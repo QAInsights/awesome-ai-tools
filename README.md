@@ -1,5 +1,7 @@
 # AI IDEs & Coding Assistants
 
+> Manually curated, enhanced w/ Claude
+
 > A curated, categorized reference of AI-powered coding tools as of **March 2026**.
 > Covers full IDEs, editor extensions, terminal agents, autonomous agents, browser-based builders, and code review platforms.
 
