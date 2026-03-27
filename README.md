@@ -63,6 +63,9 @@ AI coding agents that live in your terminal or command line.
 | **[Gemini CLI](https://github.com/google-gemini/gemini-cli)** | Google | Terminal agent for local repo tasks; lightweight; no UI overhead |
 | **[Goose](https://block.github.io/goose/)** | Block (Square) | Open-source AI agent framework; fully local; write/execute/debug from CLI |
 | **[Amazon Q CLI](https://aws.amazon.com/q/developer/)** | AWS | CLI agent component of Amazon Q; AWS-integrated terminal tasks |
+| **[Letta Code](https://github.com/letta-ai/letta-code)** | Letta AI | Memory-first terminal coding agent; stateful across sessions; [Docs](https://docs.letta.com/letta-code) |
+| **[Qwen CLI](https://qwen.ai/qwencode)** | Alibaba Qwen | High-performance CLI tool for Qwen models; specialized in code generation |
+| **[Codebuff](https://www.codebuff.com/)** | Codebuff AI | Terminal-native AI coding agent with deep codebase awareness; [GitHub](https://github.com/CodebuffAI/codebuff) |
 
 ---
 
