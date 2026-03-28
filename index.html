@@ -1,92 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ai.dosa.dev | Awesome AI Tools</title>
-    
-    <!-- SEO Tags -->
-    <meta name="description" content="A curated directory of artificial intelligence-powered coding tools, autonomous agents, and frameworks. Hosted by dosa.dev.">
-    <meta name="keywords" content="AI tools, AI coding, AI IDE, autonomous agents, prompt engineering, curated list, dosa.dev">
-    <meta property="og:title" content="ai.dosa.dev | Awesome AI Tools">
-    <meta property="og:description" content="A curated directory of artificial intelligence-powered coding tools, autonomous agents, and frameworks.">
-    <meta property="og:url" content="https://ai.dosa.dev">
-    <meta property="og:type" content="website">
-    <meta property="twitter:card" content="summary_large_image">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ai.dosa.dev | Awesome AI Tools</title>
+<meta name="description" content="A curated directory of artificial intelligence-powered coding tools, autonomous agents, and frameworks. Hosted by dosa.dev.">
+<meta name="keywords" content="AI tools, AI coding, AI IDE, autonomous agents, prompt engineering, curated list, dosa.dev">
+<meta property="og:title" content="ai.dosa.dev | Awesome AI Tools">
+<meta property="og:description" content="A curated directory of artificial intelligence-powered coding tools, autonomous agents, and frameworks.">
+<meta property="og:url" content="https://ai.dosa.dev">
+<meta property="og:type" content="website">
+<meta property="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+<script src="./app.js" defer></script>
 </head>
 <body>
-    <div class="sidebar">
-        <header class="logo">
-            <!-- Minimal Geometric Logo -->
-            <svg class="logo-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="7" height="7"></rect>
-                <rect x="14" y="3" width="7" height="7"></rect>
-                <rect x="14" y="14" width="7" height="7"></rect>
-                <rect x="3" y="14" width="7" height="7"></rect>
-                <line x1="10" y1="6.5" x2="14" y2="6.5"></line>
-                <line x1="17.5" y1="10" x2="17.5" y2="14"></line>
-            </svg>
-            <div class="logo-text">
-                <h1>ai.dosa.dev</h1>
-                <div class="version">v26.1</div>
-            </div>
-        </header>
-        
-        <div class="site-desc">
-            A curated list of artificial intelligence-powered coding instruments, frameworks, and agents.
-            <a href="https://github.com/QAInsights/awesome-ai-tools" target="_blank" class="donate-btn">Support the Project</a>
-        </div>
-
-        <div class="search-container">
-            <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <input type="text" id="searchInput" placeholder="Search the index..." autocomplete="off">
-        </div>
-        
-        <nav class="filters" id="categoryFilters">
-            <div class="nav-title">Categories</div>
-            <button class="filter-btn active" data-category="all">All Tools</button>
-            <!-- Categories injected dynamically -->
-            
-        </nav>
-        
-        <div class="advt-block">
-            <div class="advt-label">Sponsored</div>
-            <div class="advt-content">
-                Promote your AI tool directly to developers. <br>
-                <a href="https://book.qainsights.com" target="_blank">Book this space &rarr;</a>
-            </div>
-        </div>
-        
-        <footer class="sidebar-footer">
-            <div class="footer-links">
-                <a href="https://github.com/QAInsights/awesome-ai-tools" target="_blank">GitHub</a>
-                <a href="https://dosa.dev" target="_blank">dosa.dev</a>
-                <a href="https://qainsights.com" target="_blank">qainsights.com</a>
-                <a href="https://jmeter.ai" target="_blank">jmeter.ai</a>
-            </div>
-            <div class="footer-copy">&copy; 2026 dosa.dev</div>
-        </footer>
-    </div>
-    
-    <main class="content">
-        <div class="table-header">
-            <div class="col col-name">Name</div>
-            <div class="col col-company">Company</div>
-            <div class="col col-desc">Description</div>
-            <div class="col col-cat">Category</div>
-        </div>
-        <div class="registry" id="toolGrid">
-            <!-- Data injected dynamically -->
-        </div>
-    </main>
-    <script src="./app.js"></script>
+<div class="sidebar">
+<header class="logo">
+<svg class="logo-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><line x1="10" y1="6.5" x2="14" y2="6.5"></line><line x1="17.5" y1="10" x2="17.5" y2="14"></line>
+</svg>
+<div class="logo-text"><h1>ai.dosa.dev</h1><div class="version">v26.1</div></div>
+</header>
+<div class="site-desc">
+A curated list of artificial intelligence-powered coding instruments, frameworks, and agents.
+<a href="https://github.com/QAInsights/awesome-ai-tools" target="_blank" rel="noopener noreferrer" class="donate-btn">Support the Project</a>
+</div>
+<div class="search-container">
+<svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+</svg>
+<input type="text" id="searchInput" placeholder="Search the index..." autocomplete="off">
+</div>
+<nav class="filters" id="categoryFilters">
+<div class="nav-title">Categories</div>
+<button class="filter-btn active" data-category="all">All Tools</button>
+</nav>
+<div class="advt-block">
+<div class="advt-label">Sponsored</div>
+<div class="advt-content">
+Promote your AI tool directly to developers. <br>
+<a href="https://book.qainsights.com" target="_blank" rel="noopener noreferrer">Book this space &rarr;</a>
+</div>
+</div>
+<footer class="sidebar-footer">
+<div class="footer-links">
+<a href="https://github.com/QAInsights/awesome-ai-tools" target="_blank" rel="noopener noreferrer">GitHub</a>
+<a href="https://dosa.dev" target="_blank" rel="noopener noreferrer">dosa.dev</a>
+<a href="https://qainsights.com" target="_blank" rel="noopener noreferrer">qainsights.com</a>
+<a href="https://jmeter.ai" target="_blank" rel="noopener noreferrer">jmeter.ai</a>
+</div>
+<div class="footer-copy">&copy; 2026 dosa.dev</div>
+</footer>
+</div>
+<main class="content">
+<div class="table-header">
+<div class="col col-name">Name</div><div class="col col-company">Company</div><div class="col col-desc">Description</div><div class="col col-cat">Category</div>
+</div>
+<div class="registry" id="toolGrid"></div>
+</main>
 </body>
 </html>
