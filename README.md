@@ -62,6 +62,9 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Qodo](https://qodo.ai)** *(formerly CodiumAI)* | Qodo | AI-generated unit tests; code quality + PR review focus |
 | **[MarsCode](https://marscode.com)** | ByteDance | AI coding assistant and online IDE; companion to Trae |
 | **[Replit AI](https://replit.com)** | Replit | AI suite inside Replit's cloud IDE; beginner-friendly; includes Ghostwriter |
+| **[CodeBuddy](#)** | Community | MCP-compatible coding assistant extension |
+| **[Cortex Code](#)** | Community | MCP-compatible AI code assistant extension |
+| **[Kode](#)** | Community | AI developer assistant and workspace integration |
 
 ---
 
@@ -79,6 +82,18 @@ AI coding agents that live in your terminal or command line.
 | **[Letta Code](https://github.com/letta-ai/letta-code)** | Letta AI | Memory-first terminal coding agent; stateful across sessions; [Docs](https://docs.letta.com/letta-code) |
 | **[Qwen CLI](https://qwen.ai/qwencode)** | Alibaba Qwen | High-performance CLI tool for Qwen models; specialized in code generation |
 | **[Codebuff](https://www.codebuff.com/)** | Codebuff AI | Terminal-native AI coding agent with deep codebase awareness; [GitHub](https://github.com/CodebuffAI/codebuff) |
+| **[OpenClaw](#)** | Community | CLI-based autonomous agent with MCP skill support |
+| **[Command Code](#)** | Community | Terminal-native AI coding agent |
+| **[Crush](#)** | Community | CLI tool for MCP-based coding workflows |
+| **[iFlow CLI](#)** | Community | Terminal AI agent for workflow automation |
+| **[Kiro CLI](#)** | Community | Command-line agent interface with MCP capabilities |
+| **[MCPJam](#)** | Community | CLI agent optimized for Model Context Protocol integration |
+| **[Mistral Vibe](#)** | Community | Terminal agent leveraging Mistral models |
+| **[Mux](#)** | Community | Advanced terminal AI assistant and multiplexer |
+| **[Pi](#)** | Community | Lightweight terminal-based AI workspace assistant |
+| **[Zencoder](#)** | Community | Specialized terminal-based AI coding assistant |
+| **[Neovate](#)** | Community | Next-gen terminal and Neovim integrated agent |
+| **[AdaL](#)** | Community | Autonomous developer agent for the CLI |
 
 ---
 
