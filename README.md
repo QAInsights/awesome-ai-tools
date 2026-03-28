@@ -5,6 +5,19 @@
 > A curated, categorized reference of AI-powered coding tools as of **March 2026**.
 > Covers full IDEs, editor extensions, terminal agents, autonomous agents, browser-based builders, and code review platforms.
 
+## 📋 Table of Contents
+
+- [🖥️ AI-Native IDEs & Editors](#ai-native-ides--editors)
+- [🔌 IDE Extensions & Plugins](#ide-extensions--plugins)
+- [💻 Terminal & CLI Agents](#terminal--cli-agents)
+- [🤖 Autonomous & Async Agents](#autonomous--async-agents)
+- [🌐 Browser-Based & App Builders](#browser-based--app-builders)
+- [🛡️ AI Code Review & Security](#ai-code-review--security)
+- [🧰 General-Purpose AI Assistants](#general-purpose-ai-assistants-with-strong-coding-capability)
+- [🛠️ Developer Productivity & Workflow](#developer-productivity--workflow)
+- [🖊️ Editor Platforms with Native AI Features](#editor-platforms-with-native-ai-features)
+
+
 ---
 
 ## 🖥️ AI-Native IDEs & Editors
