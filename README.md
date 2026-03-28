@@ -83,7 +83,7 @@ AI coding agents that live in your terminal or command line.
 | **[Qwen CLI](https://qwen.ai/qwencode)** | Alibaba Qwen | High-performance CLI tool for Qwen models; specialized in code generation |
 | **[Codebuff](https://www.codebuff.com/)** | Codebuff AI | Terminal-native AI coding agent with deep codebase awareness; [GitHub](https://github.com/CodebuffAI/codebuff) |
 | **[OpenClaw](#)** | Community | CLI-based autonomous agent with MCP skill support |
-| **[Command Code](#)** | Community | Terminal-native AI coding agent |
+| **[Command Code](https://commandcode.ai/)** | Command Code | Stop fixing sloppy AI code. Command Code continuously learns your coding taste. Powered by taste-1 applied meta neuro-symbolic AI. |
 | **[Crush](#)** | Community | CLI tool for MCP-based coding workflows |
 | **[iFlow CLI](#)** | Community | Terminal AI agent for workflow automation |
 | **[Kiro CLI](#)** | Community | Command-line agent interface with MCP capabilities |
@@ -93,7 +93,7 @@ AI coding agents that live in your terminal or command line.
 | **[Pi](#)** | Community | Lightweight terminal-based AI workspace assistant |
 | **[Zencoder](#)** | Community | Specialized terminal-based AI coding assistant |
 | **[Neovate](#)** | Community | Next-gen terminal and Neovim integrated agent |
-| **[AdaL](#)** | Community | Autonomous developer agent for the CLI |
+| **[AdaL](https://sylph.ai/)** | Sylph | Autonomous developer agent for the CLI |
 
 ---
 
