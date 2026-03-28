@@ -104,6 +104,7 @@ AI tools that generate full apps or UIs from natural language, no local setup re
 | **[Lovable](https://lovable.dev)** | Lovable | AI web app builder; production-ready full-stack from prompts |
 | **[Replit](https://replit.com)** | Replit | Cloud IDE + AI builder; deploy from browser; great for beginners |
 | **[PlayCode AI](https://playcode.io)** | PlayCode | 15+ AI models in-browser; builds complete websites without coding |
+| **[Emergent.sh](https://app.emergent.sh/register?ref=catc151141)** | Emergent AI | Agentic vibe-coding platform for building and deploying full-stack apps from natural language |
 
 ---
 
@@ -152,3 +153,8 @@ Established editors that have shipped first-party AI capabilities.
 | **[Visual Studio](https://visualstudio.microsoft.com)** | Microsoft | GitHub Copilot deeply integrated; .NET and C++ focused |
 
 *Last updated: March 2026*
+
+---
+
+> [!NOTE]
+> Some links in this guide are referral links (e.g., Emergent.sh). Using them helps support the ongoing maintenance of this curated list at no additional cost to you.
