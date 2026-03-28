@@ -114,6 +114,17 @@ Not IDEs, but widely used for coding tasks via chat.
 | **[Claude](https://claude.ai)** | Anthropic | Top-rated for complex debugging, architecture, and large codebase reasoning |
 | **[ChatGPT](https://chatgpt.com)** | OpenAI | Versatile everyday coding; GPT-5 in 2026; broad language support |
 | **[Gemini](https://gemini.google.com)** | Google | 1M token context; multimodal; strong for Google ecosystem teams |
+| **[DeepSeek](https://www.deepseek.com/)** | DeepSeek | Competitive open-weights models (V3/R1); excellent coding benchmarks |
+| **[Perplexity](https://www.perplexity.ai/)** | Perplexity | AI search engine; excellent for technical research and API discovery |
+
+---
+
+## 🛠️ Developer Productivity & Workflow
+AI-powered tools for managing context, snippets, and developer documentation.
+
+| Tool | Company | Notes |
+|------|---------|-------|
+| **[Pieces for Developers](https://pieces.app/)** | Pieces | AI-powered context management; "Artificial Memory" for your workflow; snippet management |
 
 ---
 
