@@ -94,6 +94,7 @@ AI coding agents that live in your terminal or command line.
 | **[Zencoder](#)** | Community | Specialized terminal-based AI coding assistant |
 | **[Neovate](#)** | Community | Next-gen terminal and Neovim integrated agent |
 | **[AdaL](https://sylph.ai/)** | Sylph | Autonomous developer agent for the CLI |
+| **[Cline](https://cline.bot/kanban)** | Cline | Cline Kanban works with the agents you're already using: Claude Code, Codex, and Cline-compatible agents, with more to come. |
 
 ---
 
