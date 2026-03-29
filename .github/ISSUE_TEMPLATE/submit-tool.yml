@@ -40,10 +40,13 @@ body:
         - AI-Native IDEs & Editors
         - IDE Extensions & Plugins
         - Terminal & CLI Agents
+        - AI-Native Terminals
         - Autonomous & Async Agents
         - Browser-Based & App Builders
         - AI Code Review & Security
-        - General-Purpose AI Assistants
+        - AI Testing & Quality Assurance
+        - General-Purpose AI Assistants (with Strong Coding Capability)
+        - AI Codebase Knowledge & Generation
         - Developer Productivity & Workflow
         - Editor Platforms with Native AI Features
     validations:
