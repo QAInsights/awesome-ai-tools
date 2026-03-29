@@ -12,7 +12,6 @@ permissions:
 jobs:
   process-submission:
     runs-on: ubuntu-latest
-    if: contains(github.event.issue.labels.*.name, 'submission')
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
