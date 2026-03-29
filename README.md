@@ -96,6 +96,7 @@ AI coding agents that live in your terminal or command line.
 | **[Neovate](https://github.com/neovateai/neovate-code)** | NeovateAI | Next-gen terminal and Neovim integrated agent |
 | **[AdaL](https://sylph.ai/)** | Sylph | Autonomous developer agent for the CLI |
 | **[Cline Kanban](https://cline.bot/kanban)** | Cline | Cline Kanban works with the agents you're already using: Claude Code, Codex, and Cline-compatible agents, with more to come. |
+| **[Parallel Code](https://parallelcode.app/)** | Parallel Code | Parallel Code is a desktop app that gives every AI coding agent its own git branch and worktree — automatically.; [GitHub](https://github.com/johannesjo/parallel-code) |
 
 ---
 
