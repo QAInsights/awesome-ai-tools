@@ -4,6 +4,7 @@
 
 > A curated, categorized reference of AI-powered coding tools as of **March 2026**.
 > Covers full IDEs, editor extensions, terminal agents, autonomous agents, browser-based builders, and code review platforms.
+> **80+ tools** across 12 categories.
 
 ## 📋 Table of Contents
 
@@ -62,9 +63,9 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Qodo](https://qodo.ai)** *(formerly CodiumAI)* | Qodo | AI-generated unit tests; code quality + PR review focus |
 | **[MarsCode](https://marscode.com)** | ByteDance | AI coding assistant and online IDE; companion to Trae |
 | **[Replit AI](https://replit.com)** | Replit | AI suite inside Replit's cloud IDE; beginner-friendly; includes Ghostwriter |
-| **[CodeBuddy](#)** | Community | MCP-compatible coding assistant extension |
-| **[Cortex Code](#)** | Community | MCP-compatible AI code assistant extension |
-| **[Kode](#)** | Community | AI developer assistant and workspace integration |
+| **[CodeBuddy](https://www.codebuddy.ai/)** | Tencent | MCP-compatible coding assistant extension; ⚠️ not available in the USA |
+| **[Cortex Code](https://www.snowflake.com/en/product/features/cortex-code/)** | Snowflake | MCP-compatible AI code assistant extension |
+| **[Kode](https://github.com/shareAI-lab/Kode-Agent)** | ShareAI | AI developer assistant and workspace integration |
 
 ---
 
@@ -82,17 +83,17 @@ AI coding agents that live in your terminal or command line.
 | **[Letta Code](https://github.com/letta-ai/letta-code)** | Letta AI | Memory-first terminal coding agent; stateful across sessions; [Docs](https://docs.letta.com/letta-code) |
 | **[Qwen CLI](https://qwen.ai/qwencode)** | Alibaba Qwen | High-performance CLI tool for Qwen models; specialized in code generation |
 | **[Codebuff](https://www.codebuff.com/)** | Codebuff AI | Terminal-native AI coding agent with deep codebase awareness; [GitHub](https://github.com/CodebuffAI/codebuff) |
-| **[OpenClaw](#)** | Community | CLI-based autonomous agent with MCP skill support |
+| **[OpenClaw](https://openclaw.ai/)** | OpenClaw | CLI-based autonomous agent with MCP skill support |
 | **[Command Code](https://commandcode.ai/)** | Command Code | Stop fixing sloppy AI code. Command Code continuously learns your coding taste. Powered by taste-1 applied meta neuro-symbolic AI. |
-| **[Crush](#)** | Community | CLI tool for MCP-based coding workflows |
-| **[iFlow CLI](#)** | Community | Terminal AI agent for workflow automation |
-| **[Kiro CLI](#)** | Community | Command-line agent interface with MCP capabilities |
-| **[MCPJam](#)** | Community | CLI agent optimized for Model Context Protocol integration |
-| **[Mistral Vibe](#)** | Community | Terminal agent leveraging Mistral models |
-| **[Mux](#)** | Community | Advanced terminal AI assistant and multiplexer |
-| **[Pi](#)** | Community | Lightweight terminal-based AI workspace assistant |
-| **[Zencoder](#)** | Community | Specialized terminal-based AI coding assistant |
-| **[Neovate](#)** | Community | Next-gen terminal and Neovim integrated agent |
+| **[Crush](https://github.com/charmbracelet/crush)** | Charmbracelet | CLI tool for MCP-based coding workflows |
+| **[iFlow CLI](https://github.com/iflow-ai/iflow-cli)** | iFlow AI | Terminal AI agent for workflow automation |
+| **[Kiro CLI](https://kiro.dev/cli/)** | AWS | Command-line agent interface with MCP capabilities |
+| **[MCPJam](https://www.mcpjam.com)** | MCPJam | CLI agent optimized for Model Context Protocol integration |
+| **[Mistral Vibe](https://github.com/mistralai/mistral-vibe)** | Mistral AI | Terminal agent leveraging Mistral models |
+| **[Mux](https://coder.com/products/mux)** | Coder | Advanced terminal AI assistant and multiplexer |
+| **[Pi](https://github.com/can1357/oh-my-pi)** | Open Source | Lightweight terminal-based AI workspace assistant |
+| **[Zencoder](https://zencoder.ai/)** | Zencoder | Specialized terminal-based AI coding assistant |
+| **[Neovate](https://github.com/neovateai/neovate-code)** | NeovateAI | Next-gen terminal and Neovim integrated agent |
 | **[AdaL](https://sylph.ai/)** | Sylph | Autonomous developer agent for the CLI |
 | **[Cline Kanban](https://cline.bot/kanban)** | Cline | Cline Kanban works with the agents you're already using: Claude Code, Codex, and Cline-compatible agents, with more to come. |
 
