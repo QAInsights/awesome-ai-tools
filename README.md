@@ -119,6 +119,7 @@ Agents that operate independently on tasks, often outside your local editor.
 | **[Sweep AI](https://sweep.dev/)** | Sweep | Acts as an autonomous junior developer. Branches, writes code, and opens PRs from issues |
 | **[Ellipsis](https://www.ellipsis.dev/)** | Ellipsis | AI agent that reviews pull requests and converts comments directly into runnable code commits |
 | **[Genie](https://cosine.sh/)** | Cosine | One of the highest performing autonomous models strictly evaluated against the SWE-bench benchmarks |
+| **[Open-yak](https://open-yak.com/)** | Open-yak | Open-source desktop AI agent with 130+ skills, 46 MCP connectors, and IM gateway |
 
 ---
 
@@ -145,6 +146,15 @@ Tools focused on reviewing, securing, and validating code — not generating it.
 | **[Qodo](https://qodo.ai)** | Qodo | PR validation, test generation, merge readiness checks |
 | **[Snyk Code](https://snyk.io/product/snyk-code/)** | Snyk | SAST security scanning; real-time vulnerability detection; DevSecOps integration |
 | **[DeepCode / Snyk](https://snyk.io)** | Snyk | AI-driven code analysis; now fully under Snyk Code brand |
+
+---
+
+## 🧪 AI Testing & Quality Assurance
+Tools designed to autonomously generate, execute, and fix tests.
+
+| Tool | Company | Notes |
+|------|---------|-------|
+| **[GitAuto](https://gitauto.ai/)** | GitAuto | Automatically writes, runs, and fixes your unit tests, so you can keep shipping confidently |
 
 ---
 
