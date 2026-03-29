@@ -97,6 +97,16 @@ AI coding agents that live in your terminal or command line.
 
 ---
 
+## 💻 AI-Native Terminals
+Full terminal emulators built from the ground up with AI capabilities integrated.
+
+| Tool | Company | Notes |
+|------|---------|-------|
+| **[Warp](https://app.warp.dev/referral/VNKYYE)** | Warp | The wildly popular rust-based terminal with "Warp AI" built directly into the command line interface |
+| **[Wave](https://www.waveterm.dev/)** | Wave | An open-source, modern AI-native terminal alternative |
+
+---
+
 ## 🤖 Autonomous & Async Agents
 Agents that operate independently on tasks, often outside your local editor.
 
@@ -106,6 +116,9 @@ Agents that operate independently on tasks, often outside your local editor.
 | **[Jules](https://jules.google)** | Google | Async GitHub-integrated agent; clones repo into GCP VM; works while you code; powered by Gemini 2.5 Pro |
 | **[OpenHands](https://github.com/All-Hands-AI/OpenHands)** | All Hands AI | Open-source autonomous coding agent; 95K+ GitHub stars |
 | **[SWE-agent](https://swe-agent.com)** | Princeton NLP | Open-source agent for autonomously solving GitHub issues |
+| **[Sweep AI](https://sweep.dev/)** | Sweep | Acts as an autonomous junior developer. Branches, writes code, and opens PRs from issues |
+| **[Ellipsis](https://www.ellipsis.dev/)** | Ellipsis | AI agent that reviews pull requests and converts comments directly into runnable code commits |
+| **[Genie](https://cosine.sh/)** | Cosine | One of the highest performing autonomous models strictly evaluated against the SWE-bench benchmarks |
 
 ---
 
@@ -148,12 +161,23 @@ Not IDEs, but widely used for coding tasks via chat.
 
 ---
 
+## 🔍 AI Codebase Knowledge & Generation
+Tools for understanding large repositories or generating SDKs/APIs.
+
+| Tool | Company | Notes |
+|------|---------|-------|
+| **[Greptile](https://www.greptile.com/)** | Greptile | AI that ingests massive codebases and answers deep architectural questions via chat or API |
+| **[Fern](https://buildwithfern.com/)** | Fern | Generates SDKs and developer documentation natively from your API definitions |
+
+---
+
 ## 🛠️ Developer Productivity & Workflow
 AI-powered tools for managing context, snippets, and developer documentation.
 
 | Tool | Company | Notes |
 |------|---------|-------|
 | **[Pieces for Developers](https://pieces.app/)** | Pieces | AI-powered context management; "Artificial Memory" for your workflow; snippet management |
+| **[Vibe Kanban](https://vibekanban.com/)** | Vibe | Project management and productivity platform integrated with AI |
 
 ---
 
