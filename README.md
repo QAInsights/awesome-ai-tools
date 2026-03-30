@@ -36,6 +36,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[Verdent](https://www.verdent.ai)** | Verdent | An agentic coding tool focused on parallel agents and isolated workspaces |
 | **[Pochi](https://app.getpochi.com/home)** | Pochi | Pochi is a VS Code–native AI coding agent built by TabbyML that stands out primarily through its parallel agent execution, local model support, and privacy-first, self-hostable architecture — a combination few competitors offer together. |
 | **[Qoder](https://qoder.com/en)** | Qoder | Agentic Coding Platform for Real Software. |
+| **[Devin](https://devin.ai/)** | Cognition AI | Crush your backlog with your personal AI engineering team. |
 
 
 ---
