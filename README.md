@@ -208,5 +208,8 @@ Established editors that have shipped first-party AI capabilities.
 
 ---
 
+> [!WARNING]
+> **Disclaimer:** This directory is manually curated and may contain outdated information regarding pricing, features, or availability. Please verify details directly on the vendor's website for accuracy.
+
 > [!NOTE]
 > Some links in this guide are referral links (e.g., Emergent.sh). Using them helps support the ongoing maintenance of this curated list at no additional cost to you.
