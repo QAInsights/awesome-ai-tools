@@ -27,7 +27,7 @@ Full standalone editors built from the ground up with AI at the core.
 | Tool | Company | Notes |
 |------|---------|-------|
 | **[Cursor](https://cursor.com)** | Anysphere | VS Code fork; agent mode for multi-file edits; most popular AI-native IDE |
-| **[Windsurf](https://windsurf.com/refer?referral_code=37a59a01d5)** | Devin | AI-first IDE with "Flows" agentic engine; strong value at $20/mo |
+| **[Windsurf](https://windsurf.com/refer?referral_code=37a59a01d5)** | Cognition | AI-first IDE with "Flows" agentic engine; strong value at $20/mo |
 | **[Trae](https://trae.ai)** | ByteDance | Free AI IDE (VS Code-based); Builder Mode; GPT-4o + Claude access at no cost |
 | **[Zed](https://zed.dev)** | Zed Industries | High-performance multiplayer editor with built-in AI; by creators of Atom |
 | **[PearAI](https://trypear.ai)** | PearAI | Open-source AI code editor; VS Code fork |
@@ -51,7 +51,6 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Gemini Code Assist](https://cloud.google.com/gemini/docs/codeassist/overview)** | Google | Gemini-powered; free for individuals; VS Code + Google Cloud integration |
 | **[Amazon Q Developer](https://aws.amazon.com/q/developer/)** | AWS | Evolution of CodeWhisperer; multi-file agents; deep AWS integration |
 | **[Tabnine](https://www.tabnine.com)** | Tabnine | Privacy-first; on-premise options; all major IDEs; ethically sourced training |
-| **[Codeium](https://codeium.com)** | Codeium | Free AI completion; 70+ IDEs; real-time collaboration focus |
 | **[Cline](https://github.com/cline/cline)** | Open Source | Autonomous VS Code agent; Plan + Act modes; BYOM (zero markup) |
 | **[Kilo Code](https://kilocode.ai)** | Kilo Code | Open-source; 500+ models via OpenRouter; 4 structured modes (Architect/Code/Debug/Orchestrator) |
 | **[Roo Code](https://roocode.com)** | Roo Code | VS Code extension; strong on large multi-file changes; fork of Cline |
