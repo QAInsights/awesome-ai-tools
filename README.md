@@ -138,6 +138,7 @@ AI tools that generate full apps or UIs from natural language, no local setup re
 | **[Replit](https://replit.com)** | Replit | Cloud IDE + AI builder; deploy from browser; great for beginners |
 | **[PlayCode AI](https://playcode.io)** | PlayCode | 15+ AI models in-browser; builds complete websites without coding |
 | **[Emergent.sh](https://app.emergent.sh/register?ref=catc151141)** | Emergent AI | Agentic vibe-coding platform for building and deploying full-stack apps from natural language |
+| **[Bitrig](https://bitrig.com/)** | Bitrig | Describe what you want to build, and Bitrig turns it into real Swift code you can ship to the App Store. |
 
 ---
 
