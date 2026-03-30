@@ -31,7 +31,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[Trae](https://trae.ai)** | ByteDance | Free AI IDE (VS Code-based); Builder Mode; GPT-4o + Claude access at no cost |
 | **[Zed](https://zed.dev)** | Zed Industries | High-performance multiplayer editor with built-in AI; by creators of Atom |
 | **[PearAI](https://trypear.ai)** | PearAI | Open-source AI code editor; VS Code fork |
-| **[Google Antigravity](https://labs.google)** | Google | Dual-mode IDE: Editor View + Manager Surface for orchestrating autonomous agents |
+| **[Google Antigravity](https://antigravity.google/)** | Google | Dual-mode IDE: Editor View + Manager Surface for orchestrating autonomous agents |
 | **[Void](https://voideditor.com)** | Void | Work on Void is currently paused |
 | **[Verdent](https://www.verdent.ai)** | Verdent | An agentic coding tool focused on parallel agents and isolated workspaces |
 | **[Pochi](https://app.getpochi.com/home)** | Pochi | Pochi is a VS Code–native AI coding agent built by TabbyML that stands out primarily through its parallel agent execution, local model support, and privacy-first, self-hostable architecture — a combination few competitors offer together. |
