@@ -112,5 +112,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             return row;
         }));
     }
+
+    function updateYear() {
+        const year = new Date().getFullYear();
+        const yearElement = document.querySelector('.footer-copy');
+        yearElement.textContent = `© ${year} NaveenKumar Namachivayam`;
+    }
+
     searchInput.addEventListener('input', filterAndRender);
+    updateYear();
 });
