@@ -3,7 +3,22 @@ document.addEventListener('DOMContentLoaded', async () => {
           searchInput = document.getElementById('searchInput'),
           categoryFilters = document.getElementById('categoryFilters');
     let toolsData = [], categories = new Set(), currentCategory = 'all';
-    
+
+    const categoryMapping = {
+        'AI-Native IDEs & Editors': 'AI IDEs',
+        'IDE Extensions & Plugins': 'IDE Plugins',
+        'Terminal & CLI Agents': 'CLI Agents',
+        'AI-Native Terminals': 'AI Terminals',
+        'Autonomous & Async Agents': 'Async Agents',
+        'Browser-Based & App Builders': 'Web Builders',
+        'AI Code Review & Security': 'Code Review',
+        'AI Testing & Quality Assurance': 'QA & Testing',
+        'General-Purpose AI Assistants (with Strong Coding Capability)': 'General AI',
+        'AI Codebase Knowledge & Generation': 'Codebase AI',
+        'Developer Productivity & Workflow': 'Productivity',
+        'Editor Platforms with Native AI Features': 'Native Editors'
+    };
+
     try {
         const response = await fetch('README.md');
         if (!response.ok) throw new Error('Failed to fetch README');
@@ -86,7 +101,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             row.className = 'row';
             row.style.animationDelay = `${(index % 15) * 0.02}s`;
             const catClean = tool.category.replace(/^[\u2700-\u27BF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u26FF]/g, '').trim();
-            row.innerHTML = `<div class="col col-name">${tool.name}</div><div class="col col-company">${tool.company}</div><div class="col col-desc">${tool.notes}</div><div class="col col-cat"><span class="category-badge">${catClean}</span></div>`;
+            let catShort = catClean;
+            for (const [key, val] of Object.entries(categoryMapping)) {
+                if (catClean.includes(key)) {
+                    catShort = val;
+                    break;
+                }
+            }
+            row.innerHTML = `<div class="col col-name">${tool.name}</div><div class="col col-company">${tool.company}</div><div class="col col-desc">${tool.notes}</div><div class="col col-cat"><span class="category-badge" title="${catClean}">${catShort}</span></div>`;
             return row;
         }));
     }
