@@ -27,7 +27,7 @@ Full standalone editors built from the ground up with AI at the core.
 | Tool | Company | Notes |
 |------|---------|-------|
 | **[Cursor](https://cursor.com)** | Anysphere | VS Code fork; agent mode for multi-file edits; most popular AI-native IDE |
-| **[Windsurf](https://codeium.com/windsurf)** | Codeium | AI-first IDE with "Flows" agentic engine; strong value at $15/mo |
+| **[Windsurf](https://windsurf.com/refer?referral_code=37a59a01d5)** | Devin | AI-first IDE with "Flows" agentic engine; strong value at $20/mo |
 | **[Trae](https://trae.ai)** | ByteDance | Free AI IDE (VS Code-based); Builder Mode; GPT-4o + Claude access at no cost |
 | **[Zed](https://zed.dev)** | Zed Industries | High-performance multiplayer editor with built-in AI; by creators of Atom |
 | **[PearAI](https://trypear.ai)** | PearAI | Open-source AI code editor; VS Code fork |
