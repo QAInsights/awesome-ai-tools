@@ -66,6 +66,7 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[CodeBuddy](https://www.codebuddy.ai/)** | Tencent | MCP-compatible coding assistant extension; ⚠️ not available in the USA |
 | **[Cortex Code](https://www.snowflake.com/en/product/features/cortex-code/)** | Snowflake | MCP-compatible AI code assistant extension |
 | **[Kode](https://github.com/shareAI-lab/Kode-Agent)** | ShareAI | AI developer assistant and workspace integration |
+| **[Apertis](https://apertis.ai/)** | Stima AI | One API key works across all major coding agents |
 
 ---
 
