@@ -99,7 +99,7 @@ AI coding agents that live in your terminal or command line.
 | **[AdaL](https://sylph.ai/)** | Sylph | Autonomous developer agent for the CLI |
 | **[Cline Kanban](https://cline.bot/kanban)** | Cline | Cline Kanban works with the agents you're already using: Claude Code, Codex, and Cline-compatible agents, with more to come. |
 | **[Parallel Code](https://parallelcode.app/)** | Parallel Code | Parallel Code is a desktop app that gives every AI coding agent its own git branch and worktree — automatically.; [GitHub](https://github.com/johannesjo/parallel-code) |
-| **[Pi](https://pi.dev/)** | badlogic | Pi is a minimal terminal coding harness. Adapt pi to your workflows, not the other way around.; [GitHub](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent) |
+| **[Pi](https://pi.dev/)** | badlogic | Pi is a minimal terminal coding harness. Adapt pi to your workflows, not the other way around. |
 | **[Autohand ACP](https://github.com/autohandai/autohand-acp)** | Autohand | ACP-based terminal coding agent with autonomous capabilities |
 | **[Crow CLI](https://github.com/crow-cli/crow-cli)** | Crow | Two-layer system: ACP agent (crow-cli) that does the thinking, and MCP toolserver (crow-mcp) that does the doing |
 | **[Fast Agent](https://github.com/evalstate/fast-agent)** | EvalState | Code, Build and Evaluate agents — excellent Model and Skills/MCP/ACP Support |
