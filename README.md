@@ -4,7 +4,7 @@
 
 > A curated, categorized reference of AI-powered coding tools as of **March 2026**.
 > Covers full IDEs, editor extensions, terminal agents, autonomous agents, browser-based builders, and code review platforms.
-> **89+ tools** across 12 categories.
+> **90+ tools** across 12 categories.
 
 ## 📋 Table of Contents
 
@@ -68,6 +68,7 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Kode](https://github.com/shareAI-lab/Kode-Agent)** | ShareAI | AI developer assistant and workspace integration |
 | **[Apertis](https://apertis.ai/)** | Stima AI | One API key works across all major coding agents |
 | **[Corust](https://corust.ai/)** | Corust | Your seasoned Rust co-pilot: production-grade code generation, zero hallucinations on Rust idioms, and tools built for real Rustaceans. |
+| **[WozCode](https://www.wozcode.com/)** | WozCode | A Claude Code plugin that supercharges performance, cost, and speed |
 
 ---
 
