@@ -4,7 +4,7 @@
 
 > A curated, categorized reference of AI-powered coding tools as of **March 2026**.
 > Covers full IDEs, editor extensions, terminal agents, autonomous agents, browser-based builders, and code review platforms.
-> **80+ tools** across 12 categories.
+> **89+ tools** across 12 categories.
 
 ## 📋 Table of Contents
 
@@ -67,6 +67,7 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Cortex Code](https://www.snowflake.com/en/product/features/cortex-code/)** | Snowflake | MCP-compatible AI code assistant extension |
 | **[Kode](https://github.com/shareAI-lab/Kode-Agent)** | ShareAI | AI developer assistant and workspace integration |
 | **[Apertis](https://apertis.ai/)** | Stima AI | One API key works across all major coding agents |
+| **[Corust](https://corust.ai/)** | Corust | Your seasoned Rust co-pilot: production-grade code generation, zero hallucinations on Rust idioms, and tools built for real Rustaceans. |
 
 ---
 
@@ -99,6 +100,13 @@ AI coding agents that live in your terminal or command line.
 | **[Cline Kanban](https://cline.bot/kanban)** | Cline | Cline Kanban works with the agents you're already using: Claude Code, Codex, and Cline-compatible agents, with more to come. |
 | **[Parallel Code](https://parallelcode.app/)** | Parallel Code | Parallel Code is a desktop app that gives every AI coding agent its own git branch and worktree — automatically.; [GitHub](https://github.com/johannesjo/parallel-code) |
 | **[Pi](https://pi.dev/)** | badlogic | Pi is a minimal terminal coding harness. Adapt pi to your workflows, not the other way around.; [GitHub](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent) |
+| **[Autohand ACP](https://github.com/autohandai/autohand-acp)** | Autohand | ACP-based terminal coding agent with autonomous capabilities |
+| **[Crow CLI](https://github.com/crow-cli/crow-cli)** | Crow | Two-layer system: ACP agent (crow-cli) that does the thinking, and MCP toolserver (crow-mcp) that does the doing |
+| **[Fast Agent](https://github.com/evalstate/fast-agent)** | EvalState | Code, Build and Evaluate agents — excellent Model and Skills/MCP/ACP Support |
+| **[Minion Code](https://github.com/femto/minion-code)** | Femto | Minion's implementation of Claude Code |
+| **[Compass Nova CLI](https://github.com/Compass-Agentic-Platform/nova)** | Compass | Compass Nova CLI |
+| **[Pi ACP](https://github.com/svkozak/pi-acp)** | svkozak | ACP adapter for pi coding agent |
+| **[Stakpak Agent](https://github.com/stakpak/agent)** | Stakpak | Ship your code, on autopilot. Open source agent that lives on your machines 24/7 and keeps your apps running |
 
 ---
 
@@ -125,6 +133,7 @@ Agents that operate independently on tasks, often outside your local editor.
 | **[Ellipsis](https://www.ellipsis.dev/)** | Ellipsis | AI agent that reviews pull requests and converts comments directly into runnable code commits |
 | **[Genie](https://cosine.sh/)** | Cosine | One of the highest performing autonomous models strictly evaluated against the SWE-bench benchmarks |
 | **[Open-yak](https://open-yak.com/)** | Open-yak | Open-source desktop AI agent with 130+ skills, 46 MCP connectors, and IM gateway |
+| **[DeepAgents JS](https://github.com/langchain-ai/deepagentsjs)** | LangChain | TypeScript package for creating Deep Agents — implements deep agent capabilities in a general-purpose way |
 
 ---
 
