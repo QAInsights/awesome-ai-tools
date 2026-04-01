@@ -27,14 +27,14 @@ Full standalone editors built from the ground up with AI at the core.
 | Tool | Company | Notes |
 |------|---------|-------|
 | **[Cursor](https://cursor.com)** | Anysphere | VS Code fork; agent mode for multi-file edits; most popular AI-native IDE |
-| **[Windsurf](https://windsurf.com/refer?referral_code=37a59a01d5)** | Cognition | AI-first IDE with "Flows" agentic engine; strong value at $20/mo |
+| **[Windsurf](https://windsurf.com/refer?referral_code=37a59a01d5)** | Cognition | AI-first IDE with "Flows" agentic engine. |
 | **[Trae](https://trae.ai)** | ByteDance | Free AI IDE (VS Code-based); Builder Mode; GPT-4o + Claude access at no cost |
 | **[Zed](https://zed.dev)** | Zed Industries | High-performance multiplayer editor with built-in AI; by creators of Atom |
 | **[PearAI](https://trypear.ai)** | PearAI | Open-source AI code editor; VS Code fork |
 | **[Antigravity](https://antigravity.google/)** | Google | Dual-mode IDE: Editor View + Manager Surface for orchestrating autonomous agents |
 | **[Void](https://voideditor.com)** | Void | Work on Void is currently paused |
 | **[Verdent](https://www.verdent.ai)** | Verdent | An agentic coding tool focused on parallel agents and isolated workspaces |
-| **[Pochi](https://app.getpochi.com/home)** | Pochi | Pochi is a VS Code–native AI coding agent built by TabbyML that stands out primarily through its parallel agent execution, local model support, and privacy-first, self-hostable architecture — a combination few competitors offer together. |
+| **[Pochi](https://app.getpochi.com/home)** | Pochi | Pochi is a VS Code–native AI coding agent built by TabbyML that stands out primarily through its parallel agent execution, local model support, and more. |
 | **[Qoder](https://qoder.com/en)** | Qoder | Agentic Coding Platform for Real Software. |
 | **[Devin](https://devin.ai/)** | Cognition AI | Crush your backlog with your personal AI engineering team. |
 
@@ -98,7 +98,7 @@ AI coding agents that live in your terminal or command line.
 | **[Neovate](https://github.com/neovateai/neovate-code)** | NeovateAI | Next-gen terminal and Neovim integrated agent |
 | **[AdaL](https://sylph.ai/)** | Sylph | Autonomous developer agent for the CLI |
 | **[Cline Kanban](https://cline.bot/kanban)** | Cline | Cline Kanban works with the agents you're already using: Claude Code, Codex, and Cline-compatible agents, with more to come. |
-| **[Parallel Code](https://parallelcode.app/)** | Parallel Code | Parallel Code is a desktop app that gives every AI coding agent its own git branch and worktree — automatically.; [GitHub](https://github.com/johannesjo/parallel-code) |
+| **[Parallel Code](https://parallelcode.app/)** | Parallel Code | Parallel Code is a desktop app that gives every AI coding agent its own git branch and worktree — automatically.|
 | **[Pi](https://pi.dev/)** | badlogic | Pi is a minimal terminal coding harness. Adapt pi to your workflows, not the other way around. |
 | **[Autohand ACP](https://github.com/autohandai/autohand-acp)** | Autohand | ACP-based terminal coding agent with autonomous capabilities |
 | **[Crow CLI](https://github.com/crow-cli/crow-cli)** | Crow | Two-layer system: ACP agent (crow-cli) that does the thinking, and MCP toolserver (crow-mcp) that does the doing |

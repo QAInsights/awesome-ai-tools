@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     break;
                 }
             }
-            row.innerHTML = `<div class="col col-name">${tool.name}</div><div class="col col-company">${tool.company}</div><div class="col col-desc">${tool.notes}</div><div class="col col-cat"><span class="category-badge" title="${catClean}">${catShort}</span></div>`;
+            row.innerHTML = `<div class="col col-name">${tool.name}</div><div class="col col-company">${tool.company}</div><div class="col col-desc">${tool.notes}</div><div class="col col-cat"><span class="category-badge" title="${catClean}">${catShort}</span></div><div class="col col-vote"><button class="upvote-btn" disabled title="Voting coming soon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14l5-5 5 5M12 9v9"/></svg></button></div>`;
             return row;
         }));
     }
