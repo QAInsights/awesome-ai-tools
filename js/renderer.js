@@ -27,13 +27,14 @@ export function initRenderer(gridElement) {
  */
 export function filterTools(tools, category, searchVal) {
     const safeLower = (val) => (val || '').toLowerCase();
+    const searchLower = safeLower(searchVal);
     
     return tools.filter(tool => 
         (category === 'all' || tool.category === category) &&
-        (safeLower(tool.name).includes(searchVal) || 
-         safeLower(tool.company).includes(searchVal) || 
-         safeLower(tool.notes).includes(searchVal) || 
-         safeLower(tool.category).includes(searchVal))
+        (safeLower(tool.name).includes(searchLower) || 
+         safeLower(tool.company).includes(searchLower) || 
+         safeLower(tool.notes).includes(searchLower) || 
+         safeLower(tool.category).includes(searchLower))
     );
 }
 
