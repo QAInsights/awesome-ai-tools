@@ -671,8 +671,23 @@ background:rgba(255,255,255,0.03)
 @media (max-width:768px) {
  .col-vote {
  width:100%;
+display:flex;
 justify-content:flex-start;
-margin-top:8px
+margin-top:12px
+}
+
+.col-vote .zap-btn {
+ padding:8px 14px;
+gap:8px
+}
+
+.col-vote .zap-btn .zap-icon {
+ width:16px;
+height:16px
+}
+
+.col-vote .zap-btn .zap-count {
+ font-size:13px
 }
 
 }
