@@ -4,7 +4,7 @@
 
 > A curated, categorized reference of AI-powered coding tools as of **March 2026**.
 > Covers full IDEs, editor extensions, terminal agents, autonomous agents, browser-based builders, and code review platforms.
-> **91+ tools** across 12 categories.
+> **93+ tools** across 12 categories.
 
 ## 📋 Table of Contents
 
@@ -70,6 +70,8 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Corust](https://corust.ai/)** | Corust | Your seasoned Rust co-pilot: production-grade code generation, zero hallucinations on Rust idioms, and tools built for real Rustaceans. |
 | **[WozCode](https://www.wozcode.com/)** | WozCode | A Claude Code plugin that supercharges performance, cost, and speed |
 | **[Oh My codeX](https://github.com/Yeachan-Heo/oh-my-codex)** | Yeachan-Heo | OmX: Your codex is not alone. Add hooks, agent teams, HUDs, and so much more |
+| **[IBM Bob](https://bob.ibm.com/)** | IBM | Your AI-Powered Development Partner |
+| **[Firebender](https://firebender.com/)** | Firebender | The first Android-native coding agent that writes features, tests them in the emulator, and fixes issues automatically |
 
 ---
 

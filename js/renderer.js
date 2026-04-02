@@ -26,12 +26,14 @@ export function initRenderer(gridElement) {
  * @returns {Array} Filtered tools
  */
 export function filterTools(tools, category, searchVal) {
+    const safeLower = (val) => (val || '').toLowerCase();
+    
     return tools.filter(tool => 
         (category === 'all' || tool.category === category) &&
-        (tool.name.toLowerCase().includes(searchVal) || 
-         tool.company.toLowerCase().includes(searchVal) || 
-         tool.notes.toLowerCase().includes(searchVal) || 
-         tool.category.toLowerCase().includes(searchVal))
+        (safeLower(tool.name).includes(searchVal) || 
+         safeLower(tool.company).includes(searchVal) || 
+         safeLower(tool.notes).includes(searchVal) || 
+         safeLower(tool.category).includes(searchVal))
     );
 }
 
