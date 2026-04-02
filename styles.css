@@ -683,4 +683,173 @@ margin-top:8px
 pointer-events:auto
 }
 
+/* ── ZAP BUTTON ── */
+.zap-btn {
+ display:flex;
+align-items:center;
+gap:8px;
+background:rgba(242,192,64,0.08);
+border:1px solid rgba(242,192,64,0.2);
+border-radius:6px;
+padding:8px 14px;
+cursor:pointer;
+transition:all 0.15s ease;
+position:relative;
+flex-shrink:0;
+outline:none;
+user-select:none
+}
+
+.zap-btn:hover {
+ background:rgba(242,192,64,0.12);
+border-color:rgba(242,192,64,0.4)
+}
+
+.zap-btn.zapped {
+ background:rgba(242,192,64,0.15);
+border-color:#D4900A
+}
+
+.zap-icon {
+ width:18px;
+height:18px;
+flex-shrink:0;
+transition:transform 0.1s ease
+}
+
+.zap-btn:hover .zap-icon {
+ transform:scale(1.1)
+}
+
+.zap-bolt {
+ fill:rgba(242,192,64,0.5);
+transition:fill 0.15s ease
+}
+
+.zap-btn:hover .zap-bolt,
+.zap-btn.zapped .zap-bolt {
+ fill:#F2C040
+}
+
+.zap-count {
+ font-family:var(--font-mono);
+font-size:13px;
+font-weight:700;
+color:rgba(242,192,64,0.5);
+min-width:24px;
+text-align:left;
+transition:color 0.15s ease;
+letter-spacing:0.5px
+}
+
+.zap-btn:hover .zap-count,
+.zap-btn.zapped .zap-count {
+ color:#F2C040
+}
+
+@keyframes zap-flash {
+ 0% { transform:scale(1) }
+ 20% { transform:scale(1.35) rotate(-8deg) }
+ 40% { transform:scale(0.9) rotate(4deg) }
+ 60% { transform:scale(1.15) rotate(-4deg) }
+ 80% { transform:scale(0.97) }
+ 100% { transform:scale(1) }
+}
+
+@keyframes zap-ring {
+ 0% { opacity:1; transform:scale(1) }
+ 100% { opacity:0; transform:scale(2.2) }
+}
+
+@keyframes count-pop {
+ 0% { transform:translateY(0); opacity:1 }
+ 30% { transform:translateY(-4px); opacity:1 }
+ 60% { transform:translateY(1px); opacity:1 }
+ 100% { transform:translateY(0); opacity:1 }
+}
+
+.zap-btn.firing .zap-icon {
+ animation:zap-flash 0.45s cubic-bezier(0.36,0.07,0.19,0.97)
+}
+
+.zap-btn.firing .zap-count {
+ animation:count-pop 0.35s ease
+}
+
+.zap-ring {
+ position:absolute;
+inset:0;
+border-radius:6px;
+border:1.5px solid #F2C040;
+opacity:0;
+pointer-events:none
+}
+
+.zap-btn.firing .zap-ring {
+ animation:zap-ring 0.5s ease forwards
+}
+
+.sparks {
+ position:absolute;
+inset:0;
+pointer-events:none;
+overflow:visible
+}
+
+.spark {
+ position:absolute;
+width:3px;
+height:3px;
+border-radius:50%;
+background:#F2C040;
+opacity:0;
+top:50%;
+left:50%
+}
+
+@keyframes spark-1 { 0%{opacity:1;transform:translate(0,0) scale(1)} 100%{opacity:0;transform:translate(-18px,-20px) scale(0)} }
+@keyframes spark-2 { 0%{opacity:1;transform:translate(0,0) scale(1)} 100%{opacity:0;transform:translate(18px,-18px) scale(0)} }
+@keyframes spark-3 { 0%{opacity:1;transform:translate(0,0) scale(1)} 100%{opacity:0;transform:translate(-14px,16px) scale(0)} }
+@keyframes spark-4 { 0%{opacity:1;transform:translate(0,0) scale(1)} 100%{opacity:0;transform:translate(20px,14px) scale(0)} }
+@keyframes spark-5 { 0%{opacity:1;transform:translate(0,0) scale(1)} 100%{opacity:0;transform:translate(0,-22px) scale(0)} }
+
+.zap-btn.firing .spark-1 { animation:spark-1 0.45s ease forwards }
+.zap-btn.firing .spark-2 { animation:spark-2 0.45s ease 0.04s forwards }
+.zap-btn.firing .spark-3 { animation:spark-3 0.45s ease 0.02s forwards }
+.zap-btn.firing .spark-4 { animation:spark-4 0.45s ease 0.06s forwards }
+.zap-btn.firing .spark-5 { animation:spark-5 0.45s ease 0.01s forwards }
+
+.zap-btn[data-tip]:hover::after {
+ content:attr(data-tip);
+position:absolute;
+bottom:calc(100% + 8px);
+left:50%;
+transform:translateX(-50%);
+background:#0C1A0F;
+border:1px solid #1A3522;
+color:var(--text-secondary);
+font-size:10px;
+letter-spacing:1px;
+padding:4px 8px;
+border-radius:4px;
+white-space:nowrap;
+pointer-events:none
+}
+
+/* Small variant for table rows */
+.zap-btn.sm {
+ padding:5px 10px;
+gap:5px;
+border-radius:4px
+}
+
+.zap-btn.sm .zap-icon {
+ width:13px;
+height:13px
+}
+
+.zap-btn.sm .zap-count {
+ font-size:11px
+}
+
 

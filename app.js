@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     break;
                 }
             }
-            row.innerHTML = `<div class="col col-name">${tool.name}</div><div class="col col-company">${tool.company}</div><div class="col col-desc">${tool.notes}</div><div class="col col-cat"><span class="category-badge" title="${catClean}">${catShort}</span></div><div class="col col-vote"><button class="upvote-btn" disabled title="Voting coming soon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14l5-5 5 5M12 9v9"/></svg></button></div>`;
+            row.innerHTML = `<div class="col col-name">${tool.name}</div><div class="col col-company">${tool.company}</div><div class="col col-desc">${tool.notes}</div><div class="col col-cat"><span class="category-badge" title="${catClean}">${catShort}</span></div><div class="col col-vote"><button class="zap-btn sm" data-tip="ZAP is coming soon." data-tool-id="${tool.name.toLowerCase().replace(/\s+/g, '-')}"><div class="zap-ring"></div><div class="sparks"><div class="spark spark-1"></div><div class="spark spark-2"></div><div class="spark spark-3"></div><div class="spark spark-4"></div><div class="spark spark-5"></div></div><svg class="zap-icon" viewBox="0 0 24 24" fill="none"><path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/></svg><span class="zap-count">0</span></button></div>`;
             return row;
         }));
     }
@@ -121,4 +121,30 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     searchInput.addEventListener('input', filterAndRender);
     updateYear();
+
+    // Zap button functionality
+    const zapCounts = {};
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('.zap-btn');
+        if (!btn) return;
+        
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const toolId = btn.dataset.toolId;
+        if (btn.classList.contains('zapped')) return;
+
+        if (!zapCounts[toolId]) {
+            zapCounts[toolId] = parseInt(btn.querySelector('.zap-count').textContent.replace(/,/g, '')) || 0;
+        }
+        zapCounts[toolId]++;
+
+        btn.classList.add('firing');
+        btn.classList.add('zapped');
+
+        const countEl = btn.querySelector('.zap-count');
+        countEl.textContent = zapCounts[toolId].toLocaleString();
+
+        setTimeout(() => btn.classList.remove('firing'), 500);
+    });
 });
