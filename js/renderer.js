@@ -9,6 +9,7 @@ let filteredTools = [];
 let loadedCount = 0;
 let observer = null;
 let grid = null;
+let onClearCallback = null;
 
 /**
  * Initialize the renderer
@@ -41,10 +42,13 @@ export function filterTools(tools, category, searchVal) {
 /**
  * Render filtered tools with lazy loading
  * @param {Array} tools - Filtered tools to render
+ * @param {string} searchVal - Current search value (unused, reserved)
+ * @param {Function} clearCallback - Callback to clear all filters
  */
-export function renderTools(tools) {
+export function renderTools(tools, searchVal, clearCallback) {
     filteredTools = tools;
     loadedCount = 0;
+    onClearCallback = clearCallback || null;
     grid.innerHTML = '';
     loadBatch();
 }
@@ -54,7 +58,14 @@ export function renderTools(tools) {
  */
 function loadBatch() {
     if (filteredTools.length === 0) {
-        grid.innerHTML = `<p style="color: var(--text-secondary); padding: 32px;">No processes found matching criteria.</p>`;
+        const empty = document.createElement('div');
+        empty.style.cssText = 'padding:40px 32px;display:flex;flex-direction:column;align-items:flex-start;gap:12px';
+        empty.innerHTML = `
+            <p style="color:var(--text-secondary);margin:0;font-size:15px">No tools matched your search or filter.</p>
+            <button id="clearFiltersBtn" style="background:none;border:1px solid var(--border);color:var(--text-secondary);font-family:var(--font-mono);font-size:12px;letter-spacing:0.5px;padding:6px 12px;border-radius:4px;cursor:pointer">CLEAR FILTERS</button>`;
+        grid.appendChild(empty);
+        const btn = document.getElementById('clearFiltersBtn');
+        if (btn && onClearCallback) btn.addEventListener('click', onClearCallback);
         return;
     }
     

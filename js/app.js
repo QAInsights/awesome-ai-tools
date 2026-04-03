@@ -10,6 +10,8 @@ import { initVoting } from './voting.js';
 document.addEventListener('DOMContentLoaded', async () => {
     const grid = document.getElementById('toolGrid');
     const searchInput = document.getElementById('searchInput');
+    const searchClear = document.getElementById('searchClear');
+    const resultCount = document.getElementById('resultCount');
     const categoryFilters = document.getElementById('categoryFilters');
     
     let toolsData = [];
@@ -66,11 +68,56 @@ document.addEventListener('DOMContentLoaded', async () => {
      * Filter and render tools
      */
     function filterAndRender() {
-        const searchVal = searchInput.value.toLowerCase();
+        const searchVal = searchInput.value;
         const filtered = filterTools(toolsData, currentCategory, searchVal);
-        renderTools(filtered);
+        renderTools(filtered, searchVal, () => clearAll());
+        updateResultCount(filtered.length, toolsData.length);
+        searchClear.classList.toggle('visible', searchVal.length > 0);
+    }
+
+    /**
+     * Update the result count display
+     */
+    function updateResultCount(shown, total) {
+        if (shown === total) {
+            resultCount.textContent = `${total} tools`;
+        } else {
+            resultCount.textContent = `${shown} of ${total} tools`;
+        }
+    }
+
+    /**
+     * Clear search and reset filters
+     */
+    function clearAll() {
+        searchInput.value = '';
+        currentCategory = 'all';
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-category="all"]').classList.add('active');
+        filterAndRender();
     }
     
+    // Clear button click
+    searchClear.addEventListener('click', () => {
+        searchInput.value = '';
+        searchInput.focus();
+        filterAndRender();
+    });
+
+    // Keyboard shortcut: / focuses search
+    document.addEventListener('keydown', (e) => {
+        if (e.key === '/' && document.activeElement !== searchInput) {
+            e.preventDefault();
+            searchInput.focus();
+            searchInput.select();
+        }
+        if (e.key === 'Escape' && document.activeElement === searchInput) {
+            searchInput.value = '';
+            searchInput.blur();
+            filterAndRender();
+        }
+    });
+
     // Event listeners
     searchInput.addEventListener('input', filterAndRender);
     
