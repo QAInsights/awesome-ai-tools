@@ -106,7 +106,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Keyboard shortcut: / focuses search
     document.addEventListener('keydown', (e) => {
-        if (e.key === '/' && document.activeElement !== searchInput) {
+        const activeEl = document.activeElement;
+        const isEditableElement = activeEl && (
+            activeEl.tagName === 'INPUT' || 
+            activeEl.tagName === 'TEXTAREA' || 
+            activeEl.tagName === 'SELECT' ||
+            activeEl.isContentEditable
+        );
+        
+        if (e.key === '/' && !isEditableElement) {
             e.preventDefault();
             searchInput.focus();
             searchInput.select();
