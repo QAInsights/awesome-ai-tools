@@ -59,7 +59,7 @@ export function renderTools(tools, searchVal, clearCallback) {
 function loadBatch() {
     if (filteredTools.length === 0) {
         const empty = document.createElement('div');
-        empty.style.cssText = 'padding:40px 32px;display:flex;flex-direction:column;align-items:flex-start;gap:12px';
+        empty.className = 'empty-state';
         empty.innerHTML = `
             <p style="color:var(--text-secondary);margin:0;font-size:15px">No tools matched your search or filter.</p>
             <button id="clearFiltersBtn" style="background:none;border:1px solid var(--border);color:var(--text-secondary);font-family:var(--font-mono);font-size:12px;letter-spacing:0.5px;padding:6px 12px;border-radius:4px;cursor:pointer">CLEAR FILTERS</button>`;
