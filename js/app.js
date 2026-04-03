@@ -32,6 +32,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         categories = extractCategories(toolsData);
         
         renderFilters();
+        
+        // Minor Feature: Check for ?q= search parameters to allow sharing specific search results!
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('q')) {
+            searchInput.value = urlParams.get('q');
+        }
+        
         filterAndRender();
     } catch (error) {
         console.error('Error loading tools:', error);
@@ -73,6 +80,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderTools(filtered, searchVal, () => clearAll());
         updateResultCount(filtered.length, toolsData.length);
         searchClear.classList.toggle('visible', searchVal.length > 0);
+        
+        // Sync URL so users can copy-paste their search directly
+        const url = new URL(window.location);
+        if (searchVal) {
+            url.searchParams.set('q', searchVal);
+        } else {
+            url.searchParams.delete('q');
+        }
+        window.history.replaceState({}, '', url);
     }
 
     /**
