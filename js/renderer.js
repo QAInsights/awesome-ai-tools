@@ -59,10 +59,10 @@ export function renderTools(tools, searchVal, clearCallback) {
 function loadBatch() {
     if (filteredTools.length === 0) {
         const empty = document.createElement('div');
-        empty.className = 'empty-state';
+        empty.className = 'py-6 px-0 md:py-10 md:px-8 flex flex-col items-start gap-3';
         empty.innerHTML = `
-            <p style="color:var(--text-secondary);margin:0;font-size:15px">No tools matched your search or filter.</p>
-            <button id="clearFiltersBtn" style="background:none;border:1px solid var(--border);color:var(--text-secondary);font-family:var(--font-mono);font-size:12px;letter-spacing:0.5px;padding:6px 12px;border-radius:4px;cursor:pointer">CLEAR FILTERS</button>`;
+            <p class="text-[#a3a3a3] m-0 text-[15px]">No tools matched your search or filter.</p>
+            <button id="clearFiltersBtn" class="bg-transparent border border-[#222] text-[#a3a3a3] font-mono text-[12px] tracking-wide px-3 py-1.5 rounded cursor-pointer hover:text-white transition-colors">CLEAR FILTERS</button>`;
         grid.appendChild(empty);
         const btn = document.getElementById('clearFiltersBtn');
         if (btn && onClearCallback) btn.addEventListener('click', onClearCallback);
@@ -95,32 +95,39 @@ function createToolRow(tool, index) {
     row.href = tool.url;
     row.target = '_blank';
     row.rel = 'noopener noreferrer';
-    row.className = 'row';
+    row.className = 'flex flex-col md:flex-row gap-2 md:gap-0 py-6 border-b border-[#222] text-white no-underline transition-colors hover:border-[#a3a3a3] hover:bg-white/[0.01] items-start group row-anim';
     row.style.animationDelay = `${(index % 15) * 0.02}s`;
     
     const catShort = getShortCategory(tool.category);
     const catClean = tool.category.replace(/^[\u2700-\u27BF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u26FF]/g, '').trim();
     
     row.innerHTML = `
-        <div class="col col-name">${tool.name}</div>
-        <div class="col col-company">${tool.company}</div>
-        <div class="col col-desc">${tool.notes}</div>
-        <div class="col col-cat"><span class="category-badge" title="${catClean}">${catShort}</span></div>
-        <div class="col col-vote">
-            <button class="zap-btn sm" data-tip="ZAP is coming soon." data-tool-id="${tool.name.toLowerCase().replace(/\s+/g, '-')}">
-                <div class="zap-ring"></div>
-                <div class="sparks">
-                    <div class="spark spark-1"></div>
-                    <div class="spark spark-2"></div>
-                    <div class="spark spark-3"></div>
-                    <div class="spark spark-4"></div>
-                    <div class="spark spark-5"></div>
-                </div>
-                <svg class="zap-icon" viewBox="0 0 24 24" fill="none">
-                    <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
-                </svg>
-                <span class="zap-count">0</span>
-            </button>
+        <div class="w-full flex justify-between items-start md:contents mb-1 md:mb-0">
+            <div class="w-auto md:w-[280px] md:pr-6 shrink-0 text-[20px] md:text-[18px] font-medium flex items-center gap-3 md:order-1">
+                <span class="hidden md:inline-block font-mono text-[#737373] text-[16px] opacity-0 -translate-x-2.5 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-white">&rarr;</span>
+                ${tool.name}
+            </div>
+            <div class="shrink-0 md:w-[84px] md:pr-6 flex justify-end lg:justify-start md:order-5">
+                <button class="zap-btn sm" data-tip="ZAP is coming soon." data-tool-id="${tool.name.toLowerCase().replace(/\s+/g, '-')}">
+                    <div class="zap-ring"></div>
+                    <div class="sparks">
+                        <div class="spark spark-1"></div>
+                        <div class="spark spark-2"></div>
+                        <div class="spark spark-3"></div>
+                        <div class="spark spark-4"></div>
+                        <div class="spark spark-5"></div>
+                    </div>
+                    <svg class="zap-icon" viewBox="0 0 24 24" fill="none">
+                        <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
+                    </svg>
+                    <span class="zap-count">0</span>
+                </button>
+            </div>
+        </div>
+        <div class="w-full md:w-[200px] md:pr-6 shrink-0 font-mono text-[14px] text-[#a3a3a3] uppercase tracking-wide mb-2 md:mb-0 md:order-2">${tool.company}</div>
+        <div class="w-full md:w-auto md:pr-6 grow text-[16px] text-[#a3a3a3] leading-relaxed transition-colors group-hover:text-[#e0e0e0] mb-3 md:mb-0 md:order-3">${tool.notes}</div>
+        <div class="w-full md:hidden lg:block lg:w-[220px] md:px-6 shrink-0 text-left lg:text-center mt-1 md:mt-0 md:order-4">
+            <span class="inline-block px-3 py-1 border border-[#222] rounded-full bg-white/5 font-mono text-[13px] tracking-wide" title="${catClean}">${catShort}</span>
         </div>`;
     
     return row;

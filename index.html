@@ -1,73 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ai.dosa.dev | Awesome AI Tools</title>
-<meta name="description" content="A curated directory of artificial intelligence-powered coding tools, autonomous agents, and frameworks. Hosted by dosa.dev.">
-<meta name="keywords" content="AI tools, AI coding, AI IDE, autonomous agents, prompt engineering, curated list, dosa.dev">
-<meta property="og:title" content="ai.dosa.dev | Awesome AI Tools">
-<meta property="og:description" content="A curated directory of artificial intelligence-powered coding tools, autonomous agents, and frameworks.">
-<meta property="og:url" content="https://ai.dosa.dev">
-<meta property="og:type" content="website">
-<meta property="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./styles.css">
-<script src="./js/app.js" type="module" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ai.dosa.dev | Awesome AI Tools</title>
+    <meta name="description" content="A curated directory of artificial intelligence-powered coding tools, autonomous agents, and frameworks. Hosted by dosa.dev.">
+    <meta name="keywords" content="AI tools, AI coding, AI IDE, autonomous agents, prompt engineering, curated list, dosa.dev">
+    <meta property="og:title" content="ai.dosa.dev | Awesome AI Tools">
+    <meta property="og:description" content="A curated directory of artificial intelligence-powered coding tools, autonomous agents, and frameworks.">
+    <meta property="og:url" content="https://ai.dosa.dev">
+    <meta property="og:type" content="website">
+    <meta property="twitter:card" content="summary_large_image">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./css/output.css">
+    <script src="./js/app.js" type="module" defer></script>
 </head>
-<body>
-<div class="sidebar">
-<a href="/" class="logo" style="text-decoration: none;">
-<svg class="logo-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-<rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><line x1="10" y1="6.5" x2="14" y2="6.5"></line><line x1="17.5" y1="10" x2="17.5" y2="14"></line>
-</svg>
-<div class="logo-text"><h1>ai.dosa.dev</h1><div class="version">v26.1</div></div>
-</a>
-<div class="site-desc">
-A curated list of artificial intelligence-powered coding instruments, frameworks, and agents.
-<div class="stat-badge"><span class="stat-count">93+</span> tools across 12 categories</div>
-<div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
-<a href="https://github.com/QAInsights/awesome-ai-tools/issues/new?template=submit-tool.yml" target="_blank" rel="noopener noreferrer" class="cta-btn" style="width: 100%;">Submit a Tool</a>
-<a href="https://buymeacoffee.com/qainsights" target="_blank" rel="noopener noreferrer" class="cta-btn secondary" style="width: 100%;">Support the Project</a>
-</div>
-</div>
-<div class="search-container">
-<svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-<circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-</svg>
-<input type="text" id="searchInput" placeholder="Search the index..." autocomplete="off">
-<button class="search-clear" id="searchClear" title="Clear search" aria-label="Clear search">&#x2715;</button>
-</div>
-<div class="result-count" id="resultCount"></div>
-<nav class="filters" id="categoryFilters">
-<div class="nav-title">Categories</div>
-<button class="filter-btn active" data-category="all">All Tools</button>
-</nav>
-<div class="featured-block">
-<div class="featured-label">Sponsored</div>
-<div class="featured-content">
-Promote your AI tool directly to developers. <br>
-<a href="https://book.qainsights.com" target="_blank" rel="noopener noreferrer" class="gradient-link">Book this space &rarr;</a>
-</div>
-</div>
-<footer class="sidebar-footer">
-<div class="footer-links">
-<a href="https://github.com/QAInsights/awesome-ai-tools" target="_blank" rel="noopener noreferrer">GitHub</a>
-<a href="https://dosa.dev" target="_blank" rel="noopener noreferrer">dosa.dev</a>
-<a href="https://qainsights.com" target="_blank" rel="noopener noreferrer">qainsights.com</a>
-<a href="https://jmeter.ai" target="_blank" rel="noopener noreferrer">jmeter.ai</a>
-</div>
-<div class="footer-copy" style="margin-bottom: 8px;">&copy;  dosa.dev</div>
-<div style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">Disclaimer: Please check the vendor websites for accuracy.</div>
-</footer>
-</div>
-<main class="content">
-<div class="table-header">
-<div class="col col-name">Name</div><div class="col col-company">Company</div><div class="col col-desc">Description</div><div class="col col-cat">Category</div><div class="col col-vote">Vote</div>
-</div>
-<div class="registry" id="toolGrid"></div>
-</main>
+<body class="bg-black text-white font-sans flex flex-col md:flex-row h-auto min-h-screen md:h-screen overflow-y-auto md:overflow-hidden antialiased leading-relaxed">
+    
+    <div class="contents md:flex md:flex-col w-full md:w-[320px] bg-[#0a0a0a] md:border-r border-[#222] shrink-0 z-10 transition-colors">
+        
+        <!-- Logo -->
+        <a href="/" class="group order-1 md:order-none py-4 px-6 md:px-6 flex items-center gap-4 border-b border-[#222] shrink-0 no-underline transition-all">
+            <svg class="text-white shrink-0 w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><line x1="10" y1="6.5" x2="14" y2="6.5"></line><line x1="17.5" y1="10" x2="17.5" y2="14"></line>
+            </svg>
+            <div class="flex flex-col gap-0.5">
+                <h1 class="text-[20px] font-semibold tracking-wide text-white m-0 leading-none group-hover:gradient-link transition-all duration-300">ai.dosa.dev</h1>
+                <div class="font-mono text-sm text-[#737373]">v26.1</div>
+            </div>
+        </a>
+
+        <!-- Description -->
+        <div class="order-2 md:order-none py-4 px-6 md:py-5 md:px-6 text-[17px] text-[#a3a3a3] leading-relaxed border-b border-[#222] shrink-0">
+            A curated list of artificial intelligence-powered coding instruments, frameworks, and agents.
+            <div class="stat-badge inline-flex items-center gap-1.5 mt-3.5 py-1.5 px-2.5 border border-[#222] rounded-md bg-white/5 font-mono text-sm text-[#a3a3a3] tracking-wide">
+                <span class="stat-count font-bold text-[15px]">93+</span> tools across 12 categories
+            </div>
+            <div class="flex flex-col gap-2.5 mt-5">
+                <a href="https://github.com/QAInsights/awesome-ai-tools/issues/new?template=submit-tool.yml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center py-2 px-4 bg-white text-black text-base font-semibold rounded-md transition-all duration-200 hover:bg-white hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(255,255,255,0.1)] w-full">Submit a Tool</a>
+                <a href="https://buymeacoffee.com/qainsights" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center py-2 px-4 bg-white/5 text-white font-medium border border-[#222] rounded-md transition-all duration-200 hover:bg-white/10 w-full hover:-translate-y-px">Support the Project</a>
+            </div>
+        </div>
+
+        <!-- Search -->
+        <div class="order-3 md:order-none sticky md:relative top-0 p-4 px-6 md:p-5 border-b border-[#222] bg-black bg-opacity-95 md:bg-opacity-100 z-50 shrink-0">
+            <svg class="absolute left-9 md:left-8 top-1/2 -translate-y-1/2 text-[#a3a3a3] w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="searchInput" placeholder="Search the index..." autocomplete="off" class="w-full bg-black border border-[#222] rounded-md py-3 pl-[40px] pr-[36px] text-white font-sans text-[17px] transition-colors duration-200 outline-none focus:border-[#a3a3a3] placeholder-[#737373]">
+            <button class="search-clear absolute right-8 md:right-7 top-1/2 -translate-y-1/2 bg-transparent border-none text-[#737373] text-sm cursor-pointer p-1 leading-none hidden hover:text-white transition-colors" id="searchClear" title="Clear search" aria-label="Clear search">&#x2715;</button>
+        </div>
+
+        <div class="result-count order-3 md:order-none px-5 pt-1.5 pb-2.5 font-mono text-[11px] text-[#737373] tracking-wide min-h-[24px] shrink-0" id="resultCount"></div>
+
+        <!-- Filters -->
+        <nav class="filters order-4 md:order-none flex md:flex-col flex-row flex-nowrap overflow-x-auto md:overflow-y-auto px-6 py-4 md:p-4 md:px-4 md:py-6 gap-2 md:gap-1 border-b-2 md:border-b-0 border-[#222] shrink-0 md:shrink md:grow md:min-h-0" id="categoryFilters" style="scrollbar-width: none; -webkit-overflow-scrolling: touch;">
+            <div class="nav-title hidden md:block font-mono text-[14px] uppercase text-[#737373] mb-4 pl-2 tracking-widest">Categories</div>
+            <button class="filter-btn active" data-category="all">All Tools</button>
+        </nav>
+
+        <!-- Featured -->
+        <div class="featured-block order-6 md:order-none mx-6 my-4 mb-6 md:mx-4 md:mb-4 p-4 md:px-5 md:py-4 border border-dashed border-[#222] rounded-md bg-white/[0.01] shrink-0">
+            <div class="featured-label font-mono text-[13px] uppercase text-[#737373] mb-2 tracking-wide">Featured</div>
+            <div class="featured-content text-[15px] text-[#a3a3a3] leading-relaxed">
+                Promote your AI tool directly to developers. <br>
+                <a href="https://book.qainsights.com" target="_blank" rel="noopener noreferrer" class="gradient-link inline-block mt-2 font-mono hover:underline">Book this space &rarr;</a>
+            </div>
+        </div>
+
+        <!-- Sidebar Footer -->
+        <footer class="sidebar-footer order-7 md:order-none px-6 py-5 md:px-6 md:py-5 border-t border-[#222] shrink-0 mt-0 md:mt-auto">
+            <div class="footer-links flex flex-wrap gap-x-4 gap-y-2 mb-3">
+                <a href="https://github.com/QAInsights/awesome-ai-tools" target="_blank" rel="noopener noreferrer" class="text-[15px] text-[#a3a3a3] hover:text-white transition-colors">GitHub</a>
+                <a href="https://dosa.dev" target="_blank" rel="noopener noreferrer" class="text-[15px] text-[#a3a3a3] hover:text-white transition-colors">dosa.dev</a>
+                <a href="https://qainsights.com" target="_blank" rel="noopener noreferrer" class="text-[15px] text-[#a3a3a3] hover:text-white transition-colors">qainsights.com</a>
+                <a href="https://jmeter.ai" target="_blank" rel="noopener noreferrer" class="text-[15px] text-[#a3a3a3] hover:text-white transition-colors">jmeter.ai</a>
+            </div>
+            <div class="footer-copy font-mono text-[14px] text-[#737373] mb-2">&copy; dosa.dev</div>
+            <div class="text-[11px] text-[#737373] leading-relaxed">Disclaimer: Please check the vendor websites for accuracy.</div>
+        </footer>
+    </div>
+
+    <main class="content order-5 md:order-none grow flex flex-col overflow-visible md:overflow-hidden bg-transparent md:bg-black h-auto shrink-0 md:shrink">
+        <div class="table-header hidden md:flex items-center px-8 py-5 border-b border-[#222] font-mono text-[14px] text-[#a3a3a3] uppercase tracking-widest bg-black z-10 shrink-0">
+            <div class="col w-[280px] pr-6 shrink-0 text-sm">Name</div>
+            <div class="col w-[200px] pr-6 shrink-0 text-sm">Company</div>
+            <div class="col grow pr-6 text-sm">Description</div>
+            <div class="col w-[220px] px-6 shrink-0 text-sm text-center">Category</div>
+            <div class="col w-[84px] pr-6 shrink-0 text-sm text-left">Vote</div>
+        </div>
+        <div class="registry px-6 pb-4 md:px-8 md:pb-8 grow overflow-visible md:overflow-y-auto h-auto shrink-0 md:shrink" id="toolGrid"></div>
+    </main>
+
 </body>
 </html>
