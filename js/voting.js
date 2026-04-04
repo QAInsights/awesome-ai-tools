@@ -11,11 +11,13 @@ export function initVoting() {
     document.addEventListener('click', (e) => {
         const btn = e.target.closest('.zap-btn');
         if (!btn) return;
-        
+
         e.preventDefault();
         e.stopPropagation();
-        
+
         const toolId = btn.dataset.toolId;
+        const toolName = btn.dataset.toolName;
+        console.log(toolId, toolName);
         if (btn.classList.contains('zapped')) return;
 
         if (!zapCounts[toolId]) {

@@ -29,13 +29,13 @@ export function initRenderer(gridElement) {
 export function filterTools(tools, category, searchVal) {
     const safeLower = (val) => (val || '').toLowerCase();
     const searchLower = safeLower(searchVal);
-    
-    return tools.filter(tool => 
+
+    return tools.filter(tool =>
         (category === 'all' || tool.category === category) &&
-        (safeLower(tool.name).includes(searchLower) || 
-         safeLower(tool.company).includes(searchLower) || 
-         safeLower(tool.notes).includes(searchLower) || 
-         safeLower(tool.category).includes(searchLower))
+        (safeLower(tool.name).includes(searchLower) ||
+            safeLower(tool.company).includes(searchLower) ||
+            safeLower(tool.notes).includes(searchLower) ||
+            safeLower(tool.category).includes(searchLower))
     );
 }
 
@@ -68,19 +68,19 @@ function loadBatch() {
         if (btn && onClearCallback) btn.addEventListener('click', onClearCallback);
         return;
     }
-    
+
     const fragment = document.createDocumentFragment();
     const endIndex = Math.min(loadedCount + BATCH_SIZE, filteredTools.length);
-    
+
     for (let i = loadedCount; i < endIndex; i++) {
         const tool = filteredTools[i];
         const row = createToolRow(tool, i);
         fragment.appendChild(row);
     }
-    
+
     grid.appendChild(fragment);
     loadedCount = endIndex;
-    
+
     updateSentinel();
 }
 
@@ -97,10 +97,10 @@ function createToolRow(tool, index) {
     row.rel = 'noopener noreferrer';
     row.className = 'flex flex-col md:flex-row gap-2 md:gap-0 py-6 border-b border-[#222] text-white no-underline transition-colors hover:border-[#a3a3a3] hover:bg-white/[0.01] items-start group row-anim';
     row.style.animationDelay = `${(index % 15) * 0.02}s`;
-    
+
     const catShort = getShortCategory(tool.category);
     const catClean = tool.category.replace(/^[\u2700-\u27BF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u26FF]/g, '').trim();
-    
+
     row.innerHTML = `
         <div class="w-full flex justify-between items-start md:contents mb-1 md:mb-0">
             <div class="w-auto md:w-[280px] md:pr-6 shrink-0 text-[20px] md:text-[18px] font-medium flex items-center gap-3 md:order-1">
@@ -108,11 +108,13 @@ function createToolRow(tool, index) {
                 ${tool.name}
             </div>
             <div class="shrink-0 md:w-[84px] md:pr-6 flex justify-end lg:justify-start md:order-5">
-                <button class="zap-btn sm" data-tip="ZAP is coming soon." data-tool-id="${tool.name.toLowerCase().replace(/\s+/g, '-')}">
+                <button class="zap-btn sm" data-tip="ZAP is coming soon." 
+                    data-tool-id="${tool.company.toLowerCase().replace(/[^a-z0-9]/g, '')}-${tool.name.toLowerCase().replace(/[^a-z0-9]/g, '')}"
+                    data-tool-name="${tool.name}">
                     <div class="zap-ring"></div>
                     <div class="sparks">
                         <div class="spark spark-1"></div>
-                        <div class="spark spark-2"></div>
+                        <div class="spark spark-2"></div>   
                         <div class="spark spark-3"></div>
                         <div class="spark spark-4"></div>
                         <div class="spark spark-5"></div>
@@ -129,7 +131,7 @@ function createToolRow(tool, index) {
         <div class="w-full md:hidden lg:block lg:w-[220px] md:px-6 shrink-0 text-left lg:text-center mt-1 md:mt-0 md:order-4">
             <span class="inline-block px-3 py-1 border border-[#222] rounded-full bg-white/5 font-mono text-[13px] tracking-wide" title="${catClean}">${catShort}</span>
         </div>`;
-    
+
     return row;
 }
 
@@ -140,12 +142,12 @@ function updateSentinel() {
     if (loadedCount < filteredTools.length) {
         let sentinel = document.getElementById('load-sentinel');
         if (sentinel) sentinel.remove();
-        
+
         sentinel = document.createElement('div');
         sentinel.id = 'load-sentinel';
         sentinel.style.height = '1px';
         grid.appendChild(sentinel);
-        
+
         setupObserver(sentinel);
     } else {
         const sentinel = document.getElementById('load-sentinel');
@@ -159,12 +161,12 @@ function updateSentinel() {
  */
 function setupObserver(sentinel) {
     if (observer) observer.disconnect();
-    
+
     // On mobile, registry has overflow:visible, so use viewport as root
     const registry = document.querySelector('.registry');
     const isMobile = window.innerWidth <= 768;
     const root = isMobile ? null : registry;
-    
+
     observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting && loadedCount < filteredTools.length) {
@@ -176,6 +178,6 @@ function setupObserver(sentinel) {
         rootMargin: '100px',
         threshold: 0
     });
-    
+
     observer.observe(sentinel);
 }
