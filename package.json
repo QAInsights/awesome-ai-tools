@@ -4,9 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "tailwindcss -i ./src/input.css -o ./css/output.css --minify && bun build ./js/app.js --outdir ./dist --define process.env.ENABLE_VOTING=\"'true'\" --define process.env.CF_SITEKEY=\"'1x00000000000000000000AA'\" --define process.env.API_BASE_URL=\"'http://localhost:8080'\"",
+    "build": "tailwindcss -i ./src/input.css -o ./css/output.css --minify && bun run build.js",
     "dev": "tailwindcss -i ./src/input.css -o ./css/output.css --watch",
-    "dev:js": "bun build ./js/app.js --outdir ./dist --watch --define process.env.ENABLE_VOTING=\"'true'\" --define process.env.CF_SITEKEY=\"'1x00000000000000000000AA'\" --define process.env.API_BASE_URL=\"'http://localhost:8080'\""
+    "dev:js": "bun run build.js"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.2.2",
