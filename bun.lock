@@ -4,6 +4,9 @@
   "workspaces": {
     "": {
       "name": "awesome-ai-tools",
+      "dependencies": {
+        "@fingerprintjs/fingerprintjs": "^5.1.0",
+      },
       "devDependencies": {
         "@tailwindcss/cli": "^4.2.2",
         "@types/bun": "latest",
@@ -15,6 +18,8 @@
     },
   },
   "packages": {
+    "@fingerprintjs/fingerprintjs": ["@fingerprintjs/fingerprintjs@5.1.0", "", {}, "sha512-8h/CscV3xQ4KSLyXbSK8YFpZ5AaezzHfkl82mn8NJIEWNi1zLfbZSIu7MGGtx4pqa10oejhEk4u0MNutuE63Fw=="],
+
     "@jridgewell/gen-mapping": ["@jridgewell/gen-mapping@0.3.13", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.5.0", "@jridgewell/trace-mapping": "^0.3.24" } }, "sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA=="],
 
     "@jridgewell/remapping": ["@jridgewell/remapping@2.3.5", "", { "dependencies": { "@jridgewell/gen-mapping": "^0.3.5", "@jridgewell/trace-mapping": "^0.3.24" } }, "sha512-LI9u/+laYG4Ds1TDKSJW2YPrIlcVYOwi2fUC6xB43lueCjgxV4lffOCZCtYFiH6TNOX+tQKXx97T4IKHbhyHEQ=="],

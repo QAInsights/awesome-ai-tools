@@ -3,6 +3,9 @@
  */
 
 import { getShortCategory } from './parser.js';
+import { getVoteCount } from './voting.js';
+
+const ENABLE_VOTING = process.env.ENABLE_VOTING === 'true';
 
 const BATCH_SIZE = 20;
 let filteredTools = [];
@@ -101,6 +104,9 @@ function createToolRow(tool, index) {
     const catShort = getShortCategory(tool.category);
     const catClean = tool.category.replace(/^[\u2700-\u27BF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u26FF]/g, '').trim();
 
+    const toolId = `${tool.company.toLowerCase().replace(/[^a-z0-9]/g, '')}-${tool.name.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
+    const initialVoteCount = getVoteCount(toolId);
+
     row.innerHTML = `
         <div class="w-full flex justify-between items-start md:contents mb-1 md:mb-0">
             <div class="w-auto md:w-[280px] md:pr-6 shrink-0 text-[20px] md:text-[18px] font-medium flex items-center gap-3 md:order-1">
@@ -108,8 +114,9 @@ function createToolRow(tool, index) {
                 ${tool.name}
             </div>
             <div class="shrink-0 md:w-[84px] md:pr-6 flex justify-end lg:justify-start md:order-5">
+${ENABLE_VOTING ? `
                 <button class="zap-btn sm" data-tip="ZAP is coming soon." 
-                    data-tool-id="${tool.company.toLowerCase().replace(/[^a-z0-9]/g, '')}-${tool.name.toLowerCase().replace(/[^a-z0-9]/g, '')}"
+                    data-tool-id="${toolId}"
                     data-tool-name="${tool.name}">
                     <div class="zap-ring"></div>
                     <div class="sparks">
@@ -122,8 +129,16 @@ function createToolRow(tool, index) {
                     <svg class="zap-icon" viewBox="0 0 24 24" fill="none">
                         <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
                     </svg>
+                    <span class="zap-count">${initialVoteCount.toLocaleString()}</span>
+                </button>
+` : `
+                <button class="zap-btn sm opacity-50 cursor-not-allowed" disabled data-tip="Voting is currently disabled.">
+                    <svg class="zap-icon" viewBox="0 0 24 24" fill="none">
+                        <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
+                    </svg>
                     <span class="zap-count">0</span>
                 </button>
+`}
             </div>
         </div>
         <div class="w-full md:w-[200px] md:pr-6 shrink-0 font-mono text-[14px] text-[#a3a3a3] uppercase tracking-wide mb-2 md:mb-0 md:order-2">${tool.company}</div>

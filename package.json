@@ -4,8 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "tailwindcss -i ./src/input.css -o ./css/output.css --minify",
-    "dev": "tailwindcss -i ./src/input.css -o ./css/output.css --watch"
+    "build": "tailwindcss -i ./src/input.css -o ./css/output.css --minify && bun build ./js/app.js --outdir ./dist",
+    "dev": "tailwindcss -i ./src/input.css -o ./css/output.css --watch",
+    "dev:js": "bun build ./js/app.js --outdir ./dist --watch"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.2.2",
@@ -14,5 +15,8 @@
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "@fingerprintjs/fingerprintjs": "^5.1.0"
   }
 }

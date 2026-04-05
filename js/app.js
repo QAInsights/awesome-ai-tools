@@ -17,10 +17,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     let toolsData = [];
     let categories = new Set();
     let currentCategory = 'all';
+
+    const ENABLE_VOTING = process.env.ENABLE_VOTING === 'true';
+    const CF_SITEKEY = process.env.CF_SITEKEY || "1x00000000000000000000AA";
+
+    if (ENABLE_VOTING) {
+        // Render the Turnstile widget
+        if (typeof turnstile !== 'undefined') {
+            turnstile.render("#turnstile-container", {
+                sitekey: CF_SITEKEY,
+                callback: function (token) {
+                    console.log("Turnstile ready");
+                },
+            });
+        }
+        initVoting();
+    }
     
-    // Initialize renderer and voting
+    // Initialize renderer
     initRenderer(grid);
-    initVoting();
     
     // Load data
     try {
