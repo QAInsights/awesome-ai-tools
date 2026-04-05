@@ -52,7 +52,7 @@ export function initVoting() {
         if (btn.classList.contains('zapped')) return;
 
         // Once confirmed not clicked, cast the vote securely
-        castVote(toolId, toolName, localVisitorId);
+        castVote(toolId, toolName, localVisitorId, btn);
 
         if (!zapCounts[toolId]) {
             zapCounts[toolId] = parseInt(btn.querySelector('.zap-count').textContent.replace(/,/g, '')) || 0;
@@ -69,7 +69,7 @@ export function initVoting() {
     });
 }
 
-async function castVote(toolId, toolName, visitorId) {
+async function castVote(toolId, toolName, visitorId, btn) {
     const turnstileInput = document.querySelector('[name="cf-turnstile-response"]');
 
     const payload = {
@@ -92,9 +92,29 @@ async function castVote(toolId, toolName, visitorId) {
         window.turnstile.reset();
     }
 
-    console.log(response);
-
     if (!response.ok) {
-        console.error('Failed to cast vote');
+        if (response.status === 429) {
+            // Rollback optimistic UI changes smoothly
+            if (btn) {
+                btn.classList.remove('zapped');
+                zapCounts[toolId]--;
+                
+                const countEl = btn.querySelector('.zap-count');
+                const originalTip = btn.dataset.tip;
+                
+                // Show user-friendly error directly on the button
+                btn.dataset.tip = "You are voting too fast! Please slow down.";
+                countEl.textContent = "Wait";
+                countEl.style.color = "#ef4444"; // Tailwind's red-500
+                
+                // Revert to normal state after 3 seconds
+                setTimeout(() => {
+                    countEl.textContent = zapCounts[toolId].toLocaleString();
+                    countEl.style.color = "";
+                    btn.dataset.tip = originalTip;
+                }, 3000);
+            }
+        }
+        console.error('Failed to cast vote', response.status);
     }
 }

@@ -115,7 +115,7 @@ function createToolRow(tool, index) {
             </div>
             <div class="shrink-0 md:w-[84px] md:pr-6 flex justify-end lg:justify-start md:order-5">
 ${ENABLE_VOTING ? `
-                <button class="zap-btn sm" data-tip="ZAP is coming soon." 
+                <button class="zap-btn sm" data-tip="Zap this tool!" 
                     data-tool-id="${toolId}"
                     data-tool-name="${tool.name}">
                     <div class="zap-ring"></div>
