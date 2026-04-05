@@ -1,5 +1,7 @@
 import fpPromise from '@fingerprintjs/fingerprintjs';
 
+const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:8080';
+
 const zapCounts = {};
 let localVisitorId = "loading...";
 
@@ -18,7 +20,7 @@ export function getVoteCount(toolId) {
  */
 export function initVoting() {
     // Fetch server counts dynamically
-    fetch('http://localhost:8080/api/v1/count')
+    fetch(`${API_BASE_URL}/api/v1/count`)
         .then(res => res.json())
         .then(data => {
             for (const [key, val] of Object.entries(data)) {
@@ -77,7 +79,7 @@ async function castVote(toolId, toolName, visitorId) {
         cf_token: turnstileInput ? turnstileInput.value : ""
     };
 
-    const response = await fetch('http://localhost:8080/api/v1/vote', {
+    const response = await fetch(`${API_BASE_URL}/api/v1/vote`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
