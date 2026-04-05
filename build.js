@@ -5,11 +5,6 @@ const enableVoting = process.env.ENABLE_VOTING || 'true';
 const cfSiteKey = process.env.CF_SITEKEY || '1x00000000000000000000AA';
 const apiBaseUrl = process.env.API_BASE_URL || 'http://localhost:8080';
 
-console.log("--- BUNDLING FRONTEND WITH ---");
-console.log("API_BASE_URL:", apiBaseUrl);
-console.log("CF_SITEKEY:", cfSiteKey);
-console.log("ENABLE_VOTING:", enableVoting);
-
 const result = await build({
     entrypoints: ['./js/app.js'],
     outdir: './dist',
