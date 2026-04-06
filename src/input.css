@@ -184,3 +184,30 @@
         animation: slideIn 0.3s cubic-bezier(0.16,1,0.3,1) backwards;
     }
 }
+
+@layer base {
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #222;
+        border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #444;
+    }
+    
+    /* Firefox */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: #222 transparent;
+    }
+    
+    html, body, .overflow-y-auto {
+        scrollbar-gutter: stable;
+    }
+}
