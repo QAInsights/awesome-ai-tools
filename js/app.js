@@ -175,6 +175,59 @@ document.addEventListener('DOMContentLoaded', async () => {
     function updateYear() {
         const year = new Date().getFullYear();
         const yearElement = document.querySelector('.footer-copy');
-        yearElement.textContent = `© ${year} NaveenKumar Namachivayam`;
+        yearElement.textContent = `© ${year} dosa.dev`;
     }
+
+    // Sidebar Toggle Logic
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const collapseDesktop = document.getElementById('collapseSidebarDesktop');
+    const openDesktop = document.getElementById('openSidebarDesktop');
+    const desktopToggleContainer = document.getElementById('desktopToggleContainer');
+    const openMobile = document.getElementById('openSidebarMobile');
+    const closeMobile = document.getElementById('closeSidebarMobile');
+    const thName = document.getElementById('thName');
+
+    const toggleDesktopSidebar = (collapse) => {
+        if (collapse) {
+            sidebar.classList.add('desktop-collapsed');
+            desktopToggleContainer.classList.remove('hidden');
+            thName.classList.add('desktop-collapsed-padding');
+        } else {
+            sidebar.classList.remove('desktop-collapsed');
+            desktopToggleContainer.classList.add('hidden');
+            thName.classList.remove('desktop-collapsed-padding');
+        }
+    };
+
+    const toggleMobileSidebar = (open) => {
+        if (open) {
+            sidebar.classList.remove('-translate-x-full');
+            sidebarOverlay.classList.remove('hidden');
+            requestAnimationFrame(() => sidebarOverlay.classList.add('opacity-100'));
+            document.body.style.overflow = 'hidden';
+        } else {
+            sidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.remove('opacity-100');
+            setTimeout(() => sidebarOverlay.classList.add('hidden'), 300);
+            document.body.style.overflow = '';
+        }
+    };
+
+    if (collapseDesktop && openDesktop) {
+        collapseDesktop.addEventListener('click', () => toggleDesktopSidebar(true));
+        openDesktop.addEventListener('click', () => toggleDesktopSidebar(false));
+    }
+    if (openMobile && closeMobile && sidebarOverlay) {
+        openMobile.addEventListener('click', () => toggleMobileSidebar(true));
+        closeMobile.addEventListener('click', () => toggleMobileSidebar(false));
+        sidebarOverlay.addEventListener('click', () => toggleMobileSidebar(false));
+    }
+
+    // On mobile, close sidebar automatically when clicking a filter to give more focus
+    categoryFilters.addEventListener('click', (e) => {
+        if (window.innerWidth < 768 && e.target.classList.contains('filter-btn')) {
+            toggleMobileSidebar(false);
+        }
+    });
 });
