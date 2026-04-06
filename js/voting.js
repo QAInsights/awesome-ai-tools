@@ -71,12 +71,13 @@ export function initVoting() {
 
 async function castVote(toolId, toolName, visitorId, btn) {
     const turnstileInput = document.querySelector('[name="cf-turnstile-response"]');
+    const tokenVal = window.cfTokenValue || (turnstileInput ? turnstileInput.value : "");
 
     const payload = {
         tool_id: toolId,
         tool_name: toolName,
         visitor_id: visitorId,
-        cf_token: turnstileInput ? turnstileInput.value : ""
+        cf_token: tokenVal
     };
 
     const response = await fetch(`${API_BASE_URL}/api/v1/vote`, {
@@ -88,8 +89,12 @@ async function castVote(toolId, toolName, visitorId, btn) {
     });
 
     // new token for the next vote
-    if (window.turnstile) {
+    if (window.turnstile && window.turnstileWidgetId !== undefined) {
+        window.turnstile.reset(window.turnstileWidgetId);
+        window.cfTokenValue = "";
+    } else if (window.turnstile) {
         window.turnstile.reset();
+        window.cfTokenValue = "";
     }
 
     if (!response.ok) {
@@ -108,6 +113,44 @@ async function castVote(toolId, toolName, visitorId, btn) {
                 countEl.style.color = "#ef4444"; // Tailwind's red-500
                 
                 // Revert to normal state after 3 seconds
+                setTimeout(() => {
+                    countEl.textContent = zapCounts[toolId].toLocaleString();
+                    countEl.style.color = "";
+                    btn.dataset.tip = originalTip;
+                }, 3000);
+            }
+        } else if (response.status === 400) {
+            // Rollback for duplicate votes
+            if (btn) {
+                btn.classList.remove('zapped');
+                zapCounts[toolId]--;
+                
+                const countEl = btn.querySelector('.zap-count');
+                const originalTip = btn.dataset.tip;
+                
+                btn.dataset.tip = "You have already zapped this tool!";
+                countEl.textContent = "Zap'd";
+                countEl.style.color = "#a3a3a3"; // A softer grey for already clicked
+                
+                setTimeout(() => {
+                    countEl.textContent = zapCounts[toolId].toLocaleString();
+                    countEl.style.color = "";
+                    btn.dataset.tip = originalTip;
+                }, 3000);
+            }
+        } else {
+            // Rollback for Turnstile validation failures or general server errors
+            if (btn) {
+                btn.classList.remove('zapped');
+                zapCounts[toolId]--;
+                
+                const countEl = btn.querySelector('.zap-count');
+                const originalTip = btn.dataset.tip;
+                
+                btn.dataset.tip = "Security check failed. Please refresh and try again.";
+                countEl.textContent = "Failed";
+                countEl.style.color = "#ef4444";
+                
                 setTimeout(() => {
                     countEl.textContent = zapCounts[toolId].toLocaleString();
                     countEl.style.color = "";

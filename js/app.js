@@ -22,15 +22,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     const CF_SITEKEY = process.env.CF_SITEKEY || "1x00000000000000000000AA";
 
     if (ENABLE_VOTING) {
-        // Render the Turnstile widget
-        if (typeof turnstile !== 'undefined') {
-            turnstile.render("#turnstile-container", {
-                sitekey: CF_SITEKEY,
-                callback: function (token) {
-                    console.log("Turnstile ready");
-                },
-            });
+        function renderTurnstile() {
+            if (typeof turnstile !== 'undefined') {
+                window.turnstileWidgetId = turnstile.render("#turnstile-container", {
+                    sitekey: CF_SITEKEY,
+                    size: 'invisible',
+                    callback: function (token) {
+                        console.log("Turnstile generated token successfully!");
+                        window.cfTokenValue = token;
+                    },
+                    "error-callback": function (error) {
+                        console.error("Turnstile error:", error);
+                    }
+                });
+            } else {
+                setTimeout(renderTurnstile, 100);
+            }
         }
+        renderTurnstile();
         initVoting();
     }
     
