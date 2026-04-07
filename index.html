@@ -140,11 +140,11 @@
 
         <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-0">
             <div class="table-header hidden md:flex items-center px-8 py-5 border-b border-[#222] font-mono text-[14px] text-[#a3a3a3] uppercase tracking-widest bg-black shrink-0 transition-all duration-300" id="tableHeader">
-                <div class="col w-[280px] pl-[0] pr-6 shrink-0 text-sm transition-all duration-300 cursor-pointer hover:text-white select-none flex items-center gap-2" id="thName" data-sort="name">Name <span class="sort-icon opacity-50">↕</span></div>
-                <div class="col w-[200px] pr-6 shrink-0 text-sm cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="company">Company <span class="sort-icon opacity-50">↕</span></div>
-                <div class="col grow pr-6 text-sm">Description</div>
-                <div class="col w-[220px] px-6 shrink-0 text-sm text-center cursor-pointer hover:text-white select-none flex items-center justify-center gap-2" data-sort="category">Category <span class="sort-icon opacity-50">↕</span></div>
-                <div class="col w-[84px] pr-6 shrink-0 text-sm text-left cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="votes">Zap <span class="sort-icon opacity-50">↕</span></div>
+                <div class="w-[280px] pr-6 shrink-0 text-sm transition-all duration-300 cursor-pointer hover:text-white select-none flex items-center gap-2" id="thName" data-sort="name">Name <span class="sort-icon opacity-50">↕</span></div>
+                <div class="w-[200px] pr-6 shrink-0 text-sm cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="company">Company <span class="sort-icon opacity-50">↕</span></div>
+                <div class="grow pr-6 text-sm cursor-pointer hover:text-white select-none" style="pointer-events: none;">Description</div>
+                <div class="hidden lg:flex w-[220px] px-6 shrink-0 text-sm cursor-pointer hover:text-white select-none items-center justify-center gap-2" data-sort="category">Category <span class="sort-icon opacity-50">↕</span></div>
+                <div class="w-[84px] pr-6 shrink-0 text-sm cursor-pointer hover:text-white select-none flex items-center justify-start gap-2" data-sort="votes">Zap <span class="sort-icon opacity-50">↕</span></div>
             </div>
             
             <div class="registry px-4 pb-4 pt-2 md:px-8 md:pb-8 md:pt-4 grow overflow-y-auto" id="toolGrid"></div>

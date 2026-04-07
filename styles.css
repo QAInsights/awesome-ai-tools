@@ -322,16 +322,40 @@ text-transform:uppercase;
 letter-spacing:1px;
 background-color:var(--bg-base);
 z-index:5;
-flex-shrink:0
+flex-shrink:0;
+gap:0
 }
 
 .table-header .col {
- font-size:14px
+ font-size:14px;
+box-sizing:border-box;
+padding-right:24px
+}
+
+.table-header .col-name {
+ width:280px
+}
+
+.table-header .col-company {
+ width:200px
+}
+
+.table-header .col-desc {
+ flex-grow:1
+}
+
+.table-header .col-cat {
+ width:220px;
+text-align:center
+}
+
+.table-header .col-vote {
+ width:84px;
+text-align:left
 }
 
 .registry {
- flex-grow:1;
-overflow-y:auto;
+ overflow-y:auto;
 overflow-x:hidden;
 width:100%;
 min-height:200px

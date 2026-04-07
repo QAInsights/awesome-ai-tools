@@ -1,9 +1,9 @@
 import fpPromise from '@fingerprintjs/fingerprintjs';
 
 const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:8080';
-
-const zapCounts = {};
+let zapCounts = {};
 let localVisitorId = "loading...";
+let isVoting = false;
 
 fpPromise.load()
     .then(fp => fp.get())
@@ -18,25 +18,31 @@ export function getVoteCount(toolId) {
 /**
  * Initialize zap button click handler
  */
-export function initVoting() {
-    // Fetch server counts dynamically
-    fetch(`${API_BASE_URL}/api/v1/count`)
-        .then(res => res.json())
-        .then(data => {
-            for (const [key, val] of Object.entries(data)) {
-                // Remove "votes:" prefix from the Spring Boot Redis key
-                const id = key.replace('votes:', '');
-                zapCounts[id] = val;
-            }
-            // Rapid patch any buttons that were rendered immediately
-            document.querySelectorAll('.zap-btn').forEach(btn => {
-                const id = btn.dataset.toolId;
-                if (zapCounts[id]) {
-                    btn.querySelector('.zap-count').textContent = zapCounts[id].toLocaleString();
-                }
-            });
-        })
-        .catch(err => console.error("Could not fetch votes:", err));
+export async function initVoting() {
+    try {
+        console.log('Initializing voting from:', API_BASE_URL);
+        const response = await fetch(`${API_BASE_URL}/api/v1/count`);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch votes: ${response.status}`);
+        }
+        const data = await response.json();
+        for (const [key, val] of Object.entries(data)) {
+            // Remove "votes:" prefix from the Spring Boot Redis key
+            const id = key.replace('votes:', '');
+            zapCounts[id] = val;
+        }
+        console.log('Votes loaded:', Object.keys(zapCounts).length, 'tools have votes');
+    } catch (error) {
+        console.error('[ERROR] Could not fetch votes:', error);
+    }
+
+    // Rapid patch any buttons that were rendered immediately
+    document.querySelectorAll('.zap-btn').forEach(btn => {
+        const id = btn.dataset.toolId;
+        if (zapCounts[id]) {
+            btn.querySelector('.zap-count').textContent = zapCounts[id].toLocaleString();
+        }
+    });
 
     document.addEventListener('click', (e) => {
         const btn = e.target.closest('.zap-btn');

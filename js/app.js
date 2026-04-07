@@ -171,28 +171,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         filterAndRender();
     });
 
-    // Keyboard shortcut: / focuses search
-    document.addEventListener('keydown', (e) => {
-        const activeEl = document.activeElement;
-        const isEditableElement = activeEl && (
-            activeEl.tagName === 'INPUT' || 
-            activeEl.tagName === 'TEXTAREA' || 
-            activeEl.tagName === 'SELECT' ||
-            activeEl.isContentEditable
-        );
-        
-        if (e.key === '/' && !isEditableElement) {
-            e.preventDefault();
-            searchInput.focus();
-            searchInput.select();
-        }
-        if (e.key === 'Escape' && document.activeElement === searchInput) {
-            searchInput.value = '';
-            searchInput.blur();
-            filterAndRender();
-        }
-    });
-
     // Event listeners
     searchInput.addEventListener('input', filterAndRender);
     
@@ -255,6 +233,37 @@ document.addEventListener('DOMContentLoaded', async () => {
     categoryFilters.addEventListener('click', (e) => {
         if (window.innerWidth < 768 && e.target.classList.contains('filter-btn')) {
             toggleMobileSidebar(false);
+        }
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        const activeEl = document.activeElement;
+        const isEditableElement = activeEl && (
+            activeEl.tagName === 'INPUT' || 
+            activeEl.tagName === 'TEXTAREA' || 
+            activeEl.tagName === 'SELECT' ||
+            activeEl.isContentEditable
+        );
+        
+        // '/' focuses search
+        if (e.key === '/' && !isEditableElement) {
+            e.preventDefault();
+            searchInput.focus();
+            searchInput.select();
+        }
+        
+        if (e.key === 'Escape') {
+            // Close mobile sidebar if open
+            if (sidebar && !sidebar.classList.contains('-translate-x-full') && window.innerWidth < 768) {
+                toggleMobileSidebar(false);
+            }
+            // Clear search if focused
+            else if (document.activeElement === searchInput) {
+                searchInput.value = '';
+                searchInput.blur();
+                filterAndRender();
+            }
         }
     });
 });
