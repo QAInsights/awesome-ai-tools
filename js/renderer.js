@@ -114,9 +114,9 @@ function createToolRow(tool, index) {
         <div class="w-full flex justify-between items-start md:contents mb-1 md:mb-0">
             <div class="w-auto md:w-[280px] md:pr-6 shrink-0 text-[20px] md:text-[18px] font-medium flex items-center gap-3 md:order-1">
                 <span class="hidden md:inline-block font-mono text-[#737373] text-[16px] opacity-0 -translate-x-2.5 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-white">&rarr;</span>
-                <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-white no-underline hover:text-[#22d3ee] transition-colors group/link">
+                <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-white no-underline transition-all duration-200 group/link hover:bg-gradient-to-r hover:from-[#a78bfa] hover:via-[#22d3ee] hover:to-[#a78bfa] hover:bg-[length:200%_auto] hover:bg-clip-text hover:text-transparent hover:animate-[shift_3s_linear_infinite]">
                     ${tool.name}
-                    <svg class="w-3.5 h-3.5 opacity-40 group-hover/link:opacity-100 group-hover/link:-translate-y-[2px] group-hover/link:translate-x-[2px] transition-all duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="w-3.5 h-3.5 opacity-40 group-hover/link:opacity-100 group-hover/link:-translate-y-[2px] group-hover/link:translate-x-[2px] transition-all duration-300 stroke-white" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                         <polyline points="15 3 21 3 21 9"></polyline>
                         <line x1="10" y1="14" x2="21" y2="3"></line>
