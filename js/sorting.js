@@ -5,7 +5,7 @@
 
 import { getVoteCount } from './voting.js';
 
-let currentSort = { column: null, direction: 'asc' };
+let currentSort = { column: 'votes', direction: 'desc' };
 
 /**
  * Get current sort state
@@ -67,8 +67,8 @@ export function sortTools(tools) {
                 valB = (b.category || '').toLowerCase();
                 break;
             case 'votes':
-                valA = parseInt(getVoteCount(`${a.company.toLowerCase().replace(/[^a-z0-9]/g, '')}-${a.name.toLowerCase().replace(/[^a-z0-9]/g, '')}`)) || 0;
-                valB = parseInt(getVoteCount(`${b.company.toLowerCase().replace(/[^a-z0-9]/g, '')}-${b.name.toLowerCase().replace(/[^a-z0-9]/g, '')}`)) || 0;
+                valA = parseInt(getVoteCount(`${(a.company || '').toLowerCase().replace(/[^a-z0-9]/g, '')}-${(a.name || '').toLowerCase().replace(/[^a-z0-9]/g, '')}`)) || 0;
+                valB = parseInt(getVoteCount(`${(b.company || '').toLowerCase().replace(/[^a-z0-9]/g, '')}-${(b.name || '').toLowerCase().replace(/[^a-z0-9]/g, '')}`)) || 0;
                 break;
             default:
                 return 0;

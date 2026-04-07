@@ -1,7 +1,9 @@
 import { serve } from "bun";
 
+const PORT = 3000;
+
 const server = serve({
-    port: 3000,
+    port: PORT,
     fetch(request) {
         const url = new URL(request.url);
         const pathname = url.pathname === '/' ? '/index.html' : url.pathname;
