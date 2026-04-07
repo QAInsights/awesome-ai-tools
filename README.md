@@ -37,6 +37,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[Pochi](https://app.getpochi.com/home)** | Pochi | Pochi is a VS Code–native AI coding agent built by TabbyML that stands out primarily through its parallel agent execution, local model support, and more. |
 | **[Qoder](https://qoder.com/en)** | Qoder | Agentic Coding Platform for Real Software. |
 | **[Devin](https://devin.ai/)** | Cognition AI | Crush your backlog with your personal AI engineering team. |
+| **[Z Code](https://zcode.z.ai/)** | Z | Z Code combines the best AI agents with your existing tools so you can plan, code, review, and deploy without friction. |
 
 
 ---
