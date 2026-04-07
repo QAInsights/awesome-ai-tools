@@ -4,6 +4,7 @@
 
 import { getShortCategory } from './parser.js';
 import { getVoteCount } from './voting.js';
+import { sortTools } from './sorting.js';
 
 const ENABLE_VOTING = process.env.ENABLE_VOTING === 'true';
 
@@ -33,13 +34,15 @@ export function filterTools(tools, category, searchVal) {
     const safeLower = (val) => (val || '').toLowerCase();
     const searchLower = safeLower(searchVal);
 
-    return tools.filter(tool =>
+    const filtered = tools.filter(tool =>
         (category === 'all' || tool.category === category) &&
         (safeLower(tool.name).includes(searchLower) ||
             safeLower(tool.company).includes(searchLower) ||
             safeLower(tool.notes).includes(searchLower) ||
             safeLower(tool.category).includes(searchLower))
     );
+    
+    return sortTools(filtered);
 }
 
 /**

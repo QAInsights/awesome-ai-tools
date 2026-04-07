@@ -6,6 +6,7 @@
 import { parseMarkdown, extractCategories } from './parser.js';
 import { initRenderer, filterTools, renderTools } from './renderer.js';
 import { initVoting } from './voting.js';
+import { getSortState, setSortState, updateSortUI } from './sorting.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const grid = document.getElementById('toolGrid');
@@ -114,6 +115,32 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         window.history.replaceState({}, '', url);
     }
+
+    /**
+     * Handle sort header click
+     */
+    function handleSortClick(column) {
+        const currentState = getSortState();
+        let newDirection = 'asc';
+        
+        if (currentState.column === column) {
+            newDirection = currentState.direction === 'asc' ? 'desc' : 'asc';
+        }
+        
+        setSortState(column, newDirection);
+        updateSortUI();
+        filterAndRender();
+    }
+
+    // Add click listeners to sort headers
+    const sortHeaders = document.querySelectorAll('[data-sort]');
+    sortHeaders.forEach(header => {
+        header.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleSortClick(header.dataset.sort);
+        });
+    });
 
     /**
      * Update the result count display
