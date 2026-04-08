@@ -67,10 +67,10 @@
         <!-- Description -->
         <div class="py-5 px-6 text-[#a3a3a3] border-b border-[#222] shrink-0">
             <p class="text-[15px] leading-relaxed mb-5">A curated list of artificial intelligence-powered coding instruments, frameworks, and agents.</p>
-            <div class="stat-badge inline-flex items-center gap-1.5 py-1.5 px-2.5 border border-[#222] rounded-md bg-white/5 font-mono text-xs text-[#a3a3a3] tracking-wide">
+            <div class="stat-badge flex items-center justify-center gap-1.5 py-1.5 px-2.5 border border-[#222] rounded-md bg-white/5 font-mono text-xs text-[#a3a3a3] tracking-wide mb-5 w-full">
                 <span class="stat-count font-bold text-[14px]">100+</span> tools across 12 categories
             </div>
-            <div class="flex flex-col gap-2.5 mt-5">
+            <div class="flex flex-col gap-2.5">
                 <a href="https://github.com/QAInsights/awesome-ai-tools/issues/new?template=submit-tool.yml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center py-2 px-4 bg-white text-black text-sm font-semibold rounded-md transition-all duration-200 hover:bg-gray-200 hover:-translate-y-px w-full">Submit a Tool</a>
                 <a href="https://buymeacoffee.com/qainsights" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center py-2 px-4 bg-white/5 text-white text-sm font-medium border border-[#222] rounded-md transition-all duration-200 hover:bg-white/10 w-full hover:-translate-y-px">Support the Project</a>
             </div>
@@ -102,6 +102,22 @@
             <div class="text-[13px] text-[#a3a3a3] leading-relaxed">
                 Promote your AI tool directly to developers. <br>
                 <a href="https://book.qainsights.com" target="_blank" rel="noopener noreferrer" class="gradient-link inline-block mt-1.5 font-mono hover:underline">Book this space &rarr;</a>
+            </div>
+        </div>
+
+        <!-- Authentication Section (always visible above footer) -->
+        <div class="px-4 py-3 border-t border-[#222] shrink-0 bg-[#0a0a0a]">
+            <!-- Google Sign-In Button -->
+            <div id="googleSignInBtn" class="flex justify-center w-full"></div>
+
+            <!-- User Profile (shown when signed in) -->
+            <div id="userProfile" class="hidden flex items-center gap-3 p-2 bg-white/5 rounded-md border border-[#222]">
+                <img id="userAvatar" src="" alt="User" class="w-8 h-8 rounded-full">
+                <div class="flex-1 min-w-0">
+                    <div id="userName" class="text-sm font-medium text-white truncate"></div>
+                    <div id="userEmail" class="text-xs text-[#a3a3a3] truncate"></div>
+                </div>
+                <button id="signOutBtn" class="text-xs text-[#a3a3a3] hover:text-white transition-colors shrink-0">Sign Out</button>
             </div>
         </div>
 

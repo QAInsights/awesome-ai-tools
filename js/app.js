@@ -7,6 +7,7 @@ import { parseMarkdown, extractCategories } from './parser.js';
 import { initRenderer, filterTools, renderTools } from './renderer.js';
 import { initVoting } from './voting.js';
 import { getSortState, setSortState, updateSortUI } from './sorting.js';
+import { auth } from './auth.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const grid = document.getElementById('toolGrid');
@@ -45,6 +46,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Initialize renderer
     initRenderer(grid);
+    
+    // Initialize authentication
+    await initializeAuth();
     
     // Load data
     try {
@@ -185,6 +189,109 @@ document.addEventListener('DOMContentLoaded', async () => {
         const year = new Date().getFullYear();
         const yearElement = document.querySelector('.footer-copy');
         yearElement.textContent = `© ${year} dosa.dev`;
+    }
+
+    /**
+     * Initialize authentication system
+     */
+    async function initializeAuth() {
+        try {
+            await auth.initialize();
+            
+            // Set up auth state listener
+            auth.onAuthChange(handleAuthStateChange);
+            
+            // Set up sign out button
+            const signOutBtn = document.getElementById('signOutBtn');
+            if (signOutBtn) {
+                signOutBtn.addEventListener('click', () => {
+                    auth.signOut();
+                });
+            }
+            
+            // Initial UI update
+            updateAuthUI();
+            
+        } catch (error) {
+            console.error('Failed to initialize auth:', error);
+        }
+    }
+
+    /**
+     * Handle authentication state changes
+     */
+    function handleAuthStateChange({ event, user, error }) {
+        console.log('Auth state changed:', event, user?.name);
+        
+        if (error) {
+            console.error('Auth error:', error);
+            return;
+        }
+        
+        updateAuthUI();
+        
+        // You can add more logic here based on auth events
+        switch (event) {
+            case 'signin':
+                // User just signed in
+                console.log('Welcome back!', user.name);
+                break;
+            case 'signout':
+                // User just signed out
+                console.log('Signed out successfully');
+                break;
+            case 'session_restored':
+                // Session was restored from localStorage
+                console.log('Session restored for', user.name);
+                break;
+        }
+    }
+
+    /**
+     * Update authentication UI based on current state
+     */
+    function updateAuthUI() {
+        const signInBtn = document.getElementById('googleSignInBtn');
+        const userProfile = document.getElementById('userProfile');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        const userEmail = document.getElementById('userEmail');
+
+        if (auth.isAuthenticated()) {
+            const user = auth.getCurrentUser();
+
+            // Show user profile
+            if (userProfile) {
+                userProfile.classList.remove('hidden');
+                if (userAvatar) userAvatar.src = user.picture;
+                if (userName) userName.textContent = user.name;
+                if (userEmail) userEmail.textContent = user.email;
+            }
+
+            // Hide sign-in button container
+            if (signInBtn) {
+                signInBtn.classList.add('hidden');
+            }
+        } else {
+            // Show sign-in button container
+            if (signInBtn) {
+                signInBtn.classList.remove('hidden');
+                if (auth.isInitialized) {
+                    auth.renderSignInButton('googleSignInBtn', {
+                        theme: 'filled_black',
+                        size: 'large',
+                        text: 'signin_with',
+                        shape: 'rectangular',
+                        width: 280
+                    });
+                }
+            }
+
+            // Hide user profile
+            if (userProfile) {
+                userProfile.classList.add('hidden');
+            }
+        }
     }
 
     // Sidebar Toggle Logic

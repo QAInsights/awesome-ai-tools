@@ -4,6 +4,7 @@ import { build } from "bun";
 const enableVoting = process.env.ENABLE_VOTING || 'true';
 const cfSiteKey = process.env.CF_SITEKEY || '1x00000000000000000000AA';
 const apiBaseUrl = process.env.API_BASE_URL || 'http://localhost:8080';
+const googleClientId = process.env.GOOGLE_CLIENT_ID || 'your-google-client-id-here';
 
 const result = await build({
     entrypoints: ['./js/app.js'],
@@ -12,6 +13,7 @@ const result = await build({
         'process.env.ENABLE_VOTING': JSON.stringify(enableVoting),
         'process.env.CF_SITEKEY': JSON.stringify(cfSiteKey),
         'process.env.API_BASE_URL': JSON.stringify(apiBaseUrl),
+        'process.env.GOOGLE_CLIENT_ID': JSON.stringify(googleClientId),
     }
 });
 
