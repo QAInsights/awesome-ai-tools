@@ -41,7 +41,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
         renderTurnstile();
-        initVoting();
     }
     
     // Initialize renderer
@@ -49,10 +48,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Load data
     try {
-        const response = await fetch('README.md');
-        if (!response.ok) throw new Error('Failed to fetch README');
+        const [readmeResponse, _] = await Promise.all([
+            fetch('README.md'),
+            initVoting() // Wait for votes to load before parsing and filtering
+        ]);
         
-        const text = await response.text();
+        if (!readmeResponse.ok) throw new Error('Failed to fetch README');
+        
+        const text = await readmeResponse.text();
         toolsData = parseMarkdown(text);
         categories = extractCategories(toolsData);
         
@@ -63,6 +66,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (urlParams.has('q')) {
             searchInput.value = urlParams.get('q');
         }
+        
+        // Ensure UI reflects the default sort state on page load
+        updateSortUI();
         
         filterAndRender();
     } catch (error) {

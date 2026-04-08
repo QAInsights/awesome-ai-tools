@@ -702,6 +702,23 @@ animation:shift 3s linear infinite;
 font-weight:600
 }
 
+.tool-name-text {
+ display: inline-block;
+}
+
+.tool-link:hover .tool-name-text {
+ background:linear-gradient(90deg,#a78bfa,#22d3ee,#a78bfa);
+background-size:200% auto;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+background-clip:text;
+animation:shift 3s linear infinite;
+}
+
+.tool-link:hover svg {
+ stroke: #a78bfa;
+}
+
 
 .col-vote {
 width:60px;
