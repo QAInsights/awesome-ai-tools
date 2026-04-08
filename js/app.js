@@ -48,10 +48,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Load data
     try {
-        const [readmeResponse, _] = await Promise.all([
-            fetch('README.md'),
-            initVoting() // Wait for votes to load before parsing and filtering
-        ]);
+        await initVoting(); // Wait for votes to load before parsing and filtering
+        const readmeResponse = await fetch('README.md');
         
         if (!readmeResponse.ok) throw new Error('Failed to fetch README');
         
