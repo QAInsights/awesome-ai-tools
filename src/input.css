@@ -214,9 +214,6 @@
     .desktop-collapsed {
         width: 64px !important;
     }
-    .desktop-collapsed-padding {
-        padding-left: 80px !important;
-    }
     #desktopToggleContainer {
         display: none !important;
     }

@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let toolsData = [];
     let categories = new Set();
     let currentCategory = 'all';
+    let collapsedSidebar = null;
 
     const ENABLE_VOTING = process.env.ENABLE_VOTING === 'true';
     const CF_SITEKEY = process.env.CF_SITEKEY || "1x00000000000000000000AA";
@@ -275,7 +276,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             // Update collapsed sidebar
-            collapsedSidebar.setAuthState(true, user.picture);
+            collapsedSidebar?.setAuthState(true, user.picture);
         } else {
             // Show sign-in button container
             if (signInBtn) {
@@ -297,7 +298,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             // Update collapsed sidebar
-            collapsedSidebar.setAuthState(false);
+            collapsedSidebar?.setAuthState(false);
         }
     }
 
@@ -310,21 +311,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     const openMobile = document.getElementById('openSidebarMobile');
     const closeMobile = document.getElementById('closeSidebarMobile');
     const thName = document.getElementById('thName');
+    const tableHeader = document.getElementById('tableHeader');
+    const toolGrid = document.getElementById('toolGrid');
 
     const toggleDesktopSidebar = (collapse) => {
         if (collapse) {
             sidebar.classList.add('desktop-collapsed');
-            thName.classList.add('desktop-collapsed-padding');
             desktopToggleContainer.classList.remove('hidden');
         } else {
             sidebar.classList.remove('desktop-collapsed');
-            thName.classList.remove('desktop-collapsed-padding');
             desktopToggleContainer.classList.add('hidden');
         }
     };
 
     // Initialize Collapsed Sidebar Component (after toggleDesktopSidebar is defined)
-    const collapsedSidebar = new CollapsedSidebar('iconSidebar', {
+    collapsedSidebar = new CollapsedSidebar('iconSidebar', {
         onExpand: () => toggleDesktopSidebar(false),
         onSearchClick: () => {
             toggleDesktopSidebar(false);
