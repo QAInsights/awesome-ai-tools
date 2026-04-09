@@ -960,4 +960,85 @@ height:13px
  font-size:11px
 }
 
+/* ── COLLAPSED SIDEBAR COMPONENT ── */
+#iconSidebar {
+ display:none;
+ flex-direction:column;
+ align-items:center;
+ padding:16px 0;
+ gap:16px;
+ width:0;
+ height:100%;
+ overflow:hidden;
+ opacity:0;
+ transition:all 0.3s ease
+}
+
+@media (min-width:768px) {
+ #iconSidebar {
+  display:flex
+ }
+
+ .desktop-collapsed #sidebarContent {
+  width:0;
+  opacity:0;
+  overflow:hidden
+ }
+
+ .desktop-collapsed #iconSidebar {
+  width:64px;
+  opacity:1
+ }
+
+ .desktop-collapsed {
+  width:64px !important
+ }
+
+ .desktop-collapsed-padding {
+  padding-left:80px !important
+ }
+}
+
+.cs-icon {
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:8px;
+ color:#a3a3a3;
+ border-radius:6px;
+ transition:all 0.2s ease;
+ background:transparent;
+ border:none;
+ cursor:pointer;
+ text-decoration:none;
+ flex-shrink:0
+}
+
+.cs-icon:hover {
+ color:#fff;
+ background:rgba(255,255,255,0.05)
+}
+
+.cs-icon svg {
+ width:22px;
+ height:22px
+}
+
+.cs-spacer {
+ flex:1
+}
+
+.cs-avatar {
+ padding:4px
+}
+
+.cs-avatar img {
+ width:24px;
+ height:24px;
+ border-radius:50%
+}
+
+.cs-icon.hidden {
+ display:none !important
+}
 
