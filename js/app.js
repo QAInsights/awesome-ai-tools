@@ -8,6 +8,7 @@ import { initRenderer, filterTools, renderTools } from './renderer.js';
 import { initVoting } from './voting.js';
 import { getSortState, setSortState, updateSortUI } from './sorting.js';
 import { auth } from './auth.js';
+import { CollapsedSidebar } from './collapsed-sidebar.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const grid = document.getElementById('toolGrid');
@@ -256,9 +257,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         const userAvatar = document.getElementById('userAvatar');
         const userName = document.getElementById('userName');
         const userEmail = document.getElementById('userEmail');
-        const collapsedSignInBtn = document.getElementById('collapsedSignInBtn');
-        const collapsedUserBtn = document.getElementById('collapsedUserBtn');
-        const collapsedUserAvatar = document.getElementById('collapsedUserAvatar');
 
         if (auth.isAuthenticated()) {
             const user = auth.getCurrentUser();
@@ -276,12 +274,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 signInBtn.classList.add('hidden');
             }
 
-            // Update collapsed sidebar icons
-            if (collapsedSignInBtn) collapsedSignInBtn.classList.add('hidden');
-            if (collapsedUserBtn) {
-                collapsedUserBtn.classList.remove('hidden');
-                if (collapsedUserAvatar) collapsedUserAvatar.src = user.picture;
-            }
+            // Update collapsed sidebar
+            collapsedSidebar.setAuthState(true, user.picture);
         } else {
             // Show sign-in button container
             if (signInBtn) {
@@ -302,22 +296,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                 userProfile.classList.add('hidden');
             }
 
-            // Update collapsed sidebar icons
-            if (collapsedSignInBtn) collapsedSignInBtn.classList.remove('hidden');
-            if (collapsedUserBtn) collapsedUserBtn.classList.add('hidden');
+            // Update collapsed sidebar
+            collapsedSidebar.setAuthState(false);
         }
     }
 
     // Sidebar Toggle Logic
     const sidebar = document.getElementById('sidebar');
     const sidebarContent = document.getElementById('sidebarContent');
-    const iconSidebar = document.getElementById('iconSidebar');
     const sidebarOverlay = document.getElementById('sidebarOverlay');
     const collapseDesktop = document.getElementById('collapseSidebarDesktop');
-    const expandDesktop = document.getElementById('expandSidebarDesktop');
-    const collapsedSearchBtn = document.getElementById('collapsedSearchBtn');
-    const collapsedSignInBtn = document.getElementById('collapsedSignInBtn');
-    const collapsedUserBtn = document.getElementById('collapsedUserBtn');
     const desktopToggleContainer = document.getElementById('desktopToggleContainer');
     const openMobile = document.getElementById('openSidebarMobile');
     const closeMobile = document.getElementById('closeSidebarMobile');
@@ -327,15 +315,36 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (collapse) {
             sidebar.classList.add('desktop-collapsed');
             thName.classList.add('desktop-collapsed-padding');
+            desktopToggleContainer.classList.remove('hidden');
         } else {
             sidebar.classList.remove('desktop-collapsed');
             thName.classList.remove('desktop-collapsed-padding');
-            // Focus search when expanding from collapsed search click
-            if (document.activeElement === collapsedSearchBtn) {
-                setTimeout(() => searchInput.focus(), 300);
-            }
+            desktopToggleContainer.classList.add('hidden');
         }
     };
+
+    // Initialize Collapsed Sidebar Component (after toggleDesktopSidebar is defined)
+    const collapsedSidebar = new CollapsedSidebar('iconSidebar', {
+        onExpand: () => toggleDesktopSidebar(false),
+        onSearchClick: () => {
+            toggleDesktopSidebar(false);
+            setTimeout(() => searchInput.focus(), 300);
+        },
+        onSignInClick: () => {
+            toggleDesktopSidebar(false);
+            setTimeout(() => {
+                const signInContainer = document.getElementById('googleSignInBtn');
+                if (signInContainer) signInContainer.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        },
+        onUserClick: () => {
+            toggleDesktopSidebar(false);
+            setTimeout(() => {
+                const userProfile = document.getElementById('userProfile');
+                if (userProfile) userProfile.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+    });
 
     const toggleMobileSidebar = (open) => {
         if (open) {
@@ -354,29 +363,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (collapseDesktop) {
         collapseDesktop.addEventListener('click', () => toggleDesktopSidebar(true));
     }
-    if (expandDesktop) {
-        expandDesktop.addEventListener('click', () => toggleDesktopSidebar(false));
-    }
-    if (collapsedSearchBtn) {
-        collapsedSearchBtn.addEventListener('click', () => toggleDesktopSidebar(false));
-    }
-    if (collapsedSignInBtn) {
-        collapsedSignInBtn.addEventListener('click', () => {
-            toggleDesktopSidebar(false);
-            setTimeout(() => {
-                const signInContainer = document.getElementById('googleSignInBtn');
-                if (signInContainer) signInContainer.scrollIntoView({ behavior: 'smooth' });
-            }, 300);
-        });
-    }
-    if (collapsedUserBtn) {
-        collapsedUserBtn.addEventListener('click', () => {
-            toggleDesktopSidebar(false);
-            setTimeout(() => {
-                const userProfile = document.getElementById('userProfile');
-                if (userProfile) userProfile.scrollIntoView({ behavior: 'smooth' });
-            }, 300);
-        });
+    const openDesktop = document.getElementById('openSidebarDesktop');
+    if (openDesktop) {
+        openDesktop.addEventListener('click', () => toggleDesktopSidebar(false));
     }
     if (openMobile && closeMobile && sidebarOverlay) {
         openMobile.addEventListener('click', () => toggleMobileSidebar(true));
