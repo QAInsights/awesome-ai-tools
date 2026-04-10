@@ -44,14 +44,53 @@ const EXCLUDE_PATTERNS = [
 ];
 
 // ---------------------------------------------------------------------------
+// Fallback model list — used when models.dev is unreachable and no cache.
+// Keep this list small but representative of major providers/generations.
+// ---------------------------------------------------------------------------
+
+/** @type {Array<{id,name,family,context,multiplier}>} */
+const FALLBACK_MODELS = [
+    // OpenAI
+    { id: 'gpt-4o',              name: 'GPT-4o',              family: 'OpenAI',    context: 128_000,   multiplier: 1.00 },
+    { id: 'gpt-4o-mini',         name: 'GPT-4o mini',         family: 'OpenAI',    context: 128_000,   multiplier: 1.00 },
+    { id: 'o3',                  name: 'o3',                  family: 'OpenAI',    context: 200_000,   multiplier: 1.00 },
+    { id: 'o4-mini',             name: 'o4-mini',             family: 'OpenAI',    context: 200_000,   multiplier: 1.00 },
+    // Anthropic
+    { id: 'claude-3-7-sonnet',   name: 'Claude 3.7 Sonnet',   family: 'Anthropic', context: 200_000,   multiplier: 1.05 },
+    { id: 'claude-3-5-haiku',    name: 'Claude 3.5 Haiku',    family: 'Anthropic', context: 200_000,   multiplier: 1.05 },
+    // Google
+    { id: 'gemini-2-5-pro',      name: 'Gemini 2.5 Pro',      family: 'Google',    context: 1_048_576, multiplier: 0.98 },
+    { id: 'gemini-2-0-flash',    name: 'Gemini 2.0 Flash',    family: 'Google',    context: 1_048_576, multiplier: 0.98 },
+    // Meta
+    { id: 'llama-3-3-70b',       name: 'Llama 3.3 70B',       family: 'Meta',      context: 128_000,   multiplier: 1.02 },
+    { id: 'llama-4-maverick',    name: 'Llama 4 Maverick',    family: 'Meta',      context: 1_000_000, multiplier: 1.02 },
+    // Mistral
+    { id: 'mistral-large-2',     name: 'Mistral Large 2',     family: 'Mistral',   context: 128_000,   multiplier: 1.02 },
+    { id: 'mistral-small-3',     name: 'Mistral Small 3',     family: 'Mistral',   context: 32_000,    multiplier: 1.02 },
+    // DeepSeek
+    { id: 'deepseek-v3',         name: 'DeepSeek V3',         family: 'DeepSeek',  context: 128_000,   multiplier: 1.00 },
+    { id: 'deepseek-r1',         name: 'DeepSeek R1',         family: 'DeepSeek',  context: 128_000,   multiplier: 1.00 },
+    // xAI
+    { id: 'grok-3',              name: 'Grok 3',              family: 'xAI',       context: 131_072,   multiplier: 1.00 },
+];
+
+function buildFallbackResult() {
+    const families = ['All', ...new Set(FALLBACK_MODELS.map(m => m.family))].sort((a, b) =>
+        a === 'All' ? -1 : b === 'All' ? 1 : a.localeCompare(b)
+    );
+    return { models: FALLBACK_MODELS, families, fromFallback: true };
+}
+
+// ---------------------------------------------------------------------------
 // Model fetching + transformation
 // ---------------------------------------------------------------------------
 
 /**
  * Fetch and transform models from models.dev.
+ * Falls back to FALLBACK_MODELS if the API is unreachable and no cache exists.
  * Results are cached in sessionStorage for CACHE_TTL duration.
  *
- * @returns {Promise<{models: Array, families: Array<string>}>}
+ * @returns {Promise<{models: Array, families: Array<string>, fromFallback?: boolean}>}
  */
 export async function fetchModels() {
     // 1. Try sessionStorage cache
@@ -63,9 +102,16 @@ export async function fetchModels() {
         }
     } catch { /* ignore quota / parse errors */ }
 
-    // 2. Fetch from API
-    const res  = await fetch(MODELS_API);
-    const json = await res.json();
+    // 2. Fetch from API — use fallback on any network/parse failure
+    let json;
+    try {
+        const res = await fetch(MODELS_API, { signal: AbortSignal.timeout(8000) });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        json = await res.json();
+    } catch {
+        // API unreachable or timed out → serve offline fallback
+        return buildFallbackResult();
+    }
 
     const models   = [];
     const families = new Set();

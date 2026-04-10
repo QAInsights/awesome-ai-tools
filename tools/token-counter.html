@@ -467,6 +467,12 @@
 
             <!-- Model Cards -->
             <div id="modelCardsSection">
+                <!-- Fallback notice (shown when models.dev is unreachable) -->
+                <div id="fallbackNotice" style="display:none"
+                    class="flex items-center gap-2.5 px-3 py-2 mb-3 rounded-lg border border-[#854d0e] bg-[#451a03]/40 text-[12px] font-mono text-[#fbbf24]">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" class="shrink-0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span>models.dev unreachable — showing built-in fallback models. Data may be outdated.</span>
+                </div>
                 <!-- Loading state -->
                 <div id="loadingState" class="empty-hint" style="display:none">
                     <svg class="animate-spin" viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>
@@ -522,6 +528,7 @@
         const emptyState     = document.getElementById('emptyState');
         const loadingState   = document.getElementById('loadingState');
         const errorState     = document.getElementById('errorState');
+        const fallbackNotice = document.getElementById('fallbackNotice');
         const modelCount     = document.getElementById('modelCount');
         const copyResultsBtn = document.getElementById('copyResultsBtn');
         const shareBtn       = document.getElementById('shareBtn');
@@ -670,12 +677,18 @@
             loadingState.style.display = 'flex';
             emptyState.style.display   = 'none';
             try {
-                const { models, families } = await fetchModels();
+                const { models, families, fromFallback } = await fetchModels();
                 MODELS = models;
                 buildTabs(families);
 
                 if (modelCount) {
                     modelCount.textContent = `${models.length} models from ${families.length - 1} providers`;
+                }
+
+                // Show fallback notice if API was unreachable
+                if (fromFallback && fallbackNotice) {
+                    fallbackNotice.style.display = 'flex';
+                    if (modelCount) modelCount.textContent += ' (offline fallback)';
                 }
 
                 loadingState.style.display = 'none';
