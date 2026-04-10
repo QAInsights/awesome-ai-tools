@@ -9,6 +9,7 @@ import { initVoting } from './voting.js';
 import { getSortState, setSortState, updateSortUI } from './sorting.js';
 import { auth } from './auth.js';
 import { CollapsedSidebar } from './collapsed-sidebar.js';
+import { APP_VERSION } from './version.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const grid = document.getElementById('toolGrid');
@@ -194,7 +195,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     // Update year in footer
     updateYear();
-    
+
+    // Stamp version into all sidebar logo areas
+    document.querySelectorAll('.app-version').forEach(el => {
+        el.textContent = APP_VERSION;
+    });
+
     function updateYear() {
         const year = new Date().getFullYear();
         const yearElement = document.querySelector('.footer-copy');
