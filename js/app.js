@@ -179,14 +179,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     // Clear button click
-    searchClear.addEventListener('click', () => {
-        searchInput.value = '';
-        searchInput.focus();
-        filterAndRender();
-    });
+    if (searchClear) {
+        searchClear.addEventListener('click', () => {
+            searchInput.value = '';
+            searchInput.focus();
+            filterAndRender();
+        });
+    }
 
     // Event listeners
-    searchInput.addEventListener('input', filterAndRender);
+    if (searchInput) {
+        searchInput.addEventListener('input', filterAndRender);
+    }
     
     // Update year in footer
     updateYear();
@@ -233,6 +237,93 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
             
+            // Badge Modal Logic
+            const badgeTriggers = document.querySelectorAll('#getBadgeMenuBtn, .badge-trigger');
+            if (badgeTriggers.length > 0) {
+                // Inject modal HTML into DOM if not exists to avoid HTML replication
+                if (!document.getElementById('badgeModal')) {
+                    const modalHtml = `
+                    <div id="badgeModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4 opacity-0 transition-opacity duration-200">
+                        <div class="bg-[#111] border border-[#222] rounded-xl p-6 w-full max-w-md transform scale-95 transition-transform duration-200" id="badgeModalInner">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-white font-semibold">Your GitHub Badge</h3>
+                                <button id="closeBadgeModalBtn" class="text-[#737373] hover:text-white transition-colors text-2xl leading-none">&times;</button>
+                            </div>
+                            <div class="mb-4 flex justify-center p-6 bg-black rounded-lg border border-[#222]">
+                                <img id="badgePreview" src="" alt="Badge Preview" />
+                            </div>
+                            <div class="relative">
+                                <textarea id="badgeMarkdown" class="w-full bg-black border border-[#222] text-[#a3a3a3] text-xs font-mono p-3 rounded-md h-24 focus:outline-none focus:border-[#444] resize-none" readonly></textarea>
+                                <button id="copyBadgeBtn" class="absolute bottom-3 right-3 bg-white text-black px-3 py-1.5 rounded text-xs font-semibold hover:bg-gray-200 transition-colors">Copy</button>
+                            </div>
+                        </div>
+                    </div>`;
+                    document.body.insertAdjacentHTML('beforeend', modalHtml);
+                }
+
+                const badgeModal = document.getElementById('badgeModal');
+                const badgeModalInner = document.getElementById('badgeModalInner');
+                const closeBadgeModalBtn = document.getElementById('closeBadgeModalBtn');
+                const badgePreview = document.getElementById('badgePreview');
+                const badgeMarkdown = document.getElementById('badgeMarkdown');
+                const copyBadgeBtn = document.getElementById('copyBadgeBtn');
+
+                badgeTriggers.forEach(triggerBtn => {
+                    triggerBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        if (userMenuPopup) userMenuPopup.classList.add('hidden'); // Close dropdown
+                    
+                    const user = auth.getCurrentUser();
+                    if (!user) return;
+                    
+                    // Format name for Shields.io
+                    let safeName = user.name.trim().replace(/\s+/g, '_');
+                    safeName = encodeURIComponent(safeName);
+                    
+                    const badgeUrl = `https://img.shields.io/badge/My_Awesome_AI_Tools-${safeName}-a78bfa?style=for-the-badge&logo=github`;
+                    const markdown = `[![My AI Stack](${badgeUrl})](https://ai.dosa.dev)`;
+                    
+                    badgePreview.src = badgeUrl;
+                    badgeMarkdown.value = markdown;
+                    
+                    // Show Modal
+                    badgeModal.classList.remove('hidden');
+                        // Trigger reflow for transition
+                        void badgeModal.offsetWidth;
+                        badgeModal.classList.remove('opacity-0');
+                        badgeModalInner.classList.remove('scale-95');
+                    });
+                });
+
+                const hideModal = () => {
+                    badgeModal.classList.add('opacity-0');
+                    badgeModalInner.classList.add('scale-95');
+                    setTimeout(() => badgeModal.classList.add('hidden'), 200);
+                    // Reset copy button
+                    copyBadgeBtn.textContent = 'Copy';
+                    copyBadgeBtn.className = 'absolute bottom-3 right-3 bg-white text-black px-3 py-1.5 rounded text-xs font-semibold hover:bg-gray-200 transition-colors';
+                };
+
+                closeBadgeModalBtn.addEventListener('click', hideModal);
+                badgeModal.addEventListener('click', (e) => {
+                    if (e.target === badgeModal) hideModal();
+                });
+
+                copyBadgeBtn.addEventListener('click', async () => {
+                    try {
+                        await navigator.clipboard.writeText(badgeMarkdown.value);
+                        copyBadgeBtn.textContent = 'Copied!';
+                        copyBadgeBtn.className = 'absolute bottom-3 right-3 bg-[#a78bfa] text-white px-3 py-1.5 rounded text-xs font-semibold transition-colors';
+                        setTimeout(() => {
+                            copyBadgeBtn.textContent = 'Copy';
+                            copyBadgeBtn.className = 'absolute bottom-3 right-3 bg-white text-black px-3 py-1.5 rounded text-xs font-semibold hover:bg-gray-200 transition-colors';
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Failed to copy', err);
+                    }
+                });
+            }
+
             // Initial UI update
             updateAuthUI();
             
@@ -396,12 +487,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         sidebarOverlay.addEventListener('click', () => toggleMobileSidebar(false));
     }
 
-    // On mobile, close sidebar automatically when clicking a filter to give more focus
-    categoryFilters.addEventListener('click', (e) => {
-        if (window.innerWidth < 768 && e.target.classList.contains('filter-btn')) {
-            toggleMobileSidebar(false);
-        }
-    });
+    // On mobile, close sidebar automatically when clicking a menu option to give more focus
+    if (categoryFilters) {
+        categoryFilters.addEventListener('click', (e) => {
+            if (window.innerWidth < 768 && e.target.classList.contains('filter-btn')) {
+                toggleMobileSidebar(false);
+            }
+        });
+    }
+    const dashboardNav = document.getElementById('dashboardNav');
+    if (dashboardNav) {
+        dashboardNav.addEventListener('click', (e) => {
+            if (window.innerWidth < 768 && e.target.classList.contains('filter-btn')) {
+                toggleMobileSidebar(false);
+            }
+        });
+    }
 
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
@@ -414,7 +515,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         );
         
         // '/' focuses search
-        if (e.key === '/' && !isEditableElement) {
+        if (e.key === '/' && !isEditableElement && searchInput) {
             e.preventDefault();
             searchInput.focus();
             searchInput.select();
@@ -426,7 +527,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 toggleMobileSidebar(false);
             }
             // Clear search if focused
-            else if (document.activeElement === searchInput) {
+            else if (searchInput && document.activeElement === searchInput) {
                 searchInput.value = '';
                 searchInput.blur();
                 filterAndRender();

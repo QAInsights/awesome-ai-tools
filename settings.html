@@ -72,24 +72,19 @@
             </div>
         </div>
 
-        <!-- Search -->
-        <div class="p-5 border-b border-[#222] shrink-0 sticky top-[72px] bg-[#0a0a0a] z-10">
-            <div class="relative">
-                <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-[#a3a3a3] w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <input type="text" id="searchInput" placeholder="Search the index... (/)" autocomplete="off" class="w-full bg-black border border-[#222] rounded-md py-2.5 pl-9 pr-8 text-white font-sans text-[15px] transition-colors duration-200 outline-none focus:border-[#a3a3a3] placeholder-[#737373]">
-                <button class="absolute right-3 top-1/2 -translate-y-1/2 bg-transparent border-none text-[#737373] text-sm cursor-pointer p-0.5 hidden hover:text-white" id="searchClear" title="Clear search">&#x2715;</button>
+
+
+        <!-- Dashboard Navigation -->
+        <nav class="flex flex-col px-4 py-2 gap-1 border-b border-[#222] md:flex-1 md:min-h-0 md:overflow-y-auto" id="dashboardNav" style="scrollbar-width: thin;">
+            <div class="font-mono text-[12px] uppercase text-[#737373] mb-2 pl-2 tracking-widest mt-2 hidden md:block">Account</div>
+            <a href="settings.html" class="filter-btn active flex items-center">Settings</a>
+            <a href="zap.html" class="filter-btn flex items-center">Zap Dashboard</a>
+            <a href="help.html" class="filter-btn flex items-center">Help & Support</a>
+            <button class="filter-btn text-left badge-trigger flex items-center">Get Badge</button>
+            
+            <div class="mt-4 pb-2">
+                <a href="/" class="text-[14px] text-[#737373] hover:text-white transition-colors flex items-center gap-2 pl-2">&larr; Back to Directory</a>
             </div>
-        </div>
-
-        <div class="px-5 pt-3 pb-2 font-mono text-[11px] text-[#737373] tracking-wide shrink-0" id="resultCount"></div>
-
-        <!-- Filters -->
-        <nav class="flex flex-col px-4 py-2 gap-1 border-b border-[#222] md:flex-1 md:min-h-0 md:overflow-y-auto" id="categoryFilters" style="scrollbar-width: thin;">
-            <div class="font-mono text-[12px] uppercase text-[#737373] mb-2 pl-2 tracking-widest mt-2 hidden md:block">Categories</div>
-            <button class="filter-btn active" data-category="all">All Tools</button>
         </nav>
 
         <!-- Featured -->
