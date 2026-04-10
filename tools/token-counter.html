@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Counter | ai.dosa.dev</title>
+    <meta name="description"
+        content="Free AI token counter. Instantly estimate token counts across GPT-4o, Claude 3.5, Gemini 1.5, Llama 3 and more. See context window usage at a glance.">
+    <meta name="keywords"
+        content="token counter, LLM tokens, GPT token count, Claude tokens, AI prompt tokens, context window, tiktoken">
+    <meta property="og:title" content="Token Counter | ai.dosa.dev">
+    <meta property="og:description"
+        content="Instantly count tokens across GPT-4o, Claude, Gemini, Llama and more. Free, private, client-side.">
+    <meta property="og:url" content="https://ai.dosa.dev/tools/token-counter">
+    <meta property="og:type" content="website">
+    <meta property="twitter:card" content="summary_large_image">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="../images/icons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../images/icons/favicon.svg" />
+    <link rel="shortcut icon" href="../images/icons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="../images/icons/site.webmanifest" />
+
+    <link rel="stylesheet" href="../css/output.css">
+    <script src="../dist/app.js" type="module" defer></script>
+
+    <style>
+        /* ── Token Counter page-specific styles ── */
+
+        /* Family filter tabs — horizontal scroll strip on mobile */
+        .family-tab {
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #a3a3a3;
+            background: transparent;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+            /* Touch-friendly tap target */
+            min-height: 36px;
+            display: inline-flex;
+            align-items: center;
+        }
+        .family-tab:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        .family-tab.active {
+            color: #fff;
+            background: rgba(255,255,255,0.08);
+            border-color: #333;
+        }
+
+        /* Provider tabs scroll container */
+        #familyTabs {
+            display: flex;
+            flex-wrap: nowrap;       /* single row — scrolls horizontally */
+            gap: 6px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;   /* Firefox */
+            padding-bottom: 4px;     /* room for focus rings */
+        }
+        #familyTabs::-webkit-scrollbar { display: none; }
+
+        /* Provider tabs wrapper — must be constrained to prevent body scroll */
+        .tc-tabs-wrapper {
+            position: relative;
+            overflow: hidden;        /* clip the scrollable child */
+            padding-right: 0;        /* the ::after fade sits on top */
+        }        /* Scroll fade cue — all screen sizes */
+        .tc-tabs-wrapper::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 4px; /* match padding-bottom */
+            width: 32px;
+            background: linear-gradient(to right, transparent, #000);
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 0.2s;
+        }
+
+        /* Model cards grid */
+        .model-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 10px;
+        }
+
+        /* Individual model card */
+        .model-card {
+            background: #0d0d0d;
+            border: 1px solid #222;
+            border-radius: 10px;
+            padding: 16px;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .model-card:hover { border-color: #333; transform: translateY(-1px); }
+        .model-card.near-limit  { border-color: #854d0e; }
+        .model-card.over-limit  { border-color: #7f1d1d; }
+
+        /* Context window progress bar */
+        .ctx-bar-track {
+            height: 4px;
+            background: #1a1a1a;
+            border-radius: 99px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .ctx-bar-fill {
+            height: 100%;
+            border-radius: 99px;
+            transition: width 0.35s cubic-bezier(0.4,0,0.2,1), background-color 0.35s;
+            background: #525252;
+        }
+        .ctx-bar-fill.fill-safe    { background: linear-gradient(90deg, #404040, #737373); }
+        .ctx-bar-fill.fill-warn    { background: linear-gradient(90deg, #a16207, #ca8a04); }
+        .ctx-bar-fill.fill-danger  { background: linear-gradient(90deg, #991b1b, #dc2626); }
+
+        /* Token count number */
+        .token-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 28px;
+            font-weight: 500;
+            color: #fff;
+            letter-spacing: -0.5px;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+        .token-count.warn   { color: #ca8a04; }
+        .token-count.danger { color: #dc2626; }
+
+        /* Textarea */
+        #promptInput {
+            width: 100%;
+            background: #0d0d0d;
+            border: 1px solid #222;
+            border-radius: 10px;
+            padding: 14px 16px;
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            resize: vertical;
+            min-height: 160px;
+            transition: border-color 0.2s;
+            outline: none;
+            box-sizing: border-box;
+            /* Prevent zoom on focus in iOS (font-size >= 16px triggers zoom) */
+            -webkit-text-size-adjust: 100%;
+        }
+        #promptInput:focus  { border-color: #444; }
+        #promptInput::placeholder { color: #525252; }
+
+        /* Disable resize handle on touch devices */
+        @media (hover: none) and (pointer: coarse) {
+            #promptInput { resize: none; }
+        }
+
+        /* Stats row */
+        .stat-chip {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: #737373;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid #222;
+            border-radius: 6px;
+            padding: 4px 10px;
+            /* Touch-friendly */
+            min-height: 28px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* Action buttons */
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s;
+            border: 1px solid #333;
+            background: rgba(255,255,255,0.04);
+            color: #a3a3a3;
+            min-height: 36px;  /* 44px touch target via flex parent */
+            white-space: nowrap;
+        }
+        .action-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
+        .action-btn.success { color: #4ade80; border-color: #166534; background: rgba(74,222,128,0.05); }
+
+        /* Section heading */
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #525252;
+            margin-bottom: 10px;
+        }
+
+        /* Empty / loading state */
+        .empty-hint {
+            text-align: center;
+            padding: 40px 24px;
+            color: #525252;
+            font-size: 14px;
+        }
+        /* Only dim SVGs in the plain empty/error states, NOT the spinner */
+        #emptyState svg, #errorState svg { margin: 0 auto 16px; display: block; opacity: 0.3; }
+        #loadingState svg { margin: 0 auto; display: block; width: 32px; height: 32px; opacity: 0.7; }
+
+        /* ── Mobile overrides (≤767px) ─────────────────────────── */
+        @media (max-width: 767px) {
+            /* Tighten page-level gap */
+            .tc-page-content { gap: 20px !important; }
+
+            /* Title: smaller on mobile */
+            .tc-header-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+
+            /* Model cards: force single column */
+            .model-grid { grid-template-columns: 1fr; gap: 8px; }
+
+            /* Card padding */
+            .model-card { padding: 14px; }
+
+            /* Empty state */
+            .empty-hint { padding: 32px 16px; }
+
+            /* Mobile action buttons — remove the tc-tabs-wrapper fade on desktop */
+        }
+    </style>
+</head>
+
+<body class="bg-black text-white font-sans flex h-[100dvh] overflow-hidden antialiased leading-relaxed">
+
+    <!-- Mobile Overlay -->
+    <div id="sidebarOverlay"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden md:hidden opacity-0 transition-opacity duration-300">
+    </div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar"
+        class="fixed inset-y-0 left-0 z-50 w-[85%] max-w-[320px] bg-[#0a0a0a] border-r border-[#222] flex flex-row transition-all duration-300 transform -translate-x-full md:relative md:translate-x-0 md:w-[320px] shrink-0 h-full overflow-hidden">
+        <div id="sidebarContent" class="flex flex-col h-full w-full transition-all duration-300 overflow-y-auto md:overflow-hidden">
+
+            <!-- Logo -->
+            <div class="py-4 px-6 flex items-center justify-between border-b border-[#222] shrink-0 sticky top-0 bg-[#0a0a0a] z-10">
+                <a href="/" class="group flex items-center gap-3 no-underline transition-all">
+                    <img src="../images/icons/favicon-96x96.png" alt="dosa.dev logo"
+                        class="shrink-0 w-7 h-7 transition-transform duration-300 group-hover:scale-105" />
+                    <div class="flex flex-col gap-0.5">
+                        <div class="text-[18px] font-semibold tracking-wide text-white m-0 leading-none">ai.dosa.dev</div>
+                        <div class="font-mono text-xs text-[#737373]">v26.1</div>
+                    </div>
+                </a>
+                <button id="closeSidebarMobile" class="md:hidden text-[#737373] hover:text-white p-2 shrink-0">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <button id="collapseSidebarDesktop"
+                    class="hidden md:block text-[#a3a3a3] hover:text-white p-1.5 rounded-md hover:bg-white/5 transition-colors shrink-0"
+                    title="Close sidebar">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+                </button>
+            </div>
+
+            <!-- Description -->
+            <div class="py-5 px-6 text-[#a3a3a3] border-b border-[#222] shrink-0">
+                <p class="text-[15px] leading-relaxed mb-5">A curated list of artificial intelligence-powered coding instruments, frameworks, and agents.</p>
+                <div class="flex flex-col gap-2.5">
+                    <a href="https://github.com/QAInsights/awesome-ai-tools/issues/new?template=submit-tool.yml"
+                        target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center justify-center py-2 px-4 bg-white text-black text-sm font-semibold rounded-md transition-all duration-200 hover:bg-gray-200 hover:-translate-y-px w-full">Submit
+                        a Tool</a>
+                    <a href="https://buymeacoffee.com/qainsights" target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center justify-center py-2 px-4 bg-white/5 text-white text-sm font-medium border border-[#222] rounded-md transition-all duration-200 hover:bg-white/10 w-full hover:-translate-y-px">Support
+                        the Project</a>
+                </div>
+            </div>
+
+            <!-- Dashboard Navigation -->
+            <nav class="flex flex-col px-4 py-2 gap-1 border-b border-[#222] md:flex-1 md:min-h-0 md:overflow-y-auto"
+                id="dashboardNav" style="scrollbar-width: thin;">
+                <div class="font-mono text-[12px] uppercase text-[#737373] mb-2 pl-2 tracking-widest mt-2 hidden md:block">Account</div>
+                <a href="../settings.html" class="filter-btn flex items-center">Settings</a>
+                <a href="../zap.html" class="filter-btn flex items-center">Zap Dashboard</a>
+                <a href="../help.html" class="filter-btn flex items-center">Help &amp; Support</a>
+                <button class="filter-btn text-left badge-trigger flex items-center">Get Badge</button>
+
+                <div class="font-mono text-[12px] uppercase text-[#737373] mb-1 pl-2 tracking-widest mt-4 hidden md:block">AI Utilities</div>
+                <a href="./token-counter.html" class="filter-btn active flex items-center gap-2">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h6M8 15h4"/></svg>
+                    Token Counter
+                </a>
+
+                <div class="mt-4 pb-2">
+                    <a href="/" class="text-[14px] text-[#737373] hover:text-white transition-colors flex items-center gap-2 pl-2">&larr; Back to Directory</a>
+                </div>
+            </nav>
+
+            <!-- Featured -->
+            <div class="mx-4 my-4 p-4 border border-dashed border-[#222] rounded-md bg-white/[0.01] shrink-0">
+                <div class="font-mono text-[11px] uppercase text-[#737373] mb-1.5 tracking-wide">Featured</div>
+                <div class="text-[13px] text-[#a3a3a3] leading-relaxed">
+                    Promote your AI tool directly to developers. <br>
+                    <a href="https://book.qainsights.com" target="_blank" rel="noopener noreferrer"
+                        class="gradient-link inline-block mt-1.5 font-mono hover:underline">Book this space &rarr;</a>
+                </div>
+            </div>
+
+            <!-- Authentication Section -->
+            <div class="px-4 py-3 border-t border-[#222] shrink-0 bg-[#0a0a0a] sticky bottom-0 z-20 md:static md:z-auto">
+                <div id="googleSignInBtn" class="flex justify-center w-full"></div>
+                <div id="userProfile" class="hidden relative">
+                    <div id="userProfileBtn"
+                        class="flex items-center gap-3 p-2 bg-white/5 rounded-md border border-[#222] cursor-pointer hover:bg-white/10 transition-colors">
+                        <img id="userAvatar" src="" alt="User" class="w-8 h-8 rounded-full pointer-events-none">
+                        <div class="flex-1 min-w-0 pointer-events-none">
+                            <div id="userName" class="text-sm font-medium text-white truncate"></div>
+                            <div id="userEmail" class="text-xs text-[#a3a3a3] truncate"></div>
+                        </div>
+                    </div>
+                    <div id="userMenuPopup"
+                        class="hidden absolute bottom-[calc(100%+8px)] left-0 w-full bg-[#111] border border-[#222] rounded-md shadow-xl z-50 py-1">
+                        <a href="../settings.html"
+                            class="flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Settings</a>
+                        <a href="../zap.html"
+                            class="flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Zap</a>
+                        <a href="../help.html"
+                            class="flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Help</a>
+                        <a href="./token-counter.html"
+                            class="flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Token Counter</a>
+                        <button id="getBadgeMenuBtn"
+                            class="w-full text-left flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Get
+                            Badge</button>
+                        <div class="h-px bg-[#222] my-1"></div>
+                        <button id="signOutBtn"
+                            class="w-full text-left flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Sign
+                            Out</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Footer -->
+            <footer class="px-5 py-4 border-t border-[#222] shrink-0 mt-auto bg-[#0a0a0a]">
+                <div class="flex flex-wrap gap-x-3 gap-y-1.5 mb-2">
+                    <a href="https://github.com/QAInsights/awesome-ai-tools" target="_blank" rel="noopener noreferrer"
+                        class="text-[13px] text-[#a3a3a3] hover:text-white transition-colors">GitHub</a>
+                    <a href="https://dosa.dev" target="_blank" rel="noopener noreferrer"
+                        class="text-[13px] text-[#a3a3a3] hover:text-white transition-colors">dosa.dev</a>
+                    <a href="https://qainsights.com" target="_blank" rel="noopener noreferrer"
+                        class="text-[13px] text-[#a3a3a3] hover:text-white transition-colors">qainsights.com</a>
+                    <a href="https://jmeter.ai" target="_blank" rel="noopener noreferrer"
+                        class="text-[13px] text-[#a3a3a3] hover:text-white transition-colors">jmeter.ai</a>
+                </div>
+                <div class="font-mono text-[12px] text-[#737373] mb-1 footer-copy">&copy; dosa.dev</div>
+            </footer>
+        </div>
+
+        <!-- Collapsed Icon Sidebar -->
+        <div id="iconSidebar"></div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
+        <!-- Mobile Header -->
+        <div class="md:hidden flex items-center justify-between p-4 border-b border-[#222] bg-[#0a0a0a] shrink-0 z-10 sticky top-0">
+            <div class="flex items-center gap-3">
+                <button id="openSidebarMobile"
+                    class="text-[#a3a3a3] hover:text-white transition-colors p-1 rounded-md hover:bg-white/5">
+                    <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+                <div class="flex items-center gap-2">
+                    <img src="../images/icons/favicon-32x32.png" alt="logo" class="w-6 h-6 rounded-full" />
+                    <span class="text-[17px] font-semibold tracking-wide text-white leading-none">Token Counter</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desktop Toggle Btn (Floating) -->
+        <div id="desktopToggleContainer" class="hidden absolute top-[14px] left-4 z-20 transition-opacity duration-300">
+            <button id="openSidebarDesktop"
+                class="text-[#a3a3a3] hover:text-white p-1.5 bg-[#0a0a0a] border border-[#222] rounded-md shadow-sm transition-all hover:bg-white/5 backdrop-blur-sm"
+                title="Open sidebar">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+            </button>
+        </div>
+
+        <!-- Page Content -->
+        <div class="tc-page-content max-w-[1100px] mx-auto w-full flex flex-col flex-1 p-4 md:p-8 gap-6 md:gap-8">
+
+            <!-- Page Header -->
+            <div>
+                <div class="tc-header-row flex items-start justify-between gap-4">
+                    <div class="min-w-0">
+                        <h1 class="text-xl md:text-2xl font-semibold flex items-center gap-2.5 mb-1">
+                            <svg class="w-5 h-5 md:w-6 md:h-6 text-[#a78bfa] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h6M8 15h4"/></svg>
+                            Token Counter
+                        </h1>
+                        <p class="text-[#737373] text-sm leading-snug">Live model data from <a href="https://models.dev" target="_blank" rel="noopener" class="text-[#a3a3a3] hover:text-white transition-colors underline underline-offset-2">models.dev</a>. Your text never leaves your browser.</p>
+                        <div id="modelCount" class="mt-1 text-[11px] font-mono text-[#525252]"></div>
+                    </div>
+                    <!-- Desktop: buttons inline with title (hidden on mobile via Tailwind) -->
+                    <div class="hidden md:flex items-center gap-2 shrink-0">
+                        <button id="copyResultsBtn" class="action-btn" title="Copy summary to clipboard">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            Copy Results
+                        </button>
+                        <button id="shareBtn" class="action-btn" title="Copy shareable link">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                            Share
+                        </button>
+                    </div>
+                </div>
+                <!-- Mobile: full-width button row below title -->
+                <div class="flex md:hidden gap-2 mt-3 w-full">
+                    <button id="copyResultsBtnMobile" class="action-btn grow justify-center" title="Copy summary"
+                        onclick="document.getElementById('copyResultsBtn').click()">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copy Results
+                    </button>
+                    <button id="shareBtnMobile" class="action-btn grow justify-center" title="Share"
+                        onclick="document.getElementById('shareBtn').click()">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                        Share
+                    </button>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div>
+                <div class="section-label">Your Prompt</div>
+                <textarea
+                    id="promptInput"
+                    placeholder="Paste your prompt or text here…"
+                    spellcheck="false"
+                    autocomplete="off"
+                ></textarea>
+                <!-- Stats row -->
+                <div class="flex items-center gap-2 mt-3 flex-wrap">
+                    <span class="stat-chip" id="statChars">0 chars</span>
+                    <span class="stat-chip" id="statWords">0 words</span>
+                    <span class="stat-chip" id="statLines">0 lines</span>
+                    <button id="clearBtn" class="text-xs text-[#525252] hover:text-[#a3a3a3] transition-colors ml-auto" style="display:none">Clear</button>
+                </div>
+            </div>
+
+            <!-- Family Filter Tabs -->
+            <div>
+                <div class="section-label">Filter by Provider</div>
+                <!-- tc-tabs-wrapper adds a right-side fade cue on mobile -->
+                <div class="tc-tabs-wrapper">
+                    <div id="familyTabs"></div>
+                </div>
+            </div>
+
+            <!-- Model Cards -->
+            <div id="modelCardsSection">
+                <!-- Loading state -->
+                <div id="loadingState" class="empty-hint" style="display:none">
+                    <svg class="animate-spin" viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>
+                    <p style="margin-top:12px">Fetching latest models…</p>
+                </div>
+                <!-- Error state -->
+                <div id="errorState" class="empty-hint" style="display:none">
+                    <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#dc2626" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <p style="margin-top:12px;color:#737373">Could not load model data. Check your connection and <button onclick="window.location.reload()" style="color:#a3a3a3;text-decoration:underline;cursor:pointer">reload</button>.</p>
+                </div>
+                <!-- Empty state (shown when no text) -->
+                <div id="emptyState" class="empty-hint" style="display:none">
+                    <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h6M8 15h4"/></svg>
+                    <p>Paste a prompt above to see token counts across all models</p>
+                </div>
+                <div id="modelGrid" class="model-grid" style="display:none"></div>
+            </div>
+
+            <p class="text-[11px] text-[#525252] font-mono mt-auto pb-2">
+                ✦ All processing is done locally in your browser. No text is transmitted anywhere. Token counts are estimates (~±5% vs tiktoken). Model data sourced from <a href="https://models.dev" target="_blank" rel="noopener" class="hover:text-[#a3a3a3] transition-colors">models.dev</a> and cached for 6 hours.
+            </p>
+        </div>
+    </main>
+
+    <div id="turnstile-container"></div>
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "16936e2eed2a4361adb21441d23573dd"}'></script>
+    <!-- End Cloudflare Web Analytics -->
+
+    <script type="module">
+        import {
+            fetchModels,
+            countAllModels,
+            getTextFromURL, syncTextToURL,
+            formatTokens, formatContext, buildSummaryText
+        } from '../js/token-counter.js';
+
+        // ── State ────────────────────────────────────────────────────────────
+        let currentFamily = 'All';
+        let debounceTimer = null;
+        let lastResults   = [];
+        let lastText      = '';
+        let MODELS        = [];   // populated after fetch
+
+        // ── Elements ─────────────────────────────────────────────────────────
+        const promptInput    = document.getElementById('promptInput');
+        const statChars      = document.getElementById('statChars');
+        const statWords      = document.getElementById('statWords');
+        const statLines      = document.getElementById('statLines');
+        const clearBtn       = document.getElementById('clearBtn');
+        const familyTabs     = document.getElementById('familyTabs');
+        const modelGrid      = document.getElementById('modelGrid');
+        const emptyState     = document.getElementById('emptyState');
+        const loadingState   = document.getElementById('loadingState');
+        const errorState     = document.getElementById('errorState');
+        const modelCount     = document.getElementById('modelCount');
+        const copyResultsBtn = document.getElementById('copyResultsBtn');
+        const shareBtn       = document.getElementById('shareBtn');
+
+        // ── Build family tabs ────────────────────────────────────────────────
+        function buildTabs(families) {
+            familyTabs.innerHTML = '';
+            families.forEach(fam => {
+                const btn = document.createElement('button');
+                btn.className = `family-tab${fam === 'All' ? ' active' : ''}`;
+                btn.textContent = fam;
+                btn.dataset.family = fam;
+                btn.addEventListener('click', () => {
+                    currentFamily = fam;
+                    document.querySelectorAll('.family-tab').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderCards(lastResults);
+                });
+                familyTabs.appendChild(btn);
+            });
+        }
+
+        // ── Render model cards ───────────────────────────────────────────────
+        function renderCards(results) {
+            const filtered = currentFamily === 'All'
+                ? results
+                : results.filter(r => r.model.family === currentFamily);
+
+            if (filtered.length === 0 || lastText.trim().length === 0) {
+                modelGrid.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            modelGrid.style.display  = 'grid';
+
+            modelGrid.innerHTML = filtered.map(r => {
+                const { model, tokens, fillPct, isNearLimit, isOverLimit } = r;
+                const cardClass  = isOverLimit ? 'over-limit'  : isNearLimit ? 'near-limit' : '';
+                const countClass = isOverLimit ? 'danger'       : isNearLimit ? 'warn'       : '';
+                const barClass   = isOverLimit ? 'fill-danger'  : isNearLimit ? 'fill-warn'  : 'fill-safe';
+                const fillWidth  = Math.min(100, fillPct).toFixed(2);
+
+                return `
+                <div class="model-card ${cardClass}">
+                    <div class="flex items-start justify-between gap-2 mb-3">
+                        <div>
+                            <div class="text-[13px] font-medium text-white leading-tight">${model.name}</div>
+                            <div class="text-[11px] text-[#525252] font-mono mt-0.5">${model.family}</div>
+                        </div>
+                        <div class="text-[11px] font-mono text-[#525252] shrink-0 mt-0.5">${formatContext(model.context)} ctx</div>
+                    </div>
+                    <div class="token-count ${countClass}">${formatTokens(tokens)}</div>
+                    <div class="text-[11px] text-[#525252] mt-1">tokens</div>
+                    <div class="ctx-bar-track">
+                        <div class="ctx-bar-fill ${barClass}" style="width: ${fillWidth}%"></div>
+                    </div>
+                    <div class="flex justify-between mt-1.5">
+                        <div class="text-[11px] font-mono text-[#525252]">
+                            ${isOverLimit
+                                ? `<span style="color:#dc2626">Exceeds context window</span>`
+                                : isNearLimit
+                                    ? `<span style="color:#ca8a04">${fillPct.toFixed(1)}% full</span>`
+                                    : `${fillPct.toFixed(1)}% of context`
+                            }
+                        </div>
+                        <div class="text-[11px] font-mono text-[#525252]">${formatTokens(model.context - tokens > 0 ? model.context - tokens : 0)} left</div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        // ── Update stats row ─────────────────────────────────────────────────
+        function updateStats(text) {
+            const chars = text.length;
+            const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+            const lines = text === '' ? 0 : text.split('\n').length;
+            statChars.textContent = `${chars.toLocaleString()} chars`;
+            statWords.textContent = `${words.toLocaleString()} words`;
+            statLines.textContent = `${lines.toLocaleString()} lines`;
+            clearBtn.style.display = chars > 0 ? 'inline' : 'none';
+        }
+
+        // ── Main update handler ───────────────────────────────────────────────
+        function update() {
+            const text = promptInput.value;
+            lastText   = text;
+            updateStats(text);
+
+            if (text.trim().length === 0 || MODELS.length === 0) {
+                lastResults = [];
+                renderCards([]);
+                syncTextToURL('');
+                return;
+            }
+
+            lastResults = countAllModels(text, MODELS);
+            renderCards(lastResults);
+            syncTextToURL(text);
+        }
+
+        // ── Input event (debounced) ───────────────────────────────────────────
+        promptInput.addEventListener('input', () => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(update, 120);
+        });
+
+        // ── Clear ─────────────────────────────────────────────────────────────
+        clearBtn.addEventListener('click', () => {
+            promptInput.value = '';
+            update();
+            promptInput.focus();
+        });
+
+        // ── Copy Results ──────────────────────────────────────────────────────
+        copyResultsBtn.addEventListener('click', async () => {
+            if (!lastText.trim()) return;
+            const summary = buildSummaryText(lastText, lastResults);
+            try {
+                await navigator.clipboard.writeText(summary);
+                copyResultsBtn.classList.add('success');
+                copyResultsBtn.innerHTML = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+                setTimeout(() => {
+                    copyResultsBtn.classList.remove('success');
+                    copyResultsBtn.innerHTML = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Results`;
+                }, 2000);
+            } catch { console.warn('Clipboard write failed'); }
+        });
+
+        // ── Share ─────────────────────────────────────────────────────────────
+        shareBtn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(window.location.href);
+                shareBtn.classList.add('success');
+                shareBtn.innerHTML = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Link Copied!`;
+                setTimeout(() => {
+                    shareBtn.classList.remove('success');
+                    shareBtn.innerHTML = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share`;
+                }, 2000);
+            } catch { console.warn('Clipboard write failed'); }
+        });
+
+        // ── Bootstrap: fetch models, then init ────────────────────────────────
+        (async () => {
+            loadingState.style.display = 'flex';
+            emptyState.style.display   = 'none';
+            try {
+                const { models, families } = await fetchModels();
+                MODELS = models;
+                buildTabs(families);
+
+                if (modelCount) {
+                    modelCount.textContent = `${models.length} models from ${families.length - 1} providers`;
+                }
+
+                loadingState.style.display = 'none';
+
+                // Restore from URL if present
+                const urlText = getTextFromURL();
+                if (urlText) {
+                    promptInput.value = urlText;
+                    update();
+                } else {
+                    emptyState.style.display = 'block';
+                }
+            } catch (err) {
+                console.error('Failed to load models:', err);
+                loadingState.style.display = 'none';
+                errorState.style.display   = 'block';
+            }
+        })();
+    </script>
+</body>
+
+</html>
