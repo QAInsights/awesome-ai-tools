@@ -54,14 +54,18 @@ export class CollapsedSidebar {
         const signInBtn = this.container.querySelector('#signInBtn');
         const userBtn = this.container.querySelector('#userBtn');
         const userAvatarImg = this.container.querySelector('#userAvatarImg');
+        const searchBtn = this.container.querySelector('#searchBtn');
 
         if (isAuth) {
             signInBtn?.classList.add('hidden');
             userBtn?.classList.remove('hidden');
             if (userAvatarImg && avatarUrl) userAvatarImg.src = avatarUrl;
+            // Search is only relevant on the main registry, hide it for logged-in users
+            searchBtn?.classList.add('hidden');
         } else {
             signInBtn?.classList.remove('hidden');
             userBtn?.classList.add('hidden');
+            searchBtn?.classList.remove('hidden');
         }
     }
 
