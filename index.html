@@ -42,7 +42,7 @@
     <!-- Sidebar -->
     <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-[85%] max-w-[320px] bg-[#0a0a0a] border-r border-[#222] flex flex-row transition-all duration-300 transform -translate-x-full md:relative md:translate-x-0 md:w-[320px] shrink-0 h-full overflow-hidden">
         <!-- Full Sidebar Content -->
-        <div id="sidebarContent" class="flex flex-col h-full w-full transition-all duration-300">
+        <div id="sidebarContent" class="flex flex-col h-full w-full transition-all duration-300 overflow-y-auto md:overflow-hidden">
         <!-- Logo -->
         <div class="py-4 px-6 flex items-center justify-between border-b border-[#222] shrink-0 sticky top-0 bg-[#0a0a0a] z-10">
             <a href="/" class="group flex items-center gap-3 no-underline transition-all">
@@ -87,7 +87,7 @@
         <div class="px-5 pt-3 pb-2 font-mono text-[11px] text-[#737373] tracking-wide shrink-0" id="resultCount"></div>
 
         <!-- Filters -->
-        <nav class="flex flex-col px-4 py-2 gap-1 border-b border-[#222] flex-1 min-h-0 overflow-y-auto" id="categoryFilters" style="scrollbar-width: thin;">
+        <nav class="flex flex-col px-4 py-2 gap-1 border-b border-[#222] md:flex-1 md:min-h-0 md:overflow-y-auto" id="categoryFilters" style="scrollbar-width: thin;">
             <div class="font-mono text-[12px] uppercase text-[#737373] mb-2 pl-2 tracking-widest mt-2 hidden md:block">Categories</div>
             <button class="filter-btn active" data-category="all">All Tools</button>
         </nav>
@@ -102,7 +102,7 @@
         </div>
 
         <!-- Authentication Section (always visible above footer) -->
-        <div class="px-4 py-3 border-t border-[#222] shrink-0 bg-[#0a0a0a]">
+        <div class="px-4 py-3 border-t border-[#222] shrink-0 bg-[#0a0a0a] sticky bottom-0 z-20 md:static md:z-auto">
             <!-- Google Sign-In Button -->
             <div id="googleSignInBtn" class="flex justify-center w-full"></div>
 
