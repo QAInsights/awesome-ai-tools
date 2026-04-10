@@ -47,37 +47,41 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     // Initialize renderer
-    initRenderer(grid);
+    if (grid) {
+        initRenderer(grid);
+    }
     
     // Initialize authentication
     await initializeAuth();
     
-    // Load data
-    try {
-        await initVoting(); // Wait for votes to load before parsing and filtering
-        const readmeResponse = await fetch('README.md');
-        
-        if (!readmeResponse.ok) throw new Error('Failed to fetch README');
-        
-        const text = await readmeResponse.text();
-        toolsData = parseMarkdown(text);
-        categories = extractCategories(toolsData);
-        
-        renderFilters();
-        
-        // Minor Feature: Check for ?q= search parameters to allow sharing specific search results!
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('q')) {
-            searchInput.value = urlParams.get('q');
+    // Load data only if we're on the registry page
+    if (grid) {
+        try {
+            await initVoting(); // Wait for votes to load before parsing and filtering
+            const readmeResponse = await fetch('README.md');
+            
+            if (!readmeResponse.ok) throw new Error('Failed to fetch README');
+            
+            const text = await readmeResponse.text();
+            toolsData = parseMarkdown(text);
+            categories = extractCategories(toolsData);
+            
+            renderFilters();
+            
+            // Minor Feature: Check for ?q= search parameters to allow sharing specific search results!
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('q')) {
+                searchInput.value = urlParams.get('q');
+            }
+            
+            // Ensure UI reflects the default sort state on page load
+            updateSortUI();
+            
+            filterAndRender();
+        } catch (error) {
+            console.error('Error loading tools:', error);
+            grid.innerHTML = `<p style="color: var(--text-secondary); padding: 32px;">Could not load registry. Ensure you are running via a local server.</p>`;
         }
-        
-        // Ensure UI reflects the default sort state on page load
-        updateSortUI();
-        
-        filterAndRender();
-    } catch (error) {
-        console.error('Error loading tools:', error);
-        grid.innerHTML = `<p style="color: var(--text-secondary); padding: 32px;">Could not load registry. Ensure you are running via a local server.</p>`;
     }
     
     /**
@@ -208,6 +212,24 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (signOutBtn) {
                 signOutBtn.addEventListener('click', () => {
                     auth.signOut();
+                    const userMenuPopup = document.getElementById('userMenuPopup');
+                    if (userMenuPopup) userMenuPopup.classList.add('hidden');
+                });
+            }
+
+            // Set up user profile popup toggling
+            const userProfileBtn = document.getElementById('userProfileBtn');
+            const userMenuPopup = document.getElementById('userMenuPopup');
+            if (userProfileBtn && userMenuPopup) {
+                userProfileBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    userMenuPopup.classList.toggle('hidden');
+                });
+                
+                document.addEventListener('click', (e) => {
+                    if (!userProfileBtn.contains(e.target) && !userMenuPopup.contains(e.target)) {
+                        userMenuPopup.classList.add('hidden');
+                    }
                 });
             }
             

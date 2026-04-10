@@ -165,16 +165,16 @@
             </button>
         </div>
 
-        <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-0">
-            <div class="table-header hidden md:flex items-center px-8 py-5 border-b border-[#222] font-mono text-[14px] text-[#a3a3a3] uppercase tracking-widest bg-black shrink-0 transition-all duration-300" id="tableHeader">
-                <div class="w-[280px] pr-6 shrink-0 text-sm transition-all duration-300 cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="name" id="thName">Name <span class="sort-icon opacity-50">↕</span></div>
-                <div class="w-[200px] pr-6 shrink-0 text-sm cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="company">Company <span class="sort-icon opacity-50">↕</span></div>
-                <div class="grow pr-6 text-sm cursor-pointer hover:text-white select-none" style="pointer-events: none;">Description</div>
-                <div class="hidden lg:flex w-[220px] px-6 shrink-0 text-sm cursor-pointer hover:text-white select-none items-center justify-center gap-2" data-sort="category">Category <span class="sort-icon opacity-50">↕</span></div>
-                <div class="w-[84px] pr-6 shrink-0 text-sm cursor-pointer hover:text-white select-none flex items-center justify-start gap-2" data-sort="votes">Zap <span class="sort-icon opacity-50">↕</span></div>
+        <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-0 p-8">
+            <div class="max-w-2xl">
+                <h2 class="text-2xl font-semibold mb-6 flex items-center gap-3">
+                    <svg class="w-6 h-6 text-[#a3a3a3]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    Settings
+                </h2>
+                <div class="border border-[#222] bg-white/5 rounded-md p-6">
+                    <p class="text-[#a3a3a3]">Settings functionality is coming soon.</p>
+                </div>
             </div>
-            
-            <div class="registry px-4 pb-4 pt-2 md:px-8 md:pb-8 md:pt-4 grow overflow-y-auto" id="toolGrid" data-registry></div>
         </div>
     </main>
 

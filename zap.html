@@ -165,16 +165,16 @@
             </button>
         </div>
 
-        <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-0">
-            <div class="table-header hidden md:flex items-center px-8 py-5 border-b border-[#222] font-mono text-[14px] text-[#a3a3a3] uppercase tracking-widest bg-black shrink-0 transition-all duration-300" id="tableHeader">
-                <div class="w-[280px] pr-6 shrink-0 text-sm transition-all duration-300 cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="name" id="thName">Name <span class="sort-icon opacity-50">↕</span></div>
-                <div class="w-[200px] pr-6 shrink-0 text-sm cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="company">Company <span class="sort-icon opacity-50">↕</span></div>
-                <div class="grow pr-6 text-sm cursor-pointer hover:text-white select-none" style="pointer-events: none;">Description</div>
-                <div class="hidden lg:flex w-[220px] px-6 shrink-0 text-sm cursor-pointer hover:text-white select-none items-center justify-center gap-2" data-sort="category">Category <span class="sort-icon opacity-50">↕</span></div>
-                <div class="w-[84px] pr-6 shrink-0 text-sm cursor-pointer hover:text-white select-none flex items-center justify-start gap-2" data-sort="votes">Zap <span class="sort-icon opacity-50">↕</span></div>
+        <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-0 p-8">
+            <div class="max-w-2xl">
+                <h2 class="text-2xl font-semibold mb-6 flex items-center gap-3">
+                    <svg class="w-6 h-6 text-[#F2C040]" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    Zap Dashboard
+                </h2>
+                <div class="border border-[#222] bg-white/5 rounded-md p-6">
+                    <p class="text-[#a3a3a3]">Zap management and analytics are coming soon.</p>
+                </div>
             </div>
-            
-            <div class="registry px-4 pb-4 pt-2 md:px-8 md:pb-8 md:pt-4 grow overflow-y-auto" id="toolGrid" data-registry></div>
         </div>
     </main>
 
