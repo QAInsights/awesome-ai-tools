@@ -10,6 +10,8 @@ export class Accordion {
         this.icon = document.getElementById(iconId);
         this.countEl = countId ? document.getElementById(countId) : null;
         this.expanded = false;
+        this._onExpanded = null;
+        if (this.content) this.content.style.overflow = 'hidden';
 
         if (this.toggle) {
             this.toggle.addEventListener('click', () => this.toggleState());
@@ -24,22 +26,32 @@ export class Accordion {
         this.content.classList.add('opacity-100');
         if (this.icon) this.icon.style.transform = 'rotate(180deg)';
         if (this.toggle) this.toggle.setAttribute('aria-expanded', 'true');
-        this.content.addEventListener('transitionend', () => {
+        if (this._onExpanded) {
+            this.content.removeEventListener('transitionend', this._onExpanded);
+        }
+        this._onExpanded = (e) => {
+            if (e.propertyName !== 'max-height') return;
+            this.content.removeEventListener('transitionend', this._onExpanded);
+            this._onExpanded = null;
             if (this.expanded) {
                 this.content.style.maxHeight = 'none';
-                this.content.style.overflow = 'visible';
+                this.content.style.overflow = '';
             }
-        }, { once: true });
+        };
+        this.content.addEventListener('transitionend', this._onExpanded);
     }
 
     collapse() {
         if (!this.content) return;
         this.expanded = false;
+        if (this._onExpanded) {
+            this.content.removeEventListener('transitionend', this._onExpanded);
+            this._onExpanded = null;
+        }
         this.content.style.overflow = 'hidden';
-        this.content.style.maxHeight = this.content.scrollHeight + 'px';
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => { this.content.style.maxHeight = '0'; });
-        });
+        this.content.style.maxHeight = this.content.getBoundingClientRect().height + 'px';
+        void this.content.offsetHeight;
+        requestAnimationFrame(() => { this.content.style.maxHeight = '0'; });
         this.content.classList.remove('opacity-100');
         this.content.classList.add('opacity-0');
         if (this.icon) this.icon.style.transform = 'rotate(0deg)';
