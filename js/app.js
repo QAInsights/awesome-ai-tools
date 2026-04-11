@@ -9,6 +9,7 @@ import { initVoting } from './voting.js';
 import { getSortState, setSortState, updateSortUI } from './sorting.js';
 import { auth } from './auth.js';
 import { CollapsedSidebar } from './collapsed-sidebar.js';
+import { Accordion } from './accordion.js';
 import { APP_VERSION } from './version.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -52,6 +53,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         initRenderer(grid);
     }
     
+    const categoriesAccordion = new Accordion({
+        toggleId: 'categoriesToggle',
+        contentId: 'categoriesContent',
+        iconId: 'categoriesToggleIcon',
+        countId: 'categoriesCount',
+    });
+    categoriesAccordion.expand();
+
     // Initialize authentication
     await initializeAuth();
     
@@ -89,6 +98,8 @@ document.addEventListener('DOMContentLoaded', async () => {
      * Render category filter buttons
      */
     function renderFilters() {
+        const categoriesContent = document.getElementById('categoriesContent');
+
         categories.forEach(cat => {
             const btn = document.createElement('button');
             btn.className = 'filter-btn';
@@ -100,15 +111,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                 currentCategory = cat;
                 filterAndRender();
             });
-            categoryFilters.appendChild(btn);
+            categoriesContent.appendChild(btn);
         });
-        
+
         document.querySelector('[data-category="all"]').addEventListener('click', (e) => {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             e.target.classList.add('active');
             currentCategory = 'all';
             filterAndRender();
         });
+
+        categoriesAccordion.setCount(categories.size);
+        categoriesAccordion.expand();
     }
     
     /**

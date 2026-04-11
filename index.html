@@ -88,8 +88,18 @@
 
         <!-- Filters -->
         <nav class="flex flex-col px-4 py-2 gap-1 border-b border-[#222] md:flex-1 md:min-h-0 md:overflow-y-auto" id="categoryFilters" style="scrollbar-width: thin;">
-            <div class="font-mono text-[12px] uppercase text-[#737373] mb-2 pl-2 tracking-widest mt-2 hidden md:block">Categories</div>
-            <button class="filter-btn active" data-category="all">All Tools</button>
+            <button id="categoriesToggle" class="flex items-center justify-between w-full py-2.5 pl-3 pr-2 text-left rounded-md hover:bg-white/5 active:bg-white/10 transition-all duration-200 group" title="Toggle categories" aria-expanded="false">
+                <div class="flex items-center gap-2">
+                    <div class="font-mono text-[12px] uppercase text-[#737373] tracking-widest group-hover:text-white transition-colors">Categories</div>
+                    <span id="categoriesCount" class="font-mono text-[10px] text-[#525252] bg-[#1a1a1a] px-1.5 py-0.5 rounded">...</span>
+                </div>
+                <svg id="categoriesToggleIcon" class="w-4 h-4 text-[#525252] group-hover:text-[#a3a3a3] transition-all duration-300 ease-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
+            <div id="categoriesContent" class="flex flex-col gap-1 overflow-hidden transition-all duration-300 ease-out max-h-0 opacity-80">
+                <button class="filter-btn active" data-category="all">All Tools</button>
+            </div>
         </nav>
 
         <!-- AI Utilities — public, no login required -->
