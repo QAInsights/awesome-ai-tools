@@ -5,9 +5,10 @@ const PORT = 3000;
 const ROOT = import.meta.dir;
 const FAVICON_PATH = `${ROOT}/images/icons/favicon.ico`;
 
-async function fileExists(path: string): Promise<boolean> {
+async function isRegularFile(path: string): Promise<boolean> {
     try {
-        return await Bun.file(path).exists();
+        const stat = await Bun.file(path).stat();
+        return stat.isFile();
     } catch {
         return false;
     }
