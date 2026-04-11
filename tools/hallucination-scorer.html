@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Token Counter | ai.dosa.dev</title>
+    <title>Hallucination Risk Scorer | ai.dosa.dev</title>
     <meta name="description"
-        content="Free AI token counter. Instantly estimate token counts across GPT-4o, Claude 3.5, Gemini 1.5, Llama 3 and more. See context window usage at a glance.">
+        content="Free AI hallucination risk scorer. Analyze prompts for patterns that cause LLM hallucinations — vague context, forced formats, fact-density and more.">
     <meta name="keywords"
-        content="token counter, LLM tokens, GPT token count, Claude tokens, AI prompt tokens, context window, tiktoken">
-    <meta property="og:title" content="Token Counter | ai.dosa.dev">
+        content="hallucination risk, LLM hallucination, prompt analysis, AI safety, prompt engineering, hallucination checker">
+    <meta property="og:title" content="Hallucination Risk Scorer | ai.dosa.dev">
     <meta property="og:description"
-        content="Instantly count tokens across GPT-4o, Claude, Gemini, Llama and more. Free, private, client-side.">
-    <meta property="og:url" content="https://ai.dosa.dev/tools/token-counter">
+        content="Analyze prompts for hallucination risk patterns. Free, private, client-side.">
+    <meta property="og:url" content="https://ai.dosa.dev/tools/hallucination-scorer">
     <meta property="og:type" content="website">
     <meta property="twitter:card" content="summary_large_image">
 
@@ -32,112 +32,7 @@
     <script src="../dist/app.js" type="module" defer></script>
 
     <style>
-        /* ── Token Counter page-specific styles ── */
-
-        /* Family filter tabs — horizontal scroll strip on mobile */
-        .family-tab {
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 500;
-            color: #a3a3a3;
-            background: transparent;
-            border: 1px solid transparent;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            white-space: nowrap;
-            /* Touch-friendly tap target */
-            min-height: 36px;
-            display: inline-flex;
-            align-items: center;
-        }
-        .family-tab:hover { color: #fff; background: rgba(255,255,255,0.05); }
-        .family-tab.active {
-            color: #fff;
-            background: rgba(255,255,255,0.08);
-            border-color: #333;
-        }
-
-        /* Provider tabs scroll container */
-        #familyTabs {
-            display: flex;
-            flex-wrap: nowrap;       /* single row — scrolls horizontally */
-            gap: 6px;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;   /* Firefox */
-            padding-bottom: 4px;     /* room for focus rings */
-        }
-        #familyTabs::-webkit-scrollbar { display: none; }
-
-        /* Provider tabs wrapper — must be constrained to prevent body scroll */
-        .tc-tabs-wrapper {
-            position: relative;
-            overflow: hidden;        /* clip the scrollable child */
-            padding-right: 0;        /* the ::after fade sits on top */
-        }        /* Scroll fade cue — all screen sizes */
-        .tc-tabs-wrapper::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 0;
-            bottom: 4px; /* match padding-bottom */
-            width: 32px;
-            background: linear-gradient(to right, transparent, #000);
-            pointer-events: none;
-            opacity: 1;
-            transition: opacity 0.2s;
-        }
-
-        /* Model cards grid */
-        .model-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 10px;
-        }
-
-        /* Individual model card */
-        .model-card {
-            background: #0d0d0d;
-            border: 1px solid #222;
-            border-radius: 10px;
-            padding: 16px;
-            transition: border-color 0.2s, transform 0.2s;
-        }
-        .model-card:hover { border-color: #333; transform: translateY(-1px); }
-        .model-card.near-limit  { border-color: #854d0e; }
-        .model-card.over-limit  { border-color: #7f1d1d; }
-
-        /* Context window progress bar */
-        .ctx-bar-track {
-            height: 4px;
-            background: #1a1a1a;
-            border-radius: 99px;
-            overflow: hidden;
-            margin-top: 10px;
-        }
-        .ctx-bar-fill {
-            height: 100%;
-            border-radius: 99px;
-            transition: width 0.35s cubic-bezier(0.4,0,0.2,1), background-color 0.35s;
-            background: #525252;
-        }
-        .ctx-bar-fill.fill-safe    { background: linear-gradient(90deg, #404040, #737373); }
-        .ctx-bar-fill.fill-warn    { background: linear-gradient(90deg, #a16207, #ca8a04); }
-        .ctx-bar-fill.fill-danger  { background: linear-gradient(90deg, #991b1b, #dc2626); }
-
-        /* Token count number */
-        .token-count {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 28px;
-            font-weight: 500;
-            color: #fff;
-            letter-spacing: -0.5px;
-            line-height: 1;
-            transition: color 0.2s;
-        }
-        .token-count.warn   { color: #ca8a04; }
-        .token-count.danger { color: #dc2626; }
+        /* ── Hallucination Scorer page-specific styles ── */
 
         /* Textarea */
         #promptInput {
@@ -155,18 +50,15 @@
             transition: border-color 0.2s;
             outline: none;
             box-sizing: border-box;
-            /* Prevent zoom on focus in iOS (font-size >= 16px triggers zoom) */
             -webkit-text-size-adjust: 100%;
         }
         #promptInput:focus  { border-color: #444; }
         #promptInput::placeholder { color: #525252; }
-
-        /* Disable resize handle on touch devices */
         @media (hover: none) and (pointer: coarse) {
             #promptInput { resize: none; }
         }
 
-        /* Stats row */
+        /* Stats row chips */
         .stat-chip {
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
@@ -175,7 +67,6 @@
             border: 1px solid #222;
             border-radius: 6px;
             padding: 4px 10px;
-            /* Touch-friendly */
             min-height: 28px;
             display: inline-flex;
             align-items: center;
@@ -195,7 +86,7 @@
             border: 1px solid #333;
             background: rgba(255,255,255,0.04);
             color: #a3a3a3;
-            min-height: 36px;  /* 44px touch target via flex parent */
+            min-height: 36px;
             white-space: nowrap;
         }
         .action-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
@@ -211,35 +102,163 @@
             margin-bottom: 10px;
         }
 
-        /* Empty / loading state */
+        /* ── Radial Gauge ── */
+        .gauge-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 32px 24px 24px;
+            background: #0d0d0d;
+            border: 1px solid #222;
+            border-radius: 14px;
+            transition: border-color 0.3s;
+        }
+        .gauge-container.level-safe    { border-color: #222; }
+        .gauge-container.level-medium  { border-color: #854d0e; }
+        .gauge-container.level-high    { border-color: #7f1d1d; }
+
+        .gauge-svg {
+            width: 200px;
+            height: 200px;
+            transform: rotate(-90deg);
+        }
+        .gauge-track {
+            fill: none;
+            stroke: #1a1a1a;
+            stroke-width: 10;
+        }
+        .gauge-fill {
+            fill: none;
+            stroke-width: 10;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.6s cubic-bezier(0.4,0,0.2,1), stroke 0.4s;
+        }
+        .gauge-score {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 44px;
+            font-weight: 500;
+            letter-spacing: -1px;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+        .gauge-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-top: 4px;
+            transition: color 0.3s;
+        }
+        .gauge-level-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 99px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            margin-top: 16px;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+        .gauge-level-badge.safe {
+            color: #737373;
+            background: rgba(255,255,255,0.04);
+            border-color: #333;
+        }
+        .gauge-level-badge.medium {
+            color: #ca8a04;
+            background: rgba(202,138,4,0.08);
+            border-color: #854d0e;
+        }
+        .gauge-level-badge.high {
+            color: #dc2626;
+            background: rgba(220,38,38,0.08);
+            border-color: #7f1d1d;
+        }
+        .gauge-level-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        .gauge-level-dot.safe   { background: #525252; }
+        .gauge-level-dot.medium { background: #ca8a04; }
+        .gauge-level-dot.high   { background: #dc2626; }
+
+        /* ── Risk flag cards ── */
+        .risk-flags-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .risk-flag-card {
+            background: #0d0d0d;
+            border: 1px solid #222;
+            border-radius: 10px;
+            padding: 14px 16px;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .risk-flag-card:hover { border-color: #333; transform: translateY(-1px); }
+        .risk-flag-card .flag-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 6px;
+        }
+        .risk-flag-card .flag-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+        }
+        .risk-flag-card .flag-weight {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .flag-weight.w-low    { color: #737373; background: rgba(255,255,255,0.04); }
+        .flag-weight.w-med    { color: #ca8a04; background: rgba(202,138,4,0.08); }
+        .flag-weight.w-high   { color: #dc2626; background: rgba(220,38,38,0.08); }
+        .risk-flag-card .flag-desc {
+            font-size: 13px;
+            color: #737373;
+            line-height: 1.55;
+        }
+
+        /* Empty state */
         .empty-hint {
             text-align: center;
             padding: 40px 24px;
             color: #525252;
             font-size: 14px;
         }
-        /* Only dim SVGs in the plain empty/error states, NOT the spinner */
-        #emptyState svg, #errorState svg { margin: 0 auto 16px; display: block; opacity: 0.3; }
-        #loadingState svg { margin: 0 auto; display: block; width: 32px; height: 32px; opacity: 0.7; }
+        #emptyState svg { margin: 0 auto 16px; display: block; opacity: 0.3; }
 
-        /* ── Mobile overrides (≤767px) ─────────────────────────── */
+        /* ── Score + flags layout ── */
+        .results-grid {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 16px;
+            align-items: start;
+        }
+
+        /* ── Mobile overrides ── */
         @media (max-width: 767px) {
-            /* Tighten page-level gap */
-            .tc-page-content { gap: 20px !important; }
-
-            /* Title: smaller on mobile */
-            .tc-header-row { flex-direction: column; align-items: flex-start; gap: 12px; }
-
-            /* Model cards: force single column */
-            .model-grid { grid-template-columns: 1fr; gap: 8px; }
-
-            /* Card padding */
-            .model-card { padding: 14px; }
-
-            /* Empty state */
+            .hs-page-content { gap: 20px !important; }
+            .hs-header-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            .gauge-container { padding: 24px 16px 20px; }
+            .gauge-svg { width: 160px; height: 160px; }
+            .gauge-score { font-size: 36px; }
             .empty-hint { padding: 32px 16px; }
-
-            /* Mobile action buttons — remove the tc-tabs-wrapper fade on desktop */
         }
     </style>
 </head>
@@ -300,11 +319,11 @@
                 <button class="filter-btn text-left badge-trigger flex items-center">Get Badge</button>
 
                 <div class="font-mono text-[12px] uppercase text-[#737373] mb-1 pl-2 tracking-widest mt-4 hidden md:block">AI Utilities</div>
-                <a href="./token-counter.html" class="filter-btn active flex items-center gap-2">
+                <a href="./token-counter.html" class="filter-btn flex items-center gap-2">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h6M8 15h4"/></svg>
                     Token Counter
                 </a>
-                <a href="./hallucination-scorer.html" class="filter-btn flex items-center gap-2">
+                <a href="./hallucination-scorer.html" class="filter-btn active flex items-center gap-2">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                     Hallucination Scorer
                 </a>
@@ -389,7 +408,7 @@
                 </button>
                 <div class="flex items-center gap-2">
                     <img src="../images/icons/favicon-32x32.png" alt="logo" class="w-6 h-6 rounded-full" />
-                    <span class="text-[17px] font-semibold tracking-wide text-white leading-none">Token Counter</span>
+                    <span class="text-[17px] font-semibold tracking-wide text-white leading-none">Hallucination Scorer</span>
                 </div>
             </div>
         </div>
@@ -404,20 +423,19 @@
         </div>
 
         <!-- Page Content -->
-        <div class="tc-page-content max-w-[1100px] mx-auto w-full flex flex-col flex-1 p-4 md:p-8 gap-6 md:gap-8">
+        <div class="hs-page-content max-w-[1100px] mx-auto w-full flex flex-col flex-1 p-4 md:p-8 gap-6 md:gap-8">
 
             <!-- Page Header -->
             <div>
-                <div class="tc-header-row flex items-start justify-between gap-4">
+                <div class="hs-header-row flex items-start justify-between gap-4">
                     <div class="min-w-0">
                         <h1 class="text-xl md:text-2xl font-semibold flex items-center gap-2.5 mb-1">
-                            <svg class="w-5 h-5 md:w-6 md:h-6 text-[#a78bfa] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h6M8 15h4"/></svg>
-                            Token Counter
+                            <svg class="w-5 h-5 md:w-6 md:h-6 text-[#f97316] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                            Hallucination Risk Scorer
                         </h1>
-                        <p class="text-[#737373] text-sm leading-snug">Live model data from <a href="https://models.dev" target="_blank" rel="noopener" class="text-[#a3a3a3] hover:text-white transition-colors underline underline-offset-2">models.dev</a>. Your text never leaves your browser.</p>
-                        <div id="modelCount" class="mt-1 text-[11px] font-mono text-[#525252]"></div>
+                        <p class="text-[#737373] text-sm leading-snug">Heuristic analysis of prompt patterns that increase LLM hallucination risk.</p>
                     </div>
-                    <!-- Desktop: buttons inline with title (hidden on mobile via Tailwind) -->
+                    <!-- Desktop: buttons inline with title -->
                     <div class="hidden md:flex items-center gap-2 shrink-0">
                         <button id="copyResultsBtn" class="action-btn" title="Copy summary to clipboard">
                             <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
@@ -449,7 +467,7 @@
                 <div class="section-label">Your Prompt</div>
                 <textarea
                     id="promptInput"
-                    placeholder="Paste your prompt or text here…"
+                    placeholder="Paste your prompt here to analyze hallucination risk..."
                     spellcheck="false"
                     autocomplete="off"
                 ></textarea>
@@ -462,43 +480,47 @@
                 </div>
             </div>
 
-            <!-- Family Filter Tabs -->
-            <div>
-                <div class="section-label">Filter by Provider</div>
-                <!-- tc-tabs-wrapper adds a right-side fade cue on mobile -->
-                <div class="tc-tabs-wrapper">
-                    <div id="familyTabs"></div>
+            <!-- Results Section -->
+            <div id="resultsSection">
+                <!-- Empty state -->
+                <div id="emptyState" class="empty-hint">
+                    <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    <p>Paste a prompt above to analyze its hallucination risk</p>
                 </div>
-            </div>
 
-            <!-- Model Cards -->
-            <div id="modelCardsSection">
-                <!-- Fallback notice (shown when models.dev is unreachable) -->
-                <div id="fallbackNotice" style="display:none"
-                    class="flex items-center gap-2.5 px-3 py-2 mb-3 rounded-lg border border-[#854d0e] bg-[#451a03]/40 text-[12px] font-mono text-[#fbbf24]">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" class="shrink-0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                    <span>models.dev unreachable — showing built-in fallback models. Data may be outdated.</span>
+                <!-- Results grid (gauge + flags) -->
+                <div id="resultsGrid" class="results-grid" style="display:none">
+                    <!-- Gauge -->
+                    <div id="gaugeContainer" class="gauge-container level-safe">
+                        <svg class="gauge-svg" viewBox="0 0 120 120">
+                            <circle class="gauge-track" cx="60" cy="60" r="50" />
+                            <circle id="gaugeFill" class="gauge-fill" cx="60" cy="60" r="50"
+                                stroke="#525252"
+                                stroke-dasharray="314.16"
+                                stroke-dashoffset="314.16" />
+                        </svg>
+                        <div id="gaugeScore" class="gauge-score" style="color:#525252; margin-top:-128px;">0</div>
+                        <div id="gaugeLabel" class="gauge-label" style="color:#525252;">out of 100</div>
+                        <div id="gaugeBadge" class="gauge-level-badge safe" style="margin-top:80px;">
+                            <span id="gaugeDot" class="gauge-level-dot safe"></span>
+                            <span id="gaugeLevelText">Safe</span>
+                        </div>
+                    </div>
+
+                    <!-- Flags -->
+                    <div>
+                        <div class="section-label">Risk Breakdown</div>
+                        <div id="flagsContainer" class="risk-flags-section">
+                            <div class="empty-hint" style="padding: 24px 16px;">
+                                <p style="color:#525252; font-size:13px;">No risk flags detected</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- Loading state -->
-                <div id="loadingState" class="empty-hint" style="display:none">
-                    <svg class="animate-spin" viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>
-                    <p style="margin-top:12px">Fetching latest models…</p>
-                </div>
-                <!-- Error state -->
-                <div id="errorState" class="empty-hint" style="display:none">
-                    <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#dc2626" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                    <p style="margin-top:12px;color:#737373">Could not load model data. Check your connection and <button onclick="window.location.reload()" style="color:#a3a3a3;text-decoration:underline;cursor:pointer">reload</button>.</p>
-                </div>
-                <!-- Empty state (shown when no text) -->
-                <div id="emptyState" class="empty-hint" style="display:none">
-                    <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h6M8 15h4"/></svg>
-                    <p>Paste a prompt above to see token counts across all models</p>
-                </div>
-                <div id="modelGrid" class="model-grid" style="display:none"></div>
             </div>
 
             <p class="text-[11px] text-[#525252] font-mono mt-auto pb-2">
-                ✦ All processing is done locally in your browser. No text is transmitted anywhere. Token counts are estimates (~±5% vs tiktoken). Model data sourced from <a href="https://models.dev" target="_blank" rel="noopener" class="hover:text-[#a3a3a3] transition-colors">models.dev</a> and cached for 6 hours.
+                All analysis is done locally in your browser. No text is transmitted anywhere. Risk scores are heuristic estimates and should complement — not replace — manual prompt review.
             </p>
         </div>
     </main>
@@ -510,105 +532,95 @@
 
     <script type="module">
         import {
-            fetchModels,
-            countAllModels,
+            scoreHallucinationRisk,
             getTextFromURL, syncTextToURL,
-            formatTokens, formatContext, buildSummaryText
-        } from '../js/token-counter.js';
+            buildSummaryText
+        } from '../js/hallucination-scorer.js';
 
-        // ── State ────────────────────────────────────────────────────────────
-        let currentFamily = 'All';
+        // ── State ──
         let debounceTimer = null;
-        let lastResults   = [];
+        let lastResult    = { score: 0, level: 'Safe', flags: [] };
         let lastText      = '';
-        let MODELS        = [];   // populated after fetch
 
-        // ── Elements ─────────────────────────────────────────────────────────
+        // ── Elements ──
         const promptInput    = document.getElementById('promptInput');
         const statChars      = document.getElementById('statChars');
         const statWords      = document.getElementById('statWords');
         const statLines      = document.getElementById('statLines');
         const clearBtn       = document.getElementById('clearBtn');
-        const familyTabs     = document.getElementById('familyTabs');
-        const modelGrid      = document.getElementById('modelGrid');
         const emptyState     = document.getElementById('emptyState');
-        const loadingState   = document.getElementById('loadingState');
-        const errorState     = document.getElementById('errorState');
-        const fallbackNotice = document.getElementById('fallbackNotice');
-        const modelCount     = document.getElementById('modelCount');
+        const resultsGrid    = document.getElementById('resultsGrid');
+        const gaugeContainer = document.getElementById('gaugeContainer');
+        const gaugeFill      = document.getElementById('gaugeFill');
+        const gaugeScore     = document.getElementById('gaugeScore');
+        const gaugeLabel     = document.getElementById('gaugeLabel');
+        const gaugeBadge     = document.getElementById('gaugeBadge');
+        const gaugeDot       = document.getElementById('gaugeDot');
+        const gaugeLevelText = document.getElementById('gaugeLevelText');
+        const flagsContainer = document.getElementById('flagsContainer');
         const copyResultsBtn = document.getElementById('copyResultsBtn');
         const shareBtn       = document.getElementById('shareBtn');
 
-        // ── Build family tabs ────────────────────────────────────────────────
-        function buildTabs(families) {
-            familyTabs.innerHTML = '';
-            families.forEach(fam => {
-                const btn = document.createElement('button');
-                btn.className = `family-tab${fam === 'All' ? ' active' : ''}`;
-                btn.textContent = fam;
-                btn.dataset.family = fam;
-                btn.addEventListener('click', () => {
-                    currentFamily = fam;
-                    document.querySelectorAll('.family-tab').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    renderCards(lastResults);
-                });
-                familyTabs.appendChild(btn);
-            });
+        // ── Gauge constants ──
+        const CIRCUMFERENCE = 2 * Math.PI * 50; // r=50
+
+        function getColorForLevel(level) {
+            if (level === 'High')   return { stroke: '#dc2626', text: '#dc2626' };
+            if (level === 'Medium') return { stroke: '#ca8a04', text: '#ca8a04' };
+            return { stroke: '#525252', text: '#525252' };
         }
 
-        // ── Render model cards ───────────────────────────────────────────────
-        function renderCards(results) {
-            const filtered = currentFamily === 'All'
-                ? results
-                : results.filter(r => r.model.family === currentFamily);
+        function getWeightClass(weight) {
+            if (weight >= 16) return 'w-high';
+            if (weight >= 12) return 'w-med';
+            return 'w-low';
+        }
 
-            if (filtered.length === 0 || lastText.trim().length === 0) {
-                modelGrid.style.display = 'none';
-                emptyState.style.display = 'block';
+        // ── Render gauge ──
+        function renderGauge(score, level) {
+            const pct = score / 100;
+            const offset = CIRCUMFERENCE * (1 - pct);
+            const colors = getColorForLevel(level);
+
+            gaugeFill.style.strokeDashoffset = offset;
+            gaugeFill.setAttribute('stroke', colors.stroke);
+
+            gaugeScore.textContent = score;
+            gaugeScore.style.color = colors.text;
+            gaugeLabel.style.color = colors.text;
+
+            // Container border
+            gaugeContainer.className = `gauge-container level-${level.toLowerCase()}`;
+
+            // Badge
+            const lvl = level.toLowerCase();
+            gaugeBadge.className = `gauge-level-badge ${lvl}`;
+            gaugeDot.className   = `gauge-level-dot ${lvl}`;
+            gaugeLevelText.textContent = level;
+        }
+
+        // ── Render flags ──
+        function renderFlags(flags) {
+            if (flags.length === 0) {
+                flagsContainer.innerHTML = `
+                    <div style="padding: 24px 16px; text-align:center;">
+                        <p style="color:#525252; font-size:13px;">No risk flags detected</p>
+                    </div>`;
                 return;
             }
 
-            emptyState.style.display = 'none';
-            modelGrid.style.display  = 'grid';
-
-            modelGrid.innerHTML = filtered.map(r => {
-                const { model, tokens, fillPct, isNearLimit, isOverLimit } = r;
-                const cardClass  = isOverLimit ? 'over-limit'  : isNearLimit ? 'near-limit' : '';
-                const countClass = isOverLimit ? 'danger'       : isNearLimit ? 'warn'       : '';
-                const barClass   = isOverLimit ? 'fill-danger'  : isNearLimit ? 'fill-warn'  : 'fill-safe';
-                const fillWidth  = Math.min(100, fillPct).toFixed(2);
-
-                return `
-                <div class="model-card ${cardClass}">
-                    <div class="flex items-start justify-between gap-2 mb-3">
-                        <div>
-                            <div class="text-[13px] font-medium text-white leading-tight">${model.name}</div>
-                            <div class="text-[11px] text-[#525252] font-mono mt-0.5">${model.family}</div>
-                        </div>
-                        <div class="text-[11px] font-mono text-[#525252] shrink-0 mt-0.5">${formatContext(model.context)} ctx</div>
+            flagsContainer.innerHTML = flags.map(f => `
+                <div class="risk-flag-card">
+                    <div class="flag-header">
+                        <div class="flag-name">${f.flag}</div>
+                        <div class="flag-weight ${getWeightClass(f.weight)}">+${f.weight}</div>
                     </div>
-                    <div class="token-count ${countClass}">${formatTokens(tokens)}</div>
-                    <div class="text-[11px] text-[#525252] mt-1">tokens</div>
-                    <div class="ctx-bar-track">
-                        <div class="ctx-bar-fill ${barClass}" style="width: ${fillWidth}%"></div>
-                    </div>
-                    <div class="flex justify-between mt-1.5">
-                        <div class="text-[11px] font-mono text-[#525252]">
-                            ${isOverLimit
-                                ? `<span style="color:#dc2626">Exceeds context window</span>`
-                                : isNearLimit
-                                    ? `<span style="color:#ca8a04">${fillPct.toFixed(1)}% full</span>`
-                                    : `${fillPct.toFixed(1)}% of context`
-                            }
-                        </div>
-                        <div class="text-[11px] font-mono text-[#525252]">${formatTokens(model.context - tokens > 0 ? model.context - tokens : 0)} left</div>
-                    </div>
-                </div>`;
-            }).join('');
+                    <div class="flag-desc">${f.description}</div>
+                </div>
+            `).join('');
         }
 
-        // ── Update stats row ─────────────────────────────────────────────────
+        // ── Update stats row ──
         function updateStats(text) {
             const chars = text.length;
             const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
@@ -619,41 +631,46 @@
             clearBtn.style.display = chars > 0 ? 'inline' : 'none';
         }
 
-        // ── Main update handler ───────────────────────────────────────────────
+        // ── Main update handler ──
         function update() {
             const text = promptInput.value;
             lastText   = text;
             updateStats(text);
 
-            if (text.trim().length === 0 || MODELS.length === 0) {
-                lastResults = [];
-                renderCards([]);
+            if (text.trim().length === 0) {
+                lastResult = { score: 0, level: 'Safe', flags: [] };
+                emptyState.style.display  = 'block';
+                resultsGrid.style.display = 'none';
                 syncTextToURL('');
                 return;
             }
 
-            lastResults = countAllModels(text, MODELS);
-            renderCards(lastResults);
+            lastResult = scoreHallucinationRisk(text);
+            emptyState.style.display  = 'none';
+            resultsGrid.style.display = 'grid';
+
+            renderGauge(lastResult.score, lastResult.level);
+            renderFlags(lastResult.flags);
             syncTextToURL(text);
         }
 
-        // ── Input event (debounced) ───────────────────────────────────────────
+        // ── Input event (debounced) ──
         promptInput.addEventListener('input', () => {
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(update, 120);
         });
 
-        // ── Clear ─────────────────────────────────────────────────────────────
+        // ── Clear ──
         clearBtn.addEventListener('click', () => {
             promptInput.value = '';
             update();
             promptInput.focus();
         });
 
-        // ── Copy Results ──────────────────────────────────────────────────────
+        // ── Copy Results ──
         copyResultsBtn.addEventListener('click', async () => {
             if (!lastText.trim()) return;
-            const summary = buildSummaryText(lastText, lastResults);
+            const summary = buildSummaryText(lastText, lastResult);
             try {
                 await navigator.clipboard.writeText(summary);
                 copyResultsBtn.classList.add('success');
@@ -665,7 +682,7 @@
             } catch { console.warn('Clipboard write failed'); }
         });
 
-        // ── Share ─────────────────────────────────────────────────────────────
+        // ── Share ──
         shareBtn.addEventListener('click', async () => {
             try {
                 await navigator.clipboard.writeText(window.location.href);
@@ -678,41 +695,12 @@
             } catch { console.warn('Clipboard write failed'); }
         });
 
-        // ── Bootstrap: fetch models, then init ────────────────────────────────
-        (async () => {
-            loadingState.style.display = 'flex';
-            emptyState.style.display   = 'none';
-            try {
-                const { models, families, fromFallback } = await fetchModels();
-                MODELS = models;
-                buildTabs(families);
-
-                if (modelCount) {
-                    modelCount.textContent = `${models.length} models from ${families.length - 1} providers`;
-                }
-
-                // Show fallback notice if API was unreachable
-                if (fromFallback && fallbackNotice) {
-                    fallbackNotice.style.display = 'flex';
-                    if (modelCount) modelCount.textContent += ' (offline fallback)';
-                }
-
-                loadingState.style.display = 'none';
-
-                // Restore from URL if present
-                const urlText = getTextFromURL();
-                if (urlText) {
-                    promptInput.value = urlText;
-                    update();
-                } else {
-                    emptyState.style.display = 'block';
-                }
-            } catch (err) {
-                console.error('Failed to load models:', err);
-                loadingState.style.display = 'none';
-                errorState.style.display   = 'block';
-            }
-        })();
+        // ── Bootstrap: restore from URL if present ──
+        const urlText = getTextFromURL();
+        if (urlText) {
+            promptInput.value = urlText;
+            update();
+        }
     </script>
 </body>
 
