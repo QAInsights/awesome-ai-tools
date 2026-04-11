@@ -36,6 +36,77 @@ const server = serve({
         const url = new URL(request.url);
         let pathname = url.pathname;
 
+        // --- GitHub OAuth Local Handler ---
+        if (pathname === '/api/auth/github') {
+            const code = url.searchParams.get('code');
+            const state = url.searchParams.get('state');
+
+            if (!code) {
+                return new Response('No code provided', { status: 400 });
+            }
+
+            try {
+                // 1. Exchange code for access token
+                const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        client_id: process.env.GITHUB_CLIENT_ID,
+                        client_secret: process.env.GITHUB_CLIENT_SECRET,
+                        code: code,
+                    }),
+                });
+
+                const tokenData = await tokenResponse.json() as any;
+
+                if (tokenData.error) {
+                    return new Response(JSON.stringify(tokenData), {
+                        status: 400,
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                }
+
+                // 2. Get user profile
+                const userResponse = await fetch('https://api.github.com/user', {
+                    headers: {
+                        'Authorization': `token ${tokenData.access_token}`,
+                        'User-Agent': 'Awesome-AI-Tools-Local'
+                    },
+                });
+
+                const userData = await userResponse.json() as any;
+
+                // 3. Return user data formatted for AuthManager
+                const userProfile = {
+                    id: userData.id,
+                    name: userData.name || userData.login,
+                    email: userData.email,
+                    picture: userData.avatar_url,
+                    githubUsername: userData.login,
+                    provider: 'github'
+                };
+
+                // Redirect back to origin with the user data in base64url format
+                const base64Data = Buffer.from(JSON.stringify(userProfile)).toString('base64url');
+
+                // Always redirect back to the home page with the auth payload and returned state
+                return new Response(null, {
+                    status: 302,
+                    headers: {
+                        'Location': `/?github_auth=${base64Data}&state=${state || ''}`
+                    }
+                });
+
+            } catch (error) {
+                console.error('Local OAuth Error:', error);
+                return new Response('Internal Server Error', { status: 500 });
+            }
+        }
+        // ------------------------------------
+
         if (pathname === '/') pathname = '/index.html';
 
         if (pathname === '/favicon.ico') {

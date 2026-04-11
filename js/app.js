@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     /**
-     * Initialize authentication system
+     * Initialize authentication system (Google + GitHub)
      */
     async function initializeAuth() {
         try {
@@ -296,11 +296,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const user = auth.getCurrentUser();
                     if (!user) return;
                     
-                    // Format name for Shields.io
-                    let safeName = user.name.trim().replace(/\s+/g, '_');
-                    safeName = encodeURIComponent(safeName);
+                    // Prefer GitHub username for badge (more useful for devs); fall back to display name
+                    let badgeLabel;
+                    if (user.githubUsername) {
+                        badgeLabel = encodeURIComponent(`@${user.githubUsername}`);
+                    } else {
+                        let safeName = user.name.trim().replace(/\s+/g, '_');
+                        badgeLabel = encodeURIComponent(safeName);
+                    }
                     
-                    const badgeUrl = `https://img.shields.io/badge/My_Awesome_AI_Tools-${safeName}-a78bfa?style=for-the-badge&logo=github`;
+                    const badgeUrl = `https://img.shields.io/badge/My_Awesome_AI_Tools-${badgeLabel}-a78bfa?style=for-the-badge&logo=github`;
                     const markdown = `[![My AI Stack](${badgeUrl})](https://ai.dosa.dev)`;
                     
                     badgePreview.src = badgeUrl;
@@ -387,6 +392,7 @@ document.addEventListener('DOMContentLoaded', async () => {
      */
     function updateAuthUI() {
         const signInBtn = document.getElementById('googleSignInBtn');
+        const githubSignInBtn = document.getElementById('githubSignInBtn');
         const userProfile = document.getElementById('userProfile');
         const userAvatar = document.getElementById('userAvatar');
         const userName = document.getElementById('userName');
@@ -399,19 +405,23 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (userProfile) {
                 userProfile.classList.remove('hidden');
                 if (userAvatar) userAvatar.src = user.picture;
-                if (userName) userName.textContent = user.name;
-                if (userEmail) userEmail.textContent = user.email;
+                if (userName) {
+                    // Show GitHub username alongside name for GitHub users
+                    userName.textContent = user.githubUsername
+                        ? `${user.name} (@${user.githubUsername})`
+                        : user.name;
+                }
+                if (userEmail) userEmail.textContent = user.email || '';
             }
 
-            // Hide sign-in button container
-            if (signInBtn) {
-                signInBtn.classList.add('hidden');
-            }
+            // Hide both sign-in button containers
+            if (signInBtn) signInBtn.classList.add('hidden');
+            if (githubSignInBtn) githubSignInBtn.classList.add('hidden');
 
             // Update collapsed sidebar
             collapsedSidebar?.setAuthState(true, user.picture);
         } else {
-            // Show sign-in button container
+            // Show Google sign-in button container
             if (signInBtn) {
                 signInBtn.classList.remove('hidden');
                 if (auth.isInitialized) {
@@ -423,6 +433,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                         width: 280
                     });
                 }
+            }
+
+            // Show GitHub sign-in button container
+            if (githubSignInBtn) {
+                githubSignInBtn.classList.remove('hidden');
+                auth.renderGitHubSignInButton('githubSignInBtn');
             }
 
             // Hide user profile
