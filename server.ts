@@ -5,10 +5,9 @@ const PORT = 3000;
 const ROOT = import.meta.dir;
 const FAVICON_PATH = `${ROOT}/images/icons/favicon.ico`;
 
-async function isRegularFile(path: string): Promise<boolean> {
+async function fileExists(path: string): Promise<boolean> {
     try {
-        const stat = await Bun.file(path).stat();
-        return stat.isFile();
+        return await Bun.file(path).exists();
     } catch {
         return false;
     }
@@ -22,7 +21,7 @@ async function resolveFile(pathname: string): Promise<Response> {
     ];
 
     for (const filePath of candidates) {
-        if (await isRegularFile(filePath)) {
+        if (await fileExists(filePath)) {
             return new Response(Bun.file(filePath));
         }
     }
@@ -39,7 +38,7 @@ const server = serve({
         if (pathname === '/') pathname = '/index.html';
 
         if (pathname === '/favicon.ico') {
-            if (await isRegularFile(FAVICON_PATH)) return new Response(Bun.file(FAVICON_PATH));
+            if (await fileExists(FAVICON_PATH)) return new Response(Bun.file(FAVICON_PATH));
             return new Response('Not Found', { status: 404 });
         }
 
