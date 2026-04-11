@@ -20,18 +20,28 @@ export class Accordion {
         if (!this.content) return;
         this.expanded = true;
         this.content.style.maxHeight = this.content.scrollHeight + 'px';
-        this.content.classList.remove('opacity-80');
+        this.content.classList.remove('opacity-0');
         this.content.classList.add('opacity-100');
         if (this.icon) this.icon.style.transform = 'rotate(180deg)';
         if (this.toggle) this.toggle.setAttribute('aria-expanded', 'true');
+        this.content.addEventListener('transitionend', () => {
+            if (this.expanded) {
+                this.content.style.maxHeight = 'none';
+                this.content.style.overflow = 'visible';
+            }
+        }, { once: true });
     }
 
     collapse() {
         if (!this.content) return;
         this.expanded = false;
-        this.content.style.maxHeight = '0';
+        this.content.style.overflow = 'hidden';
+        this.content.style.maxHeight = this.content.scrollHeight + 'px';
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => { this.content.style.maxHeight = '0'; });
+        });
         this.content.classList.remove('opacity-100');
-        this.content.classList.add('opacity-80');
+        this.content.classList.add('opacity-0');
         if (this.icon) this.icon.style.transform = 'rotate(0deg)';
         if (this.toggle) this.toggle.setAttribute('aria-expanded', 'false');
     }
