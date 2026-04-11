@@ -2,19 +2,47 @@ import { serve } from "bun";
 
 const PORT = 3000;
 
+const ROOT = import.meta.dir;
+const FAVICON_PATH = `${ROOT}/images/icons/favicon.ico`;
+
+async function fileExists(path: string): Promise<boolean> {
+    try {
+        return await Bun.file(path).exists();
+    } catch {
+        return false;
+    }
+}
+
+async function resolveFile(pathname: string): Promise<Response> {
+    const candidates = [
+        `${ROOT}${pathname}`,
+        `${ROOT}${pathname}.html`,
+        `${ROOT}${pathname}/index.html`,
+    ];
+
+    for (const filePath of candidates) {
+        if (await fileExists(filePath)) {
+            return new Response(Bun.file(filePath));
+        }
+    }
+
+    return new Response('Not Found', { status: 404 });
+}
+
 const server = serve({
     port: PORT,
-    fetch(request) {
+    async fetch(request) {
         const url = new URL(request.url);
-        const pathname = url.pathname === '/' ? '/index.html' : url.pathname;
-        const filePath = `.${pathname}`;
-        
-        try {
-            const file = Bun.file(filePath);
-            return new Response(file);
-        } catch (e) {
+        let pathname = url.pathname;
+
+        if (pathname === '/') pathname = '/index.html';
+
+        if (pathname === '/favicon.ico') {
+            if (await fileExists(FAVICON_PATH)) return new Response(Bun.file(FAVICON_PATH));
             return new Response('Not Found', { status: 404 });
         }
+
+        return resolveFile(pathname);
     },
 });
 
