@@ -108,10 +108,12 @@
 
         <!-- Authentication Section (always visible above footer) -->
         <div class="px-4 py-3 border-t border-[#222] shrink-0 bg-[#0a0a0a] sticky bottom-0 z-20 md:static md:z-auto">
-            <!-- Google Sign-In Button -->
-            <div id="googleSignInBtn" class="flex justify-center w-full"></div>
-            <!-- GitHub Sign-In Button -->
-            <div id="githubSignInBtn" class="flex justify-center w-full mt-2"></div>
+            <div class="flex flex-col items-center gap-2.5 w-full">
+                <!-- Google Sign-In Button -->
+                <div id="googleSignInBtn" class="flex justify-center w-full min-h-[40px]"></div>
+                <!-- GitHub Sign-In Button -->
+                <div id="githubSignInBtn" class="flex justify-center w-full"></div>
+            </div>
 
             <!-- User Profile (shown when signed in) -->
             <div id="userProfile" class="hidden relative">

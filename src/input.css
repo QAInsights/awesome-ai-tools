@@ -147,7 +147,8 @@
         align-items: center;
         justify-content: center;
         gap: 12px;
-        width: 280px; /* Matches the width set for Google button in app.js */
+        width: 100%;
+        max-width: 280px; /* Matches the width set for Google button in app.js */
         height: 40px; /* Matches Google 'large' button height */
         background: #131314;
         color: #e3e3e3;
