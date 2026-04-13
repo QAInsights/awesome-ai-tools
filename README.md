@@ -69,6 +69,7 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Kode](https://github.com/shareAI-lab/Kode-Agent)** | ShareAI | AI developer assistant and workspace integration |
 | **[Apertis](https://apertis.ai/)** | Stima AI | One API key works across all major coding agents |
 | **[Corust](https://corust.ai/)** | Corust | Your seasoned Rust co-pilot: production-grade code generation, zero hallucinations on Rust idioms, and tools built for real Rustaceans. |
+| **[Toprank](https://github.com/nowork-studio/toprank)** | nowork-studio | Open-source Claude Code plugin for SEO, Google Ads, content writing, and CMS optimization workflows |
 | **[WozCode](https://www.wozcode.com/)** | WozCode | A Claude Code plugin that supercharges performance, cost, and speed |
 | **[Oh My codeX](https://github.com/Yeachan-Heo/oh-my-codex)** | Yeachan-Heo | OmX: Your codex is not alone. Add hooks, agent teams, HUDs, and so much more |
 | **[IBM Bob](https://bob.ibm.com/)** | IBM | Your AI-Powered Development Partner |
