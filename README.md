@@ -36,7 +36,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[Verdent](https://www.verdent.ai)** | Verdent | An agentic coding tool focused on parallel agents and isolated workspaces |
 | **[Pochi](https://app.getpochi.com/home)** | Pochi | Pochi is a VS Code–native AI coding agent built by TabbyML that stands out primarily through its parallel agent execution, local model support, and more. |
 | **[Qoder](https://qoder.com/en)** | Qoder | Agentic Coding Platform for Real Software. |
-| **[Devin](https://devin.ai/)** | Cognition AI | Crush your backlog with your personal AI engineering team. |
+| **[Devin](https://devin.ai/)** | Cognition | Crush your backlog with your personal AI engineering team. |
 | **[Z Code](https://zcode.z.ai/)** | Z | Z Code combines the best AI agents with your existing tools so you can plan, code, review, and deploy without friction. |
 
 
@@ -47,8 +47,8 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 
 | Tool | Company | Notes |
 |------|---------|-------|
-| **[GitHub Copilot](https://github.com/features/copilot)** | Microsoft / GitHub | Industry standard; inline autocomplete + agent mode; 15M+ devs |
-| **[JetBrains Junie](https://www.jetbrains.com/ai/)** | JetBrains | The JetBrains AI agent; deep integration with IntelliJ, PyCharm, WebStorm |
+| **[GitHub Copilot](https://github.com/features/copilot)** | GitHub | Industry standard; inline autocomplete + agent mode; 15M+ devs |
+| **[Junie](https://www.jetbrains.com/ai/)** | JetBrains | The JetBrains AI agent; deep integration with IntelliJ, PyCharm, WebStorm |
 | **[Gemini Code Assist](https://cloud.google.com/gemini/docs/codeassist/overview)** | Google | Gemini-powered; free for individuals; VS Code + Google Cloud integration |
 | **[Amazon Q Developer](https://aws.amazon.com/q/developer/)** | AWS | Evolution of CodeWhisperer; multi-file agents; deep AWS integration |
 | **[Tabnine](https://www.tabnine.com)** | Tabnine | Privacy-first; on-premise options; all major IDEs; ethically sourced training |
@@ -57,9 +57,9 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Roo Code](https://roocode.com)** | Roo Code | VS Code extension; strong on large multi-file changes; fork of Cline |
 | **[Continue](https://continue.dev)** | Continue | Open-source; VS Code + JetBrains; custom AI assistants; 20K+ GitHub stars |
 | **[Augment Code](https://augmentcode.com)** | Augment | World-class context engine; enterprise-grade; strong SWE-bench scores |
-| **[Sourcegraph Cody](https://sourcegraph.com/cody)** | Sourcegraph | Deep codebase indexing; cross-repository context; best for large codebases |
+| **[Cody](https://sourcegraph.com/cody)** | Sourcegraph | Deep codebase indexing; cross-repository context; best for large codebases |
 | **[Supermaven](https://supermaven.com)** | Supermaven | Ultra-fast AI completion; large context windows |
-| **[Blackbox AI](https://blackboxai.com)** | Blackbox | AI code completion + chat; multi-language support |
+| **[Blackbox](https://blackboxai.com)** | Blackbox | AI code completion + chat; multi-language support |
 | **[Snyk Code](https://snyk.io/product/snyk-code/)** | Snyk | AI-driven security scanning; real-time vulnerability detection in-IDE |
 | **[Qodo](https://qodo.ai)** *(formerly CodiumAI)* | Qodo | AI-generated unit tests; code quality + PR review focus |
 | **[MarsCode](https://marscode.com)** | ByteDance | AI coding assistant and online IDE; companion to Trae |
@@ -67,11 +67,12 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[CodeBuddy](https://www.codebuddy.ai/)** | Tencent | MCP-compatible coding assistant extension; ⚠️ not available in the USA |
 | **[Cortex Code](https://www.snowflake.com/en/product/features/cortex-code/)** | Snowflake | MCP-compatible AI code assistant extension |
 | **[Kode](https://github.com/shareAI-lab/Kode-Agent)** | ShareAI | AI developer assistant and workspace integration |
-| **[Apertis](https://apertis.ai/)** | Stima AI | One API key works across all major coding agents |
+| **[Apertis](https://apertis.ai/)** | Stima | One API key works across all major coding agents |
 | **[Corust](https://corust.ai/)** | Corust | Your seasoned Rust co-pilot: production-grade code generation, zero hallucinations on Rust idioms, and tools built for real Rustaceans. |
+| **[Toprank](https://github.com/nowork-studio/toprank)** | nowork-studio | Open-source Claude Code plugin for SEO, Google Ads, content writing, and CMS optimization workflows |
 | **[WozCode](https://www.wozcode.com/)** | WozCode | A Claude Code plugin that supercharges performance, cost, and speed |
 | **[Oh My codeX](https://github.com/Yeachan-Heo/oh-my-codex)** | Yeachan-Heo | OmX: Your codex is not alone. Add hooks, agent teams, HUDs, and so much more |
-| **[IBM Bob](https://bob.ibm.com/)** | IBM | Your AI-Powered Development Partner |
+| **[Bob](https://bob.ibm.com/)** | IBM | Your AI-Powered Development Partner |
 | **[Firebender](https://firebender.com/)** | Firebender | The first Android-native coding agent that writes features, tests them in the emulator, and fixes issues automatically |
 
 ---
@@ -82,25 +83,24 @@ AI coding agents that live in your terminal or command line.
 | Tool | Company | Notes |
 |------|---------|-------|
 | **[Claude Code](https://docs.anthropic.com/en/docs/claude-code)** | Anthropic | Terminal-native agentic coding; top-rated for complex reasoning & large refactors |
-| **[OpenAI Codex CLI](https://github.com/openai/codex)** | OpenAI | Re-emerged as agent-first tool; runs against real repos from the CLI |
+| **[Codex CLI](https://github.com/openai/codex)** | OpenAI | Re-emerged as agent-first tool; runs against real repos from the CLI |
 | **[Aider](https://aider.chat)** | Open Source | Git-native terminal pair programmer; 39K GitHub stars; auto-commits changes |
 | **[Gemini CLI](https://github.com/google-gemini/gemini-cli)** | Google | Terminal agent for local repo tasks; lightweight; no UI overhead |
-| **[Goose](https://block.github.io/goose/)** | Block (Square) | Open-source AI agent framework; fully local; write/execute/debug from CLI |
+| **[Goose](https://block.github.io/goose/)** | Block | Open-source AI agent framework; fully local; write/execute/debug from CLI |
 | **[Amazon Q CLI](https://aws.amazon.com/q/developer/)** | AWS | CLI agent component of Amazon Q; AWS-integrated terminal tasks |
-| **[Letta Code](https://github.com/letta-ai/letta-code)** | Letta AI | Memory-first terminal coding agent; stateful across sessions; [Docs](https://docs.letta.com/letta-code) |
-| **[Qwen CLI](https://qwen.ai/qwencode)** | Alibaba Qwen | High-performance CLI tool for Qwen models; specialized in code generation |
-| **[Codebuff](https://www.codebuff.com/)** | Codebuff AI | Terminal-native AI coding agent with deep codebase awareness; [GitHub](https://github.com/CodebuffAI/codebuff) |
+| **[Letta Code](https://github.com/letta-ai/letta-code)** | Letta | Memory-first terminal coding agent; stateful across sessions; [Docs](https://docs.letta.com/letta-code) |
+| **[Qwen CLI](https://qwen.ai/qwencode)** | Alibaba | High-performance CLI tool for Qwen models; specialized in code generation |
+| **[Codebuff](https://www.codebuff.com/)** | Codebuff | Terminal-native AI coding agent with deep codebase awareness; [GitHub](https://github.com/CodebuffAI/codebuff) |
 | **[OpenClaw](https://openclaw.ai/)** | OpenClaw | CLI-based autonomous agent with MCP skill support |
 | **[Command Code](https://commandcode.ai/)** | Command Code | Stop fixing sloppy AI code. Command Code continuously learns your coding taste. Powered by taste-1 applied meta neuro-symbolic AI. |
 | **[Crush](https://github.com/charmbracelet/crush)** | Charmbracelet | CLI tool for MCP-based coding workflows |
-| **[iFlow CLI](https://github.com/iflow-ai/iflow-cli)** | iFlow AI | Terminal AI agent for workflow automation |
+| **[iFlow CLI](https://github.com/iflow-ai/iflow-cli)** | iFlow | Terminal AI agent for workflow automation |
 | **[Kiro CLI](https://kiro.dev/cli/)** | AWS | Command-line agent interface with MCP capabilities |
 | **[MCPJam](https://www.mcpjam.com)** | MCPJam | CLI agent optimized for Model Context Protocol integration |
-| **[Mistral Vibe](https://github.com/mistralai/mistral-vibe)** | Mistral AI | Terminal agent leveraging Mistral models |
+| **[Mistral Vibe](https://github.com/mistralai/mistral-vibe)** | Mistral | Terminal agent leveraging Mistral models |
 | **[Mux](https://coder.com/products/mux)** | Coder | Advanced terminal AI assistant and multiplexer |
-| **[Pi](https://github.com/can1357/oh-my-pi)** | Open Source | Lightweight terminal-based AI workspace assistant |
 | **[Zencoder](https://zencoder.ai/)** | Zencoder | Specialized terminal-based AI coding assistant |
-| **[Neovate](https://github.com/neovateai/neovate-code)** | NeovateAI | Next-gen terminal and Neovim integrated agent |
+| **[Neovate](https://github.com/neovateai/neovate-code)** | Neovate | Next-gen terminal and Neovim integrated agent |
 | **[AdaL](https://sylph.ai/)** | Sylph | Autonomous developer agent for the CLI |
 | **[Cline Kanban](https://cline.bot/kanban)** | Cline | Cline Kanban works with the agents you're already using: Claude Code, Codex, and Cline-compatible agents, with more to come. |
 | **[Parallel Code](https://parallelcode.app/)** | Parallel Code | Parallel Code is a desktop app that gives every AI coding agent its own git branch and worktree — automatically.|
@@ -112,6 +112,7 @@ AI coding agents that live in your terminal or command line.
 | **[Compass Nova CLI](https://github.com/Compass-Agentic-Platform/nova)** | Compass | Compass Nova CLI |
 | **[Pi ACP](https://github.com/svkozak/pi-acp)** | svkozak | ACP adapter for pi coding agent |
 | **[Stakpak Agent](https://github.com/stakpak/agent)** | Stakpak | Ship your code, on autopilot. Open source agent that lives on your machines 24/7 and keeps your apps running |
+| **[OpenCode](https://opencode.ai/)** | Anomaly | OpenCode is an open source agent that helps you write and run code with any AI model. It's available as a terminal-based interface, desktop app, or IDE extension. Free models included or connect any model from any provider, including Claude, GPT, Gemini and more.; [GitHub](https://github.com/anomalyco/opencode) |
 
 ---
 
@@ -130,11 +131,11 @@ Agents that operate independently on tasks, often outside your local editor.
 
 | Tool | Company | Notes |
 |------|---------|-------|
-| **[Devin](https://cognition.ai/devin)** | Cognition AI | First "AI software engineer"; own sandbox environment; terminal + editor + browser |
+| **[Devin](https://cognition.ai/devin)** | Cognition | First "AI software engineer"; own sandbox environment; terminal + editor + browser |
 | **[Jules](https://jules.google)** | Google | Async GitHub-integrated agent; clones repo into GCP VM; works while you code; powered by Gemini 2.5 Pro |
-| **[OpenHands](https://github.com/All-Hands-AI/OpenHands)** | All Hands AI | Open-source autonomous coding agent; 95K+ GitHub stars |
+| **[OpenHands](https://github.com/All-Hands-AI/OpenHands)** | All Hands | Open-source autonomous coding agent; 95K+ GitHub stars |
 | **[SWE-agent](https://swe-agent.com)** | Princeton NLP | Open-source agent for autonomously solving GitHub issues |
-| **[Sweep AI](https://sweep.dev/)** | Sweep | Acts as an autonomous junior developer. Branches, writes code, and opens PRs from issues |
+| **[Sweep](https://sweep.dev/)** | Sweep | Acts as an autonomous junior developer. Branches, writes code, and opens PRs from issues |
 | **[Ellipsis](https://www.ellipsis.dev/)** | Ellipsis | AI agent that reviews pull requests and converts comments directly into runnable code commits |
 | **[Genie](https://cosine.sh/)** | Cosine | One of the highest performing autonomous models strictly evaluated against the SWE-bench benchmarks |
 | **[Open-yak](https://open-yak.com/)** | Open-yak | Open-source desktop AI agent with 130+ skills, 46 MCP connectors, and IM gateway |
@@ -151,8 +152,8 @@ AI tools that generate full apps or UIs from natural language, no local setup re
 | **[v0](https://v0.dev)** | Vercel | Natural language → React + Tailwind UI components; Vercel ecosystem |
 | **[Lovable](https://lovable.dev)** | Lovable | AI web app builder; production-ready full-stack from prompts |
 | **[Replit](https://replit.com)** | Replit | Cloud IDE + AI builder; deploy from browser; great for beginners |
-| **[PlayCode AI](https://playcode.io)** | PlayCode | 15+ AI models in-browser; builds complete websites without coding |
-| **[Emergent.sh](https://app.emergent.sh/register?ref=catc151141)** | Emergent AI | Agentic vibe-coding platform for building and deploying full-stack apps from natural language |
+| **[PlayCode](https://playcode.io)** | PlayCode | 15+ AI models in-browser; builds complete websites without coding |
+| **[Emergent.sh](https://app.emergent.sh/register?ref=catc151141)** | Emergent | Agentic vibe-coding platform for building and deploying full-stack apps from natural language |
 | **[Bitrig](https://bitrig.com/)** | Bitrig | Describe what you want to build, and Bitrig turns it into real Swift code you can ship to the App Store. |
 | **[Manus](https://manus.im)** | Meta | Manus lets your team ship production-ready applications without engineering bottlenecks. |
 
@@ -166,7 +167,6 @@ Tools focused on reviewing, securing, and validating code — not generating it.
 | **[CodeRabbit](https://coderabbit.ai)** | CodeRabbit | AI-powered PR reviews; line-by-line feedback; integrates with GitHub/GitLab |
 | **[Qodo](https://qodo.ai)** | Qodo | PR validation, test generation, merge readiness checks |
 | **[Snyk Code](https://snyk.io/product/snyk-code/)** | Snyk | SAST security scanning; real-time vulnerability detection; DevSecOps integration |
-| **[DeepCode / Snyk](https://snyk.io)** | Snyk | AI-driven code analysis; now fully under Snyk Code brand |
 
 ---
 
