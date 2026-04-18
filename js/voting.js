@@ -1,15 +1,8 @@
-import fpPromise from '@fingerprintjs/fingerprintjs';
+import { auth } from './auth.js';
 
 const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:8080';
 let zapCounts = {};
-let localVisitorId = "loading...";
 let isVoting = false;
-
-fpPromise.load()
-    .then(fp => fp.get())
-    .then(result => {
-        localVisitorId = result.visitorId;
-    });
 
 export function getVoteCount(toolId) {
     return zapCounts[toolId] || 0;
@@ -57,8 +50,26 @@ export async function initVoting() {
         // Prevent multiple rapid api calls
         if (btn.classList.contains('zapped')) return;
 
+        // Require authentication to vote
+        if (!auth.isAuthenticated()) {
+            const countEl = btn.querySelector('.zap-count');
+            const originalTip = btn.dataset.tip;
+            btn.dataset.tip = "Sign in to vote!";
+            countEl.textContent = "Login";
+            countEl.style.color = "#a78bfa";
+            setTimeout(() => {
+                countEl.textContent = zapCounts[toolId]?.toLocaleString() || '0';
+                countEl.style.color = "";
+                btn.dataset.tip = originalTip;
+            }, 2000);
+            return;
+        }
+
+        const user = auth.getCurrentUser();
+        const voterId = `${user.provider}:${user.id}`;
+
         // Once confirmed not clicked, cast the vote securely
-        castVote(toolId, toolName, localVisitorId, btn);
+        castVote(toolId, toolName, voterId, btn);
 
         if (!zapCounts[toolId]) {
             zapCounts[toolId] = parseInt(btn.querySelector('.zap-count').textContent.replace(/,/g, '')) || 0;
@@ -75,15 +86,37 @@ export async function initVoting() {
     });
 }
 
-async function castVote(toolId, toolName, visitorId, btn) {
+async function waitForTurnstileToken(timeoutMs = 3000) {
+    // If token already available, return immediately
     const turnstileInput = document.querySelector('[name="cf-turnstile-response"]');
-    const tokenVal = window.cfTokenValue || (turnstileInput ? turnstileInput.value : "");
+    if (window.cfTokenValue || (turnstileInput && turnstileInput.value)) {
+        return window.cfTokenValue || turnstileInput.value;
+    }
+
+    // Wait for Turnstile callback to populate window.cfTokenValue
+    return new Promise((resolve) => {
+        const start = Date.now();
+        const interval = setInterval(() => {
+            if (window.cfTokenValue) {
+                clearInterval(interval);
+                resolve(window.cfTokenValue);
+            } else if (Date.now() - start > timeoutMs) {
+                clearInterval(interval);
+                console.warn('[Voting] Turnstile token timed out, sending without cf_token');
+                resolve("");
+            }
+        }, 100);
+    });
+}
+
+async function castVote(toolId, toolName, voterId, btn) {
+    const cfToken = await waitForTurnstileToken();
 
     const payload = {
         tool_id: toolId,
         tool_name: toolName,
-        visitor_id: visitorId,
-        cf_token: tokenVal
+        visitor_id: voterId,
+        cf_token: cfToken
     };
 
     const response = await fetch(`${API_BASE_URL}/api/v1/vote`, {
@@ -94,7 +127,7 @@ async function castVote(toolId, toolName, visitorId, btn) {
         body: JSON.stringify(payload)
     });
 
-    // new token for the next vote
+    // Reset Turnstile for the next vote
     if (window.turnstile && window.turnstileWidgetId !== undefined) {
         window.turnstile.reset(window.turnstileWidgetId);
         window.cfTokenValue = "";
@@ -145,7 +178,7 @@ async function castVote(toolId, toolName, visitorId, btn) {
                 }, 3000);
             }
         } else {
-            // Rollback for Turnstile validation failures or general server errors
+            // Rollback for general server errors
             if (btn) {
                 btn.classList.remove('zapped');
                 zapCounts[toolId]--;

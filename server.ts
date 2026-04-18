@@ -1,4 +1,22 @@
 import { serve } from "bun";
+import { readFileSync } from "fs";
+
+// Load .env.local for local development (Bun only auto-loads .env)
+function loadEnvLocal() {
+    try {
+        const content = readFileSync(".env.local", "utf-8");
+        for (const line of content.split("\n")) {
+            const trimmed = line.trim();
+            if (!trimmed || trimmed.startsWith("#")) continue;
+            const eqIdx = trimmed.indexOf("=");
+            if (eqIdx === -1) continue;
+            const key = trimmed.slice(0, eqIdx).trim();
+            const val = trimmed.slice(eqIdx + 1).trim().replace(/^"|"$/g, "");
+            process.env[key] = val;
+        }
+    } catch {}
+}
+loadEnvLocal();
 
 const PORT = 3000;
 

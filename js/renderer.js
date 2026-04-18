@@ -5,6 +5,7 @@
 import { getShortCategory } from './parser.js';
 import { getVoteCount } from './voting.js';
 import { sortTools } from './sorting.js';
+import { auth } from './auth.js';
 
 const ENABLE_VOTING = process.env.ENABLE_VOTING === 'true';
 
@@ -124,7 +125,7 @@ function createToolRow(tool, index) {
                 </a>
             </div>
             <div class="shrink-0 md:w-[84px] md:pr-6 flex justify-end lg:justify-start md:order-5">
-${ENABLE_VOTING ? `
+${ENABLE_VOTING ? (auth.isAuthenticated() ? `
                 <button class="zap-btn sm" data-tip="Zap this tool!" 
                     data-tool-id="${toolId}"
                     data-tool-name="${tool.name}">
@@ -142,11 +143,20 @@ ${ENABLE_VOTING ? `
                     <span class="zap-count">${initialVoteCount.toLocaleString()}</span>
                 </button>
 ` : `
+                <button class="zap-btn sm" data-tip="Sign in to vote!" 
+                    data-tool-id="${toolId}"
+                    data-tool-name="${tool.name}">
+                    <svg class="zap-icon" viewBox="0 0 24 24" fill="none" style="opacity:0.4">
+                        <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
+                    </svg>
+                    <span class="zap-count" style="opacity:0.5">${initialVoteCount.toLocaleString()}</span>
+                </button>
+`) : `
                 <button class="zap-btn sm opacity-50 cursor-not-allowed" disabled data-tip="Voting is currently disabled.">
                     <svg class="zap-icon" viewBox="0 0 24 24" fill="none">
                         <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
                     </svg>
-                    <span class="zap-count">0</span>
+                    <span class="zap-count">${initialVoteCount.toLocaleString()}</span>
                 </button>
 `}
             </div>

@@ -1,4 +1,24 @@
 import { build } from "bun";
+import { readFileSync } from "fs";
+
+// Load .env.local for local development (Bun only auto-loads .env by default)
+// Parse and set env vars so they override system env vars for local dev
+function loadEnvLocal() {
+    try {
+        const content = readFileSync(".env.local", "utf-8");
+        for (const line of content.split("\n")) {
+            const trimmed = line.trim();
+            if (!trimmed || trimmed.startsWith("#")) continue;
+            const eqIdx = trimmed.indexOf("=");
+            if (eqIdx === -1) continue;
+            const key = trimmed.slice(0, eqIdx).trim();
+            const val = trimmed.slice(eqIdx + 1).trim().replace(/^"|"$/g, "");
+            // .env.local overrides system env — that's the point of local dev overrides
+            process.env[key] = val;
+        }
+    } catch {}
+}
+loadEnvLocal();
 
 // Read from the active environment (e.g. Vercel) or fallback for local
 const enableVoting = process.env.ENABLE_VOTING || 'true';

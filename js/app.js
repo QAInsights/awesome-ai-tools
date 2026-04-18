@@ -370,18 +370,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         updateAuthUI();
         
-        // You can add more logic here based on auth events
+        // Re-render tools so vote buttons update their auth-gated visual state
+        if (grid && toolsData.length > 0) {
+            filterAndRender();
+        }
+
         switch (event) {
             case 'signin':
-                // User just signed in
                 console.log('Welcome back!', user.name);
                 break;
             case 'signout':
-                // User just signed out
                 console.log('Signed out successfully');
                 break;
             case 'session_restored':
-                // Session was restored from localStorage
                 console.log('Session restored for', user.name);
                 break;
         }
