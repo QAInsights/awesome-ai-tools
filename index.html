@@ -38,6 +38,61 @@
     <link rel="preconnect" href="https://challenges.cloudflare.com" />
     <!-- Point exactly to our new javascript bundle -->
     <script src="./dist/app.js" type="module" defer></script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://ai.dosa.dev/#website",
+          "url": "https://ai.dosa.dev",
+          "name": "ai.dosa.dev — Awesome AI Tools",
+          "description": "A curated directory of AI-powered coding tools, autonomous agents, and developer utilities.",
+          "inLanguage": "en",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://ai.dosa.dev/?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "CollectionPage",
+          "@id": "https://ai.dosa.dev/#collection",
+          "url": "https://ai.dosa.dev",
+          "name": "Awesome AI Tools Directory",
+          "description": "93+ manually curated AI-powered coding tools across 12 categories including full IDEs, editor extensions, terminal agents, autonomous agents, browser-based builders, and code review platforms.",
+          "isPartOf": { "@id": "https://ai.dosa.dev/#website" },
+          "publisher": { "@id": "https://ai.dosa.dev/#organization" },
+          "about": { "@type": "Thing", "name": "AI-powered developer tools" },
+          "keywords": "AI IDE, AI coding assistant, terminal agent, autonomous agent, vibe coding, AI code review",
+          "inLanguage": "en",
+          "dateModified": "2026-03-01",
+          "image": {
+            "@type": "ImageObject",
+            "url": "https://ai.dosa.dev/images/og-image.png",
+            "width": 1200,
+            "height": 630
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://ai.dosa.dev/#organization",
+          "name": "dosa.dev",
+          "url": "https://ai.dosa.dev",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://ai.dosa.dev/images/icons/favicon-96x96.png",
+            "width": 96,
+            "height": 96
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body class="bg-black text-white font-sans flex h-[100dvh] overflow-hidden antialiased leading-relaxed">

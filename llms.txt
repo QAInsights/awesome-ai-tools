@@ -1,0 +1,51 @@
+# ai.dosa.dev — Awesome AI Tools
+
+> A manually curated, categorized reference of AI-powered coding tools, autonomous agents, and developer utilities. Hosted at [ai.dosa.dev](https://ai.dosa.dev). Updated as of March 2026.
+
+## Overview
+
+ai.dosa.dev is a single-page web application and directory that catalogs **93+ AI tools** across 12 categories. It is aimed at software developers researching AI-assisted development tooling. The site combines a browsable tool directory with a set of client-side AI/ML utilities (token counter, hallucination scorer). Users can authenticate via GitHub OAuth to bookmark ("Zap") tools and generate a GitHub README badge displaying their AI stack.
+
+- **URL**: https://ai.dosa.dev
+- **Tech stack**: HTML, TailwindCSS 4, TypeScript, Bun, deployed on Vercel
+- **Auth**: GitHub OAuth (optional; enables personalized features)
+
+## Tool Directory Categories
+
+The directory on the main page (`/`) covers:
+
+- **AI-Native IDEs & Editors** — Full standalone editors built with AI at the core (Cursor, Windsurf, Trae, Zed, PearAI, Devin, etc.)
+- **IDE Extensions & Plugins** — Plug-in assistants for VS Code, JetBrains, Neovim, and others (GitHub Copilot, Junie, Amazon Q Developer, Cline, Kilo Code, Augment Code, Tabnine, etc.)
+- **Terminal & CLI Agents** — Coding agents that run in the terminal (Claude Code, Codex CLI, Aider, Gemini CLI, Goose, Aider, etc.)
+- **AI-Native Terminals** — Full terminal emulators with native AI (Warp, Wave)
+- **Autonomous & Async Agents** — Agents that operate independently on tasks (Devin, Jules, OpenHands, SWE-agent, Sweep, Ellipsis, etc.)
+- **Browser-Based & App Builders** — Prompt-to-app tools requiring no local setup (Bolt.new, v0, Lovable, Replit, etc.)
+- **AI Code Review & Security** — PR review and SAST tools (CodeRabbit, Qodo, Snyk Code)
+- **AI Testing & Quality Assurance** — Autonomous test generation and fixing (GitAuto)
+- **General-Purpose AI Assistants** — Chat-based assistants with strong coding capability (Claude, ChatGPT, Gemini, DeepSeek, Perplexity)
+- **AI Codebase Knowledge & Generation** — Tools for understanding large repos or generating SDKs (Greptile, Fern)
+- **Developer Productivity & Workflow** — Context management and snippet tools (Pieces for Developers, Vibe Kanban)
+- **Editor Platforms with Native AI** — Established editors with first-party AI (VS Code, Xcode, JetBrains IDEs, Visual Studio)
+
+## Pages
+
+- [Tool Directory](https://ai.dosa.dev/) — Main browsable catalog with sidebar navigation, search, and filtering
+- [Token Counter & Cost Estimator](https://ai.dosa.dev/tools/token-counter) — Paste text to get instant token counts and cost estimates for GPT-4o, Claude 3.5, Gemini 1.5, and Llama 3
+- [Hallucination Risk Scorer](https://ai.dosa.dev/tools/hallucination-scorer) — Heuristic-based scorer that flags prompt patterns prone to hallucination
+- [Settings](https://ai.dosa.dev/settings) — User preferences and GitHub authentication management
+- [Help](https://ai.dosa.dev/help) — Usage guide and FAQ
+- [Zap](https://ai.dosa.dev/zap) — View and manage bookmarked ("Zapped") tools
+
+## Key Features
+
+- **Zap (bookmarking)**: GitHub-authenticated users can bookmark tools; bookmarks are persisted per user
+- **GitHub README Badge Generator**: Generates a dynamic Markdown badge for a user's GitHub README showing their AI stack
+- **Token Counter**: Client-side token counting for major LLM providers with cost breakdown
+- **Hallucination Scorer**: Client-side heuristic analysis of prompts for hallucination risk
+- **Voting**: Community upvoting on tools
+- **Collapsible sidebar**: Category-based navigation with search
+
+## Source
+
+- **Repository**: https://github.com/QAInsights/awesome-ai-tools
+- **README (full tool list)**: https://ai.dosa.dev/README.md

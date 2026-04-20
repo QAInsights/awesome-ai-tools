@@ -37,6 +37,60 @@
     <link rel="stylesheet" href="../css/output.css">
     <script src="../dist/app.js" type="module" defer></script>
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://ai.dosa.dev/tools/token-counter#app",
+          "name": "Token Counter & Cost Estimator",
+          "url": "https://ai.dosa.dev/tools/token-counter",
+          "description": "Free, client-side token counter and cost estimator. Instantly count tokens for GPT-4o, Claude 3.5, Gemini 1.5, and Llama 3. See cost per request and per 1M tokens side-by-side.",
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "Any",
+          "browserRequirements": "Requires JavaScript",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "featureList": [
+            "Token counting for GPT-4o",
+            "Token counting for Claude 3.5",
+            "Token counting for Gemini 1.5",
+            "Token counting for Llama 3",
+            "Cost per request estimate",
+            "Cost per 1M tokens breakdown",
+            "Shareable URL output",
+            "100% client-side — no data sent to servers"
+          ],
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://ai.dosa.dev/#website"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://ai.dosa.dev"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Token Counter",
+              "item": "https://ai.dosa.dev/tools/token-counter"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
     <style>
         /* ── Token Counter page-specific styles ── */
 
