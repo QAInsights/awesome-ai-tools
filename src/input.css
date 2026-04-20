@@ -293,6 +293,10 @@
 }
 
 @layer base {
+    ::selection {
+        background-color: transparent;
+    }
+
     ::-webkit-scrollbar {
         width: 6px;
         height: 6px;

@@ -11,8 +11,10 @@ import { auth } from './auth.js';
 import { CollapsedSidebar } from './collapsed-sidebar.js';
 import { Accordion } from './accordion.js';
 import { APP_VERSION } from './version.js';
+import { initGradientSelection } from './gradient-selection.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
+    initGradientSelection();
     const grid = document.getElementById('toolGrid');
     const searchInput = document.getElementById('searchInput');
     const searchClear = document.getElementById('searchClear');
