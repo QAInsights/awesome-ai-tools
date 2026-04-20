@@ -27,8 +27,8 @@ function applyGradientSelection() {
         el.style.cssText =
             `position:fixed;left:${rect.left}px;top:${rect.top}px;` +
             `width:${rect.width}px;height:${rect.height}px;` +
-            'background:linear-gradient(90deg,#ff0099,#493240);' +
-            'mix-blend-mode:screen;pointer-events:none;z-index:9999;border-radius:2px;';
+            'background:linear-gradient(90deg,#ff0099,#c026d3);' +
+            'mix-blend-mode:screen;opacity:0.8;pointer-events:none;z-index:9999;border-radius:2px;';
         document.body.appendChild(el);
         overlays.push(el);
     });
