@@ -69,7 +69,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Load data only if we're on the registry page
     if (grid) {
         try {
-            await initVoting(); // Wait for votes to load before parsing and filtering
+            // Kick off vote fetch in parallel — don't block render on backend latency.
+            // initVoting() patches counts into already-rendered buttons when it resolves.
+            const votingPromise = initVoting().catch(err => {
+                console.warn('[voting] init failed; rendering with zero counts:', err);
+            });
+
             const readmeResponse = await fetch('README.md');
             
             if (!readmeResponse.ok) throw new Error('Failed to fetch README');

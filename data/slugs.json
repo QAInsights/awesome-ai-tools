@@ -1,0 +1,638 @@
+[
+  {
+    "slug": "cursor",
+    "name": "Cursor",
+    "company": "Anysphere",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
+    "slug": "windsurf",
+    "name": "Windsurf",
+    "company": "Cognition",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
+    "slug": "trae",
+    "name": "Trae",
+    "company": "ByteDance",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
+    "slug": "zed",
+    "name": "Zed",
+    "company": "Zed Industries",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
+    "slug": "pearai",
+    "name": "PearAI",
+    "company": "PearAI",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
+    "slug": "antigravity",
+    "name": "Antigravity",
+    "company": "Google",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
+    "slug": "void",
+    "name": "Void",
+    "company": "Void",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
+    "slug": "verdent",
+    "name": "Verdent",
+    "company": "Verdent",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
+    "slug": "pochi",
+    "name": "Pochi",
+    "company": "Pochi",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
+    "slug": "qoder",
+    "name": "Qoder",
+    "company": "Qoder",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
+    "slug": "devin",
+    "name": "Devin",
+    "company": "Cognition",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
+    "slug": "z-code",
+    "name": "Z Code",
+    "company": "Z",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
+    "slug": "github-copilot",
+    "name": "GitHub Copilot",
+    "company": "GitHub",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "junie",
+    "name": "Junie",
+    "company": "JetBrains",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "gemini-code-assist",
+    "name": "Gemini Code Assist",
+    "company": "Google",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "amazon-q-developer",
+    "name": "Amazon Q Developer",
+    "company": "AWS",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "tabnine",
+    "name": "Tabnine",
+    "company": "Tabnine",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "cline",
+    "name": "Cline",
+    "company": "Open Source",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "kilo-code",
+    "name": "Kilo Code",
+    "company": "Kilo Code",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "roo-code",
+    "name": "Roo Code",
+    "company": "Roo Code",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "continue",
+    "name": "Continue",
+    "company": "Continue",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "augment-code",
+    "name": "Augment Code",
+    "company": "Augment",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "cody",
+    "name": "Cody",
+    "company": "Sourcegraph",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "supermaven",
+    "name": "Supermaven",
+    "company": "Supermaven",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "blackbox",
+    "name": "Blackbox",
+    "company": "Blackbox",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "snyk-code",
+    "name": "Snyk Code",
+    "company": "Snyk",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "qodo",
+    "name": "Qodo",
+    "company": "Qodo",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "marscode",
+    "name": "MarsCode",
+    "company": "ByteDance",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "replit-ai",
+    "name": "Replit AI",
+    "company": "Replit",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "codebuddy",
+    "name": "CodeBuddy",
+    "company": "Tencent",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "cortex-code",
+    "name": "Cortex Code",
+    "company": "Snowflake",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "kode",
+    "name": "Kode",
+    "company": "ShareAI",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "apertis",
+    "name": "Apertis",
+    "company": "Stima",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "corust",
+    "name": "Corust",
+    "company": "Corust",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "toprank",
+    "name": "Toprank",
+    "company": "nowork-studio",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "wozcode",
+    "name": "WozCode",
+    "company": "WozCode",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "oh-my-codex",
+    "name": "Oh My codeX",
+    "company": "Yeachan-Heo",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "bob",
+    "name": "Bob",
+    "company": "IBM",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "firebender",
+    "name": "Firebender",
+    "company": "Firebender",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
+    "slug": "claude-code",
+    "name": "Claude Code",
+    "company": "Anthropic",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "codex-cli",
+    "name": "Codex CLI",
+    "company": "OpenAI",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "aider",
+    "name": "Aider",
+    "company": "Open Source",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "gemini-cli",
+    "name": "Gemini CLI",
+    "company": "Google",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "goose",
+    "name": "Goose",
+    "company": "Block",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "amazon-q-cli",
+    "name": "Amazon Q CLI",
+    "company": "AWS",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "letta-code",
+    "name": "Letta Code",
+    "company": "Letta",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "qwen-cli",
+    "name": "Qwen CLI",
+    "company": "Alibaba",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "codebuff",
+    "name": "Codebuff",
+    "company": "Codebuff",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "openclaw",
+    "name": "OpenClaw",
+    "company": "OpenClaw",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "command-code",
+    "name": "Command Code",
+    "company": "Command Code",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "crush",
+    "name": "Crush",
+    "company": "Charmbracelet",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "iflow-cli",
+    "name": "iFlow CLI",
+    "company": "iFlow",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "kiro-cli",
+    "name": "Kiro CLI",
+    "company": "AWS",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "mcpjam",
+    "name": "MCPJam",
+    "company": "MCPJam",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "mistral-vibe",
+    "name": "Mistral Vibe",
+    "company": "Mistral",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "mux",
+    "name": "Mux",
+    "company": "Coder",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "zencoder",
+    "name": "Zencoder",
+    "company": "Zencoder",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "neovate",
+    "name": "Neovate",
+    "company": "Neovate",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "adal",
+    "name": "AdaL",
+    "company": "Sylph",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "cline-kanban",
+    "name": "Cline Kanban",
+    "company": "Cline",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "parallel-code",
+    "name": "Parallel Code",
+    "company": "Parallel Code",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "pi",
+    "name": "Pi",
+    "company": "badlogic",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "autohand-acp",
+    "name": "Autohand ACP",
+    "company": "Autohand",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "crow-cli",
+    "name": "Crow CLI",
+    "company": "Crow",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "fast-agent",
+    "name": "Fast Agent",
+    "company": "EvalState",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "minion-code",
+    "name": "Minion Code",
+    "company": "Femto",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "compass-nova-cli",
+    "name": "Compass Nova CLI",
+    "company": "Compass",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "pi-acp",
+    "name": "Pi ACP",
+    "company": "svkozak",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "stakpak-agent",
+    "name": "Stakpak Agent",
+    "company": "Stakpak",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "opencode",
+    "name": "OpenCode",
+    "company": "Anomaly",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "warp",
+    "name": "Warp",
+    "company": "Warp",
+    "category": "AI-Native Terminals"
+  },
+  {
+    "slug": "wave",
+    "name": "Wave",
+    "company": "Wave",
+    "category": "AI-Native Terminals"
+  },
+  {
+    "slug": "devin-cognition",
+    "name": "Devin",
+    "company": "Cognition",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "jules",
+    "name": "Jules",
+    "company": "Google",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "openhands",
+    "name": "OpenHands",
+    "company": "All Hands",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "swe-agent",
+    "name": "SWE-agent",
+    "company": "Princeton NLP",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "sweep",
+    "name": "Sweep",
+    "company": "Sweep",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "ellipsis",
+    "name": "Ellipsis",
+    "company": "Ellipsis",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "genie",
+    "name": "Genie",
+    "company": "Cosine",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "open-yak",
+    "name": "Open-yak",
+    "company": "Open-yak",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "deepagents-js",
+    "name": "DeepAgents JS",
+    "company": "LangChain",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "boltnew",
+    "name": "Bolt.new",
+    "company": "StackBlitz",
+    "category": "Browser-Based & App Builders"
+  },
+  {
+    "slug": "v0",
+    "name": "v0",
+    "company": "Vercel",
+    "category": "Browser-Based & App Builders"
+  },
+  {
+    "slug": "lovable",
+    "name": "Lovable",
+    "company": "Lovable",
+    "category": "Browser-Based & App Builders"
+  },
+  {
+    "slug": "replit",
+    "name": "Replit",
+    "company": "Replit",
+    "category": "Browser-Based & App Builders"
+  },
+  {
+    "slug": "playcode",
+    "name": "PlayCode",
+    "company": "PlayCode",
+    "category": "Browser-Based & App Builders"
+  },
+  {
+    "slug": "emergentsh",
+    "name": "Emergent.sh",
+    "company": "Emergent",
+    "category": "Browser-Based & App Builders"
+  },
+  {
+    "slug": "bitrig",
+    "name": "Bitrig",
+    "company": "Bitrig",
+    "category": "Browser-Based & App Builders"
+  },
+  {
+    "slug": "manus",
+    "name": "Manus",
+    "company": "Meta",
+    "category": "Browser-Based & App Builders"
+  },
+  {
+    "slug": "coderabbit",
+    "name": "CodeRabbit",
+    "company": "CodeRabbit",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "qodo-qodo",
+    "name": "Qodo",
+    "company": "Qodo",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "snyk-code-snyk",
+    "name": "Snyk Code",
+    "company": "Snyk",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "gitauto",
+    "name": "GitAuto",
+    "company": "GitAuto",
+    "category": "AI Testing & Quality Assurance"
+  },
+  {
+    "slug": "claude",
+    "name": "Claude",
+    "company": "Anthropic",
+    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+  },
+  {
+    "slug": "chatgpt",
+    "name": "ChatGPT",
+    "company": "OpenAI",
+    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+  },
+  {
+    "slug": "gemini",
+    "name": "Gemini",
+    "company": "Google",
+    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+  },
+  {
+    "slug": "deepseek",
+    "name": "DeepSeek",
+    "company": "DeepSeek",
+    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+  },
+  {
+    "slug": "perplexity",
+    "name": "Perplexity",
+    "company": "Perplexity",
+    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+  },
+  {
+    "slug": "greptile",
+    "name": "Greptile",
+    "company": "Greptile",
+    "category": "AI Codebase Knowledge & Generation"
+  },
+  {
+    "slug": "fern",
+    "name": "Fern",
+    "company": "Fern",
+    "category": "AI Codebase Knowledge & Generation"
+  },
+  {
+    "slug": "pieces-for-developers",
+    "name": "Pieces for Developers",
+    "company": "Pieces",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "vibe-kanban",
+    "name": "Vibe Kanban",
+    "company": "Vibe",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "visual-studio-code",
+    "name": "Visual Studio Code",
+    "company": "Microsoft",
+    "category": "Editor Platforms with Native AI Features"
+  },
+  {
+    "slug": "xcode",
+    "name": "Xcode",
+    "company": "Apple",
+    "category": "Editor Platforms with Native AI Features"
+  },
+  {
+    "slug": "jetbrains-ides",
+    "name": "JetBrains IDEs",
+    "company": "JetBrains",
+    "category": "Editor Platforms with Native AI Features"
+  },
+  {
+    "slug": "visual-studio",
+    "name": "Visual Studio",
+    "company": "Microsoft",
+    "category": "Editor Platforms with Native AI Features"
+  }
+]

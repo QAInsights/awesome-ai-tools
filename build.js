@@ -1,5 +1,6 @@
 import { build } from "bun";
 import { readFileSync } from "fs";
+import { generateToolPages } from "./scripts/generate-tool-pages.js";
 
 // Load .env.local for local development (Bun only auto-loads .env by default)
 // Parse and set env vars so they override system env vars for local dev
@@ -48,4 +49,13 @@ if (!result.success) {
     process.exit(1);
 } else {
     console.log("Build successful - dist/app.js updated!");
+}
+
+// Regenerate per-tool detail pages + sitemap from README.md
+try {
+    const { count } = await generateToolPages();
+    console.log(`Generated ${count} tool detail pages and updated sitemap.xml`);
+} catch (err) {
+    console.error("Tool page generation failed:", err);
+    process.exit(1);
 }

@@ -30,6 +30,7 @@ The directory on the main page (`/`) covers:
 ## Pages
 
 - [Tool Directory](https://ai.dosa.dev/) — Main browsable catalog with sidebar navigation, search, and filtering
+- [Tool Detail Pages](https://ai.dosa.dev/tools/) — One page per tool at `/tools/<slug>` (e.g. `/tools/cursor`, `/tools/windsurf`) with pricing, key features, best-for / not-ideal-for guidance, recent updates, and verdict. Slug catalog: https://ai.dosa.dev/data/slugs.json. Enriched payload: https://ai.dosa.dev/public/data/enriched-tools.json
 - [Token Counter & Cost Estimator](https://ai.dosa.dev/tools/token-counter) — Paste text to get instant token counts and cost estimates for GPT-4o, Claude 3.5, Gemini 1.5, and Llama 3
 - [Hallucination Risk Scorer](https://ai.dosa.dev/tools/hallucination-scorer) — Heuristic-based scorer that flags prompt patterns prone to hallucination
 - [Settings](https://ai.dosa.dev/settings) — User preferences and GitHub authentication management

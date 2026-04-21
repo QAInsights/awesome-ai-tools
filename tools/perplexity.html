@@ -1,0 +1,109 @@
+<!--
+  GENERATED FILE — DO NOT EDIT DIRECTLY.
+  Source: src/tool-template.html
+  Regenerate: bun run build  (driven by build.js and scripts/generate-tool-pages.js)
+  Shared page chrome (sidebar, mobile header, desktop toggle) is injected at
+  runtime by js/shell.js to keep per-tool HTML small.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perplexity — Perplexity | ai.dosa.dev</title>
+    <meta name="description" content="AI search engine; excellent for technical research and API discovery">
+    <meta name="keywords" content="Perplexity, Perplexity, General-Purpose AI Assistants (with Strong Coding Capability), General AI, AI coding, developer tools">
+    <link rel="canonical" href="https://ai.dosa.dev/tools/perplexity">
+
+    <meta property="og:title" content="Perplexity — Perplexity | ai.dosa.dev">
+    <meta property="og:description" content="AI search engine; excellent for technical research and API discovery">
+    <meta property="og:url" content="https://ai.dosa.dev/tools/perplexity">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://ai.dosa.dev/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://ai.dosa.dev/images/og-image.png">
+    <meta name="twitter:title" content="Perplexity — Perplexity | ai.dosa.dev">
+    <meta name="twitter:description" content="AI search engine; excellent for technical research and API discovery">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="../images/icons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../images/icons/favicon.svg" />
+    <link rel="shortcut icon" href="../images/icons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="../images/icons/site.webmanifest" />
+
+    <link rel="stylesheet" href="../css/output.css">
+    <script type="module" src="../js/shell.js" defer></script>
+    <script src="../dist/app.js" type="module" defer></script>
+    <script type="module" src="../js/tool-detail.js" defer></script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://ai.dosa.dev/tools/perplexity#app","name":"Perplexity","url":"https://www.perplexity.ai/","description":"AI search engine; excellent for technical research and API discovery","applicationCategory":"DeveloperApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isPartOf":{"@type":"WebSite","@id":"https://ai.dosa.dev/#website"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ai.dosa.dev"},{"@type":"ListItem","position":2,"name":"General-Purpose AI Assistants (with Strong Coding Capability)","item":"https://ai.dosa.dev/#perplexity"},{"@type":"ListItem","position":3,"name":"Perplexity","item":"https://ai.dosa.dev/tools/perplexity"}]}]}</script>
+    <script id="tool-seed" type="application/json">{"slug":"perplexity","name":"Perplexity","company":"Perplexity","category":"🧰 General-Purpose AI Assistants (with Strong Coding Capability)","categoryClean":"General-Purpose AI Assistants (with Strong Coding Capability)","categoryShort":"General AI","notes":"AI search engine; excellent for technical research and API discovery","url":"https://www.perplexity.ai/"}</script>
+
+    <style>
+        .td-section { padding: 20px 0; border-top: 1px solid #222; }
+        .td-section:first-of-type { border-top: none; }
+        .td-section-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #525252; margin-bottom: 14px; }
+        .td-card { background: #0d0d0d; border: 1px solid #222; border-radius: 10px; padding: 18px; transition: border-color 0.2s; }
+        .td-card:hover { border-color: #333; }
+        .td-verdict { border-left: 3px solid; border-image: linear-gradient(180deg, #a78bfa, #22d3ee) 1; padding: 14px 18px; background: linear-gradient(90deg, rgba(167,139,250,0.04), transparent); font-size: 16px; line-height: 1.7; color: #d4d4d4; font-style: italic; }
+        .td-shimmer { background: linear-gradient(90deg, #111 0%, #1a1a1a 50%, #111 100%); background-size: 200% 100%; animation: td-shimmer 1.6s infinite linear; border-radius: 6px; }
+        @keyframes td-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    </style>
+</head>
+
+<body class="bg-black text-white font-sans flex h-[100dvh] overflow-hidden antialiased leading-relaxed">
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden md:hidden opacity-0 transition-opacity duration-300"></div>
+
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-[85%] max-w-[320px] bg-[#0a0a0a] border-r border-[#222] flex flex-row transition-all duration-300 transform -translate-x-full md:relative md:translate-x-0 md:w-[320px] shrink-0 h-full overflow-hidden">
+        <div id="sidebarContent" class="flex flex-col h-full w-full transition-all duration-300 overflow-y-auto md:overflow-hidden"></div>
+        <div id="iconSidebar"></div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
+        <div id="mobileHeader"></div>
+        <div id="desktopToggleContainer" class="hidden absolute top-[14px] left-4 z-20 transition-opacity duration-300"></div>
+
+        <div class="max-w-[1000px] mx-auto w-full flex flex-col flex-1 p-4 md:p-8 gap-6">
+            <nav aria-label="Breadcrumb" class="font-mono text-[12px] text-[#737373] tracking-wide flex items-center gap-2 flex-wrap">
+                <a href="/" class="hover:text-white transition-colors">Home</a>
+                <span>/</span>
+                <span id="breadcrumbCategory" class="text-[#a3a3a3]">General-Purpose AI Assistants (with Strong Coding Capability)</span>
+                <span>/</span>
+                <span id="breadcrumbTool" class="text-white">Perplexity</span>
+            </nav>
+
+            <header class="flex flex-col gap-4 pb-4 border-b border-[#222]">
+                <div class="flex items-start justify-between gap-4 flex-wrap">
+                    <div class="min-w-0">
+                        <h1 id="toolName" class="text-[32px] md:text-[40px] font-semibold tracking-tight leading-tight bg-gradient-to-r from-white via-[#e5e5e5] to-white bg-clip-text text-transparent mb-2">Perplexity</h1>
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <span id="toolCompany" class="font-mono text-[14px] text-[#a3a3a3] uppercase tracking-wide">Perplexity</span>
+                            <span class="text-[#333]">·</span>
+                            <span id="toolCategory" class="inline-block px-3 py-1 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide">General-Purpose AI Assistants (with Strong Coding Capability)</span>
+                        </div>
+                    </div>
+                    <a id="externalLink" href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 py-2.5 px-5 bg-white text-black text-sm font-semibold rounded-md transition-all duration-200 hover:bg-gray-200 hover:-translate-y-px shrink-0" aria-label="Visit Perplexity website">
+                        Visit site
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>
+                </div>
+                <p id="toolDescription" class="text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">AI search engine; excellent for technical research and API discovery</p>
+            </header>
+
+            <div id="detailSections" class="flex flex-col gap-6"></div>
+        </div>
+    </main>
+
+    <div id="turnstile-container"></div>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "16936e2eed2a4361adb21441d23573dd"}'></script>
+</body>
+
+</html>

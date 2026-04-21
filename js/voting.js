@@ -14,7 +14,16 @@ export function getVoteCount(toolId) {
 export async function initVoting() {
     try {
         console.log('Initializing voting from:', API_BASE_URL);
-        const response = await fetch(`${API_BASE_URL}/api/v1/count`);
+        // Abort the request if the backend is unresponsive so a dead/cold API
+        // doesn't leave the voting UI in limbo for minutes.
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
+        let response;
+        try {
+            response = await fetch(`${API_BASE_URL}/api/v1/count`, { signal: controller.signal });
+        } finally {
+            clearTimeout(timeoutId);
+        }
         if (!response.ok) {
             throw new Error(`Failed to fetch votes: ${response.status}`);
         }
@@ -26,7 +35,11 @@ export async function initVoting() {
         }
         console.log('Votes loaded:', Object.keys(zapCounts).length, 'tools have votes');
     } catch (error) {
-        console.error('[ERROR] Could not fetch votes:', error);
+        if (error?.name === 'AbortError') {
+            console.warn('[voting] /api/v1/count timed out after 5s — rendering with zero counts');
+        } else {
+            console.error('[ERROR] Could not fetch votes:', error);
+        }
     }
 
     // Rapid patch any buttons that were rendered immediately

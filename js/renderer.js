@@ -111,13 +111,17 @@ function createToolRow(tool, index) {
     const toolId = `${tool.company.toLowerCase().replace(/[^a-z0-9]/g, '')}-${tool.name.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
     const initialVoteCount = getVoteCount(toolId);
 
+    const detailHref = tool.slug ? `/tools/${tool.slug}` : tool.url;
+
     row.innerHTML = `
         <div class="w-full flex justify-between items-start md:contents mb-1 md:mb-0">
-            <div class="w-auto md:w-[280px] md:pr-6 shrink-0 text-[20px] md:text-[18px] font-medium flex items-center gap-3 md:order-1">
+            <div class="w-auto md:w-[280px] md:pr-6 shrink-0 text-[20px] md:text-[18px] font-medium flex items-center gap-2 md:order-1">
                 <span class="hidden md:inline-block font-mono text-[#737373] text-[16px] opacity-0 -translate-x-2.5 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-white">&rarr;</span>
-                <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-white no-underline transition-all duration-200 group/link hover:bg-gradient-to-r hover:from-[#a78bfa] hover:via-[#22d3ee] hover:to-[#a78bfa] hover:bg-[length:200%_auto] hover:bg-clip-text hover:text-transparent hover:animate-[shift_3s_linear_infinite]">
+                <a href="${detailHref}" class="flex-1 min-w-0 text-white no-underline transition-all duration-200 hover:bg-gradient-to-r hover:from-[#a78bfa] hover:via-[#22d3ee] hover:to-[#a78bfa] hover:bg-[length:200%_auto] hover:bg-clip-text hover:text-transparent hover:animate-[shift_3s_linear_infinite]" aria-label="View details for ${tool.name}">
                     ${tool.name}
-                    <svg class="w-3.5 h-3.5 opacity-40 group-hover/link:opacity-100 group-hover/link:-translate-y-[2px] group-hover/link:translate-x-[2px] transition-all duration-300 stroke-white" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                </a>
+                <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="shrink-0 text-[#737373] hover:text-white p-1 -m-1 rounded transition-colors duration-200" aria-label="Open ${tool.name} site in a new tab" title="Open site in new tab" onclick="event.stopPropagation()">
+                    <svg class="w-3.5 h-3.5 opacity-60 hover:opacity-100 transition-all duration-200 stroke-current" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                         <polyline points="15 3 21 3 21 9"></polyline>
                         <line x1="10" y1="14" x2="21" y2="3"></line>

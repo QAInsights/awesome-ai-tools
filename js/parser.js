@@ -18,9 +18,31 @@ const categoryMapping = {
 };
 
 /**
- * Parse markdown content and extract tool data
+ * Convert an arbitrary string to a URL-safe kebab-case slug.
+ * - Lowercases, strips emojis/punctuation, collapses whitespace to `-`.
+ * - Used for detail page URLs (/tools/<slug>) and lookup in the enriched JSON.
+ * @param {string} str
+ * @returns {string}
+ */
+export function slugify(str) {
+    if (!str) return '';
+    return String(str)
+        .toLowerCase()
+        .normalize('NFKD')
+        .replace(/[\u0300-\u036f]/g, '')            // strip diacritics
+        .replace(/[\u2700-\u27BF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u26FF]|[\uFE00-\uFE0F]/g, '') // strip emoji + variation selectors
+        .replace(/[^a-z0-9\s-]/g, '')               // drop other non-word chars
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+}
+
+/**
+ * Parse markdown content and extract tool data.
+ * Attaches a collision-resolved `slug` to every tool.
  * @param {string} md - Markdown content
- * @returns {Array} Array of tool objects
+ * @returns {Array} Array of tool objects: { category, name, url, company, notes, slug }
  */
 export function parseMarkdown(md) {
     const sections = md.split('## ');
@@ -69,7 +91,22 @@ export function parseMarkdown(md) {
             }
         }
     }
-    
+
+    // Assign slugs with collision resolution. First occurrence keeps the clean
+    // name slug; subsequent ones get disambiguated by company.
+    const seen = new Map();
+    for (const tool of tools) {
+        let base = slugify(tool.name);
+        if (!base) base = 'tool';
+        let slug = base;
+        if (seen.has(slug)) {
+            const withCompany = `${base}-${slugify(tool.company)}`;
+            slug = seen.has(withCompany) ? `${withCompany}-${seen.get(withCompany) + 1}` : withCompany;
+        }
+        seen.set(slug, (seen.get(slug) || 0) + 1);
+        tool.slug = slug;
+    }
+
     return tools;
 }
 
@@ -79,7 +116,7 @@ export function parseMarkdown(md) {
  * @returns {string} Short category name
  */
 export function getShortCategory(category) {
-    const catClean = category.replace(/^[\u2700-\u27BF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u26FF]/g, '').trim();
+    const catClean = category.replace(/[\u2700-\u27BF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u26FF]|[\uFE00-\uFE0F]/g, '').trim();
     
     for (const [key, val] of Object.entries(categoryMapping)) {
         if (catClean.includes(key)) {
