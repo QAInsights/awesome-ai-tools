@@ -1,6 +1,8 @@
 /**
  * Renderer module for UI rendering and lazy loading
  */
+import { toggleTool, isSelected, getSelected, clearSelection } from "./compare-state.js";
+
 
 import { getShortCategory } from './parser.js';
 import { getVoteCount } from './voting.js';
@@ -116,6 +118,9 @@ function createToolRow(tool, index) {
     row.innerHTML = `
         <div class="w-full flex justify-between items-start md:contents mb-1 md:mb-0">
             <div class="w-auto md:w-[280px] md:pr-6 shrink-0 text-[20px] md:text-[18px] font-medium flex items-center gap-2 md:order-1">
+                <button class="compare-toggle p-1 rounded transition-colors border border-[#333] hover:border-[#666] flex items-center justify-center shrink-0 ${isSelected(tool.slug) ? 'bg-[#a78bfa] border-[#a78bfa]' : 'bg-transparent'}" data-slug="${tool.slug}" title="Compare tool" style="width: 20px; height: 20px; outline: none; margin-right: 4px;">
+                    <svg class="w-3 h-3 ${isSelected(tool.slug) ? 'text-black' : 'text-transparent'}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
                 <span class="hidden md:inline-block font-mono text-[#737373] text-[16px] opacity-0 -translate-x-2.5 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-white">&rarr;</span>
                 <a href="${detailHref}" class="flex-1 min-w-0 text-white no-underline transition-all duration-200 hover:bg-gradient-to-r hover:from-[#a78bfa] hover:via-[#22d3ee] hover:to-[#a78bfa] hover:bg-[length:200%_auto] hover:bg-clip-text hover:text-transparent hover:animate-[shift_3s_linear_infinite]" aria-label="View details for ${tool.name}">
                     ${tool.name}
@@ -220,3 +225,6 @@ function setupObserver(sentinel) {
 
     observer.observe(sentinel);
 }
+
+// Make sure to re-export
+export { grid, onClearCallback, loadBatch };
