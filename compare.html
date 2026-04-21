@@ -182,18 +182,22 @@
             </button>
         </div>
 
-        <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-0 p-8">
-            <div class="max-w-2xl">
-                <h2 class="text-2xl font-semibold mb-6 flex items-center gap-3">
-                    <svg class="w-6 h-6 text-[#a3a3a3]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                    Help & Support
-                </h2>
-                <div class="border border-[#222] bg-white/5 rounded-md p-6">
-                    <p class="text-[#a3a3a3]">Help documentation and FAQs are coming soon.</p>
-                </div>
+        <div class="max-w-7xl mx-auto py-12 px-6 w-full flex-1">
+        <div class="mb-8 flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-semibold text-white mb-2">Compare Tools</h1>
+                <p class="text-[#a3a3a3]">See how your selected tools stack up against each other.</p>
             </div>
+            <a href="/" class="text-[#a3a3a3] hover:text-white px-4 py-2 border border-[#333] rounded transition-colors">&larr; Back to registry</a>
         </div>
-    </main>
+
+        <div id="compareGrid" class="flex flex-col md:flex-row gap-6 w-full">
+            <!-- Populated via js/compare.js -->
+        </div>
+    </div>
+</main>
+<script type="module" src="./js/compare.js"></script>
+
 
     <div id="turnstile-container"></div>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
