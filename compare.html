@@ -38,61 +38,6 @@
     <link rel="preconnect" href="https://challenges.cloudflare.com" />
     <!-- Point exactly to our new javascript bundle -->
     <script src="./dist/app.js" type="module" defer></script>
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "WebSite",
-          "@id": "https://ai.dosa.dev/#website",
-          "url": "https://ai.dosa.dev",
-          "name": "ai.dosa.dev — Awesome AI Tools",
-          "description": "A curated directory of AI-powered coding tools, autonomous agents, and developer utilities.",
-          "inLanguage": "en",
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": {
-              "@type": "EntryPoint",
-              "urlTemplate": "https://ai.dosa.dev/?q={search_term_string}"
-            },
-            "query-input": "required name=search_term_string"
-          }
-        },
-        {
-          "@type": "CollectionPage",
-          "@id": "https://ai.dosa.dev/#collection",
-          "url": "https://ai.dosa.dev",
-          "name": "Awesome AI Tools Directory",
-          "description": "93+ manually curated AI-powered coding tools across 12 categories including full IDEs, editor extensions, terminal agents, autonomous agents, browser-based builders, and code review platforms.",
-          "isPartOf": { "@id": "https://ai.dosa.dev/#website" },
-          "publisher": { "@id": "https://ai.dosa.dev/#organization" },
-          "about": { "@type": "Thing", "name": "AI-powered developer tools" },
-          "keywords": "AI IDE, AI coding assistant, terminal agent, autonomous agent, vibe coding, AI code review",
-          "inLanguage": "en",
-          "dateModified": "2026-03-01",
-          "image": {
-            "@type": "ImageObject",
-            "url": "https://ai.dosa.dev/images/og-image.png",
-            "width": 1200,
-            "height": 630
-          }
-        },
-        {
-          "@type": "Organization",
-          "@id": "https://ai.dosa.dev/#organization",
-          "name": "dosa.dev",
-          "url": "https://ai.dosa.dev",
-          "logo": {
-            "@type": "ImageObject",
-            "url": "https://ai.dosa.dev/images/icons/favicon-96x96.png",
-            "width": 96,
-            "height": 96
-          }
-        }
-      ]
-    }
-    </script>
 </head>
 
 <body class="bg-black text-white font-sans flex h-[100dvh] overflow-hidden antialiased leading-relaxed">
@@ -122,9 +67,9 @@
         </div>
 
         <!-- Description -->
-        <div class="py-3 px-6 text-[#a3a3a3] border-b border-[#222] shrink-0">
-            <p class="text-[15px] leading-relaxed mb-3">A curated list of artificial intelligence-powered coding instruments, frameworks, and agents.</p>
-            <div class="stat-badge flex items-center justify-center gap-1.5 py-1.5 px-2.5 border border-[#222] rounded-md bg-white/5 font-mono text-xs text-[#a3a3a3] tracking-wide mb-3 w-full">
+        <div class="py-5 px-6 text-[#a3a3a3] border-b border-[#222] shrink-0">
+            <p class="text-[15px] leading-relaxed mb-5">A curated list of artificial intelligence-powered coding instruments, frameworks, and agents.</p>
+            <div class="stat-badge flex items-center justify-center gap-1.5 py-1.5 px-2.5 border border-[#222] rounded-md bg-white/5 font-mono text-xs text-[#a3a3a3] tracking-wide mb-5 w-full">
                 <span class="stat-count font-bold text-[14px]">100+</span> tools across 12 categories
             </div>
             <div class="flex flex-col gap-2.5">
@@ -133,54 +78,33 @@
             </div>
         </div>
 
-        <!-- Search -->
-        <div class="px-4 py-3 border-b border-[#222] shrink-0 sticky top-[72px] bg-[#0a0a0a] z-10">
-            <div class="relative">
-                <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-[#a3a3a3] w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <input type="text" id="searchInput" placeholder="Search the index... (/)" autocomplete="off" class="w-full bg-black border border-[#222] rounded-md py-2.5 pl-9 pr-8 text-white font-sans text-[15px] transition-colors duration-200 outline-none focus:border-[#a3a3a3] placeholder-[#737373]">
-                <button class="absolute right-3 top-1/2 -translate-y-1/2 bg-transparent border-none text-[#737373] text-sm cursor-pointer p-0.5 hidden hover:text-white" id="searchClear" title="Clear search">&#x2715;</button>
-            </div>
-        </div>
 
-        <div class="px-4 pt-2 pb-1 font-mono text-[11px] text-[#737373] tracking-wide shrink-0" id="resultCount"></div>
 
-        <!-- Filters -->
-        <nav class="flex flex-col px-4 py-2 gap-1 border-b border-[#222] md:flex-1 md:min-h-0 md:overflow-y-auto" id="categoryFilters" style="scrollbar-width: thin;">
-            <button id="categoriesToggle" class="flex items-center justify-between w-full py-2.5 pl-3 pr-2 text-left rounded-md hover:bg-white/5 active:bg-white/10 transition-all duration-200 group" title="Toggle categories" aria-expanded="false">
-                <div class="flex items-center gap-2">
-                    <div class="font-mono text-[12px] uppercase text-[#737373] tracking-widest group-hover:text-white transition-colors">Categories</div>
-                    <span id="categoriesCount" class="font-mono text-[10px] text-[#525252] bg-[#1a1a1a] px-1.5 py-0.5 rounded">...</span>
-                </div>
-                <svg id="categoriesToggleIcon" class="w-4 h-4 text-[#525252] group-hover:text-[#a3a3a3] transition-all duration-300 ease-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-            </button>
-            <div id="categoriesContent" class="flex flex-col gap-1 transition-all duration-300 ease-out max-h-0 opacity-0">
-                <button class="filter-btn active" data-category="all">All Tools</button>
-            </div>
-        </nav>
+        <!-- Dashboard Navigation -->
+        <nav class="flex flex-col px-4 py-2 gap-1 border-b border-[#222] md:flex-1 md:min-h-0 md:overflow-y-auto" id="dashboardNav" style="scrollbar-width: thin;">
+            <div class="font-mono text-[12px] uppercase text-[#737373] mb-2 pl-2 tracking-widest mt-2 hidden md:block">Account</div>
+            <a href="settings.html" class="filter-btn flex items-center">Settings</a>
+            <a href="zap.html" class="filter-btn flex items-center">Zap Dashboard</a>
+            <a href="help.html" class="filter-btn active flex items-center">Help &amp; Support</a>
+            <button class="filter-btn text-left badge-trigger flex items-center">Get Badge</button>
 
-        <!-- AI Utilities — public, no login required -->
-        <div class="px-4 pt-2 pb-1 shrink-0">
-            <div class="font-mono text-[11px] uppercase text-[#737373] mb-2 pl-2 tracking-widest">AI Utilities</div>
-            <a href="tools/token-counter.html"
-               class="filter-btn flex items-center gap-2 w-full text-left">
+            <div class="font-mono text-[12px] uppercase text-[#737373] mb-1 pl-2 tracking-widest mt-4 hidden md:block">AI Utilities</div>
+            <a href="tools/token-counter.html" class="filter-btn flex items-center gap-2">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h6M8 15h4"/></svg>
                 Token Counter
             </a>
-            <a href="tools/hallucination-scorer.html"
-               class="filter-btn flex items-center gap-2 w-full text-left">
+            <a href="tools/hallucination-scorer.html" class="filter-btn flex items-center gap-2">
                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                 Hallucination Scorer
             </a>
-        </div>
+
+            <div class="mt-4 pb-2">
+                <a href="/" class="text-[14px] text-[#737373] hover:text-white transition-colors flex items-center gap-2 pl-2">&larr; Back to Directory</a>
+            </div>
+        </nav>
 
         <!-- Featured -->
-
-        <div class="mx-4 mt-2 mb-3 p-3 border border-dashed border-[#222] rounded-md bg-white/[0.01] shrink-0">
+        <div class="mx-4 my-4 p-4 border border-dashed border-[#222] rounded-md bg-white/[0.01] shrink-0">
             <div class="font-mono text-[11px] uppercase text-[#737373] mb-1.5 tracking-wide">Featured</div>
             <div class="text-[13px] text-[#a3a3a3] leading-relaxed">
                 Promote your AI tool directly to developers. <br>
@@ -222,7 +146,7 @@
         </div>
 
         <!-- Sidebar Footer -->
-        <footer class="px-5 py-3 border-t border-[#222] shrink-0 mt-auto bg-[#0a0a0a]">
+        <footer class="px-5 py-4 border-t border-[#222] shrink-0 mt-auto bg-[#0a0a0a]">
             <div class="flex flex-wrap gap-x-3 gap-y-1.5 mb-2">
                 <a href="https://github.com/QAInsights/awesome-ai-tools" target="_blank" rel="noopener noreferrer" class="text-[13px] text-[#a3a3a3] hover:text-white transition-colors">GitHub</a>
                 <a href="https://dosa.dev" target="_blank" rel="noopener noreferrer" class="text-[13px] text-[#a3a3a3] hover:text-white transition-colors">dosa.dev</a>
@@ -258,29 +182,18 @@
             </button>
         </div>
 
-        <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-0">
-            <div class="table-header hidden md:flex items-center px-8 py-5 border-b border-[#222] font-mono text-[14px] text-[#a3a3a3] uppercase tracking-widest bg-black shrink-0 transition-all duration-300" id="tableHeader">
-                <div class="w-[280px] pr-6 shrink-0 text-sm transition-all duration-300 cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="name" id="thName">Name <span class="sort-icon opacity-50">↕</span></div>
-                <div class="w-[200px] pr-6 shrink-0 text-sm cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="company">Company <span class="sort-icon opacity-50">↕</span></div>
-                <div class="grow pr-6 text-sm cursor-pointer hover:text-white select-none" style="pointer-events: none;">Description</div>
-                <div class="hidden lg:flex w-[220px] px-6 shrink-0 text-sm cursor-pointer hover:text-white select-none items-center justify-center gap-2" data-sort="category">Category <span class="sort-icon opacity-50">↕</span></div>
-                <div class="w-[84px] pr-6 shrink-0 text-sm cursor-pointer hover:text-white select-none flex items-center justify-start gap-2" data-sort="votes">Zap <span class="sort-icon opacity-50">↕</span></div>
+        <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-0 p-8">
+            <div class="max-w-2xl">
+                <h2 class="text-2xl font-semibold mb-6 flex items-center gap-3">
+                    <svg class="w-6 h-6 text-[#a3a3a3]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    Help & Support
+                </h2>
+                <div class="border border-[#222] bg-white/5 rounded-md p-6">
+                    <p class="text-[#a3a3a3]">Help documentation and FAQs are coming soon.</p>
+                </div>
             </div>
-            
-            <div class="registry px-4 pb-4 pt-2 md:px-8 md:pb-8 md:pt-4 grow overflow-y-auto" id="toolGrid" data-registry></div>
         </div>
     </main>
-
-    <div id="compareFloatingBar" class="fixed bottom-0 left-0 right-0 bg-[#111] border-t border-[#333] p-4 flex items-center justify-between z-50 transform translate-y-full transition-transform duration-300">
-        <div class="flex items-center gap-4">
-            <span id="compareCountText" class="text-white text-sm font-medium">0 tools selected</span>
-            <div id="compareThumbnails" class="flex items-center gap-2"></div>
-        </div>
-        <div class="flex items-center gap-3">
-            <button id="clearCompareBtn" class="text-[#a3a3a3] hover:text-white text-sm px-3 py-1.5 transition-colors">Clear</button>
-            <button id="compareBtn" class="bg-[#a78bfa] hover:bg-[#8b5cf6] text-black font-medium text-sm px-4 py-1.5 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Compare</button>
-        </div>
-    </div>
 
     <div id="turnstile-container"></div>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
