@@ -1,0 +1,418 @@
+[
+  {
+    "companyName": "Anysphere",
+    "toolName": "Cursor"
+  },
+  {
+    "companyName": "Cognition",
+    "toolName": "Windsurf"
+  },
+  {
+    "companyName": "ByteDance",
+    "toolName": "Trae"
+  },
+  {
+    "companyName": "Zed Industries",
+    "toolName": "Zed"
+  },
+  {
+    "companyName": "PearAI",
+    "toolName": "PearAI"
+  },
+  {
+    "companyName": "Google",
+    "toolName": "Antigravity"
+  },
+  {
+    "companyName": "Void",
+    "toolName": "Void"
+  },
+  {
+    "companyName": "Verdent",
+    "toolName": "Verdent"
+  },
+  {
+    "companyName": "TabbyML",
+    "toolName": "Pochi"
+  },
+  {
+    "companyName": "Qoder",
+    "toolName": "Qoder"
+  },
+  {
+    "companyName": "Cognition",
+    "toolName": "Devin"
+  },
+  {
+    "companyName": "Z",
+    "toolName": "Z Code"
+  },
+  {
+    "companyName": "GitHub",
+    "toolName": "GitHub Copilot"
+  },
+  {
+    "companyName": "JetBrains",
+    "toolName": "Junie"
+  },
+  {
+    "companyName": "Google",
+    "toolName": "Gemini Code Assist"
+  },
+  {
+    "companyName": "AWS",
+    "toolName": "Amazon Q Developer"
+  },
+  {
+    "companyName": "Tabnine",
+    "toolName": "Tabnine"
+  },
+  {
+    "companyName": "Open Source",
+    "toolName": "Cline"
+  },
+  {
+    "companyName": "Kilo Code",
+    "toolName": "Kilo Code"
+  },
+  {
+    "companyName": "Roo Code",
+    "toolName": "Roo Code"
+  },
+  {
+    "companyName": "Continue",
+    "toolName": "Continue"
+  },
+  {
+    "companyName": "Augment",
+    "toolName": "Augment Code"
+  },
+  {
+    "companyName": "Sourcegraph",
+    "toolName": "Cody"
+  },
+  {
+    "companyName": "Supermaven",
+    "toolName": "Supermaven"
+  },
+  {
+    "companyName": "Blackbox",
+    "toolName": "Blackbox"
+  },
+  {
+    "companyName": "Snyk",
+    "toolName": "Snyk Code"
+  },
+  {
+    "companyName": "Qodo",
+    "toolName": "Qodo"
+  },
+  {
+    "companyName": "ByteDance",
+    "toolName": "MarsCode"
+  },
+  {
+    "companyName": "Replit",
+    "toolName": "Replit AI"
+  },
+  {
+    "companyName": "Tencent",
+    "toolName": "CodeBuddy"
+  },
+  {
+    "companyName": "Snowflake",
+    "toolName": "Cortex Code"
+  },
+  {
+    "companyName": "ShareAI",
+    "toolName": "Kode"
+  },
+  {
+    "companyName": "Stima",
+    "toolName": "Apertis"
+  },
+  {
+    "companyName": "Corust",
+    "toolName": "Corust"
+  },
+  {
+    "companyName": "nowork-studio",
+    "toolName": "Toprank"
+  },
+  {
+    "companyName": "WozCode",
+    "toolName": "WozCode"
+  },
+  {
+    "companyName": "Yeachan-Heo",
+    "toolName": "Oh My codeX"
+  },
+  {
+    "companyName": "IBM",
+    "toolName": "Bob"
+  },
+  {
+    "companyName": "Firebender",
+    "toolName": "Firebender"
+  },
+  {
+    "companyName": "Anthropic",
+    "toolName": "Claude Code"
+  },
+  {
+    "companyName": "OpenAI",
+    "toolName": "Codex CLI"
+  },
+  {
+    "companyName": "Open Source",
+    "toolName": "Aider"
+  },
+  {
+    "companyName": "Google",
+    "toolName": "Gemini CLI"
+  },
+  {
+    "companyName": "Block",
+    "toolName": "Goose"
+  },
+  {
+    "companyName": "AWS",
+    "toolName": "Amazon Q CLI"
+  },
+  {
+    "companyName": "Letta",
+    "toolName": "Letta Code"
+  },
+  {
+    "companyName": "Alibaba",
+    "toolName": "Qwen CLI"
+  },
+  {
+    "companyName": "Codebuff",
+    "toolName": "Codebuff"
+  },
+  {
+    "companyName": "OpenClaw",
+    "toolName": "OpenClaw"
+  },
+  {
+    "companyName": "Command Code",
+    "toolName": "Command Code"
+  },
+  {
+    "companyName": "Charmbracelet",
+    "toolName": "Crush"
+  },
+  {
+    "companyName": "iFlow",
+    "toolName": "iFlow CLI"
+  },
+  {
+    "companyName": "AWS",
+    "toolName": "Kiro CLI"
+  },
+  {
+    "companyName": "MCPJam",
+    "toolName": "MCPJam"
+  },
+  {
+    "companyName": "Mistral",
+    "toolName": "Mistral Vibe"
+  },
+  {
+    "companyName": "Coder",
+    "toolName": "Mux"
+  },
+  {
+    "companyName": "Zencoder",
+    "toolName": "Zencoder"
+  },
+  {
+    "companyName": "Neovate",
+    "toolName": "Neovate"
+  },
+  {
+    "companyName": "Sylph",
+    "toolName": "AdaL"
+  },
+  {
+    "companyName": "Cline",
+    "toolName": "Cline Kanban"
+  },
+  {
+    "companyName": "Parallel Code",
+    "toolName": "Parallel Code"
+  },
+  {
+    "companyName": "badlogic",
+    "toolName": "Pi"
+  },
+  {
+    "companyName": "Autohand",
+    "toolName": "Autohand ACP"
+  },
+  {
+    "companyName": "Crow",
+    "toolName": "Crow CLI"
+  },
+  {
+    "companyName": "EvalState",
+    "toolName": "Fast Agent"
+  },
+  {
+    "companyName": "Femto",
+    "toolName": "Minion Code"
+  },
+  {
+    "companyName": "Compass",
+    "toolName": "Compass Nova CLI"
+  },
+  {
+    "companyName": "svkozak",
+    "toolName": "Pi ACP"
+  },
+  {
+    "companyName": "Stakpak",
+    "toolName": "Stakpak Agent"
+  },
+  {
+    "companyName": "Anomaly",
+    "toolName": "OpenCode"
+  },
+  {
+    "companyName": "Warp",
+    "toolName": "Warp"
+  },
+  {
+    "companyName": "Wave",
+    "toolName": "Wave"
+  },
+  {
+    "companyName": "Cognition",
+    "toolName": "Devin"
+  },
+  {
+    "companyName": "Google",
+    "toolName": "Jules"
+  },
+  {
+    "companyName": "All Hands",
+    "toolName": "OpenHands"
+  },
+  {
+    "companyName": "Princeton NLP",
+    "toolName": "SWE-agent"
+  },
+  {
+    "companyName": "Sweep",
+    "toolName": "Sweep"
+  },
+  {
+    "companyName": "Ellipsis",
+    "toolName": "Ellipsis"
+  },
+  {
+    "companyName": "Cosine",
+    "toolName": "Genie"
+  },
+  {
+    "companyName": "Open-yak",
+    "toolName": "Open-yak"
+  },
+  {
+    "companyName": "LangChain",
+    "toolName": "DeepAgents JS"
+  },
+  {
+    "companyName": "StackBlitz",
+    "toolName": "Bolt.new"
+  },
+  {
+    "companyName": "Vercel",
+    "toolName": "v0"
+  },
+  {
+    "companyName": "Lovable",
+    "toolName": "Lovable"
+  },
+  {
+    "companyName": "Replit",
+    "toolName": "Replit"
+  },
+  {
+    "companyName": "PlayCode",
+    "toolName": "PlayCode"
+  },
+  {
+    "companyName": "Emergent",
+    "toolName": "Emergent.sh"
+  },
+  {
+    "companyName": "Bitrig",
+    "toolName": "Bitrig"
+  },
+  {
+    "companyName": "Meta",
+    "toolName": "Manus"
+  },
+  {
+    "companyName": "CodeRabbit",
+    "toolName": "CodeRabbit"
+  },
+  {
+    "companyName": "GitAuto",
+    "toolName": "GitAuto"
+  },
+  {
+    "companyName": "Anthropic",
+    "toolName": "Claude"
+  },
+  {
+    "companyName": "OpenAI",
+    "toolName": "ChatGPT"
+  },
+  {
+    "companyName": "Google",
+    "toolName": "Gemini"
+  },
+  {
+    "companyName": "DeepSeek",
+    "toolName": "DeepSeek"
+  },
+  {
+    "companyName": "Perplexity",
+    "toolName": "Perplexity"
+  },
+  {
+    "companyName": "Greptile",
+    "toolName": "Greptile"
+  },
+  {
+    "companyName": "Fern",
+    "toolName": "Fern"
+  },
+  {
+    "companyName": "Pieces",
+    "toolName": "Pieces for Developers"
+  },
+  {
+    "companyName": "Vibe",
+    "toolName": "Vibe Kanban"
+  },
+  {
+    "companyName": "Microsoft",
+    "toolName": "Visual Studio Code"
+  },
+  {
+    "companyName": "Apple",
+    "toolName": "Xcode"
+  },
+  {
+    "companyName": "JetBrains",
+    "toolName": "JetBrains IDEs"
+  },
+  {
+    "companyName": "Microsoft",
+    "toolName": "Visual Studio"
+  }
+]
