@@ -32,7 +32,7 @@
     "toolName": "Verdent"
   },
   {
-    "companyName": "TabbyML",
+    "companyName": "Pochi",
     "toolName": "Pochi"
   },
   {
@@ -358,6 +358,14 @@
   {
     "companyName": "CodeRabbit",
     "toolName": "CodeRabbit"
+  },
+  {
+    "companyName": "Qodo",
+    "toolName": "Qodo"
+  },
+  {
+    "companyName": "Snyk",
+    "toolName": "Snyk Code"
   },
   {
     "companyName": "GitAuto",
