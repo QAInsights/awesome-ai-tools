@@ -11,22 +11,36 @@
  * - VERCEL_PROJECT_ID: From Project Settings → General → Project ID
  */
 
-export default async function handler(req) {
-    // Verify request is from Vercel Cron
-    const signature = req.headers.get('x-vercel-signature');
-    if (signature !== process.env.CRON_SECRET) {
-        console.warn('[rebuild] Unauthorized request - invalid or missing signature');
-        return new Response('Unauthorized', { status: 401 });
+export default async function handler(req, res) {
+    // Verify request is from Vercel Cron (check both User-Agent and secret)
+    const userAgent = req.headers['user-agent'] || '';
+    const signature = req.headers['x-vercel-cron-secret'];
+    
+    if (!userAgent.includes('vercel-cron/1.0')) {
+        console.warn('[rebuild] Unauthorized request - invalid User-Agent:', userAgent);
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+    
+    // Validate CRON_SECRET is configured (prevent undefined === undefined bypass)
+    if (!process.env.CRON_SECRET) {
+        console.error('[rebuild] CRON_SECRET not configured');
+        return res.status(500).json({ error: 'Server configuration error' });
+    }
+    
+    // Validate signature exists and matches
+    if (!signature || signature !== process.env.CRON_SECRET) {
+        console.warn('[rebuild] Unauthorized request - invalid or missing cron secret');
+        return res.status(401).json({ error: 'Unauthorized' });
     }
 
     // Validate required env vars
     if (!process.env.VERCEL_TOKEN || !process.env.VERCEL_PROJECT_ID) {
         console.error('[rebuild] Missing required environment variables');
-        return new Response('Server configuration error', { status: 500 });
+        return res.status(500).json({ error: 'Server configuration error' });
     }
 
     try {
-        console.log('[rebuild] Triggering production deployment...');
+        console.log('[rebuild] Daily rebuild triggered at', new Date().toISOString());
 
         const resp = await fetch(
             `https://api.vercel.com/v9/projects/${process.env.VERCEL_PROJECT_ID}/deployments`,
@@ -49,23 +63,25 @@ export default async function handler(req) {
         if (!resp.ok) {
             const error = await resp.text();
             console.error('[rebuild] Vercel API error:', error);
-            return new Response(`Failed to trigger rebuild: ${error}`, { status: 500 });
+            return res.status(500).json({ error: `Failed to trigger rebuild: ${error}` });
         }
 
         const data = await resp.json();
         console.log('[rebuild] Deployment triggered:', data.id || data.url);
 
-        return new Response(JSON.stringify({
+        return res.status(200).json({
             success: true,
-            message: 'Rebuild triggered',
-            deploymentId: data.id
-        }), {
-            status: 200,
-            headers: { 'Content-Type': 'application/json' }
+            message: 'Rebuild triggered successfully',
+            deploymentId: data.id,
+            timestamp: new Date().toISOString()
         });
 
     } catch (err) {
-        console.error('[rebuild] Error triggering deployment:', err);
-        return new Response(`Internal error: ${err.message}`, { status: 500 });
+        const errorMessage = err instanceof Error ? err.message : String(err);
+        console.error('[rebuild] Error during rebuild:', errorMessage);
+        return res.status(500).json({ 
+            error: 'Rebuild failed',
+            message: errorMessage 
+        });
     }
 }
