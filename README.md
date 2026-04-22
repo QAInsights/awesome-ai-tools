@@ -52,7 +52,7 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Gemini Code Assist](https://cloud.google.com/gemini/docs/codeassist/overview)** | Google | Gemini-powered; free for individuals; VS Code + Google Cloud integration |
 | **[Amazon Q Developer](https://aws.amazon.com/q/developer/)** | AWS | Evolution of CodeWhisperer; multi-file agents; deep AWS integration |
 | **[Tabnine](https://www.tabnine.com)** | Tabnine | Privacy-first; on-premise options; all major IDEs; ethically sourced training |
-| **[Cline](https://github.com/cline/cline)** | Open Source | Autonomous VS Code agent; Plan + Act modes; BYOM (zero markup) |
+| **[Cline](https://github.com/cline/cline)** | Cline | Autonomous VS Code agent; Plan + Act modes; BYOM (zero markup) |
 | **[Kilo Code](https://kilocode.ai)** | Kilo Code | Open-source; 500+ models via OpenRouter; 4 structured modes (Architect/Code/Debug/Orchestrator) |
 | **[Roo Code](https://roocode.com)** | Roo Code | VS Code extension; strong on large multi-file changes; fork of Cline |
 | **[Continue](https://continue.dev)** | Continue | Open-source; VS Code + JetBrains; custom AI assistants; 20K+ GitHub stars |
@@ -84,7 +84,7 @@ AI coding agents that live in your terminal or command line.
 |------|---------|-------|
 | **[Claude Code](https://docs.anthropic.com/en/docs/claude-code)** | Anthropic | Terminal-native agentic coding; top-rated for complex reasoning & large refactors |
 | **[Codex CLI](https://github.com/openai/codex)** | OpenAI | Re-emerged as agent-first tool; runs against real repos from the CLI |
-| **[Aider](https://aider.chat)** | Open Source | Git-native terminal pair programmer; 39K GitHub stars; auto-commits changes |
+| **[Aider](https://aider.chat)** | Aider | Git-native terminal pair programmer; 39K GitHub stars; auto-commits changes |
 | **[Gemini CLI](https://github.com/google-gemini/gemini-cli)** | Google | Terminal agent for local repo tasks; lightweight; no UI overhead |
 | **[Goose](https://block.github.io/goose/)** | Block | Open-source AI agent framework; fully local; write/execute/debug from CLI |
 | **[Amazon Q CLI](https://aws.amazon.com/q/developer/)** | AWS | CLI agent component of Amazon Q; AWS-integrated terminal tasks |
