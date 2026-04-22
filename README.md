@@ -2,9 +2,10 @@
 
 > Manually curated, enhanced w/ Claude
 
-> A curated, categorized reference of AI-powered coding tools as of **March 2026**.
-> Covers full IDEs, editor extensions, terminal agents, autonomous agents, browser-based builders, and code review platforms.
-> **93+ tools** across 12 categories.
+> A curated, categorized reference of AI-powered coding tools as of **April 2026**.
+> Covers full IDEs, editor extensions, terminal agents, autonomous agents, browser-based builders, and code review platforms.  
+
+> **100+ tools** across 12 categories.
 
 ## 📋 Table of Contents
 
@@ -61,7 +62,7 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Supermaven](https://supermaven.com)** | Supermaven | Ultra-fast AI completion; large context windows |
 | **[Blackbox](https://blackboxai.com)** | Blackbox | AI code completion + chat; multi-language support |
 | **[Snyk Code](https://snyk.io/product/snyk-code/)** | Snyk | AI-driven security scanning; real-time vulnerability detection in-IDE |
-| **[Qodo](https://qodo.ai)** *(formerly CodiumAI)* | Qodo | AI-generated unit tests; code quality + PR review focus |
+| **[Qodo](https://qodo.ai)** | Qodo | AI-generated unit tests; code quality + PR review focus |
 | **[MarsCode](https://marscode.com)** | ByteDance | AI coding assistant and online IDE; companion to Trae |
 | **[Replit AI](https://replit.com)** | Replit | AI suite inside Replit's cloud IDE; beginner-friendly; includes Ghostwriter |
 | **[CodeBuddy](https://www.codebuddy.ai/)** | Tencent | MCP-compatible coding assistant extension; ⚠️ not available in the USA |
@@ -112,7 +113,7 @@ AI coding agents that live in your terminal or command line.
 | **[Compass Nova CLI](https://github.com/Compass-Agentic-Platform/nova)** | Compass | Compass Nova CLI |
 | **[Pi ACP](https://github.com/svkozak/pi-acp)** | svkozak | ACP adapter for pi coding agent |
 | **[Stakpak Agent](https://github.com/stakpak/agent)** | Stakpak | Ship your code, on autopilot. Open source agent that lives on your machines 24/7 and keeps your apps running |
-| **[OpenCode](https://opencode.ai/)** | Anomaly | OpenCode is an open source agent that helps you write and run code with any AI model. It's available as a terminal-based interface, desktop app, or IDE extension. Free models included or connect any model from any provider, including Claude, GPT, Gemini and more.; [GitHub](https://github.com/anomalyco/opencode) |
+| **[OpenCode](https://opencode.ai/)** | Anomaly | OpenCode is an open source agent that helps you write and run code with any AI model. It's available as a terminal-based interface, desktop app, or IDE extension. Free models included or connect any model from any provider, including Claude, GPT, Gemini and more.|
 
 ---
 
