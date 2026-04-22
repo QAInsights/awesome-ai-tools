@@ -26,6 +26,7 @@ const README_PATH     = join(ROOT, 'README.md');
 const TOOLS_DIR       = join(ROOT, 'tools');
 const DATA_DIR        = join(ROOT, 'data');
 const SITEMAP_PATH    = join(ROOT, 'sitemap.xml');
+const ENRICHED_PATH   = join(ROOT, 'public', 'data', 'enriched-tools.json');
 
 // Tool pages that are hand-authored — do NOT delete them on regeneration.
 const PROTECTED_TOOL_FILES = new Set(['token-counter.html', 'hallucination-scorer.html']);
@@ -69,7 +70,7 @@ function stripEmoji(s) {
 
 /* ---------- core ---------- */
 
-function buildJsonLd(tool, categoryClean, descMeta) {
+function buildJsonLd(tool, categoryClean, descFull) {
     return {
         '@context': 'https://schema.org',
         '@graph': [
@@ -78,7 +79,7 @@ function buildJsonLd(tool, categoryClean, descMeta) {
                 '@id': `https://ai.dosa.dev/tools/${tool.slug}#app`,
                 name: tool.name,
                 url: tool.url || `https://ai.dosa.dev/tools/${tool.slug}`,
-                description: descMeta,
+                description: descFull || tool.notes || '',
                 applicationCategory: 'DeveloperApplication',
                 operatingSystem: 'Any',
                 offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
@@ -96,10 +97,34 @@ function buildJsonLd(tool, categoryClean, descMeta) {
     };
 }
 
-function renderTemplate(template, tool) {
+function loadEnrichedData() {
+    try {
+        const raw = readFileSync(ENRICHED_PATH, 'utf-8');
+        const data = JSON.parse(raw);
+        const map = new Map();
+        for (const tool of data) {
+            if (tool.slug) map.set(tool.slug, tool);
+        }
+        return map;
+    } catch (err) {
+        console.warn('[generate-tool-pages] Could not load enriched data:', err.message);
+        return new Map();
+    }
+}
+
+function renderTemplate(template, tool, enrichedMap) {
     const categoryClean = stripEmoji(tool.category);
     const categoryShort = getShortCategory(tool.category);
-    const descMeta = truncate(tool.notes || '', 155);
+    const enriched = enrichedMap.get(tool.slug);
+    
+    // Full description for JSON-LD (structured data)
+    const descFull = enriched?.description || tool.notes || '';
+    
+    // Truncated description for meta tags (SEO length limits)
+    const descMeta = enriched?.description 
+        ? truncate(enriched.description, 155)
+        : truncate(tool.notes || '', 155);
+    
     const keywords = [
         tool.name,
         tool.company,
@@ -109,6 +134,7 @@ function renderTemplate(template, tool) {
         'developer tools',
     ].filter(Boolean).join(', ');
 
+    // Seed contains basic info + enriched data if available
     const seed = {
         slug: tool.slug,
         name: tool.name,
@@ -120,7 +146,10 @@ function renderTemplate(template, tool) {
         url: tool.url || '#',
     };
 
-    const jsonLd = buildJsonLd(tool, categoryClean, descMeta);
+    // Full enriched data embedded separately for hydration
+    const enrichedData = enriched || null;
+
+    const jsonLd = buildJsonLd(tool, categoryClean, descFull);
 
     return template
         .replaceAll('{{SLUG}}', escapeAttr(tool.slug))
@@ -133,7 +162,8 @@ function renderTemplate(template, tool) {
         .replaceAll('{{DESCRIPTION_META}}', escapeAttr(descMeta))
         .replaceAll('{{KEYWORDS}}', escapeAttr(keywords))
         .replaceAll('{{JSON_LD}}', escapeJsonForScript(jsonLd))
-        .replaceAll('{{SEED_JSON}}', escapeJsonForScript(seed));
+        .replaceAll('{{SEED_JSON}}', escapeJsonForScript(seed))
+        .replaceAll('{{ENRICHED_JSON}}', escapeJsonForScript(enrichedData));
 }
 
 function cleanStaleToolPages(keepSlugs) {
@@ -194,6 +224,11 @@ export async function generateToolPages() {
     const template = readFileSync(TEMPLATE_PATH, 'utf-8');
     const md       = readFileSync(README_PATH, 'utf-8');
     const tools    = parseMarkdown(md);
+    const enrichedMap = loadEnrichedData();
+    const enrichedCount = enrichedMap.size;
+    if (enrichedCount > 0) {
+        console.log(`[generate-tool-pages] Loaded enriched data for ${enrichedCount} tools`);
+    }
 
     mkdirSync(TOOLS_DIR, { recursive: true });
     mkdirSync(DATA_DIR, { recursive: true });
@@ -206,7 +241,7 @@ export async function generateToolPages() {
             continue;
         }
         slugs.add(tool.slug);
-        const html = renderTemplate(template, tool);
+        const html = renderTemplate(template, tool, enrichedMap);
         writeFileSync(join(TOOLS_DIR, `${tool.slug}.html`), html, 'utf-8');
     }
 
