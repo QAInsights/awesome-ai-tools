@@ -1,4 +1,8 @@
 {
   "cleanUrls": true,
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "crons": [{
+    "path": "/api/rebuild",
+    "schedule": "0 9 * * *"
+  }]
 }
