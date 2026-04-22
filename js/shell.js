@@ -151,11 +151,11 @@ const DETAIL_SECTIONS_HTML = `
 <section id="fitSection" class="hidden td-section">
     <div class="td-section-label">Who It's For</div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="td-card">
+        <div class="td-card" style="border-left: 3px solid #16a34a;">
             <div class="font-mono text-[11px] uppercase text-[#4ade80] tracking-wide mb-2">&#10003; Best For</div>
             <p id="bestFor" class="text-[15px] leading-relaxed text-[#d4d4d4]"></p>
         </div>
-        <div class="td-card">
+        <div class="td-card" style="border-left: 3px solid #dc2626;">
             <div class="font-mono text-[11px] uppercase text-[#f87171] tracking-wide mb-2">&#10007; Not Ideal For</div>
             <p id="notIdealFor" class="text-[15px] leading-relaxed text-[#d4d4d4]"></p>
         </div>

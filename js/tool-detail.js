@@ -4,13 +4,14 @@
  * Flow:
  *   1. Read seed data (name, company, category, notes, url, slug) from the
  *      inline <script id="tool-seed"> block. Paint minimal view instantly.
- *   2. Read enriched data from <script id="tool-enriched"> if present.
- *      This is embedded at build time from generate-tool-pages.js.
- *   3. If enriched data exists, render it immediately. Otherwise show
- *      "Enriched details coming soon" banner.
- *
- * Memory-efficient: No fetch of large JSON, no localStorage cache bloat.
+ *   2. Read enriched cache from localStorage; if present, render enriched view.
+ *   3. Fetch `/public/data/enriched-tools.json` (SWR). On success, update cache
+ *      and re-render enriched view if slug is present.
+ *   4. If the slug is absent from the enriched payload, show a subtle
+ *      "Enriched details coming soon" banner (seed fields remain visible).
  */
+
+import * as cache from './tool-cache.js';
 
 const ENRICHED_URL = '/public/data/enriched-tools.json';
 
@@ -24,33 +25,41 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- First paint from seed ------------------------------------------------
     paintSeed(seed);
 
-    // --- Read embedded enriched data (build-time injected) --------------------
-    const enriched = readEnriched();
-    if (enriched) {
-        paintEnriched(seed, enriched);
-    } else {
-        // No enriched data embedded — try fetching (for dev/old pages)
-        // or show coming soon banner
+    // --- Swap in cached enriched data (if any) --------------------------------
+    const cached = cache.read();
+    let appliedFromCache = false;
+    if (cached) {
+        const match = cached.data.find(t => t.slug === seed.slug);
+        if (match) {
+            paintEnriched(seed, match);
+            appliedFromCache = true;
+        }
+    }
+
+    // --- Revalidate (SWR) -----------------------------------------------------
+    if (!cached || cache.isStale(cached)) {
         fetchEnriched().then(fresh => {
-            if (!fresh) {
-                showComingSoon();
-                return;
-            }
+            if (!fresh) return;
+            cache.write(fresh);
             const match = fresh.find(t => t.slug === seed.slug);
             if (match) {
                 paintEnriched(seed, match);
-            } else {
+            } else if (!appliedFromCache) {
                 showComingSoon();
             }
         }).catch(err => {
             console.warn('[tool-detail] Enriched fetch failed:', err);
-            showComingSoon();
+            if (!appliedFromCache) showComingSoon();
         });
+    } else {
+        // Cache is fresh. If it didn't contain this slug, show the banner now.
+        const cachedMatch = cached.data.find(t => t.slug === seed.slug);
+        if (!cachedMatch) showComingSoon();
     }
 });
 
 /* ---------------------------------------------------------------------------- */
-/* Data readers                                                                 */
+/* Seed + Fetch helpers                                                         */
 /* ---------------------------------------------------------------------------- */
 
 function readSeed() {
@@ -58,18 +67,6 @@ function readSeed() {
     if (!el) return null;
     try {
         return JSON.parse(el.textContent || '{}');
-    } catch {
-        return null;
-    }
-}
-
-function readEnriched() {
-    const el = document.getElementById('tool-enriched');
-    if (!el) return null;
-    try {
-        const data = JSON.parse(el.textContent || 'null');
-        // Null means no enriched data available for this tool
-        return data;
     } catch {
         return null;
     }

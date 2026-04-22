@@ -1,34 +1,4 @@
 {
   "cleanUrls": true,
-  "outputDirectory": ".",
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "dosa.dev"
-        }
-      ],
-      "destination": "https://ai.dosa.dev/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.dosa.dev"
-        }
-      ],
-      "destination": "https://ai.dosa.dev/:path*",
-      "permanent": true
-    }
-  ],
-  "crons": [
-    {
-      "path": "/api/rebuild",
-      "schedule": "0 2 * * *"
-    }
-  ]
+  "outputDirectory": "."
 }
