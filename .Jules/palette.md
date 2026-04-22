@@ -1,0 +1,3 @@
+## 2024-05-18 - Adding ARIA Labels to Icon-Only Buttons
+**Learning:** Found a recurring pattern in the app's components where common layout toggles (sidebar toggles, search clear buttons) rely solely on SVGs for visual communication. Screen reader users would have no context for these interactive elements. Adding `aria-label` is a simple but critical fix for these structural layout components.
+**Action:** When implementing new floating action buttons or structural toggles that contain only icons, ensure `aria-label` is included by default during component creation to avoid this pattern repeating.
