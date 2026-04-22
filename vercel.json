@@ -3,6 +3,6 @@
   "outputDirectory": ".",
   "crons": [{
     "path": "/api/rebuild",
-    "schedule": "25 1 * * *"
+    "schedule": "0 2 * * *"
   }]
 }
