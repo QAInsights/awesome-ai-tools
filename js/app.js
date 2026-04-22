@@ -282,30 +282,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             compareFloatingBar.classList.add('translate-y-full');
         }
 
-        // Update button states in the grid
-        document.querySelectorAll('.compare-toggle').forEach(btn => {
-            const slug = btn.getAttribute('data-slug');
-            const svg = btn.querySelector('svg');
+        // Update toggle switch states in the grid
+        document.querySelectorAll('.compare-toggle-switch').forEach(label => {
+            const slug = label.getAttribute('data-slug');
+            const checkbox = label.querySelector('input[type="checkbox"]');
             if (isSelected(slug)) {
-                btn.classList.add('bg-[#a78bfa]', 'border-[#a78bfa]');
-                btn.classList.remove('bg-transparent');
-                svg.classList.add('text-black');
-                svg.classList.remove('text-transparent');
+                label.classList.add('active');
+                if (checkbox) checkbox.checked = true;
             } else {
-                btn.classList.remove('bg-[#a78bfa]', 'border-[#a78bfa]');
-                btn.classList.add('bg-transparent');
-                svg.classList.remove('text-black');
-                svg.classList.add('text-transparent');
+                label.classList.remove('active');
+                if (checkbox) checkbox.checked = false;
             }
         });
     }
 
     grid.addEventListener('click', (e) => {
-        const btn = e.target.closest('.compare-toggle');
-        if (btn) {
+        const toggle = e.target.closest('.compare-toggle-switch');
+        if (toggle) {
             e.preventDefault();
             e.stopPropagation();
-            const slug = btn.getAttribute('data-slug');
+            const slug = toggle.getAttribute('data-slug');
             if (!slug) {
                 // If the tool has no slug, we might need a fallback or prevent it
                 alert("This tool cannot be compared yet.");

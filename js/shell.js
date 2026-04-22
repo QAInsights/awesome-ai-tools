@@ -191,6 +191,18 @@ const DETAIL_SECTIONS_HTML = `
         Back to directory
     </a>
 </div>
+<div class="td-section" style="padding-top: 0;">
+    <div class="flex items-start gap-3 py-4 px-4 border border-[#222] rounded-lg bg-white/[0.02]">
+        <svg class="w-5 h-5 text-[#737373] shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <p class="text-[13px] text-[#737373] leading-relaxed">
+            Content on this page is AI-generated. Please verify details with the vendor's website for accuracy.
+        </p>
+    </div>
+</div>
 `;
 
 /**

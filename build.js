@@ -30,7 +30,7 @@ const googleClientId = process.env.GOOGLE_CLIENT_ID || 'your-google-client-id-he
 const githubClientId = process.env.GITHUB_CLIENT_ID || '';
 
 const result = await build({
-    entrypoints: ['./js/app.js'],
+    entrypoints: ['./js/app.js', './js/compare.js'],
     outdir: './dist',
     define: {
         'process.env.ENABLE_VOTING': JSON.stringify(enableVoting),

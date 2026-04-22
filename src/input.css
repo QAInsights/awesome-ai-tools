@@ -176,6 +176,60 @@
         height: 20px;
         flex-shrink: 0;
     }
+
+    /* Custom Toggle Switch for Compare */
+    .compare-toggle-switch {
+        @apply relative inline-flex items-center cursor-pointer shrink-0 select-none;
+        width: 36px;
+        height: 20px;
+        /* Increase touch target for mobile */
+        padding: 4px;
+        margin: -4px;
+    }
+    .compare-toggle-switch input {
+        @apply sr-only;
+    }
+    .compare-toggle-track {
+        @apply absolute inset-0 rounded-full border transition-all duration-200;
+        background: transparent;
+        border-color: #333;
+    }
+    .compare-toggle-switch:hover .compare-toggle-track {
+        border-color: #666;
+    }
+    .compare-toggle-thumb {
+        @apply absolute rounded-full transition-all duration-200;
+        width: 14px;
+        height: 14px;
+        background: #737373;
+        top: 3px;
+        left: 3px;
+    }
+    /* Selected State */
+    .compare-toggle-switch.active .compare-toggle-track {
+        background: linear-gradient(135deg, #a78bfa, #22d3ee);
+        border-color: transparent;
+    }
+    .compare-toggle-switch.active .compare-toggle-thumb {
+        background: #fff;
+        transform: translateX(16px);
+    }
+    /* Mobile: larger touch target */
+    @media (max-width: 768px) {
+        .compare-toggle-switch {
+            width: 44px;
+            height: 24px;
+        }
+        .compare-toggle-thumb {
+            width: 18px;
+            height: 18px;
+            top: 3px;
+            left: 3px;
+        }
+        .compare-toggle-switch.active .compare-toggle-thumb {
+            transform: translateX(20px);
+        }
+    }
 }
 
 @keyframes shift {

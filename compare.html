@@ -183,12 +183,12 @@
         </div>
 
         <div class="max-w-7xl mx-auto py-12 px-6 w-full flex-1 overflow-y-auto min-h-0">
-        <div class="mb-8 flex items-center justify-between">
+        <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-                <h1 class="text-3xl font-semibold text-white mb-2">Compare Tools</h1>
+                <h1 class="text-2xl sm:text-3xl font-semibold text-white mb-2">Compare Tools</h1>
                 <p class="text-[#a3a3a3]">See how your selected tools stack up against each other.</p>
             </div>
-            <a href="/" class="text-[#a3a3a3] hover:text-white px-4 py-2 border border-[#333] rounded transition-colors">&larr; Back to registry</a>
+            <a href="/" class="self-start sm:self-auto px-4 py-2 border border-[#333] rounded transition-all duration-300 hover:border-[#a78bfa] hover:bg-gradient-to-r hover:from-[#a78bfa] hover:via-[#22d3ee] hover:to-[#a78bfa] hover:bg-[length:200%_auto] hover:bg-clip-text hover:text-transparent text-[#a3a3a3] hover:text-transparent">&larr; Back to registry</a>
         </div>
 
         <div id="compareGrid" class="flex flex-col md:flex-row gap-6 w-full">
@@ -196,7 +196,7 @@
         </div>
     </div>
 </main>
-<script type="module" src="./js/compare.js"></script>
+<script type="module" src="./dist/compare.js"></script>
 
 
     <div id="turnstile-container"></div>

@@ -1,6 +1,9 @@
 import * as cache from './tool-cache.js';
+import { getVoteCount } from './voting.js';
+import { auth } from './auth.js';
 
 const ENRICHED_URL = '/public/data/enriched-tools.json';
+const ENABLE_VOTING = process.env.ENABLE_VOTING === 'true';
 
 document.addEventListener('DOMContentLoaded', async () => {
     const params = new URLSearchParams(window.location.search);
@@ -60,10 +63,53 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const featuresHtml = tool.keyFeatures ? `<ul class="list-disc pl-5 text-[#a3a3a3] text-sm flex flex-col gap-1">${tool.keyFeatures.map(f => `<li>${f}</li>`).join('')}</ul>` : '<p class="text-[#a3a3a3] text-sm">N/A</p>';
 
+        const toolId = `${tool.company.toLowerCase().replace(/[^a-z0-9]/g, '')}-${tool.name.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
+        const initialVoteCount = getVoteCount(toolId);
+
+        const zapButtonHtml = ENABLE_VOTING ? (auth.isAuthenticated() ? `
+            <button class="zap-btn sm" data-tip="Zap this tool!" 
+                data-tool-id="${toolId}"
+                data-tool-name="${tool.name}">
+                <div class="zap-ring"></div>
+                <div class="sparks">
+                    <div class="spark spark-1"></div>
+                    <div class="spark spark-2"></div>   
+                    <div class="spark spark-3"></div>
+                    <div class="spark spark-4"></div>
+                    <div class="spark spark-5"></div>
+                </div>
+                <svg class="zap-icon" viewBox="0 0 24 24" fill="none">
+                    <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
+                </svg>
+                <span class="zap-count">${initialVoteCount.toLocaleString()}</span>
+            </button>
+        ` : `
+            <button class="zap-btn sm" data-tip="Sign in to vote!" 
+                data-tool-id="${toolId}"
+                data-tool-name="${tool.name}">
+                <svg class="zap-icon" viewBox="0 0 24 24" fill="none" style="opacity:0.4">
+                    <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
+                </svg>
+                <span class="zap-count" style="opacity:0.5">${initialVoteCount.toLocaleString()}</span>
+            </button>
+        `) : `
+            <button class="zap-btn sm opacity-50 cursor-not-allowed" disabled data-tip="Voting is currently disabled.">
+                <svg class="zap-icon" viewBox="0 0 24 24" fill="none">
+                    <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
+                </svg>
+                <span class="zap-count">${initialVoteCount.toLocaleString()}</span>
+            </button>
+        `;
+
         card.innerHTML = `
-            <div class="border-b border-[#333] pb-4 mb-2">
-                <h2 class="text-2xl font-bold text-white mb-1"><a href="/tools/${tool.slug}" class="hover:text-[#a78bfa] transition-colors">${tool.name}</a></h2>
-                <p class="font-mono text-sm text-[#a3a3a3]">${tool.company}</p>
+            <div class="border-b border-[#333] pb-3 sm:pb-4 mb-2">
+                <div class="flex items-start justify-between gap-3">
+                    <div class="flex-1 min-w-0">
+                        <h2 class="text-xl sm:text-2xl font-bold text-white mb-1"><a href="/tools/${tool.slug}" class="hover:bg-gradient-to-r hover:from-[#a78bfa] hover:via-[#22d3ee] hover:to-[#a78bfa] hover:bg-[length:200%_auto] hover:bg-clip-text hover:text-transparent transition-all duration-300">${tool.name}</a></h2>
+                        <p class="font-mono text-xs sm:text-sm text-[#a3a3a3]">${tool.company}</p>
+                    </div>
+                    ${zapButtonHtml}
+                </div>
             </div>
 
             <div class="flex-1 flex flex-col gap-6">
