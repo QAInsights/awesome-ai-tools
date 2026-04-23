@@ -5,6 +5,10 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
     site: 'https://ai.dosa.dev',
+    // In Astro 6, output:'static' is the unified mode.
+    // Pages are statically pre-rendered by default.
+    // Server API routes opt into SSR with `export const prerender = false`
+    // and are deployed as Vercel serverless functions via @astrojs/vercel.
     output: 'static',
     adapter: vercel(),
     integrations: [
@@ -16,3 +20,4 @@ export default defineConfig({
         },
     },
 });
+

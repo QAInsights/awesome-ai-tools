@@ -1,6 +1,5 @@
 {
   "cleanUrls": true,
-  "outputDirectory": ".",
   "redirects": [
     {
       "source": "/:path*",
