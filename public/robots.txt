@@ -89,4 +89,4 @@ User-agent: Diffbot
 Allow: /
 
 # --- Sitemap ---
-Sitemap: https://ai.dosa.dev/sitemap.xml
+Sitemap: https://ai.dosa.dev/sitemap-index.xml
