@@ -1,7 +1,7 @@
 [
   {
-    "slug": "anysphere",
-    "name": "Anysphere",
+    "slug": "cursor",
+    "name": "Cursor",
     "company": "Anysphere",
     "pricing": "freemium",
     "pricingDetail": "Hobby (Free), Pro ($20/mo), Pro+ ($60/mo), Ultra ($200/mo), and Teams ($40/user/mo). Bugbot debugging add-on is available for $40/user/mo.",
@@ -25,8 +25,8 @@
     "lastUpdated": "2026-04-23"
   },
   {
-    "slug": "cognition",
-    "name": "Cognition",
+    "slug": "devin",
+    "name": "Devin",
     "company": "Cognition",
     "pricing": "freemium",
     "pricingDetail": "Offers a Free tier for getting started, Pro at $20/month, Max at $200/month, and Teams starting at $80/month. Usage beyond included quotas is billed via Agent Compute Units (ACUs).",
@@ -50,8 +50,35 @@
     "lastUpdated": "2026-04-23"
   },
   {
-    "slug": "bytedance",
-    "name": "ByteDance",
+    "slug": "windsurf",
+    "name": "Windsurf",
+    "company": "Cognition",
+    "pricing": "freemium",
+    "pricingDetail": "New self-serve model includes a Free tier ($10 starting credits), Pro ($20/mo), Max ($200/mo), and Teams (min. $80/mo). Usage is billed via Agent Compute Units (ACUs) at approximately $2.25 per unit.",
+    "description": "An autonomous AI software engineering platform designed to handle end-to-end development tasks including planning, coding, and debugging. It operates in a secure sandboxed environment with its own shell, browser, and Linux desktop to independently solve engineering challenges.",
+    "keyFeatures": [
+      "Autonomous Planning & Dynamic Re-planning",
+      "Full Linux Desktop for App Testing (Computer Use)",
+      "Multi-Agent Delegation ('Manage Devins')",
+      "Windsurf Agentic IDE Integration",
+      "10M+ Token Repository Context"
+    ],
+    "bestFor": "Autonomous end-to-end feature development, complex legacy code migrations, and long-running background refactoring tasks.",
+    "notIdealFor": "Low-latency code autocomplete, real-time pair programming, and creative design or subjective UX decisions.",
+    "recentUpdates": "Released Devin 2.2 with desktop support and self-verification (Feb 2026); introduced 'Manage Devins' for task delegation (March 2026); launched new self-serve pricing tiers including a Free and $20 Pro plan (April 2026).",
+    "verdict": "The premier choice for truly autonomous software engineering, now significantly more accessible thanks to new tiered pricing and powerful multi-agent coordination capabilities.",
+    "tags": [
+      "AI Software Engineer",
+      "Autonomous Agent",
+      "Code Migration",
+      "Devin",
+      "Agentic IDE"
+    ],
+    "lastUpdated": "2026-04-23"
+  },
+  {
+    "slug": "trae",
+    "name": "Trae",
     "company": "ByteDance",
     "pricing": "free",
     "pricingDetail": "As of early 2026, ByteDance's flagship AI coding tools under the Trae brand are free to use, providing unlimited access to premium models like Claude 3.7 and GPT-4o.",
@@ -77,8 +104,33 @@
     "lastUpdated": "2026-04-23"
   },
   {
-    "slug": "zed-industries",
-    "name": "Zed Industries",
+    "slug": "marscode",
+    "name": "MarsCode",
+    "company": "ByteDance",
+    "pricing": "freemium",
+    "pricingDetail": "Currently offers the Trae AI IDE for free during its early access phase, including unlimited access to premium models like Claude 3.7 Sonnet and DeepSeek R1. Paid tiers (approx. $10-$20/month) exist for advanced cloud features and higher-tier model usage in specific regions.",
+    "description": "ByteDance offers an ecosystem of AI-native developer tools, headlined by the Trae AI IDE and MarsCode cloud platform. These tools leverage agentic workflows and multi-model integration to transform coding from simple assistance to full-scale 'autopilot' development.",
+    "keyFeatures": [
+      "Builder Mode: An agentic feature that generates entire project structures and codebases from natural language prompts.",
+      "Adaptive AI Context: Deep integration with the workspace that allows the AI to understand the entire codebase for precise debugging and suggestions.",
+      "Multimodal Support: Built-in capability to convert visual design mockups or screenshots directly into functional frontend code."
+    ],
+    "bestFor": "Developers looking for a robust, free alternative to Cursor that provides access to the latest frontier models like Claude 3.7.",
+    "notIdealFor": "Users who require a strictly open-source IDE core or teams with stringent corporate data privacy policies regarding international cloud providers.",
+    "recentUpdates": "In early 2026, ByteDance integrated Claude 3.7 Sonnet and DeepSeek R1 into the Trae IDE, maintaining its 'free for all users' promotion to capture market share from established AI editors.",
+    "verdict": "With its aggressive free-access strategy and high-performance agentic modes, ByteDance's developer suite is currently the most competitive value proposition in the AI IDE market.",
+    "tags": [
+      "AI IDE",
+      "Code Generation",
+      "Claude 3.7",
+      "DeepSeek",
+      "VS Code"
+    ],
+    "lastUpdated": "2026-04-23"
+  },
+  {
+    "slug": "zed",
+    "name": "Zed",
     "company": "Zed Industries",
     "pricing": "open-source",
     "pricingDetail": "The editor is free and open-source under a GPL/Apache 2.0 license. Zed AI offers a free tier with limited credits, a Pro subscription for unlimited hosted models, and support for Bring Your Own Key (BYOK) for providers like OpenAI, Anthropic, and Ollama.",
@@ -98,6 +150,187 @@
       "Open Source",
       "AI Coding Assistant",
       "Collaboration"
+    ],
+    "lastUpdated": "2026-04-23"
+  },
+  {
+    "slug": "github-copilot",
+    "name": "GitHub Copilot",
+    "company": "GitHub",
+    "pricing": "freemium",
+    "pricingDetail": "Core plans: Free ($0), Team ($4/user/mo), and Enterprise ($21/user/mo). Copilot AI add-ons: Free (2,000 completions), Pro ($10/mo), Pro+ ($39/mo), Business ($19/user/mo), and Enterprise ($39/user/mo). Note: New sign-ups for individual Copilot plans are currently paused as of April 2026.",
+    "description": "GitHub is the world's leading AI-powered developer platform for version control, collaboration, and automated software delivery. It provides a comprehensive ecosystem where developers can host code, manage projects, and use agentic AI to handle complex coding tasks and repository maintenance.",
+    "keyFeatures": [
+      "GitHub Copilot & Workspace (Agentic multi-file editing and autonomous task execution)",
+      "GitHub Actions (Highly customizable CI/CD and workflow automation)",
+      "Advanced Security (AI-powered vulnerability scanning and automated code fixing)"
+    ],
+    "bestFor": "Engineering teams and individual developers seeking a unified, industry-standard platform for hosting code and scaling with agentic AI workflows.",
+    "notIdealFor": "New individual users specifically seeking Claude Opus access on a budget, as current capacity constraints have paused new sign-ups and limited top-tier models to the Pro+ plan.",
+    "recentUpdates": "As of April 2026, GitHub has paused new sign-ups for Copilot Pro and Pro+ to manage infrastructure strain from agentic AI. They have also introduced tighter usage limits, moved Claude Opus 4.7 exclusively to the Pro+ tier, and enabled AI training by default for individual users (with an opt-out).",
+    "verdict": "GitHub remains the gold standard for software development, successfully pivoting from a code hosting service to an 'agent-first' platform that drastically increases developer velocity through deeply integrated AI.",
+    "tags": [
+      "Version Control",
+      "AI Coding Assistant",
+      "CI/CD",
+      "DevOps",
+      "Collaboration"
+    ],
+    "lastUpdated": "2026-04-23"
+  },
+  {
+    "slug": "claude-code",
+    "name": "Claude Code",
+    "company": "Anthropic",
+    "pricing": "freemium",
+    "pricingDetail": "Free tier available; Pro plan at $20/mo; Max plans at $100-$200/mo. API pricing: Claude Opus 4.7 ($5/$25 per MTok), Sonnet 4.6 ($3/$15 per MTok), and Haiku 4.5 ($1/$5 per MTok). Batch API offers 50% discounts and Prompt Caching provides up to 90% savings.",
+    "description": "A frontier AI platform providing the Claude family of models, which excel in reasoning, coding, and safe interaction. It features an expansive 1-million-token context window and the Model Context Protocol (MCP) for seamless integration with developer tools and large codebases.",
+    "keyFeatures": [
+      "1M token context window for analyzing entire repositories and massive datasets.",
+      "Claude Code & Agent Teams for autonomous software engineering and multi-agent coordination.",
+      "Extended Thinking (Adaptive Reasoning) with adjustable effort levels (high, xhigh, max) to balance speed and depth."
+    ],
+    "bestFor": "Professional developers and enterprise teams requiring high-fidelity code generation, complex architectural reasoning, and long-context document analysis.",
+    "notIdealFor": "Simple tasks where sub-millisecond latency is critical or developers looking for a fully open-source model architecture.",
+    "recentUpdates": "Released Claude Opus 4.7 with enhanced 'xhigh' effort controls; introduced public beta for API Task Budgets; launched 'ultrareview' for flagging bugs in autonomous agent workflows (April 2026).",
+    "verdict": "Anthropic remains the industry leader for developer-centric LLMs, offering the best balance of reasoning depth, context capacity, and agentic capabilities via the Claude 4.x family.",
+    "tags": [
+      "LLM",
+      "AI Coding",
+      "Agentic AI",
+      "Claude",
+      "MCP"
+    ],
+    "lastUpdated": "2026-04-23"
+  },
+  {
+    "slug": "junie",
+    "name": "Junie",
+    "company": "JetBrains",
+    "pricing": "freemium",
+    "pricingDetail": "AI Free (unlimited local completion, limited cloud credits), AI Pro ($10/mo for individuals), and AI Ultimate ($30/mo). AI Pro is included at no extra cost with JetBrains All Products Pack and dotUltimate subscriptions.",
+    "description": "JetBrains AI is a deeply integrated suite of AI-powered coding tools built directly into the JetBrains IDE ecosystem. It combines proprietary models like Mellum with frontier LLMs and local execution to provide context-aware chat, autonomous agents, and multi-file refactoring.",
+    "keyFeatures": [
+      "Hybrid AI Engine: Uses JetBrains' Mellum model for local completion and frontier LLMs (GPT-4.1, Claude 3.7, Gemini 2.5) for cloud tasks.",
+      "Junie Coding Agent: An autonomous assistant capable of planning and executing complex multi-file tasks and code checks within the project.",
+      "Proactive Assistance: Experimental Recap and Insights features that summarize recent work and explain non-obvious code blocks proactively."
+    ],
+    "bestFor": "Developers already using JetBrains IDEs who want high-context AI assistance and the ability to run local models for privacy.",
+    "notIdealFor": "Developers primarily using VS Code or those who prefer a flat-rate subscription without usage-based cloud quotas.",
+    "recentUpdates": "The 2026.1 EAP update introduced proactive 'Recap' and 'Insights' features; support for GPT-4.1 and Claude 3.7 Sonnet was added alongside a unified credit-based quota system for cloud usage.",
+    "verdict": "An essential upgrade for the JetBrains faithful, offering the best-in-class integration that leverages the IDE's internal semantic knowledge better than any third-party plugin.",
+    "tags": [
+      "IDE",
+      "AI Assistant",
+      "Agentic",
+      "Autocomplete",
+      "Local LLM",
+      "Java",
+      "Kotlin",
+      "Python"
+    ],
+    "lastUpdated": "2026-04-23"
+  },
+  {
+    "slug": "amazon-q-developer",
+    "name": "Amazon Q Developer",
+    "company": "AWS",
+    "pricing": "freemium",
+    "pricingDetail": "Amazon Q Developer offers a perpetual Free Tier ($0) with 50 agentic requests/month. The Pro Tier costs $19/user/month for 1,000 agentic requests and 4,000 lines of code transformation. Amazon Bedrock uses pay-as-you-go token-based pricing.",
+    "description": "Amazon Web Services provides a comprehensive suite of AI-powered development tools led by Amazon Q Developer, an assistant that handles the entire software development lifecycle. It integrates directly into IDEs and the AWS Console to assist with coding, debugging, and managing cloud infrastructure.",
+    "keyFeatures": [
+      "Autonomous Agentic Coding: Capable of implementing full features, refactoring, and writing tests across multiple files.",
+      "AWS Cloud Optimization: Native integration to answer resource questions, analyze costs, and diagnose console errors in real-time.",
+      "Automated Code Transformation: Streamlines complex version upgrades (e.g., Java 8 to 17) and cross-platform porting.",
+      "Built-in Security Scanning: Identifies vulnerabilities and provides AI-powered remediation suggestions tailored to the codebase."
+    ],
+    "bestFor": "Developers and enterprise teams working heavily within the AWS ecosystem who require deep infrastructure integration and high security compliance.",
+    "notIdealFor": "Hobbyists working on small non-cloud projects or teams primarily using other cloud providers like GCP or Azure.",
+    "recentUpdates": "As of April 2024, CodeWhisperer was fully merged into Amazon Q Developer. In early 2026, AWS launched the Bedrock AgentCore harness to simplify AI agent deployment and introduced the Amazon Nova model family for multimodal development tasks.",
+    "verdict": "A top-tier choice for AWS-native developers, offering unparalleled infrastructure awareness and enterprise-grade security that generic assistants can't match.",
+    "tags": [
+      "AI Coding Assistant",
+      "Cloud Development",
+      "DevOps",
+      "Infrastructure as Code",
+      "Enterprise AI"
+    ],
+    "lastUpdated": "2026-04-23"
+  },
+  {
+    "slug": "gemini-code-assist",
+    "name": "Gemini Code Assist",
+    "company": "Google",
+    "pricing": "freemium",
+    "pricingDetail": "Free for individuals via Gemini Code Assist (up to 6,000 completions/day) and Google AI Studio; API offers a generous free tier. Paid plans for teams and enterprise range from $19.99 to $30 per user/month.",
+    "description": "A comprehensive ecosystem of AI-powered development tools centered around the Gemini model family. It includes Gemini Code Assist for IDE integration, Firebase Studio for cloud-based development, and Google AI Studio for prompt engineering and rapid prototyping.",
+    "keyFeatures": [
+      "Gemini Code Assist (IDE extensions for VS Code and JetBrains)",
+      "Firebase Studio (formerly Project IDX), a browser-based, cloud-native IDE",
+      "Massive context windows supporting up to 2 million tokens for codebase-wide analysis",
+      "Gemini CLI for terminal-native AI assistance and automation",
+      "Deep integration with Google Cloud, Firebase, and the Android ecosystem"
+    ],
+    "bestFor": "Full-stack developers and enterprise teams looking for a cloud-integrated AI workflow with exceptionally large context windows.",
+    "notIdealFor": "Developers seeking purely offline/local-first AI tools or those who prefer to avoid cloud-based IDE environments.",
+    "recentUpdates": "Project IDX was officially rebranded and integrated into the Firebase ecosystem as Firebase Studio in April 2025. The Gemini 3.1 model family launched with advanced reasoning capabilities and improved 'vibe-coding' features.",
+    "verdict": "Google's AI developer stack is a top-tier choice for modern web and mobile development, particularly for its industry-leading context window and seamless cloud deployment options.",
+    "tags": [
+      "AI Coding",
+      "Cloud IDE",
+      "LLM",
+      "Firebase",
+      "Gemini",
+      "IDE Extension"
+    ],
+    "lastUpdated": "2026-04-23"
+  },
+  {
+    "slug": "firebase-studio",
+    "name": "Firebase Studio",
+    "company": "Google",
+    "pricing": "freemium",
+    "pricingDetail": "Gemini Code Assist offers a robust free tier for individuals (180k completions/mo); paid tiers like Google AI Pro ($19.99/mo) and AI Ultra (~$41.67/mo) unlock advanced coding agents and higher usage limits.",
+    "description": "Google's AI developer suite, featuring Gemini Code Assist and Firebase Studio, provides industry-leading context windows and autonomous coding agents. It is designed to handle everything from real-time code completion in popular IDEs to 'vibe coding' full-stack applications directly from natural language prompts.",
+    "keyFeatures": [
+      "Up to 2M Token Context Window for full-repo analysis and debugging",
+      "Agent Mode (including Jules and Antigravity) for autonomous multi-step coding tasks",
+      "Firebase Studio (formerly Project IDX) for cloud-based, AI-native full-stack development"
+    ],
+    "bestFor": "Developers working with massive codebases who need long-context reasoning and teams looking for rapid, cloud-integrated prototyping.",
+    "notIdealFor": "Developers requiring purely local, offline-only AI models without cloud dependency.",
+    "recentUpdates": "Rebranded Project IDX as Firebase Studio, launched the Gemini 3.1 model family with enhanced reasoning, and introduced the Google Antigravity agent for automated app deployments.",
+    "verdict": "Google's current AI stack is a powerhouse for developers, particularly excelling in codebase-wide understanding where its massive context window outperforms most competitors.",
+    "tags": [
+      "Gemini",
+      "AI Coding Assistant",
+      "Firebase Studio",
+      "Cloud IDE"
+    ],
+    "lastUpdated": "2026-04-23"
+  },
+  {
+    "slug": "gemini",
+    "name": "Gemini",
+    "company": "Google",
+    "pricing": "freemium",
+    "pricingDetail": "Gemini Code Assist for individuals is free with high usage limits (up to 180,000 completions/month). Paid Standard and Enterprise tiers are available for teams, with a 'Premium' Developer Program plan at $24.99/month offering expanded agent access and cloud credits.",
+    "description": "Google's suite of AI coding tools, primarily Gemini Code Assist and the new Antigravity IDE, provides intelligent code generation, multi-file refactoring, and agentic workflows. It is deeply integrated across the developer lifecycle, from Google AI Studio prototyping to Google Cloud and Firebase deployment.",
+    "keyFeatures": [
+      "Gemini 3.1 Pro integration for advanced reasoning and high-context code analysis",
+      "Agentic development via 'Jules' for autonomous bug fixing and multi-file task management",
+      "Seamless cloud-native development through Firebase Studio and Project Antigravity"
+    ],
+    "bestFor": "Full-stack developers using Google Cloud or Firebase who want a deeply integrated AI assistant with high-limit free access.",
+    "notIdealFor": "Developers requiring a strictly offline-only solution or those who prefer a platform-agnostic tool with no ecosystem lock-in.",
+    "recentUpdates": "Launched Gemini 3.1 models with expanded context windows; introduced the Jules coding agent for complex software engineering tasks; and rebranded Project IDX as Firebase Studio.",
+    "verdict": "With the 2026 release of autonomous agents and the Gemini 3.1 family, Google has transformed from a simple autocomplete provider into a powerful, ecosystem-wide AI collaborator.",
+    "tags": [
+      "AI Coding Assistant",
+      "Cloud IDE",
+      "Gemini",
+      "Google Cloud",
+      "Software Development Agents"
     ],
     "lastUpdated": "2026-04-23"
   },
@@ -122,34 +355,6 @@
       "Open Source",
       "VS Code Fork",
       "AI Agent"
-    ],
-    "lastUpdated": "2026-04-23"
-  },
-  {
-    "slug": "google",
-    "name": "Google",
-    "company": "Google",
-    "pricing": "freemium",
-    "pricingDetail": "Free for individuals via Gemini Code Assist (up to 6,000 completions/day) and Google AI Studio; API offers a generous free tier. Paid plans for teams and enterprise range from $19.99 to $30 per user/month.",
-    "description": "A comprehensive ecosystem of AI-powered development tools centered around the Gemini model family. It includes Gemini Code Assist for IDE integration, Firebase Studio for cloud-based development, and Google AI Studio for prompt engineering and rapid prototyping.",
-    "keyFeatures": [
-      "Gemini Code Assist (IDE extensions for VS Code and JetBrains)",
-      "Firebase Studio (formerly Project IDX), a browser-based, cloud-native IDE",
-      "Massive context windows supporting up to 2 million tokens for codebase-wide analysis",
-      "Gemini CLI for terminal-native AI assistance and automation",
-      "Deep integration with Google Cloud, Firebase, and the Android ecosystem"
-    ],
-    "bestFor": "Full-stack developers and enterprise teams looking for a cloud-integrated AI workflow with exceptionally large context windows.",
-    "notIdealFor": "Developers seeking purely offline/local-first AI tools or those who prefer to avoid cloud-based IDE environments.",
-    "recentUpdates": "Project IDX was officially rebranded and integrated into the Firebase ecosystem as Firebase Studio in April 2025. The Gemini 3.1 model family launched with advanced reasoning capabilities and improved 'vibe-coding' features.",
-    "verdict": "Google's AI developer stack is a top-tier choice for modern web and mobile development, particularly for its industry-leading context window and seamless cloud deployment options.",
-    "tags": [
-      "AI Coding",
-      "Cloud IDE",
-      "LLM",
-      "Firebase",
-      "Gemini",
-      "IDE Extension"
     ],
     "lastUpdated": "2026-04-23"
   },
@@ -258,33 +463,6 @@
     "lastUpdated": "2026-04-23"
   },
   {
-    "slug": "cognition",
-    "name": "Cognition",
-    "company": "Cognition",
-    "pricing": "freemium",
-    "pricingDetail": "New self-serve model includes a Free tier ($10 starting credits), Pro ($20/mo), Max ($200/mo), and Teams (min. $80/mo). Usage is billed via Agent Compute Units (ACUs) at approximately $2.25 per unit.",
-    "description": "An autonomous AI software engineering platform designed to handle end-to-end development tasks including planning, coding, and debugging. It operates in a secure sandboxed environment with its own shell, browser, and Linux desktop to independently solve engineering challenges.",
-    "keyFeatures": [
-      "Autonomous Planning & Dynamic Re-planning",
-      "Full Linux Desktop for App Testing (Computer Use)",
-      "Multi-Agent Delegation ('Manage Devins')",
-      "Windsurf Agentic IDE Integration",
-      "10M+ Token Repository Context"
-    ],
-    "bestFor": "Autonomous end-to-end feature development, complex legacy code migrations, and long-running background refactoring tasks.",
-    "notIdealFor": "Low-latency code autocomplete, real-time pair programming, and creative design or subjective UX decisions.",
-    "recentUpdates": "Released Devin 2.2 with desktop support and self-verification (Feb 2026); introduced 'Manage Devins' for task delegation (March 2026); launched new self-serve pricing tiers including a Free and $20 Pro plan (April 2026).",
-    "verdict": "The premier choice for truly autonomous software engineering, now significantly more accessible thanks to new tiered pricing and powerful multi-agent coordination capabilities.",
-    "tags": [
-      "AI Software Engineer",
-      "Autonomous Agent",
-      "Code Migration",
-      "Devin",
-      "Agentic IDE"
-    ],
-    "lastUpdated": "2026-04-23"
-  },
-  {
     "slug": "z",
     "name": "Z",
     "company": "Z",
@@ -306,109 +484,6 @@
       "GLM",
       "Code Generation",
       "Multimodal"
-    ],
-    "lastUpdated": "2026-04-23"
-  },
-  {
-    "slug": "github",
-    "name": "GitHub",
-    "company": "GitHub",
-    "pricing": "freemium",
-    "pricingDetail": "Core plans: Free ($0), Team ($4/user/mo), and Enterprise ($21/user/mo). Copilot AI add-ons: Free (2,000 completions), Pro ($10/mo), Pro+ ($39/mo), Business ($19/user/mo), and Enterprise ($39/user/mo). Note: New sign-ups for individual Copilot plans are currently paused as of April 2026.",
-    "description": "GitHub is the world's leading AI-powered developer platform for version control, collaboration, and automated software delivery. It provides a comprehensive ecosystem where developers can host code, manage projects, and use agentic AI to handle complex coding tasks and repository maintenance.",
-    "keyFeatures": [
-      "GitHub Copilot & Workspace (Agentic multi-file editing and autonomous task execution)",
-      "GitHub Actions (Highly customizable CI/CD and workflow automation)",
-      "Advanced Security (AI-powered vulnerability scanning and automated code fixing)"
-    ],
-    "bestFor": "Engineering teams and individual developers seeking a unified, industry-standard platform for hosting code and scaling with agentic AI workflows.",
-    "notIdealFor": "New individual users specifically seeking Claude Opus access on a budget, as current capacity constraints have paused new sign-ups and limited top-tier models to the Pro+ plan.",
-    "recentUpdates": "As of April 2026, GitHub has paused new sign-ups for Copilot Pro and Pro+ to manage infrastructure strain from agentic AI. They have also introduced tighter usage limits, moved Claude Opus 4.7 exclusively to the Pro+ tier, and enabled AI training by default for individual users (with an opt-out).",
-    "verdict": "GitHub remains the gold standard for software development, successfully pivoting from a code hosting service to an 'agent-first' platform that drastically increases developer velocity through deeply integrated AI.",
-    "tags": [
-      "Version Control",
-      "AI Coding Assistant",
-      "CI/CD",
-      "DevOps",
-      "Collaboration"
-    ],
-    "lastUpdated": "2026-04-23"
-  },
-  {
-    "slug": "jetbrains",
-    "name": "JetBrains",
-    "company": "JetBrains",
-    "pricing": "freemium",
-    "pricingDetail": "AI Free (unlimited local completion, limited cloud credits), AI Pro ($10/mo for individuals), and AI Ultimate ($30/mo). AI Pro is included at no extra cost with JetBrains All Products Pack and dotUltimate subscriptions.",
-    "description": "JetBrains AI is a deeply integrated suite of AI-powered coding tools built directly into the JetBrains IDE ecosystem. It combines proprietary models like Mellum with frontier LLMs and local execution to provide context-aware chat, autonomous agents, and multi-file refactoring.",
-    "keyFeatures": [
-      "Hybrid AI Engine: Uses JetBrains' Mellum model for local completion and frontier LLMs (GPT-4.1, Claude 3.7, Gemini 2.5) for cloud tasks.",
-      "Junie Coding Agent: An autonomous assistant capable of planning and executing complex multi-file tasks and code checks within the project.",
-      "Proactive Assistance: Experimental Recap and Insights features that summarize recent work and explain non-obvious code blocks proactively."
-    ],
-    "bestFor": "Developers already using JetBrains IDEs who want high-context AI assistance and the ability to run local models for privacy.",
-    "notIdealFor": "Developers primarily using VS Code or those who prefer a flat-rate subscription without usage-based cloud quotas.",
-    "recentUpdates": "The 2026.1 EAP update introduced proactive 'Recap' and 'Insights' features; support for GPT-4.1 and Claude 3.7 Sonnet was added alongside a unified credit-based quota system for cloud usage.",
-    "verdict": "An essential upgrade for the JetBrains faithful, offering the best-in-class integration that leverages the IDE's internal semantic knowledge better than any third-party plugin.",
-    "tags": [
-      "IDE",
-      "AI Assistant",
-      "Agentic",
-      "Autocomplete",
-      "Local LLM",
-      "Java",
-      "Kotlin",
-      "Python"
-    ],
-    "lastUpdated": "2026-04-23"
-  },
-  {
-    "slug": "google",
-    "name": "Google",
-    "company": "Google",
-    "pricing": "freemium",
-    "pricingDetail": "Gemini Code Assist offers a robust free tier for individuals (180k completions/mo); paid tiers like Google AI Pro ($19.99/mo) and AI Ultra (~$41.67/mo) unlock advanced coding agents and higher usage limits.",
-    "description": "Google's AI developer suite, featuring Gemini Code Assist and Firebase Studio, provides industry-leading context windows and autonomous coding agents. It is designed to handle everything from real-time code completion in popular IDEs to 'vibe coding' full-stack applications directly from natural language prompts.",
-    "keyFeatures": [
-      "Up to 2M Token Context Window for full-repo analysis and debugging",
-      "Agent Mode (including Jules and Antigravity) for autonomous multi-step coding tasks",
-      "Firebase Studio (formerly Project IDX) for cloud-based, AI-native full-stack development"
-    ],
-    "bestFor": "Developers working with massive codebases who need long-context reasoning and teams looking for rapid, cloud-integrated prototyping.",
-    "notIdealFor": "Developers requiring purely local, offline-only AI models without cloud dependency.",
-    "recentUpdates": "Rebranded Project IDX as Firebase Studio, launched the Gemini 3.1 model family with enhanced reasoning, and introduced the Google Antigravity agent for automated app deployments.",
-    "verdict": "Google's current AI stack is a powerhouse for developers, particularly excelling in codebase-wide understanding where its massive context window outperforms most competitors.",
-    "tags": [
-      "Gemini",
-      "AI Coding Assistant",
-      "Firebase Studio",
-      "Cloud IDE"
-    ],
-    "lastUpdated": "2026-04-23"
-  },
-  {
-    "slug": "aws",
-    "name": "AWS",
-    "company": "AWS",
-    "pricing": "freemium",
-    "pricingDetail": "Amazon Q Developer offers a perpetual Free Tier ($0) with 50 agentic requests/month. The Pro Tier costs $19/user/month for 1,000 agentic requests and 4,000 lines of code transformation. Amazon Bedrock uses pay-as-you-go token-based pricing.",
-    "description": "Amazon Web Services provides a comprehensive suite of AI-powered development tools led by Amazon Q Developer, an assistant that handles the entire software development lifecycle. It integrates directly into IDEs and the AWS Console to assist with coding, debugging, and managing cloud infrastructure.",
-    "keyFeatures": [
-      "Autonomous Agentic Coding: Capable of implementing full features, refactoring, and writing tests across multiple files.",
-      "AWS Cloud Optimization: Native integration to answer resource questions, analyze costs, and diagnose console errors in real-time.",
-      "Automated Code Transformation: Streamlines complex version upgrades (e.g., Java 8 to 17) and cross-platform porting.",
-      "Built-in Security Scanning: Identifies vulnerabilities and provides AI-powered remediation suggestions tailored to the codebase."
-    ],
-    "bestFor": "Developers and enterprise teams working heavily within the AWS ecosystem who require deep infrastructure integration and high security compliance.",
-    "notIdealFor": "Hobbyists working on small non-cloud projects or teams primarily using other cloud providers like GCP or Azure.",
-    "recentUpdates": "As of April 2024, CodeWhisperer was fully merged into Amazon Q Developer. In early 2026, AWS launched the Bedrock AgentCore harness to simplify AI agent deployment and introduced the Amazon Nova model family for multimodal development tasks.",
-    "verdict": "A top-tier choice for AWS-native developers, offering unparalleled infrastructure awareness and enterprise-grade security that generic assistants can't match.",
-    "tags": [
-      "AI Coding Assistant",
-      "Cloud Development",
-      "DevOps",
-      "Infrastructure as Code",
-      "Enterprise AI"
     ],
     "lastUpdated": "2026-04-23"
   },
@@ -706,31 +781,6 @@
     "lastUpdated": "2026-04-23"
   },
   {
-    "slug": "bytedance",
-    "name": "ByteDance",
-    "company": "ByteDance",
-    "pricing": "freemium",
-    "pricingDetail": "Currently offers the Trae AI IDE for free during its early access phase, including unlimited access to premium models like Claude 3.7 Sonnet and DeepSeek R1. Paid tiers (approx. $10-$20/month) exist for advanced cloud features and higher-tier model usage in specific regions.",
-    "description": "ByteDance offers an ecosystem of AI-native developer tools, headlined by the Trae AI IDE and MarsCode cloud platform. These tools leverage agentic workflows and multi-model integration to transform coding from simple assistance to full-scale 'autopilot' development.",
-    "keyFeatures": [
-      "Builder Mode: An agentic feature that generates entire project structures and codebases from natural language prompts.",
-      "Adaptive AI Context: Deep integration with the workspace that allows the AI to understand the entire codebase for precise debugging and suggestions.",
-      "Multimodal Support: Built-in capability to convert visual design mockups or screenshots directly into functional frontend code."
-    ],
-    "bestFor": "Developers looking for a robust, free alternative to Cursor that provides access to the latest frontier models like Claude 3.7.",
-    "notIdealFor": "Users who require a strictly open-source IDE core or teams with stringent corporate data privacy policies regarding international cloud providers.",
-    "recentUpdates": "In early 2026, ByteDance integrated Claude 3.7 Sonnet and DeepSeek R1 into the Trae IDE, maintaining its 'free for all users' promotion to capture market share from established AI editors.",
-    "verdict": "With its aggressive free-access strategy and high-performance agentic modes, ByteDance's developer suite is currently the most competitive value proposition in the AI IDE market.",
-    "tags": [
-      "AI IDE",
-      "Code Generation",
-      "Claude 3.7",
-      "DeepSeek",
-      "VS Code"
-    ],
-    "lastUpdated": "2026-04-23"
-  },
-  {
     "slug": "replit",
     "name": "Replit",
     "company": "Replit",
@@ -1015,31 +1065,6 @@
     "lastUpdated": "2026-04-23"
   },
   {
-    "slug": "anthropic",
-    "name": "Anthropic",
-    "company": "Anthropic",
-    "pricing": "freemium",
-    "pricingDetail": "Free tier available; Pro plan at $20/mo; Max plans at $100-$200/mo. API pricing: Claude Opus 4.7 ($5/$25 per MTok), Sonnet 4.6 ($3/$15 per MTok), and Haiku 4.5 ($1/$5 per MTok). Batch API offers 50% discounts and Prompt Caching provides up to 90% savings.",
-    "description": "A frontier AI platform providing the Claude family of models, which excel in reasoning, coding, and safe interaction. It features an expansive 1-million-token context window and the Model Context Protocol (MCP) for seamless integration with developer tools and large codebases.",
-    "keyFeatures": [
-      "1M token context window for analyzing entire repositories and massive datasets.",
-      "Claude Code & Agent Teams for autonomous software engineering and multi-agent coordination.",
-      "Extended Thinking (Adaptive Reasoning) with adjustable effort levels (high, xhigh, max) to balance speed and depth."
-    ],
-    "bestFor": "Professional developers and enterprise teams requiring high-fidelity code generation, complex architectural reasoning, and long-context document analysis.",
-    "notIdealFor": "Simple tasks where sub-millisecond latency is critical or developers looking for a fully open-source model architecture.",
-    "recentUpdates": "Released Claude Opus 4.7 with enhanced 'xhigh' effort controls; introduced public beta for API Task Budgets; launched 'ultrareview' for flagging bugs in autonomous agent workflows (April 2026).",
-    "verdict": "Anthropic remains the industry leader for developer-centric LLMs, offering the best balance of reasoning depth, context capacity, and agentic capabilities via the Claude 4.x family.",
-    "tags": [
-      "LLM",
-      "AI Coding",
-      "Agentic AI",
-      "Claude",
-      "MCP"
-    ],
-    "lastUpdated": "2026-04-23"
-  },
-  {
     "slug": "openai",
     "name": "OpenAI",
     "company": "OpenAI",
@@ -1088,31 +1113,6 @@
       "Git",
       "Python",
       "LLM"
-    ],
-    "lastUpdated": "2026-04-23"
-  },
-  {
-    "slug": "google",
-    "name": "Google",
-    "company": "Google",
-    "pricing": "freemium",
-    "pricingDetail": "Gemini Code Assist for individuals is free with high usage limits (up to 180,000 completions/month). Paid Standard and Enterprise tiers are available for teams, with a 'Premium' Developer Program plan at $24.99/month offering expanded agent access and cloud credits.",
-    "description": "Google's suite of AI coding tools, primarily Gemini Code Assist and the new Antigravity IDE, provides intelligent code generation, multi-file refactoring, and agentic workflows. It is deeply integrated across the developer lifecycle, from Google AI Studio prototyping to Google Cloud and Firebase deployment.",
-    "keyFeatures": [
-      "Gemini 3.1 Pro integration for advanced reasoning and high-context code analysis",
-      "Agentic development via 'Jules' for autonomous bug fixing and multi-file task management",
-      "Seamless cloud-native development through Firebase Studio and Project Antigravity"
-    ],
-    "bestFor": "Full-stack developers using Google Cloud or Firebase who want a deeply integrated AI assistant with high-limit free access.",
-    "notIdealFor": "Developers requiring a strictly offline-only solution or those who prefer a platform-agnostic tool with no ecosystem lock-in.",
-    "recentUpdates": "Launched Gemini 3.1 models with expanded context windows; introduced the Jules coding agent for complex software engineering tasks; and rebranded Project IDX as Firebase Studio.",
-    "verdict": "With the 2026 release of autonomous agents and the Gemini 3.1 family, Google has transformed from a simple autocomplete provider into a powerful, ecosystem-wide AI collaborator.",
-    "tags": [
-      "AI Coding Assistant",
-      "Cloud IDE",
-      "Gemini",
-      "Google Cloud",
-      "Software Development Agents"
     ],
     "lastUpdated": "2026-04-23"
   },
