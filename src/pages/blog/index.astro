@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+// Get all non-draft blog posts, sorted by date descending
+const allPosts = await getCollection('blog', ({ data }) => {
+  return data.draft !== true;
+});
+const posts = allPosts.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout
+  title="Blog | AI Tools Directory"
+  description="Read the latest news, tutorials, and deep dives into AI tools for developers."
+>
+  <div class="min-h-screen flex flex-col bg-zinc-950">
+    <header class="border-b border-zinc-800 bg-zinc-900/50">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <a href="/" class="flex items-center group">
+            <div class="w-8 h-8 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center mr-3 group-hover:border-zinc-500 transition-colors">
+              <svg class="w-4 h-4 text-zinc-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+              </svg>
+            </div>
+            <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-zinc-100 to-zinc-400">
+              AI Tools Blog
+            </h1>
+          </a>
+        </div>
+        <nav>
+            <a href="/" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">Directory</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <div class="mb-10">
+        <h2 class="text-3xl font-bold text-white mb-2">Latest Posts</h2>
+        <p class="text-zinc-400">Insights, updates, and comparisons on the best AI coding tools.</p>
+      </div>
+
+      <div class="space-y-6">
+        {posts.map((post) => (
+          <article class="bg-zinc-900/40 border border-zinc-800 rounded-xl p-6 hover:border-zinc-700 transition-all">
+            <a href={`/blog/${post.id}`} class="block group">
+              <div class="flex items-center space-x-2 text-xs text-zinc-500 mb-3">
+                <time datetime={post.data.pubDate.toISOString()}>
+                  {post.data.pubDate.toLocaleDateString('en-us', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  })}
+                </time>
+                <span>•</span>
+                <span>{post.data.author}</span>
+              </div>
+              <h3 class="text-xl font-semibold text-zinc-100 group-hover:text-blue-400 transition-colors mb-2">
+                {post.data.title}
+              </h3>
+              <p class="text-zinc-400 text-sm leading-relaxed mb-4">
+                {post.data.description}
+              </p>
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="flex flex-wrap gap-2 mt-4">
+                  {post.data.tags.map((tag) => (
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-zinc-800 text-zinc-300">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </a>
+          </article>
+        ))}
+      </div>
+    </main>
+
+    <footer class="border-t border-zinc-800 py-8 mt-auto">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+        <div class="flex items-center space-x-2 mb-4 md:mb-0">
+          <span class="text-zinc-400 text-sm">© {new Date().getFullYear()} Dosa AI Tools.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+</BaseLayout>

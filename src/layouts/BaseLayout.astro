@@ -1,4 +1,6 @@
 ---
+import { SEO } from 'astro-seo';
+
 // Base layout used by all pages
 // Props: title, description, keywords, canonical, ogImage, ogType
 interface Props {
@@ -41,20 +43,38 @@ const resolvedTwitterDesc = twitterDescription ?? description;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{title}</title>
-    <meta name="description" content={description}>
-    <meta name="keywords" content={keywords}>
-    <meta property="og:title" content={resolvedOgTitle}>
-    <meta property="og:description" content={resolvedOgDesc}>
-    <meta property="og:url" content={resolvedCanonical}>
-    <meta property="og:type" content={ogType}>
-    <meta property="og:image" content={ogImage}>
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content={ogImage}>
-    <meta name="twitter:title" content={resolvedTwitterTitle}>
-    <meta name="twitter:description" content={resolvedTwitterDesc}>
+
+    <SEO
+      title={title}
+      description={description}
+      canonical={resolvedCanonical}
+      openGraph={{
+        basic: {
+          title: resolvedOgTitle,
+          type: ogType,
+          image: ogImage,
+        },
+        optional: {
+          description: resolvedOgDesc,
+        },
+        image: {
+          width: 1200,
+          height: 630,
+        }
+      }}
+      twitter={{
+        card: "summary_large_image",
+        site: "@dosadev",
+        title: resolvedTwitterTitle,
+        description: resolvedTwitterDesc,
+        image: ogImage,
+      }}
+      extend={{
+        meta: [
+          { name: "keywords", content: keywords }
+        ]
+      }}
+    />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,7 +88,6 @@ const resolvedTwitterDesc = twitterDescription ?? description;
     <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-touch-icon.png" />
     <link rel="manifest" href="/images/icons/site.webmanifest" />
 
-    <link rel="canonical" href={resolvedCanonical}>
     <link rel="stylesheet" href="/css/output.css">
 
     {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}

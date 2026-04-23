@@ -1,6 +1,8 @@
 import { defineConfig } from 'astro/config';
 import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
+import mdx from '@astrojs/mdx';
+import { remarkReadingTime } from './remark-reading-time.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -13,11 +15,17 @@ export default defineConfig({
     adapter: vercel(),
     integrations: [
         sitemap(),
+        mdx(),
     ],
+    markdown: {
+        shikiConfig: {
+            theme: 'github-dark',
+        },
+        remarkPlugins: [remarkReadingTime],
+    },
     vite: {
         css: {
             // Tailwind v4 is loaded via @import in the global CSS file
         },
     },
 });
-
