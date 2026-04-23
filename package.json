@@ -4,6 +4,12 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "astro:dev": "bun run css:build && astro dev",
+    "astro:build": "bun run css:build && bun run js:build && astro build",
+    "astro:preview": "astro preview",
+    "css:build": "tailwindcss -i ./src/input.css -o ./css/output.css --minify",
+    "css:watch": "tailwindcss -i ./src/input.css -o ./css/output.css --watch",
+    "js:build": "bun run build.js",
     "build": "tailwindcss -i ./src/input.css -o ./css/output.css --minify && bun run build.js",
     "dev": "tailwindcss -i ./src/input.css -o ./css/output.css --watch",
     "dev:js": "bun run build.js",
@@ -12,8 +18,11 @@
     "validate:enriched": "bun run scripts/validate-enriched.js"
   },
   "devDependencies": {
+    "@astrojs/sitemap": "^3.7.2",
+    "@astrojs/vercel": "^10.0.5",
     "@tailwindcss/cli": "^4.2.2",
     "@types/bun": "latest",
+    "astro": "^6.1.9",
     "tailwindcss": "^4.2.2"
   },
   "peerDependencies": {

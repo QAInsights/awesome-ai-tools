@@ -1,0 +1,130 @@
+---
+/**
+ * Main index page — the tool directory.
+ *
+ * Build-time: Fetches all tool data (README + enriched JSON).
+ * Runtime:    Search, filter, sort, and voting are hydrated via client script.
+ *
+ * Key differences from the old index.html:
+ *   - Tool cards are NOT pre-rendered in HTML — the grid is populated by
+ *     client-side JS (same as before) reading a build-time injected JSON blob.
+ *   - Sidebar is a reusable component, not inline HTML.
+ *   - No shell.js needed — layout is static.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import { getAllTools } from '../lib/tools';
+
+const tools = getAllTools();
+
+// Build structured data JSON-LD
+const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "WebSite",
+            "@id": "https://ai.dosa.dev/#website",
+            "url": "https://ai.dosa.dev",
+            "name": "ai.dosa.dev — Awesome AI Tools",
+            "description": "A curated directory of AI-powered coding tools, autonomous agents, and developer utilities.",
+            "inLanguage": "en",
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": { "@type": "EntryPoint", "urlTemplate": "https://ai.dosa.dev/?q={search_term_string}" },
+                "query-input": "required name=search_term_string"
+            }
+        },
+        {
+            "@type": "CollectionPage",
+            "@id": "https://ai.dosa.dev/#collection",
+            "url": "https://ai.dosa.dev",
+            "name": "Awesome AI Tools Directory",
+            "description": `${tools.length}+ manually curated AI-powered coding tools across 12 categories.`,
+            "isPartOf": { "@id": "https://ai.dosa.dev/#website" },
+            "publisher": { "@id": "https://ai.dosa.dev/#organization" },
+            "about": { "@type": "Thing", "name": "AI-powered developer tools" },
+            "keywords": "AI IDE, AI coding assistant, terminal agent, autonomous agent, vibe coding, AI code review",
+            "inLanguage": "en",
+            "dateModified": new Date().toISOString().slice(0, 10),
+            "image": { "@type": "ImageObject", "url": "https://ai.dosa.dev/images/og-image.png", "width": 1200, "height": 630 }
+        },
+        {
+            "@type": "Organization",
+            "@id": "https://ai.dosa.dev/#organization",
+            "name": "dosa.dev",
+            "url": "https://ai.dosa.dev",
+            "logo": { "@type": "ImageObject", "url": "https://ai.dosa.dev/images/icons/favicon-96x96.png", "width": 96, "height": 96 }
+        }
+    ]
+});
+
+// Serialize all tool data for client-side hydration
+// The client JS reads this to power search/filter/sort/voting
+const toolsJson = JSON.stringify(tools);
+---
+
+<BaseLayout
+    title="ai.dosa.dev | Awesome AI Tools"
+    description="A curated directory of artificial intelligence-powered coding tools, autonomous agents, and frameworks. Hosted by dosa.dev."
+    keywords="AI tools, AI coding, AI IDE, autonomous agents, prompt engineering, curated list, dosa.dev"
+    canonical="https://ai.dosa.dev/"
+    jsonLd={jsonLd}
+>
+    <div class="flex h-[100dvh] overflow-hidden">
+        <Sidebar variant="index" />
+
+        <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative">
+            <!-- Mobile Header -->
+            <div class="md:hidden flex items-center justify-between p-4 border-b border-[#222] bg-[#0a0a0a] shrink-0 z-10 sticky top-0">
+                <div class="flex items-center gap-3">
+                    <button id="openSidebarMobile" aria-label="Open sidebar menu" class="text-[#a3a3a3] hover:text-white transition-colors p-1 rounded-md hover:bg-white/5">
+                        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <img src="/images/icons/favicon-32x32.png" alt="logo" class="w-6 h-6 rounded-full" />
+                        <h1 class="text-[17px] font-semibold tracking-wide text-white m-0 leading-none">ai.dosa.dev</h1>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desktop Sidebar Toggle (Floating) -->
+            <div id="desktopToggleContainer" class="hidden absolute top-[14px] left-4 z-20 transition-opacity duration-300">
+                <button id="openSidebarDesktop" aria-label="Open sidebar" class="text-[#a3a3a3] hover:text-white p-1.5 bg-[#0a0a0a] border border-[#222] rounded-md shadow-sm transition-all hover:bg-white/5 backdrop-blur-sm" title="Open sidebar">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+                </button>
+            </div>
+
+            <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-0">
+                <!-- Table Header -->
+                <div class="table-header hidden md:flex items-center px-8 py-5 border-b border-[#222] font-mono text-[14px] text-[#a3a3a3] uppercase tracking-widest bg-black shrink-0 transition-all duration-300" id="tableHeader">
+                    <div class="w-[280px] pr-6 shrink-0 text-sm transition-all duration-300 cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="name" id="thName">Name <span class="sort-icon opacity-50">↕</span></div>
+                    <div class="w-[200px] pr-6 shrink-0 text-sm cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="company">Company <span class="sort-icon opacity-50">↕</span></div>
+                    <div class="grow pr-6 text-sm cursor-pointer hover:text-white select-none" style="pointer-events: none;">Description</div>
+                    <div class="hidden lg:flex w-[220px] px-6 shrink-0 text-sm cursor-pointer hover:text-white select-none items-center justify-center gap-2" data-sort="category">Category <span class="sort-icon opacity-50">↕</span></div>
+                    <div class="w-[84px] pr-6 shrink-0 text-sm cursor-pointer hover:text-white select-none flex items-center justify-start gap-2" data-sort="votes">Zap <span class="sort-icon opacity-50">↕</span></div>
+                </div>
+
+                <!-- Tool Grid — populated by client-side JS -->
+                <div class="registry px-4 pb-4 pt-2 md:px-8 md:pb-8 md:pt-4 grow overflow-y-auto" id="toolGrid" data-registry></div>
+            </div>
+        </main>
+
+        <!-- Compare Floating Bar -->
+        <div id="compareFloatingBar" class="fixed bottom-0 left-0 right-0 bg-[#111] border-t border-[#333] p-4 flex items-center justify-between z-50 transform translate-y-full transition-transform duration-300">
+            <div class="flex items-center gap-4">
+                <span id="compareCountText" class="text-white text-sm font-medium">0 tools selected</span>
+                <div id="compareThumbnails" class="flex items-center gap-2"></div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="clearCompareBtn" class="text-[#a3a3a3] hover:text-white text-sm px-3 py-1.5 transition-colors">Clear</button>
+                <button id="compareBtn" class="cursor-pointer bg-gradient-to-r from-[#a78bfa] via-[#22d3ee] to-[#a78bfa] bg-[length:200%_auto] hover:bg-[position:right] text-black font-semibold text-sm px-4 py-1.5 rounded transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">Compare</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Build-time injected tool data for client-side hydration -->
+    <script id="tools-data" type="application/json" set:html={toolsJson} />
+
+    <!-- Client-side application scripts -->
+    <script src="/dist/app.js" type="module" defer></script>
+</BaseLayout>

@@ -1,0 +1,90 @@
+---
+// Base layout used by all pages
+// Props: title, description, keywords, canonical, ogImage, ogType
+interface Props {
+    title: string;
+    description?: string;
+    keywords?: string;
+    canonical?: string;
+    ogTitle?: string;
+    ogDescription?: string;
+    ogImage?: string;
+    ogType?: string;
+    twitterTitle?: string;
+    twitterDescription?: string;
+    jsonLd?: string;
+}
+
+const {
+    title,
+    description = "A curated directory of artificial intelligence-powered coding tools, autonomous agents, and frameworks. Hosted by dosa.dev.",
+    keywords = "AI tools, AI coding, AI IDE, autonomous agents, prompt engineering, curated list, dosa.dev",
+    canonical,
+    ogTitle,
+    ogDescription,
+    ogImage = "https://ai.dosa.dev/images/og-image.png",
+    ogType = "website",
+    twitterTitle,
+    twitterDescription,
+    jsonLd,
+} = Astro.props;
+
+const resolvedCanonical = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
+const resolvedOgTitle = ogTitle ?? title;
+const resolvedOgDesc = ogDescription ?? description;
+const resolvedTwitterTitle = twitterTitle ?? title;
+const resolvedTwitterDesc = twitterDescription ?? description;
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <meta name="description" content={description}>
+    <meta name="keywords" content={keywords}>
+    <meta property="og:title" content={resolvedOgTitle}>
+    <meta property="og:description" content={resolvedOgDesc}>
+    <meta property="og:url" content={resolvedCanonical}>
+    <meta property="og:type" content={ogType}>
+    <meta property="og:image" content={ogImage}>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content={ogImage}>
+    <meta name="twitter:title" content={resolvedTwitterTitle}>
+    <meta name="twitter:description" content={resolvedTwitterDesc}>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <link rel="icon" type="image/png" href="/images/icons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/images/icons/favicon.svg" />
+    <link rel="shortcut icon" href="/images/icons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/images/icons/site.webmanifest" />
+
+    <link rel="canonical" href={resolvedCanonical}>
+    <link rel="stylesheet" href="/css/output.css">
+
+    {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
+
+    <link rel="preconnect" href="https://challenges.cloudflare.com" />
+    <slot name="head" />
+</head>
+
+<body class="bg-black text-white font-sans antialiased leading-relaxed">
+    <slot />
+
+    <div id="turnstile-container"></div>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "16936e2eed2a4361adb21441d23573dd"}'></script>
+    <!-- End Cloudflare Web Analytics -->
+</body>
+
+</html>
