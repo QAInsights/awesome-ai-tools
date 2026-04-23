@@ -289,70 +289,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    /**
-     * Handle authentication state changes
-     */
-    function handleAuthStateChange({ event, user, error }) {
-        if (error) {
-            console.error('Auth error:', error);
-            return;
-        }
-        updateAuthUI();
-    }
-
-    /**
-     * Update authentication UI based on current state
-     */
-    function updateAuthUI() {
-        const googleBtn = document.getElementById('googleSignInBtn');
-        const githubBtn = document.getElementById('githubSignInBtn');
-        const userProfile = document.getElementById('userProfile');
-        const userAvatar = document.getElementById('userAvatar');
-        const userName = document.getElementById('userName');
-        const userEmail = document.getElementById('userEmail');
-
-        if (auth.isAuthenticated()) {
-            const user = auth.getCurrentUser();
-
-            // Show user profile
-            if (userProfile) {
-                userProfile.classList.remove('hidden');
-                if (userAvatar) userAvatar.src = user.picture;
-                if (userName) userName.textContent = user.name;
-                if (userEmail) userEmail.textContent = user.email;
-            }
-
-            // Hide sign-in buttons
-            if (googleBtn) googleBtn.classList.add('hidden');
-            if (githubBtn) githubBtn.classList.add('hidden');
-        } else {
-            // Show sign-in buttons
-            if (googleBtn) {
-                googleBtn.classList.remove('hidden');
-                if (auth.isInitialized) {
-                    auth.renderSignInButton('googleSignInBtn', {
-                        theme: 'filled_black',
-                        size: 'large',
-                        text: 'signin_with',
-                        shape: 'rectangular',
-                        width: 280
-                    });
-                }
-            }
-            if (githubBtn) {
-                githubBtn.classList.remove('hidden');
-                if (auth.isInitialized) {
-                    auth.renderGitHubSignInButton('githubSignInBtn');
-                }
-            }
-
-            // Hide user profile
-            if (userProfile) {
-                userProfile.classList.add('hidden');
-            }
-        }
-    }
-
     // Comparison UI Logic
     const compareFloatingBar = document.getElementById('compareFloatingBar');
     const compareCountText = document.getElementById('compareCountText');
@@ -505,13 +441,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
 
-            // Initial UI update
-            updateAuthUI();
-            
-        } catch (error) {
-            console.error('Failed to initialize auth:', error);
-        }
-    }
+
 
     /**
      * Handle authentication state changes
