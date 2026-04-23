@@ -30,7 +30,13 @@ const googleClientId = process.env.GOOGLE_CLIENT_ID || 'your-google-client-id-he
 const githubClientId = process.env.GITHUB_CLIENT_ID || '';
 
 const result = await build({
-    entrypoints: ['./js/app.js', './js/compare.js'],
+    entrypoints: [
+        './js/app.js',
+        './js/compare.js',
+        // Utility pages — bundled as separate ES modules served at /dist/
+        './js/token-counter.js',
+        './js/hallucination-scorer.js',
+    ],
     outdir: './public/dist',
     define: {
         'process.env.ENABLE_VOTING': JSON.stringify(enableVoting),
@@ -50,6 +56,7 @@ if (!result.success) {
 } else {
     console.log("Build successful - public/dist/app.js updated!");
 }
+
 
 // Regenerate per-tool detail pages + sitemap from README.md
 try {
