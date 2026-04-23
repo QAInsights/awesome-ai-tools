@@ -40,7 +40,7 @@ function resolveOrigin(originParam: string | null): string {
     return '/';
 }
 
-export const GET: APIRoute = async ({ request }) => {
+export const GET: APIRoute = async ({ request, redirect }) => {
     const url = new URL(request.url);
     const code   = url.searchParams.get('code');
     const state  = url.searchParams.get('state');
@@ -62,8 +62,9 @@ export const GET: APIRoute = async ({ request }) => {
     }
 
     // ── 3. Verify server-side config ─────────────────────────────────────────
-    const clientId     = import.meta.env.GITHUB_CLIENT_ID;
-    const clientSecret = import.meta.env.GITHUB_CLIENT_SECRET;
+    // Using process.env as fallback for robust serverless environments
+    const clientId     = import.meta.env.GITHUB_CLIENT_ID || process.env.GITHUB_CLIENT_ID;
+    const clientSecret = import.meta.env.GITHUB_CLIENT_SECRET || process.env.GITHUB_CLIENT_SECRET;
 
     if (!clientId || !clientSecret) {
         console.error('[GitHub OAuth] Missing GITHUB_CLIENT_ID or GITHUB_CLIENT_SECRET');
@@ -160,9 +161,3 @@ export const GET: APIRoute = async ({ request }) => {
         return redirect(`${redirectOrigin}?auth_error=${encodeURIComponent('Authentication failed. Please try again.')}`);
     }
 };
-
-// ── Helper ────────────────────────────────────────────────────────────────────
-
-function redirect(location: string): Response {
-    return Response.redirect(location, 302);
-}
