@@ -1,8 +1,9 @@
 name: Process Tool Submission
 
+# Runs when a maintainer adds the "approved" label to a submission issue.
 on:
   issues:
-    types: [opened, edited]
+    types: [labeled]
 
 permissions:
   contents: write
@@ -11,7 +12,11 @@ permissions:
 
 jobs:
   process-submission:
+    if: |
+      github.event.label.name == 'approved' &&
+      contains(github.event.issue.labels.*.name, 'submission')
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -22,90 +27,28 @@ jobs:
         with:
           template-path: .github/ISSUE_TEMPLATE/submit-tool.yml
 
-      - name: Inject Row into README.md
-        run: |
-          cat << 'EOF' > parse_and_inject.py
-          import json
-          import os
-          import sys
-
-          try:
-              data = json.loads(os.environ['ISSUE_DATA'])
-          except Exception as e:
-              print("Failed to parse ISSUE_DATA environment variable.")
-              print(e)
-              sys.exit(1)
-
-          tool_name = data.get('tool-name', '').strip()
-          company = data.get('company', '').strip()
-          url = data.get('url', '').strip()
-          category = data.get('category', '').strip()
-          pricing = data.get('pricing', '').strip()
-          desc = data.get('description', '').strip()
-          github_url = data.get('github', '').strip()
-
-          if not tool_name or not url or not category:
-              print("Missing required fields. Exiting.")
-              sys.exit(0)
-
-          # Format description with github link if present
-          if github_url and github_url.lower() != 'none':
-              desc = f"{desc}; [GitHub]({github_url})"
-
-          # Replace newlines in description
-          desc = desc.replace('\n', ' ').replace('\r', '')
-
-          new_row = f"| **[{tool_name}]({url})** | {company} | {desc} |"
-
-          # Read README
-          with open('README.md', 'r', encoding='utf-8') as f:
-              lines = f.readlines()
-
-          # Find the target category block
-          target_idx = -1
-          for i, line in enumerate(lines):
-              if line.startswith('## ') and category.lower() in line.lower():
-                  target_idx = i
-                  break
-
-          if target_idx == -1:
-              print(f"Could not find category header matching: {category}")
-              sys.exit(1)
-
-          # Find the end of the table for this category
-          insert_idx = target_idx
-          in_table = False
-          for i in range(target_idx + 1, len(lines)):
-              if lines[i].strip().startswith('|'):
-                  in_table = True
-                  insert_idx = i
-              elif in_table and lines[i].strip() == '':
-                  # we found the blank line right after the table
-                  insert_idx = i - 1
-                  break
-
-          lines.insert(insert_idx + 1, new_row + '\n')
-
-          with open('README.md', 'w', encoding='utf-8') as f:
-              f.writelines(lines)
-              
-          print("Successfully injected row: " + new_row)
-          EOF
-          
-          python3 parse_and_inject.py
+      - name: Update README and tools.json
+        run: python3 .github/scripts/process_submission.py
         env:
           ISSUE_DATA: ${{ steps.parse.outputs.jsonString }}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
-          title: "Directory Submission: ${{ fromJson(steps.parse.outputs.jsonString)['tool-name'] }}"
+          title: "feat(data): add ${{ fromJson(steps.parse.outputs.jsonString)['tool-name'] }} to directory"
           body: |
-            This PR automatically injects a newly submitted tool into `README.md`.
-            
-            Triggered by @${{ github.actor }}.
-            
-            Resolves #${{ github.event.issue.number }}
-          branch: "add-tool-${{ github.event.issue.number }}"
-          commit-message: "docs(readme): add ${{ fromJson(steps.parse.outputs.jsonString)['tool-name'] }} to directory"
+            ## Automated Tool Submission
+
+            Approved by @${{ github.actor }} — closes #${{ github.event.issue.number }}
+
+            **Tool:** `${{ fromJson(steps.parse.outputs.jsonString)['tool-name'] }}`
+            **Company:** `${{ fromJson(steps.parse.outputs.jsonString)['company'] }}`
+            **Category:** `${{ fromJson(steps.parse.outputs.jsonString)['category'] }}`
+
+            ### Changes
+            - ✅ Injected row into `README.md`
+            - ✅ Appended entry to `src/data/tools.json`
+          branch: "add-tool/${{ github.event.issue.number }}"
+          commit-message: "feat(data): add ${{ fromJson(steps.parse.outputs.jsonString)['tool-name'] }} to directory"
           delete-branch: true
+          labels: "automated-pr"
