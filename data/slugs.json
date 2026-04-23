@@ -72,6 +72,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "toad",
+    "name": "toad",
+    "company": "Batrachian AI",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",

@@ -119,6 +119,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://ai.dosa.dev/tools/toad</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://ai.dosa.dev/tools/github-copilot</loc>
     <lastmod>2026-04-23</lastmod>
     <changefreq>weekly</changefreq>
