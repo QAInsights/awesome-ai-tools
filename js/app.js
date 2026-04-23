@@ -281,6 +281,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
             
+            // Initial UI update
+            updateAuthUI();
+            
+        } catch (error) {
+            console.error('Failed to initialize auth:', error);
+        }
+    }
 
     // Comparison UI Logic
     const compareFloatingBar = document.getElementById('compareFloatingBar');
@@ -434,13 +441,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
 
-            // Initial UI update
-            updateAuthUI();
-            
-        } catch (error) {
-            console.error('Failed to initialize auth:', error);
-        }
-    }
+
 
     /**
      * Handle authentication state changes
