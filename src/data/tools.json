@@ -422,5 +422,9 @@
   {
     "companyName": "Microsoft",
     "toolName": "Visual Studio"
+  },
+  {
+    "companyName": "Batrachian AI",
+    "toolName": "toad"
   }
 ]
