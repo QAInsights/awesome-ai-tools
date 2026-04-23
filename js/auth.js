@@ -178,12 +178,14 @@ class AuthManager {
 
     /**
      * Build the current origin path to redirect back to after GitHub auth.
+     * Paths must match ALLOWED_ORIGINS in src/pages/api/auth/github.ts.
      * @returns {string}
      */
     _getCurrentOriginPath() {
         const allowed = [
-            '/', '/settings.html', '/zap.html', '/help.html',
-            '/tools/token-counter.html', '/tools/hallucination-scorer.html',
+            // Astro clean URLs — no .html extensions
+            '/', '/settings', '/zap', '/help',
+            '/tools/token-counter', '/tools/hallucination-scorer',
         ];
         const path = window.location.pathname;
         return allowed.includes(path) ? path : '/';

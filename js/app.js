@@ -76,14 +76,29 @@ document.addEventListener('DOMContentLoaded', async () => {
                 console.warn('[voting] init failed; rendering with zero counts:', err);
             });
 
-            const readmeResponse = await fetch('README.md');
-            
-            if (!readmeResponse.ok) throw new Error('Failed to fetch README');
-            
-            const text = await readmeResponse.text();
-            toolsData = parseMarkdown(text);
-            categories = extractCategories(toolsData);
-            
+            // ── Data loading ──────────────────────────────────────────────────
+            // Astro build: tool data is embedded at build time in #tools-data.
+            // Legacy HTML: fall back to fetching and parsing README.md at runtime.
+            const toolsDataEl = document.getElementById('tools-data');
+            if (toolsDataEl) {
+                // Fast path — build-time JSON (Astro). No network request needed.
+                const parsed = JSON.parse(toolsDataEl.textContent || '[]');
+                // Astro embeds the full Tool shape {slug, name, company, category,
+                // categoryClean, categoryShort, notes, url, enriched}.
+                // renderer.js only needs the seed fields — drop 'enriched' to keep
+                // client-side state small.
+                toolsData = parsed.map(({ enriched: _e, ...seed }) => seed);
+                categories = extractCategories(toolsData);
+            } else {
+                // Legacy path — runtime README fetch (settings/help/zap pages and old HTML).
+                const readmeResponse = await fetch('README.md');
+                if (!readmeResponse.ok) throw new Error('Failed to fetch README');
+                const text = await readmeResponse.text();
+                toolsData = parseMarkdown(text);
+                categories = extractCategories(toolsData);
+            }
+            // ─────────────────────────────────────────────────────────────────
+
             renderFilters();
             
             // Minor Feature: Check for ?q= search parameters to allow sharing specific search results!
@@ -101,6 +116,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             grid.innerHTML = `<p style="color: var(--text-secondary); padding: 32px;">Could not load registry. Ensure you are running via a local server.</p>`;
         }
     }
+
     
     /**
      * Render category filter buttons

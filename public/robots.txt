@@ -1,0 +1,92 @@
+# robots.txt — ai.dosa.dev
+# All crawlers allowed by default.
+# AI/LLM bots are explicitly permitted to ensure they are never
+# blocked by overly restrictive default configurations.
+
+User-agent: *
+Allow: /
+
+# --- AI & LLM Crawlers (explicit allow) ---
+
+# Anthropic
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# OpenAI
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Google (AI / Gemini training)
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+# Microsoft / Bing
+User-agent: Bingbot
+Allow: /
+
+User-agent: msnbot
+Allow: /
+
+# Meta
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# Apple
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Amazon / Alexa
+User-agent: Amazonbot
+Allow: /
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
+
+# Common Crawl (used for AI training datasets)
+User-agent: CCBot
+Allow: /
+
+# ByteDance
+User-agent: Bytespider
+Allow: /
+
+# Mistral
+User-agent: MistralBot
+Allow: /
+
+# You.com
+User-agent: YouBot
+Allow: /
+
+# Diffbot
+User-agent: Diffbot
+Allow: /
+
+# --- Sitemap ---
+Sitemap: https://ai.dosa.dev/sitemap-index.xml

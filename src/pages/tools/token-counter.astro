@@ -1,0 +1,407 @@
+---
+/**
+ * Token Counter — AI token counting utility page.
+ *
+ * Migration note: This is a direct port of tools/token-counter.html.
+ * All page-specific styles are scoped to this component.
+ * The inline bootstrap script imports from /js/token-counter.js (absolute
+ * path served from public/ via the legacy build pipeline).
+ *
+ * The tool is fully client-side — no server-side logic needed.
+ */
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+
+const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "WebApplication",
+            "@id": "https://ai.dosa.dev/tools/token-counter#app",
+            "name": "Token Counter & Cost Estimator",
+            "url": "https://ai.dosa.dev/tools/token-counter",
+            "description": "Free, client-side token counter and cost estimator. Instantly count tokens for GPT-4o, Claude 3.5, Gemini 1.5, and Llama 3.",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Any",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+            "featureList": [
+                "Token counting for GPT-4o", "Token counting for Claude 3.5",
+                "Token counting for Gemini 1.5", "Token counting for Llama 3",
+                "Cost per request estimate", "100% client-side — no data sent to servers"
+            ],
+            "isPartOf": { "@type": "WebSite", "@id": "https://ai.dosa.dev/#website" }
+        },
+        {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ai.dosa.dev" },
+                { "@type": "ListItem", "position": 2, "name": "Token Counter", "item": "https://ai.dosa.dev/tools/token-counter" }
+            ]
+        }
+    ]
+});
+---
+
+<DashboardLayout
+    title="Token Counter | ai.dosa.dev"
+    description="Free AI token counter. Instantly estimate token counts across GPT-4o, Claude 3.5, Gemini 1.5, Llama 3 and more. See context window usage at a glance."
+    canonical="https://ai.dosa.dev/tools/token-counter"
+    activeNav="token-counter"
+>
+    <!-- Page-specific JSON-LD -->
+    <script type="application/ld+json" set:html={jsonLd} />
+
+    <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
+        <!-- Page Content -->
+        <div class="tc-page-content max-w-[1100px] mx-auto w-full flex flex-col flex-1 p-4 md:p-8 gap-6 md:gap-8">
+
+            <!-- Page Header -->
+            <div>
+                <div class="tc-header-row flex items-start justify-between gap-4">
+                    <div class="min-w-0">
+                        <h1 class="text-xl md:text-2xl font-semibold flex items-center gap-2.5 mb-1">
+                            <svg class="w-5 h-5 md:w-6 md:h-6 text-[#a78bfa] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h6M8 15h4"/></svg>
+                            Token Counter
+                        </h1>
+                        <p class="text-[#737373] text-sm leading-snug">Live model data from <a href="https://models.dev" target="_blank" rel="noopener" class="text-[#a3a3a3] hover:text-white transition-colors underline underline-offset-2">models.dev</a>. Your text never leaves your browser.</p>
+                        <div id="modelCount" class="mt-1 text-[11px] font-mono text-[#525252]"></div>
+                    </div>
+                    <!-- Desktop: buttons inline with title -->
+                    <div class="hidden md:flex items-center gap-2 shrink-0">
+                        <button id="copyResultsBtn" class="action-btn" title="Copy summary to clipboard">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            Copy Results
+                        </button>
+                        <button id="shareBtn" class="action-btn" title="Copy shareable link">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                            Share
+                        </button>
+                    </div>
+                </div>
+                <!-- Mobile: full-width button row below title -->
+                <div class="flex md:hidden gap-2 mt-3 w-full">
+                    <button id="copyResultsBtnMobile" class="action-btn grow justify-center" title="Copy summary" onclick="document.getElementById('copyResultsBtn').click()">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copy Results
+                    </button>
+                    <button id="shareBtnMobile" class="action-btn grow justify-center" title="Share" onclick="document.getElementById('shareBtn').click()">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                        Share
+                    </button>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div>
+                <div class="section-label">Your Prompt</div>
+                <textarea id="promptInput" placeholder="Paste your prompt or text here…" spellcheck="false" autocomplete="off"></textarea>
+                <!-- Stats row -->
+                <div class="flex items-center gap-2 mt-3 flex-wrap">
+                    <span class="stat-chip" id="statChars">0 chars</span>
+                    <span class="stat-chip" id="statWords">0 words</span>
+                    <span class="stat-chip" id="statLines">0 lines</span>
+                    <button id="clearBtn" class="text-xs text-[#525252] hover:text-[#a3a3a3] transition-colors ml-auto" style="display:none">Clear</button>
+                </div>
+            </div>
+
+            <!-- Family Filter Tabs -->
+            <div>
+                <div class="section-label">Filter by Provider</div>
+                <div class="tc-tabs-wrapper">
+                    <div id="familyTabs"></div>
+                </div>
+            </div>
+
+            <!-- Model Cards -->
+            <div id="modelCardsSection">
+                <!-- Fallback notice -->
+                <div id="fallbackNotice" style="display:none" class="flex items-center gap-2.5 px-3 py-2 mb-3 rounded-lg border border-[#854d0e] bg-[#451a03]/40 text-[12px] font-mono text-[#fbbf24]">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" class="shrink-0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <span>models.dev unreachable — showing built-in fallback models. Data may be outdated.</span>
+                </div>
+                <!-- Loading state -->
+                <div id="loadingState" class="empty-hint" style="display:none">
+                    <svg class="animate-spin" viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>
+                    <p style="margin-top:12px">Fetching latest models…</p>
+                </div>
+                <!-- Error state -->
+                <div id="errorState" class="empty-hint" style="display:none">
+                    <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#dc2626" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    <p style="margin-top:12px;color:#737373">Could not load model data. Check your connection and <button onclick="window.location.reload()" style="color:#a3a3a3;text-decoration:underline;cursor:pointer">reload</button>.</p>
+                </div>
+                <!-- Empty state -->
+                <div id="emptyState" class="empty-hint" style="display:none">
+                    <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h6M8 15h4"/></svg>
+                    <p>Paste a prompt above to see token counts across all models</p>
+                </div>
+                <div id="modelGrid" class="model-grid" style="display:none"></div>
+            </div>
+
+            <p class="text-[11px] text-[#525252] font-mono mt-auto pb-2">
+                ✦ All processing is done locally in your browser. No text is transmitted anywhere. Token counts are estimates (~±5% vs tiktoken). Model data sourced from <a href="https://models.dev" target="_blank" rel="noopener" class="hover:text-[#a3a3a3] transition-colors">models.dev</a> and cached for 6 hours.
+            </p>
+        </div>
+    </main>
+</DashboardLayout>
+
+<style>
+    /* ── Token Counter page-specific styles ── */
+    .family-tab {
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #a3a3a3;
+        background: transparent;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        white-space: nowrap;
+        min-height: 36px;
+        display: inline-flex;
+        align-items: center;
+    }
+    .family-tab:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .family-tab.active { color: #fff; background: rgba(255,255,255,0.08); border-color: #333; }
+
+    #familyTabs {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 6px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 4px;
+    }
+    #familyTabs::-webkit-scrollbar { display: none; }
+
+    .tc-tabs-wrapper {
+        position: relative;
+        overflow: hidden;
+    }
+    .tc-tabs-wrapper::after {
+        content: '';
+        position: absolute;
+        right: 0; top: 0; bottom: 4px;
+        width: 32px;
+        background: linear-gradient(to right, transparent, #000);
+        pointer-events: none;
+    }
+
+    .model-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+
+    .model-card {
+        background: #0d0d0d;
+        border: 1px solid #222;
+        border-radius: 10px;
+        padding: 16px;
+        transition: border-color 0.2s, transform 0.2s;
+    }
+    .model-card:hover { border-color: #333; transform: translateY(-1px); }
+    .model-card.near-limit { border-color: #854d0e; }
+    .model-card.over-limit { border-color: #7f1d1d; }
+
+    .ctx-bar-track { height: 4px; background: #1a1a1a; border-radius: 99px; overflow: hidden; margin-top: 10px; }
+    .ctx-bar-fill { height: 100%; border-radius: 99px; transition: width 0.35s cubic-bezier(0.4,0,0.2,1), background-color 0.35s; background: #525252; }
+    .ctx-bar-fill.fill-safe  { background: linear-gradient(90deg, #404040, #737373); }
+    .ctx-bar-fill.fill-warn  { background: linear-gradient(90deg, #a16207, #ca8a04); }
+    .ctx-bar-fill.fill-danger { background: linear-gradient(90deg, #991b1b, #dc2626); }
+
+    .token-count { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 500; color: #fff; letter-spacing: -0.5px; line-height: 1; transition: color 0.2s; }
+    .token-count.warn   { color: #ca8a04; }
+    .token-count.danger { color: #dc2626; }
+
+    #promptInput {
+        width: 100%;
+        background: #0d0d0d;
+        border: 1px solid #222;
+        border-radius: 10px;
+        padding: 14px 16px;
+        color: #fff;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 14px;
+        line-height: 1.6;
+        resize: vertical;
+        min-height: 160px;
+        transition: border-color 0.2s;
+        outline: none;
+        box-sizing: border-box;
+        -webkit-text-size-adjust: 100%;
+    }
+    #promptInput:focus { border-color: #444; }
+    #promptInput::placeholder { color: #525252; }
+    @media (hover: none) and (pointer: coarse) { #promptInput { resize: none; } }
+
+    .stat-chip { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #737373; background: rgba(255,255,255,0.03); border: 1px solid #222; border-radius: 6px; padding: 4px 10px; min-height: 28px; display: inline-flex; align-items: center; }
+
+    .action-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 7px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; border: 1px solid #333; background: rgba(255,255,255,0.04); color: #a3a3a3; min-height: 36px; white-space: nowrap; }
+    .action-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
+    .action-btn.success { color: #4ade80; border-color: #166534; background: rgba(74,222,128,0.05); }
+
+    .section-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #525252; margin-bottom: 10px; }
+
+    .empty-hint { text-align: center; padding: 40px 24px; color: #525252; font-size: 14px; }
+    #emptyState svg, #errorState svg { margin: 0 auto 16px; display: block; opacity: 0.3; }
+    #loadingState svg { margin: 0 auto; display: block; width: 32px; height: 32px; opacity: 0.7; }
+
+    @media (max-width: 767px) {
+        .tc-page-content { gap: 20px !important; }
+        .tc-header-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+        .model-grid { grid-template-columns: 1fr; gap: 8px; }
+        .model-card { padding: 14px; }
+        .empty-hint { padding: 32px 16px; }
+    }
+</style>
+
+<!-- Bootstrap script — uses absolute /js/ path since Bun serves from project root -->
+<script type="module">
+    import {
+        fetchModels,
+        countAllModels,
+        getTextFromURL, syncTextToURL,
+        formatTokens, formatContext, buildSummaryText
+    } from '/dist/token-counter.js';
+
+    let currentFamily = 'All';
+    let debounceTimer = null;
+    let lastResults   = [];
+    let lastText      = '';
+    let MODELS        = [];
+
+    const promptInput    = document.getElementById('promptInput');
+    const statChars      = document.getElementById('statChars');
+    const statWords      = document.getElementById('statWords');
+    const statLines      = document.getElementById('statLines');
+    const clearBtn       = document.getElementById('clearBtn');
+    const familyTabs     = document.getElementById('familyTabs');
+    const modelGrid      = document.getElementById('modelGrid');
+    const emptyState     = document.getElementById('emptyState');
+    const loadingState   = document.getElementById('loadingState');
+    const errorState     = document.getElementById('errorState');
+    const fallbackNotice = document.getElementById('fallbackNotice');
+    const modelCount     = document.getElementById('modelCount');
+    const copyResultsBtn = document.getElementById('copyResultsBtn');
+    const shareBtn       = document.getElementById('shareBtn');
+
+    function buildTabs(families) {
+        familyTabs.innerHTML = '';
+        families.forEach(fam => {
+            const btn = document.createElement('button');
+            btn.className = `family-tab${fam === 'All' ? ' active' : ''}`;
+            btn.textContent = fam;
+            btn.dataset.family = fam;
+            btn.addEventListener('click', () => {
+                currentFamily = fam;
+                document.querySelectorAll('.family-tab').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderCards(lastResults);
+            });
+            familyTabs.appendChild(btn);
+        });
+    }
+
+    function renderCards(results) {
+        const filtered = currentFamily === 'All' ? results : results.filter(r => r.model.family === currentFamily);
+        if (filtered.length === 0 || lastText.trim().length === 0) {
+            modelGrid.style.display = 'none';
+            emptyState.style.display = 'block';
+            return;
+        }
+        emptyState.style.display = 'none';
+        modelGrid.style.display  = 'grid';
+        modelGrid.innerHTML = filtered.map(r => {
+            const { model, tokens, fillPct, isNearLimit, isOverLimit } = r;
+            const cardClass  = isOverLimit ? 'over-limit'  : isNearLimit ? 'near-limit' : '';
+            const countClass = isOverLimit ? 'danger'       : isNearLimit ? 'warn'       : '';
+            const barClass   = isOverLimit ? 'fill-danger'  : isNearLimit ? 'fill-warn'  : 'fill-safe';
+            const fillWidth  = Math.min(100, fillPct).toFixed(2);
+            return `<div class="model-card ${cardClass}">
+                <div class="flex items-start justify-between gap-2 mb-3">
+                    <div>
+                        <div class="text-[13px] font-medium text-white leading-tight">${model.name}</div>
+                        <div class="text-[11px] text-[#525252] font-mono mt-0.5">${model.family}</div>
+                    </div>
+                    <div class="text-[11px] font-mono text-[#525252] shrink-0 mt-0.5">${formatContext(model.context)} ctx</div>
+                </div>
+                <div class="token-count ${countClass}">${formatTokens(tokens)}</div>
+                <div class="text-[11px] text-[#525252] mt-1">tokens</div>
+                <div class="ctx-bar-track"><div class="ctx-bar-fill ${barClass}" style="width: ${fillWidth}%"></div></div>
+                <div class="flex justify-between mt-1.5">
+                    <div class="text-[11px] font-mono text-[#525252]">
+                        ${isOverLimit ? `<span style="color:#dc2626">Exceeds context window</span>` : isNearLimit ? `<span style="color:#ca8a04">${fillPct.toFixed(1)}% full</span>` : `${fillPct.toFixed(1)}% of context`}
+                    </div>
+                    <div class="text-[11px] font-mono text-[#525252]">${formatTokens(model.context - tokens > 0 ? model.context - tokens : 0)} left</div>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    function updateStats(text) {
+        statChars.textContent = `${text.length.toLocaleString()} chars`;
+        statWords.textContent = `${(text.trim() === '' ? 0 : text.trim().split(/\s+/).length).toLocaleString()} words`;
+        statLines.textContent = `${(text === '' ? 0 : text.split('\n').length).toLocaleString()} lines`;
+        clearBtn.style.display = text.length > 0 ? 'inline' : 'none';
+    }
+
+    function update() {
+        const text = promptInput.value;
+        lastText   = text;
+        updateStats(text);
+        if (text.trim().length === 0 || MODELS.length === 0) {
+            lastResults = [];
+            renderCards([]);
+            syncTextToURL('');
+            return;
+        }
+        lastResults = countAllModels(text, MODELS);
+        renderCards(lastResults);
+        syncTextToURL(text);
+    }
+
+    promptInput.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(update, 120);
+    });
+
+    clearBtn.addEventListener('click', () => { promptInput.value = ''; update(); promptInput.focus(); });
+
+    copyResultsBtn.addEventListener('click', async () => {
+        if (!lastText.trim()) return;
+        try {
+            await navigator.clipboard.writeText(buildSummaryText(lastText, lastResults));
+            copyResultsBtn.classList.add('success');
+            copyResultsBtn.innerHTML = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+            setTimeout(() => { copyResultsBtn.classList.remove('success'); copyResultsBtn.innerHTML = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Results`; }, 2000);
+        } catch { console.warn('Clipboard write failed'); }
+    });
+
+    shareBtn.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(window.location.href);
+            shareBtn.classList.add('success');
+            shareBtn.innerHTML = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Link Copied!`;
+            setTimeout(() => { shareBtn.classList.remove('success'); shareBtn.innerHTML = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share`; }, 2000);
+        } catch { console.warn('Clipboard write failed'); }
+    });
+
+    (async () => {
+        loadingState.style.display = 'flex';
+        emptyState.style.display   = 'none';
+        try {
+            const { models, families, fromFallback } = await fetchModels();
+            MODELS = models;
+            buildTabs(families);
+            if (modelCount) modelCount.textContent = `${models.length} models from ${families.length - 1} providers`;
+            if (fromFallback && fallbackNotice) {
+                fallbackNotice.style.display = 'flex';
+                if (modelCount) modelCount.textContent += ' (offline fallback)';
+            }
+            loadingState.style.display = 'none';
+            const urlText = getTextFromURL();
+            if (urlText) { promptInput.value = urlText; update(); } else { emptyState.style.display = 'block'; }
+        } catch (err) {
+            console.error('Failed to load models:', err);
+            loadingState.style.display = 'none';
+            errorState.style.display   = 'block';
+        }
+    })();
+</script>

@@ -1,0 +1,54 @@
+---
+/**
+ * DashboardLayout — used by settings, help, zap, and compare pages.
+ * Extends BaseLayout with the sidebar (tool variant = nav links, back button)
+ * and the shared mobile header / desktop sidebar toggle chrome.
+ *
+ * Props:
+ *   title, description — forwarded to BaseLayout
+ *   activeNav — highlights the active link in the sidebar nav
+ */
+import BaseLayout from './BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+
+interface Props {
+    title: string;
+    description?: string;
+    canonical?: string;
+    activeNav?: 'settings' | 'zap' | 'help' | 'compare' | string;
+}
+
+const { title, description, canonical, activeNav } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} canonical={canonical}>
+    <div class="flex h-[100dvh] overflow-hidden">
+        <Sidebar variant="tool" />
+
+        <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
+            <!-- Mobile Header -->
+            <div class="md:hidden flex items-center justify-between p-4 border-b border-[#222] bg-[#0a0a0a] shrink-0 z-10 sticky top-0">
+                <div class="flex items-center gap-3">
+                    <button id="openSidebarMobile" aria-label="Open sidebar menu" class="text-[#a3a3a3] hover:text-white transition-colors p-1 rounded-md hover:bg-white/5">
+                        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <img src="/images/icons/favicon-32x32.png" alt="logo" class="w-6 h-6 rounded-full" />
+                        <span class="text-[17px] font-semibold tracking-wide text-white leading-none">{title.replace(' | ai.dosa.dev', '').replace('ai.dosa.dev | ', '')}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desktop Sidebar Toggle (Floating) -->
+            <div id="desktopToggleContainer" class="hidden absolute top-[14px] left-4 z-20 transition-opacity duration-300">
+                <button id="openSidebarDesktop" aria-label="Open sidebar" class="text-[#a3a3a3] hover:text-white p-1.5 bg-[#0a0a0a] border border-[#222] rounded-md shadow-sm transition-all hover:bg-white/5 backdrop-blur-sm" title="Open sidebar">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+                </button>
+            </div>
+
+            <slot />
+        </main>
+    </div>
+
+    <script src="/dist/app.js" type="module" defer></script>
+</BaseLayout>

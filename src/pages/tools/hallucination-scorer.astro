@@ -1,0 +1,341 @@
+---
+/**
+ * Hallucination Risk Scorer — prompt safety analysis utility.
+ *
+ * Migration note: Direct port of tools/hallucination-scorer.html.
+ * All page-specific styles scoped to this component.
+ * The inline bootstrap script imports from /js/hallucination-scorer.js
+ * (absolute path served by Astro's dev server from the legacy JS source).
+ */
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+
+const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "WebApplication",
+            "@id": "https://ai.dosa.dev/tools/hallucination-scorer#app",
+            "name": "Hallucination Risk Scorer",
+            "url": "https://ai.dosa.dev/tools/hallucination-scorer",
+            "description": "Free, client-side heuristic scorer that analyzes prompts for patterns that cause LLM hallucinations.",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Any",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+            "featureList": [
+                "Hallucination risk scoring", "Vague context detection",
+                "Forced format detection", "Fact-density analysis",
+                "100% client-side — no data sent to servers"
+            ],
+            "isPartOf": { "@type": "WebSite", "@id": "https://ai.dosa.dev/#website" }
+        },
+        {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ai.dosa.dev" },
+                { "@type": "ListItem", "position": 2, "name": "Hallucination Risk Scorer", "item": "https://ai.dosa.dev/tools/hallucination-scorer" }
+            ]
+        }
+    ]
+});
+---
+
+<DashboardLayout
+    title="Hallucination Risk Scorer | ai.dosa.dev"
+    description="Free AI hallucination risk scorer. Analyze prompts for patterns that cause LLM hallucinations — vague context, forced formats, fact-density and more."
+    canonical="https://ai.dosa.dev/tools/hallucination-scorer"
+    activeNav="hallucination-scorer"
+>
+    <script type="application/ld+json" set:html={jsonLd} />
+
+    <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
+        <div class="hs-page-content max-w-[1100px] mx-auto w-full flex flex-col flex-1 p-4 md:p-8 gap-6 md:gap-8">
+
+            <!-- Page Header -->
+            <div>
+                <div class="hs-header-row flex items-start justify-between gap-4">
+                    <div class="min-w-0">
+                        <h1 class="text-xl md:text-2xl font-semibold flex items-center gap-2.5 mb-1">
+                            <svg class="w-5 h-5 md:w-6 md:h-6 text-[#f97316] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                            Hallucination Risk Scorer
+                        </h1>
+                        <p class="text-[#737373] text-sm leading-snug">Heuristic analysis of prompt patterns that increase LLM hallucination risk.</p>
+                    </div>
+                    <div class="hidden md:flex items-center gap-2 shrink-0">
+                        <button id="copyResultsBtn" class="action-btn" title="Copy summary to clipboard">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            Copy Results
+                        </button>
+                        <button id="shareBtn" class="action-btn" title="Copy shareable link">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                            Share
+                        </button>
+                    </div>
+                </div>
+                <div class="flex md:hidden gap-2 mt-3 w-full">
+                    <button id="copyResultsBtnMobile" class="action-btn grow justify-center" title="Copy summary" onclick="document.getElementById('copyResultsBtn').click()">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copy Results
+                    </button>
+                    <button id="shareBtnMobile" class="action-btn grow justify-center" title="Share" onclick="document.getElementById('shareBtn').click()">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                        Share
+                    </button>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div>
+                <div class="section-label">Your Prompt</div>
+                <textarea id="promptInput" placeholder="Paste your prompt here to analyze hallucination risk..." spellcheck="false" autocomplete="off"></textarea>
+                <div class="flex items-center gap-2 mt-3 flex-wrap">
+                    <span class="stat-chip" id="statChars">0 chars</span>
+                    <span class="stat-chip" id="statWords">0 words</span>
+                    <span class="stat-chip" id="statLines">0 lines</span>
+                    <button id="clearBtn" class="text-xs text-[#525252] hover:text-[#a3a3a3] transition-colors ml-auto" style="display:none">Clear</button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection">
+                <div id="emptyState" class="empty-hint">
+                    <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    <p>Paste a prompt above to analyze its hallucination risk</p>
+                </div>
+
+                <div id="resultsGrid" class="results-grid" style="display:none">
+                    <!-- Gauge -->
+                    <div id="gaugeContainer" class="gauge-container level-safe">
+                        <svg class="gauge-svg" viewBox="0 0 120 120">
+                            <circle class="gauge-track" cx="60" cy="60" r="50" />
+                            <circle id="gaugeFill" class="gauge-fill" cx="60" cy="60" r="50"
+                                stroke="#525252"
+                                stroke-dasharray="314.16"
+                                stroke-dashoffset="314.16" />
+                        </svg>
+                        <div id="gaugeScore" class="gauge-score" style="color:#525252; margin-top:-128px;">0</div>
+                        <div id="gaugeLabel" class="gauge-label" style="color:#525252;">out of 100</div>
+                        <div id="gaugeBadge" class="gauge-level-badge safe" style="margin-top:80px;">
+                            <span id="gaugeDot" class="gauge-level-dot safe"></span>
+                            <span id="gaugeLevelText">Safe</span>
+                        </div>
+                    </div>
+
+                    <!-- Flags -->
+                    <div>
+                        <div class="section-label">Risk Breakdown</div>
+                        <div id="flagsContainer" class="risk-flags-section">
+                            <div class="empty-hint" style="padding: 24px 16px;">
+                                <p style="color:#525252; font-size:13px;">No risk flags detected</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-[11px] text-[#525252] font-mono mt-auto pb-2">
+                All analysis is done locally in your browser. No text is transmitted anywhere. Risk scores are heuristic estimates and should complement — not replace — manual prompt review.
+            </p>
+        </div>
+    </main>
+</DashboardLayout>
+
+<style>
+    #promptInput {
+        width: 100%;
+        background: #0d0d0d;
+        border: 1px solid #222;
+        border-radius: 10px;
+        padding: 14px 16px;
+        color: #fff;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 14px;
+        line-height: 1.6;
+        resize: vertical;
+        min-height: 160px;
+        transition: border-color 0.2s;
+        outline: none;
+        box-sizing: border-box;
+        -webkit-text-size-adjust: 100%;
+    }
+    #promptInput:focus { border-color: #444; }
+    #promptInput::placeholder { color: #525252; }
+    @media (hover: none) and (pointer: coarse) { #promptInput { resize: none; } }
+
+    .stat-chip { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #737373; background: rgba(255,255,255,0.03); border: 1px solid #222; border-radius: 6px; padding: 4px 10px; min-height: 28px; display: inline-flex; align-items: center; }
+
+    .action-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 7px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; border: 1px solid #333; background: rgba(255,255,255,0.04); color: #a3a3a3; min-height: 36px; white-space: nowrap; }
+    .action-btn:hover { background: rgba(255,255,255,0.08); color: #fff; }
+    .action-btn.success { color: #4ade80; border-color: #166534; background: rgba(74,222,128,0.05); }
+
+    .section-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #525252; margin-bottom: 10px; }
+
+    /* Radial Gauge */
+    .gauge-container { display: flex; flex-direction: column; align-items: center; padding: 32px 24px 24px; background: #0d0d0d; border: 1px solid #222; border-radius: 14px; transition: border-color 0.3s; }
+    .gauge-container.level-safe   { border-color: #222; }
+    .gauge-container.level-medium { border-color: #854d0e; }
+    .gauge-container.level-high   { border-color: #7f1d1d; }
+    .gauge-svg { width: 200px; height: 200px; transform: rotate(-90deg); }
+    .gauge-track { fill: none; stroke: #1a1a1a; stroke-width: 10; }
+    .gauge-fill { fill: none; stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 0.6s cubic-bezier(0.4,0,0.2,1), stroke 0.4s; }
+    .gauge-score { font-family: 'JetBrains Mono', monospace; font-size: 44px; font-weight: 500; letter-spacing: -1px; line-height: 1; transition: color 0.3s; }
+    .gauge-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; margin-top: 4px; transition: color 0.3s; }
+    .gauge-level-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 99px; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; letter-spacing: 0.05em; margin-top: 16px; transition: all 0.3s; border: 1px solid transparent; }
+    .gauge-level-badge.safe   { color: #737373; background: rgba(255,255,255,0.04); border-color: #333; }
+    .gauge-level-badge.medium { color: #ca8a04; background: rgba(202,138,4,0.08); border-color: #854d0e; }
+    .gauge-level-badge.high   { color: #dc2626; background: rgba(220,38,38,0.08); border-color: #7f1d1d; }
+    .gauge-level-dot { width: 7px; height: 7px; border-radius: 50%; transition: background 0.3s; }
+    .gauge-level-dot.safe   { background: #525252; }
+    .gauge-level-dot.medium { background: #ca8a04; }
+    .gauge-level-dot.high   { background: #dc2626; }
+
+    /* Risk flag cards */
+    .risk-flags-section { display: flex; flex-direction: column; gap: 8px; }
+    .risk-flag-card { background: #0d0d0d; border: 1px solid #222; border-radius: 10px; padding: 14px 16px; transition: border-color 0.2s, transform 0.2s; }
+    .risk-flag-card:hover { border-color: #333; transform: translateY(-1px); }
+    .risk-flag-card .flag-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+    .risk-flag-card .flag-name { font-size: 13px; font-weight: 600; color: #fff; }
+    .risk-flag-card .flag-weight { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 2px 8px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+    .flag-weight.w-low  { color: #737373; background: rgba(255,255,255,0.04); }
+    .flag-weight.w-med  { color: #ca8a04; background: rgba(202,138,4,0.08); }
+    .flag-weight.w-high { color: #dc2626; background: rgba(220,38,38,0.08); }
+    .risk-flag-card .flag-desc { font-size: 13px; color: #737373; line-height: 1.55; }
+
+    .empty-hint { text-align: center; padding: 40px 24px; color: #525252; font-size: 14px; }
+    #emptyState svg { margin: 0 auto 16px; display: block; opacity: 0.3; }
+
+    .results-grid { display: grid; grid-template-columns: 240px 1fr; gap: 16px; align-items: start; }
+
+    @media (max-width: 767px) {
+        .hs-page-content { gap: 20px !important; }
+        .hs-header-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+        .results-grid { grid-template-columns: 1fr; }
+        .gauge-container { padding: 24px 16px 20px; }
+        .gauge-svg { width: 160px; height: 160px; }
+        .gauge-score { font-size: 36px; }
+        .empty-hint { padding: 32px 16px; }
+    }
+</style>
+
+<script type="module">
+    import {
+        scoreHallucinationRisk,
+        getTextFromURL, syncTextToURL,
+        buildSummaryText
+    } from '/dist/hallucination-scorer.js';
+
+    let debounceTimer = null;
+    let lastResult    = { score: 0, level: 'Safe', flags: [] };
+    let lastText      = '';
+
+    const promptInput    = document.getElementById('promptInput');
+    const statChars      = document.getElementById('statChars');
+    const statWords      = document.getElementById('statWords');
+    const statLines      = document.getElementById('statLines');
+    const clearBtn       = document.getElementById('clearBtn');
+    const emptyState     = document.getElementById('emptyState');
+    const resultsGrid    = document.getElementById('resultsGrid');
+    const gaugeContainer = document.getElementById('gaugeContainer');
+    const gaugeFill      = document.getElementById('gaugeFill');
+    const gaugeScore     = document.getElementById('gaugeScore');
+    const gaugeLabel     = document.getElementById('gaugeLabel');
+    const gaugeBadge     = document.getElementById('gaugeBadge');
+    const gaugeDot       = document.getElementById('gaugeDot');
+    const gaugeLevelText = document.getElementById('gaugeLevelText');
+    const flagsContainer = document.getElementById('flagsContainer');
+    const copyResultsBtn = document.getElementById('copyResultsBtn');
+    const shareBtn       = document.getElementById('shareBtn');
+
+    const CIRCUMFERENCE = 2 * Math.PI * 50;
+
+    function getColorForLevel(level) {
+        if (level === 'High')   return { stroke: '#dc2626', text: '#dc2626' };
+        if (level === 'Medium') return { stroke: '#ca8a04', text: '#ca8a04' };
+        return { stroke: '#525252', text: '#525252' };
+    }
+
+    function getWeightClass(weight) {
+        if (weight >= 16) return 'w-high';
+        if (weight >= 12) return 'w-med';
+        return 'w-low';
+    }
+
+    function renderGauge(score, level) {
+        const colors = getColorForLevel(level);
+        gaugeFill.style.strokeDashoffset = CIRCUMFERENCE * (1 - score / 100);
+        gaugeFill.setAttribute('stroke', colors.stroke);
+        gaugeScore.textContent = score;
+        gaugeScore.style.color = colors.text;
+        gaugeLabel.style.color = colors.text;
+        gaugeContainer.className = `gauge-container level-${level.toLowerCase()}`;
+        const lvl = level.toLowerCase();
+        gaugeBadge.className = `gauge-level-badge ${lvl}`;
+        gaugeDot.className   = `gauge-level-dot ${lvl}`;
+        gaugeLevelText.textContent = level;
+    }
+
+    function renderFlags(flags) {
+        if (flags.length === 0) {
+            flagsContainer.innerHTML = `<div style="padding: 24px 16px; text-align:center;"><p style="color:#525252; font-size:13px;">No risk flags detected</p></div>`;
+            return;
+        }
+        flagsContainer.innerHTML = flags.map(f => `
+            <div class="risk-flag-card">
+                <div class="flag-header">
+                    <div class="flag-name">${f.flag}</div>
+                    <div class="flag-weight ${getWeightClass(f.weight)}">+${f.weight}</div>
+                </div>
+                <div class="flag-desc">${f.description}</div>
+            </div>`).join('');
+    }
+
+    function updateStats(text) {
+        statChars.textContent = `${text.length.toLocaleString()} chars`;
+        statWords.textContent = `${(text.trim() === '' ? 0 : text.trim().split(/\s+/).length).toLocaleString()} words`;
+        statLines.textContent = `${(text === '' ? 0 : text.split('\n').length).toLocaleString()} lines`;
+        clearBtn.style.display = text.length > 0 ? 'inline' : 'none';
+    }
+
+    function update() {
+        const text = promptInput.value;
+        lastText   = text;
+        updateStats(text);
+        if (text.trim().length === 0) {
+            lastResult = { score: 0, level: 'Safe', flags: [] };
+            emptyState.style.display  = 'block';
+            resultsGrid.style.display = 'none';
+            syncTextToURL('');
+            return;
+        }
+        lastResult = scoreHallucinationRisk(text);
+        emptyState.style.display  = 'none';
+        resultsGrid.style.display = 'grid';
+        renderGauge(lastResult.score, lastResult.level);
+        renderFlags(lastResult.flags);
+        syncTextToURL(text);
+    }
+
+    promptInput.addEventListener('input', () => { clearTimeout(debounceTimer); debounceTimer = setTimeout(update, 120); });
+    clearBtn.addEventListener('click', () => { promptInput.value = ''; update(); promptInput.focus(); });
+
+    copyResultsBtn.addEventListener('click', async () => {
+        if (!lastText.trim()) return;
+        try {
+            await navigator.clipboard.writeText(buildSummaryText(lastText, lastResult));
+            copyResultsBtn.classList.add('success');
+            copyResultsBtn.innerHTML = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+            setTimeout(() => { copyResultsBtn.classList.remove('success'); copyResultsBtn.innerHTML = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Results`; }, 2000);
+        } catch { console.warn('Clipboard write failed'); }
+    });
+
+    shareBtn.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(window.location.href);
+            shareBtn.classList.add('success');
+            shareBtn.innerHTML = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Link Copied!`;
+            setTimeout(() => { shareBtn.classList.remove('success'); shareBtn.innerHTML = `<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Share`; }, 2000);
+        } catch { console.warn('Clipboard write failed'); }
+    });
+
+    const urlText = getTextFromURL();
+    if (urlText) { promptInput.value = urlText; update(); }
+</script>
