@@ -21,6 +21,7 @@
     "@astrojs/sitemap": "^3.7.2",
     "@astrojs/vercel": "^10.0.5",
     "@tailwindcss/cli": "^4.2.2",
+    "@tailwindcss/typography": "^0.5.19",
     "@types/bun": "latest",
     "astro": "^6.1.9",
     "tailwindcss": "^4.2.2"
@@ -29,6 +30,11 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "@fingerprintjs/fingerprintjs": "^5.1.0"
+    "@astrojs/mdx": "^5.0.4",
+    "@astrojs/rss": "^4.0.18",
+    "@fingerprintjs/fingerprintjs": "^5.1.0",
+    "astro-seo": "^1.1.0",
+    "mdast-util-to-string": "^4.0.0",
+    "reading-time": "^1.5.0"
   }
 }

@@ -1,0 +1,73 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map(entry => ({
+    params: { id: entry.id }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, remarkPluginFrontmatter } = await render(entry);
+---
+
+<BaseLayout
+  title={`${entry.data.title} | AI Tools Blog`}
+  description={entry.data.description}
+  ogType="article"
+>
+  <div class="min-h-screen flex flex-col bg-zinc-950">
+    <header class="border-b border-zinc-800 bg-zinc-900/50 sticky top-0 z-10 backdrop-blur-sm">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+        <a href="/blog" class="text-zinc-400 hover:text-white transition-colors flex items-center text-sm font-medium">
+          <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to Blog
+        </a>
+      </div>
+    </header>
+
+    <main class="flex-1 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <article>
+        <header class="mb-10 text-center">
+          <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
+            {entry.data.title}
+          </h1>
+          <div class="flex items-center justify-center space-x-4 text-sm text-zinc-400">
+            <time datetime={entry.data.pubDate.toISOString()}>
+              {entry.data.pubDate.toLocaleDateString('en-us', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </time>
+            <span>•</span>
+            <span>{entry.data.author}</span>
+            {remarkPluginFrontmatter && remarkPluginFrontmatter.readingTime && (
+                <>
+                <span>•</span>
+                <span>{remarkPluginFrontmatter.readingTime}</span>
+                </>
+            )}
+          </div>
+          {entry.data.tags && entry.data.tags.length > 0 && (
+            <div class="flex flex-wrap justify-center gap-2 mt-6">
+              {entry.data.tags.map((tag) => (
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-800 text-zinc-300 border border-zinc-700">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </header>
+
+        <div class="prose prose-invert prose-zinc max-w-none prose-headings:font-bold prose-a:text-blue-400 hover:prose-a:text-blue-300 prose-code:text-pink-400 prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-zinc-800 prose-img:rounded-xl">
+          <Content />
+        </div>
+      </article>
+    </main>
+  </div>
+</BaseLayout>
