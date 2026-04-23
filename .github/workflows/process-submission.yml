@@ -12,9 +12,10 @@ permissions:
 
 jobs:
   process-submission:
-    # Gate: only run when a maintainer adds the 'approved' label to a 'submission' issue.
-    # To trigger: open the issue, review it, then add the 'approved' label.
-    if: github.event.label.name == 'approved' && contains(github.event.issue.labels.*.name, 'submission')
+    # Gate: only run when a maintainer adds the 'approved' label to a submission issue.
+    # We check the title prefix instead of the 'submission' label because template labels
+    # are only auto-applied if they already exist in the repo — an unreliable dependency.
+    if: github.event.label.name == 'approved' && startsWith(github.event.issue.title, '[Tool Submission]')
     runs-on: ubuntu-latest
 
     steps:
