@@ -8,7 +8,8 @@
     "dev": "tailwindcss -i ./src/input.css -o ./css/output.css --watch",
     "dev:js": "bun run build.js",
     "test": "bun test",
-    "test:watch": "bun test --watch js/*.test.js"
+    "test:watch": "bun test --watch js/*.test.js",
+    "validate:enriched": "bun run scripts/validate-enriched.js"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.2.2",
