@@ -51,93 +51,118 @@ function stripEmoji(s: string): string {
         .trim();
 }
 
-const CATEGORY_SHORT: Record<string, string> = {
-    'Full IDE': 'IDE',
-    'Editor Extension': 'Ext',
-    'Terminal Agent': 'CLI',
-    'Autonomous Agent': 'Agent',
-    'Browser-Based Builder': 'Builder',
-    'Code Review': 'Review',
-    'AI Chat': 'Chat',
-    'Code Completion': 'Complete',
-    'AI Platform': 'Platform',
-    'AI Search': 'Search',
-    'AI DevOps': 'DevOps',
+const CATEGORY_MAPPING: Record<string, string> = {
+    'AI-Native IDEs & Editors': 'AI IDEs',
+    'IDE Extensions & Plugins': 'IDE Plugins',
+    'Terminal & CLI Agents': 'CLI Agents',
+    'AI-Native Terminals': 'AI Terminals',
+    'Autonomous & Async Agents': 'Async Agents',
+    'Browser-Based & App Builders': 'Web Builders',
+    'AI Code Review & Security': 'Code Review',
+    'AI Testing & Quality Assurance': 'QA & Testing',
+    'General-Purpose AI Assistants (with Strong Coding Capability)': 'General AI',
+    'AI Codebase Knowledge & Generation': 'Codebase AI',
+    'Developer Productivity & Workflow': 'Productivity',
+    'Editor Platforms with Native AI Features': 'Native Editors',
 };
+
+/**
+ * Slug generation — mirrors parser.js exactly.
+ * First occurrence: name-only slug.
+ * Collision: name-company slug.
+ */
+function slugify(str: string): string {
+    if (!str) return '';
+    return String(str)
+        .toLowerCase()
+        .normalize('NFKD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[\u2700-\u27BF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u26FF]|[\uFE00-\uFE0F]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+}
 
 function getShortCategory(category: string): string {
     const clean = stripEmoji(category);
-    for (const [key, short] of Object.entries(CATEGORY_SHORT)) {
-        if (clean.includes(key)) return short;
+    for (const [key, val] of Object.entries(CATEGORY_MAPPING)) {
+        if (clean.includes(key)) return val;
     }
-    return clean.slice(0, 6);
-}
-
-function slugify(name: string, company: string): string {
-    const combined = `${company}-${name}`.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-    return combined;
+    return clean;
 }
 
 /**
- * Parse the markdown tool tables from README.md
- * Mirrors the logic in js/parser.js
+ * Parse the markdown tool tables from README.md.
+ * Mirrors parser.js exactly — slug is name-only first, then name-company on collision.
  */
 function parseMarkdown(text: string): ToolSeed[] {
-    const tools: ToolSeed[] = [];
-    const slugCounts = new Map<string, number>();
+    const toolsRaw: Omit<ToolSeed, 'slug'>[] = [];
+    const sections = text.split('## ');
 
-    const lines = text.split('\n');
-    let currentCategory = '';
+    for (let i = 1; i < sections.length; i++) {
+        const lines = sections[i].split('\n');
+        const categoryLine = lines[0].trim();
 
-    for (const line of lines) {
-        // Detect category heading
-        const headingMatch = line.match(/^#{1,3}\s+(.+)/);
-        if (headingMatch) {
-            currentCategory = headingMatch[1].trim();
-            continue;
+        if (categoryLine.toLowerCase().includes('table of contents')) continue;
+
+        let isTable = false;
+        for (const line of lines) {
+            if (line.startsWith('| Tool |') || line.startsWith('|------|')) {
+                isTable = true;
+                continue;
+            }
+            if (isTable && line.trim().startsWith('|')) {
+                const cells = line.split('|').map(s => s.trim()).filter(Boolean);
+                if (cells.length >= 3) {
+                    const toolRaw = cells[0] ?? '';
+                    const company = cells[1] ?? '';
+                    const notes = cells[2] ?? '';
+                    const match = toolRaw.match(/\[(.*?)\]\((.*?)\)/);
+                    if (match) {
+                        toolsRaw.push({
+                            name: match[1].replace(/\*\*/g, ''),
+                            url: match[2],
+                            company,
+                            notes,
+                            category: categoryLine,
+                            categoryClean: stripEmoji(categoryLine),
+                            categoryShort: getShortCategory(categoryLine),
+                        });
+                    } else {
+                        const nameMatch = toolRaw.match(/\*\*(.*?)\*\*/);
+                        toolsRaw.push({
+                            name: nameMatch ? nameMatch[1] : toolRaw.replace(/\*\*/g, ''),
+                            url: '#',
+                            company,
+                            notes,
+                            category: categoryLine,
+                            categoryClean: stripEmoji(categoryLine),
+                            categoryShort: getShortCategory(categoryLine),
+                        });
+                    }
+                }
+            } else if (isTable && (!line.trim().startsWith('|') && line.trim() !== '')) {
+                isTable = false;
+            }
         }
-
-        // Parse table rows — skip header and separator
-        if (!line.startsWith('|') || line.includes('---')) continue;
-
-        const cells = line.split('|').map(c => c.trim()).filter(Boolean);
-        if (cells.length < 3) continue;
-
-        // Row format: | Name | Company | Notes |
-        // Name cell may be [Name](url)
-        const nameCell = cells[0] ?? '';
-        const company = cells[1] ?? '';
-        const notes = cells[2] ?? '';
-
-        const linkMatch = nameCell.match(/\[([^\]]+)\]\(([^)]+)\)/);
-        if (!linkMatch) continue;
-
-        const name = linkMatch[1].trim();
-        const url = linkMatch[2].trim();
-        if (!name || !url) continue;
-
-        const categoryClean = stripEmoji(currentCategory);
-        const categoryShort = getShortCategory(currentCategory);
-
-        // Slug collision handling
-        let baseSlug = slugify(name, company);
-        const count = slugCounts.get(baseSlug) ?? 0;
-        slugCounts.set(baseSlug, count + 1);
-        const slug = count === 0 ? baseSlug : `${baseSlug}-${count}`;
-
-        tools.push({
-            slug,
-            name,
-            company,
-            category: currentCategory,
-            categoryClean,
-            categoryShort,
-            notes,
-            url,
-        });
     }
 
-    return tools;
+    // Collision resolution mirrors parser.js exactly:
+    // first occurrence: name-only; collision: name-company; further: name-company-N
+    const seen = new Map<string, number>();
+    return toolsRaw.map(tool => {
+        let base = slugify(tool.name);
+        if (!base) base = 'tool';
+        let slug = base;
+        if (seen.has(slug)) {
+            const withCompany = `${base}-${slugify(tool.company)}`;
+            slug = seen.has(withCompany) ? `${withCompany}-${(seen.get(withCompany) ?? 0) + 1}` : withCompany;
+        }
+        seen.set(slug, (seen.get(slug) ?? 0) + 1);
+        return { ...tool, slug };
+    });
 }
 
 /**
