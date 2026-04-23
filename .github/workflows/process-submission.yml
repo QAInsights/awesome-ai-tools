@@ -12,9 +12,9 @@ permissions:
 
 jobs:
   process-submission:
-    if: |
-      github.event.label.name == 'approved' &&
-      contains(github.event.issue.labels.*.name, 'submission')
+    # Gate: only run when a maintainer adds the 'approved' label to a 'submission' issue.
+    # To trigger: open the issue, review it, then add the 'approved' label.
+    if: github.event.label.name == 'approved' && contains(github.event.issue.labels.*.name, 'submission')
     runs-on: ubuntu-latest
 
     steps:
