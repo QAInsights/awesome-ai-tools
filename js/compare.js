@@ -1,6 +1,7 @@
 import * as cache from './tool-cache.js';
 import { getVoteCount } from './voting.js';
 import { auth } from './auth.js';
+import html2canvas from 'html2canvas';
 
 const ENRICHED_URL = '/public/data/enriched-tools.json';
 const ENABLE_VOTING = process.env.ENABLE_VOTING === 'true';
@@ -148,4 +149,66 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         grid.appendChild(card);
     });
+
+    // Add Share and Export functionality
+    const shareBtn = document.getElementById('shareCompareBtn');
+    const shareBtnText = document.getElementById('shareBtnText');
+    const exportBtn = document.getElementById('exportCompareBtn');
+
+    if (shareBtn) {
+        shareBtn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(window.location.href);
+                shareBtnText.textContent = 'Copied!';
+                shareBtn.classList.add('text-[#a78bfa]', 'border-[#a78bfa]');
+                setTimeout(() => {
+                    shareBtnText.textContent = 'Share';
+                    shareBtn.classList.remove('text-[#a78bfa]', 'border-[#a78bfa]');
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy', err);
+            }
+        });
+    }
+
+    if (exportBtn) {
+        exportBtn.addEventListener('click', async () => {
+            if (!grid) return;
+
+            // Temporary styling for capture
+            const originalStyle = grid.style.cssText;
+            grid.style.background = '#000'; // Ensure dark background
+            grid.style.padding = '24px';
+            grid.style.borderRadius = '12px';
+
+            // Show loading state
+            const originalText = exportBtn.innerHTML;
+            exportBtn.innerHTML = '<span class="animate-pulse">Exporting...</span>';
+            exportBtn.disabled = true;
+
+            try {
+                const canvas = await html2canvas(grid, {
+                    backgroundColor: '#000000',
+                    scale: 2, // Higher resolution
+                    useCORS: true,
+                    logging: false
+                });
+
+                // Create download link
+                const image = canvas.toDataURL("image/png");
+                const link = document.createElement('a');
+                link.download = `ai-tools-compare-${slugs.join('-vs-')}.png`;
+                link.href = image;
+                link.click();
+            } catch (err) {
+                console.error('Failed to export image', err);
+                alert('Failed to export image. Please try again.');
+            } finally {
+                // Restore styling and button state
+                grid.style.cssText = originalStyle;
+                exportBtn.innerHTML = originalText;
+                exportBtn.disabled = false;
+            }
+        });
+    }
 });

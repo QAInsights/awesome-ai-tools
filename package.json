@@ -34,6 +34,7 @@
     "@astrojs/rss": "^4.0.18",
     "@fingerprintjs/fingerprintjs": "^5.1.0",
     "astro-seo": "^1.1.0",
+    "html2canvas": "^1.4.1",
     "mdast-util-to-string": "^4.0.0",
     "reading-time": "^1.5.0"
   }
