@@ -21,10 +21,20 @@ import DashboardLayout from '../layouts/DashboardLayout.astro';
                 <h1 class="text-2xl sm:text-3xl font-semibold text-white mb-2">Compare Tools</h1>
                 <p class="text-[#a3a3a3]">See how your selected tools stack up against each other.</p>
             </div>
-            <a href="/"
-                class="self-start sm:self-auto px-4 py-2 border border-[#333] rounded transition-all duration-300 hover:border-[#a78bfa] hover:bg-gradient-to-r hover:from-[#a78bfa] hover:via-[#22d3ee] hover:to-[#a78bfa] hover:bg-[length:200%_auto] hover:bg-clip-text hover:text-transparent text-[#a3a3a3] hover:text-transparent">
-                &larr; Back to registry
-            </a>
+                        <div class="flex flex-wrap items-center gap-3 self-start sm:self-auto">
+                <button id="exportCompareBtn" class="px-3 sm:px-4 py-2 bg-[#1a1a1a] border border-[#333] rounded hover:border-[#22d3ee] hover:text-[#22d3ee] transition-colors text-[#a3a3a3] flex items-center gap-2 text-sm sm:text-base">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Export Image
+                </button>
+                <button id="shareCompareBtn" class="px-3 sm:px-4 py-2 bg-[#1a1a1a] border border-[#333] rounded hover:border-[#a78bfa] hover:text-[#a78bfa] transition-colors text-[#a3a3a3] flex items-center gap-2 text-sm sm:text-base">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                    <span id="shareBtnText">Share</span>
+                </button>
+                <a href="/"
+                    class="px-3 sm:px-4 py-2 border border-[#333] rounded transition-all duration-300 hover:border-[#a78bfa] hover:bg-gradient-to-r hover:from-[#a78bfa] hover:via-[#22d3ee] hover:to-[#a78bfa] hover:bg-[length:200%_auto] hover:bg-clip-text hover:text-transparent text-[#a3a3a3] hover:text-transparent text-sm sm:text-base">
+                    &larr; Back
+                </a>
+            </div>
         </div>
 
         <div id="compareGrid" class="flex flex-col md:flex-row gap-6 w-full">
