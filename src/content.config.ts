@@ -9,6 +9,7 @@ const blogCollection = defineCollection({
         pubDate: z.date(),
         author: z.string().default('Dosa AI Tools'),
         tags: z.array(z.string()).optional(),
+        image: z.string().optional(),
         draft: z.boolean().default(false),
     }),
 });

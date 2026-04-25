@@ -63,6 +63,15 @@ const { Content, remarkPluginFrontmatter } = await render(entry);
           )}
         </header>
 
+        {/* Featured Image */}
+        <div class="mb-12 rounded-xl overflow-hidden border border-[#222] bg-[#111] aspect-[16/9]">
+          <img 
+            src={entry.data.image || '/images/blog-placeholder.png'} 
+            alt={entry.data.title}
+            class="w-full h-full object-cover"
+          />
+        </div>
+
         <div class="prose prose-invert prose-zinc max-w-none prose-headings:font-semibold prose-a:text-[#22d3ee] hover:prose-a:text-[#67e8f9] prose-a:no-underline hover:prose-a:underline prose-code:text-[#a78bfa] prose-pre:bg-[#0a0a0a] prose-pre:border prose-pre:border-[#222] prose-img:rounded-lg prose-img:border prose-img:border-[#222] prose-hr:border-[#222]">
           <Content />
         </div>

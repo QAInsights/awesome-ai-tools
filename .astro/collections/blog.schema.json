@@ -22,6 +22,9 @@
         "type": "string"
       }
     },
+    "image": {
+      "type": "string"
+    },
     "draft": {
       "default": false,
       "type": "boolean"

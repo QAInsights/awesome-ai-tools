@@ -35,34 +35,48 @@ const { page } = Astro.props;
 
       <div class="space-y-6">
         {page.data.map((post) => (
-          <article class="bg-white/[0.02] border border-[#222] rounded-lg p-6 hover:border-[#444] transition-all">
-            <a href={`/blog/${post.id}`} class="block group">
-              <div class="flex items-center space-x-2 text-xs text-[#737373] mb-3 font-mono">
-                <time datetime={post.data.pubDate.toISOString()}>
-                  {post.data.pubDate.toLocaleDateString('en-us', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                  })}
-                </time>
-                <span>•</span>
-                <span>{post.data.author}</span>
+          <article class="bg-white/[0.02] border border-[#222] rounded-lg overflow-hidden hover:border-[#444] transition-all group">
+            <a href={`/blog/${post.id}`} class="flex flex-col md:flex-row h-full">
+              {/* Image Section */}
+              <div class="w-full md:w-[280px] h-[200px] md:h-auto shrink-0 relative overflow-hidden bg-[#111]">
+                <img 
+                  src={post.data.image || '/images/blog-placeholder.png'} 
+                  alt={post.data.title}
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
               </div>
-              <h3 class="text-xl font-semibold text-white group-hover:text-[#22d3ee] transition-colors mb-2">
-                {post.data.title}
-              </h3>
-              <p class="text-[#a3a3a3] text-[15px] leading-relaxed mb-4">
-                {post.data.description}
-              </p>
-              {post.data.tags && post.data.tags.length > 0 && (
-                <div class="flex flex-wrap gap-2 mt-4">
-                  {post.data.tags.map((tag) => (
-                    <span class="inline-flex items-center px-2 py-0.5 rounded border border-[#333] text-xs font-mono bg-white/[0.03] text-[#a3a3a3]">
-                      {tag}
-                    </span>
-                  ))}
+
+              {/* Content Section */}
+              <div class="flex-1 p-6 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center space-x-2 text-xs text-[#737373] mb-3 font-mono">
+                    <time datetime={post.data.pubDate.toISOString()}>
+                      {post.data.pubDate.toLocaleDateString('en-us', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                    </time>
+                    <span>•</span>
+                    <span>{post.data.author}</span>
+                  </div>
+                  <h3 class="text-xl font-semibold text-white group-hover:text-[#22d3ee] transition-colors mb-2">
+                    {post.data.title}
+                  </h3>
+                  <p class="text-[#a3a3a3] text-[15px] leading-relaxed mb-4 line-clamp-2">
+                    {post.data.description}
+                  </p>
                 </div>
-              )}
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-2">
+                    {post.data.tags.map((tag) => (
+                      <span class="inline-flex items-center px-2 py-0.5 rounded border border-[#333] text-xs font-mono bg-white/[0.03] text-[#a3a3a3]">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
             </a>
           </article>
         ))}
