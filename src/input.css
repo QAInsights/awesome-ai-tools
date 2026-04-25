@@ -222,17 +222,17 @@
 
     /* GitHub OAuth sign-in button */
     .github-signin-btn {
-        display: inline-flex;
+        position: relative;
+        display: flex;
         align-items: center;
         justify-content: center;
-        gap: 12px;
         width: 100%;
-        max-width: 280px; /* Matches the width set for Google button in app.js */
+        max-width: 320px; /* Matches Google button width */
         height: 40px; /* Matches Google 'large' button height */
         background: #131314;
         color: #e3e3e3;
-        border: 1px solid #8e918f;
-        border-radius: 4px; /* Matches Google button's 'rectangular' shape */
+        border: none;
+        border-radius: 20px; /* Matches Google button's 'pill' shape */
         font-family: 'Inter', system-ui, sans-serif;
         font-size: 14px;
         font-weight: 500;
@@ -240,19 +240,19 @@
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         text-decoration: none;
         padding: 0 16px;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
     .github-signin-btn:hover {
         background: #1e1e1f;
-        border-color: #a1a3a1;
         box-shadow: 0 1px 3px rgba(0,0,0,0.4);
     }
     .github-signin-btn:active {
         background: #2b2b2c;
     }
     .github-signin-btn svg {
-        width: 20px;
-        height: 20px;
+        position: absolute;
+        left: 12px;
+        width: 18px;
+        height: 18px;
         flex-shrink: 0;
     }
 
