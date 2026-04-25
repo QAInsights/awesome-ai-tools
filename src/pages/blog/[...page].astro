@@ -38,7 +38,7 @@ const { page } = Astro.props;
           <article class="bg-white/[0.02] border border-[#222] rounded-lg overflow-hidden hover:border-[#444] transition-all group">
             <a href={`/blog/${post.id}`} class="flex flex-col md:flex-row h-full">
               {/* Image Section */}
-              <div class="w-full md:w-[280px] h-[200px] md:h-auto shrink-0 relative overflow-hidden bg-[#111]">
+              <div class="w-full md:w-[200px] h-[160px] md:h-auto shrink-0 relative overflow-hidden bg-[#111]">
                 <img 
                   src={post.data.image || '/images/blog-placeholder.png'} 
                   alt={post.data.title}
