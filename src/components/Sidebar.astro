@@ -49,46 +49,15 @@ const isTool = variant === 'tool';
 
         {isIndex ? (
             <!-- Description + CTAs (index only) -->
-            <div class="py-3 px-6 text-[#a3a3a3] border-b border-[#222] shrink-0">
-                <p class="text-[15px] leading-relaxed mb-3">A curated list of artificial intelligence-powered coding instruments, frameworks, and agents.</p>
-                <div class="stat-badge flex items-center justify-center gap-1.5 py-1.5 px-2.5 border border-[#222] rounded-md bg-white/5 font-mono text-xs text-[#a3a3a3] tracking-wide mb-3 w-full">
-                    <span class="stat-count font-bold text-[14px]">100+</span> tools across 12 categories
-                </div>
+            <div class="py-4 px-6 text-[#a3a3a3] border-b border-[#222] shrink-0">
+                <p class="text-[15px] leading-relaxed mb-5">A curated directory of AI-powered coding tools, autonomous agents, and developer utilities.</p>
                 <div class="flex flex-col gap-2.5">
                     <a href="https://github.com/QAInsights/awesome-ai-tools/issues/new?template=submit-tool.yml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center py-2 px-4 bg-white text-black text-sm font-semibold rounded-md transition-all duration-200 hover:bg-gray-200 hover:-translate-y-px w-full">Submit a Tool</a>
                     <a href="https://buymeacoffee.com/qainsights" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center py-2 px-4 bg-white/5 text-white text-sm font-medium border border-[#222] rounded-md transition-all duration-200 hover:bg-white/10 w-full hover:-translate-y-px">Support the Project</a>
                 </div>
             </div>
 
-            <!-- Search (index only) -->
-            <div class="px-4 py-3 border-b border-[#222] shrink-0 sticky top-[72px] bg-[#0a0a0a] z-10">
-                <div class="relative">
-                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-[#a3a3a3] w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                    <input type="text" id="searchInput" placeholder="Search the index... (/)" autocomplete="off" class="w-full bg-black border border-[#222] rounded-md py-2.5 pl-9 pr-8 text-white font-sans text-[15px] transition-colors duration-200 outline-none focus:border-[#a3a3a3] placeholder-[#737373]">
-                    <button class="absolute right-3 top-1/2 -translate-y-1/2 bg-transparent border-none text-[#737373] text-sm cursor-pointer p-0.5 hidden hover:text-white" id="searchClear" aria-label="Clear search" title="Clear search">&#x2715;</button>
-                </div>
-            </div>
 
-            <div class="px-4 pt-2 pb-1 font-mono text-[11px] text-[#737373] tracking-wide shrink-0" id="resultCount"></div>
-
-            <!-- Filters (index only) -->
-            <nav class="flex flex-col px-4 py-2 gap-1 border-b border-[#222] md:flex-1 md:min-h-0 md:overflow-y-auto" id="categoryFilters" style="scrollbar-width: thin;">
-                <button id="categoriesToggle" class="flex items-center justify-between w-full py-2.5 pl-3 pr-2 text-left rounded-md hover:bg-white/5 active:bg-white/10 transition-all duration-200 group" title="Toggle categories" aria-expanded="false">
-                    <div class="flex items-center gap-2">
-                        <div class="font-mono text-[12px] uppercase text-[#737373] tracking-widest group-hover:text-white transition-colors">Categories</div>
-                        <span id="categoriesCount" class="font-mono text-[10px] text-[#525252] bg-[#1a1a1a] px-1.5 py-0.5 rounded">...</span>
-                    </div>
-                    <svg id="categoriesToggleIcon" class="w-4 h-4 text-[#525252] group-hover:text-[#a3a3a3] transition-all duration-300 ease-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </button>
-                <div id="categoriesContent" class="flex flex-col gap-1 transition-all duration-300 ease-out max-h-0 opacity-0">
-                    <button class="filter-btn active" data-category="all">All Tools</button>
-                </div>
-            </nav>
         ) : (
             <!-- Tool page: back + nav links -->
             <div class="py-5 px-6 text-[#a3a3a3] border-b border-[#222] shrink-0">
@@ -108,17 +77,14 @@ const isTool = variant === 'tool';
 
                 <div class="font-mono text-[12px] uppercase text-[#737373] mb-1 pl-2 tracking-widest mt-4 hidden md:block">Resources</div>
                 <a href="/blog" class="filter-btn flex items-center gap-2">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                     Blog
                 </a>
 
                 <div class="font-mono text-[12px] uppercase text-[#737373] mb-1 pl-2 tracking-widest mt-4 hidden md:block">AI Utilities</div>
                 <a href="/tools/token-counter" class="filter-btn flex items-center gap-2">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h6M8 15h4"/></svg>
                     Token Counter
                 </a>
                 <a href="/tools/hallucination-scorer" class="filter-btn flex items-center gap-2">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                     Hallucination Scorer
                 </a>
 
@@ -130,22 +96,21 @@ const isTool = variant === 'tool';
 
         <!-- AI Utilities (index only, below filters) -->
         {isIndex && (
-            <div class="px-4 pt-2 pb-1 shrink-0">
-                <div class="font-mono text-[11px] uppercase text-[#737373] mb-2 pl-2 tracking-widest">Resources</div>
-                <a href="/blog" class="filter-btn flex items-center gap-2 w-full text-left">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                    Blog
-                </a>
-                
-                <div class="font-mono text-[11px] uppercase text-[#737373] mb-2 pl-2 tracking-widest mt-4">AI Utilities</div>
-                <a href="/tools/token-counter" class="filter-btn flex items-center gap-2 w-full text-left">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h6M8 15h4"/></svg>
-                    Token Counter
-                </a>
-                <a href="/tools/hallucination-scorer" class="filter-btn flex items-center gap-2 w-full text-left">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    Hallucination Scorer
-                </a>
+            <div class="px-4 py-4 shrink-0 border-b border-[#222]">
+                <div class="font-mono text-[11px] uppercase text-[#737373] mb-3 pl-2 tracking-widest">Resources</div>
+                <div class="flex flex-col gap-1.5">
+                    <a href="/blog" class="filter-btn flex items-center gap-2 w-full text-left">
+                        Blog
+                    </a>
+                    
+                    <div class="font-mono text-[11px] uppercase text-[#737373] mb-1.5 pl-2 tracking-widest mt-4">AI Utilities</div>
+                    <a href="/tools/token-counter" class="filter-btn flex items-center gap-2 w-full text-left">
+                        Token Counter
+                    </a>
+                    <a href="/tools/hallucination-scorer" class="filter-btn flex items-center gap-2 w-full text-left">
+                        Hallucination Scorer
+                    </a>
+                </div>
             </div>
         )}
 
@@ -158,37 +123,6 @@ const isTool = variant === 'tool';
             </div>
         </div>
 
-        <!-- Authentication Section -->
-        <div class="px-4 py-3 border-t border-[#222] shrink-0 bg-[#0a0a0a] sticky bottom-0 z-20 md:static md:z-auto">
-            <div class="flex flex-col items-center gap-2.5 w-full">
-                <div id="googleSignInBtn" class="flex justify-center w-full min-h-[40px]"></div>
-                <div id="githubSignInBtn" class="flex justify-center w-full"></div>
-            </div>
-
-            <!-- User Profile (shown when signed in) -->
-            <div id="userProfile" class="hidden relative">
-                <div id="userProfileBtn" class="flex items-center gap-3 p-2 bg-white/5 rounded-md border border-[#222] cursor-pointer hover:bg-white/10 transition-colors">
-                    <img id="userAvatar" src="" alt="User" class="w-8 h-8 rounded-full pointer-events-none">
-                    <div class="flex-1 min-w-0 pointer-events-none">
-                        <div id="userName" class="text-sm font-medium text-white truncate"></div>
-                        <div id="userEmail" class="text-xs text-[#a3a3a3] truncate"></div>
-                    </div>
-                </div>
-
-                <!-- Popup Menu -->
-                <div id="userMenuPopup" class="hidden absolute bottom-[calc(100%+8px)] left-0 w-full bg-[#111] border border-[#222] rounded-md shadow-xl z-50 py-1">
-                    <a href="/settings" class="flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Settings</a>
-                    <a href="/zap" class="flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Zap</a>
-                    <a href="/blog" class="flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Blog</a>
-                    <a href="/help" class="flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Help</a>
-                    <a href="/tools/token-counter" class="flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Token Counter</a>
-                    <a href="/tools/hallucination-scorer" class="flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Hallucination Scorer</a>
-                    <button id="getBadgeMenuBtn" class="w-full text-left flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Get Badge</button>
-                    <div class="h-px bg-[#222] my-1"></div>
-                    <button id="signOutBtn" class="w-full text-left flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Sign Out</button>
-                </div>
-            </div>
-        </div>
 
         <!-- Sidebar Footer -->
         <footer class="px-5 py-3 border-t border-[#222] shrink-0 mt-auto bg-[#0a0a0a]">

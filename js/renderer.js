@@ -104,7 +104,7 @@ function loadBatch() {
  */
 function createToolRow(tool, index) {
     const row = document.createElement('div');
-    row.className = 'flex flex-col md:flex-row gap-2 md:gap-0 py-6 border-b border-[#222] text-white transition-colors hover:border-[#a3a3a3] hover:bg-white/[0.01] items-start group row-anim';
+    row.className = 'flex flex-col md:flex-row gap-2 md:gap-0 py-6 border-b border-[#222] text-white transition-all duration-200 hover:border-[#444] hover:bg-white/[0.02] items-start group row-anim';
     row.style.animationDelay = `${(index % 15) * 0.02}s`;
 
     const catShort = getShortCategory(tool.category);
@@ -114,30 +114,37 @@ function createToolRow(tool, index) {
     const initialVoteCount = getVoteCount(toolId);
 
     const detailHref = tool.slug ? `/tools/${tool.slug}` : tool.url;
+    
+    // Truncate notes
+    const fullNotes = tool.notes || '';
+    const isLong = fullNotes.length > 105;
+    const displayNotes = isLong ? fullNotes.substring(0, 100) + '...' : fullNotes;
 
     row.innerHTML = `
         <div class="w-full flex justify-between items-start md:contents mb-1 md:mb-0">
-            <div class="w-auto md:w-[280px] md:pr-6 shrink-0 text-[20px] md:text-[18px] font-medium flex items-center gap-2 md:order-1">
-                <label class="compare-toggle-switch ${isSelected(tool.slug) ? 'active' : ''}" data-slug="${tool.slug}" title="Compare tool">
+            <div class="w-auto md:w-[280px] md:pr-6 shrink-0 text-[20px] md:text-[18px] font-medium flex items-center gap-3 md:order-1">
+                <label class="compare-toggle-switch ${isSelected(tool.slug) ? 'active' : ''}" data-slug="${tool.slug}" title="Add to comparison">
                     <input type="checkbox" ${isSelected(tool.slug) ? 'checked' : ''}>
                     <span class="compare-toggle-track"></span>
                     <span class="compare-toggle-thumb"></span>
                 </label>
-                <span class="hidden md:inline-block font-mono text-[#737373] text-[16px] opacity-0 -translate-x-2.5 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-white">&rarr;</span>
-                <a href="${detailHref}" class="flex-1 min-w-0 text-white no-underline transition-all duration-200 hover:bg-gradient-to-r hover:from-[#a78bfa] hover:via-[#22d3ee] hover:to-[#a78bfa] hover:bg-[length:200%_auto] hover:bg-clip-text hover:text-transparent hover:animate-[shift_3s_linear_infinite]" aria-label="View details for ${tool.name}">
-                    ${tool.name}
-                </a>
-                <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="shrink-0 text-[#737373] hover:text-white p-1 -m-1 rounded transition-colors duration-200" aria-label="Open ${tool.name} site in a new tab" title="Open site in new tab" onclick="event.stopPropagation()">
-                    <svg class="w-3.5 h-3.5 opacity-60 hover:opacity-100 transition-all duration-200 stroke-current" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                        <polyline points="15 3 21 3 21 9"></polyline>
-                        <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                </a>
+                <div class="flex items-center gap-2 flex-1 min-w-0">
+                    <span class="hidden md:inline-block font-mono text-[#737373] text-[16px] opacity-0 -translate-x-2.5 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-white">&rarr;</span>
+                    <a href="${detailHref}" class="flex-1 min-w-0 text-white no-underline transition-all duration-200 hover:bg-gradient-to-r hover:from-[#a78bfa] hover:via-[#22d3ee] hover:to-[#a78bfa] hover:bg-[length:200%_auto] hover:bg-clip-text hover:text-transparent hover:animate-[shift_3s_linear_infinite]" aria-label="View details for ${tool.name}">
+                        ${tool.name}
+                    </a>
+                    <a href="${tool.url}" target="_blank" rel="noopener noreferrer" class="shrink-0 text-[#737373] hover:text-white p-1 -m-1 rounded transition-colors duration-200" aria-label="Open ${tool.name} site in a new tab" title="Open site in new tab" onclick="event.stopPropagation()">
+                        <svg class="w-3.5 h-3.5 opacity-60 hover:opacity-100 transition-all duration-200 stroke-current" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                    </a>
+                </div>
             </div>
-            <div class="shrink-0 md:w-[84px] md:pr-6 flex justify-end lg:justify-start md:order-5">
+            <div class="shrink-0 md:w-[100px] md:pr-6 flex justify-end lg:justify-start md:order-5">
 ${ENABLE_VOTING ? (auth.isAuthenticated() ? `
-                <button class="zap-btn sm" data-tip="Zap this tool!" 
+                <button class="zap-btn sm inline" data-tip="Zap this tool!" 
                     data-tool-id="${toolId}"
                     data-tool-name="${tool.name}">
                     <div class="zap-ring"></div>
@@ -154,7 +161,7 @@ ${ENABLE_VOTING ? (auth.isAuthenticated() ? `
                     <span class="zap-count">${initialVoteCount.toLocaleString()}</span>
                 </button>
 ` : `
-                <button class="zap-btn sm" data-tip="Sign in to vote!" 
+                <button class="zap-btn sm inline" data-tip="Sign in to vote!" 
                     data-tool-id="${toolId}"
                     data-tool-name="${tool.name}">
                     <svg class="zap-icon" viewBox="0 0 24 24" fill="none" style="opacity:0.4">
@@ -163,7 +170,7 @@ ${ENABLE_VOTING ? (auth.isAuthenticated() ? `
                     <span class="zap-count" style="opacity:0.5">${initialVoteCount.toLocaleString()}</span>
                 </button>
 `) : `
-                <button class="zap-btn sm opacity-50 cursor-not-allowed" disabled data-tip="Voting is currently disabled.">
+                <button class="zap-btn sm inline opacity-50 cursor-not-allowed" disabled data-tip="Voting is disabled.">
                     <svg class="zap-icon" viewBox="0 0 24 24" fill="none">
                         <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
                     </svg>
@@ -173,8 +180,8 @@ ${ENABLE_VOTING ? (auth.isAuthenticated() ? `
             </div>
         </div>
         <div class="w-full md:w-[200px] md:pr-6 shrink-0 font-mono text-[14px] text-[#a3a3a3] uppercase tracking-wide mb-2 md:mb-0 md:order-2">${tool.company}</div>
-        <div class="w-full md:w-auto md:pr-6 grow text-[16px] text-[#a3a3a3] leading-relaxed transition-colors group-hover:text-[#e0e0e0] mb-3 md:mb-0 md:order-3">${tool.notes}</div>
-        <div class="w-full md:hidden lg:block lg:w-[220px] md:px-6 shrink-0 text-left lg:text-center mt-1 md:mt-0 md:order-4">
+        <div class="w-full md:w-auto md:pr-6 grow text-[16px] text-[#a3a3a3] leading-relaxed transition-colors group-hover:text-[#e0e0e0] mb-3 md:mb-0 md:order-3 tool-notes" title="${isLong ? fullNotes : ''}">${displayNotes}</div>
+        <div class="w-full md:hidden lg:block lg:w-[180px] md:px-6 shrink-0 text-left lg:text-center mt-1 md:mt-0 md:order-4">
             <span class="inline-block px-3 py-1 border border-[#222] rounded-full bg-white/5 font-mono text-[13px] tracking-wide" title="${catClean}">${catShort}</span>
         </div>`;
 
