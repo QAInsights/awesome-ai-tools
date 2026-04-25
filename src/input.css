@@ -32,6 +32,26 @@
         @apply bg-white/10 border-white/40 text-white shadow-[0_0_20px_rgba(255,255,255,0.05)];
     }
 
+    #signInModal {
+        transition: opacity 0.3s ease;
+    }
+    #signInModal:not(.hidden) {
+        @apply flex;
+        animation: fadeIn 0.3s ease forwards;
+    }
+    #signInModal .relative {
+        animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
     .category-card.active {
         @apply border-white bg-white/5;
     }

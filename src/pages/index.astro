@@ -124,8 +124,9 @@ const toolsJson = JSON.stringify(tools);
 
                         <!-- Auth Section (Top Right) -->
                         <div id="authHeader" class="flex items-center gap-4">
-                            <div id="googleSignInBtn" class="min-h-[40px] flex items-center"></div>
-                            <div id="githubSignInBtn" class="flex items-center"></div>
+                            <button id="signInTriggerBtn" class="hidden px-5 py-2.5 bg-white text-black rounded-full text-sm font-semibold hover:bg-gray-200 transition-all active:scale-[0.98]">
+                                Sign in
+                            </button>
                             
                             <!-- User Profile (shown when signed in) -->
                             <div id="userProfile" class="hidden relative">
@@ -185,6 +186,24 @@ const toolsJson = JSON.stringify(tools);
             <div class="flex items-center gap-3">
                 <button id="clearCompareBtn" class="text-[#a3a3a3] hover:text-white text-sm px-3 py-1.5 transition-colors">Clear</button>
                 <button id="compareBtn" class="cursor-pointer bg-gradient-to-r from-[#a78bfa] via-[#22d3ee] to-[#a78bfa] bg-[length:200%_auto] hover:bg-[position:right] text-black font-semibold text-sm px-4 py-1.5 rounded transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">Compare</button>
+            </div>
+        </div>
+
+        <!-- Sign In Modal -->
+        <div id="signInModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <div id="signInModalOverlay" class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"></div>
+            <div class="relative bg-[#0d0d0d] border border-[#222] rounded-[32px] p-8 w-full max-w-sm shadow-[0_40px_80px_-15px_rgba(0,0,0,0.9)] transform transition-all duration-300">
+                <button id="closeSignInModal" class="absolute top-6 right-6 text-[#525252] hover:text-white transition-colors">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <div class="text-center mb-8">
+                    <h3 class="text-xl font-bold text-white mb-2">Welcome Back</h3>
+                    <p class="text-[#737373] text-sm">Sign in to track your favorite tools and share your stack.</p>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <div id="googleSignInBtn" class="w-full min-h-[44px]"></div>
+                    <div id="githubSignInBtn" class="w-full min-h-[44px]"></div>
+                </div>
             </div>
         </div>
     </div>
