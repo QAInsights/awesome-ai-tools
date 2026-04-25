@@ -32,11 +32,6 @@ export class CollapsedSidebar {
                 ? `<a href="${icon.href}" target="_blank" rel="noopener noreferrer" class="cs-icon" title="${icon.title}">${icon.svg}</a>`
                 : `<button id="${icon.id}" class="cs-icon" title="${icon.title}">${icon.svg}</button>`
             ).join('')}
-            <div class="cs-spacer"></div>
-            <button id="signInBtn" class="cs-icon" title="Sign In">${this.svgs.signIn}</button>
-            <button id="userBtn" class="cs-icon cs-avatar hidden" title="User Profile">
-                <img id="userAvatarImg" src="" alt="User">
-            </button>
         `;
     }
 
@@ -50,23 +45,6 @@ export class CollapsedSidebar {
     setAuthState(isAuth, avatarUrl = null) {
         this.isAuthenticated = isAuth;
         this.userAvatar = avatarUrl;
-
-        const signInBtn = this.container.querySelector('#signInBtn');
-        const userBtn = this.container.querySelector('#userBtn');
-        const userAvatarImg = this.container.querySelector('#userAvatarImg');
-        const searchBtn = this.container.querySelector('#searchBtn');
-
-        if (isAuth) {
-            signInBtn?.classList.add('hidden');
-            userBtn?.classList.remove('hidden');
-            if (userAvatarImg && avatarUrl) userAvatarImg.src = avatarUrl;
-            // Search is only relevant on the main registry, hide it for logged-in users
-            searchBtn?.classList.add('hidden');
-        } else {
-            signInBtn?.classList.remove('hidden');
-            userBtn?.classList.add('hidden');
-            searchBtn?.classList.remove('hidden');
-        }
     }
 
     get svgs() {
