@@ -177,18 +177,6 @@ const toolsJson = JSON.stringify(tools);
             </div>
         </main>
 
-        <!-- Compare Floating Bar -->
-        <div id="compareFloatingBar" class="fixed bottom-0 left-0 right-0 bg-[#111] border-t border-[#333] p-4 flex items-center justify-between z-50 transform translate-y-full transition-transform duration-300">
-            <div class="flex items-center gap-4">
-                <span id="compareCountText" class="text-white text-sm font-medium">0 tools selected</span>
-                <div id="compareThumbnails" class="flex items-center gap-2"></div>
-            </div>
-            <div class="flex items-center gap-3">
-                <button id="clearCompareBtn" class="text-[#a3a3a3] hover:text-white text-sm px-3 py-1.5 transition-colors">Clear</button>
-                <button id="compareBtn" class="cursor-pointer bg-gradient-to-r from-[#a78bfa] via-[#22d3ee] to-[#a78bfa] bg-[length:200%_auto] hover:bg-[position:right] text-black font-semibold text-sm px-4 py-1.5 rounded transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">Compare</button>
-            </div>
-        </div>
-
         <!-- Sign In Modal -->
         <div id="signInModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
             <div id="signInModalOverlay" class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"></div>
@@ -205,6 +193,18 @@ const toolsJson = JSON.stringify(tools);
                     <div id="githubSignInBtn" class="w-full min-h-[44px]"></div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Compare Floating Bar -->
+    <div id="compareFloatingBar" class="fixed bottom-0 left-0 right-0 bg-[#111] border-t border-[#333] p-4 flex items-center justify-between z-50" style="transition: translate 0.3s ease; translate: 0 100%;">
+        <div class="flex items-center gap-4">
+            <span id="compareCountText" class="text-white text-sm font-medium">0 tools selected</span>
+            <div id="compareThumbnails" class="flex items-center gap-2"></div>
+        </div>
+        <div class="flex items-center gap-3">
+            <button id="clearCompareBtn" class="text-[#a3a3a3] hover:text-white text-sm px-3 py-1.5 transition-colors">Clear</button>
+            <button id="compareBtn" class="cursor-pointer bg-gradient-to-r from-[#a78bfa] via-[#22d3ee] to-[#a78bfa] bg-[length:200%_auto] hover:bg-[position:right] text-black font-semibold text-sm px-4 py-1.5 rounded transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed">Compare</button>
         </div>
     </div>
 

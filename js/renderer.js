@@ -24,6 +24,97 @@ let onClearCallback = null;
  */
 export function initRenderer(gridElement) {
     grid = gridElement;
+    setupCompareHandlers();
+}
+
+/**
+ * Update the compare floating bar based on current selection state
+ */
+function updateCompareBar() {
+    const selected = getSelected();
+    const bar = document.getElementById('compareFloatingBar');
+    const countText = document.getElementById('compareCountText');
+    const thumbsContainer = document.getElementById('compareThumbnails');
+    const compareBtn = document.getElementById('compareBtn');
+
+    if (!bar) return;
+
+    if (selected.length === 0) {
+        bar.style.translate = '0 100%';
+    } else {
+        bar.style.translate = '0 0';
+    }
+
+    if (countText) {
+        countText.textContent = `${selected.length} tool${selected.length === 1 ? '' : 's'} selected`;
+    }
+
+    if (thumbsContainer) {
+        thumbsContainer.innerHTML = selected.map(slug =>
+            `<span class="font-mono text-[12px] text-[#a3a3a3] bg-white/5 border border-[#333] rounded px-2 py-0.5">${slug}</span>`
+        ).join('');
+    }
+
+    if (compareBtn) {
+        compareBtn.disabled = selected.length < 2;
+    }
+}
+
+/**
+ * Set up event handlers for compare toggle switches and floating bar buttons
+ */
+function setupCompareHandlers() {
+    console.log('[compare] setupCompareHandlers called, grid:', grid);
+    console.log('[compare] clearCompareBtn:', document.getElementById('clearCompareBtn'));
+    console.log('[compare] compareBtn:', document.getElementById('compareBtn'));
+    console.log('[compare] compareFloatingBar:', document.getElementById('compareFloatingBar'));
+
+    grid.addEventListener('click', (e) => {
+        // Ignore the synthetic click the browser re-dispatches onto the checkbox
+        if (e.target.tagName === 'INPUT') return;
+
+        const toggle = e.target.closest('.compare-toggle-switch');
+        if (!toggle) return;
+
+        e.preventDefault();
+        const slug = toggle.dataset.slug;
+        console.log('[compare] toggle clicked, slug:', slug);
+        if (!slug) return;
+
+        const success = toggleTool(slug);
+        console.log('[compare] toggleTool success:', success, 'isSelected:', isSelected(slug));
+        if (success) {
+            const selected = isSelected(slug);
+            toggle.classList.toggle('active', selected);
+            const checkbox = toggle.querySelector('input[type="checkbox"]');
+            if (checkbox) checkbox.checked = selected;
+        }
+
+        updateCompareBar();
+    });
+
+    const clearBtn = document.getElementById('clearCompareBtn');
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            clearSelection();
+            grid.querySelectorAll('.compare-toggle-switch.active').forEach(toggle => {
+                toggle.classList.remove('active');
+                const checkbox = toggle.querySelector('input[type="checkbox"]');
+                if (checkbox) checkbox.checked = false;
+            });
+            updateCompareBar();
+        });
+    }
+
+    const compareBtn = document.getElementById('compareBtn');
+    if (compareBtn) {
+        compareBtn.addEventListener('click', () => {
+            const selected = getSelected();
+            if (selected.length >= 2) {
+                window.location.href = `/compare?tools=${selected.join(',')}`;
+            }
+        });
+    }
 }
 
 /**
