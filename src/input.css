@@ -239,7 +239,7 @@
         cursor: pointer;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         text-decoration: none;
-        padding: 0 16px;
+        padding: 0 16px 0 44px; /* Shifted center to match Google button alignment */
     }
     .github-signin-btn:hover {
         background: #1e1e1f;
