@@ -184,6 +184,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             grid.style.padding = '24px';
             grid.style.borderRadius = '12px';
 
+            // html2canvas doesn't support color-mix() from Tailwind v4 (e.g. bg-white/[0.03])
+            // So we temporarily set a solid hex background for zap buttons
+            const zapBtns = grid.querySelectorAll('.zap-btn');
+            const originalZapStyles = [];
+            zapBtns.forEach(btn => {
+                originalZapStyles.push(btn.style.backgroundColor);
+                btn.style.backgroundColor = '#1a1a1a';
+            });
+
             // Show loading state
             const originalText = exportBtn.innerHTML;
             exportBtn.innerHTML = '<span class="animate-pulse">Exporting...</span>';
@@ -211,6 +220,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 grid.style.cssText = originalStyle;
                 exportBtn.innerHTML = originalText;
                 exportBtn.disabled = false;
+                zapBtns.forEach((btn, index) => {
+                    btn.style.backgroundColor = originalZapStyles[index];
+                });
             }
         });
     }
