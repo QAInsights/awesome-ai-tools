@@ -1,7 +1,7 @@
 [
   {
-    "slug": "anysphere",
-    "name": "Anysphere",
+    "slug": "cursor",
+    "name": "Cursor",
     "company": "Anysphere",
     "pricing": "freemium",
     "pricingDetail": "Offers a Hobby (Free) tier, Pro ($20/mo) for individuals, Pro+ ($60/mo) for higher usage, and Ultra ($200/mo) for power users. Teams are $40/user/mo, with custom Enterprise pricing available.",
@@ -25,8 +25,8 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "cognition",
-    "name": "Cognition",
+    "slug": "windsurf",
+    "name": "Windsurf",
     "company": "Cognition",
     "pricing": "freemium",
     "pricingDetail": "Includes a Free tier, Pro ($20/mo), Max ($200/mo), and usage-based Teams (min $80/mo) and Enterprise plans.",
@@ -50,8 +50,8 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "bytedance",
-    "name": "ByteDance",
+    "slug": "trae",
+    "name": "Trae",
     "company": "ByteDance",
     "pricing": "freemium",
     "pricingDetail": "The flagship Trae IDE is currently free during its open beta, providing access to premium models like Claude 3.7 and GPT-4o. A separate 'Coding Plan' for its underlying agents via Volcano Engine is priced starting at approximately $1.30/month (promotional).",
@@ -75,8 +75,8 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "zed-industries",
-    "name": "Zed Industries",
+    "slug": "zed",
+    "name": "Zed",
     "company": "Zed Industries",
     "pricing": "freemium",
     "pricingDetail": "Free for personal use with Bring Your Own Key (BYOK) AI; Pro plan is $10/month including $5 token credit and unlimited edit predictions; Open-source under AGPL/GPL/Apache licenses.",
@@ -125,8 +125,8 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "google",
-    "name": "Google",
+    "slug": "antigravity",
+    "name": "Antigravity",
     "company": "Google",
     "pricing": "freemium",
     "pricingDetail": "Free for individuals (up to 180,000 completions/month); AI Pro at $19.99/mo; Developer Premium at $299/year; Enterprise preview at $75/user/month.",
@@ -256,8 +256,8 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "cognition",
-    "name": "Cognition",
+    "slug": "devin",
+    "name": "Devin",
     "company": "Cognition",
     "pricing": "freemium",
     "pricingDetail": "Offers a Free tier; Pro starts at $20/month, Max at $200/month, and Teams at $80/month minimum (usage-based). Enterprise pricing is custom.",
@@ -280,8 +280,8 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "z",
-    "name": "Z",
+    "slug": "z-code",
+    "name": "Z Code",
     "company": "Z",
     "pricing": "paid",
     "pricingDetail": "Subscription plans start at approximately $18/month for the Pro tier, with 'Lite' options around $6/month; flagship model weights (GLM-5.1) are available under the MIT open-source license.",
@@ -305,9 +305,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "github",
-    "name": "GitHub",
-    "company": "GitHub",
+    "slug": "toad",
+    "name": "toad",
+    "company": "Batrachian AI",
     "pricing": "freemium",
     "pricingDetail": "Core features are free for individuals and open source. Paid plans include Team ($4/user/mo) and Enterprise ($21/user/mo). GitHub Copilot is a separate add-on available in five tiers: Free ($0), Pro ($10/mo), Pro+ ($39/mo), Business ($19/user/mo), and Enterprise ($39/user/mo).",
     "description": "GitHub is the world's leading developer platform for version control and collaboration, now evolved into an AI-native ecosystem. It integrates the industry-standard Git workflow with advanced AI agents that can autonomously write code, manage pull requests, and build entire applications from natural language prompts.",
@@ -330,9 +330,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "jetbrains",
-    "name": "JetBrains",
-    "company": "JetBrains",
+    "slug": "github-copilot",
+    "name": "GitHub Copilot",
+    "company": "GitHub",
     "pricing": "freemium",
     "pricingDetail": "Free tier offers unlimited local completions and 3 monthly cloud credits. AI Pro ($10/mo) is bundled with the All Products Pack, while AI Ultimate ($30/mo) provides 35 credits for heavy agent usage.",
     "description": "JetBrains AI Assistant is a sophisticated AI service orchestrator embedded directly into the JetBrains IDE ecosystem. It leverages the IDE's deep semantic code analysis to provide context-aware suggestions, autonomous agent capabilities, and support for multiple frontier LLMs.",
@@ -357,9 +357,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "google",
-    "name": "Google",
-    "company": "Google",
+    "slug": "junie",
+    "name": "Junie",
+    "company": "JetBrains",
     "pricing": "freemium",
     "pricingDetail": "Free for individual developers; Standard edition is $22.80/user/month and Enterprise is $54/user/month. API access via Google AI Studio provides a free tier and pay-as-you-go options.",
     "description": "Google's AI developer ecosystem, headlined by Gemini Code Assist, provides a powerful suite of tools for code generation, completion, and full-lifecycle application development. It offers deep integration with IDEs and Google Cloud, enabling developers to build, test, and deploy software using advanced multimodal models.",
@@ -382,9 +382,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "aws",
-    "name": "AWS",
-    "company": "AWS",
+    "slug": "gemini-code-assist",
+    "name": "Gemini Code Assist",
+    "company": "Google",
     "pricing": "freemium",
     "pricingDetail": "Offers a Free tier with 50 agentic requests/month and 1,000 lines of code transformation. The Pro tier costs $19/user/month, providing 1,000 agentic requests, 4,000 lines of code transformation, and enterprise security controls.",
     "description": "AWS offers a comprehensive suite of AI developer tools led by Amazon Q Developer, an assistant that supports the entire software development lifecycle. It provides context-aware code generation, autonomous agents for multi-step tasks, and deep integration for managing AWS cloud infrastructure directly from the IDE or CLI.",
@@ -407,9 +407,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "tabnine",
-    "name": "Tabnine",
-    "company": "Tabnine",
+    "slug": "amazon-q-developer",
+    "name": "Amazon Q Developer",
+    "company": "AWS",
     "pricing": "freemium",
     "pricingDetail": "Offers a limited Free Basic plan for individual developers. Paid tiers include the Pro/Dev plan at approximately $12/user/month and an Enterprise plan starting at $39/user/month, which adds advanced agentic features, private models, and self-hosting options.",
     "description": "A mature, privacy-focused AI coding assistant that provides context-aware code completions and intelligent chat agents. It is specifically designed for enterprise security, supporting on-premises and air-gapped deployments to ensure code remains private and secure.",
@@ -433,9 +433,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "cline",
-    "name": "Cline",
-    "company": "Cline",
+    "slug": "tabnine",
+    "name": "Tabnine",
+    "company": "Tabnine",
     "pricing": "open-source",
     "pricingDetail": "Free open-source extension; users pay for their own AI inference via BYOK (Bring Your Own Key) or Cline's credits. Enterprise and Teams tiers available for centralized billing and security.",
     "description": "An autonomous AI coding agent for VS Code and JetBrains that can plan complex tasks, edit files, execute terminal commands, and use a browser for testing. It operates as a high-autonomy partner with explicit approval gates for every file change and command execution.",
@@ -458,9 +458,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "kilo-code",
-    "name": "Kilo Code",
-    "company": "Kilo Code",
+    "slug": "cline",
+    "name": "Cline",
+    "company": "Cline",
     "pricing": "open-source",
     "pricingDetail": "Free and open-source (Apache 2.0). Users can 'Bring Your Own Key' (BYOK) for zero-markup model access; paid 'Kilo Pass' ($19/mo) and 'Teams' ($15/mo) plans offer managed inference and collaboration features.",
     "description": "An open-source, model-agnostic AI coding agent designed for autonomous task execution and deep codebase understanding. It features specialized agent modes for planning and debugging, supporting over 500 AI models including the latest GPT and Claude releases.",
@@ -486,9 +486,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "roo-code",
-    "name": "Roo Code",
-    "company": "Roo Code",
+    "slug": "kilo-code",
+    "name": "Kilo Code",
+    "company": "Kilo Code",
     "pricing": "open-source",
     "pricingDetail": "The extension is free and open-source; users pay only for their own AI model usage via API providers like Anthropic, OpenAI, or OpenRouter.",
     "description": "Roo Code is a powerful open-source AI coding assistant for VS Code that operates as an autonomous agent capable of editing files, executing terminal commands, and using browser tools. It is highly customizable, allowing developers to bring their own API keys and define specialized AI 'modes' for different workflows.",
@@ -512,9 +512,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "continue",
-    "name": "Continue",
-    "company": "Continue",
+    "slug": "roo-code",
+    "name": "Roo Code",
+    "company": "Roo Code",
     "pricing": "open-source",
     "pricingDetail": "Free and open-source for personal use with your own API keys or local models; paid plans include Starter ($3/M tokens pay-as-you-go) and Team ($20/seat/month).",
     "description": "Continue is the leading open-source AI coding assistant that integrates any LLM into VS Code and JetBrains. It allows developers to build custom autocomplete and chat experiences using local or cloud-based models while maintaining full control over their data and tools.",
@@ -538,9 +538,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "augment",
-    "name": "Augment",
-    "company": "Augment",
+    "slug": "continue",
+    "name": "Continue",
+    "company": "Continue",
     "pricing": "freemium",
     "pricingDetail": "Credit-based model: Indie ($20/mo for 40k credits), Standard ($60/mo for 130k credits), and Max ($200/mo for 450k credits). Offers a free plan for open-source projects and a trial for new users.",
     "description": "Augment is an AI coding platform powered by a specialized context engine designed to index and understand massive, million-line repositories. It provides autonomous agents that can execute complex, multi-file refactors and architectural changes with deep awareness of project-specific patterns.",
@@ -562,9 +562,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "sourcegraph",
-    "name": "Sourcegraph",
-    "company": "Sourcegraph",
+    "slug": "augment-code",
+    "name": "Augment Code",
+    "company": "Augment",
     "pricing": "freemium",
     "pricingDetail": "Free for individuals and teams up to 10 users. Cloud Pro is available for approximately $19/user/month, while Enterprise plans for large organizations are custom-priced, typically ranging from $49 to $59 per user per month with annual commitments.",
     "description": "Sourcegraph is a comprehensive code intelligence platform that combines universal code search with Cody, an AI-powered coding assistant. It enables developers to navigate, understand, and automate changes across massive, multi-repository codebases with deep contextual awareness.",
@@ -589,9 +589,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "supermaven",
-    "name": "Supermaven",
-    "company": "Supermaven",
+    "slug": "cody",
+    "name": "Cody",
+    "company": "Sourcegraph",
     "pricing": "freemium",
     "pricingDetail": "Free tier available with high-speed completions; Pro tier at $10/month (or $99/year) adds a 1 million token context window and style adaptation; Team tier at $10/user/month for centralized billing.",
     "description": "Supermaven is an ultra-fast AI coding assistant designed for low-latency completions and massive codebase understanding. It features a proprietary 1-million-token context window that allows it to maintain deep awareness of large repositories for highly accurate, project-specific suggestions.",
@@ -614,9 +614,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "blackbox",
-    "name": "Blackbox",
-    "company": "Blackbox",
+    "slug": "supermaven",
+    "name": "Supermaven",
+    "company": "Supermaven",
     "pricing": "freemium",
     "pricingDetail": "Free tier available for basic chat and completions; Pro ($10/mo), Pro Plus ($20/mo), and Pro Max ($40/mo) offer advanced models like GPT-5.2 and Claude 4.6, with a $2 first-month promo often available for Pro.",
     "description": "Blackbox is a comprehensive AI coding assistant that integrates across 35+ IDEs to provide real-time code completions, repository-wide context, and automated debugging. Its unique multi-agent 'Chairman' architecture allows it to run tasks through multiple frontier LLMs simultaneously to select the best possible code solution.",
@@ -638,9 +638,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "snyk",
-    "name": "Snyk",
-    "company": "Snyk",
+    "slug": "blackbox",
+    "name": "Blackbox",
+    "company": "Blackbox",
     "pricing": "freemium",
     "pricingDetail": "Free for individuals and small teams; Team plan starts at $25/developer/month; Enterprise and Ignite plans offer custom quotes for advanced security needs.",
     "description": "A developer-first security platform that integrates directly into IDEs, CI/CD pipelines, and cloud workflows to find and fix vulnerabilities. It provides automated remediation for open-source dependencies, proprietary code, containers, and infrastructure as code.",
@@ -664,9 +664,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "qodo",
-    "name": "Qodo",
-    "company": "Qodo",
+    "slug": "snyk-code",
+    "name": "Snyk Code",
+    "company": "Snyk",
     "pricing": "freemium",
     "pricingDetail": "Free for individuals (limited to 75 PRs and 250 credits/mo). Teams plan is $38/user/month ($30 billed annually) with unlimited PRs and 2,500 credits. Enterprise tier offers custom pricing with on-prem and air-gapped deployment options.",
     "description": "A comprehensive AI code integrity platform that focuses on the entire software development lifecycle, moving beyond simple autocomplete to provide automated testing, documentation, and deep code reviews. It utilizes a context engine to understand complex multi-repo architectures and ensure code reliability through agentic workflows.",
@@ -690,9 +690,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "bytedance",
-    "name": "ByteDance",
-    "company": "ByteDance",
+    "slug": "qodo",
+    "name": "Qodo",
+    "company": "Qodo",
     "pricing": "freemium",
     "pricingDetail": "The flagship Trae IDE is currently free for developers in early access, while advanced 'Coding Plans' for enterprise and API usage via Volcano Engine are priced starting at approximately $1.30/month.",
     "description": "ByteDance provides a high-performance AI-native development suite led by Trae, an adaptive IDE built on the VS Code foundation. The platform leverages autonomous agents and frontier models like Claude 3.7 and DeepSeek R1 to handle complex, multi-file engineering tasks.",
@@ -715,9 +715,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "replit",
-    "name": "Replit",
-    "company": "Replit",
+    "slug": "marscode",
+    "name": "MarsCode",
+    "company": "ByteDance",
     "pricing": "freemium",
     "pricingDetail": "Starter (Free), Core ($25/mo or $20/mo annually), and Pro ($100/mo flat for up to 15 users). Usage beyond included credits is billed based on AI effort and compute time.",
     "description": "Replit is a cloud-native development platform that provides a collaborative IDE, hosting, and database integration directly in the browser. It features the powerful Replit Agent, which can autonomously generate, test, and deploy full-stack applications from natural language prompts.",
@@ -740,9 +740,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "tencent",
-    "name": "Tencent Cloud CodeBuddy",
-    "company": "Tencent",
+    "slug": "replit-ai",
+    "name": "Replit AI",
+    "company": "Replit",
     "pricing": "freemium",
     "pricingDetail": "Includes a Free plan with 250 credits every 2 weeks. The Pro plan is available for $9.95/month (discounted from $19.90) and provides 1,000 monthly credits with access to premium models such as GPT-4o, Claude 3.5 Sonnet, and Hunyuan Hy3.",
     "description": "Tencent Cloud CodeBuddy is an AI-powered development suite that enables 'conversation-as-programming,' allowing users to build, test, and deploy applications using natural language. It features autonomous agents that handle the full development lifecycle from requirement analysis and Figma-to-code conversion to cloud deployment.",
@@ -765,9 +765,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "snowflake",
-    "name": "Snowflake",
-    "company": "Snowflake",
+    "slug": "codebuddy",
+    "name": "CodeBuddy",
+    "company": "Tencent",
     "pricing": "paid",
     "pricingDetail": "Consumption-based pricing using Snowflake credits. Specific AI features like Cortex functions are billed per token, while Snowflake Copilot and Cortex Code leverage standard warehouse compute or dedicated token consumption models.",
     "description": "Snowflake's AI Data Cloud provides a suite of deeply integrated development tools including Snowflake Copilot and Cortex Code, designed to automate data engineering and analytics. It offers context-aware SQL generation, serverless LLM functions, and native support for open-source models like Snowflake Arctic within a governed environment.",
@@ -790,9 +790,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "shareai",
-    "name": "ShareAI",
-    "company": "ShareAI",
+    "slug": "cortex-code",
+    "name": "Cortex Code",
+    "company": "Snowflake",
     "pricing": "freemium",
     "pricingDetail": "Offers a free tier for basic testing and usage-based 'pay-per-token' plans for scaling. In its decentralized network, 70% of token fees are distributed to the GPU providers hosting the models.",
     "description": "A decentralized AI gateway that provides developers with access to over 150 open-source LLMs through a single API. It features a P2P compute-sharing network that allows users to either consume AI services or monetize their own idle hardware.",
@@ -817,9 +817,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "stima",
-    "name": "Stima",
-    "company": "Stima",
+    "slug": "kode",
+    "name": "Kode",
+    "company": "ShareAI",
     "pricing": "freemium",
     "pricingDetail": "Offers a pay-as-you-go model with a $3 starting credit and a specialized 'Coding Plan' starting at $12/month. Users can save up to 50% compared to direct provider API costs through unified billing and caching.",
     "description": "Stima (rebranded as Apertis AI) is a unified AI API gateway that provides developers with access to over 500 large language models through a single OpenAI-compatible endpoint. It simplifies the AI stack by managing model failover, load balancing, and prompt caching in a single high-performance infrastructure.",
@@ -842,9 +842,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "corust",
-    "name": "Corust",
-    "company": "Corust",
+    "slug": "apertis",
+    "name": "Apertis",
+    "company": "Stima",
     "pricing": "freemium",
     "pricingDetail": "Offers a zero-cost free tier for its fine-tuned Rust models with no credit card required to start.",
     "description": "Corust is a specialized AI coding platform purpose-built for the Rust ecosystem, providing idiomatic code generation and automated PR reviews. It integrates with the Zed editor and the terminal to handle complex Rust concepts like ownership, lifetimes, and Cargo dependencies with high reliability.",
@@ -867,9 +867,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "nowork-studio",
-    "name": "nowork-studio",
-    "company": "nowork-studio",
+    "slug": "corust",
+    "name": "Corust",
+    "company": "Corust",
     "pricing": "open-source",
     "pricingDetail": "Free and open-source (MIT License). Requires an Anthropic API key or Claude Pro subscription to run Claude Code.",
     "description": "nowork-studio provides a suite of open-source AI tools and skills, headlined by TopRank, that integrate Claude Code with marketing APIs. It allows developers to automate technical SEO audits, manage Google Ads campaigns, and deploy code-based fixes directly from their terminal.",
@@ -893,9 +893,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "wozcode",
-    "name": "WozCode",
-    "company": "WozCode",
+    "slug": "toprank",
+    "name": "Toprank",
+    "company": "nowork-studio",
     "pricing": "freemium",
     "pricingDetail": "Free plan includes up to $100/month in Claude Code savings; Pro plan is $20/week for unlimited savings; Enterprise options for teams.",
     "description": "WozCode is a performance-focused plugin for Claude Code that optimizes token consumption and execution speed. It replaces standard file tools with efficient custom alternatives to reduce API costs by up to 55% while maintaining a high win rate on complex coding tasks.",
@@ -918,9 +918,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "yeachan-heo",
-    "name": "Yeachan-Heo",
-    "company": "Yeachan-Heo",
+    "slug": "wozcode",
+    "name": "WozCode",
+    "company": "WozCode",
     "pricing": "open-source",
     "pricingDetail": "Free and open-source; requires an active Claude Pro/Max subscription or personal API keys for the underlying models (Anthropic, OpenAI, etc.).",
     "description": "A high-performance suite of CLI-based multi-agent orchestration tools, including Oh My ClaudeCode (OMC) and Oh My Codex (OMX). It transforms standard AI coding assistants into autonomous developer teams with intelligent routing, specialized agent roles, and long-running execution loops.",
@@ -943,9 +943,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "ibm",
-    "name": "IBM watsonx Code Assistant",
-    "company": "IBM",
+    "slug": "oh-my-codex",
+    "name": "Oh My codeX",
+    "company": "Yeachan-Heo",
     "pricing": "freemium",
     "pricingDetail": "Offers a 30-day free trial with 150,000 tokens. Paid plans include Essentials at $2.12 per Resource Unit (~10,000 tokens) and Standard at $3,180 per month plus usage fees for enterprise modernization features.",
     "description": "An enterprise-grade AI coding suite designed to accelerate software development and application modernization through generative AI. It specializes in IT automation with Ansible, legacy code transformation like COBOL to Java, and general-purpose development using IBM's Granite foundation models.",
@@ -969,9 +969,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "firebender",
-    "name": "Firebender",
-    "company": "Firebender",
+    "slug": "bob",
+    "name": "Bob",
+    "company": "IBM",
     "pricing": "freemium",
     "pricingDetail": "Offers a one-week free trial. Individual plans include Developer ($30/mo), Developer+ ($75/mo), and Pro ($150/mo). Business plans are $60/user/mo, with custom Enterprise pricing. A 'Flex' BYOK tier is also available with a $0.05/M token fee.",
     "description": "A high-performance AI coding agent designed specifically for Android Studio and IntelliJ. It features deep integration with the Android emulator, profiler, and Compose previews to provide context-aware code generation and debugging for mobile engineers.",
@@ -996,9 +996,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "anthropic",
-    "name": "Anthropic",
-    "company": "Anthropic",
+    "slug": "firebender",
+    "name": "Firebender",
+    "company": "Firebender",
     "pricing": "freemium",
     "pricingDetail": "Free tier available; Pro at $20/mo; Max tiers at $100-$200/mo. API billed per million tokens: Opus 4.6 ($5/$25), Sonnet 4.6 ($3/$15), Haiku 4.5 ($1/$5).",
     "description": "Anthropic develops the Claude family of large language models and specialized developer tools like Claude Code, focusing on safety, high-reasoning, and agentic capabilities. It is a premier choice for complex coding tasks, long-context analysis, and autonomous computer-use automation.",
@@ -1024,9 +1024,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "openai",
-    "name": "OpenAI",
-    "company": "OpenAI",
+    "slug": "claude-code",
+    "name": "Claude Code",
+    "company": "Anthropic",
     "pricing": "freemium",
     "pricingDetail": "API follows a pay-as-you-go model with GPT-5.5 at $5/1M input and $30/1M output tokens. Consumer plans include a Free tier, ChatGPT Plus ($20/mo), and Codex Pro (starting at $100/mo).",
     "description": "OpenAI provides industry-leading frontier AI models and developer platforms for building intelligent, agentic applications. Its ecosystem includes high-performance APIs for text, vision, and code, optimized for complex reasoning and autonomous task execution.",
@@ -1049,9 +1049,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "aider",
-    "name": "Aider",
-    "company": "Aider",
+    "slug": "codex-cli",
+    "name": "Codex CLI",
+    "company": "OpenAI",
     "pricing": "open-source",
     "pricingDetail": "Free and open-source under the Apache 2.0 license. Users only pay for their own LLM API costs or can run local models for free using Ollama.",
     "description": "Aider is an open-source AI pair programmer that runs in your terminal and edits code directly in your local Git repository. It helps developers build features, fix bugs, and refactor code by automatically mapping the codebase and committing changes with descriptive messages.",
@@ -1074,9 +1074,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "google",
-    "name": "Google",
-    "company": "Google",
+    "slug": "aider",
+    "name": "Aider",
+    "company": "Aider",
     "pricing": "freemium",
     "pricingDetail": "Free tier for individual developers; Standard plan at $19/user/month and Enterprise at $45/user/month (annual commitment).",
     "description": "Google's developer ecosystem provides high-performance AI coding through Gemini Code Assist and Project IDX. It offers a massive context window for full-codebase understanding, deep integration with Google Cloud Platform, and specialized tools for full-stack app prototyping.",
@@ -1099,9 +1099,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "block",
-    "name": "Block",
-    "company": "Block",
+    "slug": "gemini-cli",
+    "name": "Gemini CLI",
+    "company": "Google",
     "pricing": "open-source",
     "pricingDetail": "Free and open-source (Apache License 2.0). There are no subscription fees, though users are responsible for their own LLM API costs if using remote providers like Anthropic or OpenAI.",
     "description": "An open-source autonomous AI coding agent and framework (often referred to as Goose) that handles end-to-end development tasks including writing code, running tests, and debugging. It integrates deeply with local environments and external tools using the Model Context Protocol (MCP).",
@@ -1125,9 +1125,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "aws",
-    "name": "AWS",
-    "company": "AWS",
+    "slug": "goose",
+    "name": "Goose",
+    "company": "Block",
     "pricing": "freemium",
     "pricingDetail": "Free tier ($0) includes 50 agentic requests and 1,000 lines of code transformation per month. Pro tier ($19/user/month) increases limits to 1,000 agentic requests and 4,000 transformation lines with added IP indemnity and SSO.",
     "description": "AWS provides a comprehensive AI-powered development suite led by Amazon Q Developer, featuring real-time code suggestions and autonomous agents. It is deeply integrated across IDEs, the command line, and the AWS Management Console to assist with both coding and cloud infrastructure management.",
@@ -1151,9 +1151,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "letta",
-    "name": "Letta",
-    "company": "Letta",
+    "slug": "amazon-q-cli",
+    "name": "Amazon Q CLI",
+    "company": "AWS",
     "pricing": "freemium",
     "pricingDetail": "Free tier available for personal use; Pro plan starts at $20/month. API plans for organizations are $20/month plus usage-based credits. Core framework is open-source under Apache-2.0.",
     "description": "Letta is a platform for building stateful AI agents with advanced, persistent memory. It transforms stateless language models into long-lived assistants that learn, remember, and improve from every interaction, providing a 'memory-first' architecture for complex developer workflows.",
@@ -1179,9 +1179,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "alibaba",
-    "name": "Alibaba AI Coding",
-    "company": "Alibaba",
+    "slug": "letta-code",
+    "name": "Letta Code",
+    "company": "Letta",
     "pricing": "freemium",
     "pricingDetail": "Free for individual users. The 'AI Coding Plan' for API access starts at $3-$10/month (Lite) and $29-$50/month (Pro), while the Enterprise edition is approximately $22/user/month.",
     "description": "Alibaba's developer ecosystem centers on Tongyi Lingma, an AI assistant for major IDEs, and the Qwen-Coder model family. It enables developers to perform autonomous multi-file edits, generate unit tests, and navigate massive codebases using high-context AI models.",
@@ -1204,9 +1204,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "codebuff",
-    "name": "Codebuff",
-    "company": "Codebuff",
+    "slug": "qwen-cli",
+    "name": "Qwen CLI",
+    "company": "Alibaba",
     "pricing": "freemium",
     "pricingDetail": "Offers a free tier with 500 monthly credits (1¢ per credit thereafter) and premium tiers: $100/mo (Strong), $200/mo (Pro), and $500/mo (Ultra) for high-volume usage.",
     "description": "Codebuff is a terminal-first AI coding agent that uses a multi-agent architecture to handle complex, multi-file codebase modifications. It coordinates specialized agents for planning, editing, and reviewing, allowing developers to implement features and manage dependencies entirely through natural language terminal commands.",
@@ -1229,9 +1229,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "openclaw",
-    "name": "OpenClaw",
-    "company": "OpenClaw",
+    "slug": "codebuff",
+    "name": "Codebuff",
+    "company": "Codebuff",
     "pricing": "open-source",
     "pricingDetail": "Free and open-source (MIT License). Users pay for their own LLM API tokens and hosting. An official managed cloud version is available for $59/month.",
     "description": "OpenClaw is an autonomous, local-first AI assistant that connects LLMs to your local files and messaging apps like WhatsApp, Telegram, and Discord. It acts as a proactive 24/7 agent capable of executing shell commands, browsing the web, and automating complex workflows with persistent memory.",
@@ -1257,9 +1257,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "command-code",
-    "name": "Command Code",
-    "company": "Command Code",
+    "slug": "openclaw",
+    "name": "OpenClaw",
+    "company": "OpenClaw",
     "pricing": "freemium",
     "pricingDetail": "Freemium model with $10 in free credits for new users; paid subscription plans are available for individual and team usage.",
     "description": "Command Code is a terminal-native AI coding agent that utilizes a proprietary 'taste-1' meta neuro-symbolic AI model to learn and adapt to your specific coding style and preferences. It automates full-stack development tasks, refactoring, and bug fixes while continuously refining its output based on your edits and feedback.",
@@ -1285,9 +1285,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "charmbracelet",
-    "name": "Charmbracelet",
-    "company": "Charmbracelet",
+    "slug": "command-code",
+    "name": "Command Code",
+    "company": "Command Code",
     "pricing": "open-source",
     "pricingDetail": "Free and open-source (using the Functional Source License with eventual MIT fallback); users bring their own API keys for LLMs or use local models via Ollama.",
     "description": "Charmbracelet offers a collection of highly polished, terminal-based AI tools including Crush, an agentic coding assistant, and Mods, a CLI tool for AI-driven pipelines. These tools leverage high-quality terminal user interfaces to provide developers with a powerful, agentic experience directly within the command line.",
@@ -1310,9 +1310,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "iflow",
-    "name": "iFlow",
-    "company": "iFlow",
+    "slug": "crush",
+    "name": "Crush",
+    "company": "Charmbracelet",
     "pricing": "open-source",
     "pricingDetail": "Free and open-source (MIT License). It supports connecting to personal OpenAI-compatible API keys or using models provided via the iFlow Open Platform.",
     "description": "iFlow is an open-source, terminal-native AI assistant designed for interactive code analysis and autonomous workflow automation. It leverages a multi-agent architecture and the Model Context Protocol (MCP) to manage complex development tasks directly from the command line.",
@@ -1337,9 +1337,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "aws",
-    "name": "AWS",
-    "company": "AWS",
+    "slug": "iflow-cli",
+    "name": "iFlow CLI",
+    "company": "iFlow",
     "pricing": "freemium",
     "pricingDetail": "Free tier includes 50 agentic requests/month; Pro plan is $19/user/month with 1,000 agentic requests and 4,000 lines of code transformation.",
     "description": "AWS provides a comprehensive suite of AI-powered coding tools, headlined by Amazon Q Developer, designed to assist with the entire software development lifecycle. It offers deep integration with cloud services, enabling developers to generate code, troubleshoot console errors, and automate complex legacy migrations natively within their workflow.",
@@ -1362,9 +1362,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "mcpjam",
-    "name": "MCPJam",
-    "company": "MCPJam",
+    "slug": "kiro-cli",
+    "name": "Kiro CLI",
+    "company": "AWS",
     "pricing": "open-source",
     "pricingDetail": "Free and open-source developer tool. Includes a playground with access to frontier models (GPT-5, Claude Sonnet, Gemini 2.5) for testing, or allows users to bring their own API keys.",
     "description": "A powerful development platform and visual inspector designed for building, testing, and debugging Model Context Protocol (MCP) servers and AI-native applications. It provides a visual interface for invoking tools, browsing resources, and emulating interactive UI widgets for ChatGPT and Claude apps.",
@@ -1389,9 +1389,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "mistral",
-    "name": "Mistral",
-    "company": "Mistral",
+    "slug": "mcpjam",
+    "name": "MCPJam",
+    "company": "MCPJam",
     "pricing": "freemium",
     "pricingDetail": "API access starts at $0.10/M input tokens for Mistral Small 4; Le Chat Pro plan for €14.99/month includes IDE integration. Most models are open-weight and free for self-hosting.",
     "description": "Mistral AI offers a suite of high-performance open-weight models specifically optimized for coding, reasoning, and multilingual tasks. Its developer ecosystem features specialized models like Codestral and the Mistral Vibe integration for seamless code generation and codebase-wide context understanding.",
@@ -1414,9 +1414,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "coder",
-    "name": "Coder",
-    "company": "Coder",
+    "slug": "mistral-vibe",
+    "name": "Mistral Vibe",
+    "company": "Mistral",
     "pricing": "freemium",
     "pricingDetail": "Free open-source Community edition; Premium enterprise edition requires a paid annual subscription per user (contact sales).",
     "description": "Coder is an open-source cloud development environment (CDE) that enables teams to self-host secure, consistent workspaces on their own infrastructure using Terraform. It provides a centralized platform for managing developer environments and integrated AI coding agents while maintaining strict security and governance.",
@@ -1440,9 +1440,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "zencoder",
-    "name": "Zencoder",
-    "company": "Zencoder",
+    "slug": "mux",
+    "name": "Mux",
+    "company": "Coder",
     "pricing": "freemium",
     "pricingDetail": "Free plan available with 30 premium LLM calls per day. Paid tiers include Starter ($19/mo), Core ($49/mo), Advanced ($119/mo), and Max ($250/mo), scaling by daily call limits and features like multi-repo indexing.",
     "description": "Zencoder is an AI coding agent platform designed for professional engineers to manage large-scale codebases through deep repository understanding. It utilizes specialized agents for code generation, testing, and refactoring, shifting the focus from simple autocomplete to autonomous task execution.",
@@ -1467,9 +1467,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "neovate",
-    "name": "Neovate",
-    "company": "Neovate",
+    "slug": "zencoder",
+    "name": "Zencoder",
+    "company": "Zencoder",
     "pricing": "open-source",
     "pricingDetail": "Free and open-source under the MIT license. It operates on a 'Bring Your Own Key' (BYOK) model, supporting 20+ LLM providers.",
     "description": "An open-source AI coding agent that automates software development tasks such as code generation, bug fixing, and unit test creation. It features both a powerful CLI for terminal-based workflows and a desktop application for a more visual experience.",
@@ -1493,9 +1493,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "sylph",
-    "name": "Sylph",
-    "company": "Sylph",
+    "slug": "neovate",
+    "name": "Neovate",
+    "company": "Neovate",
     "pricing": "freemium",
     "pricingDetail": "Free open-source CLI (AdaL); paid plans available for team collaboration, persistent memory features, and enterprise-grade support.",
     "description": "Sylph (by SylphAI) is an autonomous AI coding platform featuring its flagship agent, AdaL, designed to understand entire repositories and learn from team interactions. It goes beyond simple autocomplete by executing multi-file changes, running tests, and evolving its context based on your team's specific engineering patterns.",
@@ -1518,9 +1518,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "cline",
-    "name": "Cline",
-    "company": "Cline",
+    "slug": "adal",
+    "name": "AdaL",
+    "company": "Sylph",
     "pricing": "open-source",
     "pricingDetail": "Free and open-source for individuals; users pay for their own AI inference via API keys (BYOK) or Cline credits. Enterprise plans available for teams.",
     "description": "An open-source agentic coding assistant for VS Code that autonomously handles complex development tasks like refactoring and feature building. It can read/write files, execute terminal commands, and use a browser, all while keeping the developer in control through a human-in-the-loop approval system.",
@@ -1543,9 +1543,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "parallel-code",
-    "name": "Parallel Code",
-    "company": "Parallel Code",
+    "slug": "cline-kanban",
+    "name": "Cline Kanban",
+    "company": "Cline",
     "pricing": "open-source",
     "pricingDetail": "Completely free and open-source under the MIT license, with no subscriptions or hidden platform fees.",
     "description": "Parallel Code is a desktop application that enables developers to run multiple AI coding agents simultaneously by isolating each task in its own Git worktree. It eliminates the bottleneck of waiting for a single AI to finish by orchestrating a fleet of agents to work on different branches concurrently.",
@@ -1568,9 +1568,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "badlogic",
-    "name": "badlogic",
-    "company": "badlogic",
+    "slug": "parallel-code",
+    "name": "Parallel Code",
+    "company": "Parallel Code",
     "pricing": "open-source",
     "pricingDetail": "Free and open-source under the MIT License. Users are responsible for their own LLM API costs or existing subscriptions (e.g., Claude Pro, ChatGPT Plus).",
     "description": "A minimalist, terminal-first AI coding toolkit and agent designed for speed and context efficiency. It provides a lean agent focused on core file manipulation and shell execution, highly extensible via a TypeScript-based skill and extension system.",
@@ -1593,9 +1593,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "autohand",
-    "name": "Autohand",
-    "company": "Autohand",
+    "slug": "pi",
+    "name": "Pi",
+    "company": "badlogic",
     "pricing": "freemium",
     "pricingDetail": "Free for individuals and companies under $5M ARR (Bring Your Own Key model). Requires a commercial license for larger enterprises.",
     "description": "An autonomous, self-evolving AI coding agent that runs in the terminal to reason across entire codebases. It utilizes the ReAct pattern to plan and execute complex code changes with deep Git integration and minimal human intervention.",
@@ -1618,9 +1618,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "crow",
-    "name": "Crow",
-    "company": "Crow",
+    "slug": "autohand-acp",
+    "name": "Autohand ACP",
+    "company": "Autohand",
     "pricing": "freemium",
     "pricingDetail": "Offers a generous free tier for trial and development; paid plans are available for scaling with premium models and enterprise features.",
     "description": "Crow is a developer-focused platform that allows you to embed a fully functional AI copilot directly into your software applications. By connecting to your existing APIs via OpenAPI specs, it enables users to perform complex actions and query data through a natural language chat interface.",
@@ -1643,9 +1643,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "evalstate",
-    "name": "EvalState",
-    "company": "EvalState",
+    "slug": "crow-cli",
+    "name": "Crow CLI",
+    "company": "Crow",
     "pricing": "open-source",
     "pricingDetail": "EvalState's core tools, including the fast-agent framework and various MCP servers, are open-source and available on GitHub. Users primarily pay for their own LLM API usage through providers like OpenAI, Anthropic, or Google.",
     "description": "EvalState is a developer-centric framework for building, testing, and evaluating AI agents and workflows with native support for the Model Context Protocol (MCP). It features a declarative syntax for agent configuration and a CLI-first environment designed for rapid prototyping of complex, multi-modal AI applications.",
@@ -1669,9 +1669,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "femto",
-    "name": "Femto",
-    "company": "Femto",
+    "slug": "fast-agent",
+    "name": "Fast Agent",
+    "company": "EvalState",
     "pricing": "freemium",
     "pricingDetail": "Offers a free-to-access Developer Portal and SDK for model evaluation and simulation, with enterprise licensing for commercial deployments and specialized SPU hardware.",
     "description": "An end-to-end edge AI development platform and SDK designed for building and deploying ultra-efficient AI models. It provides developers with tools for sparse model optimization, pruning, and quantization to enable high-performance intelligence on resource-constrained devices.",
@@ -1694,9 +1694,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "compass",
-    "name": "Compass",
-    "company": "Compass",
+    "slug": "minion-code",
+    "name": "Minion Code",
+    "company": "Femto",
     "pricing": "freemium",
     "pricingDetail": "Includes a Free plan for basic access; paid tiers include Teams and Pro plans (starting at $49/month per entity based on similar company offerings), with custom quotes for Enterprise requirements.",
     "description": "Compass is an agentic AI software development platform that provides a collaborative team of specialized AI agents to orchestrate the entire development lifecycle. It features dedicated agents like Martha (Product Manager), Bruce (Architect), and Nova (Software Engineer) to manage everything from requirements and system design to autonomous coding.",
@@ -1719,9 +1719,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "svkozak",
-    "name": "svkozak",
-    "company": "svkozak",
+    "slug": "compass-nova-cli",
+    "name": "Compass Nova CLI",
+    "company": "Compass",
     "pricing": "open-source",
     "pricingDetail": "Completely free and open-source under the MIT license. Users pay only for their own LLM API usage (e.g., Anthropic, OpenAI, or DeepSeek).",
     "description": "svkozak is a developer-focused suite of AI coding tools and adapters, most notably featuring pi-acp, a bridge for the pi coding agent. It enables autonomous AI agents to work directly within editors like Zed and Emacs using the Agent Client Protocol.",
@@ -1745,9 +1745,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "stakpak",
-    "name": "Stakpak",
-    "company": "Stakpak",
+    "slug": "pi-acp",
+    "name": "Pi ACP",
+    "company": "svkozak",
     "pricing": "freemium",
     "pricingDetail": "Free open-source tier (BYOK); Hacker plan at $15/mo, Builder at $45/mo, and Team at $450/mo.",
     "description": "Stakpak is an open-source, Rust-based terminal agent designed to automate infrastructure-as-code and production DevOps tasks. It generates validated configurations for Terraform and Kubernetes while providing autonomous autopilot features for monitoring, auto-healing, and cost optimization.",
@@ -1771,9 +1771,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "anomaly",
-    "name": "Anomaly",
-    "company": "Anomaly",
+    "slug": "stakpak-agent",
+    "name": "Stakpak Agent",
+    "company": "Stakpak",
     "pricing": "freemium",
     "pricingDetail": "Free plan includes 30 Analysis Units/mo; paid tiers include Starter ($16/mo), Pro ($32/mo), and Team ($300/mo) for higher volume and team features.",
     "description": "Anomaly is an AI-powered data analyst that converts natural language into transparent SQL and interactive dashboards. It allows developers to connect databases and spreadsheets to perform ad-hoc analysis, detect data irregularities, and automate reporting without building a full BI stack.",
@@ -1795,9 +1795,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "warp",
-    "name": "Warp",
-    "company": "Warp",
+    "slug": "opencode",
+    "name": "OpenCode",
+    "company": "Anomaly",
     "pricing": "freemium",
     "pricingDetail": "Core terminal features are free for individuals. Paid AI plans include Build ($20/mo for 1,500 credits), Max ($180/mo), and Business ($50/user/mo). Supports Bring-Your-Own-Key (BYOK) for LLM access on paid tiers.",
     "description": "Warp is a GPU-accelerated terminal built in Rust that reimagines the command line as an agentic development environment. It combines IDE-like text editing with AI-powered command generation and collaborative 'blocks' for sharing terminal output.",
@@ -1820,9 +1820,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "wave",
-    "name": "Wave",
-    "company": "Wave",
+    "slug": "warp",
+    "name": "Warp",
+    "company": "Warp",
     "pricing": "open-source",
     "pricingDetail": "Free and open-source (Apache 2.0). Currently in free beta with included AI credits; users can also 'Bring Your Own Key' (BYOK) for LLM providers like OpenAI and Anthropic.",
     "description": "Wave is an open-source, AI-native terminal that integrates traditional CLI workflows with graphical tools like file previews, web browsing, and a built-in code editor. It features a context-aware AI assistant and durable SSH sessions that persist through network interruptions and system restarts.",
@@ -1845,9 +1845,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "cognition",
-    "name": "Cognition",
-    "company": "Cognition",
+    "slug": "wave",
+    "name": "Wave",
+    "company": "Wave",
     "pricing": "freemium",
     "pricingDetail": "Offers a Free tier for beginners; Pro plan at $20/mo; Max at $200/mo; Teams starting at $80/mo (usage-based); and custom Enterprise pricing. Usage beyond quotas is billed in dollars for self-serve plans.",
     "description": "Cognition is an applied AI lab best known for creating Devin, the world's first fully autonomous AI software engineer. The tool can independently plan, code, debug, and deploy complex applications using its own sandboxed terminal, browser, and code editor.",
@@ -1871,9 +1871,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "google",
-    "name": "Google",
-    "company": "Google",
+    "slug": "devin-cognition",
+    "name": "Devin",
+    "company": "Cognition",
     "pricing": "freemium",
     "pricingDetail": "Free for individuals via the Google Developer Program Standard tier. Premium memberships cost $24.99/month (or $299/year) for higher quotas and cloud credits. Enterprise plans start at $75/developer/month.",
     "description": "Google provides a comprehensive suite of AI coding tools centered around the Gemini model family, featuring native integrations with IDEs, a browser-based development environment, and a powerful CLI. These tools offer large-context code analysis, real-time completions, and agentic workflows for full-stack application development.",
@@ -1896,9 +1896,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "all-hands",
-    "name": "All Hands",
-    "company": "All Hands",
+    "slug": "jules",
+    "name": "Jules",
+    "company": "Google",
     "pricing": "freemium",
     "pricingDetail": "The core OpenHands platform is free and open-source (MIT License). A hosted cloud version, OpenHands Cloud, offers managed environments with usage-based pricing and initial free credits. Enterprise plans with advanced security and team collaboration features are available via contact.",
     "description": "An open-source AI software engineering platform that deploys autonomous agents to handle end-to-end development tasks. It enables developers to automate repetitive 'toil' like bug fixing and unit test generation by allowing agents to write code, execute terminal commands, and browse the web.",
@@ -1921,9 +1921,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "princeton-nlp",
-    "name": "Princeton NLP",
-    "company": "Princeton NLP",
+    "slug": "openhands",
+    "name": "OpenHands",
+    "company": "All Hands",
     "pricing": "open-source",
     "pricingDetail": "The tools are free and open-source under the Apache 2.0 license; users are responsible for their own LLM API costs (e.g., OpenAI or Anthropic).",
     "description": "Princeton NLP provides a suite of high-performance autonomous agents, most notably SWE-agent, designed to resolve GitHub issues automatically. These tools use a specialized Agent-Computer Interface (ACI) to allow language models to navigate codebases, edit files, and execute tests with minimal human intervention.",
@@ -1947,9 +1947,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "sweep",
-    "name": "Sweep",
-    "company": "Sweep",
+    "slug": "swe-agent",
+    "name": "SWE-agent",
+    "company": "Princeton NLP",
     "pricing": "freemium",
     "pricingDetail": "Free trial includes 1,000 autocompletes and $5 API credits. Paid tiers include Basic ($10/mo), Pro ($20/mo), and Ultra ($60/mo), all featuring unlimited autocomplete. Agent usage for complex tasks is charged at the underlying LLM cost plus a 5% markup.",
     "description": "Sweep is an AI-powered coding agent and assistant purpose-built for the JetBrains IDE ecosystem. It automates technical debt, bug fixes, and feature requests by transforming natural language instructions into repository-wide code changes and pull requests.",
@@ -1974,9 +1974,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "ellipsis",
-    "name": "Ellipsis",
-    "company": "Ellipsis",
+    "slug": "sweep",
+    "name": "Sweep",
+    "company": "Sweep",
     "pricing": "freemium",
     "pricingDetail": "Free for public GitHub repositories; paid plans start at $20 per developer per month with a 7-day free trial.",
     "description": "An AI-powered developer tool that acts as a virtual teammate to automate code reviews, fix bugs, and summarize pull requests. It integrates directly into GitHub and GitLab to convert natural language comments into tested, working code.",
@@ -2000,9 +2000,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "cosine",
-    "name": "Cosine",
-    "company": "Cosine",
+    "slug": "ellipsis",
+    "name": "Ellipsis",
+    "company": "Ellipsis",
     "pricing": "freemium",
     "pricingDetail": "Free plan includes 80 tasks for new users. Paid plans start at $20/month (Hobby) for 80 tasks/month and $200/month (Professional) for 240 tasks/month. Enterprise plans offer custom pricing and VPC/on-prem deployment.",
     "description": "An autonomous AI software engineer designed to handle end-to-end engineering tasks like bug fixes and feature development. It integrates with your codebase and ticketing systems to asynchronously plan, implement, and test code before opening review-ready pull requests.",
@@ -2027,9 +2027,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "open-yak",
-    "name": "Open-yak",
-    "company": "Open-yak",
+    "slug": "genie",
+    "name": "Genie",
+    "company": "Cosine",
     "pricing": "open-source",
     "pricingDetail": "Free and open-source (AGPL-3.0); includes 1M tokens/week on free models via OpenRouter. Users can also Bring Your Own Key (BYOK) or pay-as-you-go for premium models with zero markup.",
     "description": "An open-source, local-first AI desktop agent designed as a private alternative to Claude Code and OpenAI Codex. It connects directly to your local file system to automate workflows, analyze data, and execute code while ensuring all sensitive data remains on your machine.",
@@ -2055,9 +2055,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "langchain",
-    "name": "LangChain",
-    "company": "LangChain",
+    "slug": "open-yak",
+    "name": "Open-yak",
+    "company": "Open-yak",
     "pricing": "open-source",
     "pricingDetail": "Core orchestration libraries are MIT-licensed and free. The LangSmith observability platform offers a free Developer tier (5,000 traces/mo), a Plus plan at $39/seat/month, and custom Enterprise pricing.",
     "description": "LangChain is the industry-standard open-source framework for building context-aware LLM applications. It provides modular components and standardized interfaces to orchestrate models, vector databases, and tools into complex, stateful agentic workflows.",
@@ -2080,9 +2080,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "stackblitz",
-    "name": "StackBlitz",
-    "company": "StackBlitz",
+    "slug": "deepagents-js",
+    "name": "DeepAgents JS",
+    "company": "LangChain",
     "pricing": "freemium",
     "pricingDetail": "Free Personal plan; Pro for $18/mo; Teams for $55/user/mo (billed annually). Enterprise pricing on request.",
     "description": "StackBlitz is an instant, browser-based development environment that uses WebContainer technology to run full-stack Node.js applications entirely within the browser. It delivers a VS Code-like experience with zero-latency local execution, allowing developers to build, test, and share web projects via simple URLs without local configuration.",
@@ -2109,9 +2109,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "vercel",
-    "name": "Vercel",
-    "company": "Vercel",
+    "slug": "boltnew",
+    "name": "Bolt.new",
+    "company": "StackBlitz",
     "pricing": "freemium",
     "pricingDetail": "Hobby plan is free for personal use. Pro plan starts at $20/month per developer seat with usage-based billing for compute. v0 AI prototyping starts free with $5 monthly credits, with Premium plans at $20/month.",
     "description": "Vercel is a front-end cloud platform that provides the infrastructure and specialized tools to build, deploy, and scale AI-powered web applications. It offers a complete AI development stack including v0 for generative UI prototyping and the Vercel AI SDK for multi-model orchestration.",
@@ -2137,9 +2137,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "lovable",
-    "name": "Lovable",
-    "company": "Lovable",
+    "slug": "v0",
+    "name": "v0",
+    "company": "Vercel",
     "pricing": "freemium",
     "pricingDetail": "Free tier includes 5 daily credits; Pro plan ($25/mo) offers 100 monthly credits plus daily bonuses; Business ($50/mo) adds SSO and advanced team controls.",
     "description": "Lovable is an AI-powered full-stack development platform that transforms natural language prompts into functional web applications using React, TypeScript, and Supabase. It automates the entire development lifecycle, from UI design and backend integration to two-way GitHub sync and one-click deployment.",
@@ -2165,9 +2165,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "replit",
-    "name": "Replit",
-    "company": "Replit",
+    "slug": "lovable",
+    "name": "Lovable",
+    "company": "Lovable",
     "pricing": "freemium",
     "pricingDetail": "Starter (Free), Core ($20/mo billed annually or $25/mo monthly), Pro ($95/mo billed annually or $100/mo monthly), and Enterprise (Custom). Paid plans include monthly usage credits (Core: $25; Pro: $100) that cover AI Agent usage, compute, and deployments.",
     "description": "An AI-powered cloud development platform that allows users to build, host, and deploy full-stack applications entirely in the browser. It features the Replit Agent, which can autonomously generate, debug, and deploy code from natural language prompts.",
@@ -2191,9 +2191,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "playcode",
-    "name": "PlayCode",
-    "company": "PlayCode",
+    "slug": "replit",
+    "name": "Replit",
+    "company": "Replit",
     "pricing": "freemium",
     "pricingDetail": "Free plan includes up to 3 projects and basic hosting. Pro plan is $25/month or $21/month billed annually, providing 100+ AI credits, custom domains, and full code export. Special promotional tiers for small businesses have been reported as low as $21/year.",
     "description": "A conversational AI website builder and online IDE that generates production-ready websites and apps from plain-language descriptions. It uniquely provides full access to the underlying React, Vue, and JavaScript code, allowing developers to switch between AI-assisted building and manual coding seamlessly.",
@@ -2220,9 +2220,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "emergent",
-    "name": "Emergent",
-    "company": "Emergent",
+    "slug": "playcode",
+    "name": "PlayCode",
+    "company": "PlayCode",
     "pricing": "freemium",
     "pricingDetail": "Free plan with 10 credits/mo. Paid plans start at $20/mo (Standard, 100 credits), $200/mo (Pro, 750 credits), and $300/mo (Team, 1,250 credits). Active deployments cost 50 credits/mo.",
     "description": "Emergent is an agentic 'vibe-coding' platform that transforms natural language prompts into full-stack web and mobile applications. It employs a multi-agent architecture to autonomously handle the entire software lifecycle, including architecture, coding, testing, and production deployment.",
@@ -2245,9 +2245,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "bitrig",
-    "name": "Bitrig",
-    "company": "Bitrig",
+    "slug": "emergentsh",
+    "name": "Emergent.sh",
+    "company": "Emergent",
     "pricing": "freemium",
     "pricingDetail": "Free plan includes 5 daily credits (up to 30/month). Plus plans start at approximately $19.99/month for 10 daily credits, with higher tiers (Plus 200 to Plus 1600) ranging from $25 to $300/month. Unused credits roll over for one month for subscribers.",
     "description": "Bitrig is an AI-powered development platform for building native Swift and SwiftUI applications through conversational prompts. Built by ex-Apple engineers, it allows both non-technical users and developers to generate, test, and ship real iOS apps directly from their iPhone or Mac.",
@@ -2273,9 +2273,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "meta",
-    "name": "Meta",
-    "company": "Meta",
+    "slug": "bitrig",
+    "name": "Bitrig",
+    "company": "Bitrig",
     "pricing": "freemium",
     "pricingDetail": "Free for standard usage; Meta AI+ premium plan available for $10/month; Llama model weights are free to download (open-weight).",
     "description": "Meta provides a world-class AI ecosystem for developers centered around the Llama model family, offering advanced code generation and debugging capabilities. It combines a versatile cloud assistant with powerful open-weight models that can be hosted locally for private, secure development workflows.",
@@ -2297,9 +2297,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "coderabbit",
-    "name": "CodeRabbit",
-    "company": "CodeRabbit",
+    "slug": "manus",
+    "name": "Manus",
+    "company": "Meta",
     "pricing": "freemium",
     "pricingDetail": "Free for open-source and individual developers; Lite tier at $12/user/month (annual) for reactive reviews; Pro tier at $24/user/month (annual) for proactive planning and deep integrations; Enterprise starts at $15,000/month for 500+ users.",
     "description": "CodeRabbit is an AI-powered code review platform that provides automated, context-aware feedback and one-click fixes directly within pull requests. It combines large language models with static analysis to surface bugs, ensure architectural alignment, and generate comprehensive PR summaries.",
@@ -2325,9 +2325,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "qodo",
-    "name": "Qodo",
-    "company": "Qodo",
+    "slug": "coderabbit",
+    "name": "CodeRabbit",
+    "company": "CodeRabbit",
     "pricing": "freemium",
     "pricingDetail": "Free Developer tier (30 PR reviews + 75 credits/mo); Teams plan at $30/user/mo (annual) or $38/user/mo (monthly) with 2,500 credits; Enterprise starts at approximately $45/user/mo.",
     "description": "Qodo is a quality-first AI coding platform that provides automated code reviews, comprehensive test generation, and context-aware development assistance. It utilizes a multi-agent architecture and a specialized context engine to ensure code integrity across the entire software development lifecycle.",
@@ -2350,9 +2350,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "snyk",
-    "name": "Snyk",
-    "company": "Snyk",
+    "slug": "qodo-qodo",
+    "name": "Qodo",
+    "company": "Qodo",
     "pricing": "freemium",
     "pricingDetail": "Snyk offers a Free tier with limited monthly scans, a Team tier starting at approximately $25 per developer/month, and an Enterprise tier with unlimited testing and advanced security governance. Pricing is based on the number of active contributing developers.",
     "description": "Snyk is a developer-first security platform that automates finding and fixing vulnerabilities across code, open-source dependencies, containers, and cloud infrastructure. It integrates directly into IDEs and CI/CD pipelines, providing real-time AI-powered fix suggestions and security governance for autonomous AI coding agents.",
@@ -2378,9 +2378,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "gitauto",
-    "name": "GitAuto",
-    "company": "GitAuto",
+    "slug": "snyk-code-snyk",
+    "name": "Snyk Code",
+    "company": "Snyk",
     "pricing": "freemium",
     "pricingDetail": "Offers a free tier for up to 10 issues per month. Paid usage follows a 'Pay per PR' model at $8 per pull request with no monthly commitment, starting with $24 in free credits.",
     "description": "GitAuto is an autonomous AI software engineer that automates backend development by translating GitHub issues into pull requests. It specializes in generating unit tests and reaching high coverage targets, automatically fixing CI failures and responding to reviews until the code is ready to merge.",
@@ -2405,9 +2405,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "anthropic",
-    "name": "Anthropic",
-    "company": "Anthropic",
+    "slug": "gitauto",
+    "name": "GitAuto",
+    "company": "GitAuto",
     "pricing": "freemium",
     "pricingDetail": "Free tier available; Pro plan at $20/month; API costs range from $1-$5 per million input tokens depending on the model (Haiku 4.5 to Opus 4.7).",
     "description": "Anthropic offers the Claude family of LLMs and specialized developer tools like Claude Code, a terminal-based agentic assistant. It is known for high-reasoning capabilities, a large context window, and the Model Context Protocol for connecting AI to local data sources.",
@@ -2432,9 +2432,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "openai",
-    "name": "OpenAI",
-    "company": "OpenAI",
+    "slug": "claude",
+    "name": "Claude",
+    "company": "Anthropic",
     "pricing": "freemium",
     "pricingDetail": "API pay-as-you-go: GPT-5.5 at $5.00/$30.00 per 1M tokens; GPT-5.4 Nano from $0.20/$1.25 per 1M tokens; ChatGPT Plus at $20/mo.",
     "description": "OpenAI provides a leading platform of frontier AI models and developer tools for building autonomous agents and high-performance applications. The ecosystem includes the GPT-5.5 flagship model, the Codex coding harness, and a robust Agents SDK for complex tool orchestration.",
@@ -2457,9 +2457,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "google",
-    "name": "Google",
-    "company": "Google",
+    "slug": "chatgpt",
+    "name": "ChatGPT",
+    "company": "OpenAI",
     "pricing": "freemium",
     "pricingDetail": "Free for individual developers with generous daily limits (up to 6,000 code completions). Paid tiers for Enterprise and Cloud users start at approximately $19-$20/user/month, with pay-as-you-go API pricing for Gemini 3.1 models in Google AI Studio.",
     "description": "Google offers a comprehensive suite of AI-powered development tools centered on the Gemini model family, providing contextual code generation, project-wide chat, and autonomous agent capabilities. It is uniquely distinguished by its massive context window and native grounding in real-time Google Search results.",
@@ -2482,9 +2482,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "deepseek",
-    "name": "DeepSeek",
-    "company": "DeepSeek",
+    "slug": "gemini",
+    "name": "Gemini",
+    "company": "Google",
     "pricing": "open-source",
     "pricingDetail": "DeepSeek provides open-weight models for free local deployment under permissive licenses. Its hosted API is highly cost-effective, with the flagship V4 model priced at approximately $0.30 per 1M input tokens and $0.50 per 1M output tokens.",
     "description": "DeepSeek is an open-source AI research organization that develops high-performance large language models specialized for coding, reasoning, and complex problem-solving. Their models consistently rival top-tier proprietary systems like GPT-4 and Claude while maintaining transparency through open-weight releases.",
@@ -2508,9 +2508,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "perplexity",
-    "name": "Perplexity",
-    "company": "Perplexity",
+    "slug": "deepseek",
+    "name": "DeepSeek",
+    "company": "DeepSeek",
     "pricing": "freemium",
     "pricingDetail": "Free plan available; Pro at $20/mo with unlimited Pro searches; Max at $200/mo for agentic workflows; Enterprise from $40/seat/mo; API is pay-as-you-go.",
     "description": "An AI-powered conversational search engine that synthesizes real-time web information into direct, cited answers. It serves as a research-heavy coding companion, allowing developers to query up-to-date documentation and troubleshoot using the latest frontier models.",
@@ -2532,9 +2532,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "greptile",
-    "name": "Greptile",
-    "company": "Greptile",
+    "slug": "perplexity",
+    "name": "Perplexity",
+    "company": "Perplexity",
     "pricing": "paid",
     "pricingDetail": "$30/developer/month (includes 50 reviews/month, then $1 per additional review). Custom Enterprise pricing available.",
     "description": "An AI-powered code review agent that builds a complete graph of your repository to provide high-context feedback on pull requests. It understands cross-file dependencies and internal libraries, allowing it to catch complex bugs that diff-only tools miss.",
@@ -2559,9 +2559,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "fern",
-    "name": "Fern",
-    "company": "Fern",
+    "slug": "greptile",
+    "name": "Greptile",
+    "company": "Greptile",
     "pricing": "freemium",
     "pricingDetail": "Hobby plan is free ($0/mo); Team plan starts at $150/mo. SDK generation is priced separately starting at $250/mo per language.",
     "description": "Fern is an API-first platform that transforms OpenAPI, gRPC, and AsyncAPI specifications into production-ready SDKs and interactive developer documentation. It automates the entire developer experience by ensuring client libraries and documentation stay synchronized with every API update.",
@@ -2584,9 +2584,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "pieces",
-    "name": "Pieces",
-    "company": "Pieces",
+    "slug": "fern",
+    "name": "Fern",
+    "company": "Fern",
     "pricing": "freemium",
     "pricingDetail": "Free forever for core local features including snippet management and local LLMs; Pro plan costs $18.99/month (or $169.99/year) for access to advanced cloud models like Claude 3.5 and Gemini 2.5.",
     "description": "Pieces is an AI-enabled productivity tool that acts as an on-device second brain for developers by automatically capturing work context across the OS. It organizes snippets, research, and technical discussions from your IDE, browser, and collaboration tools for instant retrieval.",
@@ -2609,9 +2609,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "vibe",
-    "name": "Vibe",
-    "company": "Mistral AI",
+    "slug": "pieces-for-developers",
+    "name": "Pieces for Developers",
+    "company": "Pieces",
     "pricing": "freemium",
     "pricingDetail": "Free for experimental use; bundled with Mistral Le Chat Pro ($20/month) or Team ($20/user/month) for high-capacity usage and advanced models.",
     "description": "A terminal-native AI coding agent that provides a conversational interface to your local codebase, allowing you to explore, modify, and refactor projects using natural language. It combines Mistral's specialized coding models with a powerful CLI toolset for autonomous file manipulation and command execution.",
@@ -2634,9 +2634,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "microsoft",
-    "name": "Microsoft",
-    "company": "Microsoft",
+    "slug": "vibe-kanban",
+    "name": "Vibe Kanban",
+    "company": "Vibe",
     "pricing": "freemium",
     "pricingDetail": "GitHub Copilot offers a Free tier (2,000 completions), Pro ($10/mo), Pro+ ($39/mo), Business ($19/user/mo), and Enterprise ($39/user/mo). Note: New sign-ups for Individual plans (Pro, Pro+, Student) are temporarily paused as of April 2026 due to high demand.",
     "description": "Microsoft's AI coding suite, centered around GitHub Copilot, provides developers with advanced code completions, natural language chat, and agentic workflows. It is deeply integrated into Visual Studio Code and the broader GitHub ecosystem to automate everything from unit testing to complex refactoring.",
@@ -2659,9 +2659,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "apple",
-    "name": "Apple",
-    "company": "Apple",
+    "slug": "visual-studio-code",
+    "name": "Visual Studio Code",
+    "company": "Microsoft",
     "pricing": "free",
     "pricingDetail": "Included for free with Xcode. Features like Swift Assist and local predictive completion are built into the IDE, though some advanced cloud integrations may require an Apple Developer Program membership or third-party LLM subscriptions.",
     "description": "Apple provides a comprehensive suite of AI coding tools integrated directly into Xcode and the Apple platform ecosystem. These tools leverage on-device machine learning for privacy-focused code completion and cloud-based models for complex tasks like Swift Assist and autonomous agentic coding.",
@@ -2686,9 +2686,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "jetbrains",
-    "name": "JetBrains AI Assistant",
-    "company": "JetBrains",
+    "slug": "xcode",
+    "name": "Xcode",
+    "company": "Apple",
     "pricing": "freemium",
     "pricingDetail": "AI Free (3 credits/mo); AI Pro ($10/mo, included with All Products Pack); AI Ultimate ($30/mo); Enterprise pricing available.",
     "description": "A deeply integrated AI service for JetBrains IDEs that leverages semantic code analysis to provide context-aware assistance. It features autonomous coding agents, multi-model support including local LLMs, and intelligent refactoring tools directly within the editor.",
@@ -2712,9 +2712,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "microsoft",
-    "name": "Microsoft",
-    "company": "Microsoft",
+    "slug": "jetbrains-ides",
+    "name": "JetBrains IDEs",
+    "company": "JetBrains",
     "pricing": "freemium",
     "pricingDetail": "GitHub Copilot offers five tiers: Free ($0/mo), Pro ($10/mo), Pro+ ($39/mo), Business ($19/user/mo), and Enterprise ($39/user/mo). Some new individual sign-ups were temporarily paused as of April 20, 2026.",
     "description": "Microsoft's developer ecosystem provides integrated AI tools led by GitHub Copilot, offering multi-model support and autonomous agent capabilities. It seamlessly connects VS Code, Visual Studio, and Azure to streamline the entire software development lifecycle from coding to deployment.",
@@ -2738,9 +2738,9 @@
     "lastUpdated": "2026-04-25"
   },
   {
-    "slug": "batrachian-ai",
-    "name": "Batrachian AI",
-    "company": "Batrachian AI",
+    "slug": "visual-studio",
+    "name": "Visual Studio",
+    "company": "Microsoft",
     "pricing": "open-source",
     "pricingDetail": "Free and open-source under the AGPL-3.0 license; users typically provide their own API keys for underlying models.",
     "description": "Batrachian AI provides a unified terminal user interface (TUI) called Toad for managing and interacting with various AI coding agents. It streamlines the developer experience by consolidating tools like Claude Code, Gemini CLI, and OpenHands into a single, consistent environment.",

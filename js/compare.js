@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Check cache
     const cached = cache.read();
-    if (cached) {
+    if (cached && Array.isArray(cached.data) && cached.data.length > 0) {
         enrichedData = cached.data;
     }
 
@@ -35,8 +35,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const res = await fetch(ENRICHED_URL);
         if (res.ok) {
-            enrichedData = await res.json();
-            cache.write(enrichedData);
+            const freshData = await res.json();
+            if (Array.isArray(freshData) && freshData.length > 0) {
+                enrichedData = freshData;
+                cache.write(enrichedData);
+            }
         }
     } catch (e) {
         console.warn('Failed to fetch enriched-tools.json', e);

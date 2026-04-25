@@ -35,7 +35,7 @@ export function read() {
  * @param {string|null} etag
  */
 export function write(data, etag = null) {
-    if (!Array.isArray(data)) return;
+    if (!Array.isArray(data) || data.length === 0) return;
     const envelope = { v: 1, data, fetchedAt: Date.now(), etag };
     try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(envelope));

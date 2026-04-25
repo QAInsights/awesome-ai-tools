@@ -100,11 +100,11 @@ describe('tool-cache', () => {
             expect(localStorageMock.getItem(STORAGE_KEY)).toBeNull();
         });
 
-        test('should write empty array', () => {
+        test('should not write empty array', () => {
             write([]);
-            
-            const stored = JSON.parse(localStorageMock.getItem(STORAGE_KEY));
-            expect(stored.data).toEqual([]);
+
+            const stored = localStorageMock.getItem(STORAGE_KEY);
+            expect(stored).toBeNull();
         });
 
         test('should overwrite existing cache', () => {
