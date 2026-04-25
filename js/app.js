@@ -20,7 +20,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     let toolsData = [];
     let categories = new Set();
-    let collapsedSidebar = new CollapsedSidebar();
+    let collapsedSidebar = new CollapsedSidebar('iconSidebar', {
+        onExpand: () => document.getElementById('openSidebarDesktop')?.click(),
+        onSearchClick: () => {
+            document.getElementById('openSidebarDesktop')?.click();
+            setTimeout(() => document.getElementById('searchInput')?.focus(), 300);
+        },
+        onSignInClick: () => document.getElementById('signInTriggerBtn')?.click(),
+        onUserClick: () => document.getElementById('userProfileBtn')?.click()
+    });
 
     const ENABLE_VOTING = process.env.ENABLE_VOTING === 'true';
     const CF_SITEKEY = process.env.CF_SITEKEY || "1x00000000000000000000AA";
