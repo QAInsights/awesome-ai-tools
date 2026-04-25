@@ -106,6 +106,12 @@ const isTool = variant === 'tool';
                 <a href="/help" class="filter-btn flex items-center">Help &amp; Support</a>
                 <button class="filter-btn text-left badge-trigger flex items-center">Get Badge</button>
 
+                <div class="font-mono text-[12px] uppercase text-[#737373] mb-1 pl-2 tracking-widest mt-4 hidden md:block">Resources</div>
+                <a href="/blog" class="filter-btn flex items-center gap-2">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    Blog
+                </a>
+
                 <div class="font-mono text-[12px] uppercase text-[#737373] mb-1 pl-2 tracking-widest mt-4 hidden md:block">AI Utilities</div>
                 <a href="/tools/token-counter" class="filter-btn flex items-center gap-2">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h6M8 15h4"/></svg>
@@ -125,7 +131,13 @@ const isTool = variant === 'tool';
         <!-- AI Utilities (index only, below filters) -->
         {isIndex && (
             <div class="px-4 pt-2 pb-1 shrink-0">
-                <div class="font-mono text-[11px] uppercase text-[#737373] mb-2 pl-2 tracking-widest">AI Utilities</div>
+                <div class="font-mono text-[11px] uppercase text-[#737373] mb-2 pl-2 tracking-widest">Resources</div>
+                <a href="/blog" class="filter-btn flex items-center gap-2 w-full text-left">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    Blog
+                </a>
+                
+                <div class="font-mono text-[11px] uppercase text-[#737373] mb-2 pl-2 tracking-widest mt-4">AI Utilities</div>
                 <a href="/tools/token-counter" class="filter-btn flex items-center gap-2 w-full text-left">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12h6M8 15h4"/></svg>
                     Token Counter
@@ -167,6 +179,7 @@ const isTool = variant === 'tool';
                 <div id="userMenuPopup" class="hidden absolute bottom-[calc(100%+8px)] left-0 w-full bg-[#111] border border-[#222] rounded-md shadow-xl z-50 py-1">
                     <a href="/settings" class="flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Settings</a>
                     <a href="/zap" class="flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Zap</a>
+                    <a href="/blog" class="flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Blog</a>
                     <a href="/help" class="flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Help</a>
                     <a href="/tools/token-counter" class="flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Token Counter</a>
                     <a href="/tools/hallucination-scorer" class="flex items-center px-4 py-2.5 text-sm text-[#a3a3a3] hover:text-white hover:bg-white/5 transition-colors">Hallucination Scorer</a>

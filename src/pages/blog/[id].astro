@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
@@ -13,30 +13,29 @@ const { entry } = Astro.props;
 const { Content, remarkPluginFrontmatter } = await render(entry);
 ---
 
-<BaseLayout
-  title={`${entry.data.title} | AI Tools Blog`}
+<DashboardLayout
+  title={`${entry.data.title} | ai.dosa.dev`}
   description={entry.data.description}
-  ogType="article"
+  canonical={`https://ai.dosa.dev/blog/${entry.id}`}
+  activeNav="blog"
 >
-  <div class="min-h-screen flex flex-col bg-zinc-950">
-    <header class="border-b border-zinc-800 bg-zinc-900/50 sticky top-0 z-10 backdrop-blur-sm">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-        <a href="/blog" class="text-zinc-400 hover:text-white transition-colors flex items-center text-sm font-medium">
+  <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-full p-6 md:p-8">
+    <div class="max-w-3xl flex flex-col flex-1">
+      <div class="mb-8">
+        <a href="/blog" class="text-[#737373] hover:text-white transition-colors flex items-center text-sm font-mono tracking-wide w-fit">
           <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
           Back to Blog
         </a>
       </div>
-    </header>
 
-    <main class="flex-1 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
       <article>
-        <header class="mb-10 text-center">
-          <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
+        <header class="mb-10 text-left">
+          <h1 class="text-3xl sm:text-4xl font-semibold text-white tracking-tight mb-4">
             {entry.data.title}
           </h1>
-          <div class="flex items-center justify-center space-x-4 text-sm text-zinc-400">
+          <div class="flex flex-wrap items-center gap-3 text-sm text-[#737373] font-mono">
             <time datetime={entry.data.pubDate.toISOString()}>
               {entry.data.pubDate.toLocaleDateString('en-us', {
                 year: 'numeric',
@@ -54,9 +53,9 @@ const { Content, remarkPluginFrontmatter } = await render(entry);
             )}
           </div>
           {entry.data.tags && entry.data.tags.length > 0 && (
-            <div class="flex flex-wrap justify-center gap-2 mt-6">
+            <div class="flex flex-wrap gap-2 mt-6">
               {entry.data.tags.map((tag) => (
-                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-800 text-zinc-300 border border-zinc-700">
+                <span class="inline-flex items-center px-2 py-0.5 rounded border border-[#333] text-xs font-mono bg-white/[0.03] text-[#a3a3a3]">
                   {tag}
                 </span>
               ))}
@@ -64,10 +63,14 @@ const { Content, remarkPluginFrontmatter } = await render(entry);
           )}
         </header>
 
-        <div class="prose prose-invert prose-zinc max-w-none prose-headings:font-bold prose-a:text-blue-400 hover:prose-a:text-blue-300 prose-code:text-pink-400 prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-zinc-800 prose-img:rounded-xl">
+        <div class="prose prose-invert prose-zinc max-w-none prose-headings:font-semibold prose-a:text-[#22d3ee] hover:prose-a:text-[#67e8f9] prose-a:no-underline hover:prose-a:underline prose-code:text-[#a78bfa] prose-pre:bg-[#0a0a0a] prose-pre:border prose-pre:border-[#222] prose-img:rounded-lg prose-img:border prose-img:border-[#222] prose-hr:border-[#222]">
           <Content />
         </div>
       </article>
-    </main>
+      
+      <footer class="pt-12 pb-6 text-center border-t border-[#222] mt-auto">
+        <span class="font-mono text-xs text-[#525252]">© {new Date().getFullYear()} dosa.dev</span>
+      </footer>
+    </div>
   </div>
-</BaseLayout>
+</DashboardLayout>
