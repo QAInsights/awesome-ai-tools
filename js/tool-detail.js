@@ -12,7 +12,7 @@
  * Memory-efficient: No fetch of large JSON, no localStorage cache bloat.
  */
 
-const ENRICHED_URL = '/public/data/enriched-tools.json';
+const ENRICHED_URL = '/data/enriched-tools.json';
 
 document.addEventListener('DOMContentLoaded', () => {
     const seed = readSeed();

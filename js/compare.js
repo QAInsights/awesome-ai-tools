@@ -3,7 +3,7 @@ import { getVoteCount } from './voting.js';
 import { auth } from './auth.js';
 import html2canvas from 'html2canvas';
 
-const ENRICHED_URL = '/public/data/enriched-tools.json';
+const ENRICHED_URL = '/data/enriched-tools.json';
 const ENABLE_VOTING = process.env.ENABLE_VOTING === 'true';
 
 document.addEventListener('DOMContentLoaded', async () => {
