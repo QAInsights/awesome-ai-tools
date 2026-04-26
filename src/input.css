@@ -373,54 +373,62 @@
     }
 
     .compare-checkbox-box {
-        @apply relative flex items-center justify-center rounded-[6px] border transition-all duration-200;
-        width: 20px;
-        height: 20px;
-        border-radius: 999px;
+        @apply relative flex items-center justify-center border transition-all duration-200;
+        width: 20px !important;
+        height: 20px !important;
+        min-width: 20px;
+        min-height: 20px;
+        max-width: 20px;
+        max-height: 20px;
+        aspect-ratio: 1 / 1;
+        border-radius: 50% !important;
         background:
-            radial-gradient(circle at 34% 32%, rgba(255, 250, 238, 0.96) 0 16%, transparent 17%),
-            radial-gradient(circle at 68% 66%, rgba(195, 134, 63, 0.18) 0 10%, transparent 11%),
-            radial-gradient(circle at 58% 38%, rgba(222, 170, 102, 0.14) 0 9%, transparent 10%),
-            radial-gradient(circle at center, rgba(244, 223, 171, 0.94) 0 60%, rgba(223, 188, 118, 0.98) 61% 100%);
-        border-color: #b89557;
+            radial-gradient(circle at 25% 30%, rgba(200, 150, 80, 0.15) 0 8%, transparent 9%),
+            radial-gradient(circle at 70% 45%, rgba(180, 140, 70, 0.12) 0 6%, transparent 7%),
+            radial-gradient(circle at 45% 65%, rgba(190, 145, 75, 0.1) 0 7%, transparent 8%),
+            radial-gradient(circle at 60% 25%, rgba(185, 140, 70, 0.13) 0 5%, transparent 6%),
+            linear-gradient(135deg, #fffef8 0%, #fdf9f0 50%, #faf5e8 100%);
+        border-color: #e8dcc8;
         box-shadow:
-            inset 0 1px 0 rgba(255, 251, 239, 0.5),
-            inset 0 -1px 1px rgba(133, 75, 20, 0.24),
-            0 0 0 1px rgba(255, 226, 163, 0.08);
+            inset 0 0.5px 1px rgba(255, 255, 255, 0.8),
+            inset 0 -0.5px 1px rgba(200, 180, 140, 0.2),
+            0 0 0 1px rgba(230, 220, 200, 0.3);
     }
 
     .compare-checkbox:hover .compare-checkbox-box {
-        border-color: #d6b77a;
-        transform: translateY(-1px) scale(1.03);
+        border-color: #f0e6d6;
+        transform: translateY(-1px) scale(1.05);
         box-shadow:
-            inset 0 1px 0 rgba(255, 251, 239, 0.56),
-            inset 0 -1px 1px rgba(133, 75, 20, 0.28),
-            0 6px 14px rgba(161, 107, 34, 0.18);
+            inset 0 0.5px 1px rgba(255, 255, 255, 0.9),
+            inset 0 -0.5px 1px rgba(200, 180, 140, 0.25),
+            0 4px 12px rgba(200, 180, 140, 0.2);
     }
 
     .compare-checkbox.active .compare-checkbox-box {
         background:
-            radial-gradient(circle at 32% 30%, rgba(255, 249, 235, 0.98) 0 16%, transparent 17%),
-            radial-gradient(circle at 72% 66%, rgba(178, 108, 42, 0.18) 0 12%, transparent 13%),
-            radial-gradient(circle at center, #f6e2b3 0 58%, #d8af65 59% 100%);
-        border-color: #e5c98c;
+            radial-gradient(circle at 25% 30%, rgba(200, 150, 80, 0.2) 0 8%, transparent 9%),
+            radial-gradient(circle at 70% 45%, rgba(180, 140, 70, 0.18) 0 6%, transparent 7%),
+            radial-gradient(circle at 45% 65%, rgba(190, 145, 75, 0.15) 0 7%, transparent 8%),
+            radial-gradient(circle at 60% 25%, rgba(185, 140, 70, 0.17) 0 5%, transparent 6%),
+            linear-gradient(135deg, #fffef5 0%, #fdf8ed 50%, #faf3e0 100%);
+        border-color: #f5e8d0;
         color: #2b1706;
         box-shadow:
-            inset 0 1px 0 rgba(255, 251, 239, 0.58),
-            0 0 0 4px rgba(214, 183, 122, 0.1),
-            0 8px 18px rgba(126, 74, 22, 0.22);
+            inset 0 0.5px 1px rgba(255, 255, 255, 0.9),
+            0 0 0 3px rgba(250, 240, 220, 0.3),
+            0 6px 16px rgba(200, 180, 140, 0.25);
     }
 
     .compare-checkbox.active .compare-checkbox-box::after {
         content: '';
         position: absolute;
         inset: 2px;
-        border-radius: 999px;
-        border-top: 1px solid rgba(255, 247, 228, 0.6);
-        border-right: 1px solid rgba(255, 247, 228, 0.28);
-        border-bottom: 1px solid rgba(160, 103, 36, 0.18);
-        border-left: 1px solid rgba(160, 103, 36, 0.18);
-        opacity: 0.8;
+        border-radius: 50%;
+        border-top: 0.5px solid rgba(255, 255, 255, 0.5);
+        border-right: 0.5px solid rgba(255, 255, 255, 0.2);
+        border-bottom: 0.5px solid rgba(200, 180, 140, 0.15);
+        border-left: 0.5px solid rgba(200, 180, 140, 0.15);
+        opacity: 0.6;
         pointer-events: none;
     }
 
@@ -469,8 +477,13 @@
         }
 
         .compare-checkbox-box {
-            width: 21px;
-            height: 21px;
+            width: 24px !important;
+            height: 24px !important;
+            min-width: 24px;
+            min-height: 24px;
+            max-width: 24px;
+            max-height: 24px;
+            aspect-ratio: 1 / 1;
         }
     }
 

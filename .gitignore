@@ -39,3 +39,4 @@ TODO.md
 .vercel
 .env*.local
 .agentrules
+.kiro/specs/public-ai-stack-profile/.config.kiro
