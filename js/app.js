@@ -68,6 +68,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // 4. Defer auth/voting to improve first interactivity
+    let syncVotingUi = () => {};
+
     const deferredBootstrap = async () => {
         const [{ initAuthManager }, { initVoting, getVoteCount }] = await Promise.all([
             import('./modules/auth-manager.js'),
@@ -77,17 +79,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         const authManager = initAuthManager({
             collapsedSidebar,
             onStateChange: () => {
-                // Future global state hook
+                syncVotingUi();
             }
         });
         await authManager.initializeAuth();
 
         const { auth } = await import('./auth.js');
-        setVotingContext({
-            getVoteCount,
-            isAuthenticated: () => auth.isAuthenticated()
-        });
-        refreshVotingButtons();
+        syncVotingUi = () => {
+            setVotingContext({
+                getVoteCount,
+                isAuthenticated: () => auth.isAuthenticated()
+            });
+            refreshVotingButtons();
+        };
+        syncVotingUi();
 
         if (ENABLE_VOTING) {
             initVoting().catch(err => console.warn('[voting] init failed:', err));

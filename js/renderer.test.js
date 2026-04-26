@@ -1,341 +1,221 @@
-/**
- * Tests for renderer.js compare toggle and floating bar logic
- *
- * Tests cover:
- * - updateCompareBar: bar visibility, count text, thumbnails, compare button state
- * - setupCompareHandlers: click delegation, INPUT tag guard, slug extraction,
- *   toggle class toggling, clearCompareBtn, compareBtn navigation
- */
+import { beforeEach, describe, expect, test } from 'bun:test';
+import { clearSelection, getSelected, toggleTool } from './compare-state.js';
 
-import { describe, test, expect, beforeEach } from 'bun:test';
-import { clearSelection, toggleTool, getSelected } from './compare-state.js';
+let initRenderer;
+let refreshVotingButtons;
+let setVotingContext;
 
-// ── Minimal DOM mock ──────────────────────────────────────────────────────────
-
-function makeEl(tag = 'div', attrs = {}) {
+function makeEl(tag = 'div') {
     const classes = new Set();
     const listeners = {};
-    const el = {
+
+    return {
         tagName: tag.toUpperCase(),
         dataset: {},
         style: {},
         disabled: false,
         textContent: '',
         innerHTML: '',
-        children: [],
         classList: {
-            add: (...c) => c.forEach(x => classes.add(x)),
-            remove: (...c) => c.forEach(x => classes.delete(x)),
-            toggle: (c, force) => {
-                if (force === undefined) { classes.has(c) ? classes.delete(c) : classes.add(c); }
-                else { force ? classes.add(c) : classes.delete(c); }
+            add: (...tokens) => tokens.forEach(token => classes.add(token)),
+            remove: (...tokens) => tokens.forEach(token => classes.delete(token)),
+            toggle: (token, force) => {
+                if (force === undefined) {
+                    classes.has(token) ? classes.delete(token) : classes.add(token);
+                    return;
+                }
+                force ? classes.add(token) : classes.delete(token);
             },
-            contains: (c) => classes.has(c),
+            contains: (token) => classes.has(token)
         },
-        addEventListener: (ev, fn) => { listeners[ev] = fn; },
-        _trigger: (ev, e) => listeners[ev]?.(e),
-        _classes: classes,
-        ...attrs,
+        addEventListener: (event, handler) => {
+            listeners[event] = handler;
+        },
+        _trigger: (event, payload = {}) => {
+            listeners[event]?.(payload);
+        }
     };
-    return el;
+}
+
+function makeToggle(slug, active = false) {
+    const checkbox = makeEl('input');
+    checkbox.checked = active;
+
+    const toggle = makeEl('label');
+    toggle.dataset.slug = slug;
+    if (active) {
+        toggle.classList.add('active');
+    }
+    toggle.querySelector = (selector) => selector === 'input[type="checkbox"]' ? checkbox : null;
+    toggle._checkbox = checkbox;
+
+    return toggle;
 }
 
 function makeGrid() {
     const listeners = {};
-    const children = [];
+    const state = {
+        activeToggles: [],
+        zapButtons: []
+    };
+
     return {
-        tagName: 'DIV',
-        addEventListener: (ev, fn) => { listeners[ev] = fn; },
-        _trigger: (ev, e) => listeners[ev]?.(e),
-        querySelectorAll: (sel) => sel === '.compare-toggle-switch.active' ? children.filter(c => c.classList.contains('active')) : [],
-        appendChild: (c) => children.push(c),
-        innerHTML: '',
-        children,
+        addEventListener: (event, handler) => {
+            listeners[event] = handler;
+        },
+        _trigger: (event, payload) => {
+            listeners[event]?.(payload);
+        },
+        querySelectorAll: (selector) => {
+            if (selector === '.compare-toggle-switch.active') return state.activeToggles;
+            if (selector === '.zap-btn[data-tool-id]') return state.zapButtons;
+            return [];
+        },
+        _state: state
     };
 }
 
-// ── Shared state ──────────────────────────────────────────────────────────────
+describe('renderer', () => {
+    let bar;
+    let countText;
+    let thumbnails;
+    let compareBtn;
+    let clearBtn;
+    let grid;
 
-let bar, countText, thumbnails, compareBtn, clearBtn, grid;
-const elements = {};
-
-function setupDOM() {
-    bar = makeEl('div');
-    countText = makeEl('span');
-    thumbnails = makeEl('div');
-    compareBtn = makeEl('button');
-    clearBtn = makeEl('button');
-    grid = makeGrid();
-
-    elements['compareFloatingBar'] = bar;
-    elements['compareCountText'] = countText;
-    elements['compareThumbnails'] = thumbnails;
-    elements['compareBtn'] = compareBtn;
-    elements['clearCompareBtn'] = clearBtn;
-
-    global.document = {
-        getElementById: (id) => elements[id] ?? null,
-        querySelectorAll: () => [],
-    };
-    global.window = { location: { href: '' } };
-}
-
-// ── Inline updateCompareBar (mirrors renderer.js logic exactly) ──────────────
-
-function updateCompareBar() {
-    const selected = getSelected();
-    const b = global.document.getElementById('compareFloatingBar');
-    const ct = global.document.getElementById('compareCountText');
-    const th = global.document.getElementById('compareThumbnails');
-    const cb = global.document.getElementById('compareBtn');
-
-    if (!b) return;
-
-    if (selected.length === 0) {
-        b.style.translate = '0 100%';
-    } else {
-        b.style.translate = '0 0';
-    }
-
-    if (ct) {
-        ct.textContent = `${selected.length} tool${selected.length === 1 ? '' : 's'} selected`;
-    }
-
-    if (th) {
-        th.innerHTML = selected.map(slug =>
-            `<span>${slug}</span>`
-        ).join('');
-    }
-
-    if (cb) {
-        cb.disabled = selected.length < 2;
-    }
-}
-
-// ── Tests ─────────────────────────────────────────────────────────────────────
-
-describe('renderer > updateCompareBar', () => {
     beforeEach(() => {
         clearSelection();
-        setupDOM();
+        process.env.ENABLE_VOTING = 'true';
+
+        bar = makeEl('div');
+        countText = makeEl('span');
+        thumbnails = makeEl('div');
+        compareBtn = makeEl('button');
+        clearBtn = makeEl('button');
+        grid = makeGrid();
+
+        const elements = {
+            compareFloatingBar: bar,
+            compareCountText: countText,
+            compareThumbnails: thumbnails,
+            compareBtn,
+            clearCompareBtn: clearBtn
+        };
+
+        global.document = {
+            getElementById: (id) => elements[id] ?? null,
+            querySelector: () => null
+        };
+
+        global.window = {
+            location: { href: '' },
+            innerWidth: 1280
+        };
     });
 
-    test('should hide bar when no tools selected', () => {
-        updateCompareBar();
-        expect(bar.style.translate).toBe('0 100%');
-    });
+    test('updates compare bar through the real delegated click handler', async () => {
+        ({ initRenderer, refreshVotingButtons, setVotingContext } = await import(`./renderer.js?test=${Date.now()}`));
+        initRenderer(grid);
 
-    test('should show bar when one tool selected', () => {
-        toggleTool('cursor');
-        updateCompareBar();
+        const toggle = makeToggle('cursor');
+        const target = makeEl('span');
+        target.closest = (selector) => selector === '.compare-toggle-switch' ? toggle : null;
+
+        grid._trigger('click', {
+            target,
+            preventDefault: () => {}
+        });
+
+        expect(getSelected()).toEqual(['cursor']);
+        expect(toggle.classList.contains('active')).toBe(true);
+        expect(toggle._checkbox.checked).toBe(true);
         expect(bar.style.translate).toBe('0 0');
-    });
-
-    test('should show bar when multiple tools selected', () => {
-        toggleTool('cursor');
-        toggleTool('windsurf');
-        updateCompareBar();
-        expect(bar.style.translate).toBe('0 0');
-    });
-
-    test('should hide bar again after clearing selection', () => {
-        toggleTool('cursor');
-        updateCompareBar();
-        expect(bar.style.translate).toBe('0 0');
-
-        clearSelection();
-        updateCompareBar();
-        expect(bar.style.translate).toBe('0 100%');
-    });
-
-    test('should display singular label for one tool', () => {
-        toggleTool('cursor');
-        updateCompareBar();
         expect(countText.textContent).toBe('1 tool selected');
-    });
-
-    test('should display plural label for two tools', () => {
-        toggleTool('cursor');
-        toggleTool('windsurf');
-        updateCompareBar();
-        expect(countText.textContent).toBe('2 tools selected');
-    });
-
-    test('should disable compare button with fewer than 2 tools', () => {
-        toggleTool('cursor');
-        updateCompareBar();
+        expect(thumbnails.innerHTML).toContain('cursor');
         expect(compareBtn.disabled).toBe(true);
     });
 
-    test('should enable compare button with 2 tools', () => {
+    test('clear button removes active selections through the renderer handler', async () => {
+        ({ initRenderer, refreshVotingButtons, setVotingContext } = await import(`./renderer.js?test=${Date.now()}`));
+        initRenderer(grid);
+
+        const cursorToggle = makeToggle('cursor', true);
+        const windsurfToggle = makeToggle('windsurf', true);
+        grid._state.activeToggles = [cursorToggle, windsurfToggle];
+
         toggleTool('cursor');
         toggleTool('windsurf');
-        updateCompareBar();
-        expect(compareBtn.disabled).toBe(false);
+
+        clearBtn._trigger('click');
+
+        expect(getSelected()).toEqual([]);
+        expect(cursorToggle.classList.contains('active')).toBe(false);
+        expect(windsurfToggle.classList.contains('active')).toBe(false);
+        expect(cursorToggle._checkbox.checked).toBe(false);
+        expect(windsurfToggle._checkbox.checked).toBe(false);
+        expect(bar.style.translate).toBe('0 100%');
+        expect(compareBtn.disabled).toBe(true);
     });
 
-    test('should enable compare button with 3 tools', () => {
+    test('compare button navigates using the selected slugs', async () => {
+        ({ initRenderer, refreshVotingButtons, setVotingContext } = await import(`./renderer.js?test=${Date.now()}`));
+        initRenderer(grid);
+
         toggleTool('cursor');
         toggleTool('windsurf');
-        toggleTool('aider');
-        updateCompareBar();
-        expect(compareBtn.disabled).toBe(false);
+
+        compareBtn._trigger('click');
+
+        expect(window.location.href).toBe('/compare?tools=cursor,windsurf');
     });
 
-    test('should render slug thumbnails', () => {
-        toggleTool('cursor');
-        toggleTool('windsurf');
-        updateCompareBar();
-        expect(thumbnails.innerHTML).toContain('cursor');
-        expect(thumbnails.innerHTML).toContain('windsurf');
-    });
+    test('refreshVotingButtons re-renders vote buttons with live auth context', async () => {
+        ({ initRenderer, refreshVotingButtons, setVotingContext } = await import(`./renderer.js?test=${Date.now()}`));
+        initRenderer(grid);
 
-    test('should return early when bar element is missing', () => {
-        elements['compareFloatingBar'] = null;
-        expect(() => updateCompareBar()).not.toThrow();
-    });
+        const voteButton = {
+            dataset: {
+                toolId: 'anysphere-cursor',
+                toolName: 'Cursor'
+            },
+            outerHTML: ''
+        };
+        grid._state.zapButtons = [voteButton];
 
-    test('should handle missing countText gracefully', () => {
-        elements['compareCountText'] = null;
-        toggleTool('cursor');
-        expect(() => updateCompareBar()).not.toThrow();
-        expect(bar.style.translate).toBe('0 0');
-    });
-
-    test('should handle missing compareBtn gracefully', () => {
-        elements['compareBtn'] = null;
-        toggleTool('cursor');
-        toggleTool('windsurf');
-        expect(() => updateCompareBar()).not.toThrow();
-    });
-});
-
-describe('renderer > setupCompareHandlers (click delegation)', () => {
-    beforeEach(() => {
-        clearSelection();
-        setupDOM();
-    });
-
-    function makeToggle(slug, active = false) {
-        const checkbox = makeEl('input');
-        checkbox.tagName = 'INPUT';
-        checkbox.checked = false;
-        const toggle = makeEl('label');
-        toggle.dataset.slug = slug;
-        if (active) toggle._classes.add('active');
-        toggle.querySelector = (sel) => sel === 'input[type="checkbox"]' ? checkbox : null;
-        toggle._checkbox = checkbox;
-        return toggle;
-    }
-
-    function simulateClick(target, closest) {
-        // closest('.compare-toggle-switch') is called on e.target
-        target.closest = (sel) => sel === '.compare-toggle-switch' ? closest : null;
-        grid._trigger('click', { target, preventDefault: () => {} });
-    }
-
-    test('should ignore click when target is INPUT', () => {
-        const inputEl = makeEl('input');
-        inputEl.tagName = 'INPUT';
-        inputEl.closest = () => null;
-        const beforeSelected = getSelected().length;
-        grid._trigger('click', { target: inputEl, preventDefault: () => {} });
-        expect(getSelected().length).toBe(beforeSelected);
-    });
-
-    test('should ignore click when no toggle ancestor found', () => {
-        const el = makeEl('div');
-        el.closest = () => null;
-        grid._trigger('click', { target: el, preventDefault: () => {} });
-        expect(getSelected().length).toBe(0);
-    });
-
-    test('should ignore click when toggle has no slug', () => {
-        const toggle = makeToggle('');
-        toggle.dataset.slug = '';
-        simulateClick(makeEl('span'), toggle);
-        expect(getSelected().length).toBe(0);
-    });
-
-    test('should not double-toggle on synthetic checkbox click', () => {
-        // Wire a real click handler that mirrors setupCompareHandlers
-        const localGrid = makeGrid();
-        localGrid.addEventListener('click', (e) => {
-            if (e.target.tagName === 'INPUT') return;
-            const toggle = e.target.closest('.compare-toggle-switch');
-            if (!toggle) return;
-            e.preventDefault();
-            const slug = toggle.dataset.slug;
-            if (!slug) return;
-            toggleTool(slug);
+        setVotingContext({
+            getVoteCount: () => 42,
+            isAuthenticated: () => true
         });
 
-        const toggle = makeToggle('cursor');
-        const spanTarget = makeEl('span');
-        spanTarget.closest = (sel) => sel === '.compare-toggle-switch' ? toggle : null;
+        refreshVotingButtons();
 
-        // First click via label target — should add
-        localGrid._trigger('click', { target: spanTarget, preventDefault: () => {} });
-        expect(getSelected()).toContain('cursor');
-
-        // Synthetic INPUT click — must be ignored, selection stays
-        const inputEl = makeEl('input');
-        inputEl.tagName = 'INPUT';
-        inputEl.closest = () => toggle;
-        localGrid._trigger('click', { target: inputEl, preventDefault: () => {} });
-        expect(getSelected()).toContain('cursor');
+        expect(voteButton.outerHTML).toContain('Zap this tool!');
+        expect(voteButton.outerHTML).toContain('42');
+        expect(voteButton.outerHTML).toContain('data-tool-id="anysphere-cursor"');
     });
 
-    test('clearCompareBtn click clears all active toggles', () => {
-        toggleTool('cursor');
-        toggleTool('windsurf');
+    test('refreshVotingButtons falls back to signed-out state when auth is false', async () => {
+        ({ initRenderer, refreshVotingButtons, setVotingContext } = await import(`./renderer.js?test=${Date.now()}`));
+        initRenderer(grid);
 
-        const t1 = makeToggle('cursor', true);
-        const t2 = makeToggle('windsurf', true);
-        grid.children.push(t1, t2);
+        const voteButton = {
+            dataset: {
+                toolId: 'codeium-windsurf',
+                toolName: 'Windsurf'
+            },
+            outerHTML: ''
+        };
+        grid._state.zapButtons = [voteButton];
 
-        // Wire clearBtn handler the same way setupCompareHandlers does
-        const localClearBtn = makeEl('button');
-        localClearBtn.addEventListener('click', () => {
-            clearSelection();
-            grid.querySelectorAll('.compare-toggle-switch.active').forEach(t => {
-                t.classList.remove('active');
-                const cb = t.querySelector('input[type="checkbox"]');
-                if (cb) cb.checked = false;
-            });
+        setVotingContext({
+            getVoteCount: () => 7,
+            isAuthenticated: () => false
         });
-        localClearBtn._trigger('click', {});
-        expect(getSelected().length).toBe(0);
-    });
 
-    test('compareBtn navigates to compare URL with selected slugs', () => {
-        toggleTool('cursor');
-        toggleTool('windsurf');
+        refreshVotingButtons();
 
-        // Wire compareBtn handler the same way setupCompareHandlers does
-        const localCompareBtn = makeEl('button');
-        localCompareBtn.addEventListener('click', () => {
-            const selected = getSelected();
-            if (selected.length >= 2) {
-                global.window.location.href = `/compare?tools=${selected.join(',')}`;
-            }
-        });
-        localCompareBtn._trigger('click', {});
-        expect(global.window.location.href).toBe('/compare?tools=cursor,windsurf');
-    });
-
-    test('compareBtn does not navigate with fewer than 2 tools', () => {
-        global.window.location.href = '';
-        toggleTool('cursor');
-
-        const localCompareBtn = makeEl('button');
-        localCompareBtn.addEventListener('click', () => {
-            const selected = getSelected();
-            if (selected.length >= 2) {
-                global.window.location.href = `/compare?tools=${selected.join(',')}`;
-            }
-        });
-        localCompareBtn._trigger('click', {});
-        expect(global.window.location.href).toBe('');
+        expect(voteButton.outerHTML).toContain('Sign in to vote!');
+        expect(voteButton.outerHTML).toContain('7');
+        expect(voteButton.outerHTML).toContain('data-tool-name="Windsurf"');
     });
 });
