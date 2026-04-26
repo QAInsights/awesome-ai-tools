@@ -543,6 +543,16 @@
     }
 }
 
+/* ── MOBILE SIDEBAR ── */
+#sidebar.mobile-open {
+    translate: 0 0;
+}
+
+/* Mobile overlay opacity transition */
+#sidebarOverlay:not(.hidden) {
+    opacity: 1;
+}
+
 /* ── COLLAPSED SIDEBAR COMPONENT ── */
 #iconSidebar {
     display: none;

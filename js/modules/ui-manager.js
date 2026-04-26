@@ -36,10 +36,13 @@ export function initUiManager() {
         if (open) {
             sidebar?.classList.add('mobile-open');
             sidebarOverlay?.classList.remove('hidden');
+            // Force opacity to 1 for the overlay transition
+            setTimeout(() => { sidebarOverlay && (sidebarOverlay.style.opacity = '1'); }, 10);
             document.body.style.overflow = 'hidden';
         } else {
             sidebar?.classList.remove('mobile-open');
-            sidebarOverlay?.classList.add('hidden');
+            sidebarOverlay && (sidebarOverlay.style.opacity = '0');
+            setTimeout(() => { sidebarOverlay?.classList.add('hidden'); }, 300);
             document.body.style.overflow = '';
         }
     };
