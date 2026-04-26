@@ -39,7 +39,7 @@ export function setVotingContext(context = {}) {
 function createZapButtonHtml(toolId, toolName, voteCount) {
     if (!ENABLE_VOTING) {
         return `
-                <button class="zap-btn sm inline opacity-50 cursor-not-allowed" disabled data-tip="Voting is disabled.">
+                <button class="zap-btn sm row opacity-50 cursor-not-allowed" disabled data-tip="Voting is disabled.">
                     <svg class="zap-icon" viewBox="0 0 24 24" fill="none">
                         <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
                     </svg>
@@ -50,7 +50,7 @@ function createZapButtonHtml(toolId, toolName, voteCount) {
 
     if (isAuthenticatedFn()) {
         return `
-                <button class="zap-btn sm inline" data-tip="Zap this tool!" 
+                <button class="zap-btn sm row" data-tip="Zap this tool!" 
                     data-tool-id="${toolId}"
                     data-tool-name="${toolName}">
                     <div class="zap-ring"></div>
@@ -70,7 +70,7 @@ function createZapButtonHtml(toolId, toolName, voteCount) {
     }
 
     return `
-                <button class="zap-btn sm inline" data-tip="Sign in to vote!" 
+                <button class="zap-btn sm row" data-tip="Sign in to vote!" 
                     data-tool-id="${toolId}"
                     data-tool-name="${toolName}">
                     <svg class="zap-icon" viewBox="0 0 24 24" fill="none" style="opacity:0.4">
@@ -299,7 +299,7 @@ function createToolRow(tool, index) {
                     </a>
                 </div>
             </div>
-            <div class="shrink-0 md:w-[100px] md:pr-6 flex justify-end lg:justify-start md:order-5">
+            <div class="shrink-0 md:w-[120px] md:pr-6 flex justify-end md:justify-center md:order-5">
 ${createZapButtonHtml(toolId, tool.name, initialVoteCount)}
             </div>
         </div>

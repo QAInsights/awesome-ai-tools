@@ -29,7 +29,92 @@
     
     /* Better button active state */
     #filterAccordionBtn.active {
-        @apply bg-white/10 border-white/40 text-white shadow-[0_0_20px_rgba(255,255,255,0.05)];
+        border-color: #4c4030;
+        color: #fff4de;
+        background: #211c16;
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.02),
+            0 0 0 4px rgba(214, 183, 122, 0.08);
+    }
+
+    .search-shell {
+        position: relative;
+    }
+
+    .search-input {
+        min-height: 52px;
+        border: 1px solid #2a2a2a;
+        background: #151515;
+        color: #f5f2eb;
+        padding: 0.9rem 6rem 0.9rem 2.9rem;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    }
+
+    @media (min-width: 768px) {
+        .search-input {
+            min-height: 52px;
+            padding-top: 0.9rem;
+            padding-bottom: 0.9rem;
+        }
+    }
+
+    .search-input::placeholder {
+        color: #8b8b8b;
+        opacity: 1;
+    }
+
+    .search-input:hover {
+        border-color: #383838;
+        background: #181818;
+    }
+
+    .search-input:focus {
+        border-color: #4b4b4b;
+        background: #111111;
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.02),
+            0 0 0 4px rgba(255, 255, 255, 0.04);
+    }
+
+    .search-shortcut {
+        align-items: center;
+        justify-content: center;
+        min-width: 28px;
+        height: 28px;
+        padding: 0 0.45rem;
+        border-radius: 999px;
+        border: 1px solid #333;
+        background: #1a1a1a;
+        color: #a3a3a3;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        line-height: 1;
+    }
+
+    .search-result-count {
+        color: #9a9a9a;
+        background: #1a1a1a;
+        border: 1px solid #303030;
+        padding: 0.2rem 0.5rem;
+        border-radius: 999px;
+    }
+
+    .refine-btn {
+        border: 1px solid #2a2a2a;
+        background: #181818;
+        color: #d9d9d9;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    }
+
+    .refine-btn:hover {
+        border-color: #3c3c3c;
+        color: #ffffff;
+        background: #1d1d1d;
+        transform: translateY(-1px);
+    }
+
+    .refine-btn svg {
+        color: #d6b77a;
     }
 
     #signInModal {
@@ -122,8 +207,8 @@
     .zap-btn.sm {
         @apply w-[56px] h-[52px];
     }
-    .zap-btn.sm.inline {
-        @apply w-auto h-auto min-h-[38px] px-3 py-1.5 flex-row gap-2;
+    .zap-btn.row {
+        @apply h-[44px] min-w-[74px] px-3.5 flex-row gap-2.5;
     }
     .zap-btn:hover {
         @apply bg-white/[0.08] border-[#444] -translate-y-px shadow-lg shadow-black/20;

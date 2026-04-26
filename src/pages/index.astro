@@ -100,24 +100,25 @@ const toolsJson = JSON.stringify(tools);
                     <div class="flex items-center justify-between gap-6">
                         <div class="flex items-center gap-4 flex-1">
                             <!-- Search -->
-                            <div class="relative max-w-md w-full group">
-                                <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#525252] group-focus-within:text-[#a3a3a3] w-4.5 h-4.5 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <div class="search-shell relative max-w-[560px] w-full group">
+                                <svg class="absolute left-4 top-1/2 md:top-[26px] -translate-y-1/2 text-[#6f6a63] group-focus-within:text-[#d6c7a8] w-4.5 h-4.5 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <circle cx="11" cy="11" r="8"></circle>
                                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                                 </svg>
-                                <input type="text" id="searchInput" placeholder="Search 100+ tools... (/)" autocomplete="off" class="w-full bg-[#111] border border-[#222] rounded-xl py-3 pl-11 pr-10 text-white text-[15px] transition-all duration-300 outline-none focus:border-[#444] focus:bg-black placeholder-[#404040]">
-                                <div class="absolute right-3.5 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                                <input type="text" id="searchInput" placeholder="Search tools, agents, and workflows" autocomplete="off" class="search-input w-full rounded-2xl text-[15px] outline-none transition-all duration-300">
+                                <div class="absolute right-3.5 top-1/2 md:top-[26px] -translate-y-1/2 flex items-center gap-2">
                                     <button class="bg-transparent border-none text-[#737373] text-sm cursor-pointer p-1 hidden hover:text-white" id="searchClear" aria-label="Clear search" title="Clear search">&#x2715;</button>
-                                    <span id="resultCount" class="font-mono text-[10px] text-[#525252] bg-[#1a1a1a] px-2 py-0.5 rounded-md hidden md:block"></span>
+                                    <span class="search-shortcut hidden md:inline-flex" aria-hidden="true">/</span>
+                                    <span id="resultCount" class="search-result-count font-mono text-[10px] hidden md:block"></span>
                                 </div>
                             </div>
                             
                             <!-- Filter Toggle Button -->
-                            <button id="filterAccordionBtn" class="flex items-center gap-2.5 px-5 py-3 bg-[#111] border border-[#222] rounded-xl text-sm font-medium text-[#a3a3a3] hover:text-white hover:border-[#444] transition-all active:scale-[0.98]">
+                            <button id="filterAccordionBtn" class="refine-btn flex h-[52px] items-center gap-2.5 px-5 rounded-2xl text-sm font-medium transition-all active:scale-[0.98]">
                                 <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
                                 </svg>
-                                Filters
+                                <span>Scope</span>
                                 <span id="activeFilterBadge" class="hidden font-mono text-[10px] bg-white text-black px-1.5 py-0.5 rounded-full"></span>
                             </button>
                         </div>
@@ -169,7 +170,7 @@ const toolsJson = JSON.stringify(tools);
                     <div class="w-[200px] pr-6 shrink-0 text-sm cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="company">Company <span class="sort-icon opacity-50">↕</span></div>
                     <div class="grow pr-6 text-sm cursor-pointer hover:text-white select-none" style="pointer-events: none;">Description</div>
                     <div class="hidden lg:flex w-[180px] px-6 shrink-0 text-sm cursor-pointer hover:text-white select-none items-center justify-center gap-2" data-sort="category">Category <span class="sort-icon opacity-50">↕</span></div>
-                    <div class="w-[100px] pr-6 shrink-0 text-sm cursor-pointer hover:text-white select-none flex items-center justify-start gap-2" data-sort="votes">⚡ Zap <span class="sort-icon opacity-50">↕</span></div>
+                    <div class="w-[120px] pr-6 shrink-0 text-sm cursor-pointer hover:text-white select-none flex items-center justify-center gap-2" data-sort="votes">⚡ Zap <span class="sort-icon opacity-50">↕</span></div>
                 </div>
 
                 <!-- Tool Grid — populated by client-side JS -->
