@@ -341,57 +341,136 @@
         flex-shrink: 0;
     }
 
-    /* Custom Toggle Switch for Compare */
-    .compare-toggle-switch {
-        @apply relative inline-flex items-center cursor-pointer shrink-0 select-none;
-        width: 36px;
+    .compare-row {
+        border-radius: 22px;
+        padding-inline: 0.9rem;
+        margin-inline: -0.9rem;
+    }
+
+    .compare-row:hover {
+        @apply border-[#444] bg-white/[0.02];
+    }
+
+    .compare-row.compare-row-selected,
+    .compare-row[data-selected='true'] {
+        border-color: #4c4030;
+        background:
+            linear-gradient(180deg, rgba(214, 183, 122, 0.06), rgba(214, 183, 122, 0.02)),
+            rgba(255, 255, 255, 0.02);
+        box-shadow: inset 0 0 0 1px rgba(214, 183, 122, 0.08);
+    }
+
+    .compare-checkbox {
+        @apply relative inline-flex items-center justify-center cursor-pointer shrink-0 select-none;
+        width: 20px;
         height: 20px;
-        /* Increase touch target for mobile */
         padding: 4px;
         margin: -4px;
     }
-    .compare-toggle-switch input {
+
+    .compare-checkbox input {
         @apply sr-only;
     }
-    .compare-toggle-track {
-        @apply absolute inset-0 rounded-full border transition-all duration-200;
-        background: transparent;
-        border-color: #333;
+
+    .compare-checkbox-box {
+        @apply relative flex items-center justify-center rounded-[6px] border transition-all duration-200;
+        width: 20px;
+        height: 20px;
+        border-radius: 999px;
+        background:
+            radial-gradient(circle at 34% 32%, rgba(255, 250, 238, 0.96) 0 16%, transparent 17%),
+            radial-gradient(circle at 68% 66%, rgba(195, 134, 63, 0.18) 0 10%, transparent 11%),
+            radial-gradient(circle at 58% 38%, rgba(222, 170, 102, 0.14) 0 9%, transparent 10%),
+            radial-gradient(circle at center, rgba(244, 223, 171, 0.94) 0 60%, rgba(223, 188, 118, 0.98) 61% 100%);
+        border-color: #b89557;
+        box-shadow:
+            inset 0 1px 0 rgba(255, 251, 239, 0.5),
+            inset 0 -1px 1px rgba(133, 75, 20, 0.24),
+            0 0 0 1px rgba(255, 226, 163, 0.08);
     }
-    .compare-toggle-switch:hover .compare-toggle-track {
-        border-color: #666;
+
+    .compare-checkbox:hover .compare-checkbox-box {
+        border-color: #d6b77a;
+        transform: translateY(-1px) scale(1.03);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 251, 239, 0.56),
+            inset 0 -1px 1px rgba(133, 75, 20, 0.28),
+            0 6px 14px rgba(161, 107, 34, 0.18);
     }
-    .compare-toggle-thumb {
-        @apply absolute rounded-full transition-all duration-200;
-        width: 14px;
-        height: 14px;
-        background: #737373;
-        top: 3px;
-        left: 3px;
+
+    .compare-checkbox.active .compare-checkbox-box {
+        background:
+            radial-gradient(circle at 32% 30%, rgba(255, 249, 235, 0.98) 0 16%, transparent 17%),
+            radial-gradient(circle at 72% 66%, rgba(178, 108, 42, 0.18) 0 12%, transparent 13%),
+            radial-gradient(circle at center, #f6e2b3 0 58%, #d8af65 59% 100%);
+        border-color: #e5c98c;
+        color: #2b1706;
+        box-shadow:
+            inset 0 1px 0 rgba(255, 251, 239, 0.58),
+            0 0 0 4px rgba(214, 183, 122, 0.1),
+            0 8px 18px rgba(126, 74, 22, 0.22);
     }
-    /* Selected State */
-    .compare-toggle-switch.active .compare-toggle-track {
-        background: linear-gradient(135deg, #a78bfa, #22d3ee);
-        border-color: transparent;
+
+    .compare-checkbox.active .compare-checkbox-box::after {
+        content: '';
+        position: absolute;
+        inset: 2px;
+        border-radius: 999px;
+        border-top: 1px solid rgba(255, 247, 228, 0.6);
+        border-right: 1px solid rgba(255, 247, 228, 0.28);
+        border-bottom: 1px solid rgba(160, 103, 36, 0.18);
+        border-left: 1px solid rgba(160, 103, 36, 0.18);
+        opacity: 0.8;
+        pointer-events: none;
     }
-    .compare-toggle-switch.active .compare-toggle-thumb {
-        background: #fff;
-        transform: translateX(16px);
+
+    .compare-checkbox.compare-checkbox-disabled {
+        cursor: not-allowed;
+        opacity: 0.45;
     }
-    /* Mobile: larger touch target */
+
+    .compare-checkbox-icon {
+        width: 12px;
+        height: 12px;
+        opacity: 0;
+        transform: scale(0.75);
+        transition: opacity 0.18s ease, transform 0.18s ease;
+        filter: drop-shadow(0 1px 0 rgba(255, 252, 243, 0.2));
+    }
+
+    .compare-checkbox.active .compare-checkbox-icon {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .compare-pill {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        border: 1px solid #72552e;
+        background: linear-gradient(180deg, rgba(87, 60, 26, 0.7), rgba(59, 41, 19, 0.82));
+        color: #f4dfb2;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        line-height: 1;
+        padding: 0.45rem 0.65rem;
+        box-shadow: inset 0 1px 0 rgba(255, 244, 214, 0.06);
+    }
+
     @media (max-width: 768px) {
-        .compare-toggle-switch {
-            width: 44px;
+        .compare-row {
+            padding-inline: 0.7rem;
+            margin-inline: -0.7rem;
+        }
+
+        .compare-checkbox {
+            width: 24px;
             height: 24px;
         }
-        .compare-toggle-thumb {
-            width: 18px;
-            height: 18px;
-            top: 3px;
-            left: 3px;
-        }
-        .compare-toggle-switch.active .compare-toggle-thumb {
-            transform: translateX(20px);
+
+        .compare-checkbox-box {
+            width: 21px;
+            height: 21px;
         }
     }
 

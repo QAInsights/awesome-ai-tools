@@ -17,6 +17,7 @@ let loadedCount = 0;
 let observer = null;
 let grid = null;
 let onClearCallback = null;
+const COMPARE_LIMIT = 3;
 
 /**
  * Initialize the renderer
@@ -100,6 +101,7 @@ function updateCompareBar() {
     const selected = getSelected();
     const bar = document.getElementById('compareFloatingBar');
     const countText = document.getElementById('compareCountText');
+    const helperText = document.getElementById('compareHelperText');
     const thumbsContainer = document.getElementById('compareThumbnails');
     const compareBtn = document.getElementById('compareBtn');
 
@@ -112,62 +114,100 @@ function updateCompareBar() {
     }
 
     if (countText) {
-        countText.textContent = `${selected.length} tool${selected.length === 1 ? '' : 's'} selected`;
+        countText.textContent = selected.length === 0
+            ? 'Select tools to compare'
+            : `${selected.length} of ${COMPARE_LIMIT} selected`;
+    }
+
+    if (helperText) {
+        if (selected.length === 0) {
+            helperText.textContent = `Pick up to ${COMPARE_LIMIT} tools. Compare unlocks when you select at least 2.`;
+        } else {
+            helperText.textContent = selected.length === COMPARE_LIMIT
+                ? 'Selection limit reached. Remove one tool to pick another.'
+                : `Select ${Math.max(2 - selected.length, 0)} more to compare, or keep adding up to ${COMPARE_LIMIT}.`;
+        }
     }
 
     if (thumbsContainer) {
-        thumbsContainer.innerHTML = selected.map(slug =>
-            `<span class="font-mono text-[12px] text-[#a3a3a3] bg-white/5 border border-[#333] rounded px-2 py-0.5">${slug}</span>`
+        thumbsContainer.innerHTML = selected.map((slug) => {
+            const row = grid?.querySelector?.(`[data-compare-row][data-slug="${slug}"]`);
+            const label = row?.dataset?.toolName || slug;
+            return `<span class="compare-pill">${label}</span>`;
+        }
         ).join('');
     }
 
     if (compareBtn) {
         compareBtn.disabled = selected.length < 2;
+        compareBtn.textContent = selected.length >= 2
+            ? `Compare ${selected.length}`
+            : 'Compare';
     }
 }
 
 /**
- * Set up event handlers for compare toggle switches and floating bar buttons
+ * Sync the visual state of compare rows and checkboxes.
  */
-function setupCompareHandlers() {
-    console.log('[compare] setupCompareHandlers called, grid:', grid);
-    console.log('[compare] clearCompareBtn:', document.getElementById('clearCompareBtn'));
-    console.log('[compare] compareBtn:', document.getElementById('compareBtn'));
-    console.log('[compare] compareFloatingBar:', document.getElementById('compareFloatingBar'));
+function syncCompareRows() {
+    const selected = getSelected();
+    const atLimit = selected.length >= COMPARE_LIMIT;
 
-    grid.addEventListener('click', (e) => {
-        // Ignore the synthetic click the browser re-dispatches onto the checkbox
-        if (e.target.tagName === 'INPUT') return;
+    grid?.querySelectorAll?.('[data-compare-row]').forEach((row) => {
+        const slug = row.dataset.slug;
+        const checked = isSelected(slug);
+        const checkbox = row.querySelector('input[type="checkbox"]');
+        const control = row.querySelector('.compare-checkbox');
 
-        const toggle = e.target.closest('.compare-toggle-switch');
-        if (!toggle) return;
+        row.classList.toggle('compare-row-selected', checked);
+        row.dataset.selected = checked ? 'true' : 'false';
+        row.setAttribute('aria-selected', checked ? 'true' : 'false');
 
-        e.preventDefault();
-        const slug = toggle.dataset.slug;
-        console.log('[compare] toggle clicked, slug:', slug);
-        if (!slug) return;
-
-        const success = toggleTool(slug);
-        console.log('[compare] toggleTool success:', success, 'isSelected:', isSelected(slug));
-        if (success) {
-            const selected = isSelected(slug);
-            toggle.classList.toggle('active', selected);
-            const checkbox = toggle.querySelector('input[type="checkbox"]');
-            if (checkbox) checkbox.checked = selected;
+        if (checkbox) {
+            checkbox.checked = checked;
+            checkbox.disabled = atLimit && !checked;
         }
 
-        updateCompareBar();
+        if (control) {
+            control.classList.toggle('active', checked);
+            control.classList.toggle('compare-checkbox-disabled', atLimit && !checked);
+        }
+    });
+}
+
+function handleCompareSelection(slug) {
+    if (!slug) return;
+
+    const success = toggleTool(slug);
+    if (!success) return;
+
+    syncCompareRows();
+    updateCompareBar();
+}
+
+/**
+ * Set up event handlers for compare checkboxes and floating bar buttons
+ */
+function setupCompareHandlers() {
+    if (!grid) return;
+
+    grid.addEventListener('click', (e) => {
+        const interactiveChild = e.target.closest('a, button');
+        if (interactiveChild && !interactiveChild.closest('.compare-checkbox')) return;
+
+        const row = e.target.closest('[data-compare-row]');
+        const control = e.target.closest('.compare-checkbox');
+        if (!row && !control) return;
+
+        e.preventDefault();
+        handleCompareSelection((control || row)?.dataset.slug);
     });
 
     const clearBtn = document.getElementById('clearCompareBtn');
     if (clearBtn) {
         clearBtn.addEventListener('click', () => {
             clearSelection();
-            grid.querySelectorAll('.compare-toggle-switch.active').forEach(toggle => {
-                toggle.classList.remove('active');
-                const checkbox = toggle.querySelector('input[type="checkbox"]');
-                if (checkbox) checkbox.checked = false;
-            });
+            syncCompareRows();
             updateCompareBar();
         });
     }
@@ -181,6 +221,8 @@ function setupCompareHandlers() {
             }
         });
     }
+
+    updateCompareBar();
 }
 
 /**
@@ -250,6 +292,8 @@ function loadBatch() {
     grid.appendChild(fragment);
     loadedCount = endIndex;
 
+    syncCompareRows();
+    updateCompareBar();
     updateSentinel();
 }
 
@@ -261,8 +305,12 @@ function loadBatch() {
  */
 function createToolRow(tool, index) {
     const row = document.createElement('div');
-    row.className = 'flex flex-col md:flex-row gap-2 md:gap-0 py-6 border-b border-[#222] text-white transition-all duration-200 hover:border-[#444] hover:bg-white/[0.02] items-start group row-anim';
+    row.className = 'compare-row flex flex-col md:flex-row gap-2 md:gap-0 py-5 md:py-6 border-b border-[#222] text-white transition-all duration-200 items-start group row-anim cursor-pointer';
     row.style.animationDelay = `${(index % 15) * 0.02}s`;
+    row.dataset.compareRow = 'true';
+    row.dataset.slug = tool.slug;
+    row.dataset.toolName = tool.name;
+    row.dataset.selected = isSelected(tool.slug) ? 'true' : 'false';
 
     const catShort = getShortCategory(tool.category);
     const catClean = tool.category.replace(/^[\u2700-\u27BF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u26FF]/g, '').trim();
@@ -280,10 +328,14 @@ function createToolRow(tool, index) {
     row.innerHTML = `
         <div class="w-full flex justify-between items-start md:contents mb-1 md:mb-0">
             <div class="w-auto md:w-[280px] md:pr-6 shrink-0 text-[20px] md:text-[18px] font-medium flex items-center gap-3 md:order-1">
-                <label class="compare-toggle-switch ${isSelected(tool.slug) ? 'active' : ''}" data-slug="${tool.slug}" title="Add to comparison">
+                <label class="compare-checkbox ${isSelected(tool.slug) ? 'active' : ''}" data-slug="${tool.slug}" title="Select ${tool.name} for comparison" aria-label="Select ${tool.name} for comparison">
                     <input type="checkbox" ${isSelected(tool.slug) ? 'checked' : ''}>
-                    <span class="compare-toggle-track"></span>
-                    <span class="compare-toggle-thumb"></span>
+                    <span class="compare-checkbox-box">
+                        <svg class="compare-checkbox-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                            <path d="M4.75 10.5C6.4 11.2 8.5 10.4 10.75 6.9" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"></path>
+                            <path d="M10.1 6.3L12 5.5L11.55 7.55" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
                 </label>
                 <div class="flex items-center gap-2 flex-1 min-w-0">
                     <span class="hidden md:inline-block font-mono text-[#737373] text-[16px] opacity-0 -translate-x-2.5 transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-white">&rarr;</span>
@@ -308,6 +360,8 @@ ${createZapButtonHtml(toolId, tool.name, initialVoteCount)}
         <div class="w-full md:hidden lg:block lg:w-[180px] md:px-6 shrink-0 text-left lg:text-center mt-1 md:mt-0 md:order-4">
             <span class="inline-block px-3 py-1 border border-[#222] rounded-full bg-white/5 font-mono text-[13px] tracking-wide" title="${catClean}">${catShort}</span>
         </div>`;
+
+    row.setAttribute('aria-selected', isSelected(tool.slug) ? 'true' : 'false');
 
     return row;
 }

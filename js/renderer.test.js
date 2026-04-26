@@ -37,25 +37,41 @@ function makeEl(tag = 'div') {
     };
 }
 
-function makeToggle(slug, active = false) {
+function makeCompareRow(slug, toolName = slug, active = false) {
     const checkbox = makeEl('input');
     checkbox.checked = active;
 
-    const toggle = makeEl('label');
-    toggle.dataset.slug = slug;
+    const control = makeEl('label');
+    control.dataset.slug = slug;
     if (active) {
-        toggle.classList.add('active');
+        control.classList.add('active');
     }
-    toggle.querySelector = (selector) => selector === 'input[type="checkbox"]' ? checkbox : null;
-    toggle._checkbox = checkbox;
+    const row = makeEl('div');
+    row.dataset.slug = slug;
+    row.dataset.toolName = toolName;
+    row.dataset.compareRow = 'true';
+    row.querySelector = (selector) => {
+        if (selector === 'input[type="checkbox"]') return checkbox;
+        if (selector === '.compare-checkbox') return control;
+        return null;
+    };
+    row.setAttribute = (name, value) => {
+        row[name] = value;
+    };
 
-    return toggle;
+    control.closest = (selector) => selector === '.compare-checkbox' ? control : null;
+    control.querySelector = (selector) => selector === 'input[type="checkbox"]' ? checkbox : null;
+    control._checkbox = checkbox;
+    row._checkbox = checkbox;
+    row._control = control;
+
+    return row;
 }
 
 function makeGrid() {
     const listeners = {};
     const state = {
-        activeToggles: [],
+        rows: [],
         zapButtons: []
     };
 
@@ -67,9 +83,16 @@ function makeGrid() {
             listeners[event]?.(payload);
         },
         querySelectorAll: (selector) => {
-            if (selector === '.compare-toggle-switch.active') return state.activeToggles;
+            if (selector === '[data-compare-row]') return state.rows;
             if (selector === '.zap-btn[data-tool-id]') return state.zapButtons;
             return [];
+        },
+        querySelector: (selector) => {
+            const slugMatch = selector.match(/\[data-slug="([^"]+)"\]/);
+            if (selector.startsWith('[data-compare-row]') && slugMatch) {
+                return state.rows.find((row) => row.dataset.slug === slugMatch[1]) ?? null;
+            }
+            return null;
         },
         _state: state
     };
@@ -117,9 +140,15 @@ describe('renderer', () => {
         ({ initRenderer, refreshVotingButtons, setVotingContext } = await import(`./renderer.js?test=${Date.now()}`));
         initRenderer(grid);
 
-        const toggle = makeToggle('cursor');
+        const row = makeCompareRow('cursor', 'Cursor');
+        grid._state.rows = [row];
         const target = makeEl('span');
-        target.closest = (selector) => selector === '.compare-toggle-switch' ? toggle : null;
+        target.closest = (selector) => {
+            if (selector === '[data-compare-row]') return row;
+            if (selector === 'a, button') return null;
+            if (selector === '.compare-checkbox') return null;
+            return null;
+        };
 
         grid._trigger('click', {
             target,
@@ -127,11 +156,12 @@ describe('renderer', () => {
         });
 
         expect(getSelected()).toEqual(['cursor']);
-        expect(toggle.classList.contains('active')).toBe(true);
-        expect(toggle._checkbox.checked).toBe(true);
+        expect(row.classList.contains('compare-row-selected')).toBe(true);
+        expect(row._control.classList.contains('active')).toBe(true);
+        expect(row._checkbox.checked).toBe(true);
         expect(bar.style.translate).toBe('0 0');
-        expect(countText.textContent).toBe('1 tool selected');
-        expect(thumbnails.innerHTML).toContain('cursor');
+        expect(countText.textContent).toBe('1 of 3 selected');
+        expect(thumbnails.innerHTML).toContain('Cursor');
         expect(compareBtn.disabled).toBe(true);
     });
 
@@ -139,9 +169,9 @@ describe('renderer', () => {
         ({ initRenderer, refreshVotingButtons, setVotingContext } = await import(`./renderer.js?test=${Date.now()}`));
         initRenderer(grid);
 
-        const cursorToggle = makeToggle('cursor', true);
-        const windsurfToggle = makeToggle('windsurf', true);
-        grid._state.activeToggles = [cursorToggle, windsurfToggle];
+        const cursorRow = makeCompareRow('cursor', 'Cursor', true);
+        const windsurfRow = makeCompareRow('windsurf', 'Windsurf', true);
+        grid._state.rows = [cursorRow, windsurfRow];
 
         toggleTool('cursor');
         toggleTool('windsurf');
@@ -149,10 +179,12 @@ describe('renderer', () => {
         clearBtn._trigger('click');
 
         expect(getSelected()).toEqual([]);
-        expect(cursorToggle.classList.contains('active')).toBe(false);
-        expect(windsurfToggle.classList.contains('active')).toBe(false);
-        expect(cursorToggle._checkbox.checked).toBe(false);
-        expect(windsurfToggle._checkbox.checked).toBe(false);
+        expect(cursorRow.classList.contains('compare-row-selected')).toBe(false);
+        expect(windsurfRow.classList.contains('compare-row-selected')).toBe(false);
+        expect(cursorRow._control.classList.contains('active')).toBe(false);
+        expect(windsurfRow._control.classList.contains('active')).toBe(false);
+        expect(cursorRow._checkbox.checked).toBe(false);
+        expect(windsurfRow._checkbox.checked).toBe(false);
         expect(bar.style.translate).toBe('0 100%');
         expect(compareBtn.disabled).toBe(true);
     });
