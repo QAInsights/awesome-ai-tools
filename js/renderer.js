@@ -4,12 +4,12 @@
 import { toggleTool, isSelected, getSelected, clearSelection } from "./compare-state.js";
 
 
-import { getShortCategory } from './parser.js';
-import { getVoteCount } from './voting.js';
+import { getShortCategory } from './category.js';
 import { sortTools } from './sorting.js';
-import { auth } from './auth.js';
 
 const ENABLE_VOTING = process.env.ENABLE_VOTING === 'true';
+let getVoteCountFn = () => 0;
+let isAuthenticatedFn = () => false;
 
 const BATCH_SIZE = 20;
 let filteredTools = [];
@@ -25,6 +25,72 @@ let onClearCallback = null;
 export function initRenderer(gridElement) {
     grid = gridElement;
     setupCompareHandlers();
+}
+
+export function setVotingContext(context = {}) {
+    if (typeof context.getVoteCount === 'function') {
+        getVoteCountFn = context.getVoteCount;
+    }
+    if (typeof context.isAuthenticated === 'function') {
+        isAuthenticatedFn = context.isAuthenticated;
+    }
+}
+
+function createZapButtonHtml(toolId, toolName, voteCount) {
+    if (!ENABLE_VOTING) {
+        return `
+                <button class="zap-btn sm inline opacity-50 cursor-not-allowed" disabled data-tip="Voting is disabled.">
+                    <svg class="zap-icon" viewBox="0 0 24 24" fill="none">
+                        <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
+                    </svg>
+                    <span class="zap-count">${voteCount.toLocaleString()}</span>
+                </button>
+`;
+    }
+
+    if (isAuthenticatedFn()) {
+        return `
+                <button class="zap-btn sm inline" data-tip="Zap this tool!" 
+                    data-tool-id="${toolId}"
+                    data-tool-name="${toolName}">
+                    <div class="zap-ring"></div>
+                    <div class="sparks">
+                        <div class="spark spark-1"></div>
+                        <div class="spark spark-2"></div>   
+                        <div class="spark spark-3"></div>
+                        <div class="spark spark-4"></div>
+                        <div class="spark spark-5"></div>
+                    </div>
+                    <svg class="zap-icon" viewBox="0 0 24 24" fill="none">
+                        <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
+                    </svg>
+                    <span class="zap-count">${voteCount.toLocaleString()}</span>
+                </button>
+`;
+    }
+
+    return `
+                <button class="zap-btn sm inline" data-tip="Sign in to vote!" 
+                    data-tool-id="${toolId}"
+                    data-tool-name="${toolName}">
+                    <svg class="zap-icon" viewBox="0 0 24 24" fill="none" style="opacity:0.4">
+                        <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
+                    </svg>
+                    <span class="zap-count" style="opacity:0.5">${voteCount.toLocaleString()}</span>
+                </button>
+`;
+}
+
+export function refreshVotingButtons() {
+    const containers = grid?.querySelectorAll('.zap-btn[data-tool-id]') ?? [];
+    containers.forEach((btn) => {
+        const toolId = btn.dataset.toolId;
+        const toolName = btn.dataset.toolName;
+        if (!toolId || !toolName) return;
+
+        const voteCount = getVoteCountFn(toolId);
+        btn.outerHTML = createZapButtonHtml(toolId, toolName, voteCount).trim();
+    });
 }
 
 /**
@@ -202,7 +268,7 @@ function createToolRow(tool, index) {
     const catClean = tool.category.replace(/^[\u2700-\u27BF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u26FF]/g, '').trim();
 
     const toolId = `${tool.company.toLowerCase().replace(/[^a-z0-9]/g, '')}-${tool.name.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
-    const initialVoteCount = getVoteCount(toolId);
+    const initialVoteCount = getVoteCountFn(toolId);
 
     const detailHref = tool.slug ? `/tools/${tool.slug}` : tool.url;
     
@@ -234,40 +300,7 @@ function createToolRow(tool, index) {
                 </div>
             </div>
             <div class="shrink-0 md:w-[100px] md:pr-6 flex justify-end lg:justify-start md:order-5">
-${ENABLE_VOTING ? (auth.isAuthenticated() ? `
-                <button class="zap-btn sm inline" data-tip="Zap this tool!" 
-                    data-tool-id="${toolId}"
-                    data-tool-name="${tool.name}">
-                    <div class="zap-ring"></div>
-                    <div class="sparks">
-                        <div class="spark spark-1"></div>
-                        <div class="spark spark-2"></div>   
-                        <div class="spark spark-3"></div>
-                        <div class="spark spark-4"></div>
-                        <div class="spark spark-5"></div>
-                    </div>
-                    <svg class="zap-icon" viewBox="0 0 24 24" fill="none">
-                        <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
-                    </svg>
-                    <span class="zap-count">${initialVoteCount.toLocaleString()}</span>
-                </button>
-` : `
-                <button class="zap-btn sm inline" data-tip="Sign in to vote!" 
-                    data-tool-id="${toolId}"
-                    data-tool-name="${tool.name}">
-                    <svg class="zap-icon" viewBox="0 0 24 24" fill="none" style="opacity:0.4">
-                        <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
-                    </svg>
-                    <span class="zap-count" style="opacity:0.5">${initialVoteCount.toLocaleString()}</span>
-                </button>
-`) : `
-                <button class="zap-btn sm inline opacity-50 cursor-not-allowed" disabled data-tip="Voting is disabled.">
-                    <svg class="zap-icon" viewBox="0 0 24 24" fill="none">
-                        <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
-                    </svg>
-                    <span class="zap-count">${initialVoteCount.toLocaleString()}</span>
-                </button>
-`}
+${createZapButtonHtml(toolId, tool.name, initialVoteCount)}
             </div>
         </div>
         <div class="w-full md:w-[200px] md:pr-6 shrink-0 font-mono text-[14px] text-[#a3a3a3] uppercase tracking-wide mb-2 md:mb-0 md:order-2">${tool.company}</div>

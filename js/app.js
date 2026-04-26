@@ -3,12 +3,9 @@
  * AI IDEs & Coding Assistants - Tool Registry
  */
 
-import { parseMarkdown, extractCategories } from './parser.js';
-import { initRenderer, renderTools } from './renderer.js';
-import { initVoting } from './voting.js';
+import { initRenderer, renderTools, setVotingContext, refreshVotingButtons } from './renderer.js';
 import { CollapsedSidebar } from './collapsed-sidebar.js';
 import { initGradientSelection } from './gradient-selection.js';
-import { initAuthManager } from './modules/auth-manager.js';
 import { initFilterManager } from './modules/filter-manager.js';
 import { initUiManager } from './modules/ui-manager.js';
 import { initSortManager } from './modules/sort-manager.js';
@@ -20,6 +17,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     let toolsData = [];
     let categories = new Set();
+    let toolsDataRef = [];
+    let filterManagerRef = null;
     let collapsedSidebar = new CollapsedSidebar('iconSidebar', {
         onExpand: () => document.getElementById('openSidebarDesktop')?.click(),
         onSearchClick: () => {
@@ -36,27 +35,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 1. Initialize UI (Sidebar, Version, Year)
     initUiManager();
 
-    // 2. Initialize Auth
-    const authManager = initAuthManager({
-        collapsedSidebar,
-        onStateChange: (user) => {
-            // Future global state hook
-        }
-    });
-    await authManager.initializeAuth();
-
-    // 3. Initialize Voting (parallel)
-    if (ENABLE_VOTING) {
-        initVoting().catch(err => console.warn('[voting] init failed:', err));
-        renderTurnstile(CF_SITEKEY);
-    }
-    
-    // 4. Load Data & Initialize Renderer
+    // 2. Load Data & Initialize Renderer
     if (grid) {
         initRenderer(grid);
         await loadData();
+        setVotingContext();
+        toolsDataRef = toolsData;
         
-        // 5. Initialize Filters & Sort
+        // 3. Initialize Filters & Sort
         const filterManager = initFilterManager({
             toolsData,
             categories,
@@ -64,6 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // Future global filter hook
             }
         });
+        filterManagerRef = filterManager;
         filterManager.renderFilters();
 
         initSortManager({
@@ -80,6 +67,44 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // 4. Defer auth/voting to improve first interactivity
+    const deferredBootstrap = async () => {
+        const [{ initAuthManager }, { initVoting, getVoteCount }] = await Promise.all([
+            import('./modules/auth-manager.js'),
+            import('./voting.js')
+        ]);
+
+        const authManager = initAuthManager({
+            collapsedSidebar,
+            onStateChange: () => {
+                // Future global state hook
+            }
+        });
+        await authManager.initializeAuth();
+
+        const { auth } = await import('./auth.js');
+        setVotingContext({
+            getVoteCount,
+            isAuthenticated: () => auth.isAuthenticated()
+        });
+        refreshVotingButtons();
+
+        if (ENABLE_VOTING) {
+            initVoting().catch(err => console.warn('[voting] init failed:', err));
+            renderTurnstile(CF_SITEKEY);
+        }
+    };
+
+    if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(() => {
+            deferredBootstrap().catch(err => console.warn('[bootstrap] deferred init failed:', err));
+        }, { timeout: 1500 });
+    } else {
+        setTimeout(() => {
+            deferredBootstrap().catch(err => console.warn('[bootstrap] deferred init failed:', err));
+        }, 0);
+    }
+
     async function loadData() {
         const toolsDataEl = document.getElementById('tools-data');
         if (toolsDataEl) {
@@ -89,10 +114,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             const readmeResponse = await fetch('README.md');
             if (readmeResponse.ok) {
                 const text = await readmeResponse.text();
+                const { parseMarkdown } = await import('./parser.js');
                 toolsData = parseMarkdown(text);
             }
         }
-        categories = extractCategories(toolsData);
+        categories = new Set(toolsData.map(tool => tool.category));
     }
 
     function renderTurnstile(siteKey) {

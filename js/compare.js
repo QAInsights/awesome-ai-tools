@@ -1,10 +1,11 @@
 import * as cache from './tool-cache.js';
-import { getVoteCount } from './voting.js';
-import { auth } from './auth.js';
-import html2canvas from 'html2canvas';
 
 const ENRICHED_URL = '/data/enriched-tools.json';
 const ENABLE_VOTING = process.env.ENABLE_VOTING === 'true';
+const CF_SITEKEY = process.env.CF_SITEKEY || '1x00000000000000000000AA';
+let getVoteCount = () => 0;
+let isAuthenticated = () => false;
+let html2canvasModule = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
     const params = new URLSearchParams(window.location.search);
@@ -12,6 +13,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!toolsParam) {
         document.getElementById('compareGrid').innerHTML = '<p class="text-[#a3a3a3]">No tools selected for comparison.</p>';
         return;
+    }
+
+    function renderTurnstile(siteKey) {
+        if (typeof turnstile !== 'undefined') {
+            window.turnstileWidgetId = turnstile.render('#turnstile-container', {
+                sitekey: siteKey,
+                size: 'invisible',
+                callback: (token) => window.cfTokenValue = token
+            });
+        } else {
+            setTimeout(() => renderTurnstile(siteKey), 100);
+        }
     }
 
     const slugs = toolsParam.split(',').filter(Boolean);
@@ -57,23 +70,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // Render the grid
-    grid.innerHTML = '';
+    function createZapButtonHtml(toolId, toolName, voteCount) {
+        if (!ENABLE_VOTING) {
+            return `
+            <button class="zap-btn sm opacity-50 cursor-not-allowed" disabled data-tip="Voting is currently disabled.">
+                <svg class="zap-icon" viewBox="0 0 24 24" fill="none">
+                    <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
+                </svg>
+                <span class="zap-count">${voteCount.toLocaleString()}</span>
+            </button>
+        `;
+        }
 
-    toolsToCompare.forEach(tool => {
-        const card = document.createElement('div');
-        // Mobile vertical, desktop horizontal (handled by parent flex-row)
-        card.className = 'flex-1 bg-[#111] border border-[#333] rounded-xl p-6 flex flex-col gap-4';
-
-        const featuresHtml = tool.keyFeatures ? `<ul class="list-disc pl-5 text-[#a3a3a3] text-sm flex flex-col gap-1">${tool.keyFeatures.map(f => `<li>${f}</li>`).join('')}</ul>` : '<p class="text-[#a3a3a3] text-sm">N/A</p>';
-
-        const toolId = `${tool.company.toLowerCase().replace(/[^a-z0-9]/g, '')}-${tool.name.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
-        const initialVoteCount = getVoteCount(toolId);
-
-        const zapButtonHtml = ENABLE_VOTING ? (auth.isAuthenticated() ? `
+        if (isAuthenticated()) {
+            return `
             <button class="zap-btn sm" data-tip="Zap this tool!" 
                 data-tool-id="${toolId}"
-                data-tool-name="${tool.name}">
+                data-tool-name="${toolName}">
                 <div class="zap-ring"></div>
                 <div class="sparks">
                     <div class="spark spark-1"></div>
@@ -85,25 +98,49 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <svg class="zap-icon" viewBox="0 0 24 24" fill="none">
                     <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
                 </svg>
-                <span class="zap-count">${initialVoteCount.toLocaleString()}</span>
+                <span class="zap-count">${voteCount.toLocaleString()}</span>
             </button>
-        ` : `
+        `;
+        }
+
+        return `
             <button class="zap-btn sm" data-tip="Sign in to vote!" 
                 data-tool-id="${toolId}"
-                data-tool-name="${tool.name}">
+                data-tool-name="${toolName}">
                 <svg class="zap-icon" viewBox="0 0 24 24" fill="none" style="opacity:0.4">
                     <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
                 </svg>
-                <span class="zap-count" style="opacity:0.5">${initialVoteCount.toLocaleString()}</span>
-            </button>
-        `) : `
-            <button class="zap-btn sm opacity-50 cursor-not-allowed" disabled data-tip="Voting is currently disabled.">
-                <svg class="zap-icon" viewBox="0 0 24 24" fill="none">
-                    <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
-                </svg>
-                <span class="zap-count">${initialVoteCount.toLocaleString()}</span>
+                <span class="zap-count" style="opacity:0.5">${voteCount.toLocaleString()}</span>
             </button>
         `;
+    }
+
+    function refreshZapButtons() {
+        const buttons = grid?.querySelectorAll('.zap-btn[data-tool-id]') ?? [];
+        buttons.forEach((btn) => {
+            const toolId = btn.dataset.toolId;
+            const toolName = btn.dataset.toolName;
+            if (!toolId || !toolName) return;
+
+            const voteCount = getVoteCount(toolId);
+            btn.outerHTML = createZapButtonHtml(toolId, toolName, voteCount).trim();
+        });
+    }
+
+    function renderCompareGrid() {
+        grid.innerHTML = '';
+
+        toolsToCompare.forEach(tool => {
+        const card = document.createElement('div');
+        // Mobile vertical, desktop horizontal (handled by parent flex-row)
+        card.className = 'flex-1 bg-[#111] border border-[#333] rounded-xl p-6 flex flex-col gap-4';
+
+        const featuresHtml = tool.keyFeatures ? `<ul class="list-disc pl-5 text-[#a3a3a3] text-sm flex flex-col gap-1">${tool.keyFeatures.map(f => `<li>${f}</li>`).join('')}</ul>` : '<p class="text-[#a3a3a3] text-sm">N/A</p>';
+
+        const toolId = `${tool.company.toLowerCase().replace(/[^a-z0-9]/g, '')}-${tool.name.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
+        const initialVoteCount = getVoteCount(toolId);
+
+        const zapButtonHtml = createZapButtonHtml(toolId, tool.name, initialVoteCount);
 
         card.innerHTML = `
             <div class="border-b border-[#333] pb-3 sm:pb-4 mb-2">
@@ -151,7 +188,41 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
 
         grid.appendChild(card);
-    });
+        });
+    }
+
+    renderCompareGrid();
+
+    if (ENABLE_VOTING) {
+        const bootstrapVoting = async () => {
+            try {
+                const [{ getVoteCount: voteCountFn, initVoting }, { auth }] = await Promise.all([
+                    import('./voting.js'),
+                    import('./auth.js')
+                ]);
+
+                await auth.initialize();
+                getVoteCount = voteCountFn;
+                isAuthenticated = () => auth.isAuthenticated();
+
+                refreshZapButtons();
+                await initVoting();
+                renderTurnstile(CF_SITEKEY);
+            } catch (error) {
+                console.warn('[compare] voting bootstrap failed:', error);
+            }
+        };
+
+        if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(() => {
+                bootstrapVoting();
+            }, { timeout: 1500 });
+        } else {
+            setTimeout(() => {
+                bootstrapVoting();
+            }, 0);
+        }
+    }
 
     // Add Share and Export functionality
     const shareBtn = document.getElementById('shareCompareBtn');
@@ -199,7 +270,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             exportBtn.disabled = true;
 
             try {
-                const canvas = await html2canvas(grid, {
+                if (!html2canvasModule) {
+                    const mod = await import('html2canvas');
+                    html2canvasModule = mod.default;
+                }
+
+                const canvas = await html2canvasModule(grid, {
                     backgroundColor: '#000000',
                     scale: 2, // Higher resolution
                     useCORS: true,

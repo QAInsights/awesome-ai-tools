@@ -1,5 +1,5 @@
 import { build } from "bun";
-import { readFileSync } from "fs";
+import { readFileSync, existsSync, readdirSync, unlinkSync } from "fs";
 import { generateToolPages } from "./scripts/generate-tool-pages.js";
 
 // Load .env.local for local development (Bun only auto-loads .env by default)
@@ -29,15 +29,30 @@ const googleClientId = process.env.GOOGLE_CLIENT_ID || 'your-google-client-id-he
 // NOTE: Only the client_id is injected — client_secret stays in Vercel env vars only
 const githubClientId = process.env.GITHUB_CLIENT_ID || '';
 
+function cleanDistJs() {
+    const outdir = './public/dist';
+    if (!existsSync(outdir)) return;
+
+    for (const file of readdirSync(outdir)) {
+        if (!file.endsWith('.js')) continue;
+        unlinkSync(`${outdir}/${file}`);
+    }
+}
+
+cleanDistJs();
+
 const result = await build({
     entrypoints: [
         './js/app.js',
+        './js/dashboard.js',
         './js/compare.js',
         // Utility pages — bundled as separate ES modules served at /dist/
         './js/token-counter.js',
         './js/hallucination-scorer.js',
     ],
     outdir: './public/dist',
+    splitting: true,
+    minify: true,
     define: {
         'process.env.ENABLE_VOTING': JSON.stringify(enableVoting),
         'process.env.CF_SITEKEY': JSON.stringify(cfSiteKey),
