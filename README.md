@@ -57,7 +57,7 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Cline](https://github.com/cline/cline)** | Cline | Autonomous VS Code agent; Plan + Act modes; BYOM (zero markup) |
 | **[Kilo Code](https://kilocode.ai)** | Kilo Code | Open-source; 500+ models via OpenRouter; 4 structured modes (Architect/Code/Debug/Orchestrator) |
 | **[Roo Code](https://roocode.com)** | Roo Code | VS Code extension; strong on large multi-file changes; fork of Cline |
-| **[Continue](https://continue.dev)** | Continue | Open-source; VS Code + JetBrains; custom AI assistants; 20K+ GitHub stars |
+| **[Continue](https://continue.dev/allgreen?ref=naveenkumar)** | Continue | Open-source; VS Code + JetBrains; custom AI assistants; 20K+ GitHub stars |
 | **[Augment Code](https://augmentcode.com)** | Augment | World-class context engine; enterprise-grade; strong SWE-bench scores |
 | **[Cody](https://sourcegraph.com/cody)** | Sourcegraph | Deep codebase indexing; cross-repository context; best for large codebases |
 | **[Supermaven](https://supermaven.com)** | Supermaven | Ultra-fast AI completion; large context windows |
