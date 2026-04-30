@@ -9,6 +9,7 @@ import { initGradientSelection } from './gradient-selection.js';
 import { initFilterManager } from './modules/filter-manager.js';
 import { initUiManager } from './modules/ui-manager.js';
 import { initSortManager } from './modules/sort-manager.js';
+import { sortTools } from './sorting.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     initGradientSelection();
@@ -63,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             searchInput.value = urlParams.get('q');
             filterManager.filterAndRender();
         } else {
-            renderTools(toolsData);
+            renderTools(sortTools(toolsData));
         }
     }
 
