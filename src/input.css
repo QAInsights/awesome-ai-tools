@@ -224,7 +224,7 @@
     }
 
     .zap-bolt {
-        fill: rgba(242, 192, 64, 0.5);
+        fill: rgba(242, 192, 64, 0.85);
         transition: fill 0.15s ease;
     }
 

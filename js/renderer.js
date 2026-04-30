@@ -74,10 +74,10 @@ function createZapButtonHtml(toolId, toolName, voteCount) {
                 <button class="zap-btn sm row" data-tip="Sign in to vote!" 
                     data-tool-id="${toolId}"
                     data-tool-name="${toolName}">
-                    <svg class="zap-icon" viewBox="0 0 24 24" fill="none" style="opacity:0.4">
+                    <svg class="zap-icon" viewBox="0 0 24 24" fill="none" >
                         <path class="zap-bolt" d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/>
                     </svg>
-                    <span class="zap-count" style="opacity:0.5">${voteCount.toLocaleString()}</span>
+                    <span class="zap-count" >${voteCount.toLocaleString()}</span>
                 </button>
 `;
 }

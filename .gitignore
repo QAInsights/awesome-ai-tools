@@ -40,3 +40,4 @@ TODO.md
 .env*.local
 .agentrules
 .kiro/specs/public-ai-stack-profile/.config.kiro
+.commandcode
