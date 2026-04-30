@@ -96,7 +96,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         syncVotingUi();
 
         if (ENABLE_VOTING) {
-            initVoting().catch(err => console.warn('[voting] init failed:', err));
+            await initVoting().catch(err => console.warn('[voting] init failed:', err));
+            filterManagerRef?.filterAndRender();
             renderTurnstile(CF_SITEKEY);
         }
     };
