@@ -182,6 +182,7 @@ Tools designed to autonomously generate, execute, and fix tests.
 | Tool | Company | Notes |
 |------|---------|-------|
 | **[GitAuto](https://gitauto.ai/)** | GitAuto | Automatically writes, runs, and fixes your unit tests, so you can keep shipping confidently |
+| **[AgentDiff](https://agentstatus.dev/)** | AgentStatus | Catch the regression CI couldn't, before merge. |
 
 ---
 
