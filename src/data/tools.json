@@ -426,5 +426,9 @@
   {
     "companyName": "Batrachian AI",
     "toolName": "toad"
+  },
+  {
+    "companyName": "Superset",
+    "toolName": "Superset"
   }
 ]
