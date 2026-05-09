@@ -74,6 +74,7 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Corust](https://corust.ai/)** | Corust | Your seasoned Rust co-pilot: production-grade code generation, zero hallucinations on Rust idioms, and tools built for real Rustaceans. |
 | **[Toprank](https://github.com/nowork-studio/toprank)** | nowork-studio | Open-source Claude Code plugin for SEO, Google Ads, content writing, and CMS optimization workflows |
 | **[WozCode](https://www.wozcode.com/)** | WozCode | A Claude Code plugin that supercharges performance, cost, and speed |
+| **[Claude Code Skills 中文精选集](https://claude-skills.bt199.com/)** | 老实人实验室 | Chinese curated directory of Claude Code Skills, Agents, Plugins, and workflows with 140+ resources |
 | **[Oh My codeX](https://github.com/Yeachan-Heo/oh-my-codex)** | Yeachan-Heo | OmX: Your codex is not alone. Add hooks, agent teams, HUDs, and so much more |
 | **[Bob](https://bob.ibm.com/)** | IBM | Your AI-Powered Development Partner |
 | **[Firebender](https://firebender.com/)** | Firebender | The first Android-native coding agent that writes features, tests them in the emulator, and fixes issues automatically |
