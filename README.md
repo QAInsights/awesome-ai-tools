@@ -215,6 +215,7 @@ AI-powered tools for managing context, snippets, and developer documentation.
 | Tool | Company | Notes |
 |------|---------|-------|
 | **[Pieces for Developers](https://pieces.app/)** | Pieces | AI-powered context management; "Artificial Memory" for your workflow; snippet management |
+| **[agenttrace](https://github.com/luoyuctl/agenttrace)** | luoyuctl | Open-source observability and audit trail for AI coding agent sessions |
 | **[Vibe Kanban](https://vibekanban.com/)** | Vibe | Project management and productivity platform integrated with AI |
 
 ---
