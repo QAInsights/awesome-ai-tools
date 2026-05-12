@@ -15,6 +15,7 @@
     "dev:js": "bun run build.js",
     "test": "bun test",
     "test:watch": "bun test --watch js/*.test.js",
+    "validate:slugs": "node scripts/check-slugs-sync.js",
     "validate:enriched": "bun run scripts/validate-enriched.js"
   },
   "devDependencies": {

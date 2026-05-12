@@ -78,6 +78,18 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "nimbalyst",
+    "name": "Nimbalyst",
+    "company": "Nimbalyst",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
+    "slug": "superset",
+    "name": "Superset",
+    "company": "Superset",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -222,6 +234,12 @@
     "category": "IDE Extensions & Plugins"
   },
   {
+    "slug": "claude-code-skills",
+    "name": "Claude Code Skills 中文精选集",
+    "company": "老实人实验室",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
     "slug": "oh-my-codex",
     "name": "Oh My codeX",
     "company": "Yeachan-Heo",
@@ -321,6 +339,12 @@
     "slug": "kiro-cli",
     "name": "Kiro CLI",
     "company": "AWS",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "lucinate",
+    "name": "lucinate",
+    "company": "lucinate-ai",
     "category": "Terminal & CLI Agents"
   },
   {
@@ -564,6 +588,12 @@
     "category": "AI Testing & Quality Assurance"
   },
   {
+    "slug": "agentdiff",
+    "name": "AgentDiff",
+    "company": "AgentStatus",
+    "category": "AI Testing & Quality Assurance"
+  },
+  {
     "slug": "claude",
     "name": "Claude",
     "company": "Anthropic",
@@ -609,6 +639,12 @@
     "slug": "pieces-for-developers",
     "name": "Pieces for Developers",
     "company": "Pieces",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "agenttrace",
+    "name": "agenttrace",
+    "company": "luoyuctl",
     "category": "Developer Productivity & Workflow"
   },
   {

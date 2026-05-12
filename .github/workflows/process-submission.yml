@@ -21,6 +21,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
       - name: Parse Issue Form
         id: parse
         uses: stefanbuck/github-issue-parser@v3
@@ -31,6 +36,9 @@ jobs:
         run: python3 .github/scripts/process_submission.py
         env:
           ISSUE_DATA: ${{ steps.parse.outputs.jsonString }}
+
+      - name: Regenerate slug catalog
+        run: node scripts/generate-tool-pages.js
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
@@ -48,6 +56,7 @@ jobs:
             ### Changes
             - ✅ Injected row into `README.md`
             - ✅ Appended entry to `src/data/tools.json`
+            - ✅ Regenerated `data/slugs.json`
           branch: "add-tool/${{ github.event.issue.number }}"
           commit-message: "feat(data): add ${{ fromJson(steps.parse.outputs.jsonString)['tool-name'] }} to directory"
           delete-branch: true

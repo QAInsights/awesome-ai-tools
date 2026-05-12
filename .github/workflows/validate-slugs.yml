@@ -1,0 +1,38 @@
+name: Validate Slug Catalog
+
+on:
+  pull_request:
+    paths:
+      - README.md
+      - data/slugs.json
+      - scripts/generate-tool-pages.js
+      - js/parser.js
+      - js/category.js
+  push:
+    branches:
+      - main
+    paths:
+      - README.md
+      - data/slugs.json
+      - scripts/generate-tool-pages.js
+      - js/parser.js
+      - js/category.js
+
+permissions:
+  contents: read
+
+jobs:
+  validate-slugs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Verify slug catalog is in sync
+        run: node scripts/check-slugs-sync.js
