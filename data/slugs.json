@@ -258,6 +258,12 @@
     "category": "IDE Extensions & Plugins"
   },
   {
+    "slug": "lervos",
+    "name": "Lervos",
+    "company": "Lervos",
+    "category": "Invoicing / Proposals"
+  },
+  {
     "slug": "claude-code",
     "name": "Claude Code",
     "company": "Anthropic",

@@ -5,12 +5,13 @@
 > A curated, categorized reference of AI-powered coding tools as of **May 2026**.
 > Covers full IDEs, editor extensions, terminal agents, autonomous agents, browser-based builders, and code review platforms.  
 
-> **100+ tools** across 12 categories.
+> **100+ tools** across 13 categories.
 
 ## 📋 Table of Contents
 
 - [🖥️ AI-Native IDEs & Editors](#ai-native-ides--editors)
 - [🔌 IDE Extensions & Plugins](#ide-extensions--plugins)
+- [🧾 Invoicing / Proposals](#invoicing--proposals)
 - [💻 Terminal & CLI Agents](#terminal--cli-agents)
 - [🤖 Autonomous & Async Agents](#autonomous--async-agents)
 - [🌐 Browser-Based & App Builders](#browser-based--app-builders)
@@ -79,6 +80,13 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Oh My codeX](https://github.com/Yeachan-Heo/oh-my-codex)** | Yeachan-Heo | OmX: Your codex is not alone. Add hooks, agent teams, HUDs, and so much more |
 | **[Bob](https://bob.ibm.com/)** | IBM | Your AI-Powered Development Partner |
 | **[Firebender](https://firebender.com/)** | Firebender | The first Android-native coding agent that writes features, tests them in the emulator, and fixes issues automatically |
+
+---
+
+## 🧾 Invoicing / Proposals
+AI-assisted tools for client proposals, quotes, and freelance bids.
+
+* [Lervos](https://lervos.com) - AI-powered proposal assistant that automates high-converting project bids for freelancers.
 
 ---
 
