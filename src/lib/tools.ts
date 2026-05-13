@@ -64,6 +64,7 @@ const CATEGORY_MAPPING: Record<string, string> = {
     'AI Codebase Knowledge & Generation': 'Codebase AI',
     'Developer Productivity & Workflow': 'Productivity',
     'Editor Platforms with Native AI Features': 'Native Editors',
+    'Invoicing / Proposals': 'Proposals',
 };
 
 /**
@@ -145,6 +146,23 @@ function parseMarkdown(text: string): ToolSeed[] {
                 }
             } else if (isTable && (!line.trim().startsWith('|') && line.trim() !== '')) {
                 isTable = false;
+            }
+        }
+
+        for (const line of lines) {
+            const trimmed = line.trim();
+            const bulletMatch = trimmed.match(/^\* \[(.*?)\]\((.*?)\) - (.+)$/);
+            if (bulletMatch) {
+                const name = bulletMatch[1].replace(/\*\*/g, '');
+                toolsRaw.push({
+                    name,
+                    url: bulletMatch[2],
+                    company: name,
+                    notes: bulletMatch[3].trim(),
+                    category: categoryLine,
+                    categoryClean: stripEmoji(categoryLine),
+                    categoryShort: getShortCategory(categoryLine),
+                });
             }
         }
     }

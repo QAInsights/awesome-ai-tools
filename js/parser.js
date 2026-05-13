@@ -76,6 +76,22 @@ export function parseMarkdown(md) {
                 isTable = false;
             }
         }
+
+        // Bullet list entries: * [Name](url) - notes
+        for (const line of lines) {
+            const trimmed = line.trim();
+            const bulletMatch = trimmed.match(/^\* \[(.*?)\]\((.*?)\) - (.+)$/);
+            if (bulletMatch) {
+                const name = bulletMatch[1].replace(/\*\*/g, '');
+                tools.push({
+                    category: categoryLine,
+                    name,
+                    url: bulletMatch[2],
+                    company: name,
+                    notes: bulletMatch[3].trim(),
+                });
+            }
+        }
     }
 
     // Assign slugs with collision resolution. First occurrence keeps the clean

@@ -10,7 +10,8 @@ const categoryMapping = {
     'General-Purpose AI Assistants (with Strong Coding Capability)': 'General AI',
     'AI Codebase Knowledge & Generation': 'Codebase AI',
     'Developer Productivity & Workflow': 'Productivity',
-    'Editor Platforms with Native AI Features': 'Native Editors'
+    'Editor Platforms with Native AI Features': 'Native Editors',
+    'Invoicing / Proposals': 'Proposals'
 };
 
 export function getShortCategory(category) {

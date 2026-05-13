@@ -120,6 +120,21 @@ describe('parser', () => {
             expect(tools[0].name).toBe('Cursor');
         });
 
+        test('should parse bullet list tool entries', () => {
+            const md = `## 🧾 Invoicing / Proposals
+
+* [Lervos](https://lervos.com) - AI-powered proposal assistant for freelancers.
+`;
+            const tools = parseMarkdown(md);
+            expect(tools.length).toBe(1);
+            expect(tools[0].name).toBe('Lervos');
+            expect(tools[0].url).toBe('https://lervos.com');
+            expect(tools[0].company).toBe('Lervos');
+            expect(tools[0].notes).toBe('AI-powered proposal assistant for freelancers.');
+            expect(tools[0].category).toBe('🧾 Invoicing / Proposals');
+            expect(tools[0].slug).toBe('lervos');
+        });
+
         test('should assign unique slugs with collision resolution', () => {
             const md = `## Category A
 
@@ -202,6 +217,7 @@ Some text without tables.
             expect(getShortCategory('AI-Native IDEs & Editors')).toBe('AI IDEs');
             expect(getShortCategory('IDE Extensions & Plugins')).toBe('IDE Plugins');
             expect(getShortCategory('Terminal & CLI Agents')).toBe('CLI Agents');
+            expect(getShortCategory('🧾 Invoicing / Proposals')).toBe('Proposals');
         });
 
         test('should handle partial category matches', () => {
