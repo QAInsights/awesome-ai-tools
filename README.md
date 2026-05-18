@@ -216,6 +216,7 @@ AI-powered tools for managing context, snippets, and developer documentation.
 |------|---------|-------|
 | **[Pieces for Developers](https://pieces.app/)** | Pieces | AI-powered context management; "Artificial Memory" for your workflow; snippet management |
 | **[agenttrace](https://github.com/luoyuctl/agenttrace)** | luoyuctl | Open-source observability and audit trail for AI coding agent sessions |
+| **[codex-profiles](https://github.com/Ducksss/codex-profiles)** | Ducksss | Open-source CLI helper for switching Codex CLI/Desktop accounts with isolated CODEX_HOME profiles |
 | **[Vibe Kanban](https://vibekanban.com/)** | Vibe | Project management and productivity platform integrated with AI |
 
 ---
