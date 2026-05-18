@@ -90,6 +90,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "archestra",
+    "name": "archestra",
+    "company": "Archestra Inc.",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
