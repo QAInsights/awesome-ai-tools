@@ -43,6 +43,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[Nimbalyst](https://nimbalyst.com)** | Nimbalyst | Open-source visual workspace for building with Codex, Claude Code, and more. Manage agents, sessions, tasks, files. Visually edit markdown, mockups, diagrams, diffs, and code.; [GitHub](https://github.com/Nimbalyst/nimbalyst) |
 | **[Superset](https://superset.sh/)** | Superset | Code Editor for the AI Agents Era - Run an army of Claude Code, Codex, etc. on your machine |
 | **[archestra](https://github.com/archestra-ai/archestra)** | Archestra Inc. | Enterprise AI Platform with guardrails, MCP registry, gateway & orchestrator |
+| **[codex-profiles](https://github.com/Ducksss/codex-profiles)** | Chai Pin Zheng | Switch Codex CLI and Desktop accounts with isolated CODEX_HOME profiles |
 
 
 ---
