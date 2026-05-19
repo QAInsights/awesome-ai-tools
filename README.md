@@ -7,6 +7,10 @@
 
 > **100+ tools** across 12 categories.
 
+<a href="https://buymecoffee.com/qainsights" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="40"></a>
+
+> **Important:** Do **not** open a pull request to submit a new tool. Use the [Tool Submission form](https://github.com/QAInsights/awesome-ai-tools/issues/new?template=submit-tool.yml) instead, it runs the automated pipeline that updates all data files.
+
 ## 📋 Table of Contents
 
 - [🖥️ AI-Native IDEs & Editors](#ai-native-ides--editors)

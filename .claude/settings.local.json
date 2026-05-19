@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh pr *)",
+      "Bash(git pull *)",
+      "Bash(git fetch *)",
+      "Bash(git checkout *)",
+      "Bash(head -5 README.md)",
+      "Bash(ls package.json bun.lockb package-lock.json)",
+      "Bash(npm run *)",
+      "Bash(npx astro *)"
+    ]
+  }
+}
