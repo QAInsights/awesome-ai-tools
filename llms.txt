@@ -37,6 +37,19 @@ The directory on the main page (`/`) covers:
 - [Help](https://ai.dosa.dev/help) — Usage guide and FAQ
 - [Zap](https://ai.dosa.dev/zap) — View and manage bookmarked ("Zapped") tools
 
+## Developer API
+
+ai.dosa.dev provides a dynamic Semantic Search API intended for programmatic consumption by AI agents and LLM-powered assistants.
+
+- **Endpoint**: `GET https://ai.dosa.dev/api/search`
+- **Description**: Exposes semantic search powered by `all-MiniLM-L6-v2` vector embeddings. Matches natural language descriptions, verdicts, and use cases, rather than relying strictly on lexical matches.
+- **Parameters**:
+  - `q` (required) - The natural language text query to search for.
+  - `price` (optional) - Filter by pricing model (e.g., `free`, `freemium`).
+  - `category` (optional) - Filter by tool tag/category.
+- **Response**: Returns a structured JSON payload with matching tools, similarity scores, and metadata.
+- **Example**: `curl "https://ai.dosa.dev/api/search?q=summarizing%20video%20content&price=freemium"`
+
 ## Key Features
 
 - **Zap (bookmarking)**: GitHub-authenticated users can bookmark tools; bookmarks are persisted per user

@@ -77,6 +77,12 @@ if (!result.success) {
 try {
     const { count } = await generateToolPages();
     console.log(`Generated ${count} tool detail pages and updated sitemap.xml`);
+    
+    // Generate vector embeddings for semantic search
+    const { $ } = await import("bun");
+    console.log("Generating vector embeddings...");
+    await $`bun run scripts/generate-embeddings.js`;
+    console.log("Vector embeddings generated successfully.");
 } catch (err) {
     console.error("Tool page generation failed:", err);
     process.exit(1);
