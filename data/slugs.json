@@ -102,6 +102,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "reasonix",
+    "name": "Reasonix",
+    "company": "ESEngine",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
