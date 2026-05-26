@@ -180,6 +180,7 @@ Tools focused on reviewing, securing, and validating code — not generating it.
 | **[CodeRabbit](https://coderabbit.ai)** | CodeRabbit | AI-powered PR reviews; line-by-line feedback; integrates with GitHub/GitLab |
 | **[Qodo](https://qodo.ai)** | Qodo | PR validation, test generation, merge readiness checks |
 | **[Snyk Code](https://snyk.io/product/snyk-code/)** | Snyk | SAST security scanning; real-time vulnerability detection; DevSecOps integration |
+| **[cubic](https://www.cubic.dev/)** | Cubic | AI code reviews for complex codebases |
 
 ---
 
