@@ -450,5 +450,9 @@
   {
     "companyName": "Cubic",
     "toolName": "cubic"
+  },
+  {
+    "companyName": "aiproduct.cards",
+    "toolName": "AI Product Adoption Deck"
   }
 ]

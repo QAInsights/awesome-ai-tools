@@ -225,6 +225,7 @@ AI-powered tools for managing context, snippets, and developer documentation.
 | **[Pieces for Developers](https://pieces.app/)** | Pieces | AI-powered context management; "Artificial Memory" for your workflow; snippet management |
 | **[agenttrace](https://github.com/luoyuctl/agenttrace)** | luoyuctl | Open-source observability and audit trail for AI coding agent sessions |
 | **[Vibe Kanban](https://vibekanban.com/)** | Vibe | Project management and productivity platform integrated with AI |
+| **[AI Product Adoption Deck](https://aiproduct.cards)** | aiproduct.cards | The AI Product Adoption Deck is a 124-page playbook of 104 cards that helps product teams diagnose and fix the specific moments where AI products lose users — empty prompts, trust gaps, broken correction loops, agents nobody trusts. It's built for PMs, designers, founders, and AI engineers shipping copilots, agents, and embedded AI features who need concrete patterns, not generic UX advice. Each card maps a symptom to a diagnosis, an action, and a workshop you can run with your team this week.; [GitHub](https://github.com/AIProductCards/ai-product-adoption-deck-skill) |
 
 ---
 
