@@ -684,6 +684,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "ai-product-adoption-deck",
+    "name": "AI Product Adoption Deck",
+    "company": "aiproduct.cards",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
