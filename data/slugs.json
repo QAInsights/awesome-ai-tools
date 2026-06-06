@@ -708,6 +708,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "faryo",
+    "name": "Faryo",
+    "company": "Snailflyer",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
