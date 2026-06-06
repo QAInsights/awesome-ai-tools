@@ -468,6 +468,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "antigravity-cli",
+    "name": "Antigravity CLI",
+    "company": "Google",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

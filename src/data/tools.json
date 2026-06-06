@@ -458,5 +458,9 @@
   {
     "companyName": "Kodus",
     "toolName": "Kodus"
+  },
+  {
+    "companyName": "Google",
+    "toolName": "Antigravity CLI"
   }
 ]
