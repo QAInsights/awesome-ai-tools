@@ -32,15 +32,48 @@ jobs:
         with:
           template-path: .github/ISSUE_TEMPLATE/submit-tool.yml
 
+      - name: Validate Parsed Fields
+        id: validate
+        env:
+          ISSUE_DATA: ${{ steps.parse.outputs.jsonString }}
+        run: |
+          TOOL_NAME=$(echo "$ISSUE_DATA" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('tool-name','').strip())")
+          URL=$(echo "$ISSUE_DATA" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('url','').strip())")
+          CATEGORY=$(echo "$ISSUE_DATA" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('category','').strip())")
+          if [ -z "$TOOL_NAME" ] || [ -z "$URL" ] || [ -z "$CATEGORY" ]; then
+            echo "valid=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "valid=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Comment on Invalid Submission
+        if: steps.validate.outputs.valid == 'false'
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            👋 Hi there! It looks like this issue wasn't submitted using the [tool submission form](../issues/new?template=submit-tool.yml).
+
+            The automated processor requires the structured form fields (`Tool Name`, `Tool URL`, `Category`, etc.) to be present.
+
+            Please **close this issue and re-submit** using the template form so the submission can be processed automatically. Thank you!
+
+      - name: Skip remaining steps for invalid submission
+        if: steps.validate.outputs.valid == 'false'
+        run: echo "Submission is missing required fields — skipping processing." && exit 0
+
       - name: Update README and tools.json
+        if: steps.validate.outputs.valid == 'true'
         run: python3 .github/scripts/process_submission.py
         env:
           ISSUE_DATA: ${{ steps.parse.outputs.jsonString }}
 
       - name: Regenerate slug catalog
+        if: steps.validate.outputs.valid == 'true'
         run: node scripts/generate-tool-pages.js
 
       - name: Create Pull Request
+        if: steps.validate.outputs.valid == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
           title: "feat(data): add ${{ fromJson(steps.parse.outputs.jsonString)['tool-name'] }} to directory"
