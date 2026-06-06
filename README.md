@@ -2,7 +2,7 @@
 
 > Manually curated, enhanced w/ Claude
 
-> A curated, categorized reference of AI-powered coding tools as of **May 2026**.
+> A curated, categorized reference of AI-powered coding tools as of **June 2026**.
 > Covers full IDEs, editor extensions, terminal agents, autonomous agents, browser-based builders, and code review platforms.  
 
 > **100+ tools** across 12 categories.
