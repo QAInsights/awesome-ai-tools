@@ -126,6 +126,7 @@ AI coding agents that live in your terminal or command line.
 | **[Pi ACP](https://github.com/svkozak/pi-acp)** | svkozak | ACP adapter for pi coding agent |
 | **[Stakpak Agent](https://github.com/stakpak/agent)** | Stakpak | Ship your code, on autopilot. Open source agent that lives on your machines 24/7 and keeps your apps running |
 | **[OpenCode](https://opencode.ai/)** | Anomaly | OpenCode is an open source agent that helps you write and run code with any AI model. It's available as a terminal-based interface, desktop app, or IDE extension. Free models included or connect any model from any provider, including Claude, GPT, Gemini and more.|
+| **[Antigravity CLI](https://antigravity.google/product/antigravity-cli)** | Google | The terminal-first surface to interact with Antigravity agents. Stay in your flow without context switching. |
 
 ---
 
