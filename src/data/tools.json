@@ -462,5 +462,9 @@
   {
     "companyName": "Google",
     "toolName": "Antigravity CLI"
+  },
+  {
+    "companyName": "CoderPlan",
+    "toolName": "CoderPlan"
   }
 ]
