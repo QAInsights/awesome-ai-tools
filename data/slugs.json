@@ -474,6 +474,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "nanocoder",
+    "name": "Nanocoder",
+    "company": "Nano Collective",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

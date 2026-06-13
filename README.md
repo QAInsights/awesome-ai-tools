@@ -127,6 +127,7 @@ AI coding agents that live in your terminal or command line.
 | **[Stakpak Agent](https://github.com/stakpak/agent)** | Stakpak | Ship your code, on autopilot. Open source agent that lives on your machines 24/7 and keeps your apps running |
 | **[OpenCode](https://opencode.ai/)** | Anomaly | OpenCode is an open source agent that helps you write and run code with any AI model. It's available as a terminal-based interface, desktop app, or IDE extension. Free models included or connect any model from any provider, including Claude, GPT, Gemini and more.|
 | **[Antigravity CLI](https://antigravity.google/product/antigravity-cli)** | Google | The terminal-first surface to interact with Antigravity agents. Stay in your flow without context switching. |
+| **[Nanocoder](https://github.com/Nano-Collective/nanocoder)** | Nano Collective | Local-first, open-source terminal coding agent built by a community collective. Bring your own model (Ollama, OpenRouter, or any OpenAI-compatible API) and keep your code on your machine, with native tool calling, an XML fallback, MCP server support, and file-based custom commands and tools.; [GitHub](https://github.com/Nano-Collective/nanocoder) |
 
 ---
 
