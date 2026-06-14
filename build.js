@@ -73,10 +73,10 @@ if (!result.success) {
 }
 
 
-// Regenerate per-tool detail pages + sitemap from README.md
+// Regenerate per-tool detail pages from README.md
 try {
     const { count } = await generateToolPages();
-    console.log(`Generated ${count} tool detail pages and updated sitemap.xml`);
+    console.log(`Generated ${count} tool detail pages`);
 } catch (err) {
     console.error("Tool page generation failed:", err);
     process.exit(1);
