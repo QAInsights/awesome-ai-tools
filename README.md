@@ -184,6 +184,7 @@ Tools focused on reviewing, securing, and validating code — not generating it.
 | **[Snyk Code](https://snyk.io/product/snyk-code/)** | Snyk | SAST security scanning; real-time vulnerability detection; DevSecOps integration |
 | **[cubic](https://www.cubic.dev/)** | Cubic | AI code reviews for complex codebases |
 | **[Kodus](https://kodus.io/)** | Kodus | Open source AI code review tool that helps engineering teams review pull requests with repository context, custom rules, and BYOK support. It integrates with GitHub, GitLab, Bitbucket, and Azure DevOps.; [GitHub](https://github.com/kodustech/kodus-ai) |
+| **[Gito](https://github.com/Nayjest/Gito)** | Vitalii Stepanenko | Open-source AI code reviewer that runs in GitHub Actions or locally. Model-agnostic (works with any LLM) and reports findings to GitHub, Jira, or Linear.; [GitHub](https://github.com/Nayjest/Gito) |
 
 ---
 
