@@ -480,6 +480,11 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "ai-prompt-architect",
+    "name": "AI Prompt Architect",
+    "company": "AI Prompt Architect",
+    "category" : "Terminal & CLI Agents"
+  },
     "slug": "ai-badger",
     "name": "AI Badger",
     "company": "PVR Labs",
