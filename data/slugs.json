@@ -480,6 +480,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "ai-prompt-architect",
+    "name": "AI Prompt Architect",
+    "company": "AI Prompt Architect",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
