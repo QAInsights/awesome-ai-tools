@@ -480,6 +480,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "ai-badger",
+    "name": "AI Badger",
+    "company": "PVR Labs",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
