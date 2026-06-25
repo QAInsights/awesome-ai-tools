@@ -483,8 +483,9 @@
     "slug": "ai-prompt-architect",
     "name": "AI Prompt Architect",
     "company": "AI Prompt Architect",
-    "category" : "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents"
   },
+  {
     "slug": "ai-badger",
     "name": "AI Badger",
     "company": "PVR Labs",
@@ -692,6 +693,12 @@
     "slug": "fern",
     "name": "Fern",
     "company": "Fern",
+    "category": "AI Codebase Knowledge & Generation"
+  },
+  {
+    "slug": "remio",
+    "name": "Remio",
+    "company": "Remio",
     "category": "AI Codebase Knowledge & Generation"
   },
   {

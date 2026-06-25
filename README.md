@@ -220,6 +220,7 @@ Tools for understanding large repositories or generating SDKs/APIs.
 |------|---------|-------|
 | **[Greptile](https://www.greptile.com/)** | Greptile | AI that ingests massive codebases and answers deep architectural questions via chat or API |
 | **[Fern](https://buildwithfern.com/)** | Fern | Generates SDKs and developer documentation natively from your API definitions |
+| **[Remio](https://remio.ai/)** | Remio | Local-first AI memory and personal knowledge base desktop app. Remio parses files, webpages, recordings, emails, messages, images, and notes into local indexes and vectors so coding agents can retrieve focused personal context through the Remio CLI/skill instead of repeatedly scanning folders or loading whole documents into prompts. The CLI/skill require the Remio desktop client. |
 
 ---
 
