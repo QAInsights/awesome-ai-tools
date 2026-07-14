@@ -32,6 +32,7 @@ Full standalone editors built from the ground up with AI at the core.
 | Tool | Company | Notes |
 |------|---------|-------|
 | **[Cursor](https://cursor.com)** | Anysphere | VS Code fork; agent mode for multi-file edits; most popular AI-native IDE |
+| [Auferet](https://auferet.com) | AI game master that remembers your world: persistent memory for characters, places, and lore you upload; solo or multiplayer, 5e & Pathfinder 2e | — |
 | **[Windsurf](https://windsurf.com/refer?referral_code=37a59a01d5)** | Cognition | AI-first IDE with "Flows" agentic engine. |
 | **[Trae](https://trae.ai)** | ByteDance | Free AI IDE (VS Code-based); Builder Mode; GPT-4o + Claude access at no cost |
 | **[Zed](https://zed.dev)** | Zed Industries | High-performance multiplayer editor with built-in AI; by creators of Atom |
