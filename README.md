@@ -81,6 +81,7 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Apertis](https://apertis.ai/)** | Stima | One API key works across all major coding agents |
 | **[Corust](https://corust.ai/)** | Corust | Your seasoned Rust co-pilot: production-grade code generation, zero hallucinations on Rust idioms, and tools built for real Rustaceans. |
 | **[Toprank](https://github.com/nowork-studio/toprank)** | nowork-studio | Open-source Claude Code plugin for SEO, Google Ads, content writing, and CMS optimization workflows |
+| **[NotFair](https://github.com/nowork-studio/NotFair)** | nowork-studio | Open-source Claude Code skills for SEO, GEO/AEO, and paid ads; bundles Google Search Console, Google Analytics (GA4), Google Ads, and Meta Ads MCP servers for live account data |
 | **[WozCode](https://www.wozcode.com/)** | WozCode | A Claude Code plugin that supercharges performance, cost, and speed |
 | **[Claude Code Skills 中文精选集](https://claude-skills.bt199.com/)** | 老实人实验室 | Chinese curated directory of Claude Code Skills, Agents, Plugins, and workflows with 140+ resources |
 | **[Oh My codeX](https://github.com/Yeachan-Heo/oh-my-codex)** | Yeachan-Heo | OmX: Your codex is not alone. Add hooks, agent teams, HUDs, and so much more |
