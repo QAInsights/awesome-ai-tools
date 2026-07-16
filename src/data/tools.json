@@ -498,5 +498,9 @@
   {
     "companyName": "TerminallyLazy",
     "toolName": "Tree Ring Memory"
+  },
+  {
+    "companyName": "ShakespeareLabs",
+    "toolName": "OpenAgentRelay"
   }
 ]
