@@ -265,9 +265,7 @@ export function renderTools(tools, searchVal, clearCallback) {
  * Load a batch of tools
  */
 function loadBatch() {
-    console.log('loadBatch called, filteredTools.length:', filteredTools.length);
     if (filteredTools.length === 0) {
-        console.log('No tools to render - showing empty state');
         const empty = document.createElement('div');
         empty.className = 'py-6 px-0 md:py-10 md:px-8 flex flex-col items-start gap-3';
         empty.innerHTML = `
@@ -278,8 +276,6 @@ function loadBatch() {
         if (btn && onClearCallback) btn.addEventListener('click', onClearCallback);
         return;
     }
-
-    console.log('Rendering batch from', loadedCount, 'to', Math.min(loadedCount + BATCH_SIZE, filteredTools.length));
     const fragment = document.createDocumentFragment();
     const endIndex = Math.min(loadedCount + BATCH_SIZE, filteredTools.length);
 
