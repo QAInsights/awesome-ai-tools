@@ -13,6 +13,7 @@
 
 ## 📋 Table of Contents
 
+- [CharaVox](https://charavox.com) - AI voice generation platform with character voices, voice cloning, and studio-quality TTS in 6 languages (en/zh/ja/ko/es/pt). Powered by VoxCPM.
 - [🖥️ AI-Native IDEs & Editors](#ai-native-ides--editors)
 - [🔌 IDE Extensions & Plugins](#ide-extensions--plugins)
 - [💻 Terminal & CLI Agents](#terminal--cli-agents)
