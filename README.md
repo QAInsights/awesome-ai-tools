@@ -99,6 +99,7 @@ AI coding agents that live in your terminal or command line.
 | **[Aider](https://aider.chat)** | Aider | Git-native terminal pair programmer; 39K GitHub stars; auto-commits changes |
 | **[Gemini CLI](https://github.com/google-gemini/gemini-cli)** | Google | Terminal agent for local repo tasks; lightweight; no UI overhead |
 | **[Goose](https://block.github.io/goose/)** | Block | Open-source AI agent framework; fully local; write/execute/debug from CLI |
+| **[Tura](https://github.com/Tura-AI/tura)** | Tura AI | Open-source local coding agent with CLI/TUI/GUI, task-scoped context, macro command execution, verification, and published benchmarks |
 | **[Amazon Q CLI](https://aws.amazon.com/q/developer/)** | AWS | CLI agent component of Amazon Q; AWS-integrated terminal tasks |
 | **[Letta Code](https://github.com/letta-ai/letta-code)** | Letta | Memory-first terminal coding agent; stateful across sessions; [Docs](https://docs.letta.com/letta-code) |
 | **[Qwen CLI](https://qwen.ai/qwencode)** | Alibaba | High-performance CLI tool for Qwen models; specialized in code generation |
