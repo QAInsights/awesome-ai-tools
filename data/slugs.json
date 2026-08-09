@@ -600,6 +600,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "kody",
+    "name": "Kody",
+    "company": "Kent C. Dodds",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
