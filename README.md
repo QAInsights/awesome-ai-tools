@@ -165,6 +165,7 @@ Agents that operate independently on tasks, often outside your local editor.
 | **[DeepAgents JS](https://github.com/langchain-ai/deepagentsjs)** | LangChain | TypeScript package for creating Deep Agents — implements deep agent capabilities in a general-purpose way |
 | **[Orkas](https://orkas.ai/?source=gh_qainsights)** | Orkas-AI | Open-source, local-first desktop workspace where a Commander decomposes goals and coordinates specialist AI agents in parallel or sequence.; [GitHub](https://github.com/Orkas-AI/Orkas) |
 | **[Kody](https://github.com/kentcdodds/kody)** | Kent C. Dodds | Your assistant's home — the memory, keys, code, and automations your AI agent keeps, portable across every MCP host. Built on Cloudflare Workers.; [GitHub](https://github.com/kentcdodds/kody) |
+| **[Omnigent](https://github.com/omnigent-ai/omnigent)** | Omnigent | Omnigent is an open-source AI agent framework and meta-harness: orchestrate Claude Code, Codex, Cursor, Pi, and custom agents — swap harnesses without rewriting, enforce policies and sandboxing, and collaborate in real time from any device.; [GitHub](https://github.com/omnigent-ai/omnigent) |
 
 ---
 
