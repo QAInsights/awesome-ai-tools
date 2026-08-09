@@ -554,5 +554,9 @@
   {
     "companyName": "Omnigent",
     "toolName": "Omnigent"
+  },
+  {
+    "companyName": "Factory",
+    "toolName": "Factory AI"
   }
 ]

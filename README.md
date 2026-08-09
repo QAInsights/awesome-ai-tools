@@ -53,6 +53,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[Meta Muse](https://developer.meta.com/ai/products/muse-code/)** | Meta | An agent for your most complex coding workstreams. Build, debug and ship with Muse Code.; [GitHub](_No response_) |
 | **[DeepCode](https://github.com/HKUDS/DeepCode)** | HKUDS | DeepCode: Open Agentic Coding (Paper2Code & Text2Web & Text2Backend); [GitHub](_No response_) |
 | **[Fletch](https://fletch.sh)** | FWDAI | Open source multi-agent runner for your coding agents that runs then in parallel and in real isolation (Docker or Seatbelt). Allows chaining them into deterministic workflows that plan, build, review and test. You ship AI-written code you can actually trust, not just more of it.; [GitHub](https://github.com/fwdai/fletch) |
+| **[Factory AI](https://factory.ai/)** | Factory | Complete software development agents for individuals.; [GitHub](_No response_) |
 
 
 ---

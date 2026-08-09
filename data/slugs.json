@@ -132,6 +132,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "factory-ai",
+    "name": "Factory AI",
+    "company": "Factory",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
