@@ -558,5 +558,9 @@
   {
     "companyName": "AntigmaLabs",
     "toolName": "ante"
+  },
+  {
+    "companyName": "ISMS Copilot / Better ISMS",
+    "toolName": "heygrc"
   }
 ]

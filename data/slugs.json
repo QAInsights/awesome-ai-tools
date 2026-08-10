@@ -708,6 +708,12 @@
     "category": "AI Code Review & Security"
   },
   {
+    "slug": "heygrc",
+    "name": "heygrc",
+    "company": "ISMS Copilot / Better ISMS",
+    "category": "AI Code Review & Security"
+  },
+  {
     "slug": "gitauto",
     "name": "GitAuto",
     "company": "GitAuto",
