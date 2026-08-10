@@ -92,6 +92,7 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Oh My codeX](https://github.com/Yeachan-Heo/oh-my-codex)** | Yeachan-Heo | OmX: Your codex is not alone. Add hooks, agent teams, HUDs, and so much more |
 | **[Bob](https://bob.ibm.com/)** | IBM | Your AI-Powered Development Partner |
 | **[Firebender](https://firebender.com/)** | Firebender | The first Android-native coding agent that writes features, tests them in the emulator, and fixes issues automatically |
+| **[Feather Wand](https://jmeter.ai)** | NaveenKumar Namachivayam | Supercharge your performance testing workflow with AI-driven capabilities built natively into JMeter.; [GitHub](https://github.com/QAInsights/jmeter-ai) |
 
 ---
 

@@ -300,6 +300,12 @@
     "category": "IDE Extensions & Plugins"
   },
   {
+    "slug": "feather-wand",
+    "name": "Feather Wand",
+    "company": "NaveenKumar Namachivayam",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
     "slug": "claude-code",
     "name": "Claude Code",
     "company": "Anthropic",
