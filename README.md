@@ -57,6 +57,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[Factory AI](https://factory.ai/)** | Factory | Complete software development agents for individuals.; [GitHub](_No response_) |
 | **[ante](https://github.com/AntigmaLabs/ante)** | AntigmaLabs | Ghost in your shell. Ante is a self-contained agent harness with a highly optimized core. It works like Claude Code or Codex, with none of their dependencies or model constraints.; [GitHub](https://github.com/AntigmaLabs/ante) |
 | **[unsloth](https://github.com/unslothai/unsloth)** | unsloth | Unsloth lets you run, train, and deploy AI models locally, with support for all types of models.; [GitHub](https://github.com/unslothai/unsloth) |
+| **[bb](https://github.com/get-bb/bb)** | bb | bb is an agentic IDE that can control itself. You can seamlessly orchestrate all of your favorite coding agents together and have them programmatically use bb too.; [GitHub](https://github.com/get-bb/bb) |
 
 
 ---

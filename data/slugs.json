@@ -144,6 +144,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "bb",
+    "name": "bb",
+    "company": "bb",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
