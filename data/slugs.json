@@ -138,6 +138,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "unsloth",
+    "name": "unsloth",
+    "company": "unsloth",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",

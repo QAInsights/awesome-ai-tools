@@ -56,6 +56,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[Fletch](https://fletch.sh)** | FWDAI | Open source multi-agent runner for your coding agents that runs then in parallel and in real isolation (Docker or Seatbelt). Allows chaining them into deterministic workflows that plan, build, review and test. You ship AI-written code you can actually trust, not just more of it.; [GitHub](https://github.com/fwdai/fletch) |
 | **[Factory AI](https://factory.ai/)** | Factory | Complete software development agents for individuals.; [GitHub](_No response_) |
 | **[ante](https://github.com/AntigmaLabs/ante)** | AntigmaLabs | Ghost in your shell. Ante is a self-contained agent harness with a highly optimized core. It works like Claude Code or Codex, with none of their dependencies or model constraints.; [GitHub](https://github.com/AntigmaLabs/ante) |
+| **[unsloth](https://github.com/unslothai/unsloth)** | unsloth | Unsloth lets you run, train, and deploy AI models locally, with support for all types of models.; [GitHub](https://github.com/unslothai/unsloth) |
 
 
 ---
