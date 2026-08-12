@@ -162,6 +162,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "jcode",
+    "name": "jcode",
+    "company": "Jeremy Huang",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",

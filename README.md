@@ -60,6 +60,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[bb](https://github.com/get-bb/bb)** | bb | bb is an agentic IDE that can control itself. You can seamlessly orchestrate all of your favorite coding agents together and have them programmatically use bb too.; [GitHub](https://github.com/get-bb/bb) |
 | **[OpenChamber](https://openchamber.dev/)** | OpenChamber | OpenChamber is an open-source workspace for running, supervising, and reviewing AI coding work across desktop, browser, editor, and mobile.; [GitHub](https://github.com/openchamber/openchamber) |
 | **[Waku](https://github.com/egoist/waku)** | EGOIST | Waku is a fast, native desktop app for working with local coding agents. It is built in Rust with [GPUI](https://github.com/zed-industries/zed/tree/main/crates/gpui) and keeps projects, sessions, transcripts on your machine.; [GitHub](https://github.com/egoist/waku) |
+| **[jcode](https://github.com/1jehuang/jcode)** | Jeremy Huang | jcode is built to be as performant and resource efficient as possible. Every metric is optimized to the bone, which is important for scaling multi-session workflows. Here we sample a few metrics to show the difference: RAM usage and boot up.; [GitHub](https://github.com/1jehuang/jcode) |
 
 
 ---
