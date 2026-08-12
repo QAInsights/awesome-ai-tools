@@ -100,6 +100,7 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Firebender](https://firebender.com/)** | Firebender | The first Android-native coding agent that writes features, tests them in the emulator, and fixes issues automatically |
 | **[Feather Wand](https://jmeter.ai)** | NaveenKumar Namachivayam | Supercharge your performance testing workflow with AI-driven capabilities built natively into JMeter.; [GitHub](https://github.com/QAInsights/jmeter-ai) |
 | **[SF Pi](https://github.com/salesforce/sf-pi)** | Salesforce | Opinionated Salesforce extensions for the [Pi coding agent](https://pi.dev/): focused lifecycle tools, Salesforce-aware status and safety surfaces, Agent Script authoring, and one Manager for package settings and extension enablement.; [GitHub](https://github.com/salesforce/sf-pi) |
+| **[Blume](https://blume.codes/invite/coral-buttercup-awakening-gracefully)** | Blume | Blume helps you build an agentic-native codebase with consistent and correct context. Fewer mistakes, fewer headaches.; [GitHub](_No response_) |
 
 ---
 

@@ -348,6 +348,12 @@
     "category": "IDE Extensions & Plugins"
   },
   {
+    "slug": "blume",
+    "name": "Blume",
+    "company": "Blume",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
     "slug": "claude-code",
     "name": "Claude Code",
     "company": "Anthropic",
