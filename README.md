@@ -62,6 +62,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[Waku](https://github.com/egoist/waku)** | EGOIST | Waku is a fast, native desktop app for working with local coding agents. It is built in Rust with [GPUI](https://github.com/zed-industries/zed/tree/main/crates/gpui) and keeps projects, sessions, transcripts on your machine.; [GitHub](https://github.com/egoist/waku) |
 | **[jcode](https://github.com/1jehuang/jcode)** | Jeremy Huang | jcode is built to be as performant and resource efficient as possible. Every metric is optimized to the bone, which is important for scaling multi-session workflows. Here we sample a few metrics to show the difference: RAM usage and boot up.; [GitHub](https://github.com/1jehuang/jcode) |
 | **[Grok Bot](https://x.ai/bot)** | X | AI teammates you can give real work to. Bots can sign in to your tools, use them just like you do, and come back with finished work.; [GitHub](_No response_) |
+| **[Ori](https://openrouter.ai/ori/harness)** | OpenRouter | Your favorite harness with every model.; [GitHub](_No response_) |
 
 
 ---

@@ -598,5 +598,9 @@
   {
     "companyName": "X",
     "toolName": "Grok Bot"
+  },
+  {
+    "companyName": "OpenRouter",
+    "toolName": "Ori"
   }
 ]
