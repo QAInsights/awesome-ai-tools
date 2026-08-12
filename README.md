@@ -147,6 +147,7 @@ AI coding agents that live in your terminal or command line.
 | **[AI Badger](https://pvrlabs.xyz/aibadger)** | PVR Labs | AI Badger is a local-first CLI that maps your codebase and extracts focused file context for AI chats and coding agents. It works with ChatGPT, Claude, Codex, Gemini, and other assistants without cloud indexing, API keys, or vendor lock-in.; [GitHub](https://github.com/PVRLabs/aibadger) |
 | **[AgentBox](https://agent-box.sh)** | Marco D'Alia | Run multiple coding agents (Claude Code, Codex, OpenCode) in parallel, each teleported into its own sandboxed VM — local Docker, self-hosted, or cloud (Hetzner/Daytona/E2B). Sub-second checkpoints, per-box browser/VS Code/persistent shells, native macOS menu-bar app, git credentials kept on the host. MIT.; [GitHub](https://github.com/madarco/agentbox) |
 | **[Oh My Pi](https://github.com/can1357/oh-my-pi)** | Can Bölük | ⌥ AI Coding agent for the terminal — hash-anchored edits, optimized tool harness, LSP, Python, browser, subagents, and more.; [GitHub](_No response_) |
+| **[Sillage](https://github.com/MarlBurroW/sillage)** | MarlBurroW | Self-hosted, mobile-first web UI that drives the native Claude Code and Codex CLIs on your own machine (replaces the terminal, not the agent). Sessions that outlive the client, full-text search across every conversation, an IDE panel (file explorer, editor, diffs, terminal), a board the agents read through its own MCP server, installable PWA with push. Single Docker container. MIT.; [GitHub](https://github.com/MarlBurroW/sillage) |
 
 ---
 
