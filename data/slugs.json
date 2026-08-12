@@ -156,6 +156,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "waku",
+    "name": "Waku",
+    "company": "EGOIST",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",

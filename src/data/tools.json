@@ -578,5 +578,9 @@
   {
     "companyName": "OpenChamber",
     "toolName": "OpenChamber"
+  },
+  {
+    "companyName": "EGOIST",
+    "toolName": "Waku"
   }
 ]
