@@ -582,6 +582,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "grok-build",
+    "name": "Grok Build",
+    "company": "X",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
