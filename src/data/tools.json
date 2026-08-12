@@ -594,5 +594,9 @@
   {
     "companyName": "X",
     "toolName": "Grok Build"
+  },
+  {
+    "companyName": "X",
+    "toolName": "Grok Bot"
   }
 ]
