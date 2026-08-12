@@ -5,8 +5,7 @@
   "private": true,
   "scripts": {
     "astro:dev": "bun run css:build && bun run js:build && astro dev",
-    "astro:build": "bun run css:build && bun run js:build && bun scripts/assert-parser-parity.ts && node scripts/generate-og-images.js && node scripts/generate-blog-images.js && astro build",
-    "generate:blog-images": "node scripts/generate-blog-images.js",
+    "astro:build": "bun run css:build && bun run js:build && bun scripts/assert-parser-parity.ts && node scripts/generate-og-images.js && astro build",
     "astro:preview": "astro preview",
     "css:build": "tailwindcss -i ./src/input.css -o ./public/css/output.css --minify",
     "css:watch": "tailwindcss -i ./src/input.css -o ./public/css/output.css --watch",

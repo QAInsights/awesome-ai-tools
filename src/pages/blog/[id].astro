@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import BlogCardGradient from '../../components/BlogCardGradient.astro';
 import { safeJsonForScript } from '../../lib/serialize';
 
 export async function getStaticPaths() {
@@ -16,9 +17,6 @@ const { entry } = Astro.props;
 const { Content, headings, remarkPluginFrontmatter } = await render(entry);
 
 const postUrl = `https://ai.dosa.dev/blog/${entry.id}`;
-const postImage = entry.data.image
-  ? new URL(entry.data.image, 'https://ai.dosa.dev').href
-  : 'https://ai.dosa.dev/images/og-image.png';
 
 const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
@@ -26,7 +24,6 @@ const jsonLd = JSON.stringify({
   "@id": `${postUrl}#article`,
   "headline": entry.data.title,
   "description": entry.data.description,
-  "image": postImage,
   "datePublished": entry.data.pubDate.toISOString(),
   "author": { "@type": "Person", "name": entry.data.author },
   "publisher": {
@@ -71,21 +68,14 @@ const shareLinks = [
 ];
 
 // Deep links into AI chatbots with a pre-filled discussion prompt.
-// The prompt is also copied to the clipboard on click as a fallback for
-// targets that strip query params.
 const aiPrompt = `I want to discuss this article: ${postUrl}`;
 const aiTargets = [
   { name: 'ChatGPT', href: `https://chatgpt.com/?q=${encodeURIComponent(aiPrompt)}`, copiedLabel: 'Copied!' },
   { name: 'Claude', href: `https://claude.ai/new?q=${encodeURIComponent(aiPrompt)}`, copiedLabel: 'Copied!' },
-  // Gemini doesn't reliably pre-fill from ?q= — the clipboard copy is the
-  // primary path there, so say so in the feedback label.
-  { name: 'Gemini', href: `https://gemini.google.com/app?q=${encodeURIComponent(aiPrompt)}`, copiedLabel: 'Copied — paste in Gemini' },
+  { name: 'Gemini', href: `https://gemini.google.com/app?q=${encodeURIComponent(aiPrompt)}`, copiedLabel: 'Copied - paste in Gemini' },
   { name: 'Perplexity', href: `https://www.perplexity.ai/search?q=${encodeURIComponent(aiPrompt)}`, copiedLabel: 'Copied!' },
 ];
 
-// Full article as markdown for the "Copy for LLM" action.
-// The glob loader maps entry.id to a path under src/content/blog; guard the
-// read so a missing/renamed file can't fail the whole SSG build.
 let articleBody = '';
 try {
   const mdxPath = join(process.cwd(), 'src', 'content', 'blog', `${entry.id}.mdx`);
@@ -118,7 +108,6 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
   description={entry.data.description}
   canonical={postUrl}
   ogType="article"
-  ogImage={postImage}
   jsonLd={jsonLd}
   activeNav="blog"
 >
@@ -136,9 +125,12 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
           </a>
         </div>
 
-        <article>
-          <header class="mb-10 text-left">
-            <h1 class="text-3xl sm:text-4xl font-semibold text-white tracking-tight mb-4">
+        <article class="select-text">
+          {/* Featured Image Gradient (above title) */}
+          <BlogCardGradient title={entry.data.title} slug={entry.id} tags={entry.data.tags} aspect="article" />
+
+          <header class="mb-8 text-left select-text">
+            <h1 class="text-3xl sm:text-4xl font-semibold text-white tracking-tight mb-4 select-text">
               {entry.data.title}
             </h1>
             <div class="flex flex-wrap items-center gap-3 text-sm text-[#737373] font-mono">
@@ -152,102 +144,15 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
               <span>•</span>
               <span>{entry.data.author}</span>
               {remarkPluginFrontmatter && remarkPluginFrontmatter.readingTime && (
-                  <>
+                <>
                   <span>•</span>
                   <span>{remarkPluginFrontmatter.readingTime}</span>
-                  </>
+                </>
               )}
             </div>
-
-            {/* Share row */}
-            <div class="flex flex-wrap items-center gap-2 mt-6">
-              <span class="text-xs font-mono uppercase tracking-widest text-[#525252] mr-1">Share</span>
-              {shareLinks.map((link) => (
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Share on ${link.name}`}
-                  title={`Share on ${link.name}`}
-                  class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors"
-                >
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" set:html={link.icon} />
-                </a>
-              ))}
-              <button
-                type="button"
-                id="copy-link-btn"
-                data-copy={postUrl}
-                aria-label="Copy article link"
-                title="Copy link"
-                class="inline-flex items-center justify-center gap-1.5 h-8 px-2.5 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors text-xs font-mono"
-              >
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 0 0-5.656 0l-4 4a4 4 0 1 0 5.656 5.656l1.102-1.101m-.758-4.899a4 4 0 0 0 5.656 0l4-4a4 4 0 0 0-5.656-5.656l-1.1 1.1" />
-                </svg>
-                <span data-label>Copy link</span>
-              </button>
-            </div>
-
-            {/* Discuss with AI row */}
-            <div class="flex flex-wrap items-center gap-2 mt-3">
-              <span class="text-xs font-mono uppercase tracking-widest text-[#525252] mr-1">Discuss with AI</span>
-              {aiTargets.map((target) => (
-                <a
-                  href={target.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="ai-copy-btn inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors text-xs font-mono"
-                  data-copy={aiPrompt}
-                  data-copied-label={target.copiedLabel}
-                  aria-label={`Discuss this article in ${target.name}`}
-                >
-                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
-                  <span data-label>{target.name}</span>
-                </a>
-              ))}
-              <button
-                type="button"
-                id="copy-llm-btn"
-                aria-label="Copy full article as markdown for an LLM"
-                title="Copy full article as markdown"
-                class="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors text-xs font-mono"
-              >
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                </svg>
-                <span data-label>Copy for LLM</span>
-              </button>
-            </div>
-
-            {entry.data.tags && entry.data.tags.length > 0 && (
-              <div class="flex flex-wrap gap-2 mt-6">
-                {entry.data.tags.map((tag) => (
-                  <span class="inline-flex items-center px-2 py-0.5 rounded border border-[#333] text-xs font-mono bg-white/[0.03] text-[#a3a3a3]">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
           </header>
 
-          {/* Featured Image */}
-          <div class="mb-12 rounded-xl overflow-hidden border border-[#222] bg-[#111] aspect-[21/9]">
-            <img
-              src={entry.data.image || '/images/blog-placeholder.png'}
-              alt={entry.data.title}
-              fetchpriority="high"
-              decoding="async"
-              class="w-full h-full object-cover"
-            />
-          </div>
-
-          <div id="article-body" class="prose prose-invert prose-zinc max-w-none prose-headings:font-semibold prose-a:text-[#22d3ee] hover:prose-a:text-[#67e8f9] prose-a:no-underline hover:prose-a:underline prose-code:text-[#a78bfa] prose-pre:bg-[#0a0a0a] prose-pre:border prose-pre:border-[#222] prose-img:rounded-lg prose-img:border prose-img:border-[#222] prose-hr:border-[#222]">
+          <div id="article-body" class="select-text prose prose-invert prose-zinc max-w-none prose-headings:font-semibold prose-a:text-[#22d3ee] hover:prose-a:text-[#67e8f9] prose-a:no-underline hover:prose-a:underline prose-code:text-[#a78bfa] prose-pre:bg-[#0a0a0a] prose-pre:border prose-pre:border-[#222] prose-img:rounded-lg prose-img:border prose-img:border-[#222] prose-hr:border-[#222]">
             <Content />
           </div>
         </article>
@@ -257,19 +162,20 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
         </footer>
       </div>
 
-      {/* Table of contents (desktop) */}
-      {tocHeadings.length > 0 && (
-        <aside class="hidden xl:block">
-          <nav aria-label="Table of contents" class="sticky top-8 border-l border-[#222] pl-4">
-            <p class="text-xs font-mono uppercase tracking-widest text-[#525252] mb-3">On this page</p>
-            <ul class="space-y-1 text-sm">
+      {/* Right Sidebar: Table of contents, Share, Discuss with AI, Tags */}
+      <aside class="space-y-8 mt-6 xl:mt-0 xl:block xl:sticky xl:top-[50vh] xl:-translate-y-1/2 self-start">
+        {/* Table of contents */}
+        {tocHeadings.length > 0 && (
+          <nav aria-label="Table of contents" class="border-l border-[#222] pl-4">
+            <p class="text-xs font-mono uppercase tracking-widest text-[#525252] mb-1.5">On this page</p>
+            <ul class="space-y-0.5 text-sm">
               {tocHeadings.map((h) => (
                 <li>
                   <a
                     href={`#${h.slug}`}
                     data-toc-link={h.slug}
                     class:list={[
-                      'toc-link block py-1 border-l-2 border-transparent -ml-[17px] pl-[15px] text-[#737373] hover:text-white transition-colors leading-snug',
+                      'toc-link block py-0.5 border-l-2 border-transparent -ml-[17px] pl-[15px] text-[#737373] hover:text-white transition-colors leading-snug',
                       { 'pl-[27px]': h.depth === 3 },
                     ]}
                   >
@@ -279,8 +185,92 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
               ))}
             </ul>
           </nav>
-        </aside>
-      )}
+        )}
+
+        {/* Share Section */}
+        <div class="border-l border-[#222] pl-4">
+          <p class="text-xs font-mono uppercase tracking-widest text-[#525252] mb-3">Share</p>
+          <div class="flex flex-wrap items-center gap-2">
+            {shareLinks.map((link) => (
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Share on ${link.name}`}
+                title={`Share on ${link.name}`}
+                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors"
+              >
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" set:html={link.icon} />
+              </a>
+            ))}
+            <button
+              type="button"
+              id="copy-link-btn"
+              data-copy={postUrl}
+              aria-label="Copy article link"
+              title="Copy link"
+              class="inline-flex items-center justify-center gap-1.5 h-8 px-2.5 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors text-xs font-mono"
+            >
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 0 0-5.656 0l-4 4a4 4 0 1 0 5.656 5.656l1.102-1.101m-.758-4.899a4 4 0 0 0 5.656 0l4-4a4 4 0 0 0-5.656-5.656l-1.1 1.1" />
+              </svg>
+              <span data-label>Copy link</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Discuss with AI Section */}
+        <div class="border-l border-[#222] pl-4">
+          <p class="text-xs font-mono uppercase tracking-widest text-[#525252] mb-3">Discuss with AI</p>
+          <div class="flex flex-wrap items-center gap-2">
+            {aiTargets.map((target) => (
+              <a
+                href={target.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ai-copy-btn inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors text-xs font-mono"
+                data-copy={aiPrompt}
+                data-copied-label={target.copiedLabel}
+                aria-label={`Discuss this article in ${target.name}`}
+              >
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                <span data-label>{target.name}</span>
+              </a>
+            ))}
+            <button
+              type="button"
+              id="copy-llm-btn"
+              aria-label="Copy full article as markdown for an LLM"
+              title="Copy full article as markdown"
+              class="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors text-xs font-mono"
+            >
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span data-label>Copy for LLM</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Tags Section */}
+        {entry.data.tags && entry.data.tags.length > 0 && (
+          <div class="border-l border-[#222] pl-4">
+            <p class="text-xs font-mono uppercase tracking-widest text-[#525252] mb-3">Tags</p>
+            <div class="flex flex-wrap gap-2">
+              {entry.data.tags.map((tag) => (
+                <span class="inline-flex items-center px-2 py-0.5 rounded border border-[#333] text-xs font-mono bg-white/[0.03] text-[#a3a3a3]">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+      </aside>
     </div>
   </div>
 

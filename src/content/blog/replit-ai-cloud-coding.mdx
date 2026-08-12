@@ -1,18 +1,17 @@
 ---
 title: "Replit AI and the Rise of Cloud-Based AI Coding"
-description: "Coding in the browser used to mean compromises. Replit AI, Emergent.sh, and Bitrig are betting the whole dev environment belongs in the cloud — here's the state of play."
+description: "Coding in the browser used to mean compromises. Replit AI, Emergent.sh, and Bitrig are betting the whole dev environment belongs in the cloud - here's the state of play."
 pubDate: 2026-06-15
 tags: ["replit", "cloud", "browser", "ai", "review"]
-image: "/images/blog/replit-ai-cloud-coding.png"
 ---
 
-For years, "coding in the browser" meant toy editors and toy projects. That era is over. Cloud dev environments now run real backends, real databases, and — crucially — **AI agents that can use the whole environment**, not just autocomplete text in it. When the runtime, the filesystem, and the AI live in the same place, the agent can do things a local plugin can't: provision a database, run the app, see the error, fix it, and deploy.
+For years, "coding in the browser" meant toy editors and toy projects. That era is over. Cloud dev environments now run real backends, real databases, and - crucially - **AI agents that can use the whole environment**, not just autocomplete text in it. When the runtime, the filesystem, and the AI live in the same place, the agent can do things a local plugin can't: provision a database, run the app, see the error, fix it, and deploy.
 
 Three tools illustrate where this is heading.
 
 ## Replit AI
 
-[Replit](/tools/replit) is the veteran of browser-based coding, and its AI push — especially **Replit Agent** — turned it into one of the most complete prompt-to-deployed-app platforms available.
+[Replit](/tools/replit) is the veteran of browser-based coding, and its AI push - especially **Replit Agent** - turned it into one of the most complete prompt-to-deployed-app platforms available.
 
 The loop is remarkably tight:
 
@@ -27,13 +26,13 @@ The loop is remarkably tight:
 
 ## Emergent.sh
 
-[Emergent.sh](/tools/emergentsh) pushes the same idea further toward autonomy: describe a full application — frontend, backend, database, integrations — and its agent builds, tests, and deploys it, with an emphasis on production-style scaffolding rather than toy output.
+[Emergent.sh](/tools/emergentsh) pushes the same idea further toward autonomy: describe a full application - frontend, backend, database, integrations - and its agent builds, tests, and deploys it, with an emphasis on production-style scaffolding rather than toy output.
 
 It's aimed at founders and product teams who want a working application from a spec, with the option to take the code and run. If Replit is "an IDE in the cloud with an agent inside," Emergent is "an agent in the cloud that happens to show you the code."
 
 ## Bitrig
 
-[Bitrig](/tools/bitrig) targets a niche the others skip: **native mobile**. Its AI builds real iOS (Swift) apps from prompts — a much harder problem than web apps, and one where "prompt to app" has historically meant cross-platform compromises.
+[Bitrig](/tools/bitrig) targets a niche the others skip: **native mobile**. Its AI builds real iOS (Swift) apps from prompts - a much harder problem than web apps, and one where "prompt to app" has historically meant cross-platform compromises.
 
 For indie devs and small teams who want to ship to the App Store without deep Swift expertise, it's one of the only tools even attempting this.
 
@@ -42,11 +41,11 @@ For indie devs and small teams who want to ship to the App Store without deep Sw
 The local-versus-cloud debate predates AI, but AI changes the calculus:
 
 - **Agents need environments.** An agent that can run code, see output, and iterate needs a controlled runtime. Cloud platforms own that runtime end-to-end.
-- **Setup cost collapses.** No "works on my machine" — the environment the AI builds in is the environment it deploys to.
+- **Setup cost collapses.** No "works on my machine" - the environment the AI builds in is the environment it deploys to.
 - **Sandboxing is free.** Letting an agent loose in a disposable cloud container is safer than letting it loose on your laptop.
 
 The trade-offs remain the classics: latency, offline work, vendor lock-in, and cost at scale. Serious local setups with tools like [Cursor](/tools/cursor) or [Claude Code](/tools/claude-code) still win for large existing codebases.
 
 ## Verdict
 
-Cloud AI coding is no longer a toy tier — it's the fastest path from idea to live URL, full stop. Start with [Replit](/tools/replit) for the most complete package, look at [Emergent.sh](/tools/emergentsh) for agent-first building, and watch [Bitrig](/tools/bitrig) if mobile is your world. For the adjacent category of web-focused app builders, see our [v0 vs Bolt.new vs Lovable](/blog/v0-vs-bolt-vs-lovable) comparison.
+Cloud AI coding is no longer a toy tier - it's the fastest path from idea to live URL, full stop. Start with [Replit](/tools/replit) for the most complete package, look at [Emergent.sh](/tools/emergentsh) for agent-first building, and watch [Bitrig](/tools/bitrig) if mobile is your world. For the adjacent category of web-focused app builders, see our [v0 vs Bolt.new vs Lovable](/blog/v0-vs-bolt-vs-lovable) comparison.

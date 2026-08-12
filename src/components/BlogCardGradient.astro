@@ -1,0 +1,92 @@
+---
+import { getBlogTheme } from '../lib/blogGradients';
+
+interface Props {
+  title: string;
+  slug: string;
+  tags?: string[];
+  aspect?: 'card' | 'hero' | 'article';
+}
+
+const { title, slug, tags = [], aspect = 'card' } = Astro.props;
+const theme = getBlogTheme(slug, tags);
+
+const isHero = aspect === 'hero';
+const isArticle = aspect === 'article';
+---
+
+{isHero ? (
+  <div
+    class="mb-8 rounded-2xl overflow-hidden border border-white/15 bg-[#05070e] relative aspect-[3/1] flex items-center justify-center p-6 md:p-10 select-none shadow-2xl"
+    style={`background-image: ${theme.gradient};`}
+  >
+    <!-- Background Grid Pattern -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
+
+    <!-- Glassmorphic Central Card -->
+    <div class="relative z-10 backdrop-blur-xl bg-white/[0.05] border border-white/20 rounded-2xl p-6 md:p-8 text-center max-w-xl shadow-2xl overflow-hidden">
+      <!-- Reflection Sheen -->
+      <div class="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/20 to-transparent rounded-t-2xl pointer-events-none"></div>
+
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-white/10 border border-white/20 text-white mb-3 shadow-sm">
+        <span class="w-2 h-2 rounded-full animate-pulse" style={`background-color: ${theme.accent};`}></span>
+        dosa.dev
+      </div>
+
+      <h1 class="text-2xl md:text-4xl font-bold text-white tracking-tight mb-2 drop-shadow-md">
+        AI Tools Blog
+      </h1>
+      <p class="text-xs md:text-sm text-neutral-300 font-mono">
+        Insights, updates, and comparisons on the best AI coding tools.
+      </p>
+    </div>
+  </div>
+) : isArticle ? (
+  <div
+    class="mb-10 rounded-2xl overflow-hidden border border-white/15 bg-[#05070e] relative aspect-[21/9] flex items-center justify-center p-6 md:p-10 select-none shadow-2xl"
+    style={`background-image: ${theme.gradient};`}
+  >
+    <!-- Background Grid Pattern -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none"></div>
+
+    <!-- Glassmorphic Central Card -->
+    <div class="relative z-10 backdrop-blur-xl bg-white/[0.05] border border-white/20 rounded-2xl p-6 md:p-10 text-center max-w-2xl shadow-2xl overflow-hidden">
+      <!-- Reflection Sheen -->
+      <div class="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/20 to-transparent rounded-t-2xl pointer-events-none"></div>
+
+      {tags.length > 0 && (
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-white/10 border border-white/20 text-white mb-4 shadow-sm" style={`color: ${theme.accent};`}>
+          <span class="w-2 h-2 rounded-full" style={`background-color: ${theme.accent};`}></span>
+          {tags[0]}
+        </span>
+      )}
+
+      <h2 class="text-xl sm:text-3xl font-bold text-white tracking-tight leading-tight">
+        {title}
+      </h2>
+    </div>
+  </div>
+) : (
+  <div
+    class="relative w-full h-full min-h-[160px] overflow-hidden rounded-lg border border-white/10 bg-[#06080d] flex items-center justify-center p-4 select-none"
+    style={`background-image: ${theme.gradient};`}
+  >
+    <!-- Ambient Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-white/5 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:20px_24px] pointer-events-none"></div>
+
+    <!-- Glassmorphic Floating Card -->
+    <div class="relative z-10 backdrop-blur-md bg-white/[0.04] border border-white/20 rounded-xl p-3.5 flex flex-col items-center justify-center text-center max-w-[88%] transition-transform duration-500 group-hover:scale-105 group-hover:border-white/40 shadow-xl overflow-hidden">
+      <!-- Reflection Sheen -->
+      <div class="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/15 to-transparent rounded-t-xl pointer-events-none"></div>
+
+      <div class="w-9 h-9 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center mb-2 text-white font-mono text-base font-bold shadow-inner" style={`color: ${theme.accent};`}>
+        {theme.icon}
+      </div>
+
+      <span class="text-[11px] font-mono uppercase tracking-wider text-white/90 font-medium line-clamp-1">
+        {tags[0] || 'AI Tools'}
+      </span>
+    </div>
+  </div>
+)}

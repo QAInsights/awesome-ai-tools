@@ -1,9 +1,8 @@
 ---
 title: "Cursor Deep Dive: The AI IDE That Changed How Developers Write Code"
-description: "A thorough review of Cursor — Tab completions, Agent mode, codebase indexing, pricing, and who it's actually for."
+description: "A thorough review of Cursor - Tab completions, Agent mode, codebase indexing, pricing, and who it's actually for."
 pubDate: 2026-08-03
 tags: ["cursor", "ai", "ide", "review"]
-image: "/images/blog/cursor-deep-dive.png"
 featured: true
 ---
 
@@ -11,13 +10,13 @@ featured: true
 
 ## What Makes Cursor Different
 
-Most AI coding tools are plugins. Cursor is a **fork** — which sounds like a liability (you're betting on Anysphere keeping pace with upstream VS Code) but is exactly what enables its best features. Because it owns the editor, Cursor can do things an extension never could: inline diffs you accept with a keystroke, predictions that edit code *around* your cursor, and an agent that operates the editor itself.
+Most AI coding tools are plugins. Cursor is a **fork** - which sounds like a liability (you're betting on Anysphere keeping pace with upstream VS Code) but is exactly what enables its best features. Because it owns the editor, Cursor can do things an extension never could: inline diffs you accept with a keystroke, predictions that edit code *around* your cursor, and an agent that operates the editor itself.
 
 ## The Three Modes
 
 ### 1. Tab (Autocomplete)
 
-Cursor's autocomplete is the feature that hooks people. Instead of completing the current line, it predicts your **next edit** — sometimes several edits away, in a different part of the file. Change a function signature, and Tab will offer to update the call sites. It feels less like autocomplete and more like the editor reading your mind.
+Cursor's autocomplete is the feature that hooks people. Instead of completing the current line, it predicts your **next edit** - sometimes several edits away, in a different part of the file. Change a function signature, and Tab will offer to update the call sites. It feels less like autocomplete and more like the editor reading your mind.
 
 ### 2. Chat / Inline Edit
 
@@ -25,17 +24,17 @@ Cursor's autocomplete is the feature that hooks people. Instead of completing th
 
 ### 3. Agent Mode
 
-Agent mode is Cursor's answer to [Claude Code](/tools/claude-code) and friends. Give it a task — "add pagination to the users endpoint and update the tests" — and it plans, edits multiple files, runs terminal commands, and iterates. It's competent, and it's improving rapidly, though dedicated CLI agents still edge it out on very long-horizon tasks.
+Agent mode is Cursor's answer to [Claude Code](/tools/claude-code) and friends. Give it a task - "add pagination to the users endpoint and update the tests" - and it plans, edits multiple files, runs terminal commands, and iterates. It's competent, and it's improving rapidly, though dedicated CLI agents still edge it out on very long-horizon tasks.
 
 ## Codebase Indexing
 
-Cursor builds a semantic index of your repo, so `@`-mentioning a file or asking "where is authentication handled?" returns real answers. This is the unglamorous feature that makes everything else work — without it, the AI is just a chatbot with an API key.
+Cursor builds a semantic index of your repo, so `@`-mentioning a file or asking "where is authentication handled?" returns real answers. This is the unglamorous feature that makes everything else work - without it, the AI is just a chatbot with an API key.
 
 ## Pricing Reality Check
 
 Cursor's pricing has tiers (Hobby, Pro, and up), and the model-usage economics have been a moving target. The practical advice:
 
-- **Pro is worth it** if you code daily — the Tab completions alone justify it.
+- **Pro is worth it** if you code daily - the Tab completions alone justify it.
 - **Watch usage-based limits** on premium models; heavy Agent-mode users can burn through included usage.
 - **Bring-your-own-key** is an option if you want predictable costs with specific providers.
 
@@ -47,4 +46,4 @@ Cursor's pricing has tiers (Hobby, Pro, and up), and the model-usage economics h
 
 ## Verdict
 
-Cursor earned its hype. If you want AI that lives *in* your editor rather than next to it, it's the benchmark — see our [Cursor vs GitHub Copilot](/blog/cursor-vs-github-copilot) comparison for how it stacks up against the incumbent, and browse [alternatives to Cursor](/tools/cursor/alternatives) if a fork of VS Code isn't your thing.
+Cursor earned its hype. If you want AI that lives *in* your editor rather than next to it, it's the benchmark - see our [Cursor vs GitHub Copilot](/blog/cursor-vs-github-copilot) comparison for how it stacks up against the incumbent, and browse [alternatives to Cursor](/tools/cursor/alternatives) if a fork of VS Code isn't your thing.

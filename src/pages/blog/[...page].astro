@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import BlogCardGradient from '../../components/BlogCardGradient.astro';
 import { safeJsonForScript } from '../../lib/serialize';
 
 export async function getStaticPaths({ paginate }) {
@@ -42,7 +43,6 @@ const searchIndex = allPosts.map((post) => ({
     day: 'numeric',
   }),
   tags: post.data.tags ?? [],
-  image: post.data.image || '/images/blog-placeholder.png',
   featured: post.data.featured,
 }));
 const postsJson = safeJsonForScript(searchIndex);
@@ -57,21 +57,12 @@ const listPosts =
   title={`Blog | ai.dosa.dev${page.currentPage > 1 ? ` (Page ${page.currentPage})` : ''}`}
   description="Read the latest news, tutorials, and deep dives into AI tools for developers."
   canonical={`https://ai.dosa.dev/blog${page.currentPage > 1 ? `/${page.currentPage}` : ''}`}
-  ogImage="https://ai.dosa.dev/images/blog/blog-hero.png"
   activeNav="blog"
 >
   <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-full p-6 md:p-8">
     <div class="max-w-3xl mx-auto flex flex-col flex-1 w-full">
       <h2 class="sr-only">AI Tools Blog</h2>
-      <div class="mb-8 rounded-xl overflow-hidden border border-[#222] bg-[#111] aspect-[3/1]">
-        <img
-          src="/images/blog/blog-hero.png"
-          alt="Blog — Insights, updates, and comparisons on the best AI coding tools."
-          fetchpriority="high"
-          decoding="async"
-          class="w-full h-full object-cover"
-        />
-      </div>
+      <BlogCardGradient title="Blog" slug="blog-hero" aspect="hero" />
 
       {/* Search */}
       <div class="mb-4">
@@ -146,13 +137,7 @@ const listPosts =
                 <article class="bg-white/[0.02] border border-[#f0d08f]/25 rounded-lg overflow-hidden hover:border-[#f0d08f]/50 transition-all group">
                   <a href={`/blog/${post.id}`} class="flex flex-col md:flex-row h-full">
                     <div class="w-full md:w-[200px] h-[160px] md:h-auto shrink-0 relative overflow-hidden bg-[#111]">
-                      <img
-                        src={post.data.image || '/images/blog-placeholder.png'}
-                        alt={post.data.title}
-                        loading="lazy"
-                        decoding="async"
-                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
+                      <BlogCardGradient title={post.data.title} slug={post.id} tags={post.data.tags} aspect="card" />
                     </div>
                     <div class="flex-1 p-6 flex flex-col justify-between">
                       <div>
@@ -205,13 +190,7 @@ const listPosts =
               <a href={`/blog/${post.id}`} class="flex flex-col md:flex-row h-full">
                 {/* Image Section */}
                 <div class="w-full md:w-[200px] h-[160px] md:h-auto shrink-0 relative overflow-hidden bg-[#111]">
-                  <img
-                    src={post.data.image || '/images/blog-placeholder.png'}
-                    alt={post.data.title}
-                    loading="lazy"
-                    decoding="async"
-                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
+                  <BlogCardGradient title={post.data.title} slug={post.id} tags={post.data.tags} aspect="card" />
                 </div>
 
                 {/* Content Section */}

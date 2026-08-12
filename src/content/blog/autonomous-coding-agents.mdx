@@ -3,28 +3,27 @@ title: "Devin, OpenHands, and SWE-agent: The Autonomous Coding Agent Wave"
 description: "Autonomous software engineering agents promise to take tickets and return pull requests. Here's where Devin, OpenHands, and SWE-agent actually stand."
 pubDate: 2026-07-13
 tags: ["devin", "openhands", "swe-agent", "agents", "autonomous"]
-image: "/images/blog/autonomous-coding-agents.png"
 ---
 
-Autonomous coding agents are the most ambitious category in AI tooling: give the system a ticket, walk away, come back to a pull request. No autocomplete, no chat — the agent plans, codes, tests, and iterates on its own, often in a cloud sandbox with its own shell, editor, and browser.
+Autonomous coding agents are the most ambitious category in AI tooling: give the system a ticket, walk away, come back to a pull request. No autocomplete, no chat - the agent plans, codes, tests, and iterates on its own, often in a cloud sandbox with its own shell, editor, and browser.
 
 Three tools define the category today: [Devin](/tools/devin), [OpenHands](/tools/openhands), and [SWE-agent](/tools/swe-agent).
 
 ## Devin
 
-[Devin](/tools/devin), from Cognition, is the commercial flagship — the tool that made "AI software engineer" a mainstream phrase. It runs in a cloud environment with a full dev setup: shell, editor, browser, and planning tools. You assign work through a chat-like interface (or Slack/Jira integrations), and Devin executes, reporting progress and opening PRs.
+[Devin](/tools/devin), from Cognition, is the commercial flagship - the tool that made "AI software engineer" a mainstream phrase. It runs in a cloud environment with a full dev setup: shell, editor, browser, and planning tools. You assign work through a chat-like interface (or Slack/Jira integrations), and Devin executes, reporting progress and opening PRs.
 
 **What it's good at:**
 
-- **Well-scoped tickets** — dependency upgrades, bug fixes with repro steps, small features with clear acceptance criteria
-- **Long-running work** — it can grind on a task for extended sessions without losing context
-- **Team integration** — it fits into existing workflows rather than asking you to change them
+- **Well-scoped tickets** - dependency upgrades, bug fixes with repro steps, small features with clear acceptance criteria
+- **Long-running work** - it can grind on a task for extended sessions without losing context
+- **Team integration** - it fits into existing workflows rather than asking you to change them
 
-**Where it falls short:** ambiguous or design-heavy work. Devin needs the same thing a junior engineer needs — a clear definition of done. Pricing is also team-oriented rather than hobbyist-friendly.
+**Where it falls short:** ambiguous or design-heavy work. Devin needs the same thing a junior engineer needs - a clear definition of done. Pricing is also team-oriented rather than hobbyist-friendly.
 
 ## OpenHands
 
-[OpenHands](/tools/openhands) (formerly OpenDevin) is the open-source answer. It replicates the Devin concept — sandboxed agent with shell, editor, and browser access — as an MIT-licensed project you can run yourself with your choice of model.
+[OpenHands](/tools/openhands) (formerly OpenDevin) is the open-source answer. It replicates the Devin concept - sandboxed agent with shell, editor, and browser access - as an MIT-licensed project you can run yourself with your choice of model.
 
 ```bash
 docker pull docker.all-hands.dev/all-hands-ai/runtime:latest
@@ -34,7 +33,7 @@ docker pull docker.all-hands.dev/all-hands-ai/runtime:latest
 
 - **Model freedom.** Run it with Claude, GPT, or a local model. Your code never has to leave your infrastructure.
 - **Transparency.** Every action the agent takes is inspectable, and the framework is a popular research testbed.
-- **Cost control.** You pay model costs only — no platform fee.
+- **Cost control.** You pay model costs only - no platform fee.
 
 The trade-off is polish: you're operating infrastructure, and setup is more involved than signing into a SaaS.
 
@@ -42,7 +41,7 @@ The trade-off is polish: you're operating infrastructure, and setup is more invo
 
 [SWE-agent](/tools/swe-agent) comes out of Princeton's research group and is built around a key insight: **the interface between the model and the environment matters as much as the model**. Its Agent-Computer Interface (ACI) research shaped how the whole industry thinks about giving agents shell and editor access.
 
-It's primarily a **research and benchmarking tool** — the way to run SWE-bench evaluations or experiment with agent architectures — but it's also a capable agent for repository-level bug fixing.
+It's primarily a **research and benchmarking tool** - the way to run SWE-bench evaluations or experiment with agent architectures - but it's also a capable agent for repository-level bug fixing.
 
 ## How They Compare
 
@@ -55,6 +54,6 @@ It's primarily a **research and benchmarking tool** — the way to run SWE-bench
 
 ## Setting Expectations
 
-None of these replace engineers. The realistic framing: they're **tireless junior-to-mid contributors** for well-specified work, and the teams getting the most value treat them that way — clear tickets, real code review on every PR, and no deployment without human sign-off.
+None of these replace engineers. The realistic framing: they're **tireless junior-to-mid contributors** for well-specified work, and the teams getting the most value treat them that way - clear tickets, real code review on every PR, and no deployment without human sign-off.
 
 The category is moving faster than any other in AI tooling. Track all three (plus newer entrants like [Jules](/tools/jules)) in the [directory](/).

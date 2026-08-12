@@ -1,16 +1,15 @@
 ---
 title: "Claude Code Deep Dive: Agentic Coding from the Terminal"
-description: "How Claude Code works, what it's good at, how to set it up well, and where it falls short — a practical review of Anthropic's terminal agent."
+description: "How Claude Code works, what it's good at, how to set it up well, and where it falls short - a practical review of Anthropic's terminal agent."
 pubDate: 2026-07-27
 tags: ["claude-code", "anthropic", "cli", "agents", "review"]
-image: "/images/blog/claude-code-deep-dive.png"
 ---
 
 [Claude Code](/tools/claude-code) is Anthropic's terminal-based coding agent, and it's the tool that convinced a lot of skeptics that "agentic coding" is real. Instead of completing lines or answering questions, it takes *goals*: "migrate this package from Jest to Vitest," then explores, edits, runs, and iterates until done.
 
 ## How It Works
 
-Claude Code runs in your terminal with access to a set of tools — file reading and editing, bash execution, search, web fetch, and MCP servers you configure. Given a task, it forms a plan, gathers context by reading your repo, and works through the plan, checking its own work by running your tests and linters.
+Claude Code runs in your terminal with access to a set of tools - file reading and editing, bash execution, search, web fetch, and MCP servers you configure. Given a task, it forms a plan, gathers context by reading your repo, and works through the plan, checking its own work by running your tests and linters.
 
 ```bash
 npm install -g @anthropic-ai/claude-code
@@ -45,23 +44,23 @@ Shift+Tab into plan mode and Claude Code will research and propose a plan *befor
 ## Advanced Features Worth Knowing
 
 - **Subagents:** specialized agents (e.g., a code reviewer, a test writer) with their own context windows, defined in `.claude/agents/`.
-- **Hooks:** shell commands triggered on lifecycle events — format on save, run tests after edits, block writes to protected paths.
-- **Headless mode:** `claude -p "..."` runs non-interactively, which makes it scriptable in CI — e.g., auto-fix lint failures on PRs.
+- **Hooks:** shell commands triggered on lifecycle events - format on save, run tests after edits, block writes to protected paths.
+- **Headless mode:** `claude -p "..."` runs non-interactively, which makes it scriptable in CI - e.g., auto-fix lint failures on PRs.
 - **MCP servers:** connect databases, issue trackers, docs, or internal tools so the agent can pull real context.
 
 ## Where It Shines
 
 - **Multi-file refactors** with tests to verify against
 - **Migrations** (framework upgrades, dependency swaps)
-- **Exploring unfamiliar codebases** — "how does billing work in this repo?" returns a traced answer with file references
-- **Grunt work with clear acceptance criteria** — writing tests for an untested module, fixing a batch of type errors
+- **Exploring unfamiliar codebases** - "how does billing work in this repo?" returns a traced answer with file references
+- **Grunt work with clear acceptance criteria** - writing tests for an untested module, fixing a batch of type errors
 
 ## Where It Struggles
 
 - **Ambiguous product decisions.** It will happily build the wrong thing confidently.
 - **Cost on big sessions.** Long autonomous runs consume real tokens; keep an eye on usage.
-- **Very long horizons.** For tasks spanning hours, it can lose the thread — break work into stages.
+- **Very long horizons.** For tasks spanning hours, it can lose the thread - break work into stages.
 
 ## Verdict
 
-Claude Code is the strongest terminal agent available right now and the one to beat. It rewards teams that invest in setup — a good `CLAUDE.md`, scoped tasks, hooks — and it's a genuine force multiplier for senior developers who know what "done" looks like. Compare it with the other options in our [AI coding CLIs roundup](/blog/best-ai-coding-clis), or find alternatives on its [tool page](/tools/claude-code).
+Claude Code is the strongest terminal agent available right now and the one to beat. It rewards teams that invest in setup - a good `CLAUDE.md`, scoped tasks, hooks - and it's a genuine force multiplier for senior developers who know what "done" looks like. Compare it with the other options in our [AI coding CLIs roundup](/blog/best-ai-coding-clis), or find alternatives on its [tool page](/tools/claude-code).

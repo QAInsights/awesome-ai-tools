@@ -1,9 +1,8 @@
 ---
 title: "Cline vs Roo Code vs Kilo Code: Which AI Coding Agent Should You Actually Use in 2026?"
-description: "Cline, Roo Code, and Kilo Code share one lineage — but with Roo Code discontinued in May 2026, the calculus has changed. A fact-based comparison of the open-source VS Code agent trio."
+description: "Cline, Roo Code, and Kilo Code share one lineage - but with Roo Code discontinued in May 2026, the calculus has changed. A fact-based comparison of the open-source VS Code agent trio."
 pubDate: 2026-08-10
 tags: ["cline", "roo-code", "kilo-code", "comparison", "vscode", "open-source"]
-image: "/images/blog/cline-vs-roo-code-vs-kilo-code.png"
 featured: true
 ---
 
@@ -11,23 +10,23 @@ If you've spent any time inside VS Code chasing the "best" AI coding agent, you'
 
 ## The Short Answer
 
-- **[Cline](/tools/cline)** — the original, still actively maintained, VS Code-first, Plan/Act workflow, largest community (5M+ installs, 60k+ GitHub stars).
-- **[Roo Code](/tools/roo-code)** — was Cline's most popular fork, added custom modes (Architect/Code/Ask/Debug) and Orchestrator mode. **Discontinued and archived May 15, 2026**; the team pivoted to a cloud product called Roomote.
-- **[Kilo Code](/tools/kilo-code)** — forked both Cline and Roo, absorbed Roo's custom-mode ideas, added Orchestrator/Agent Manager, inline autocomplete, and multi-surface support (VS Code, JetBrains, CLI, Cloud Agents). Now the de facto "maintained successor" for anyone still on Roo.
+- **[Cline](/tools/cline)** - the original, still actively maintained, VS Code-first, Plan/Act workflow, largest community (5M+ installs, 60k+ GitHub stars).
+- **[Roo Code](/tools/roo-code)** - was Cline's most popular fork, added custom modes (Architect/Code/Ask/Debug) and Orchestrator mode. **Discontinued and archived May 15, 2026**; the team pivoted to a cloud product called Roomote.
+- **[Kilo Code](/tools/kilo-code)** - forked both Cline and Roo, absorbed Roo's custom-mode ideas, added Orchestrator/Agent Manager, inline autocomplete, and multi-surface support (VS Code, JetBrains, CLI, Cloud Agents). Now the de facto "maintained successor" for anyone still on Roo.
 
 If you're starting fresh today, Cline or Kilo Code are your real choices. Roo Code is legacy-only.
 
 ## Where These Tools Actually Came From
 
-This isn't three unrelated products — it's one lineage:
+This isn't three unrelated products - it's one lineage:
 
 1. **Cline** launched as an open-source, agentic VS Code extension built around a Plan/Act loop: it proposes a plan, you approve it, then it executes step-by-step with terminal access, file edits, and browser control, always asking permission before doing something risky.
-2. **Roo Code** (originally "Roo Cline") forked Cline to add **custom modes** — Architect for planning, Code for implementation, Debug for troubleshooting, Ask for read-only Q&A — plus an Orchestrator/Boomerang mode that split big tasks into smaller ones and routed them to the right mode.
-3. **Kilo Code** forked *both* projects, explicitly positioning itself as a superset: Cline's approachability plus Roo's mode system, then layered on an MCP server marketplace, a "Memory Bank" for persistent context, inline autocomplete, and — after an April 2026 rebuild — an Agent Manager for running parallel agents across git worktrees.
+2. **Roo Code** (originally "Roo Cline") forked Cline to add **custom modes** - Architect for planning, Code for implementation, Debug for troubleshooting, Ask for read-only Q&A - plus an Orchestrator/Boomerang mode that split big tasks into smaller ones and routed them to the right mode.
+3. **Kilo Code** forked *both* projects, explicitly positioning itself as a superset: Cline's approachability plus Roo's mode system, then layered on an MCP server marketplace, a "Memory Bank" for persistent context, inline autocomplete, and - after an April 2026 rebuild - an Agent Manager for running parallel agents across git worktrees.
 
 ## The Roo Code Shutdown (What Happened, and Why It Matters)
 
-On April 21, 2026, Roo Code's team announced they were discontinuing the VS Code extension, Roo Code Cloud, and the Roo Code Router entirely to focus on a new cloud-based agent called **Roomote**, arguing they "don't believe IDEs are the future of coding." The `RooCodeInc/Roo-Code` GitHub repo — 24,000+ stars, 3M+ installs — was archived read-only on May 15, 2026.
+On April 21, 2026, Roo Code's team announced they were discontinuing the VS Code extension, Roo Code Cloud, and the Roo Code Router entirely to focus on a new cloud-based agent called **Roomote**, arguing they "don't believe IDEs are the future of coding." The `RooCodeInc/Roo-Code` GitHub repo - 24,000+ stars, 3M+ installs - was archived read-only on May 15, 2026.
 
 Practically, here's what that means if you're currently on Roo Code:
 
@@ -57,11 +56,11 @@ If you're evaluating these tools today, don't invest in Roo Code as a long-term 
 
 ## Cline: Simple, Mature, Still the Reference Point
 
-Cline's biggest strength is that it does one thing well: a transparent Plan/Act loop where nothing happens without your sign-off. It's model-agnostic, supports MCP, and its CLI 2.0 makes headless CI/CD runs possible — something neither Roo nor (until recently) Kilo could do. The tradeoff is that it doesn't natively give you specialized modes; you're working with one general-purpose agent rather than an Architect/Coder/Debugger split. If you want the most battle-tested, largest-community option and don't need multi-mode orchestration, Cline is the safe default.
+Cline's biggest strength is that it does one thing well: a transparent Plan/Act loop where nothing happens without your sign-off. It's model-agnostic, supports MCP, and its CLI 2.0 makes headless CI/CD runs possible - something neither Roo nor (until recently) Kilo could do. The tradeoff is that it doesn't natively give you specialized modes; you're working with one general-purpose agent rather than an Architect/Coder/Debugger split. If you want the most battle-tested, largest-community option and don't need multi-mode orchestration, Cline is the safe default.
 
 ## Roo Code: Useful History, Not a Future Bet
 
-Roo Code's custom-mode system was genuinely influential — it's the reason Kilo Code and other forks exist. If you already have `.roomodes` and `.roo/rules/` files from an existing setup, that config isn't wasted; Kilo Code reads it directly on startup, which makes migration close to painless. But there's no reason to adopt Roo Code new today. Its repo is archived, its cloud and router services are gone, and any new project should route around it entirely.
+Roo Code's custom-mode system was genuinely influential - it's the reason Kilo Code and other forks exist. If you already have `.roomodes` and `.roo/rules/` files from an existing setup, that config isn't wasted; Kilo Code reads it directly on startup, which makes migration close to painless. But there's no reason to adopt Roo Code new today. Its repo is archived, its cloud and router services are gone, and any new project should route around it entirely.
 
 ## Kilo Code: The Maintained Path Forward
 
@@ -73,16 +72,16 @@ Kilo Code is the one actively absorbing both codebases' lessons. Its Orchestrato
 - **You're migrating off Roo Code and want the closest thing to its old workflow, actively maintained:** Kilo Code.
 - **You need JetBrains or a CLI-native workflow alongside VS Code:** Kilo Code.
 - **You want headless CI/CD runs today:** Cline's CLI 2.0.
-- **You're still on Roo Code:** budget time to migrate — the extension works but is frozen, unpatched software going forward.
+- **You're still on Roo Code:** budget time to migrate - the extension works but is frozen, unpatched software going forward.
 
 ## FAQ
 
-**Is Roo Code still usable?** Yes, the extension keeps running after the shutdown, but it receives no updates, security patches, or new model support — treat it as frozen.
+**Is Roo Code still usable?** Yes, the extension keeps running after the shutdown, but it receives no updates, security patches, or new model support - treat it as frozen.
 
 **What replaced Roo Code?** The original team moved to a cloud agent called Roomote; community forks like ZooCode continue the open-source codebase, and Kilo Code is the most actively maintained fork of the Cline/Roo lineage.
 
-**Does Kilo Code support Roo's custom modes?** Yes — it reads existing `.roomodes` and `.roo/rules/` configuration files on startup, making migration mostly automatic aside from re-entering API keys.
+**Does Kilo Code support Roo's custom modes?** Yes - it reads existing `.roomodes` and `.roo/rules/` configuration files on startup, making migration mostly automatic aside from re-entering API keys.
 
-**Is Cline better than Kilo Code?** They serve different priorities: Cline is leaner and has the largest install base and CLI-first headless workflows; Kilo Code adds orchestration, inline autocomplete, and multi-surface (JetBrains, CLI, Cloud) coverage. Neither is objectively "better" — it depends on whether you want simplicity or breadth.
+**Is Cline better than Kilo Code?** They serve different priorities: Cline is leaner and has the largest install base and CLI-first headless workflows; Kilo Code adds orchestration, inline autocomplete, and multi-surface (JetBrains, CLI, Cloud) coverage. Neither is objectively "better" - it depends on whether you want simplicity or breadth.
 
-*All three tools are listed in the [directory](/) — see [Cline](/tools/cline), [Roo Code](/tools/roo-code), and [Kilo Code](/tools/kilo-code) for details, and our [AI coding CLIs roundup](/blog/best-ai-coding-clis) if a terminal-first workflow is more your style.*
+*All three tools are listed in the [directory](/) - see [Cline](/tools/cline), [Roo Code](/tools/roo-code), and [Kilo Code](/tools/kilo-code) for details, and our [AI coding CLIs roundup](/blog/best-ai-coding-clis) if a terminal-first workflow is more your style.*

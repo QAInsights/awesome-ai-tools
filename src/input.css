@@ -666,7 +666,8 @@
 
 @layer base {
     ::selection {
-        background-color: transparent;
+        background-color: rgba(34, 211, 238, 0.25);
+        color: #ffffff;
     }
 
     ::-webkit-scrollbar {
@@ -692,5 +693,18 @@
     
     html, body, .overflow-y-auto {
         scrollbar-gutter: stable;
+    }
+
+    #article-body,
+    #article-body *,
+    article,
+    article p,
+    article h1,
+    article h2,
+    article h3,
+    article code,
+    article pre {
+        user-select: text !important;
+        -webkit-user-select: text !important;
     }
 }
