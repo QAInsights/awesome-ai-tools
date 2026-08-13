@@ -2688,6 +2688,35 @@
     "lastUpdated": "2026-08-13"
   },
   {
+    "slug": "deepseek-harness",
+    "name": "DeepSeek Harness",
+    "company": "DeepSeek",
+    "pricing": "open-source",
+    "pricingDetail": "DeepSeek Harness is open-source and free to use. The underlying DeepSeek V4 models are available via API with usage-based pricing, e.g., $0.14 per million input tokens (cache miss) for V4 Flash and $0.435 for V4 Pro, with off-peak discounts.",
+    "description": "DeepSeek Harness (dsh) is an open-source agent harness developed by DeepSeek AI, providing the engineering layer (context management, tool calling, file editing, terminal execution) that turns DeepSeek models into coding agents.",
+    "keyFeatures": [
+      "Context management and memory",
+      "Tool calling and file operations",
+      "Terminal execution",
+      "Self-correction with feedback loops",
+      "MCP server support",
+      "Anthropic SKILL.md integration",
+      "OpenAI-compatible API"
+    ],
+    "bestFor": "Developers and enterprises seeking a low-cost, open-source alternative to Claude Code for autonomous coding tasks, especially those already using DeepSeek models.",
+    "notIdealFor": "Teams requiring mature IDE integration, extensive Skills ecosystem, or polished MCP tooling, as DeepSeek Harness is still in early stages and lacks the ecosystem depth of Claude Code.",
+    "recentUpdates": "DeepSeek Harness was first mentioned in the July 31, 2026 changelog as 'to be released soon'. A community version (HenryZ838978/deepseek-harness) was published on May 9, 2026, with Python library, CLI, and MCP server. DeepSeek formed a dedicated Harness team in May 2026 to build a Code Harness product.",
+    "verdict": "DeepSeek Harness is a promising open-source agent framework that leverages DeepSeek's cost-effective models, but it is not yet officially released and lacks the maturity and ecosystem of established tools like Claude Code.",
+    "tags": [
+      "agent-harness",
+      "coding-agent",
+      "open-source",
+      "deepseek",
+      "cli"
+    ],
+    "lastUpdated": "2026-08-13"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

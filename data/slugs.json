@@ -606,6 +606,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "deepseek-harness",
+    "name": "DeepSeek Harness",
+    "company": "DeepSeek",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

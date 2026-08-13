@@ -606,5 +606,9 @@
   {
     "companyName": "GCWing",
     "toolName": "BitFun"
+  },
+  {
+    "companyName": "DeepSeek",
+    "toolName": "DeepSeek Harness"
   }
 ]

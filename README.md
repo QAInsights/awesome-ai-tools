@@ -151,6 +151,7 @@ AI coding agents that live in your terminal or command line.
 | **[Oh My Pi](https://github.com/can1357/oh-my-pi)** | Can Bölük | ⌥ AI Coding agent for the terminal — hash-anchored edits, optimized tool harness, LSP, Python, browser, subagents, and more.; [GitHub](_No response_) |
 | **[Grok Build](https://x.ai/build)** | X | A powerful coding agent for complex work.; [GitHub](_No response_) |
 | **[BitFun](https://github.com/GCWing/BitFun)** | GCWing | Open-source coding agent with an interactive terminal UI and desktop app. It can plan, edit, test, and commit inside real Git repositories, with protected tool calls requiring approval by default.; [GitHub](https://github.com/GCWing/BitFun) |
+| **[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)** | DeepSeek | DeepSeek Harness (dsh) is an open-source agent harness developed by DeepSeek AI.; [GitHub](https://github.com/deepseek-ai/deepseek-harness) |
 
 ---
 
