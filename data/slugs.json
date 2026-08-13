@@ -612,6 +612,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "atomic-agent",
+    "name": "Atomic Agent",
+    "company": "AtomicBot",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

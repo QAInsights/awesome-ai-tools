@@ -610,5 +610,9 @@
   {
     "companyName": "DeepSeek",
     "toolName": "DeepSeek Harness"
+  },
+  {
+    "companyName": "AtomicBot",
+    "toolName": "Atomic Agent"
   }
 ]

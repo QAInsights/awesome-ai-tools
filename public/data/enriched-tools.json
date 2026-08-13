@@ -2717,6 +2717,35 @@
     "lastUpdated": "2026-08-13"
   },
   {
+    "slug": "atomic-agent",
+    "name": "Atomic Agent",
+    "company": "AtomicBot",
+    "pricing": "open-source",
+    "pricingDetail": "Atomic Agent is open-source under the MIT license, free to use with no per-token fees. It runs entirely locally on your machine, requiring no account or API key. The related Atomic Bot product offers a freemium model with optional paid cloud mode.",
+    "description": "Atomic Agent is a local-first CLI and TUI coding agent that runs open-weight models entirely on your machine through a llama.cpp fork. It drives your browser, edits files, runs approved shell commands, and remembers context across sessions, all while keeping data private on your device.",
+    "keyFeatures": [
+      "56 built-in tools including browser, filesystem, git, memory, and vision",
+      "MCP support for connecting to external services",
+      "Five-layer local memory system",
+      "Grammar-constrained decoding (GBNF) for valid tool calls",
+      "KV-cache for fast repeated steps",
+      "Runs on macOS, Linux, and Windows",
+      "OpenAI-compatible API endpoint"
+    ],
+    "bestFor": "Developers and privacy-conscious users who want a fully local, open-source AI agent with no cloud dependencies and no per-token costs.",
+    "notIdealFor": "Non-technical users who prefer a graphical interface or cloud-hosted convenience; also not ideal for those needing large, cloud-scale models or extensive integrations out of the box.",
+    "recentUpdates": "As of June 2026, Atomic Agent is at version v0.1.65. The related Atomic Bot product has seen frequent releases, including v1.0.115 (April 22, 2026) adding Qwen3.6-27B local model, v1.0.114 (April 17, 2026) adding Computer Use and notifications, and v1.0.109 (April 7, 2026) adding GLM 5.1 support and MCP servers.",
+    "verdict": "Atomic Agent is a strong choice for developers seeking a private, local-first AI agent with solid performance (GAIA L1 69.8%) and no usage fees. However, it requires technical comfort with CLI/TUI and local model management, and may lack the polish and convenience of cloud-based alternatives.",
+    "tags": [
+      "local-first",
+      "CLI",
+      "TUI",
+      "open-source",
+      "AI agent"
+    ],
+    "lastUpdated": "2026-08-13"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
