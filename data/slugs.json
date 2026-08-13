@@ -600,6 +600,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "bitfun",
+    "name": "BitFun",
+    "company": "GCWing",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

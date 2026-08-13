@@ -2659,6 +2659,35 @@
     "lastUpdated": "2026-08-12"
   },
   {
+    "slug": "bitfun",
+    "name": "BitFun",
+    "company": "GCWing",
+    "pricing": "open-source",
+    "pricingDetail": "BitFun is open-source under the MIT License and free to use. Users may incur costs from model providers, cloud services, tunnels, or other third-party services they choose to connect.",
+    "description": "BitFun is a local-first, open-source agent workspace that combines a high-performance Rust runtime with a desktop app for coding, knowledge work, creation, and personal assistance. It offers multiple agent modes, an integrated editor, terminal, Git, and supports Mini Apps, MCP, and multi-device control.",
+    "keyFeatures": [
+      "Agentic, Plan, Debug, Multitask, Cowork, Computer Use, Deep Research, Team, and Claw modes",
+      "Integrated files, editor, terminal, Git, browser, previews, and session history",
+      "Agentic Mini Apps that give each task its own interface",
+      "Self-hosted multi-device control with zero-knowledge relay",
+      "Custom Agents, Skills, MCP connections, and permission policies",
+      "Local and remote workspaces (SSH, containers)",
+      "Cross-platform desktop app for Windows, macOS, Linux"
+    ],
+    "bestFor": "Developers and knowledge workers who want a versatile, open-source agent workspace that handles coding, document creation, research, and personal assistance with strong privacy and local-first control.",
+    "notIdealFor": "Users who need a fully managed cloud service or who prefer a simple single-purpose AI IDE without the complexity of multiple modes and self-hosting options.",
+    "recentUpdates": "As of July 2026, BitFun is in active 0.x development with frequent releases. v0.2.13 (July 2026) added BitFun Canvas support, memory extraction, reusable subagent sessions, built-in browser URL opening, remote file transfer improvements, and archive compression/extraction. The project launched in February 2026 and has gained over 1,600 stars.",
+    "verdict": "BitFun is a powerful, feature-rich open-source agent workspace that goes beyond typical AI IDEs, offering a wide range of modes and extensibility. However, its breadth may be overwhelming for users seeking a simple tool, and some features are still in preview or beta.",
+    "tags": [
+      "open-source",
+      "AI agent",
+      "coding assistant",
+      "desktop app",
+      "Rust"
+    ],
+    "lastUpdated": "2026-08-13"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
