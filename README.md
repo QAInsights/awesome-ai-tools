@@ -179,6 +179,7 @@ Agents that operate independently on tasks, often outside your local editor.
 | **[Orkas](https://orkas.ai/?source=gh_qainsights)** | Orkas-AI | Open-source, local-first desktop workspace where a Commander decomposes goals and coordinates specialist AI agents in parallel or sequence.; [GitHub](https://github.com/Orkas-AI/Orkas) |
 | **[Kody](https://github.com/kentcdodds/kody)** | Kent C. Dodds | Your assistant's home — the memory, keys, code, and automations your AI agent keeps, portable across every MCP host. Built on Cloudflare Workers.; [GitHub](https://github.com/kentcdodds/kody) |
 | **[Omnigent](https://github.com/omnigent-ai/omnigent)** | Omnigent | Omnigent is an open-source AI agent framework and meta-harness: orchestrate Claude Code, Codex, Cursor, Pi, and custom agents — swap harnesses without rewriting, enforce policies and sandboxing, and collaborate in real time from any device.; [GitHub](https://github.com/omnigent-ai/omnigent) |
+| **[Manus](https://manus.im/invitation/KK5RLBDPBSGLZD?utm_source=invitation&utm_medium=social&utm_campaign=copy_link)** | Monica | Manus is an autonomous AI agent that can plan, code, and execute complex tasks end-to-end in the browser.; [GitHub](_No response_) |
 
 ---
 

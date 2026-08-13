@@ -3014,6 +3014,35 @@
     "lastUpdated": "2026-08-12"
   },
   {
+    "slug": "manus",
+    "name": "Manus",
+    "company": "Monica",
+    "pricing": "freemium",
+    "pricingDetail": "Manus offers a Free plan ($0/month) with 300 daily refresh credits and limited access to Manus 1.6 Lite. Paid Pro plans start at $20/month (4,000 monthly credits) and $40/month (8,000 monthly credits), with a higher Extended tier at $200/month (40,000 credits). Team plans start at $20 per seat/month. Annual billing saves 17%. Monthly credits do not roll over.",
+    "description": "Manus is an autonomous, general-purpose AI agent that plans and executes complex multi-step tasks in a cloud-based virtual computer, including web browsing, code writing and execution, data analysis, and producing finished deliverables like reports, spreadsheets, slides, and web apps.",
+    "keyFeatures": [
+      "Autonomous task execution with multi-agent architecture",
+      "Cloud-based virtual machines for sandboxed execution",
+      "Web browsing, code execution, and data analysis",
+      "Asynchronous operation (works in background)",
+      "Integrations with Slack, WhatsApp, Telegram, Gmail, Google Calendar, Notion",
+      "Web App Builder for creating full-stack apps",
+      "Scheduled Tasks 2.0 for recurring jobs"
+    ],
+    "bestFor": "Non-technical users, researchers, solopreneurs, and teams who need an autonomous agent to handle deep research, data analysis, report generation, and prototype building without continuous human guidance.",
+    "notIdealFor": "Developers already using code-aware agentic setups like Claude Code or OpenAI Codex, and those needing production-grade app building (Web App Builder is still buggy) or robust team collaboration features.",
+    "recentUpdates": "Meta's planned $2B acquisition was blocked by Chinese regulators in April 2026, keeping Manus independent. In May 2026, Manus shipped Scheduled Tasks 2.0 and new connector integrations (Gmail, Google Calendar, Notion). The 1.6 model family (1.6 Lite, 1.6, 1.6 Max) launched in 2026, along with a full Web App Builder and Slack/WhatsApp/Telegram integrations.",
+    "verdict": "Manus is a powerful and genuinely autonomous agent that excels at research and data-heavy tasks, with a generous free tier and flexible paid plans. However, output quality varies by task, app building is not production-ready, and pricing has shifted multiple times, so verify current rates before committing.",
+    "tags": [
+      "autonomous agent",
+      "AI research",
+      "multi-agent",
+      "web automation",
+      "credit-based pricing"
+    ],
+    "lastUpdated": "2026-08-13"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -3201,33 +3230,6 @@
       "macOS",
       "Xcode",
       "vibe-coding"
-    ],
-    "lastUpdated": "2026-08-12"
-  },
-  {
-    "slug": "manus",
-    "name": "Manus",
-    "company": "Butterfly Effect",
-    "pricing": "freemium",
-    "pricingDetail": "Free plan includes 300 daily refresh credits. Pro plans start at $20/month (4,000 credits) or $40/month (8,000 credits), with Team plans starting at $20 per seat/month. Annual billing offers a 17% discount.",
-    "description": "Manus is an autonomous AI agent platform that performs multi-step tasks by coordinating specialized sub-agents in a secure cloud sandbox. Unlike conversational chatbots, it is designed to plan, execute, and deliver complete, functional artifacts like research reports, slide decks, and web applications.",
-    "keyFeatures": [
-      "Autonomous multi-step task execution in a cloud sandbox",
-      "Wide Research mode for parallelized, high-volume data analysis",
-      "Full-stack web application development and deployment",
-      "Agent Skills for packaging and reusing custom workflows",
-      "Scheduled task automation for recurring assignments"
-    ],
-    "bestFor": "Solo founders, analysts, and professionals who need to delegate structured, repetitive, or complex multi-step tasks like competitive research, data extraction, and report generation.",
-    "notIdealFor": "Tasks requiring deep creative voice, nuanced domain expertise, or real-time conversational back-and-forth; also not suitable for users who require highly predictable, low-cost pricing due to the opaque, consumption-based credit model.",
-    "recentUpdates": "As of August 2026, Manus is returning to independent operations under Butterfly Effect following the cancellation of its acquisition by Meta. The company has notified users of a mandatory data deletion for information generated on or after December 29, 2025, to comply with regulatory requirements.",
-    "verdict": "Manus is a powerful, autonomous first-draft engine that excels at delivering tangible files for well-scoped tasks, though users should be cautious of opaque credit consumption and the need for thorough output verification.",
-    "tags": [
-      "AI Agents",
-      "Automation",
-      "Research",
-      "Productivity",
-      "Web Development"
     ],
     "lastUpdated": "2026-08-12"
   },

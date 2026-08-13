@@ -678,6 +678,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "manus",
+    "name": "Manus",
+    "company": "Monica",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -720,7 +726,7 @@
     "category": "Browser-Based & App Builders"
   },
   {
-    "slug": "manus",
+    "slug": "manus-meta",
     "name": "Manus",
     "company": "Meta",
     "category": "Browser-Based & App Builders"
