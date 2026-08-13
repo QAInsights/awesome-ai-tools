@@ -624,6 +624,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "caveman-code",
+    "name": "Caveman Code",
+    "company": "Julius Brussee",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

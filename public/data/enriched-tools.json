@@ -2775,6 +2775,35 @@
     "lastUpdated": "2026-08-13"
   },
   {
+    "slug": "caveman-code",
+    "name": "Caveman Code",
+    "company": "Julius Brussee",
+    "pricing": "freemium",
+    "pricingDetail": "Caveman Code is MIT-licensed open source and free to use. It supports 20+ providers, including subscription-based OAuth (Claude Pro, ChatGPT Plus, GitHub Copilot, Gemini) and API keys, so you can use existing subscriptions or pay per token via API providers.",
+    "description": "Caveman Code is a terminal coding agent that compresses prompts, tool output, and file reads to reduce token usage by ~2x compared to Codex, while maintaining similar pass rates. It supports 20+ providers, plan mode, autopilot loop, session branching, subagents, MCP, and sandboxing.",
+    "keyFeatures": [
+      "Caveman Mode compression: 3-layer compression of prompts, tool output, and file reads (~85% reduction on tool output)",
+      "20+ providers with 6 OAuth flows (Claude Pro, ChatGPT Plus, GitHub Copilot, Gemini, etc.)",
+      "Plan mode with read-only exploration and structured plans",
+      "Autonomous goal loop with autopilot",
+      "Session branching and shadow-git checkpoints with /rollback",
+      "Native MCP support (stdio, Streamable HTTP, in-process) and can serve as MCP server",
+      "Worktree-isolated subagents (up to 7) and persistent memory via cavemem"
+    ],
+    "bestFor": "Developers who want to reduce token costs while using terminal-based AI coding agents, especially those with existing subscriptions to Claude, ChatGPT, or other providers, and those who value open-source, provider-agnostic tools.",
+    "notIdealFor": "Teams requiring enterprise support or managed cloud services, as Caveman Code is self-hosted and community-driven; also, users who prefer a polished, first-party experience like Claude Code or Codex may find the caveman-style output too terse.",
+    "recentUpdates": "Published 25-task MicroBench on 2026-05-18 showing 1.93x fewer tokens than Codex CLI with similar pass rate (14/25 vs 15/25). Version 0.65.2 released on 2026-05-18. The project is actively developed with 906 stars on GitHub.",
+    "verdict": "Caveman Code is a compelling open-source alternative for token-conscious developers, offering significant cost savings without sacrificing much performance. Its unique compression approach and multi-provider support are strong differentiators, but it may lack the polish and ecosystem of more established tools.",
+    "tags": [
+      "terminal coding agent",
+      "token compression",
+      "open source",
+      "multi-provider",
+      "CLI"
+    ],
+    "lastUpdated": "2026-08-13"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
