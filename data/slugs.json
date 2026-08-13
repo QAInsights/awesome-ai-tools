@@ -618,6 +618,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "kane-cli",
+    "name": "Kane CLI",
+    "company": "TestMU AI",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

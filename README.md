@@ -153,6 +153,7 @@ AI coding agents that live in your terminal or command line.
 | **[BitFun](https://github.com/GCWing/BitFun)** | GCWing | Open-source coding agent with an interactive terminal UI and desktop app. It can plan, edit, test, and commit inside real Git repositories, with protected tool calls requiring approval by default.; [GitHub](https://github.com/GCWing/BitFun) |
 | **[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)** | DeepSeek | DeepSeek Harness (dsh) is an open-source agent harness developed by DeepSeek AI.; [GitHub](https://github.com/deepseek-ai/deepseek-harness) |
 | **[Atomic Agent](https://atomicagent.io)** | AtomicBot | Local-first CLI and TUI coding agent that runs open-weight models entirely on your machine through a llama.cpp fork, so no account or API key is required. Ships 56 built-in tools (browser, filesystem, git, memory, vision), MCP support, and a five-layer local memory system.; [GitHub](https://github.com/AtomicBot-ai/atomic-agent) |
+| **[Kane CLI](https://www.testmuai.com/support/docs/kane-cli-introduction/)** | TestMU AI | End-to-end flows on your local browser, powered by natural language. Instant validation, deep bug discovery, and production-ready automation that elevates release confidence.; [GitHub](_No response_) |
 
 ---
 

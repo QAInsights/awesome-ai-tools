@@ -2746,6 +2746,35 @@
     "lastUpdated": "2026-08-13"
   },
   {
+    "slug": "kane-cli",
+    "name": "Kane CLI",
+    "company": "TestMU AI",
+    "pricing": "freemium",
+    "pricingDetail": "Kane CLI offers a free tier with 200 credits per month (resets every 30 days) including local test authoring, auto-heal, and Test Manager free tier. Paid plans start at $19/month for 2,000 credits (Starter) and $99/month for 10,000 credits (Pro), with additional features like remote execution on HyperExecute.",
+    "description": "Kane CLI is an AI-powered command-line tool for browser automation testing. It lets users describe test objectives in plain English, then drives a real Chrome browser to execute the flow and returns a verified pass/fail verdict with evidence.",
+    "keyFeatures": [
+      "Natural-language test authoring (no code or selectors required)",
+      "Drives real Chrome browser locally or on Browser Cloud",
+      "Returns binary pass/fail with NDJSON evidence and replay link",
+      "Three modes: Interactive TUI, Non-Interactive CLI, Agent Mode",
+      "Integrates with AI coding agents (Cursor, Claude Code, Codex, Gemini)",
+      "CI/CD integration with headless mode and structured output",
+      "Auto-heal and AI vision for resilient test execution"
+    ],
+    "bestFor": "Developers and QA engineers who want to quickly validate web UI flows from the terminal or integrate browser testing into AI coding agent workflows and CI/CD pipelines.",
+    "notIdealFor": "Teams needing fully autonomous end-to-end testing without human oversight, as the tool is a guided assistant (Agenticness score 13/36) and requires credit-based usage for cloud scaling.",
+    "recentUpdates": "Kane CLI was created in April 2026, with the latest release 0.4.5 on June 15, 2026. The project has 26 releases and is actively maintained by TestMu AI (formerly LambdaTest).",
+    "verdict": "Kane CLI is a powerful, developer-friendly tool that brings AI browser automation to the terminal with a focus on evidence-based verdicts. Its freemium model and agent integrations make it accessible, but the credit system and guided-assistant nature may limit heavy autonomous use.",
+    "tags": [
+      "browser automation",
+      "AI testing",
+      "CLI",
+      "QA",
+      "natural language"
+    ],
+    "lastUpdated": "2026-08-13"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

@@ -614,5 +614,9 @@
   {
     "companyName": "AtomicBot",
     "toolName": "Atomic Agent"
+  },
+  {
+    "companyName": "TestMU AI",
+    "toolName": "Kane CLI"
   }
 ]
