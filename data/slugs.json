@@ -714,6 +714,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "looptroop",
+    "name": "LoopTroop",
+    "company": "LoopTroop AI",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",

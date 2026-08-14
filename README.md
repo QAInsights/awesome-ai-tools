@@ -185,6 +185,7 @@ Agents that operate independently on tasks, often outside your local editor.
 | **[Kody](https://github.com/kentcdodds/kody)** | Kent C. Dodds | Your assistant's home — the memory, keys, code, and automations your AI agent keeps, portable across every MCP host. Built on Cloudflare Workers.; [GitHub](https://github.com/kentcdodds/kody) |
 | **[Omnigent](https://github.com/omnigent-ai/omnigent)** | Omnigent | Omnigent is an open-source AI agent framework and meta-harness: orchestrate Claude Code, Codex, Cursor, Pi, and custom agents — swap harnesses without rewriting, enforce policies and sandboxing, and collaborate in real time from any device.; [GitHub](https://github.com/omnigent-ai/omnigent) |
 | **[Manus](https://manus.im/invitation/KK5RLBDPBSGLZD?utm_source=invitation&utm_medium=social&utm_campaign=copy_link)** | Monica | Manus is an autonomous AI agent that can plan, code, and execute complex tasks end-to-end in the browser. |
+| **[LoopTroop](https://www.looptroop.ovh/)** | LoopTroop AI | Local, open-source GUI for running multi-step AI coding tickets across projects. Uses an LLM council for planning, atomic Beads in isolated git worktrees, and time-boxed retry loops for execution.; [GitHub](https://github.com/looptroop-ai/LoopTroop) |
 
 ---
 

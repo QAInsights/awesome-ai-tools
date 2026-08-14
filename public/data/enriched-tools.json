@@ -3188,6 +3188,35 @@
     "lastUpdated": "2026-08-13"
   },
   {
+    "slug": "looptroop",
+    "name": "LoopTroop",
+    "company": "LoopTroop AI",
+    "pricing": "open-source",
+    "pricingDetail": "LoopTroop is free and fully open-source under the MIT license. It runs entirely on your local machine with no hosted service or subscription fees. You only pay for the LLM API usage from providers like OpenRouter, NVIDIA NIM, or OpenCode, and free-tier models are supported.",
+    "description": "LoopTroop is a local, open-source GUI orchestrator that automates complex AI coding tasks from ticket to pull request. It uses LLM councils for planning, atomic 'beads' in isolated git worktrees for execution, and Ralph-style retry loops for self-correction, with human approval gates at key boundaries.",
+    "keyFeatures": [
+      "LLM council planning with multi-model draft, vote, and refine",
+      "Atomic 'beads' executed in isolated git worktrees",
+      "Ralph-style retry loops with fresh context and bounded retries",
+      "Human approval gates at irreversible boundaries",
+      "Local-first: runs entirely on your machine with SQLite storage",
+      "Supports free-tier models from OpenRouter, NVIDIA NIM, or OpenCode",
+      "Automatic PR creation and final verification pass"
+    ],
+    "bestFor": "Developers and teams who need high-correctness, multi-file feature work and prefer a local, controllable, and auditable AI coding pipeline over fast chat-based assistants.",
+    "notIdealFor": "Users who want quick, interactive chat-style coding assistance or who are not comfortable running autonomous agents with local privileges (requires a VM or sandbox for safety).",
+    "recentUpdates": "LoopTroop v0.4 was released around July 29, 2026, and the project hit 100 GitHub stars. The GitHub repository shows 109-113 stars and 8 forks as of early August 2026. The project was created on March 3, 2026, and has an active contributor (looptroop-ai) with over 1000 contributions.",
+    "verdict": "LoopTroop offers a robust, opinionated approach to AI coding that prioritizes correctness and control over speed, making it ideal for complex, long-running tasks. However, its deliberate slowness and requirement for a sandboxed environment may deter users seeking quick fixes or those uncomfortable with autonomous agents.",
+    "tags": [
+      "AI coding",
+      "agent orchestration",
+      "local-first",
+      "LLM council",
+      "git worktrees"
+    ],
+    "lastUpdated": "2026-08-14"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
