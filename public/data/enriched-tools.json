@@ -4272,6 +4272,34 @@
     "lastUpdated": "2026-08-15"
   },
   {
+    "slug": "sandbase-cli",
+    "name": "SandBase CLI",
+    "company": "SandBase AI",
+    "pricing": "open-source",
+    "pricingDetail": "The SandBase CLI itself is open-source under the Apache-2.0 license (the Go module shows MIT license, but the repository is Apache-2.0). The underlying SandBase platform uses a pay-as-you-go credit system where 1 credit = $1 USD, with no monthly subscription and credits that never expire. Users purchase credits in amounts from $5 to $100 or custom via Stripe.",
+    "description": "SandBase CLI is a command-line tool and MCP bridge that configures 17+ coding-agent clients with six tools for discovering, inspecting, invoking, and tracking calls to a hosted catalog of 2,000+ models and APIs. It provides unified management of multimodal generation, LLM chat, agent/session orchestration, file uploads/downloads, and account queries.",
+    "keyFeatures": [
+      "Search and list models with `sandbase models`",
+      "View model parameter schemas with `sandbase schema`",
+      "Run multimodal generation tasks (e.g., image generation) with `sandbase run`",
+      "Streaming LLM chat with `sandbase chat`",
+      "Manage agents, sessions, environments, and skills via CLI commands",
+      "MCP bridge for configuring coding agents like Codex and Claude"
+    ],
+    "bestFor": "Developers and teams building AI agents who want a unified CLI to manage model calls, sandboxes, sessions, and MCP tools across multiple coding agents.",
+    "notIdealFor": "Users who prefer a fully graphical interface or who need a completely offline tool, as the CLI relies on the hosted SandBase platform for model access and requires an API key.",
+    "recentUpdates": "The CLI has seen active development with versions v0.1.1 (2026-06-26) through v0.2.4 (2026-07-05). The related sandbase-harness project was created 2026-07-11 and has 581 stars.",
+    "verdict": "SandBase CLI is a powerful open-source tool for developers integrating with the SandBase platform, offering extensive model access and agent management. However, it is tightly coupled to the hosted service, so it may not suit those seeking a fully self-hosted or offline solution.",
+    "tags": [
+      "CLI",
+      "MCP",
+      "AI agents",
+      "model gateway",
+      "developer tools"
+    ],
+    "lastUpdated": "2026-08-15"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",

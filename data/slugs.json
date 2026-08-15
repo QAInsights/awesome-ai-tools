@@ -948,6 +948,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "sandbase-cli",
+    "name": "SandBase CLI",
+    "company": "SandBase AI",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
