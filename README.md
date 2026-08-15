@@ -218,6 +218,7 @@ Tools focused on reviewing, securing, and validating code — not generating it.
 | **[Gito](https://github.com/Nayjest/Gito)** | Vitalii Stepanenko | Open-source AI code reviewer that runs in GitHub Actions or locally. Model-agnostic (works with any LLM) and reports findings to GitHub, Jira, or Linear.; [GitHub](https://github.com/Nayjest/Gito) |
 | **[Bubo](https://github.com/mountainowl/bubo)** | MountainOwl | I maintain Bubo, a self-hosted AI reviewer for GitHub PRs and GitLab MRs. I built it to run CLI-driven models, post evidence-backed inline findings or LGTM, and learn from maintainer feedback to reduce repository-specific noise.; [GitHub](https://github.com/mountainowl/bubo) |
 | **[heygrc](https://heygrc.com)** | ISMS Copilot / Better ISMS | GitHub App that reviews every pull request against compliance frameworks (ISO 27001, SOC 2, GDPR, EU AI Act, and more), cites the control clause, and says what to fix. Public repositories always free. Install: https://github.com/apps/heygrc; [GitHub](_No response_) |
+| **[Mydentify AI Crawler Access Checker](https://mydentify.com/tools/ai-crawler-access-checker)** | Mydentify / Timothy Allard | A free browser-based checker that tests whether AI crawlers can access a site by inspecting robots.txt, page-level directives, response headers, and user-agent behavior. It reports observable access signals and their limits; it does not claim to measure crawler indexing or guarantee AI visibility.; [GitHub](https://github.com/mitdralla/mydentify-ai-crawler-access-checker) |
 
 ---
 

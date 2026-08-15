@@ -3675,6 +3675,34 @@
     "lastUpdated": "2026-08-15"
   },
   {
+    "slug": "mydentify-ai-crawler-access-checker",
+    "name": "Mydentify AI Crawler Access Checker",
+    "company": "Mydentify / Timothy Allard",
+    "pricing": "free",
+    "pricingDetail": "The tool is completely free to use with no account required. There is no mention of any paid tiers or credits for this specific tool.",
+    "description": "A free browser-based checker that tests whether AI crawlers (OpenAI and Anthropic) can access a given URL by inspecting robots.txt, page-level directives, response headers, and user-agent behavior. It reports observable access signals and their limits without claiming to measure indexing or guarantee AI visibility.",
+    "keyFeatures": [
+      "Checks robots.txt for OAI-SearchBot, ChatGPT-User, GPTBot, Claude-SearchBot, Claude-User, and ClaudeBot",
+      "Separates search, user-requested retrieval, and training crawler access",
+      "Probes the URL with documented crawler user-agent names",
+      "Reports HTTP responses for each crawler",
+      "No account required, private live check",
+      "Reviewed July 25, 2026"
+    ],
+    "bestFor": "Product builders and site owners who want to ensure their public pages are reachable by AI crawlers for discovery in ChatGPT and Claude.",
+    "notIdealFor": "Users seeking guaranteed AI inclusion or indexing metrics, as the tool only reports access signals and cannot certify official crawler behavior.",
+    "recentUpdates": "Reviewed July 25, 2026; part of Mydentify's 2026 rebuild for the agentic era.",
+    "verdict": "A useful free diagnostic for checking AI crawler access, but it has limitations: it uses Mydentify infrastructure rather than verified provider IPs, so it cannot guarantee official crawler behavior. It's a good first step for improving AI discoverability.",
+    "tags": [
+      "AI crawler checker",
+      "robots.txt",
+      "ChatGPT",
+      "Claude",
+      "SEO"
+    ],
+    "lastUpdated": "2026-08-15"
+  },
+  {
     "slug": "gitauto",
     "name": "GitAuto",
     "company": "GitAuto",
