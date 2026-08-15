@@ -2832,6 +2832,34 @@
     "lastUpdated": "2026-08-15"
   },
   {
+    "slug": "sillage",
+    "name": "Sillage",
+    "company": "MarlBurroW (open source)",
+    "pricing": "open-source",
+    "pricingDetail": "Sillage is open-source under the MIT license, self-hosted, and free to use. No paid tiers or credit models are mentioned.",
+    "description": "Sillage is a self-hosted, mobile-first web UI that drives the native Claude Code and Codex CLIs on your own machine, providing a terminal-free interface with persistent sessions, full-text search, an IDE panel, and an installable PWA, all in a single Docker container.",
+    "keyFeatures": [
+      "Mobile-first web UI for Claude Code and Codex CLIs",
+      "Sessions that outlive the client",
+      "Full-text search over every conversation",
+      "IDE panel with file explorer, editor, diffs, and terminal",
+      "Installable PWA",
+      "Single Docker container deployment"
+    ],
+    "bestFor": "Developers who want to use Claude Code or Codex from mobile devices or a web browser without a terminal, while keeping full control via self-hosting.",
+    "notIdealFor": "Users who prefer a native terminal experience or need multi-agent orchestration, as Sillage focuses on single-agent CLI wrappers.",
+    "recentUpdates": "No specific recent updates for Sillage were found in the search results; the project appears to be new or low-activity.",
+    "verdict": "Sillage offers a unique mobile-first web UI for popular CLI agents, with strong self-hosting and open-source credentials. However, it is limited to Claude Code and Codex, and lacks the broader agent ecosystem of similar tools.",
+    "tags": [
+      "self-hosted",
+      "web-ui",
+      "claude-code",
+      "codex",
+      "pwa"
+    ],
+    "lastUpdated": "2026-08-15"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

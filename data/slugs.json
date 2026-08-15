@@ -630,6 +630,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "sillage",
+    "name": "Sillage",
+    "company": "MarlBurroW (open source)",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
