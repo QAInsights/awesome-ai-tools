@@ -3786,6 +3786,35 @@
     "lastUpdated": "2026-08-15"
   },
   {
+    "slug": "agent-qa",
+    "name": "Agent QA",
+    "company": "Vostride",
+    "pricing": "freemium",
+    "pricingDetail": "agent-qa is source-available and free to self-host, with no paid tier or seat fees. Users provide their own LLM credentials or use local models. An optional subscription auth plugin supports Codex and Claude Code subscriptions.",
+    "description": "agent-qa is a self-improving, agentic QA harness that lets teams write web and mobile tests in natural language. It builds memory from past runs, self-heals when UI changes, and catches regressions before shipping.",
+    "keyFeatures": [
+      "Natural language test authoring for web, Android, and iOS",
+      "Self-healing test execution that recovers from UI drift",
+      "Execution memory with trust scores and confirmation counts",
+      "Action cache for faster runs and reduced token usage",
+      "Sandboxed hooks (Node, Bun, Python, Bash) in Docker",
+      "CLI, dashboard, and MCP integration for coding agents",
+      "Bring your own LLM (OpenAI, Anthropic, Gemini, local models)"
+    ],
+    "bestFor": "Teams building web and mobile applications that want to reduce selector rot and maintenance overhead on stable user flows, and QA engineers who prefer natural-language test authoring.",
+    "notIdealFor": "Teams whose test suites depend on complex conditional branching across application states, as the linear natural-language step model may not express such logic.",
+    "recentUpdates": "The npm package was updated to version 0.1.21 on June 3, 2026. The GitHub repository was created on May 7, 2026, and has 178 stars. Documentation was last updated in August 2026.",
+    "verdict": "agent-qa offers a fresh approach to QA automation with natural-language tests and self-healing memory, making it a strong choice for teams tired of brittle selectors. However, its linear test model may not suit complex branching scenarios, and it requires users to bring their own LLM credentials.",
+    "tags": [
+      "AI testing",
+      "QA automation",
+      "natural language testing",
+      "self-healing tests",
+      "open source"
+    ],
+    "lastUpdated": "2026-08-16"
+  },
+  {
     "slug": "claude",
     "name": "Claude",
     "company": "Anthropic",

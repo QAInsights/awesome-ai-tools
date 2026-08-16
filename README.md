@@ -230,6 +230,7 @@ Tools designed to autonomously generate, execute, and fix tests.
 |------|---------|-------|
 | **[GitAuto](https://gitauto.ai/)** | GitAuto | Automatically writes, runs, and fixes your unit tests, so you can keep shipping confidently |
 | **[AgentDiff](https://agentstatus.dev/)** | AgentStatus | Catch the regression CI couldn't, before merge. |
+| **[Agent QA](https://github.com/vostride/agent-qa)** | Vostride | The self-improving QA agent for software teams. It creates and runs natural-language web and mobile tests, retains test memory, and adapts flows when interfaces change. |
 
 ---
 

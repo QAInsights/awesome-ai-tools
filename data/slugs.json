@@ -840,6 +840,12 @@
     "category": "AI Testing & Quality Assurance"
   },
   {
+    "slug": "agent-qa",
+    "name": "Agent QA",
+    "company": "Vostride",
+    "category": "AI Testing & Quality Assurance"
+  },
+  {
     "slug": "claude",
     "name": "Claude",
     "company": "Anthropic",
