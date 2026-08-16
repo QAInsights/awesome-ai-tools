@@ -366,6 +366,12 @@
     "category": "IDE Extensions & Plugins"
   },
   {
+    "slug": "codex",
+    "name": "Codex++",
+    "company": "bennett",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
     "slug": "claude-code",
     "name": "Claude Code",
     "company": "Anthropic",

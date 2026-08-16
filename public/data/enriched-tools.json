@@ -1641,6 +1641,35 @@
     "lastUpdated": "2026-08-15"
   },
   {
+    "slug": "codex",
+    "name": "Codex++",
+    "company": "bennett",
+    "pricing": "free",
+    "pricingDetail": "Codex++ is free and open-source under the MIT License. There are no paid tiers or credit models; it is a community project.",
+    "description": "Codex++ is an unofficial tweak system and external enhancer for the OpenAI Codex desktop app. It injects enhancements via the Chromium DevTools Protocol (CDP) to unlock features like plugin installation in API key mode, session deletion, proxy injection, and UI tweaks, without modifying the original app files.",
+    "keyFeatures": [
+      "Plugin menu unlocked even in API Key mode",
+      "Force-install restricted plugins",
+      "Hover-to-delete sessions (actual deletion, not archiving)",
+      "Export sessions to Markdown",
+      "Proxy injection with custom model providers",
+      "Native bridge support for AppKit, Metal, and helper processes",
+      "Tweak loader with local tweaks folder and settings section"
+    ],
+    "bestFor": "Developers using the Codex desktop app who want to bypass login restrictions, use custom API providers, manage sessions more flexibly, or extend the app with community tweaks.",
+    "notIdealFor": "Users who rely on official ChatGPT login and don't need plugins or custom providers, or those who prefer stable, officially supported features without the risk of breakage from app updates.",
+    "recentUpdates": "Version 1.0.0 added cleaner patching, better debug output, Owl runtime detection, browser-host debugging, and native bridge support. The project has seen rapid iteration with multiple releases, and as of mid-2026 it had over 14k GitHub stars. A related project (BigPizzaV3/CodexPlusPlus) released v1.2.41 in July 2026.",
+    "verdict": "Codex++ is a powerful and popular enhancement tool that unlocks significant functionality for Codex users, but its injection-based approach makes it fragile across app updates, and it is unofficial with potential security risks. It's best for power users who accept those trade-offs.",
+    "tags": [
+      "Codex",
+      "tweak loader",
+      "CDP injection",
+      "open-source",
+      "desktop app enhancement"
+    ],
+    "lastUpdated": "2026-08-16"
+  },
+  {
     "slug": "claude-code",
     "name": "Claude Code",
     "company": "Anthropic",

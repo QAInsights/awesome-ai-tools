@@ -103,6 +103,7 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Feather Wand](https://jmeter.ai)** | NaveenKumar Namachivayam | Supercharge your performance testing workflow with AI-driven capabilities built natively into JMeter.; [GitHub](https://github.com/QAInsights/jmeter-ai) |
 | **[SF Pi](https://github.com/salesforce/sf-pi)** | Salesforce | Opinionated Salesforce extensions for the [Pi coding agent](https://pi.dev/): focused lifecycle tools, Salesforce-aware status and safety surfaces, Agent Script authoring, and one Manager for package settings and extension enablement.; [GitHub](https://github.com/salesforce/sf-pi) |
 | **[Blume](https://blume.codes/invite/coral-buttercup-awakening-gracefully)** | Blume | Blume helps you build an agentic-native codebase with consistent and correct context. Fewer mistakes, fewer headaches.; [GitHub](_No response_) |
+| **[Codex++](https://github.com/b-nnett/codex-plusplus)** | bennett | Codex++ tweak system for the Codex desktop app; [GitHub](https://github.com/b-nnett/codex-plusplus) |
 
 ---
 
