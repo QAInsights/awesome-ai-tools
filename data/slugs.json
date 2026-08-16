@@ -978,6 +978,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "codex-quota-overlay",
+    "name": "Codex Quota Overlay",
+    "company": "cpys (maintainer; independent community project)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",

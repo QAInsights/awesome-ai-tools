@@ -650,5 +650,9 @@
   {
     "companyName": "Vostride",
     "toolName": "Agent QA"
+  },
+  {
+    "companyName": "cpys (maintainer; independent community project)",
+    "toolName": "Codex Quota Overlay"
   }
 ]

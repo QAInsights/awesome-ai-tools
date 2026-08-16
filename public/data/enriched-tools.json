@@ -4413,6 +4413,33 @@
     "lastUpdated": "2026-08-16"
   },
   {
+    "slug": "codex-quota-overlay",
+    "name": "Codex Quota Overlay",
+    "company": "cpys (maintainer; independent community project)",
+    "pricing": "open-source",
+    "pricingDetail": "The tool is open-source and free to use. No pricing tiers or credit models are mentioned in the search results.",
+    "description": "Codex Quota Overlay is an independent Windows and macOS overlay that displays remaining Codex quota, next reset time, and available reset credits beside the active Codex conversation, reading the documented local rate-limits method without capturing screenshots, conversations, or browser cookies.",
+    "keyFeatures": [
+      "Shows remaining Codex quota, next reset time, and reset credits",
+      "Reads the documented local rate-limits method",
+      "Stays out of the way and does not capture screenshots, conversations, or browser cookies",
+      "Available for Windows and macOS",
+      "Independent community project, not affiliated with OpenAI"
+    ],
+    "bestFor": "Codex users on Windows or macOS who want a lightweight, privacy-respecting overlay to monitor their quota without leaving the conversation.",
+    "notIdealFor": "Users needing multi-provider quota monitoring or advanced features like alerts, dashboards, or support for other AI coding tools.",
+    "recentUpdates": "No specific recent updates are mentioned in the search results.",
+    "verdict": "A focused, privacy-conscious overlay for Codex quota monitoring, but limited to a single provider and basic display. Users wanting broader monitoring may prefer multi-provider tools.",
+    "tags": [
+      "codex",
+      "quota",
+      "overlay",
+      "developer-tools",
+      "privacy"
+    ],
+    "lastUpdated": "2026-08-16"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
