@@ -960,6 +960,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "wolfmarkdown",
+    "name": "WolfMarkDown",
+    "company": "WolfMark",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",

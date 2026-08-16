@@ -4328,6 +4328,33 @@
     "lastUpdated": "2026-08-15"
   },
   {
+    "slug": "wolfmarkdown",
+    "name": "WolfMarkDown",
+    "company": "WolfMark",
+    "pricing": "free",
+    "pricingDetail": "The tool is listed as free on GitHub, and no paid tiers are mentioned in the search results.",
+    "description": "WolfMarkDown is an AI agent skill that cleans up messy AI-generated research, conversation, or Markdown into production-ready documents using semantic judgment and deterministic verification, including Prettier, markdownlint, GFM parsing, integrity checks, and idempotence.",
+    "keyFeatures": [
+      "Repairs document structure",
+      "Preserves technical details",
+      "Validates with Prettier and markdownlint",
+      "GFM parsing and integrity checks",
+      "Idempotence verification"
+    ],
+    "bestFor": "Developers and writers who need to clean up AI-generated Markdown or research into polished, production-ready documents.",
+    "notIdealFor": "Users looking for a full-featured markdown editor or a tool with a graphical interface, as this is an AI agent skill.",
+    "recentUpdates": "No recent updates or news found in the search results.",
+    "verdict": "WolfMarkDown appears to be a niche but useful tool for automating Markdown cleanup with validation, though it lacks a broad feature set and may require integration with an AI agent environment.",
+    "tags": [
+      "markdown",
+      "AI agent",
+      "document cleanup",
+      "validation",
+      "developer tool"
+    ],
+    "lastUpdated": "2026-08-16"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
