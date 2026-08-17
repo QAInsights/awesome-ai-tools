@@ -654,5 +654,9 @@
   {
     "companyName": "cpys (maintainer; independent community project)",
     "toolName": "Codex Quota Overlay"
+  },
+  {
+    "companyName": "Math-AI",
+    "toolName": "MathCode"
   }
 ]

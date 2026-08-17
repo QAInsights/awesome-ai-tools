@@ -2889,6 +2889,35 @@
     "lastUpdated": "2026-08-15"
   },
   {
+    "slug": "mathcode",
+    "name": "MathCode",
+    "company": "Math-AI",
+    "pricing": "open-source",
+    "pricingDetail": "MathCode is an open-source project available on GitHub. The repository does not explicitly state a license, but the source code is freely accessible. Users need to provide their own API keys for the underlying AI models (e.g., OpenAI, Anthropic) and may incur API costs.",
+    "description": "MathCode is a terminal AI coding assistant with a built-in math formalization engine. It converts natural language math problems into Lean 4 theorems and attempts formal proofs, targeting researchers and developers in formal mathematics.",
+    "keyFeatures": [
+      "Converts natural language math problems into Lean 4 theorems",
+      "Persistent Lean REPL for sub-second compile checks",
+      "Agent-mode proving with iterative proof repair",
+      "Multi-planner parallel proof strategy exploration",
+      "Obsidian knowledge graph for theorem dependencies",
+      "Prefix cache reshaping to cut API costs by up to 90%",
+      "Support for multiple AI backends (OpenAI, Anthropic, AWS Bedrock, Google Vertex, Azure Foundry)"
+    ],
+    "bestFor": "Researchers, math students, and formal methods practitioners who need to formalize mathematical concepts and verify proofs in Lean 4.",
+    "notIdealFor": "General-purpose software developers looking for a versatile coding assistant, as MathCode is narrowly focused on mathematical theorem proving and requires specific Lean toolchain setup.",
+    "recentUpdates": "MathCode v0.2.0 released on May 26, 2026, introduced prefix cache reshaping to cut API costs by 90%, token budget controls, dynamic thinking depth adjustment, and support for external compiler Kimina Lean Server. Earlier, v0.0.3 (April 2026) added TypeScript-native AUTOLEAN, new features like REPL, LSP, agent-prove, tree-prove, theorem-store, and axiom-lib.",
+    "verdict": "MathCode is a powerful specialized tool for formal mathematics, offering innovative features like cost-cutting prefix caching and Lean integration. However, its narrow focus and reliance on specific toolchains make it unsuitable for general coding tasks.",
+    "tags": [
+      "mathematical coding",
+      "Lean 4",
+      "theorem proving",
+      "AI agent",
+      "formalization"
+    ],
+    "lastUpdated": "2026-08-17"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

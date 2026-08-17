@@ -157,6 +157,7 @@ AI coding agents that live in your terminal or command line.
 | **[Kane CLI](https://www.testmuai.com/support/docs/kane-cli-introduction/)** | TestMU AI | End-to-end flows on your local browser, powered by natural language. Instant validation, deep bug discovery, and production-ready automation that elevates release confidence.; [GitHub](_No response_) |
 | **[Caveman Code](https://github.com/JuliusBrussee/caveman)** | Julius Brussee | Same model. Same task. ~2× fewer tokens than Codex. 20+ providers · plan mode · autopilot loop · MIT.; [GitHub](https://github.com/JuliusBrussee/caveman) |
 | **[Sillage](https://marlburrow.github.io/sillage)** | MarlBurroW (open source) | Self-hosted, MIT-licensed, mobile-first web UI that drives the native Claude Code and Codex CLIs on your own machine (the official agent harnesses, without a terminal). Sessions that outlive the client, full-text search over every conversation, an IDE panel (file explorer, editor, diffs, terminal), and an installable PWA. Single Docker container.; [GitHub](https://github.com/MarlBurroW/sillage) |
+| **[MathCode](https://github.com/math-ai-org/mathcode)** | Math-AI | MathCode: A Frontier Mathematical Coding Agent; [GitHub](https://github.com/math-ai-org/mathcode) |
 
 ---
 

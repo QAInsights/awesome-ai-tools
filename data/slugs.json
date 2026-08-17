@@ -642,6 +642,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "mathcode",
+    "name": "MathCode",
+    "company": "Math-AI",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
