@@ -660,6 +660,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "zero",
+    "name": "Zero",
+    "company": "Gitlawb",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

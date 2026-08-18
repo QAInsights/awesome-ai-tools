@@ -2973,6 +2973,35 @@
     "lastUpdated": "2026-08-18"
   },
   {
+    "slug": "zero",
+    "name": "Zero",
+    "company": "Gitlawb",
+    "pricing": "open-source",
+    "pricingDetail": "Zero is open-source under the MIT License. The npm package is free to install, and there are no paid tiers mentioned. Users only pay for API usage of the AI models they choose to connect.",
+    "description": "Zero is a local terminal AI coding agent that inspects repositories, edits files, runs commands, and uses browser/terminal helpers, with durable local sessions and full control over model choice and permission levels.",
+    "keyFeatures": [
+      "Model-agnostic: supports OpenAI, Anthropic, Gemini, Groq, OpenRouter, DeepSeek, Mistral, xAI, Qwen, Kimi, GitHub Models, Ollama, LM Studio, and any OpenAI-/Anthropic-compatible endpoint",
+      "Granular permission and sandbox policy for file writes, shell commands, and network access",
+      "Interactive TUI with model/provider pickers, image input, slash commands, live plan/tool rendering, scrollback, themes, and resume/fork support",
+      "Scriptable headless mode (zero exec) with text/JSON/stream-JSON I/O, isolated worktrees, spec-first runs, and exit codes for CI",
+      "Local session storage: searchable, resumable, never uploaded as telemetry",
+      "Extensible via MCP servers, skills, plugins, hooks, and specialist subagents",
+      "Image channel and view_image tool for visual inspection of screenshots and PDFs (v0.7.0)"
+    ],
+    "bestFor": "Developers who want a privacy-focused, model-agnostic coding agent that runs entirely in their terminal with granular control over permissions and local session persistence.",
+    "notIdealFor": "Users who prefer a cloud-hosted agent with managed infrastructure or who need a GUI-based interface rather than a terminal-centric workflow.",
+    "recentUpdates": "v0.7.0 (August 10, 2026) added an image channel and view_image tool, read-only planning mode, closed two sandbox holes, and improved model list refresh. v0.4.0 fixed a sandbox bypass and other security issues. The project launched on July 2, 2026, and has gained ~1,200 GitHub stars.",
+    "verdict": "Zero is a promising open-source terminal coding agent that emphasizes model freedom and user control, with a strong security posture and active development. Its main trade-off is that it requires users to manage their own API keys and local setup, which may be less convenient than cloud-based alternatives.",
+    "tags": [
+      "terminal",
+      "coding-agent",
+      "open-source",
+      "privacy",
+      "model-agnostic"
+    ],
+    "lastUpdated": "2026-08-18"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
