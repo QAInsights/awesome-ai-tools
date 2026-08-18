@@ -180,6 +180,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "agentone",
+    "name": "AgentOne",
+    "company": "BestCodes",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",

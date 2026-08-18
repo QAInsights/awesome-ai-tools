@@ -813,6 +813,35 @@
     "lastUpdated": "2026-08-15"
   },
   {
+    "slug": "agentone",
+    "name": "AgentOne",
+    "company": "BestCodes",
+    "pricing": "freemium",
+    "pricingDetail": "AgentOne offers a free tier with 100 credits per month, no credit card required. Paid plans include Pro at $8.99/mo (1,000 credits), Ultra at $29.99/mo (5,000 credits), and Hyper at $239.99/mo (75,000 credits). BYOK (bring your own keys) is also supported for OpenAI-compatible providers, OpenRouter, Groq, Google, Ollama, LM Studio, and more.",
+    "description": "AgentOne is a desktop-first AI agent and deep-researcher that can automate complex tasks, connect to 11,000+ extensions and 7,500+ AI models, and run parallel subagents. It emphasizes privacy by default, with local data storage and optional cross-device sync.",
+    "keyFeatures": [
+      "11,000+ built-in extensions (Gmail, Notion, Slack, GitHub, etc.)",
+      "7,500+ AI models from 60+ providers",
+      "Parallel subagents for complex task decomposition",
+      "Private by default: desktop-first, local data storage",
+      "Bring your own keys (BYOK) with no markup",
+      "Deep research tools: web search, page browsing, URL reading",
+      "Local file and command tools with approval controls"
+    ],
+    "bestFor": "Developers, marketers, and business owners who need a versatile AI agent that can automate multi-step workflows, integrate with many services, and maintain privacy with local data storage.",
+    "notIdealFor": "Users who require extensive cloud-based agent runs or API access, as these are only available in the higher-priced Ultra and Hyper plans. Also, those who prefer a fully open-source solution may find the freemium model limiting.",
+    "recentUpdates": "As of May 2026, AgentOne introduced the AI Model Directory, a self-updating open-source list of AI models from over 35 providers, ensuring 0-day support for new models. The project is part of AgentOne's open-source initiative.",
+    "verdict": "AgentOne is a powerful and flexible AI agent with a generous free tier and extensive integration options, making it a strong choice for automation and research. However, higher usage limits and cloud features require paid plans, and the sheer number of options may be overwhelming for some users.",
+    "tags": [
+      "AI agent",
+      "automation",
+      "deep research",
+      "desktop app",
+      "BYOK"
+    ],
+    "lastUpdated": "2026-08-18"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
