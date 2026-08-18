@@ -654,6 +654,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "fxsh",
+    "name": "fx.sh",
+    "company": "Vercel",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

@@ -159,6 +159,7 @@ AI coding agents that live in your terminal or command line.
 | **[Caveman Code](https://github.com/JuliusBrussee/caveman)** | Julius Brussee | Same model. Same task. ~2× fewer tokens than Codex. 20+ providers · plan mode · autopilot loop · MIT.; [GitHub](https://github.com/JuliusBrussee/caveman) |
 | **[Sillage](https://marlburrow.github.io/sillage)** | MarlBurroW (open source) | Self-hosted, MIT-licensed, mobile-first web UI that drives the native Claude Code and Codex CLIs on your own machine (the official agent harnesses, without a terminal). Sessions that outlive the client, full-text search over every conversation, an IDE panel (file explorer, editor, diffs, terminal), and an installable PWA. Single Docker container.; [GitHub](https://github.com/MarlBurroW/sillage) |
 | **[MathCode](https://github.com/math-ai-org/mathcode)** | Math-AI | MathCode: A Frontier Mathematical Coding Agent; [GitHub](https://github.com/math-ai-org/mathcode) |
+| **[fx.sh](https://fx.sh/)** | Vercel | fx is a coding agent harness and CLI written in Zig, optimized for research and embeddability as part of larger systems.; [GitHub](https://github.com/vercel-labs/fx) |
 
 ---
 

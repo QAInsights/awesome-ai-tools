@@ -662,5 +662,9 @@
   {
     "companyName": "BestCodes",
     "toolName": "AgentOne"
+  },
+  {
+    "companyName": "Vercel",
+    "toolName": "fx.sh"
   }
 ]

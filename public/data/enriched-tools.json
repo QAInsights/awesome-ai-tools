@@ -2947,6 +2947,32 @@
     "lastUpdated": "2026-08-17"
   },
   {
+    "slug": "fxsh",
+    "name": "fx.sh",
+    "company": "Vercel",
+    "pricing": "free",
+    "pricingDetail": "fx.sh is listed as free, and no pricing information specific to fx.sh was found in the search results. The results primarily cover other Vercel products like AI Gateway and v0, which have their own pricing tiers.",
+    "description": "fx is a coding agent harness and CLI written in Zig, optimized for research and embeddability as part of larger systems.",
+    "keyFeatures": [
+      "Coding agent harness and CLI",
+      "Written in Zig",
+      "Optimized for research",
+      "Embeddable in larger systems"
+    ],
+    "bestFor": "Developers and researchers who need a lightweight, embeddable coding agent harness for integration into larger systems.",
+    "notIdealFor": "Users looking for a full-featured AI coding assistant with GUI or extensive documentation, as no such details are available.",
+    "recentUpdates": null,
+    "verdict": "fx.sh appears to be a free, specialized tool for developers seeking a Zig-based coding agent harness. However, limited public information means users should verify features and support directly.",
+    "tags": [
+      "coding agent",
+      "CLI",
+      "Zig",
+      "harness",
+      "embeddable"
+    ],
+    "lastUpdated": "2026-08-18"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
