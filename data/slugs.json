@@ -186,6 +186,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "onecli",
+    "name": "OneCLI",
+    "company": "OneCLI",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",

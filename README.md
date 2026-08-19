@@ -64,6 +64,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[Grok Bot](https://x.ai/bot)** | X | AI teammates you can give real work to. Bots can sign in to your tools, use them just like you do, and come back with finished work.; [GitHub](_No response_) |
 | **[Ori](https://openrouter.ai/ori/harness)** | OpenRouter | Your favorite harness with every model.; [GitHub](_No response_) |
 | **[AgentOne](https://github.com/The-Best-Codes/agent-one)** | BestCodes | A free AI agent and deep-researcher.; [GitHub](https://github.com/The-Best-Codes/agent-one) |
+| **[OneCLI](https://github.com/onecli/onecli)** | OneCLI | Open-source sandboxed agent harness for teams. Giving every employee a secured personal agent.; [GitHub](https://github.com/onecli/onecli) |
 
 
 ---

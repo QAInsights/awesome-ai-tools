@@ -842,6 +842,35 @@
     "lastUpdated": "2026-08-18"
   },
   {
+    "slug": "onecli",
+    "name": "OneCLI",
+    "company": "OneCLI",
+    "pricing": "freemium",
+    "pricingDetail": "Offers a free tier with a 7-day trial and $5 in AI credits, plus paid plans: Team at $149/mo (5 users, 10 agents), Scale at $499/mo (10 users, 20 agents), and Enterprise with custom pricing. Self-hosted Community edition is free and open source.",
+    "description": "OneCLI is an open-source credential gateway and sandboxed agent harness for teams, giving every employee a secured personal AI agent. It intercepts agent HTTP requests, injects scoped credentials from an encrypted vault, and enforces policies at the network layer so agents never see raw secrets.",
+    "keyFeatures": [
+      "Credential vault with AES-256-GCM encryption, keys never exposed to agents",
+      "Transparent gateway (Rust) that injects credentials per request and enforces rules",
+      "Policy engine: block endpoints, rate-limit, require human approval",
+      "Per-agent access grants and isolated sandboxed VMs per employee",
+      "Integrations with 50+ apps (Google, GitHub, Slack, Jira, AWS, Stripe) and framework-agnostic (OpenClaw, NanoClaw, Dify, n8n, etc.)",
+      "Audit logs with per-request tracking and revocation",
+      "Self-hosted options: free Community edition and commercial Enterprise edition"
+    ],
+    "bestFor": "Teams and organizations that want to securely deploy AI agents (coding or autonomous) at scale, especially those needing strict credential management, policy enforcement, and audit trails.",
+    "notIdealFor": "Individual developers who just want a simple agent without team management overhead; also not ideal for those needing advanced features like per-tool manual approvals or organization policy console in the free self-hosted edition.",
+    "recentUpdates": "OneCLI is a Y Combinator Summer 2026 company. It has 2.5K+ GitHub stars and 300K+ downloads, and is the default credential layer for NanoClaw. The v2 shift focuses on team features like IdP integration and per-person agents.",
+    "verdict": "OneCLI provides a robust security layer for AI agents, addressing a critical need for credential safety and governance. Its open-source nature and freemium model make it accessible, but advanced features require paid plans or enterprise edition.",
+    "tags": [
+      "credential gateway",
+      "AI agent security",
+      "open-source",
+      "team governance",
+      "sandboxed agents"
+    ],
+    "lastUpdated": "2026-08-19"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
