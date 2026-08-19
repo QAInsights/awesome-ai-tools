@@ -4553,6 +4553,35 @@
     "lastUpdated": "2026-08-16"
   },
   {
+    "slug": "deskcue",
+    "name": "DeskCue",
+    "company": "Alexander Kornev",
+    "pricing": "open-source",
+    "pricingDetail": "DeskCue is open-source and free to use. As a local-first tool, it runs entirely on your machine with no subscription or usage fees.",
+    "description": "DeskCue is an open-source, local-first workspace for reviewing and steering coding-agent work. It keeps sessions, git diff, files, live preview, notifications, and the next prompt accessible from another browser or phone while the agents and workspace stay on your machine.",
+    "keyFeatures": [
+      "Local-first architecture: agents and workspace stay on your machine",
+      "Remote access from another browser or phone",
+      "Session management for coding-agent work",
+      "Git diff and file viewing",
+      "Live preview",
+      "Notifications",
+      "Next prompt input"
+    ],
+    "bestFor": "Developers who want to monitor and control AI coding agents remotely while keeping their code and data local.",
+    "notIdealFor": "Teams requiring cloud-based collaboration or centralized management, as DeskCue is local-first and self-hosted.",
+    "recentUpdates": null,
+    "verdict": "DeskCue offers a unique local-first approach to managing coding agents, ideal for privacy-conscious developers. However, it may lack the collaborative features of cloud-based alternatives.",
+    "tags": [
+      "open-source",
+      "local-first",
+      "coding-agent",
+      "developer-tool",
+      "remote-access"
+    ],
+    "lastUpdated": "2026-08-19"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
