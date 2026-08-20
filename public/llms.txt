@@ -7,7 +7,7 @@
 ai.dosa.dev is a web directory that catalogs **140+ AI coding tools** across 12 categories. It is aimed at software developers researching AI-assisted development tooling. The site combines a browsable tool directory with per-tool detail pages (pricing, key features, verdicts) and a set of client-side AI/ML utilities (token counter, hallucination scorer). Users can authenticate via GitHub or Google to bookmark ("Zap") tools and generate a GitHub README badge displaying their AI stack.
 
 - **URL**: https://ai.dosa.dev
-- **Tech stack**: Astro 6, TailwindCSS 4, TypeScript, Bun, deployed on Vercel
+- **Tech stack**: Astro 6, TailwindCSS 4, TypeScript, Bun, deployed on Cloudflare Workers
 - **Auth**: GitHub + Google OAuth (optional; enables personalized features)
 
 ## Tool Directory Categories

@@ -14,8 +14,12 @@ const ROOT = process.cwd();
 const comparisons = JSON.parse(readFileSync(join(ROOT, 'data', 'comparisons.json'), 'utf-8'));
 const slugs = new Set(JSON.parse(readFileSync(join(ROOT, 'data', 'slugs.json'), 'utf-8')).map(t => t.slug));
 const enriched = new Set(JSON.parse(readFileSync(join(ROOT, 'public', 'data', 'enriched-tools.json'), 'utf-8')).map(t => t.slug));
-const vercelRedirects = new Set(
-    JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf-8')).redirects.map(r => r.source)
+const cloudflareRedirects = new Set(
+    readFileSync(join(ROOT, 'public', '_redirects'), 'utf-8')
+        .split(/\r?\n/)
+        .map(line => line.trim())
+        .filter(line => line && !line.startsWith('#'))
+        .map(line => line.split(/\s+/)[0])
 );
 
 describe('comparisons data', () => {
@@ -65,9 +69,9 @@ describe('comparisons data', () => {
         }
     });
 
-    test('every pair has a reverse-order redirect in vercel.json', () => {
+    test('every pair has a reverse-order redirect in public/_redirects', () => {
         for (const c of comparisons) {
-            expect(vercelRedirects.has(`/compare/${c.b}-vs-${c.a}`)).toBe(true);
+            expect(cloudflareRedirects.has(`/compare/${c.b}-vs-${c.a}`)).toBe(true);
         }
     });
 });

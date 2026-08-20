@@ -6,11 +6,8 @@
  * This replaces the runtime fetch + parse approach in the old app.js.
  */
 
-import { readFileSync } from 'fs';
-import { join } from 'path';
-
-// process.cwd() is the project root when run by Astro's build pipeline
-const ROOT = process.cwd();
+import readmeMarkdown from '../../README.md?raw';
+import enrichedToolsJson from '../../public/data/enriched-tools.json';
 
 export interface ToolSeed {
     slug: string;
@@ -169,17 +166,11 @@ function parseMarkdown(text: string): ToolSeed[] {
  * Load enriched tool data from public/data/enriched-tools.json
  */
 function loadEnriched(): Map<string, EnrichedTool> {
-    try {
-        const raw = readFileSync(join(ROOT, 'public', 'data', 'enriched-tools.json'), 'utf-8');
-        const arr: EnrichedTool[] = JSON.parse(raw);
-        const map = new Map<string, EnrichedTool>();
-        for (const t of arr) {
-            if (t.slug) map.set(t.slug, t);
-        }
-        return map;
-    } catch {
-        return new Map();
+    const map = new Map<string, EnrichedTool>();
+    for (const t of enrichedToolsJson as EnrichedTool[]) {
+        if (t.slug) map.set(t.slug, t);
     }
+    return map;
 }
 
 // ── freshness helpers ─────────────────────────────────────────────────────────
@@ -237,9 +228,7 @@ let _tools: Tool[] | null = null;
 export function getAllTools(): Tool[] {
     if (_tools) return _tools;
 
-    const readmePath = join(ROOT, 'README.md');
-    const md = readFileSync(readmePath, 'utf-8');
-    const seeds = parseMarkdown(md);
+    const seeds = parseMarkdown(readmeMarkdown);
     const enrichedMap = loadEnriched();
 
     _tools = seeds.map(seed => ({
@@ -297,8 +286,7 @@ export function getCategorySlug(short: string): string {
 function loadCategoryDescriptions(): Map<string, string> {
     const map = new Map<string, string>();
     try {
-        const md = readFileSync(join(ROOT, 'README.md'), 'utf-8');
-        const sections = md.split('\n## ');
+        const sections = readmeMarkdown.split('\n## ');
         for (const section of sections.slice(1)) {
             const lines = section.split('\n');
             const categoryLine = lines[0].trim();

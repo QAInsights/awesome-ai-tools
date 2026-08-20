@@ -1,7 +1,5 @@
 ---
 import { getCollection, render } from 'astro:content';
-import { readFileSync, existsSync } from 'node:fs';
-import { join } from 'node:path';
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
 import BlogCardGradient from '../../components/BlogCardGradient.astro';
 import { safeJsonForScript } from '../../lib/serialize';
@@ -76,17 +74,7 @@ const aiTargets = [
   { name: 'Perplexity', href: `https://www.perplexity.ai/search?q=${encodeURIComponent(aiPrompt)}`, copiedLabel: 'Copied!' },
 ];
 
-let articleBody = '';
-try {
-  const mdxPath = join(process.cwd(), 'src', 'content', 'blog', `${entry.id}.mdx`);
-  if (existsSync(mdxPath)) {
-    articleBody = readFileSync(mdxPath, 'utf-8').replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '').trim();
-  } else {
-    console.warn(`[blog] markdown source not found for entry "${entry.id}" (${mdxPath})`);
-  }
-} catch (err) {
-  console.warn(`[blog] failed to read markdown for "${entry.id}":`, err);
-}
+const articleBody = entry.body?.trim() ?? '';
 const llmMarkdown = [
   `# ${entry.data.title}`,
   '',

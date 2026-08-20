@@ -151,7 +151,7 @@ export const GET: APIRoute = async ({ request, redirect }) => {
         };
 
         // ── 7. Encode and redirect back to client ─────────────────────────────
-        // Buffer is available in Vercel's Node.js runtime (Node 18+).
+        // Buffer is provided by the Workers nodejs_compat compatibility flag.
         const encoded = Buffer.from(JSON.stringify(userData)).toString('base64url');
         return redirect(`${redirectOrigin}?github_auth=${encoded}&state=${encodeURIComponent(state)}`);
 

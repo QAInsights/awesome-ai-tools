@@ -21,12 +21,12 @@ function loadEnvLocal() {
 }
 loadEnvLocal();
 
-// Read from the active environment (e.g. Vercel) or fallback for local
+// Read from the active environment or fallback for local
 const enableVoting = process.env.ENABLE_VOTING || 'true';
 const cfSiteKey = process.env.CF_SITEKEY || '1x00000000000000000000AA';
 const apiBaseUrl = process.env.API_BASE_URL || 'http://localhost:8080';
 const googleClientId = process.env.GOOGLE_CLIENT_ID || 'your-google-client-id-here';
-// NOTE: Only the client_id is injected — client_secret stays in Vercel env vars only
+// NOTE: Only the client_id is injected — client_secret stays in Worker secrets
 const githubClientId = process.env.GITHUB_CLIENT_ID || '';
 
 function cleanDistJs() {

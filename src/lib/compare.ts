@@ -7,11 +7,8 @@
  * client-side, so search engines and AI crawlers see the full content.
  */
 
-import { readFileSync } from 'fs';
-import { join } from 'path';
+import comparisonsJson from '../../data/comparisons.json';
 import { getAllTools, getToolBySlug, type Tool } from './tools';
-
-const ROOT = process.cwd();
 
 export interface Comparison {
     slug: string;
@@ -30,14 +27,7 @@ let _comparisons: Comparison[] | null = null;
 
 export function getComparisons(): Comparison[] {
     if (_comparisons) return _comparisons;
-    try {
-        const raw = readFileSync(join(ROOT, 'data', 'comparisons.json'), 'utf-8');
-        _comparisons = JSON.parse(raw) as Comparison[];
-    } catch (err) {
-        // Fail the build rather than silently shipping zero compare pages.
-        console.error('[compare] failed to load data/comparisons.json:', err);
-        throw err;
-    }
+    _comparisons = comparisonsJson as Comparison[];
     return _comparisons!;
 }
 

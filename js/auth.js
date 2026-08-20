@@ -4,7 +4,7 @@
  *
  * Providers:
  *   - Google: via Google Identity Services (GIS), fully client-side JWT
- *   - GitHub: via OAuth Authorization Code flow w/ Vercel serverless callback
+ *   - GitHub: via OAuth Authorization Code flow w/ the Worker callback
  */
 
 class AuthManager {
@@ -221,7 +221,7 @@ class AuthManager {
 
     /**
      * Check whether the current URL contains a ?github_auth= param (i.e. we
-     * just returned from the Vercel OAuth callback). If so, parse, validate,
+     * just returned from the OAuth callback). If so, parse, validate,
      * and store the session, then clean the URL.
      *
      * @returns {boolean} true if a GitHub callback was handled
