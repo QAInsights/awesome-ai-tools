@@ -1,41 +1,25 @@
-name: Deploy to Cloudflare Workers
+name: Trigger Cloudflare Workers Build
 
 on:
-  push:
-    branches:
-      - main
   schedule:
     - cron: '0 2 * * *'
   workflow_dispatch:
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
-  deploy:
+  trigger-build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Bun
-        uses: oven-sh/setup-bun@v2
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
-
-      - name: Build site
-        run: bun run build
+      - name: Trigger Workers Build deploy hook
         env:
-          ENABLE_VOTING: ${{ secrets.ENABLE_VOTING || vars.ENABLE_VOTING || 'true' }}
-          CF_SITEKEY: ${{ secrets.CF_SITEKEY || vars.CF_SITEKEY || '1x00000000000000000000AA' }}
-          API_BASE_URL: ${{ secrets.API_BASE_URL || vars.API_BASE_URL || 'http://localhost:8080' }}
-          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID || vars.GOOGLE_CLIENT_ID || 'your-google-client-id-here' }}
-          GITHUB_CLIENT_ID: ${{ secrets.GITHUB_CLIENT_ID || vars.GITHUB_CLIENT_ID || '' }}
-
-      - name: Deploy Worker
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy
+          CLOUDFLARE_DEPLOY_HOOK_URL: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK_URL }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$CLOUDFLARE_DEPLOY_HOOK_URL" ]]; then
+            echo "::error::CLOUDFLARE_DEPLOY_HOOK_URL is not configured"
+            exit 1
+          fi
+          curl --fail-with-body --silent --show-error \
+            --request POST \
+            "$CLOUDFLARE_DEPLOY_HOOK_URL"
