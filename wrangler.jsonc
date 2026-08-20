@@ -1,11 +1,15 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "awesome-ai-tools",
-  "main": "@astrojs/cloudflare/entrypoints/server",
-  "compatibility_date": "2026-08-20",
+  "compatibility_date": "2026-03-05",
   "compatibility_flags": ["nodejs_compat", "nodejs_compat_populate_process_env"],
+  "kv_namespaces": [
+    {
+      "binding": "SESSION",
+      "id": "REPLACE_WITH_SESSION_KV_NAMESPACE_ID"
+    }
+  ],
   "assets": {
-    "directory": "./dist",
     "binding": "ASSETS",
     "html_handling": "drop-trailing-slash"
   },

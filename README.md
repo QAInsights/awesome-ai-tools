@@ -20,14 +20,19 @@ The site is deployed as a Cloudflare Worker with static assets. Merges to `main`
 One-time migration steps:
 
 1. Create the `awesome-ai-tools` Worker in the Cloudflare account and configure the repository secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` for GitHub Actions.
-2. Set the OAuth Worker secrets from the repository root:
+2. Create the Astro session KV namespace and put its ID in `wrangler.jsonc`:
+   ```bash
+   bunx wrangler kv namespace create SESSION
+   ```
+   Replace `REPLACE_WITH_SESSION_KV_NAMESPACE_ID` with the returned namespace ID before the first deployment. Astro's Cloudflare adapter uses this binding for session storage.
+3. Set the OAuth Worker secrets from the repository root:
    ```bash
    bunx wrangler secret put GITHUB_CLIENT_ID
    bunx wrangler secret put GITHUB_CLIENT_SECRET
    ```
-3. Bind the `ai.dosa.dev` custom domain to the Worker.
-4. Add Cloudflare Redirect Rules for `dosa.dev/*` and `www.dosa.dev/*` to permanently redirect to `https://ai.dosa.dev/<path>`. These host-based redirects are not represented in `public/_redirects`.
-5. Remove or disable the Vercel project and its cron job after verifying the Worker deployment.
+4. Bind the `ai.dosa.dev` custom domain to the Worker.
+5. Add Cloudflare Redirect Rules for `dosa.dev/*` and `www.dosa.dev/*` to permanently redirect to `https://ai.dosa.dev/<path>`. These host-based redirects are not represented in `public/_redirects`.
+6. Remove or disable the Vercel project and its cron job after verifying the Worker deployment.
 
 The GitHub OAuth callback URL remains `https://ai.dosa.dev/api/auth/github`.
 
