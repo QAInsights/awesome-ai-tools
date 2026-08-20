@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, sessionDrivers } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
@@ -11,6 +11,9 @@ export default defineConfig({
     // Pages are statically pre-rendered by default.
     // Server API routes opt into SSR with `export const prerender = false`.
     output: 'static',
+    session: {
+        driver: sessionDrivers.null(),
+    },
     adapter: cloudflare({
         platformProxy: { enabled: true },
         imageService: 'compile',
