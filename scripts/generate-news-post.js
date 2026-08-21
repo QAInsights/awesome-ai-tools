@@ -239,7 +239,12 @@ export function inspectNewsOutput(output, exaResults) {
     if (typeof output.description === 'string' && output.description.length > 320) {
         hardErrors.push('description exceeds hard ceiling of 320 characters');
     }
-    if (typeof output.leadIn === 'string' && output.leadIn.length > 200) hardErrors.push('leadIn exceeds 200 characters');
+    if (typeof output.leadIn === 'string' && output.leadIn.length > 200) {
+        softWarnings.push('leadIn exceeds soft target of 200 characters');
+    }
+    if (typeof output.leadIn === 'string' && output.leadIn.length > 400) {
+        hardErrors.push('leadIn exceeds hard ceiling of 400 characters');
+    }
     if (!Array.isArray(output.items) || output.items.length < 3 || output.items.length > 7) {
         hardErrors.push('items must contain between 3 and 7 stories');
     }
@@ -248,10 +253,30 @@ export function inspectNewsOutput(output, exaResults) {
         for (const field of ['headline', 'whatHappened', 'whyItMatters', 'sourceUrl', 'sourceName']) {
             requiredString(item?.[field], `items[${index}].${field}`, hardErrors);
         }
-        if (item?.headline?.length > 70) hardErrors.push(`items[${index}].headline exceeds 70 characters`);
-        if (item?.whatHappened?.length > 320) hardErrors.push(`items[${index}].whatHappened exceeds 320 characters`);
-        if (item?.whyItMatters?.length > 220) hardErrors.push(`items[${index}].whyItMatters exceeds 220 characters`);
-        if (item?.sourceName?.length > 40) hardErrors.push(`items[${index}].sourceName exceeds 40 characters`);
+        if (item?.headline?.length > 70) {
+            softWarnings.push(`items[${index}].headline exceeds soft target of 70 characters`);
+        }
+        if (item?.headline?.length > 200) {
+            hardErrors.push(`items[${index}].headline exceeds hard ceiling of 200 characters`);
+        }
+        if (item?.whatHappened?.length > 320) {
+            softWarnings.push(`items[${index}].whatHappened exceeds soft target of 320 characters`);
+        }
+        if (item?.whatHappened?.length > 640) {
+            hardErrors.push(`items[${index}].whatHappened exceeds hard ceiling of 640 characters`);
+        }
+        if (item?.whyItMatters?.length > 220) {
+            softWarnings.push(`items[${index}].whyItMatters exceeds soft target of 220 characters`);
+        }
+        if (item?.whyItMatters?.length > 440) {
+            hardErrors.push(`items[${index}].whyItMatters exceeds hard ceiling of 440 characters`);
+        }
+        if (item?.sourceName?.length > 40) {
+            softWarnings.push(`items[${index}].sourceName exceeds soft target of 40 characters`);
+        }
+        if (item?.sourceName?.length > 120) {
+            hardErrors.push(`items[${index}].sourceName exceeds hard ceiling of 120 characters`);
+        }
         if (item?.sourceUrl && !sourceUrls.has(item.sourceUrl)) {
             hardErrors.push(`items[${index}].sourceUrl is not present in Exa results: ${item.sourceUrl}`);
         }

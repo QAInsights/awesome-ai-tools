@@ -149,6 +149,40 @@ test('retries an over-target description and publishes after a soft-only retry f
     }
 });
 
+test('publishes an over-target headline after the single retry with a soft warning', async () => {
+    const outputDir = mkdtempSync(`${tmpdir()}/today-in-ai-headline-`);
+    const longHeadlineOutput = {
+        ...validOutput,
+        items: validOutput.items.map((item, index) =>
+            index === 0 ? { ...item, headline: item.headline.padEnd(72, '!') } : item
+        ),
+    };
+    const responses = [longHeadlineOutput, longHeadlineOutput];
+    const warnings = [];
+    let calls = 0;
+    const originalWarn = console.warn;
+    console.warn = (message) => warnings.push(message);
+    try {
+        const generated = await generateNewsPost({
+            now: new Date('2026-08-21T12:00:00Z'),
+            outputDir,
+            searchImpl: async () => validOutput.items.map((item) => result(item.sourceUrl, item.headline)),
+            llmImpl: async () => {
+                calls++;
+                return responses.shift();
+            },
+        });
+        expect(generated.created).toBe(true);
+        expect(calls).toBe(2);
+        expect(warnings).toHaveLength(1);
+        expect(warnings[0]).toContain('SOFT validation warnings');
+        expect(warnings[0]).toContain('items[0].headline exceeds soft target of 70 characters');
+    } finally {
+        console.warn = originalWarn;
+        rmSync(outputDir, { recursive: true, force: true });
+    }
+});
+
 test('publishes a short description without enforcing the removed lower bound', async () => {
     const outputDir = mkdtempSync(`${tmpdir()}/today-in-ai-short-description-`);
     const shortDescriptionOutput = { ...validOutput, description: 'x'.repeat(100) };
