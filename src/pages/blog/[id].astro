@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
 import BlogCardGradient from '../../components/BlogCardGradient.astro';
 import { safeJsonForScript } from '../../lib/serialize';
+import { extractNewsCitations } from '../../lib/news-citations.js';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog', ({ data }) => data.draft !== true);
@@ -38,8 +39,7 @@ const jsonLdData = {
 };
 if (isNewsPost) {
   jsonLdData.dateModified = entry.data.pubDate.toISOString();
-  jsonLdData.citation = [...(entry.body ?? '').matchAll(/\[Source:[^\]]+\]\(<([^>]+)>\)/g)]
-    .map((match) => match[1]);
+  jsonLdData.citation = extractNewsCitations(entry.body);
 }
 const jsonLd = JSON.stringify(jsonLdData);
 

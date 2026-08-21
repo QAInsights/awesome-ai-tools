@@ -313,6 +313,13 @@ export function parseFrontmatter(post) {
 
 export function renderNewsPost(output, date) {
     const frontmatter = createFrontmatter(output, date);
+    const sources = [];
+    const seenSourceUrls = new Set();
+    for (const item of output.items) {
+        if (seenSourceUrls.has(item.sourceUrl)) continue;
+        seenSourceUrls.add(item.sourceUrl);
+        sources.push(`- [${escapeMdxText(item.sourceName)}](<${escapeMdxUrl(item.sourceUrl)}>)`);
+    }
     const body = [
         `This brief covers AI news from ${date} UTC.`,
         '',
@@ -328,6 +335,9 @@ export function renderNewsPost(output, date) {
             `[Source: ${escapeMdxText(item.sourceName)}](<${escapeMdxUrl(item.sourceUrl)}>)`,
             '',
         ]),
+        '## Sources',
+        '',
+        ...sources,
     ].join('\n').trimEnd();
     const post = `${frontmatter}\n\n${body}\n`;
     parseFrontmatter(post);

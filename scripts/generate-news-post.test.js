@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'bun:test';
 import { mkdtempSync, rmSync } from 'fs';
 import { tmpdir } from 'os';
+import { extractNewsCitations } from '../src/lib/news-citations.js';
 import {
     createFrontmatter,
     dedupeResults,
@@ -119,6 +120,42 @@ test('escapes MDX expression and HTML delimiters', () => {
     expect(post).toContain('This brief covers AI news from 2026-08-21 UTC.');
     expect(post).toContain('## Safe &#123;headline&#125; &lt;tag&gt;');
     expect(post).not.toContain('## Safe {headline}');
+});
+
+test('renders one ordered Sources entry per unique URL', () => {
+    const output = {
+        ...validOutput,
+        items: [
+            { ...validOutput.items[0], sourceName: 'First Publication' },
+            { ...validOutput.items[1], sourceUrl: validOutput.items[0].sourceUrl, sourceName: 'Second Publication' },
+            { ...validOutput.items[2], sourceName: 'Third Publication' },
+        ],
+    };
+    const post = renderNewsPost(output, '2026-08-21');
+    const sourcesSection = post.split('\n## Sources\n')[1];
+    expect(sourcesSection).toContain('- [First Publication](<https://example.com/a>)');
+    expect(sourcesSection).not.toContain('Second Publication');
+    expect(sourcesSection).toContain('- [Third Publication](<https://example.com/c>)');
+    expect(sourcesSection.match(/https:\/\/example\.com\/[abc]/g)).toEqual([
+        'https://example.com/a',
+        'https://example.com/c',
+    ]);
+});
+
+test('dedupes NewsArticle citations from repeated per-item source links', () => {
+    const output = {
+        ...validOutput,
+        items: [
+            validOutput.items[0],
+            { ...validOutput.items[1], sourceUrl: validOutput.items[0].sourceUrl },
+            validOutput.items[2],
+        ],
+    };
+    const post = renderNewsPost(output, '2026-08-21');
+    expect(extractNewsCitations(post)).toEqual([
+        'https://example.com/a',
+        'https://example.com/c',
+    ]);
 });
 
 test('generates and parses the dated slug/frontmatter', () => {
