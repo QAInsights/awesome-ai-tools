@@ -16,6 +16,7 @@ import {
     type ResolvedComparison,
 } from '../../lib/compare';
 import { formatDate, getCategorySlug } from '../../lib/tools';
+import { addOutboundUtmParams } from '../../lib/outbound-utm.js';
 
 export async function getStaticPaths() {
     return getResolvedComparisons().map(comparison => ({
@@ -160,7 +161,7 @@ const jsonLd = JSON.stringify({
                                 <p class="text-[14px] leading-relaxed text-[#a3a3a3] m-0">{t.enriched?.description ?? t.notes}</p>
                                 <div class="flex items-center gap-2.5 mt-auto pt-1">
                                     <a href={`/tools/${t.slug}`} class="inline-flex items-center py-2 px-4 bg-white text-black text-sm font-semibold rounded-md transition-all hover:bg-gray-200">Full review</a>
-                                    <a href={t.url} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 py-2 px-4 bg-white/5 text-white text-sm font-medium border border-[#333] rounded-md transition-all hover:bg-white/10">
+                                    <a href={addOutboundUtmParams(t.url)} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 py-2 px-4 bg-white/5 text-white text-sm font-medium border border-[#333] rounded-md transition-all hover:bg-white/10">
                                         Visit site
                                         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                                     </a>

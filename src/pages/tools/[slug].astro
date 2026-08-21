@@ -16,6 +16,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import { formatDate, getAlternativesFor, getAllTools, getCategorySlug, getToolBySlug, type Tool } from '../../lib/tools';
 import { getComparisonsForTool, hasAlternativesPage, humanizePricing, truncate } from '../../lib/compare';
+import { addOutboundUtmParams } from '../../lib/outbound-utm.js';
 
 export async function getStaticPaths() {
     const tools = getAllTools();
@@ -220,7 +221,7 @@ const jsonLd = JSON.stringify(jsonLdObj);
                                 )}
                             </div>
                         </div>
-                        <a href={tool.url} target="_blank" rel="noopener noreferrer"
+                        <a href={addOutboundUtmParams(tool.url)} target="_blank" rel="noopener noreferrer"
                             class="inline-flex items-center gap-2 py-2.5 px-5 bg-white text-black text-sm font-semibold rounded-md transition-all duration-200 hover:bg-gray-200 hover:-translate-y-px shrink-0"
                             aria-label={`Visit ${displayName} website`}>
                             Visit site

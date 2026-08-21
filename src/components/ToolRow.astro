@@ -10,6 +10,7 @@
  *   - same classes, order, and animation delay formula
  */
 import { getCategorySlug, type Tool } from '../lib/tools';
+import { addOutboundUtmParams } from '../lib/outbound-utm.js';
 
 interface Props {
     tool: Tool;
@@ -53,7 +54,7 @@ const displayNotes = isLong ? fullNotes.substring(0, 100) + '...' : fullNotes;
                 <a href={detailHref} class="flex-1 min-w-0 text-white no-underline transition-all duration-200 hover:bg-gradient-to-r hover:from-[#a78bfa] hover:via-[#22d3ee] hover:to-[#a78bfa] hover:bg-[length:200%_auto] hover:bg-clip-text hover:text-transparent hover:animate-[shift_3s_linear_infinite]" aria-label={`View details for ${tool.name}`}>
                     {tool.name}
                 </a>
-                <a href={tool.url} target="_blank" rel="noopener noreferrer" class="shrink-0 text-[#737373] hover:text-white p-1 -m-1 rounded transition-colors duration-200" aria-label={`Open ${tool.name} site in a new tab`} title="Open site in new tab" onclick="event.stopPropagation()">
+                <a href={addOutboundUtmParams(tool.url)} target="_blank" rel="noopener noreferrer" class="shrink-0 text-[#737373] hover:text-white p-1 -m-1 rounded transition-colors duration-200" aria-label={`Open ${tool.name} site in a new tab`} title="Open site in new tab" onclick="event.stopPropagation()">
                     <svg class="w-3.5 h-3.5 opacity-60 hover:opacity-100 transition-all duration-200 stroke-current" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                         <polyline points="15 3 21 3 21 9"></polyline>

@@ -6,6 +6,7 @@ import { toggleTool, isSelected, getSelected, clearSelection } from "./compare-s
 
 import { getShortCategory } from './category.js';
 import { sortTools } from './sorting.js';
+import { addOutboundUtmParams } from '../src/lib/outbound-utm.js';
 
 const ENABLE_VOTING = process.env.ENABLE_VOTING === 'true';
 let getVoteCountFn = () => 0;
@@ -353,7 +354,9 @@ function createToolRow(tool, index) {
     const initialVoteCount = getVoteCountFn(toolId);
 
     const safeName = escapeHtml(tool.name);
-    const detailHref = tool.slug ? `/tools/${encodeURIComponent(tool.slug)}` : escapeHtml(tool.url);
+    const detailHref = tool.slug
+        ? `/tools/${encodeURIComponent(tool.slug)}`
+        : escapeHtml(addOutboundUtmParams(tool.url));
 
     // Truncate notes
     const fullNotes = tool.notes || '';
@@ -377,7 +380,7 @@ function createToolRow(tool, index) {
                     <a href="${detailHref}" class="flex-1 min-w-0 text-white no-underline transition-all duration-200 hover:bg-gradient-to-r hover:from-[#a78bfa] hover:via-[#22d3ee] hover:to-[#a78bfa] hover:bg-[length:200%_auto] hover:bg-clip-text hover:text-transparent hover:animate-[shift_3s_linear_infinite]" aria-label="View details for ${safeName}">
                         ${safeName}
                     </a>
-                    <a href="${escapeHtml(tool.url)}" target="_blank" rel="noopener noreferrer" class="shrink-0 text-[#737373] hover:text-white p-1 -m-1 rounded transition-colors duration-200" aria-label="Open ${safeName} site in a new tab" title="Open site in new tab" onclick="event.stopPropagation()">
+                    <a href="${escapeHtml(addOutboundUtmParams(tool.url))}" target="_blank" rel="noopener noreferrer" class="shrink-0 text-[#737373] hover:text-white p-1 -m-1 rounded transition-colors duration-200" aria-label="Open ${safeName} site in a new tab" title="Open site in new tab" onclick="event.stopPropagation()">
                         <svg class="w-3.5 h-3.5 opacity-60 hover:opacity-100 transition-all duration-200 stroke-current" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                             <polyline points="15 3 21 3 21 9"></polyline>

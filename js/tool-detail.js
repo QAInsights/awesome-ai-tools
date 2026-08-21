@@ -12,6 +12,8 @@
  * Memory-efficient: No fetch of large JSON, no localStorage cache bloat.
  */
 
+import { addOutboundUtmParams } from '../src/lib/outbound-utm.js';
+
 const ENRICHED_URL = '/data/enriched-tools.json';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -92,7 +94,7 @@ function paintSeed(seed) {
     setText('toolCompany', seed.company);
     setText('toolCategory', stripEmoji(seed.category));
     setText('toolDescription', seed.notes || '');
-    setAttr('externalLink', 'href', seed.url || '#');
+    setAttr('externalLink', 'href', addOutboundUtmParams(seed.url) || '#');
 
     // Update breadcrumb
     setText('breadcrumbCategory', stripEmoji(seed.category));
