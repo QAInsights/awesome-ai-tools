@@ -44,6 +44,12 @@ const popularTags = [...tagCounts.entries()]
           ))}
         </div>
       )}
+      {page.data.length === 0 && (
+        <div class="border border-dashed border-[#222] rounded-lg bg-white/[0.01] p-8 text-center">
+          <p class="text-[#a3a3a3] text-[15px] leading-relaxed mb-1">No brief published yet.</p>
+          <p class="text-[#737373] text-sm">A new edition lands every day at 00:30 UTC.</p>
+        </div>
+      )}
       <div class="space-y-6">
         {page.data.map((post) => (
           <article class="bg-white/[0.02] border border-[#222] rounded-lg overflow-hidden hover:border-[#444] transition-all group">

@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content';
 import PrompticonFeature from './PrompticonFeature.astro';
 
 /**
@@ -19,6 +20,18 @@ interface Props {
 const { variant = 'index', assetPrefix = '/' } = Astro.props;
 const isIndex = variant === 'index';
 const isTool = variant === 'tool';
+
+const newsPosts = await getCollection('blog', ({ data }) =>
+    data.draft !== true && data.tags?.includes('news')
+);
+const latestNews = newsPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())[0];
+const latestNewsDate = latestNews
+    ? latestNews.data.pubDate.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          timeZone: 'UTC',
+      })
+    : null;
 ---
 
 <!-- Mobile Overlay -->
@@ -78,6 +91,9 @@ const isTool = variant === 'tool';
                 <button class="filter-btn text-left badge-trigger flex items-center">Get Badge</button>
 
                 <div class="font-mono text-[12px] uppercase text-[#737373] mb-1 pl-2 tracking-widest mt-4 hidden md:block">Resources</div>
+                <a href="/news" class="filter-btn flex items-center gap-2">
+                    Today in AI
+                </a>
                 <a href="/blog" class="filter-btn flex items-center gap-2">
                     Blog
                 </a>
@@ -104,6 +120,9 @@ const isTool = variant === 'tool';
             <div class="px-4 py-4 shrink-0 border-b border-[#222]">
                 <div class="font-mono text-[11px] uppercase text-[#737373] mb-3 pl-2 tracking-widest">Resources</div>
                 <div class="flex flex-col gap-1.5">
+                    <a href="/news" class="filter-btn flex items-center gap-2 w-full text-left">
+                        Today in AI
+                    </a>
                     <a href="/blog" class="filter-btn flex items-center gap-2 w-full text-left">
                         Blog
                     </a>
@@ -119,6 +138,19 @@ const isTool = variant === 'tool';
                         Hallucination Scorer
                     </a>
                 </div>
+            </div>
+        )}
+
+        {isIndex && latestNews && (
+            <div class="mx-4 mt-3 p-3 border border-[#222] rounded-md bg-white/[0.01] shrink-0">
+                <div class="flex items-center justify-between mb-1.5">
+                    <div class="font-mono text-[11px] uppercase text-[#737373] tracking-widest">Today in AI</div>
+                    <span class="font-mono text-[11px] text-[#525252]">{latestNewsDate}</span>
+                </div>
+                <a href={`/blog/${latestNews.id}`} class="text-[13px] text-[#e5e5e5] leading-snug no-underline hover:text-white transition-colors block">
+                    {latestNews.data.title}
+                </a>
+                <a href="/news" class="gradient-link inline-block mt-2 font-mono text-[12px] hover:underline">All briefs &rarr;</a>
             </div>
         )}
 
