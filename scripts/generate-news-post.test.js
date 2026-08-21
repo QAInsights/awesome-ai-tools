@@ -7,6 +7,7 @@ import {
     dedupeResults,
     escapeMdxText,
     generateNewsPost,
+    inspectNewsOutput,
     isQuietDayOutput,
     parseFrontmatter,
     renderNewsPost,
@@ -66,7 +67,7 @@ test('retries one live LLM response when validation fails, then recovers', async
     const outputDir = mkdtempSync(`${tmpdir()}/today-in-ai-retry-`);
     const firstOutput = {
         ...validOutput,
-        title: validOutput.title.padEnd(66, '!'),
+        title: validOutput.title.padEnd(71, '!'),
     };
     const responses = [firstOutput, validOutput];
     const messages = [];
@@ -82,17 +83,101 @@ test('retries one live LLM response when validation fails, then recovers', async
         });
         expect(generated.created).toBe(true);
         expect(messages).toHaveLength(2);
-        expect(messages[1].at(-1).content).toContain('title must be 50-65 characters');
+        expect(messages[1].at(-1).content).toContain('SOFT: title exceeds soft target of 70 characters');
     } finally {
         rmSync(outputDir, { recursive: true, force: true });
     }
 });
 
-test('fails after the single retry still violates validation', async () => {
+test('publishes with a warning after the single retry still has a soft violation', async () => {
     const outputDir = mkdtempSync(`${tmpdir()}/today-in-ai-retry-`);
     const invalidOutput = {
         ...validOutput,
-        title: validOutput.title.padEnd(66, '!'),
+        title: validOutput.title.padEnd(71, '!'),
+    };
+    let calls = 0;
+    const warnings = [];
+    const originalWarn = console.warn;
+    console.warn = (message) => warnings.push(message);
+    try {
+        const generated = await generateNewsPost({
+            now: new Date('2026-08-21T12:00:00Z'),
+            outputDir,
+            searchImpl: async () => validOutput.items.map((item) => result(item.sourceUrl, item.headline)),
+            llmImpl: async () => {
+                calls++;
+                return invalidOutput;
+            },
+        });
+        expect(generated.created).toBe(true);
+        expect(calls).toBe(2);
+        expect(warnings).toHaveLength(1);
+        expect(warnings[0]).toContain('SOFT validation warnings');
+        expect(warnings[0]).toContain('title exceeds soft target of 70 characters');
+    } finally {
+        console.warn = originalWarn;
+        rmSync(outputDir, { recursive: true, force: true });
+    }
+});
+
+test('retries an over-target description and publishes after a soft-only retry failure', async () => {
+    const outputDir = mkdtempSync(`${tmpdir()}/today-in-ai-description-`);
+    const longDescriptionOutput = { ...validOutput, description: 'x'.repeat(161) };
+    const responses = [longDescriptionOutput, longDescriptionOutput];
+    const messages = [];
+    const warnings = [];
+    const originalWarn = console.warn;
+    console.warn = (message) => warnings.push(message);
+    try {
+        const generated = await generateNewsPost({
+            now: new Date('2026-08-21T12:00:00Z'),
+            outputDir,
+            searchImpl: async () => validOutput.items.map((item) => result(item.sourceUrl, item.headline)),
+            llmImpl: async (request) => {
+                messages.push(request);
+                return responses.shift();
+            },
+        });
+        expect(generated.created).toBe(true);
+        expect(messages).toHaveLength(2);
+        expect(messages[1].at(-1).content).toContain('SOFT: description exceeds soft target of 160 characters');
+        expect(warnings).toHaveLength(1);
+        expect(warnings[0]).toContain('description exceeds soft target of 160 characters');
+    } finally {
+        console.warn = originalWarn;
+        rmSync(outputDir, { recursive: true, force: true });
+    }
+});
+
+test('publishes a short description without enforcing the removed lower bound', async () => {
+    const outputDir = mkdtempSync(`${tmpdir()}/today-in-ai-short-description-`);
+    const shortDescriptionOutput = { ...validOutput, description: 'x'.repeat(100) };
+    let calls = 0;
+    try {
+        const generated = await generateNewsPost({
+            now: new Date('2026-08-21T12:00:00Z'),
+            outputDir,
+            searchImpl: async () => validOutput.items.map((item) => result(item.sourceUrl, item.headline)),
+            llmImpl: async () => {
+                calls++;
+                return shortDescriptionOutput;
+            },
+        });
+        expect(generated.created).toBe(true);
+        expect(calls).toBe(1);
+        expect(inspectNewsOutput(shortDescriptionOutput, validOutput.items).softWarnings).toEqual([]);
+    } finally {
+        rmSync(outputDir, { recursive: true, force: true });
+    }
+});
+
+test('aborts hard source URL failures after one retry', async () => {
+    const outputDir = mkdtempSync(`${tmpdir()}/today-in-ai-hard-source-`);
+    const invalidOutput = {
+        ...validOutput,
+        items: validOutput.items.map((item, index) =>
+            index === 0 ? { ...item, sourceUrl: 'https://hallucinated.example/story' } : item
+        ),
     };
     let calls = 0;
     try {
@@ -104,7 +189,7 @@ test('fails after the single retry still violates validation', async () => {
                 calls++;
                 return invalidOutput;
             },
-        })).rejects.toThrow(/title must be 50-65 characters/);
+        })).rejects.toThrow(/HARD validation failed.*not present in Exa results/s);
         expect(calls).toBe(2);
     } finally {
         rmSync(outputDir, { recursive: true, force: true });

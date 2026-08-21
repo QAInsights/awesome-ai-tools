@@ -215,51 +215,97 @@ function requiredString(value, field, errors) {
     if (typeof value !== 'string' || !value.trim()) errors.push(`${field} must be non-empty`);
 }
 
-export function validateNewsOutput(output, exaResults) {
-    const errors = [];
+export function inspectNewsOutput(output, exaResults) {
+    const hardErrors = [];
+    const softWarnings = [];
     if (!output || typeof output !== 'object') {
-        throw new Error('News output must be an object');
+        return { hardErrors: ['output must be an object'], softWarnings };
     }
-    requiredString(output.title, 'title', errors);
-    requiredString(output.description, 'description', errors);
-    requiredString(output.leadIn, 'leadIn', errors);
-    if (typeof output.title === 'string' && (output.title.length < 50 || output.title.length > 65)) {
-        errors.push('title must be 50-65 characters');
+    requiredString(output.title, 'title', hardErrors);
+    requiredString(output.description, 'description', hardErrors);
+    requiredString(output.leadIn, 'leadIn', hardErrors);
+    if (typeof output.title === 'string' && output.title.length > 70) {
+        softWarnings.push('title exceeds soft target of 70 characters');
+    }
+    if (typeof output.title === 'string' && output.title.length > 200) {
+        hardErrors.push('title exceeds hard ceiling of 200 characters');
     }
     if (typeof output.title === 'string' && /^today in ai\b/i.test(output.title)) {
-        errors.push("title must not start with 'Today in AI'");
+        hardErrors.push("title must not start with 'Today in AI'");
     }
-    if (typeof output.description === 'string' && (output.description.length < 120 || output.description.length > 155)) {
-        errors.push('description must be 120-155 characters');
+    if (typeof output.description === 'string' && output.description.length > 160) {
+        softWarnings.push('description exceeds soft target of 160 characters');
     }
-    if (typeof output.leadIn === 'string' && output.leadIn.length > 200) errors.push('leadIn exceeds 200 characters');
+    if (typeof output.description === 'string' && output.description.length > 320) {
+        hardErrors.push('description exceeds hard ceiling of 320 characters');
+    }
+    if (typeof output.leadIn === 'string' && output.leadIn.length > 200) hardErrors.push('leadIn exceeds 200 characters');
     if (!Array.isArray(output.items) || output.items.length < 3 || output.items.length > 7) {
-        errors.push('items must contain between 3 and 7 stories');
+        hardErrors.push('items must contain between 3 and 7 stories');
     }
     const sourceUrls = new Set((exaResults || []).map((result) => result.url));
     for (const [index, item] of (output.items || []).entries()) {
         for (const field of ['headline', 'whatHappened', 'whyItMatters', 'sourceUrl', 'sourceName']) {
-            requiredString(item?.[field], `items[${index}].${field}`, errors);
+            requiredString(item?.[field], `items[${index}].${field}`, hardErrors);
         }
-        if (item?.headline?.length > 70) errors.push(`items[${index}].headline exceeds 70 characters`);
-        if (item?.whatHappened?.length > 320) errors.push(`items[${index}].whatHappened exceeds 320 characters`);
-        if (item?.whyItMatters?.length > 220) errors.push(`items[${index}].whyItMatters exceeds 220 characters`);
-        if (item?.sourceName?.length > 40) errors.push(`items[${index}].sourceName exceeds 40 characters`);
+        if (item?.headline?.length > 70) hardErrors.push(`items[${index}].headline exceeds 70 characters`);
+        if (item?.whatHappened?.length > 320) hardErrors.push(`items[${index}].whatHappened exceeds 320 characters`);
+        if (item?.whyItMatters?.length > 220) hardErrors.push(`items[${index}].whyItMatters exceeds 220 characters`);
+        if (item?.sourceName?.length > 40) hardErrors.push(`items[${index}].sourceName exceeds 40 characters`);
         if (item?.sourceUrl && !sourceUrls.has(item.sourceUrl)) {
-            errors.push(`items[${index}].sourceUrl is not present in Exa results: ${item.sourceUrl}`);
+            hardErrors.push(`items[${index}].sourceUrl is not present in Exa results: ${item.sourceUrl}`);
         }
     }
     if (!Array.isArray(output.tags) || output.tags.length < 3 || output.tags.length > 6) {
-        errors.push('tags must contain between 3 and 6 slugs');
+        hardErrors.push('tags must contain between 3 and 6 slugs');
     } else if (output.tags.some((tag) => typeof tag !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(tag))) {
-        errors.push('tags must be lowercase topical slugs');
+        hardErrors.push('tags must be lowercase topical slugs');
     }
-    if (errors.length) {
-        const error = new Error(`News output validation failed:\n- ${errors.join('\n- ')}`);
-        error.validationErrors = errors;
-        throw error;
+    return { hardErrors, softWarnings };
+}
+
+function createHardValidationError(hardErrors) {
+    const error = new Error(`News output HARD validation failed:\n- ${hardErrors.join('\n- ')}`);
+    error.tier = 'hard';
+    error.validationErrors = hardErrors;
+    return error;
+}
+
+export function validateNewsOutput(output, exaResults) {
+    const { hardErrors } = inspectNewsOutput(output, exaResults);
+    if (hardErrors.length) {
+        throw createHardValidationError(hardErrors);
     }
     return output;
+}
+
+function logSoftWarnings(softWarnings) {
+    if (softWarnings.length) {
+        console.warn(`[news] SOFT validation warnings; publishing anyway:\n- ${softWarnings.join('\n- ')}`);
+    }
+}
+
+function validationFeedback({ hardErrors, softWarnings }) {
+    return [
+        ...hardErrors.map((message) => `HARD: ${message}`),
+        ...softWarnings.map((message) => `SOFT: ${message}`),
+    ];
+}
+
+function validateForGeneration(output, exaResults) {
+    const validation = inspectNewsOutput(output, exaResults);
+    if (validation.hardErrors.length) {
+        throw createHardValidationError(validation.hardErrors);
+    }
+    return validation;
+}
+
+function parseAndValidateFrontmatter(post) {
+    try {
+        parseFrontmatter(post);
+    } catch (error) {
+        throw createHardValidationError([`frontmatter could not be parsed: ${error.message}`]);
+    }
 }
 
 export function escapeMdxText(value) {
@@ -340,7 +386,7 @@ export function renderNewsPost(output, date) {
         ...sources,
     ].join('\n').trimEnd();
     const post = `${frontmatter}\n\n${body}\n`;
-    parseFrontmatter(post);
+    parseAndValidateFrontmatter(post);
     return post;
 }
 
@@ -373,7 +419,8 @@ export async function generateNewsPost({
             console.log('[news] No post produced: fewer than three stories survived the editorial rules.');
             return { created: false, filename, post: null, quiet: true };
         }
-        validateNewsOutput(output, results);
+        const validation = validateForGeneration(output, results);
+        logSoftWarnings(validation.softWarnings);
     } else {
         if (!EXA_API_KEY && !searchImpl) throw new Error('EXA_API_KEY is required');
         if (!LLM_API_KEY && !llmImpl) throw new Error('OPENAI_API_KEY is required');
@@ -394,28 +441,31 @@ export async function generateNewsPost({
             console.log('[news] No post produced: fewer than three stories survived the editorial rules.');
             return { created: false, filename, post: null, quiet: true };
         }
-        try {
-            validateNewsOutput(output, results);
-        } catch (error) {
-            if (dryRun) throw error;
-            const validationErrors = error.validationErrors || [error.message];
-            output = await call([
-                ...messages,
-                { role: 'assistant', content: JSON.stringify(output) },
-                {
-                    role: 'user',
-                    content: [
-                        'Your first response failed validation for these specific reasons:',
-                        ...validationErrors.map((message) => `- ${message}`),
-                        'Return one corrected JSON object only. Keep all unchanged fields and sourceUrl values grounded in the supplied results.',
-                    ].join('\n'),
-                },
-            ], { fetchImpl });
-            if (isQuietDayOutput(output)) {
-                console.log('[news] No post produced: fewer than three stories survived the editorial rules.');
-                return { created: false, filename, post: null, quiet: true };
+        let validation = inspectNewsOutput(output, results);
+        if (validation.hardErrors.length || validation.softWarnings.length) {
+            if (dryRun) {
+                if (validation.hardErrors.length) throw createHardValidationError(validation.hardErrors);
+                logSoftWarnings(validation.softWarnings);
+            } else {
+                output = await call([
+                    ...messages,
+                    { role: 'assistant', content: JSON.stringify(output) },
+                    {
+                        role: 'user',
+                        content: [
+                            'Your first response failed validation for these specific reasons:',
+                            ...validationFeedback(validation).map((message) => `- ${message}`),
+                            'Return one corrected JSON object only. Keep all unchanged fields and sourceUrl values grounded in the supplied results.',
+                        ].join('\n'),
+                    },
+                ], { fetchImpl });
+                if (isQuietDayOutput(output)) {
+                    console.log('[news] No post produced: fewer than three stories survived the editorial rules.');
+                    return { created: false, filename, post: null, quiet: true };
+                }
+                validation = validateForGeneration(output, results);
+                logSoftWarnings(validation.softWarnings);
             }
-            validateNewsOutput(output, results);
         }
     }
 
