@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import PrompticonFeature from './PrompticonFeature.astro';
+import { AUTH_SESSION_KEY, AUTH_SESSION_TTL_MS } from '../lib/auth-session.js';
 
 /**
  * Sidebar component - replaces js/shell.js runtime HTML injection.
@@ -84,13 +85,15 @@ const latestNewsDate = latestNews
             </div>
 
             <nav class="flex flex-col px-4 py-2 gap-1 border-b border-[#222] md:flex-1 md:min-h-0 md:overflow-y-auto" id="dashboardNav" style="scrollbar-width: thin;">
-                <div class="font-mono text-[12px] uppercase text-[#737373] mb-2 pl-2 tracking-widest mt-2 hidden md:block">Account</div>
-                <a href="/settings" class="filter-btn flex items-center">Settings</a>
-                <a href="/zap" class="filter-btn flex items-center">Zap Dashboard</a>
-                <a href="/help" class="filter-btn flex items-center">Help &amp; Support</a>
-                <button class="filter-btn text-left badge-trigger flex items-center">Get Badge</button>
+                <div id="sidebarAccountNav" class="hidden flex-col gap-1">
+                    <div class="font-mono text-[12px] uppercase text-[#737373] mb-2 pl-2 tracking-widest mt-2 hidden md:block">Account</div>
+                    <a href="/settings" class="filter-btn flex items-center">Settings</a>
+                    <a href="/zap" class="filter-btn flex items-center">Zap Dashboard</a>
+                    <button class="filter-btn text-left badge-trigger flex items-center">Get Badge</button>
+                </div>
 
                 <div class="font-mono text-[12px] uppercase text-[#737373] mb-1 pl-2 tracking-widest mt-4 hidden md:block">Resources</div>
+                <a href="/help" class="filter-btn flex items-center">Help &amp; Support</a>
                 <a href="/news" class="filter-btn flex items-center gap-2">
                     Today in AI
                 </a>
@@ -181,3 +184,23 @@ const latestNewsDate = latestNews
     <!-- Collapsed Icon Sidebar -->
     <div id="iconSidebar"></div>
 </aside>
+
+{isTool && (
+    <script is:inline define:vars={{ authSessionKey: AUTH_SESSION_KEY, authSessionTtlMs: AUTH_SESSION_TTL_MS }}>
+        const accountNav = document.getElementById('sidebarAccountNav');
+        const sessionData = localStorage.getItem(authSessionKey);
+
+        if (accountNav && sessionData) {
+            try {
+                const session = JSON.parse(sessionData);
+                const isValid = Boolean(session?.user)
+                    && typeof session?.timestamp === 'number'
+                    && Date.now() - session.timestamp <= authSessionTtlMs;
+                if (isValid) {
+                    accountNav.classList.remove('hidden');
+                    accountNav.classList.add('flex');
+                }
+            } catch {}
+        }
+    </script>
+)}

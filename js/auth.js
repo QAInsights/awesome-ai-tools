@@ -7,6 +7,11 @@
  *   - GitHub: via OAuth Authorization Code flow w/ the Worker callback
  */
 
+import {
+    AUTH_SESSION_KEY,
+    isValidAuthSession,
+} from '../src/lib/auth-session.js';
+
 class AuthManager {
     constructor() {
         this.user = null;
@@ -298,7 +303,7 @@ class AuthManager {
             user: this.user,
             timestamp: Date.now(),
         };
-        localStorage.setItem('auth_session', JSON.stringify(sessionData));
+        localStorage.setItem(AUTH_SESSION_KEY, JSON.stringify(sessionData));
     }
 
     /**
@@ -310,9 +315,7 @@ class AuthManager {
 
         try {
             const session = JSON.parse(sessionData);
-            const isExpired = Date.now() - session.timestamp > 24 * 60 * 60 * 1000;
-
-            if (!isExpired && session.user) {
+            if (isValidAuthSession(session)) {
                 this.user = session.user;
                 // Back-fill githubUsername for sessions saved before this field existed
                 if (!('githubUsername' in this.user)) {
@@ -347,7 +350,7 @@ class AuthManager {
      * Remove the stored session from localStorage.
      */
     _clearSession() {
-        localStorage.removeItem('auth_session');
+        localStorage.removeItem(AUTH_SESSION_KEY);
     }
 
     // ─── Public API ────────────────────────────────────────────────────────────
