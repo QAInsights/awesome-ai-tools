@@ -232,6 +232,7 @@ AI tools that generate full apps or UIs from natural language, no local setup re
 | **[PlayCode](https://playcode.io)** | PlayCode | 15+ AI models in-browser; builds complete websites without coding |
 | **[Emergent.sh](https://app.emergent.sh/register?ref=catc151141)** | Emergent | Agentic vibe-coding platform for building and deploying full-stack apps from natural language |
 | **[Bitrig](https://bitrig.com/)** | Bitrig | Describe what you want to build, and Bitrig turns it into real Swift code you can ship to the App Store. |
+| **[Floot](https://floot.com/)** | Floot | Floot turns Claude or ChatGPT into a full app builder - backend, database, and hosting included. No git, no terminal, no build credits.; [GitHub](_No response_) |
 
 ---
 

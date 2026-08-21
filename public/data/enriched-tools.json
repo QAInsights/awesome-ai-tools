@@ -3628,6 +3628,34 @@
     "lastUpdated": "2026-08-15"
   },
   {
+    "slug": "floot",
+    "name": "Floot",
+    "company": "Floot",
+    "pricing": "freemium",
+    "pricingDetail": "Free plan includes 100 build actions/day, 3,000 starter credits for AI features, and $3 hosting allowance. Pro at $25/month offers 1,000 actions/day, 5,000 credits/month, and $10 hosting. Power at $100/month provides 5,000 actions/day, 15,000 credits/month, and $25 hosting, plus mobile app conversion.",
+    "description": "Floot is a platform that turns plain-language descriptions into full-stack apps (React + TypeScript frontend, serverless endpoints, Postgres database, auth, storage, email) by connecting to AI assistants like Claude or ChatGPT via MCP. It handles hosting and deployment, providing a live URL.",
+    "keyFeatures": [
+      "Build full-stack apps from AI chat (Claude, ChatGPT, Cursor) via MCP connector",
+      "Built-in services: Postgres database, authentication, AI, storage, email, realtime, scheduled jobs, push notifications, analytics",
+      "Hosting and CDN with automatic SSL and scaling",
+      "Publish to web with custom domains (Pro and above)",
+      "Convert to native iOS and Android apps (Power plan)",
+      "No git, terminal, or build credits required"
+    ],
+    "bestFor": "Developers and non-developers who want to rapidly build and deploy full-stack apps using natural language in their existing AI chat tools, without managing infrastructure.",
+    "notIdealFor": "Teams needing advanced custom backend logic (no filesystem or in-memory persistence), or those requiring extensive free-tier usage (limited to 100 actions/day and 3,000 credits).",
+    "recentUpdates": "On 2026-04-14, Floot announced new features for faster AI app building, better organization, and easier launches. On 2026-03-23, they added project references, AI images, better Q&A, and support for 7 languages.",
+    "verdict": "Floot offers a unique approach by leveraging existing AI subscriptions to build full-stack apps with minimal overhead, making it accessible and cost-effective. However, the free tier is limited, and the platform's serverless constraints may not suit complex applications.",
+    "tags": [
+      "AI app builder",
+      "MCP",
+      "full-stack",
+      "no-code",
+      "hosting"
+    ],
+    "lastUpdated": "2026-08-21"
+  },
+  {
     "slug": "coderabbit",
     "name": "CodeRabbit",
     "company": "CodeRabbit",
