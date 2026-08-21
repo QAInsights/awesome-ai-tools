@@ -1,0 +1,392 @@
+#!/usr/bin/env node
+/**
+ * Generate the daily "Today in AI" news post.
+ *
+ * Network-free fixtures can be supplied with:
+ *   node scripts/generate-news-post.js --dry-run --fixture=path/to/fixture.json
+ */
+
+import { existsSync, readFileSync, writeFileSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = join(__dirname, '..');
+const BLOG_DIR = join(ROOT, 'src', 'content', 'blog');
+
+const EXA_API_KEY = process.env.EXA_API_KEY;
+const LLM_API_KEY = process.env.OPENAI_API_KEY || process.env.DEEPSEEK_API_KEY || process.env.ANTHROPIC_API_KEY;
+const LLM_BASE_URL = (process.env.OPENAI_BASE_URL || 'https://api.deepseek.com/v1').replace(/\/+$/, '');
+const LLM_MODEL = process.env.LLM_MODEL || 'deepseek-v4-flash';
+const EXA_NUM_RESULTS = parseInt(process.env.EXA_NUM_RESULTS || '6', 10);
+const MAX_RESULT_TEXT = 2200;
+
+const SEARCH_BEATS = [
+    'AI frontier labs model releases and product launches for developers',
+    'AI funding acquisitions partnerships earnings and business moves',
+    'AI policy regulation copyright antitrust and legal decisions affecting builders',
+    'AI developer tooling coding agents infrastructure chips and research milestones',
+];
+
+const LLM_SYSTEM_PROMPT = `You are the news editor for "Today in AI", a daily brief on the ai.dosa.dev developer-tools site. You write short, punchy, tabloid-energy copy that is still factually strict.
+
+You will be given a list of search results (title, URL, published date, page text) about artificial intelligence from the last 24 hours. Write a daily brief from ONLY those results.
+
+HARD RULES
+1. Every factual claim must be traceable to the supplied search results. Never add background knowledge, numbers, dates, names, or context that is not present in the supplied text. If you are unsure, leave it out.
+2. Never invent or guess a URL. Every sourceUrl you output must be copied character-for-character from a supplied result.
+3. Discard any result that is not genuinely news from the last 24 hours: marketing pages, "best tools" listicles, undated evergreen docs, pricing pages, tutorials, and pure opinion columns.
+4. Discard duplicates. If several results cover the same story, pick the single most substantive one.
+
+EDITORIAL SCOPE — include
+AI model and product launches, capability and benchmark results, developer tooling and coding agents, funding rounds, acquisitions, partnerships, earnings and business moves, infrastructure and chips, research milestones, open-weight releases, notable outages and security incidents, regulation and policy that directly affects builders, and significant hiring or org changes at AI labs.
+
+EDITORIAL SCOPE — exclude
+Skip a story entirely, rather than softening it, if covering it would require you to take a side on a contested political, electoral, religious, ethnic, or nationalist dispute; on war, armed conflict, or geopolitical hostility; on abortion, gender identity, immigration, gun policy, or similar culture-war subjects; on the guilt or innocence of a named person in an ongoing legal, criminal, or misconduct matter; or on individual health, medical, or legal advice. Skip celebrity and personal gossip, deaths and tragedies, unverified rumor and leaks, and speculation about anyone's private life. Never speculate about, mock, or pass moral judgment on any named individual or company.
+
+Where AI policy or litigation IS the story (an AI regulation passing, an AI copyright ruling, an antitrust filing against an AI company), report it, but restrict yourself to what verifiably happened: who did what, when, and what it means for people building with AI. State the procedural facts and the stated positions of the parties. Do not editorialize about whether it is good or bad, and do not predict outcomes.
+
+TONE
+Tabloid means energetic, plain-spoken, and concrete: strong verbs, short sentences, no corporate filler, no hedging mush. It does NOT mean sensational, snide, or moralizing. No clickbait that the body does not deliver. No exclamation marks. No emoji. No em dashes.
+
+OUTPUT
+Respond with a single JSON object and nothing else, matching exactly this shape:
+
+{
+  "title": "string, 50-65 chars, specific to today's biggest story, must NOT start with 'Today in AI'",
+  "description": "string, 120-155 chars, meta description summarizing the day, no clickbait",
+  "leadIn": "string, one sentence, max 200 chars, sets up the day",
+  "items": [
+    {
+      "headline": "string, max 70 chars, concrete and specific, no colon-subtitle pattern",
+      "whatHappened": "string, 1-2 sentences, max 320 chars, only facts from the source",
+      "whyItMatters": "string, 1 sentence, max 220 chars, practical consequence for developers and builders",
+      "sourceUrl": "string, copied verbatim from a supplied result",
+      "sourceName": "string, publication or company name, max 40 chars"
+    }
+  ],
+  "tags": ["array of 3-6 lowercase topical slugs, e.g. openai, funding, agents, chips"]
+}
+
+Order items by significance, biggest story first. Include between 3 and 7 items. If fewer than 3 supplied results survive the rules above, return {"items": []} and nothing else, so the pipeline can abort rather than publish a thin post.`;
+
+const LLM_USER_PROMPT_TEMPLATE = `Date (UTC): {{DATE}}
+
+Search results from the last 24 hours:
+
+{{RESULTS}}
+
+Write today's brief as a single JSON object following the schema and all rules. Use only the results above.
+`;
+
+function setOutput(name, value) {
+    if (process.env.GITHUB_OUTPUT) {
+        writeFileSync(process.env.GITHUB_OUTPUT, `${name}=${value}\n`, { flag: 'a' });
+    }
+}
+
+export function todayUTC(now = new Date()) {
+    return now.toISOString().slice(0, 10);
+}
+
+function resultText(result) {
+    return String(result.text || result.content || '').slice(0, MAX_RESULT_TEXT);
+}
+
+function normalizedTitle(title) {
+    return String(title || '')
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N}]+/gu, ' ')
+        .trim();
+}
+
+function titleSimilarity(a, b) {
+    const left = new Set(normalizedTitle(a).split(/\s+/).filter(Boolean));
+    const right = new Set(normalizedTitle(b).split(/\s+/).filter(Boolean));
+    if (!left.size || !right.size) return 0;
+    const intersection = [...left].filter((token) => right.has(token)).length;
+    return intersection / (left.size + right.size - intersection);
+}
+
+export function dedupeResults(results) {
+    const seenUrls = new Set();
+    const kept = [];
+    for (const result of results) {
+        const url = String(result.url || '').trim();
+        if (!url || seenUrls.has(url)) continue;
+        const host = (() => {
+            try {
+                return new URL(url).hostname.toLowerCase().replace(/^www\./, '');
+            } catch {
+                return '';
+            }
+        })();
+        const duplicate = kept.some((prior) => {
+            if (!host || prior.host !== host) return false;
+            const left = normalizedTitle(result.title).split(/\s+/).filter(Boolean);
+            const right = normalizedTitle(prior.title).split(/\s+/).filter(Boolean);
+            const shared = new Set(left.filter((token) => right.includes(token))).size;
+            const contained = Math.min(left.length, right.length) >= 3 &&
+                shared / Math.min(left.length, right.length) >= 0.9;
+            return titleSimilarity(result.title, prior.title) >= 0.82 || contained;
+        });
+        if (duplicate) continue;
+        seenUrls.add(url);
+        kept.push({ ...result, host });
+    }
+    return kept.map(({ host, ...result }) => result);
+}
+
+export function formatResults(results) {
+    return results.map((result, index) => {
+        const date = result.publishedDate
+            ? new Date(result.publishedDate).toISOString()
+            : 'N/A';
+        return `Result ${index + 1}:\nTitle: ${result.title || 'N/A'}\nURL: ${result.url || 'N/A'}\nDate: ${date}\nContent: ${resultText(result)}`;
+    }).join('\n\n---\n\n');
+}
+
+function parseLLMJson(content) {
+    try {
+        return JSON.parse(content);
+    } catch {
+        const match = String(content).match(/```(?:json)?\n([\s\S]*?)\n```/);
+        if (match) return JSON.parse(match[1]);
+        throw new Error('LLM output is not valid JSON');
+    }
+}
+
+async function exaSearch(query, { fetchImpl = fetch, now = new Date() } = {}) {
+    const startPublishedDate = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString();
+    const response = await fetchImpl('https://api.exa.ai/search', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${EXA_API_KEY}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            query,
+            numResults: EXA_NUM_RESULTS,
+            startPublishedDate,
+            contents: { text: true, title: true },
+        }),
+    });
+    if (!response.ok) {
+        throw new Error(`Exa API ${response.status}: ${await response.text()}`);
+    }
+    const data = await response.json();
+    return data.results || [];
+}
+
+async function callLLM(messages, { fetchImpl = fetch } = {}) {
+    const response = await fetchImpl(`${LLM_BASE_URL}/chat/completions`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${LLM_API_KEY}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            model: LLM_MODEL,
+            messages,
+            response_format: { type: 'json_object' },
+            temperature: 0.3,
+        }),
+    });
+    if (!response.ok) {
+        throw new Error(`LLM API ${response.status}: ${await response.text()}`);
+    }
+    const data = await response.json();
+    const content = data.choices?.[0]?.message?.content;
+    if (!content) throw new Error('LLM returned empty response');
+    return parseLLMJson(content);
+}
+
+function requiredString(value, field, errors) {
+    if (typeof value !== 'string' || !value.trim()) errors.push(`${field} must be non-empty`);
+}
+
+export function validateNewsOutput(output, exaResults) {
+    const errors = [];
+    if (!output || typeof output !== 'object') {
+        throw new Error('News output must be an object');
+    }
+    requiredString(output.title, 'title', errors);
+    requiredString(output.description, 'description', errors);
+    requiredString(output.leadIn, 'leadIn', errors);
+    if (typeof output.title === 'string' && (output.title.length < 50 || output.title.length > 65)) {
+        errors.push('title must be 50-65 characters');
+    }
+    if (typeof output.title === 'string' && /^today in ai\b/i.test(output.title)) {
+        errors.push("title must not start with 'Today in AI'");
+    }
+    if (typeof output.description === 'string' && (output.description.length < 120 || output.description.length > 155)) {
+        errors.push('description must be 120-155 characters');
+    }
+    if (typeof output.leadIn === 'string' && output.leadIn.length > 200) errors.push('leadIn exceeds 200 characters');
+    if (!Array.isArray(output.items) || output.items.length < 3 || output.items.length > 7) {
+        errors.push('items must contain between 3 and 7 stories');
+    }
+    const sourceUrls = new Set((exaResults || []).map((result) => result.url));
+    for (const [index, item] of (output.items || []).entries()) {
+        for (const field of ['headline', 'whatHappened', 'whyItMatters', 'sourceUrl', 'sourceName']) {
+            requiredString(item?.[field], `items[${index}].${field}`, errors);
+        }
+        if (item?.headline?.length > 70) errors.push(`items[${index}].headline exceeds 70 characters`);
+        if (item?.whatHappened?.length > 320) errors.push(`items[${index}].whatHappened exceeds 320 characters`);
+        if (item?.whyItMatters?.length > 220) errors.push(`items[${index}].whyItMatters exceeds 220 characters`);
+        if (item?.sourceName?.length > 40) errors.push(`items[${index}].sourceName exceeds 40 characters`);
+        if (item?.sourceUrl && !sourceUrls.has(item.sourceUrl)) {
+            errors.push(`items[${index}].sourceUrl is not present in Exa results: ${item.sourceUrl}`);
+        }
+    }
+    if (!Array.isArray(output.tags) || output.tags.length < 3 || output.tags.length > 6) {
+        errors.push('tags must contain between 3 and 6 slugs');
+    } else if (output.tags.some((tag) => typeof tag !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(tag))) {
+        errors.push('tags must be lowercase topical slugs');
+    }
+    if (errors.length) throw new Error(`News output validation failed:\n- ${errors.join('\n- ')}`);
+    return output;
+}
+
+export function escapeMdxText(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\{/g, '&#123;')
+        .replace(/\}/g, '&#125;');
+}
+
+function escapeMdxUrl(value) {
+    return String(value).replace(/[<>]/g, (character) => character === '<' ? '%3C' : '%3E');
+}
+
+export function createFrontmatter(output, date) {
+    const modelTags = output.tags.map((tag) => tag.toLowerCase().trim()).filter(Boolean);
+    const tags = [...new Set(['news', 'today-in-ai', ...modelTags])];
+    return [
+        '---',
+        `title: ${JSON.stringify(output.title)}`,
+        `description: ${JSON.stringify(output.description)}`,
+        `pubDate: ${date}`,
+        `tags: ${JSON.stringify(tags)}`,
+        'draft: false',
+        'featured: false',
+        '---',
+    ].join('\n');
+}
+
+export function parseFrontmatter(post) {
+    const match = String(post).match(/^---\n([\s\S]*?)\n---\n/);
+    if (!match) throw new Error('Generated post frontmatter could not be parsed');
+    const values = {};
+    for (const line of match[1].split('\n')) {
+        const separator = line.indexOf(':');
+        if (separator < 1) throw new Error(`Invalid frontmatter line: ${line}`);
+        const key = line.slice(0, separator);
+        const raw = line.slice(separator + 1).trim();
+        try {
+            values[key] = key === 'pubDate' || key === 'tags' ? (key === 'tags' ? JSON.parse(raw) : new Date(raw)) : JSON.parse(raw);
+        } catch {
+            throw new Error(`Invalid frontmatter value for ${key}`);
+        }
+    }
+    if (!values.title || !values.description || !(values.pubDate instanceof Date) || isNaN(values.pubDate.getTime())) {
+        throw new Error('Generated post frontmatter is missing required fields');
+    }
+    return values;
+}
+
+export function renderNewsPost(output, date) {
+    const frontmatter = createFrontmatter(output, date);
+    const body = [
+        escapeMdxText(output.leadIn),
+        '',
+        ...output.items.flatMap((item) => [
+            `## ${escapeMdxText(item.headline)}`,
+            '',
+            `**What happened:** ${escapeMdxText(item.whatHappened)}`,
+            '',
+            `**Why it matters:** ${escapeMdxText(item.whyItMatters)}`,
+            '',
+            `[Source: ${escapeMdxText(item.sourceName)}](<${escapeMdxUrl(item.sourceUrl)}>)`,
+            '',
+        ]),
+    ].join('\n').trimEnd();
+    const post = `${frontmatter}\n\n${body}\n`;
+    parseFrontmatter(post);
+    return post;
+}
+
+export function slugForDate(date) {
+    return `today-in-ai-${date}`;
+}
+
+export async function generateNewsPost({
+    now = new Date(),
+    dryRun = false,
+    fixture,
+    outputDir = BLOG_DIR,
+    fetchImpl = fetch,
+} = {}) {
+    const date = todayUTC(now);
+    const filename = `${slugForDate(date)}.mdx`;
+    const outputPath = join(outputDir, filename);
+    if (!dryRun && existsSync(outputPath)) {
+        return { created: false, filename, post: null };
+    }
+
+    let results;
+    let output;
+    if (fixture) {
+        results = dedupeResults(fixture.results || []);
+        output = fixture.output;
+    } else {
+        if (!EXA_API_KEY) throw new Error('EXA_API_KEY is required');
+        if (!LLM_API_KEY) throw new Error('OPENAI_API_KEY is required');
+        const searched = [];
+        for (const beat of SEARCH_BEATS) searched.push(...await exaSearch(beat, { fetchImpl, now }));
+        results = dedupeResults(searched);
+        const prompt = LLM_USER_PROMPT_TEMPLATE
+            .replace('{{DATE}}', date)
+            .replace('{{RESULTS}}', formatResults(results));
+        output = await callLLM([
+            { role: 'system', content: LLM_SYSTEM_PROMPT },
+            { role: 'user', content: prompt },
+        ], { fetchImpl });
+    }
+
+    validateNewsOutput(output, results);
+    const post = renderNewsPost(output, date);
+    if (dryRun) {
+        console.log(post);
+    } else {
+        writeFileSync(outputPath, post, 'utf-8');
+    }
+    return { created: !dryRun, filename, post, outputPath };
+}
+
+function parseArgs(args) {
+    const fixtureIndex = args.indexOf('--fixture');
+    const fixtureArg = args.find((arg) => arg.startsWith('--fixture='));
+    return {
+        dryRun: args.includes('--dry-run'),
+        fixturePath: fixtureArg?.slice('--fixture='.length) || (fixtureIndex >= 0 ? args[fixtureIndex + 1] : null),
+    };
+}
+
+async function main() {
+    const { dryRun, fixturePath } = parseArgs(process.argv.slice(2));
+    const fixture = fixturePath ? JSON.parse(readFileSync(fixturePath, 'utf-8')) : null;
+    const result = await generateNewsPost({ dryRun, fixture });
+    setOutput('file_created', result.created ? 'true' : 'false');
+    setOutput('filename', result.filename);
+    if (!result.created && !dryRun) console.log(`[news] ${result.filename} already exists; nothing to do.`);
+}
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+    main().catch((error) => {
+        console.error(`[news] ${error.message}`);
+        process.exitCode = 1;
+    });
+}

@@ -36,6 +36,12 @@ export default defineConfig({
                 } else if (url === 'https://ai.dosa.dev/') {
                     item.priority = 1.0;
                     item.changefreq = 'daily';
+                } else if (url === 'https://ai.dosa.dev/news/' || url === 'https://ai.dosa.dev/news') {
+                    item.priority = 0.8;
+                    item.changefreq = 'daily';
+                } else if (/\/blog\/today-in-ai-\d{4}-\d{2}-\d{2}\/?$/.test(url)) {
+                    item.priority = 0.7;
+                    item.changefreq = 'daily';
                 } else if (url.includes('/blog/')) {
                     item.priority = 0.6;
                     item.changefreq = 'monthly';

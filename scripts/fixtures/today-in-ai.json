@@ -1,0 +1,51 @@
+{
+  "results": [
+    {
+      "title": "Acme ships a faster coding model for repository agents",
+      "url": "https://example.com/acme-coding-model",
+      "publishedDate": "2026-08-21T08:00:00Z",
+      "text": "Acme announced a coding model that runs repository agents faster. The company says the release is available through its developer API today."
+    },
+    {
+      "title": "Northstar raises $40 million to build AI developer tools",
+      "url": "https://example.com/northstar-funding",
+      "publishedDate": "2026-08-21T09:00:00Z",
+      "text": "Northstar announced a $40 million funding round to expand its AI developer-tools team and product."
+    },
+    {
+      "title": "Forge adds test repair to its open coding agent",
+      "url": "https://example.com/forge-agent",
+      "publishedDate": "2026-08-21T10:00:00Z",
+      "text": "Forge released an update that lets its coding agent inspect failing tests and propose repairs in the same workspace."
+    }
+  ],
+  "output": {
+    "title": "Acme puts faster coding agents in developers' hands",
+    "description": "Acme ships a faster coding model, Northstar funds its developer-tools push, and Forge adds automated test repair for coding agents today.",
+    "leadIn": "Three fresh moves push AI coding agents closer to the daily developer workflow.",
+    "items": [
+      {
+        "headline": "Acme ships a faster coding model for agents",
+        "whatHappened": "Acme announced a coding model that runs repository agents faster. The release is available through its developer API today.",
+        "whyItMatters": "Developers get another model option for agent workflows where execution speed affects iteration time.",
+        "sourceUrl": "https://example.com/acme-coding-model",
+        "sourceName": "Example News"
+      },
+      {
+        "headline": "Northstar raises $40 million for AI developer tools",
+        "whatHappened": "Northstar announced a $40 million funding round to expand its AI developer-tools team and product.",
+        "whyItMatters": "More capital gives the team room to ship and support tools aimed at software builders.",
+        "sourceUrl": "https://example.com/northstar-funding",
+        "sourceName": "Example News"
+      },
+      {
+        "headline": "Forge adds test repair to its coding agent",
+        "whatHappened": "Forge released an update that lets its coding agent inspect failing tests and propose repairs in the same workspace.",
+        "whyItMatters": "Agents that can respond to failing tests may shorten the loop between a code change and a fix.",
+        "sourceUrl": "https://example.com/forge-agent",
+        "sourceName": "Example News"
+      }
+    ],
+    "tags": ["agents", "coding", "funding", "developer-tools"]
+  }
+}

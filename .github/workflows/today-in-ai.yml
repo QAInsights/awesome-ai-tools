@@ -1,0 +1,57 @@
+name: Generate Today in AI
+
+on:
+  schedule:
+    - cron: '30 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-news:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Generate daily brief
+        id: generate
+        env:
+          EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+        run: bun scripts/generate-news-post.js
+
+      - name: Commit and push generated post
+        id: commit
+        if: steps.generate.outputs.file_created == 'true'
+        env:
+          NEWS_FILENAME: ${{ steps.generate.outputs.filename }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "src/content/blog/$NEWS_FILENAME"
+          git commit -m "feat(news): publish $NEWS_FILENAME"
+          git push origin HEAD:main
+
+      - name: Trigger Cloudflare Workers Build
+        if: steps.commit.outcome == 'success'
+        env:
+          CLOUDFLARE_DEPLOY_HOOK_URL: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK_URL }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$CLOUDFLARE_DEPLOY_HOOK_URL" ]]; then
+            echo "::error::CLOUDFLARE_DEPLOY_HOOK_URL is not configured"
+            exit 1
+          fi
+          curl --fail-with-body --silent --show-error \
+            --request POST \
+            "$CLOUDFLARE_DEPLOY_HOOK_URL"

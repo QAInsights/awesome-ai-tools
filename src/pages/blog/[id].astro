@@ -15,10 +15,11 @@ const { entry } = Astro.props;
 const { Content, headings, remarkPluginFrontmatter } = await render(entry);
 
 const postUrl = `https://ai.dosa.dev/blog/${entry.id}`;
+const isNewsPost = entry.data.tags?.includes('news');
 
-const jsonLd = JSON.stringify({
+const jsonLdData = {
   "@context": "https://schema.org",
-  "@type": "Article",
+  "@type": isNewsPost ? "NewsArticle" : "Article",
   "@id": `${postUrl}#article`,
   "headline": entry.data.title,
   "description": entry.data.description,
@@ -34,7 +35,12 @@ const jsonLd = JSON.stringify({
   "mainEntityOfPage": { "@type": "WebPage", "@id": postUrl },
   "inLanguage": "en",
   ...(entry.data.tags?.length ? { "keywords": entry.data.tags.join(', ') } : {}),
-});
+};
+if (isNewsPost) {
+  jsonLdData.dateModified = entry.data.pubDate.toISOString();
+  jsonLdData.citation = entry.body?.match(/https?:\/\/[^\s)>]+/g) ?? [];
+}
+const jsonLd = JSON.stringify(jsonLdData);
 
 // Table of contents: h2/h3 only
 const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
