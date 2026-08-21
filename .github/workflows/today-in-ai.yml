@@ -45,17 +45,3 @@ jobs:
           git add "src/content/blog/$NEWS_FILENAME"
           git commit -m "feat(news): publish $NEWS_FILENAME"
           git push origin HEAD:main
-
-      - name: Trigger Cloudflare Workers Build
-        if: steps.commit.outcome == 'success'
-        env:
-          CLOUDFLARE_DEPLOY_HOOK_URL: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK_URL }}
-        run: |
-          set -euo pipefail
-          if [[ -z "$CLOUDFLARE_DEPLOY_HOOK_URL" ]]; then
-            echo "::error::CLOUDFLARE_DEPLOY_HOOK_URL is not configured"
-            exit 1
-          fi
-          curl --fail-with-body --silent --show-error \
-            --request POST \
-            "$CLOUDFLARE_DEPLOY_HOOK_URL"
