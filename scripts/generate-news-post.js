@@ -36,18 +36,30 @@ HARD RULES
 1. Every factual claim must be traceable to the supplied search results. Never add background knowledge, numbers, dates, names, or context that is not present in the supplied text. If you are unsure, leave it out.
 2. Never invent or guess a URL. Every sourceUrl you output must be copied character-for-character from a supplied result.
 3. Discard any result that is not genuinely news from the last 24 hours: marketing pages, "best tools" listicles, undated evergreen docs, pricing pages, tutorials, and pure opinion columns.
-4. Discard duplicates. If several results cover the same story, pick the single most substantive one.
+4. Discard duplicates. If several results cover the same story, pick one, following SOURCE SELECTION below.
 
-EDITORIAL SCOPE — include
+SOURCE SELECTION
+Always prefer the primary source: the company's own announcement or engineering blog, the release notes, the paper, the filing, the regulator's own statement. Cite an outlet only when it is doing the original reporting, or when no primary source is among the supplied results.
+
+When the same story appears from several sources, rank them: primary/official announcement first, then established trade press doing original reporting, then anything else. Avoid rewrite-and-repost sites, SEO content farms, and newsletter or blog roundups that merely summarize other people's coverage; if such a result is the only one for a story, prefer to drop the story unless it is significant enough that the day would be worse without it. Name the source as readers know it (for example "NVIDIA" or "Reuters"), not the blog's tagline.
+
+EDITORIAL SCOPE, INCLUDE
 AI model and product launches, capability and benchmark results, developer tooling and coding agents, funding rounds, acquisitions, partnerships, earnings and business moves, infrastructure and chips, research milestones, open-weight releases, notable outages and security incidents, regulation and policy that directly affects builders, and significant hiring or org changes at AI labs.
 
-EDITORIAL SCOPE — exclude
+EDITORIAL SCOPE, EXCLUDE
 Skip a story entirely, rather than softening it, if covering it would require you to take a side on a contested political, electoral, religious, ethnic, or nationalist dispute; on war, armed conflict, or geopolitical hostility; on abortion, gender identity, immigration, gun policy, or similar culture-war subjects; on the guilt or innocence of a named person in an ongoing legal, criminal, or misconduct matter; or on individual health, medical, or legal advice. Skip celebrity and personal gossip, deaths and tragedies, unverified rumor and leaks, and speculation about anyone's private life. Never speculate about, mock, or pass moral judgment on any named individual or company.
 
 Where AI policy or litigation IS the story (an AI regulation passing, an AI copyright ruling, an antitrust filing against an AI company), report it, but restrict yourself to what verifiably happened: who did what, when, and what it means for people building with AI. State the procedural facts and the stated positions of the parties. Do not editorialize about whether it is good or bad, and do not predict outcomes.
 
+TIME FRAME
+This is a daily brief, not a weekly roundup. Write about today only. Never frame the day as "this week", "in recent days", "lately", or "the past few weeks", and never claim a trend spanning more than the day's stories. If a supplied result is itself a weekly roundup, take the individual story from it, not the week's framing.
+
 TONE
-Tabloid means energetic, plain-spoken, and concrete: strong verbs, short sentences, no corporate filler, no hedging mush. It does NOT mean sensational, snide, or moralizing. No clickbait that the body does not deliver. No exclamation marks. No emoji. No em dashes.
+Write like a person who follows this field and is telling a colleague what happened: energetic, plain-spoken, concrete. Strong verbs, short sentences, no corporate filler, no hedging mush. It does NOT mean sensational, snide, or moralizing. No clickbait that the body does not deliver. No exclamation marks. No emoji.
+
+Never use em dashes or en dashes. Use a comma, a full stop, or a colon instead.
+
+Avoid the phrasings that make copy read as machine-written. Do not use: "in a move that", "underscores", "highlights the growing", "is poised to", "marks a significant", "the landscape", "the space", "signals a shift", "paving the way", "as the industry continues to", "double down", "game-changer", "a flood of", "heats up". Do not open consecutive items with the same construction, do not start a sentence with a company name every single time, and do not end "why it matters" with a vague gesture at the future. Say the specific consequence for someone building software, or say nothing.
 
 OUTPUT
 Respond with a single JSON object and nothing else, matching exactly this shape:
@@ -55,7 +67,7 @@ Respond with a single JSON object and nothing else, matching exactly this shape:
 {
   "title": "string, 50-65 chars, specific to today's biggest story, must NOT start with 'Today in AI'",
   "description": "string, 120-155 chars, meta description summarizing the day, no clickbait",
-  "leadIn": "string, one sentence, max 200 chars, sets up the day",
+  "leadIn": "string, one sentence, max 200 chars, sets up today's stories without claiming a weekly or longer trend",
   "items": [
     {
       "headline": "string, max 70 chars, concrete and specific, no colon-subtitle pattern",
@@ -224,6 +236,15 @@ export function inspectNewsOutput(output, exaResults) {
     requiredString(output.title, 'title', hardErrors);
     requiredString(output.description, 'description', hardErrors);
     requiredString(output.leadIn, 'leadIn', hardErrors);
+    for (const [field, value] of [
+        ['title', output.title],
+        ['description', output.description],
+        ['leadIn', output.leadIn],
+    ]) {
+        if (typeof value === 'string' && /[\u2013\u2014]/.test(value)) {
+            softWarnings.push(`${field} contains an em dash or en dash`);
+        }
+    }
     if (typeof output.title === 'string' && output.title.length > 70) {
         softWarnings.push('title exceeds soft target of 70 characters');
     }
@@ -252,6 +273,11 @@ export function inspectNewsOutput(output, exaResults) {
     for (const [index, item] of (output.items || []).entries()) {
         for (const field of ['headline', 'whatHappened', 'whyItMatters', 'sourceUrl', 'sourceName']) {
             requiredString(item?.[field], `items[${index}].${field}`, hardErrors);
+        }
+        for (const field of ['headline', 'whatHappened', 'whyItMatters', 'sourceName']) {
+            if (typeof item?.[field] === 'string' && /[\u2013\u2014]/.test(item[field])) {
+                softWarnings.push(`items[${index}].${field} contains an em dash or en dash`);
+            }
         }
         if (item?.headline?.length > 70) {
             softWarnings.push(`items[${index}].headline exceeds soft target of 70 characters`);
@@ -342,6 +368,20 @@ export function escapeMdxText(value) {
         .replace(/\}/g, '&#125;');
 }
 
+export function sanitizeNewsText(value) {
+    return String(value)
+        .replace(/(\d)\s*[\u2013\u2014]\s*(\d)/g, '$1 to $2')
+        .replace(/[\u2013\u2014]/g, ',')
+        .replace(/([.!?])\s*,/g, '$1')
+        .replace(/,\s*([.!?])/g, '$1')
+        .replace(/,{2,}/g, ',')
+        .replace(/,\s*,+/g, ',')
+        .replace(/\s*,\s*/g, ', ')
+        .replace(/[ \t]+([.!?])/g, '$1')
+        .replace(/([.!?])\s*\1+/g, '$1')
+        .replace(/[ \t]{2,}/g, ' ');
+}
+
 function escapeMdxUrl(value) {
     return String(value).replace(/[<>]/g, (character) => character === '<' ? '%3C' : '%3E');
 }
@@ -351,8 +391,8 @@ export function createFrontmatter(output, date) {
     const tags = [...new Set(['news', 'today-in-ai', ...modelTags])];
     return [
         '---',
-        `title: ${JSON.stringify(output.title)}`,
-        `description: ${JSON.stringify(output.description)}`,
+        `title: ${JSON.stringify(sanitizeNewsText(output.title))}`,
+        `description: ${JSON.stringify(sanitizeNewsText(output.description))}`,
         `pubDate: ${date}`,
         `tags: ${JSON.stringify(tags)}`,
         'draft: false',
@@ -389,21 +429,21 @@ export function renderNewsPost(output, date) {
     for (const item of output.items) {
         if (seenSourceUrls.has(item.sourceUrl)) continue;
         seenSourceUrls.add(item.sourceUrl);
-        sources.push(`- [${escapeMdxText(item.sourceName)}](<${escapeMdxUrl(item.sourceUrl)}>)`);
+        sources.push(`- [${escapeMdxText(sanitizeNewsText(item.sourceName))}](<${escapeMdxUrl(item.sourceUrl)}>)`);
     }
     const body = [
         `This brief covers AI news from ${date} UTC.`,
         '',
-        escapeMdxText(output.leadIn),
+        escapeMdxText(sanitizeNewsText(output.leadIn)),
         '',
         ...output.items.flatMap((item) => [
-            `## ${escapeMdxText(item.headline)}`,
+            `## ${escapeMdxText(sanitizeNewsText(item.headline))}`,
             '',
-            `**What happened:** ${escapeMdxText(item.whatHappened)}`,
+            `**What happened:** ${escapeMdxText(sanitizeNewsText(item.whatHappened))}`,
             '',
-            `**Why it matters:** ${escapeMdxText(item.whyItMatters)}`,
+            `**Why it matters:** ${escapeMdxText(sanitizeNewsText(item.whyItMatters))}`,
             '',
-            `[Source: ${escapeMdxText(item.sourceName)}](<${escapeMdxUrl(item.sourceUrl)}>)`,
+            `[Source: ${escapeMdxText(sanitizeNewsText(item.sourceName))}](<${escapeMdxUrl(item.sourceUrl)}>)`,
             '',
         ]),
         '## Sources',

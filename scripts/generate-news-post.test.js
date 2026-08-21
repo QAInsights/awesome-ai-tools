@@ -11,6 +11,7 @@ import {
     isQuietDayOutput,
     parseFrontmatter,
     renderNewsPost,
+    sanitizeNewsText,
     slugForDate,
     validateNewsOutput,
 } from './generate-news-post.js';
@@ -239,6 +240,61 @@ test('escapes MDX expression and HTML delimiters', () => {
     expect(post).toContain('This brief covers AI news from 2026-08-21 UTC.');
     expect(post).toContain('## Safe &#123;headline&#125; &lt;tag&gt;');
     expect(post).not.toContain('## Safe {headline}');
+});
+
+test('sanitizes dash punctuation without changing hyphens, URLs, or slugs', () => {
+    expect(sanitizeNewsText('Models — for builders')).toBe('Models, for builders');
+    expect(sanitizeNewsText('Model versions 1–3')).toBe('Model versions 1 to 3');
+    expect(sanitizeNewsText('Use ai-tools, https://example.com/a-b, and today-in-ai')).toBe(
+        'Use ai-tools, https://example.com/a-b, and today-in-ai'
+    );
+    expect(sanitizeNewsText('Models —, — ship')).toBe('Models, ship');
+    expect(sanitizeNewsText('Models —. Ship')).toBe('Models. Ship');
+});
+
+test('soft-validates dashes and sanitizes them from rendered MDX', async () => {
+    const outputDir = mkdtempSync(`${tmpdir()}/today-in-ai-dashes-`);
+    const dashedOutput = {
+        ...validOutput,
+        title: 'Primary model release — now available',
+        description: 'Builders can use model versions 1–3 in production workflows.',
+        leadIn: 'Today brings practical updates — for teams shipping AI products.',
+        items: validOutput.items.map((item, index) => index === 0 ? {
+            ...item,
+            headline: 'Acme ships model updates — faster',
+            whatHappened: 'Acme released versions 1–3 — with expanded API access.',
+            whyItMatters: 'Teams can test more capable models — without changing providers.',
+            sourceName: 'Example News — Wire',
+        } : item),
+    };
+    const responses = [dashedOutput, dashedOutput];
+    const warnings = [];
+    let calls = 0;
+    const originalWarn = console.warn;
+    console.warn = (message) => warnings.push(message);
+    try {
+        const generated = await generateNewsPost({
+            now: new Date('2026-08-21T12:00:00Z'),
+            outputDir,
+            searchImpl: async () => validOutput.items.map((item) => result(item.sourceUrl, item.headline)),
+            llmImpl: async () => {
+                calls++;
+                return responses.shift();
+            },
+        });
+        expect(generated.created).toBe(true);
+        expect(calls).toBe(2);
+        expect(warnings).toHaveLength(1);
+        expect(warnings[0]).toContain('SOFT validation warnings');
+        expect(generated.post).not.toMatch(/[–—]/);
+        expect(generated.post).toContain('versions 1 to 3');
+        expect(generated.post).toContain('Acme ships model updates, faster');
+        expect(generated.post).toContain('Example News, Wire');
+        expect(generated.post).toContain('https://example.com/a');
+    } finally {
+        console.warn = originalWarn;
+        rmSync(outputDir, { recursive: true, force: true });
+    }
 });
 
 test('renders one ordered Sources entry per unique URL', () => {
