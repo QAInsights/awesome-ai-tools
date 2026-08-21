@@ -38,7 +38,8 @@ const jsonLdData = {
 };
 if (isNewsPost) {
   jsonLdData.dateModified = entry.data.pubDate.toISOString();
-  jsonLdData.citation = entry.body?.match(/https?:\/\/[^\s)>]+/g) ?? [];
+  jsonLdData.citation = [...(entry.body ?? '').matchAll(/\[Source:[^\]]+\]\(<([^>]+)>\)/g)]
+    .map((match) => match[1]);
 }
 const jsonLd = JSON.stringify(jsonLdData);
 

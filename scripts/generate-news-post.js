@@ -15,7 +15,7 @@ const ROOT = join(__dirname, '..');
 const BLOG_DIR = join(ROOT, 'src', 'content', 'blog');
 
 const EXA_API_KEY = process.env.EXA_API_KEY;
-const LLM_API_KEY = process.env.OPENAI_API_KEY || process.env.DEEPSEEK_API_KEY || process.env.ANTHROPIC_API_KEY;
+const LLM_API_KEY = process.env.OPENAI_API_KEY || process.env.DEEPSEEK_API_KEY;
 const LLM_BASE_URL = (process.env.OPENAI_BASE_URL || 'https://api.deepseek.com/v1').replace(/\/+$/, '');
 const LLM_MODEL = process.env.LLM_MODEL || 'deepseek-v4-flash';
 const EXA_NUM_RESULTS = parseInt(process.env.EXA_NUM_RESULTS || '6', 10);
@@ -146,6 +146,16 @@ export function formatResults(results) {
     }).join('\n\n---\n\n');
 }
 
+export function isQuietDayOutput(output) {
+    return Boolean(
+        output &&
+        typeof output === 'object' &&
+        Array.isArray(output.items) &&
+        output.items.length === 0 &&
+        Object.keys(output).length === 1
+    );
+}
+
 function parseLLMJson(content) {
     try {
         return JSON.parse(content);
@@ -244,7 +254,11 @@ export function validateNewsOutput(output, exaResults) {
     } else if (output.tags.some((tag) => typeof tag !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(tag))) {
         errors.push('tags must be lowercase topical slugs');
     }
-    if (errors.length) throw new Error(`News output validation failed:\n- ${errors.join('\n- ')}`);
+    if (errors.length) {
+        const error = new Error(`News output validation failed:\n- ${errors.join('\n- ')}`);
+        error.validationErrors = errors;
+        throw error;
+    }
     return output;
 }
 
@@ -300,6 +314,8 @@ export function parseFrontmatter(post) {
 export function renderNewsPost(output, date) {
     const frontmatter = createFrontmatter(output, date);
     const body = [
+        `This brief covers AI news from ${date} UTC.`,
+        '',
         escapeMdxText(output.leadIn),
         '',
         ...output.items.flatMap((item) => [
@@ -328,6 +344,8 @@ export async function generateNewsPost({
     fixture,
     outputDir = BLOG_DIR,
     fetchImpl = fetch,
+    searchImpl = null,
+    llmImpl = null,
 } = {}) {
     const date = todayUTC(now);
     const filename = `${slugForDate(date)}.mdx`;
@@ -341,22 +359,56 @@ export async function generateNewsPost({
     if (fixture) {
         results = dedupeResults(fixture.results || []);
         output = fixture.output;
+        if (isQuietDayOutput(output)) {
+            console.log('[news] No post produced: fewer than three stories survived the editorial rules.');
+            return { created: false, filename, post: null, quiet: true };
+        }
+        validateNewsOutput(output, results);
     } else {
-        if (!EXA_API_KEY) throw new Error('EXA_API_KEY is required');
-        if (!LLM_API_KEY) throw new Error('OPENAI_API_KEY is required');
+        if (!EXA_API_KEY && !searchImpl) throw new Error('EXA_API_KEY is required');
+        if (!LLM_API_KEY && !llmImpl) throw new Error('OPENAI_API_KEY is required');
+        const search = searchImpl || ((query, options) => exaSearch(query, options));
+        const call = llmImpl || ((messages, options) => callLLM(messages, options));
         const searched = [];
-        for (const beat of SEARCH_BEATS) searched.push(...await exaSearch(beat, { fetchImpl, now }));
+        for (const beat of SEARCH_BEATS) searched.push(...await search(beat, { fetchImpl, now }));
         results = dedupeResults(searched);
         const prompt = LLM_USER_PROMPT_TEMPLATE
             .replace('{{DATE}}', date)
             .replace('{{RESULTS}}', formatResults(results));
-        output = await callLLM([
+        const messages = [
             { role: 'system', content: LLM_SYSTEM_PROMPT },
             { role: 'user', content: prompt },
-        ], { fetchImpl });
+        ];
+        output = await call(messages, { fetchImpl });
+        if (isQuietDayOutput(output)) {
+            console.log('[news] No post produced: fewer than three stories survived the editorial rules.');
+            return { created: false, filename, post: null, quiet: true };
+        }
+        try {
+            validateNewsOutput(output, results);
+        } catch (error) {
+            if (dryRun) throw error;
+            const validationErrors = error.validationErrors || [error.message];
+            output = await call([
+                ...messages,
+                { role: 'assistant', content: JSON.stringify(output) },
+                {
+                    role: 'user',
+                    content: [
+                        'Your first response failed validation for these specific reasons:',
+                        ...validationErrors.map((message) => `- ${message}`),
+                        'Return one corrected JSON object only. Keep all unchanged fields and sourceUrl values grounded in the supplied results.',
+                    ].join('\n'),
+                },
+            ], { fetchImpl });
+            if (isQuietDayOutput(output)) {
+                console.log('[news] No post produced: fewer than three stories survived the editorial rules.');
+                return { created: false, filename, post: null, quiet: true };
+            }
+            validateNewsOutput(output, results);
+        }
     }
 
-    validateNewsOutput(output, results);
     const post = renderNewsPost(output, date);
     if (dryRun) {
         console.log(post);

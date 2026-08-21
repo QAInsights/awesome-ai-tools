@@ -1,8 +1,12 @@
 import { describe, expect, test } from 'bun:test';
+import { mkdtempSync, rmSync } from 'fs';
+import { tmpdir } from 'os';
 import {
     createFrontmatter,
     dedupeResults,
     escapeMdxText,
+    generateNewsPost,
+    isQuietDayOutput,
     parseFrontmatter,
     renderNewsPost,
     slugForDate,
@@ -46,12 +50,73 @@ test('rejects hallucinated source URLs and thin results', () => {
     expect(() => validateNewsOutput(validOutput, [result('https://example.com/not-used', 'Other story')])).toThrow(/not present in Exa results/);
 });
 
+test('treats the exact empty-items response as a quiet day', async () => {
+    expect(isQuietDayOutput({ items: [] })).toBe(true);
+    expect(isQuietDayOutput({ title: 'No news', items: [] })).toBe(false);
+    const result = await generateNewsPost({
+        dryRun: true,
+        fixture: { results: [], output: { items: [] } },
+        now: new Date('2026-08-21T12:00:00Z'),
+    });
+    expect(result).toMatchObject({ created: false, quiet: true });
+});
+
+test('retries one live LLM response when validation fails, then recovers', async () => {
+    const outputDir = mkdtempSync(`${tmpdir()}/today-in-ai-retry-`);
+    const firstOutput = {
+        ...validOutput,
+        title: validOutput.title.padEnd(66, '!'),
+    };
+    const responses = [firstOutput, validOutput];
+    const messages = [];
+    try {
+        const generated = await generateNewsPost({
+            now: new Date('2026-08-21T12:00:00Z'),
+            outputDir,
+            searchImpl: async () => validOutput.items.map((item) => result(item.sourceUrl, item.headline)),
+            llmImpl: async (request) => {
+                messages.push(request);
+                return responses.shift();
+            },
+        });
+        expect(generated.created).toBe(true);
+        expect(messages).toHaveLength(2);
+        expect(messages[1].at(-1).content).toContain('title must be 50-65 characters');
+    } finally {
+        rmSync(outputDir, { recursive: true, force: true });
+    }
+});
+
+test('fails after the single retry still violates validation', async () => {
+    const outputDir = mkdtempSync(`${tmpdir()}/today-in-ai-retry-`);
+    const invalidOutput = {
+        ...validOutput,
+        title: validOutput.title.padEnd(66, '!'),
+    };
+    let calls = 0;
+    try {
+        await expect(generateNewsPost({
+            now: new Date('2026-08-21T12:00:00Z'),
+            outputDir,
+            searchImpl: async () => validOutput.items.map((item) => result(item.sourceUrl, item.headline)),
+            llmImpl: async () => {
+                calls++;
+                return invalidOutput;
+            },
+        })).rejects.toThrow(/title must be 50-65 characters/);
+        expect(calls).toBe(2);
+    } finally {
+        rmSync(outputDir, { recursive: true, force: true });
+    }
+});
+
 test('escapes MDX expression and HTML delimiters', () => {
     expect(escapeMdxText('use {value} <Component> & compare')).toBe('use &#123;value&#125; &lt;Component&gt; &amp; compare');
     const post = renderNewsPost({
         ...validOutput,
         items: validOutput.items.map((item) => ({ ...item, headline: 'Safe {headline} <tag>' })),
     }, '2026-08-21');
+    expect(post).toContain('This brief covers AI news from 2026-08-21 UTC.');
     expect(post).toContain('## Safe &#123;headline&#125; &lt;tag&gt;');
     expect(post).not.toContain('## Safe {headline}');
 });

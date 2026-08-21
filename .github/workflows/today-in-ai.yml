@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: today-in-ai
+  cancel-in-progress: false
+
 jobs:
   generate-news:
     runs-on: ubuntu-latest
