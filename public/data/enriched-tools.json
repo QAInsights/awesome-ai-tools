@@ -871,6 +871,34 @@
     "lastUpdated": "2026-08-19"
   },
   {
+    "slug": "termy",
+    "name": "Termy",
+    "company": "Lasse",
+    "pricing": "open-source",
+    "pricingDetail": "Termy is free and open source under the MIT License. There are no paid tiers or credit models; users can download pre-built binaries or build from source.",
+    "description": "Termy is a fast, native terminal emulator for macOS, Linux, and Windows, built in Rust with GPU-accelerated rendering. It combines modern terminal workflows like tabs, splits, search, tasks, layouts, themes, and optional tmux sessions without cluttering the interface.",
+    "keyFeatures": [
+      "GPU-accelerated rendering with damage-scoped dirty-span cell caching",
+      "Tabs, splits, search, tasks, and reusable layouts",
+      "Configurable keybindings, colors, themes, and terminal behavior",
+      "Optional tmux control-mode sessions",
+      "Cross-platform support (macOS, Linux, Windows)",
+      "Developer Inspector with live state, keyboard log, and render stats"
+    ],
+    "bestFor": "Developers who want a fast, minimal, and customizable terminal emulator with modern GPU rendering and tmux integration, especially those who appreciate open-source software.",
+    "notIdealFor": "Users who need a terminal with extensive built-in features or a fully polished, signed macOS app, as macOS builds are not yet signed and require manual quarantine removal.",
+    "recentUpdates": "As of July 2026, Termy has released v0.2.21 with 116 releases. Notable recent updates include v0.2.7 (June 2026) adding a Developer Inspector, refreshed chrome, per-pane progress, and native tmux control-mode foundations. The project is actively developed with CI improvements and roadmap planning.",
+    "verdict": "Termy is a promising open-source terminal that leverages GPU acceleration for speed and offers a clean, customizable interface. It is still evolving, with some rough edges like unsigned macOS builds, but it is a strong choice for developers seeking a modern, fast terminal.",
+    "tags": [
+      "terminal emulator",
+      "GPU-accelerated",
+      "Rust",
+      "open-source",
+      "tmux"
+    ],
+    "lastUpdated": "2026-08-22"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
