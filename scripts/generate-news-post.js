@@ -9,6 +9,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { extractNewsCitations } from '../src/lib/news-citations.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -42,6 +43,11 @@ SOURCE SELECTION
 Always prefer the primary source: the company's own announcement or engineering blog, the release notes, the paper, the filing, the regulator's own statement. Cite an outlet only when it is doing the original reporting, or when no primary source is among the supplied results.
 
 When the same story appears from several sources, rank them: primary/official announcement first, then established trade press doing original reporting, then anything else. Avoid rewrite-and-repost sites, SEO content farms, and newsletter or blog roundups that merely summarize other people's coverage; if such a result is the only one for a story, prefer to drop the story unless it is significant enough that the day would be worse without it. Name the source as readers know it (for example "NVIDIA" or "Reuters"), not the blog's tagline.
+
+ALREADY COVERED
+You will be given a list of stories this brief already published on earlier days. Never publish one of them again. This applies to the story, not just the link: if a listed story is the same event, the same announcement, the same funding round or the same release, skip it even when today's result comes from a different outlet, carries a different URL, or adds a small extra detail. Cover it again only if today's results report a genuinely new development in it, and in that case lead with what changed rather than restating the original news.
+
+Never reuse an earlier day's story as today's lead. If the biggest item in today's results is already covered, lead with the strongest item that is not.
 
 EDITORIAL SCOPE, INCLUDE
 AI model and product launches, capability and benchmark results, developer tooling and coding agents, funding rounds, acquisitions, partnerships, earnings and business moves, infrastructure and chips, research milestones, open-weight releases, notable outages and security incidents, regulation and policy that directly affects builders, and significant hiring or org changes at AI labs.
@@ -84,6 +90,8 @@ Order items by significance, biggest story first. Include between 3 and 7 items.
 
 const LLM_USER_PROMPT_TEMPLATE = `Date (UTC): {{DATE}}
 
+{{COVERED}}
+
 Search results from the last 24 hours:
 
 {{RESULTS}}
@@ -118,6 +126,83 @@ function titleSimilarity(a, b) {
     if (!left.size || !right.size) return 0;
     const intersection = [...left].filter((token) => right.has(token)).length;
     return intersection / (left.size + right.size - intersection);
+}
+
+export function normalizeNewsUrl(value) {
+    if (typeof value !== 'string' || !value.trim()) return null;
+    try {
+        const parsed = new URL(value);
+        if (!['http:', 'https:'].includes(parsed.protocol.toLowerCase())) return null;
+        parsed.protocol = parsed.protocol.toLowerCase();
+        parsed.hostname = parsed.hostname.toLowerCase();
+        parsed.pathname = parsed.pathname.replace(/\/+$/, '');
+        return parsed.toString().replace(/\/(?=[?#]|$)/, '');
+    } catch {
+        return null;
+    }
+}
+
+function previousUtcDate(now, daysAgo) {
+    const date = new Date(now);
+    date.setUTCHours(0, 0, 0, 0);
+    date.setUTCDate(date.getUTCDate() - daysAgo);
+    return todayUTC(date);
+}
+
+export function readRecentBriefs(outputDir, now = new Date()) {
+    const briefTitles = [];
+    const storyHeadings = [];
+    const sourceUrls = new Set();
+
+    for (let daysAgo = 1; daysAgo <= 7; daysAgo++) {
+        const date = previousUtcDate(now, daysAgo);
+        const path = join(outputDir, `${slugForDate(date)}.mdx`);
+        if (!existsSync(path)) continue;
+
+        const body = readFileSync(path, 'utf-8');
+        try {
+            const frontmatter = parseFrontmatter(body);
+            if (frontmatter.title) briefTitles.push({ date, title: frontmatter.title });
+        } catch {}
+
+        let inSources = false;
+        for (const line of body.split('\n')) {
+            const heading = line.match(/^## (.+)$/)?.[1]?.trim();
+            if (!heading) continue;
+            if (heading === 'Sources') {
+                inSources = true;
+                continue;
+            }
+            if (!inSources) storyHeadings.push({ date, heading });
+        }
+        for (const url of extractNewsCitations(body)) {
+            const normalized = normalizeNewsUrl(url);
+            if (normalized) sourceUrls.add(normalized);
+        }
+    }
+
+    return { briefTitles, storyHeadings, sourceUrls };
+}
+
+export function filterRecentResults(results, coveredData) {
+    const coveredUrls = coveredData?.sourceUrls || new Set();
+    const coveredHeadings = coveredData?.storyHeadings || [];
+    return results.filter((result) => {
+        const normalizedUrl = normalizeNewsUrl(result.url);
+        if (normalizedUrl && coveredUrls.has(normalizedUrl)) return false;
+        return !coveredHeadings.some(({ heading }) => titleSimilarity(result.title, heading) >= 0.82);
+    });
+}
+
+export function formatCoveredStories(coveredData) {
+    const stories = coveredData?.storyHeadings || [];
+    if (!stories.length) {
+        return 'Stories already published in earlier briefs, do not repeat them: none yet.';
+    }
+    return [
+        'Stories already published in earlier briefs, do not repeat them:',
+        ...stories.map(({ date, heading }) => `- ${date}: ${heading}`),
+    ].join('\n');
 }
 
 export function dedupeResults(results) {
@@ -227,7 +312,7 @@ function requiredString(value, field, errors) {
     if (typeof value !== 'string' || !value.trim()) errors.push(`${field} must be non-empty`);
 }
 
-export function inspectNewsOutput(output, exaResults) {
+export function inspectNewsOutput(output, exaResults, coveredData = null) {
     const hardErrors = [];
     const softWarnings = [];
     if (!output || typeof output !== 'object') {
@@ -270,6 +355,7 @@ export function inspectNewsOutput(output, exaResults) {
         hardErrors.push('items must contain between 3 and 7 stories');
     }
     const sourceUrls = new Set((exaResults || []).map((result) => result.url));
+    const coveredUrls = coveredData?.sourceUrls || new Set();
     for (const [index, item] of (output.items || []).entries()) {
         for (const field of ['headline', 'whatHappened', 'whyItMatters', 'sourceUrl', 'sourceName']) {
             requiredString(item?.[field], `items[${index}].${field}`, hardErrors);
@@ -306,6 +392,17 @@ export function inspectNewsOutput(output, exaResults) {
         if (item?.sourceUrl && !sourceUrls.has(item.sourceUrl)) {
             hardErrors.push(`items[${index}].sourceUrl is not present in Exa results: ${item.sourceUrl}`);
         }
+        if (item?.sourceUrl && coveredUrls.has(normalizeNewsUrl(item.sourceUrl))) {
+            hardErrors.push(`items[${index}].sourceUrl was already cited in a recent brief: ${item.sourceUrl}`);
+        }
+    }
+    if (typeof output.title === 'string') {
+        for (const { title } of coveredData?.briefTitles || []) {
+            if (normalizedTitle(output.title) === normalizedTitle(title) || titleSimilarity(output.title, title) >= 0.9) {
+                hardErrors.push(`title duplicates a recent brief title: ${title}`);
+                break;
+            }
+        }
     }
     if (!Array.isArray(output.tags) || output.tags.length < 3 || output.tags.length > 6) {
         hardErrors.push('tags must contain between 3 and 6 slugs');
@@ -322,8 +419,8 @@ function createHardValidationError(hardErrors) {
     return error;
 }
 
-export function validateNewsOutput(output, exaResults) {
-    const { hardErrors } = inspectNewsOutput(output, exaResults);
+export function validateNewsOutput(output, exaResults, coveredData = null) {
+    const { hardErrors } = inspectNewsOutput(output, exaResults, coveredData);
     if (hardErrors.length) {
         throw createHardValidationError(hardErrors);
     }
@@ -343,8 +440,8 @@ function validationFeedback({ hardErrors, softWarnings }) {
     ];
 }
 
-function validateForGeneration(output, exaResults) {
-    const validation = inspectNewsOutput(output, exaResults);
+function validateForGeneration(output, exaResults, coveredData = null) {
+    const validation = inspectNewsOutput(output, exaResults, coveredData);
     if (validation.hardErrors.length) {
         throw createHardValidationError(validation.hardErrors);
     }
@@ -477,14 +574,19 @@ export async function generateNewsPost({
 
     let results;
     let output;
+    const coveredData = readRecentBriefs(outputDir, now);
     if (fixture) {
-        results = dedupeResults(fixture.results || []);
-        output = fixture.output;
-        if (isQuietDayOutput(output)) {
-            console.log('[news] No post produced: fewer than three stories survived the editorial rules.');
+        results = filterRecentResults(dedupeResults(fixture.results || []), coveredData);
+        if (results.length < 3) {
+            console.log('[news] Quiet day: fewer than three usable stories remained after recent-brief filtering; no post produced.');
             return { created: false, filename, post: null, quiet: true };
         }
-        const validation = validateForGeneration(output, results);
+        output = fixture.output;
+        if (isQuietDayOutput(output)) {
+            console.log('[news] Quiet day: fewer than three stories survived the editorial rules; no post produced.');
+            return { created: false, filename, post: null, quiet: true };
+        }
+        const validation = validateForGeneration(output, results, coveredData);
         logSoftWarnings(validation.softWarnings);
     } else {
         if (!EXA_API_KEY && !searchImpl) throw new Error('EXA_API_KEY is required');
@@ -493,9 +595,14 @@ export async function generateNewsPost({
         const call = llmImpl || ((messages, options) => callLLM(messages, options));
         const searched = [];
         for (const beat of SEARCH_BEATS) searched.push(...await search(beat, { fetchImpl, now }));
-        results = dedupeResults(searched);
+        results = filterRecentResults(dedupeResults(searched), coveredData);
+        if (results.length < 3) {
+            console.log('[news] Quiet day: fewer than three usable stories remained after recent-brief filtering; no post produced.');
+            return { created: false, filename, post: null, quiet: true };
+        }
         const prompt = LLM_USER_PROMPT_TEMPLATE
             .replace('{{DATE}}', date)
+            .replace('{{COVERED}}', formatCoveredStories(coveredData))
             .replace('{{RESULTS}}', formatResults(results));
         const messages = [
             { role: 'system', content: LLM_SYSTEM_PROMPT },
@@ -503,10 +610,10 @@ export async function generateNewsPost({
         ];
         output = await call(messages, { fetchImpl });
         if (isQuietDayOutput(output)) {
-            console.log('[news] No post produced: fewer than three stories survived the editorial rules.');
+            console.log('[news] Quiet day: fewer than three stories survived the editorial rules; no post produced.');
             return { created: false, filename, post: null, quiet: true };
         }
-        let validation = inspectNewsOutput(output, results);
+        let validation = inspectNewsOutput(output, results, coveredData);
         if (validation.hardErrors.length || validation.softWarnings.length) {
             if (dryRun) {
                 if (validation.hardErrors.length) throw createHardValidationError(validation.hardErrors);
@@ -525,10 +632,10 @@ export async function generateNewsPost({
                     },
                 ], { fetchImpl });
                 if (isQuietDayOutput(output)) {
-                    console.log('[news] No post produced: fewer than three stories survived the editorial rules.');
+                    console.log('[news] Quiet day: fewer than three stories survived the editorial rules; no post produced.');
                     return { created: false, filename, post: null, quiet: true };
                 }
-                validation = validateForGeneration(output, results);
+                validation = validateForGeneration(output, results, coveredData);
                 logSoftWarnings(validation.softWarnings);
             }
         }

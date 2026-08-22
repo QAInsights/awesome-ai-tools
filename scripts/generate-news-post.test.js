@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { mkdtempSync, rmSync } from 'fs';
+import { mkdtempSync, rmSync, writeFileSync } from 'fs';
 import { tmpdir } from 'os';
 import { extractNewsCitations } from '../src/lib/news-citations.js';
 import {
@@ -7,9 +7,13 @@ import {
     dedupeResults,
     escapeMdxText,
     generateNewsPost,
+    filterRecentResults,
     inspectNewsOutput,
     isQuietDayOutput,
+    formatCoveredStories,
+    normalizeNewsUrl,
     parseFrontmatter,
+    readRecentBriefs,
     renderNewsPost,
     sanitizeNewsText,
     slugForDate,
@@ -45,6 +49,131 @@ test('dedupes exact URLs and near-identical stories on the same host', () => {
         'https://example.com/one',
         'https://other.example/two',
     ]);
+});
+
+test('reads recent brief titles, story headings, and citations without Sources headings', () => {
+    const outputDir = mkdtempSync(`${tmpdir()}/today-in-ai-recent-`);
+    try {
+        writeFileSync(`${outputDir}/today-in-ai-2026-08-22.mdx`, `---
+title: "Yesterday's AI Brief"
+description: "A brief description."
+pubDate: 2026-08-22
+tags: ["news"]
+draft: false
+featured: false
+---
+
+## Acme launches a coding agent
+
+Details.
+
+[Source: Acme](<https://EXAMPLE.com/acme/>)
+
+## Sources
+
+- [Acme](<https://EXAMPLE.com/acme/>)
+
+## This is not a story heading
+`);
+        const covered = readRecentBriefs(outputDir, new Date('2026-08-23T12:00:00Z'));
+        expect(covered.briefTitles).toEqual([{ date: '2026-08-22', title: "Yesterday's AI Brief" }]);
+        expect(covered.storyHeadings).toEqual([
+            { date: '2026-08-22', heading: 'Acme launches a coding agent' },
+        ]);
+        expect(covered.sourceUrls).toEqual(new Set(['https://example.com/acme']));
+        expect(formatCoveredStories(covered)).toBe(
+            'Stories already published in earlier briefs, do not repeat them:\n- 2026-08-22: Acme launches a coding agent'
+        );
+    } finally {
+        rmSync(outputDir, { recursive: true, force: true });
+    }
+});
+
+test('filters recently cited URLs and near-duplicate story headlines', () => {
+    const covered = {
+        sourceUrls: new Set([normalizeNewsUrl('https://EXAMPLE.com/stale/')]),
+        storyHeadings: [{ date: '2026-08-22', heading: 'Acme launches a coding agent' }],
+    };
+    const results = [
+        result('https://example.com/stale', 'A new unrelated headline'),
+        result('https://example.com/fresh', 'Acme launches a coding agent today'),
+        result('https://example.com/new', 'Northstar raises a developer tools round'),
+    ];
+    expect(filterRecentResults(results, covered).map((item) => item.url)).toEqual([
+        'https://example.com/new',
+    ]);
+});
+
+test('renders the none-yet covered prompt section on the first run', async () => {
+    const outputDir = mkdtempSync(`${tmpdir()}/today-in-ai-covered-empty-`);
+    const messages = [];
+    try {
+        await generateNewsPost({
+            now: new Date('2026-08-23T12:00:00Z'),
+            outputDir,
+            searchImpl: async () => validOutput.items.map((item) => result(item.sourceUrl, item.headline)),
+            llmImpl: async (request) => {
+                messages.push(request);
+                return validOutput;
+            },
+        });
+        expect(messages[0].at(-1).content).toContain(
+            'Stories already published in earlier briefs, do not repeat them: none yet.'
+        );
+    } finally {
+        rmSync(outputDir, { recursive: true, force: true });
+    }
+});
+
+test('reports hard validation for recently covered source URLs and brief titles', () => {
+    const covered = {
+        sourceUrls: new Set([normalizeNewsUrl('https://example.com/a')]),
+        briefTitles: [{ date: '2026-08-22', title: validOutput.title }],
+    };
+    const validation = inspectNewsOutput(validOutput, validOutput.items.map((item) => result(item.sourceUrl, item.headline)), covered);
+    expect(validation.hardErrors).toContain(
+        'items[0].sourceUrl was already cited in a recent brief: https://example.com/a'
+    );
+    expect(validation.hardErrors).toContain(
+        `title duplicates a recent brief title: ${validOutput.title}`
+    );
+});
+
+test('includes hard duplicate-title feedback in the single retry', async () => {
+    const outputDir = mkdtempSync(`${tmpdir()}/today-in-ai-covered-title-`);
+    const duplicateTitle = validOutput.title;
+    writeFileSync(`${outputDir}/today-in-ai-2026-08-22.mdx`, `---
+title: ${JSON.stringify(duplicateTitle)}
+description: "A brief description."
+pubDate: 2026-08-22
+tags: ["news"]
+draft: false
+featured: false
+---
+
+## Yesterday's story
+
+[Source: Example News](<https://example.com/yesterday>)
+`);
+    const messages = [];
+    const responses = [validOutput, { ...validOutput, title: 'A fresh title for today' }];
+    try {
+        await generateNewsPost({
+            now: new Date('2026-08-23T12:00:00Z'),
+            outputDir,
+            searchImpl: async () => validOutput.items.map((item) => result(item.sourceUrl, item.headline)),
+            llmImpl: async (request) => {
+                messages.push(request);
+                return responses.shift();
+            },
+        });
+        expect(messages).toHaveLength(2);
+        expect(messages[1].at(-1).content).toContain(
+            `HARD: title duplicates a recent brief title: ${duplicateTitle}`
+        );
+    } finally {
+        rmSync(outputDir, { recursive: true, force: true });
+    }
 });
 
 test('rejects hallucinated source URLs and thin results', () => {
