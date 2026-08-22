@@ -158,7 +158,7 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
       </div>
 
       {/* Right Sidebar: Table of contents, Share, Discuss with AI, Tags */}
-      <aside class="space-y-8 mt-6 xl:mt-0 xl:block xl:sticky xl:top-[50vh] xl:-translate-y-1/2 self-start">
+      <aside class="space-y-8 mt-6 xl:mt-0 xl:block xl:sticky xl:top-8 xl:max-h-[calc(100vh-4rem)] xl:overflow-y-auto self-start">
         {/* Table of contents */}
         {tocHeadings.length > 0 && (
           <nav aria-label="Table of contents" class="border-l border-[#222] pl-4">
