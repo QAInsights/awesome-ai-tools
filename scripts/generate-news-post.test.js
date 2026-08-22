@@ -75,14 +75,47 @@ Details.
 
 ## This is not a story heading
 `);
+        writeFileSync(`${outputDir}/today-in-ai-2026-08-20.mdx`, `---
+title: "Three Days Ago's AI Brief"
+description: "A brief description."
+pubDate: 2026-08-20
+tags: ["news"]
+draft: false
+featured: false
+---
+
+## Northstar raises a developer tools round
+
+[Source: Northstar](<https://example.com/northstar/>)
+`);
+        writeFileSync(`${outputDir}/today-in-ai-2026-08-19.mdx`, `---
+title: "Four Days Ago's AI Brief"
+description: "A brief description."
+pubDate: 2026-08-19
+tags: ["news"]
+draft: false
+featured: false
+---
+
+## This story is outside the lookback
+
+[Source: Outside](<https://example.com/outside>)
+`);
         const covered = readRecentBriefs(outputDir, new Date('2026-08-23T12:00:00Z'));
-        expect(covered.briefTitles).toEqual([{ date: '2026-08-22', title: "Yesterday's AI Brief" }]);
+        expect(covered.briefTitles).toEqual([
+            { date: '2026-08-22', title: "Yesterday's AI Brief" },
+            { date: '2026-08-20', title: "Three Days Ago's AI Brief" },
+        ]);
         expect(covered.storyHeadings).toEqual([
             { date: '2026-08-22', heading: 'Acme launches a coding agent' },
+            { date: '2026-08-20', heading: 'Northstar raises a developer tools round' },
         ]);
-        expect(covered.sourceUrls).toEqual(new Set(['https://example.com/acme']));
+        expect(covered.sourceUrls).toEqual(new Set([
+            'https://example.com/acme',
+            'https://example.com/northstar',
+        ]));
         expect(formatCoveredStories(covered)).toBe(
-            'Stories already published in earlier briefs, do not repeat them:\n- 2026-08-22: Acme launches a coding agent'
+            'Stories already published in earlier briefs, do not repeat them:\n- 2026-08-22: Acme launches a coding agent\n- 2026-08-20: Northstar raises a developer tools round'
         );
     } finally {
         rmSync(outputDir, { recursive: true, force: true });

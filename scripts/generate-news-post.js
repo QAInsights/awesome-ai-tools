@@ -21,6 +21,7 @@ const LLM_BASE_URL = (process.env.OPENAI_BASE_URL || 'https://api.deepseek.com/v
 const LLM_MODEL = process.env.LLM_MODEL || 'deepseek-v4-flash';
 const EXA_NUM_RESULTS = parseInt(process.env.EXA_NUM_RESULTS || '6', 10);
 const MAX_RESULT_TEXT = 2200;
+const RECENT_BRIEF_LOOKBACK_DAYS = 3;
 
 const SEARCH_BEATS = [
     'AI frontier labs model releases and product launches for developers',
@@ -154,7 +155,7 @@ export function readRecentBriefs(outputDir, now = new Date()) {
     const storyHeadings = [];
     const sourceUrls = new Set();
 
-    for (let daysAgo = 1; daysAgo <= 7; daysAgo++) {
+    for (let daysAgo = 1; daysAgo <= RECENT_BRIEF_LOOKBACK_DAYS; daysAgo++) {
         const date = previousUtcDate(now, daysAgo);
         const path = join(outputDir, `${slugForDate(date)}.mdx`);
         if (!existsSync(path)) continue;
