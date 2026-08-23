@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
-import BlogCardGradient from '../../components/BlogCardGradient.astro';
 import { safeJsonForScript } from '../../lib/serialize';
 import { extractNewsCitations } from '../../lib/news-citations.js';
 
@@ -45,6 +44,14 @@ const jsonLd = JSON.stringify(jsonLdData);
 
 // Table of contents: h2/h3 only
 const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
+
+const backHref = isNewsPost ? '/news' : '/blog';
+const backLabel = isNewsPost ? 'Back to Today in AI' : 'Back to Blog';
+
+// Topic chips next to the byline: skip the feed markers, keep the line short.
+const displayTags = (entry.data.tags ?? [])
+  .filter(tag => tag !== 'news' && tag !== 'today-in-ai')
+  .slice(0, 4);
 
 // Share links
 const encodedUrl = encodeURIComponent(postUrl);
@@ -108,24 +115,21 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
 >
   <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-full p-6 md:p-8">
     <div class="max-w-3xl mx-auto flex flex-col flex-1 w-full min-w-0">
-      <div class="mb-8">
-        <a href="/blog" class="text-[#737373] hover:text-white transition-colors flex items-center text-sm font-mono tracking-wide w-fit">
+      <div class="mb-5">
+        <a href={backHref} class="text-[#737373] hover:text-white transition-colors flex items-center text-sm font-mono tracking-wide w-fit">
           <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          Back to Blog
+          {backLabel}
         </a>
       </div>
 
       <article class="select-text">
-        {/* Featured Image Gradient (above title) */}
-        <BlogCardGradient title={entry.data.title} slug={entry.id} tags={entry.data.tags} aspect="article" />
-
-        <header class="mb-8 text-left select-text">
-          <h1 class="text-3xl sm:text-4xl font-semibold text-white tracking-tight mb-4 select-text">
+        <header class="mb-6 text-left select-text">
+          <h1 class="text-3xl sm:text-4xl font-semibold text-white tracking-tight mb-3 select-text">
             {entry.data.title}
           </h1>
-          <div class="flex flex-wrap items-center gap-3 text-sm text-[#737373] font-mono">
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-[#737373] font-mono">
             <time datetime={entry.data.pubDate.toISOString()}>
               {entry.data.pubDate.toLocaleDateString('en-us', {
                 year: 'numeric',
@@ -141,10 +145,55 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
                 <span>{remarkPluginFrontmatter.readingTime}</span>
               </>
             )}
+            {displayTags.length > 0 && (
+              <span class="flex flex-wrap items-center gap-1.5">
+                {displayTags.map((tag) => (
+                  <span class="inline-flex items-center px-2 py-0.5 rounded border border-[#282828] text-xs bg-white/[0.03] text-[#8a8a8a]">
+                    {tag}
+                  </span>
+                ))}
+              </span>
+            )}
           </div>
+        </header>
 
-          {/* Share */}
-          <div class="mt-6 pt-6 border-t border-[#222]">
+        {/* Compact, collapsible table of contents at the top of the content */}
+        {tocHeadings.length > 0 && (
+          <details class="group mb-8 rounded-lg border border-[#1e1e1e] bg-white/[0.02]">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-2.5 text-xs font-mono uppercase tracking-widest text-[#525252] hover:text-[#a3a3a3] transition-colors">
+              <span>In this {isNewsPost ? 'brief' : 'article'} · {tocHeadings.length} sections</span>
+              <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
+              </svg>
+            </summary>
+            <nav aria-label="Table of contents" class="px-4 pb-3">
+              <ul class="space-y-0.5 text-sm">
+                {tocHeadings.map((h) => (
+                  <li>
+                    <a
+                      href={`#${h.slug}`}
+                      data-toc-link={h.slug}
+                      class:list={[
+                        'toc-link block py-0.5 border-l-2 border-transparent pl-3 text-[#737373] hover:text-white transition-colors leading-snug',
+                        { 'pl-7': h.depth === 3 },
+                      ]}
+                    >
+                      {h.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </details>
+        )}
+
+        <div id="article-body" class="select-text prose prose-invert prose-zinc max-w-none prose-headings:font-semibold prose-a:text-[#22d3ee] hover:prose-a:text-[#67e8f9] prose-a:no-underline hover:prose-a:underline prose-code:text-[#a78bfa] prose-pre:bg-[#0a0a0a] prose-pre:border prose-pre:border-[#222] prose-img:rounded-lg prose-img:border prose-img:border-[#222] prose-hr:border-[#222]">
+          <Content />
+        </div>
+
+        {/* Share and AI actions, after the story */}
+        <div class="mt-12 pt-8 border-t border-[#222] space-y-6">
+          <div>
             <p class="text-xs font-mono uppercase tracking-widest text-[#525252] mb-3">Share</p>
             <div class="flex flex-wrap items-center gap-2">
               {shareLinks.map((link) => (
@@ -175,8 +224,7 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
             </div>
           </div>
 
-          {/* Discuss with AI */}
-          <div class="mt-6">
+          <div>
             <p class="text-xs font-mono uppercase tracking-widest text-[#525252] mb-3">Discuss with AI</p>
             <div class="flex flex-wrap items-center gap-2">
               {aiTargets.map((target) => (
@@ -212,47 +260,6 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
               </button>
             </div>
           </div>
-
-          {/* Tags */}
-          {entry.data.tags && entry.data.tags.length > 0 && (
-            <div class="mt-6">
-              <p class="text-xs font-mono uppercase tracking-widest text-[#525252] mb-3">Tags</p>
-              <div class="flex flex-wrap gap-2">
-                {entry.data.tags.map((tag) => (
-                  <span class="inline-flex items-center px-2 py-0.5 rounded border border-[#333] text-xs font-mono bg-white/[0.03] text-[#a3a3a3]">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-        </header>
-
-        {/* Table of contents, at the top of the article content */}
-        {tocHeadings.length > 0 && (
-          <nav aria-label="Table of contents" class="mb-8 rounded-lg border border-[#222] bg-white/[0.02] p-4">
-            <p class="text-xs font-mono uppercase tracking-widest text-[#525252] mb-2">On this page</p>
-            <ul class="space-y-0.5 text-sm">
-              {tocHeadings.map((h) => (
-                <li>
-                  <a
-                    href={`#${h.slug}`}
-                    data-toc-link={h.slug}
-                    class:list={[
-                      'toc-link block py-0.5 border-l-2 border-transparent pl-3 text-[#737373] hover:text-white transition-colors leading-snug',
-                      { 'pl-7': h.depth === 3 },
-                    ]}
-                  >
-                    {h.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        )}
-
-        <div id="article-body" class="select-text prose prose-invert prose-zinc max-w-none prose-headings:font-semibold prose-a:text-[#22d3ee] hover:prose-a:text-[#67e8f9] prose-a:no-underline hover:prose-a:underline prose-code:text-[#a78bfa] prose-pre:bg-[#0a0a0a] prose-pre:border prose-pre:border-[#222] prose-img:rounded-lg prose-img:border prose-img:border-[#222] prose-hr:border-[#222]">
-          <Content />
         </div>
       </article>
 
