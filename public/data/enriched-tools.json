@@ -899,6 +899,35 @@
     "lastUpdated": "2026-08-22"
   },
   {
+    "slug": "paseo",
+    "name": "Paseo",
+    "company": "getpaseo",
+    "pricing": "free",
+    "pricingDetail": "Paseo is completely free and open source (AGPL-3.0). There are no paid tiers; you bring your own keys and subscriptions for the underlying agent CLIs (e.g., Claude Code, Codex), so Paseo adds zero cost on top.",
+    "description": "Paseo is a self-hosted, open-source orchestrator that lets you run, monitor, and interact with multiple coding agents (Claude Code, Codex, Copilot, OpenCode, Pi, and more) from desktop, mobile, web, or CLI. It wraps existing agent CLIs, so your subscriptions, configs, and skills carry over.",
+    "keyFeatures": [
+      "Multi-provider support: native adapters for Claude Code, Codex, OpenCode, Pi, plus ACP catalog with 25+ agents (Cursor, Gemini, Copilot, etc.)",
+      "Cross-device: native iOS/Android apps, desktop (Electron), web, and CLI with full feature parity",
+      "Self-hosted daemon: agents run on your machine, VM, or server; connect via direct connection or end-to-end encrypted relay",
+      "Parallel work: split panes, git worktrees, per-worktree dev servers with proxy URLs",
+      "Voice control: on-device speech-to-text and text-to-speech",
+      "Git workflow integration: create branches, preview, review diffs, commit, open PRs, and merge without leaving the app",
+      "Fully scriptable CLI and Paseo Hub for GitHub/Slack/Discord triggers"
+    ],
+    "bestFor": "Developers who already use coding agents and want to supervise multiple sessions from their phone, desktop, or terminal while keeping full control of their infrastructure and avoiding vendor lock-in.",
+    "notIdealFor": "Teams that require a hosted solution with managed infrastructure, or those avoiding AGPL-3.0 licensing; also not for users who want a simple autocomplete plugin or a tool that replaces their existing agent subscriptions.",
+    "recentUpdates": "As of July 2026, Paseo is at v0.1.103 with ~9.65k GitHub stars. The project has seen rapid development since its October 2025 creation, with 118 releases and 3,800+ commits from a solo maintainer. Paseo Hub (triggers from GitHub, Slack, Discord) is a new addition.",
+    "verdict": "Paseo is a powerful, free, and open-source orchestrator that stands out for its cross-device support and multi-provider flexibility. Its main tradeoffs are the AGPL license and the need to self-host and manage your own agent CLIs, which may not suit everyone.",
+    "tags": [
+      "agent orchestration",
+      "self-hosted",
+      "multi-provider",
+      "mobile",
+      "open-source"
+    ],
+    "lastUpdated": "2026-08-23"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",

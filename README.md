@@ -90,6 +90,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[AgentOne](https://github.com/The-Best-Codes/agent-one)** | BestCodes | A free AI agent and deep-researcher.; [GitHub](https://github.com/The-Best-Codes/agent-one) |
 | **[OneCLI](https://github.com/onecli/onecli)** | OneCLI | Open-source sandboxed agent harness for teams. Giving every employee a secured personal agent.; [GitHub](https://github.com/onecli/onecli) |
 | **[Termy](https://termy.sh/)** | Lasse | The terminal, at full speed ⚡; [GitHub](https://github.com/lassejlv/termy) |
+| **[Paseo](https://github.com/getpaseo/paseo)** | getpaseo | Orchestrate multiple coding agents from desktop and mobile.; [GitHub](https://github.com/getpaseo/paseo) |
 
 
 ---
