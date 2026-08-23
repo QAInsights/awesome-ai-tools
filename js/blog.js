@@ -13,11 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 await navigator.clipboard.writeText(textToCopy);
                 if (label) label.textContent = 'Copied!';
-                copyLinkBtn.classList.add('border-[#22d3ee]', 'text-[#22d3ee]');
+                copyLinkBtn.style.borderColor = '#22d3ee';
+                copyLinkBtn.style.color = '#22d3ee';
 
                 setTimeout(() => {
                     if (label) label.textContent = originalText;
-                    copyLinkBtn.classList.remove('border-[#22d3ee]', 'text-[#22d3ee]');
+                    copyLinkBtn.style.borderColor = '';
+                    copyLinkBtn.style.color = '';
                 }, 2000);
             } catch (err) {
                 console.error('Failed to copy link:', err);
