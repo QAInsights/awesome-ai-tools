@@ -1,8 +1,8 @@
 import { getBlogTheme } from '../src/lib/blogGradients.ts';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const copyLinkBtn = document.getElementById('copy-link-btn');
-    if (copyLinkBtn) {
+    const copyLinkBtns = document.querySelectorAll('.copy-link-btn');
+    copyLinkBtns.forEach((copyLinkBtn) => {
         copyLinkBtn.addEventListener('click', async () => {
             const textToCopy = copyLinkBtn.getAttribute('data-copy');
             if (!textToCopy) return;
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Failed to copy link:', err);
             }
         });
-    }
+    });
 
     // "Discuss with AI" deep-links: also copy the discussion prompt to the
     // clipboard so the user can paste it manually if the AI chat target

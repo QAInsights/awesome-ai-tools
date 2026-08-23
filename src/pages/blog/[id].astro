@@ -42,8 +42,9 @@ if (isNewsPost) {
 }
 const jsonLd = JSON.stringify(jsonLdData);
 
-// Table of contents: h2/h3 only
+// Table of contents: h2/h3 only, and only worth showing on longer pieces.
 const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
+const showToc = tocHeadings.length >= 4;
 
 const backHref = isNewsPost ? '/news' : '/blog';
 const backLabel = isNewsPost ? 'Back to Today in AI' : 'Back to Blog';
@@ -155,10 +156,37 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
               </span>
             )}
           </div>
+
+          {/* Compact share row, right under the byline */}
+          <div class="mt-4 flex flex-wrap items-center gap-2">
+            {shareLinks.map((link) => (
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Share on ${link.name}`}
+                title={`Share on ${link.name}`}
+                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors"
+              >
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" set:html={link.icon} />
+              </a>
+            ))}
+            <button
+              type="button"
+              data-copy={postUrl}
+              aria-label="Copy article link"
+              title="Copy link"
+              class="copy-link-btn inline-flex items-center justify-center w-8 h-8 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors"
+            >
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 0 0-5.656 0l-4 4a4 4 0 1 0 5.656 5.656l1.102-1.101m-.758-4.899a4 4 0 0 0 5.656 0l4-4a4 4 0 0 0-5.656-5.656l-1.1 1.1" />
+              </svg>
+            </button>
+          </div>
         </header>
 
         {/* Compact, collapsible table of contents at the top of the content */}
-        {tocHeadings.length > 0 && (
+        {showToc && (
           <details class="group mb-8 rounded-lg border border-[#1e1e1e] bg-white/[0.02]">
             <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-2.5 text-xs font-mono uppercase tracking-widest text-[#525252] hover:text-[#a3a3a3] transition-colors">
               <span>In this {isNewsPost ? 'brief' : 'article'} · {tocHeadings.length} sections</span>
@@ -210,11 +238,10 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
               ))}
               <button
                 type="button"
-                id="copy-link-btn"
                 data-copy={postUrl}
                 aria-label="Copy article link"
                 title="Copy link"
-                class="inline-flex items-center justify-center gap-1.5 h-8 px-2.5 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors text-xs font-mono"
+                class="copy-link-btn inline-flex items-center justify-center gap-1.5 h-8 px-2.5 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors text-xs font-mono"
               >
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 0 0-5.656 0l-4 4a4 4 0 1 0 5.656 5.656l1.102-1.101m-.758-4.899a4 4 0 0 0 5.656 0l4-4a4 4 0 0 0-5.656-5.656l-1.1 1.1" />
