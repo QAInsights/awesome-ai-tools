@@ -3144,6 +3144,35 @@
     "lastUpdated": "2026-08-25"
   },
   {
+    "slug": "ob-1",
+    "name": "OB-1",
+    "company": "Overbrilliant",
+    "pricing": "freemium",
+    "pricingDetail": "Free tier with no account or API key required, using a built-in free-model router. Paid plans: Starter at $9/mo (includes $9 of credits) and Pro at $49/mo (includes $49 of credits), with 1 credit = $1 and a hard cap to prevent overage. Prepaid credits can be topped up, with a limited-time 1:1 credit match up to $100.",
+    "description": "OB-1 is a free, open-source CLI coding agent that runs in your terminal, edits code, and verifies its own work by running project checks and self-correcting until they pass. It features persistent project memory, multi-agent parallel investigation, and a built-in free-models router for keyless startup.",
+    "keyFeatures": [
+      "Self-checking code verification (runs checks and self-corrects)",
+      "Persistent project memory with inspectable fact/relationship graph",
+      "Multi-agent parallel investigation and best-of-N escalation",
+      "Free-model router with 162 free models across 22 providers, no account or API key needed",
+      "Rewind/undo functionality to restore files and conversation",
+      "Repository context mapping and automatic context compaction",
+      "MCP support and OS-level sandboxing (Seatbelt on macOS, bubblewrap on Linux)"
+    ],
+    "bestFor": "Developers who want a free, open-source terminal coding agent with zero setup, automatic test-driven self-correction, and the flexibility to use local models or bring their own API keys.",
+    "notIdealFor": "Teams needing Windows support (only macOS and Linux are supported) or those requiring immediate access to the latest frontier models on the free tier (new free models are delayed by 30 days for free users).",
+    "recentUpdates": "OB-1 is actively developed with version 0.3.4 mentioned. The GitHub repository was created in June 2026 and has ongoing contributions. A limited-time promotion offers 1:1 credit match up to $100 for paid credits.",
+    "verdict": "OB-1 stands out for its genuinely free, keyless startup and self-correcting workflow, making it accessible for experimentation. However, the free tier's model quality and shared limits may not satisfy power users, who will need to pay for frontier models or bring their own keys.",
+    "tags": [
+      "terminal",
+      "coding agent",
+      "open-source",
+      "self-correcting",
+      "free"
+    ],
+    "lastUpdated": "2026-08-25"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

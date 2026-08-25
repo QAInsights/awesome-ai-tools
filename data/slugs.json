@@ -696,6 +696,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "ob-1",
+    "name": "OB-1",
+    "company": "Overbrilliant",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
