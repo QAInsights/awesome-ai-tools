@@ -188,6 +188,7 @@ AI coding agents that live in your terminal or command line.
 | **[MathCode](https://github.com/math-ai-org/mathcode)** | Math-AI | MathCode: A Frontier Mathematical Coding Agent; [GitHub](https://github.com/math-ai-org/mathcode) |
 | **[fx.sh](https://fx.sh/)** | Vercel | fx is a coding agent harness and CLI written in Zig, optimized for research and embeddability as part of larger systems.; [GitHub](https://github.com/vercel-labs/fx) |
 | **[Zero](https://github.com/gitlawb/zero)** | Gitlawb | Zero is an AI coding agent for your local terminal. It can inspect a repository, edit files, run commands, use browser/terminal helpers, and keep durable local sessions while you choose the model and the permission level.; [GitHub](https://github.com/gitlawb/zero) |
+| **[Headlong](https://github.com/laude-institute/headlong)** | Laude Institute | An open source agent microharness featuring persistent agency and recursive LLMs. Of bash, by bash, for bash; it's shells all the way down.; [GitHub](https://github.com/laude-institute/headlong) |
 
 ---
 

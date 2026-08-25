@@ -684,6 +684,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "headlong",
+    "name": "Headlong",
+    "company": "Laude Institute",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

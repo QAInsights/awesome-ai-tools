@@ -3088,6 +3088,33 @@
     "lastUpdated": "2026-08-18"
   },
   {
+    "slug": "headlong",
+    "name": "Headlong",
+    "company": "Laude Institute",
+    "pricing": "free",
+    "pricingDetail": "Headlong is an open-source project, free to use. No paid tiers or subscription costs are mentioned in the search results.",
+    "description": "Headlong is an open-source agent microharness from Laude Institute that provides persistent agency and recursive LLMs, built entirely in Bash for terminal-based AI agents.",
+    "keyFeatures": [
+      "Persistent agency in Bash",
+      "Recursive LLM support",
+      "Open-source",
+      "Terminal-based",
+      "Built by Laude Institute and MIT"
+    ],
+    "bestFor": "Developers and researchers who want a lightweight, open-source, Bash-centric agent harness for terminal-based AI workflows.",
+    "notIdealFor": "Users seeking a full-featured IDE integration or those who prefer GUI-based tools, as Headlong is terminal-only and Bash-centric.",
+    "recentUpdates": "Mentioned as an early project by Laude Institute, but no specific release dates or version details were found in the search results.",
+    "verdict": "Headlong is a promising open-source tool for terminal enthusiasts, but lacks extensive documentation and community adoption compared to mainstream tools. Its Bash-only approach may limit its appeal to a niche audience.",
+    "tags": [
+      "open-source",
+      "terminal",
+      "bash",
+      "agent",
+      "LLM"
+    ],
+    "lastUpdated": "2026-08-25"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
