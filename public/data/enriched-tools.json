@@ -928,6 +928,35 @@
     "lastUpdated": "2026-08-23"
   },
   {
+    "slug": "openworker",
+    "name": "OpenWorker",
+    "company": "Andrew Ng",
+    "pricing": "open-source",
+    "pricingDetail": "OpenWorker is free and open-source under the MIT license. There are no paid tiers for the software itself; users bring their own model API keys (e.g., OpenAI, Anthropic, Google) or run fully local with Ollama, paying only the model provider for usage.",
+    "description": "OpenWorker is an open-source, local-first desktop AI coworker from Andrew Ng that delivers finished work—such as polished documents, Slack replies, calendar updates, and triaged inboxes—rather than just chat. It runs on your machine, integrates with 25+ tools, and supports any model via bring-your-own-key or local inference.",
+    "keyFeatures": [
+      "Delivers finished deliverables (documents, Slack replies, calendar edits) instead of chat transcripts",
+      "Local-first architecture: data, API keys, and credentials stay on your device",
+      "Model-agnostic: supports OpenAI, Anthropic, Google, DeepSeek, Kimi, GLM, Ollama, and more",
+      "25+ native connectors including Slack, Gmail, Google Calendar, GitHub, Jira, Notion, and MCP support",
+      "Typed permission model with risk classes (read, write_local, exec, external) and approval gates",
+      "Runs on macOS and Windows (unsigned builds), with auto-updates on Mac",
+      "Built on aisuite, Andrew Ng's open-source unified-LLM library"
+    ],
+    "bestFor": "Privacy-conscious individuals, developers, and small teams who want an open-source, self-hosted AI agent that can autonomously complete real tasks across their desktop and connected apps without vendor lock-in.",
+    "notIdealFor": "Users who prefer a managed cloud service with built-in model hosting, centralized team administration, or SSO/SCIM; also not ideal for those needing Linux support or a fully polished Windows installer (currently unsigned).",
+    "recentUpdates": "Launched in open beta on July 23, 2026, by Andrew Ng and Rohit Prasad. The GitHub repo quickly gained over 14,000 stars within weeks. Windows support shipped on day one but is unsigned; Linux is not available. The project is actively developed with frequent updates.",
+    "verdict": "OpenWorker is a promising open-source AI coworker that stands out for its local-first, privacy-preserving design and focus on delivering finished work. Its main trade-offs are the manual setup (managing your own API keys and model costs) and the lack of a managed cloud option, but for those comfortable with self-hosting, it offers strong flexibility and control.",
+    "tags": [
+      "open-source",
+      "local-first",
+      "AI agent",
+      "desktop app",
+      "productivity"
+    ],
+    "lastUpdated": "2026-08-25"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
