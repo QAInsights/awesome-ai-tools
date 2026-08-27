@@ -4672,30 +4672,30 @@
   {
     "slug": "sandbase-cli",
     "name": "SandBase CLI",
-    "company": "SandBase AI",
-    "pricing": "open-source",
-    "pricingDetail": "The SandBase CLI itself is open-source under the Apache-2.0 license (the Go module shows MIT license, but the repository is Apache-2.0). The underlying SandBase platform uses a pay-as-you-go credit system where 1 credit = $1 USD, with no monthly subscription and credits that never expire. Users purchase credits in amounts from $5 to $100 or custom via Stripe.",
-    "description": "SandBase CLI is a command-line tool and MCP bridge that configures 17+ coding-agent clients with six tools for discovering, inspecting, invoking, and tracking calls to a hosted catalog of 2,000+ models and APIs. It provides unified management of multimodal generation, LLM chat, agent/session orchestration, file uploads/downloads, and account queries.",
+    "company": "SandBase",
+    "pricing": "freemium",
+    "pricingDetail": "SandBase CLI is open-source (Apache 2.0) and free to use, but the SandBase platform uses a pay-as-you-go credit system. Users get free starter credits, then pay per token or API call. Credits never expire and there is no monthly subscription.",
+    "description": "SandBase CLI is an open-source TypeScript CLI and MCP bridge that connects AI coding agents to 2,000+ AI models and APIs through a single interface. It supports 25 AI client targets and exposes six MCP tools for discovering, inspecting, and running capabilities.",
     "keyFeatures": [
-      "Search and list models with `sandbase models`",
-      "View model parameter schemas with `sandbase schema`",
-      "Run multimodal generation tasks (e.g., image generation) with `sandbase run`",
-      "Streaming LLM chat with `sandbase chat`",
-      "Manage agents, sessions, environments, and skills via CLI commands",
-      "MCP bridge for configuring coding agents like Codex and Claude"
+      "One command setup for 25 AI clients (Codex, Claude Code, Cursor, Gemini CLI, Windsurf, etc.)",
+      "Access to 2,000+ AI models and APIs via MCP",
+      "Six MCP tools: discover, inspect, run, run_get, runs, account",
+      "Structured JSON output and machine-readable catalog",
+      "OAuth device flow with PKCE for secure authentication",
+      "Safe client configuration updates with backup and rollback"
     ],
-    "bestFor": "Developers and teams building AI agents who want a unified CLI to manage model calls, sandboxes, sessions, and MCP tools across multiple coding agents.",
-    "notIdealFor": "Users who prefer a fully graphical interface or who need a completely offline tool, as the CLI relies on the hosted SandBase platform for model access and requires an API key.",
-    "recentUpdates": "The CLI has seen active development with versions v0.1.1 (2026-06-26) through v0.2.4 (2026-07-05). The related sandbase-harness project was created 2026-07-11 and has 581 stars.",
-    "verdict": "SandBase CLI is a powerful open-source tool for developers integrating with the SandBase platform, offering extensive model access and agent management. However, it is tightly coupled to the hosted service, so it may not suit those seeking a fully self-hosted or offline solution.",
+    "bestFor": "Developers and forward-deployed engineers who want to quickly give their AI coding agents real-world capabilities (web search, image generation, data extraction) without managing multiple API keys.",
+    "notIdealFor": "Teams that need a fully self-hosted solution without any cloud dependency, or those who prefer a single-vendor API without a credit-based marketplace.",
+    "recentUpdates": "SandBase CLI v0.1.17 released on 2026-08-19, adding a 25-client compatibility catalog, updated Agent Skill metadata, and release workflow for npm trusted publishing. The SandBase Skills repository launched on 2026-07-29 with 88 installable Agent Skills.",
+    "verdict": "SandBase CLI is a promising open-source bridge that simplifies connecting AI agents to a vast ecosystem of models and APIs. Its strength is broad client support and a clean MCP toolset, but it relies on the SandBase platform for execution, which may be a consideration for those wanting full control.",
     "tags": [
-      "CLI",
       "MCP",
+      "CLI",
       "AI agents",
-      "model gateway",
-      "developer tools"
+      "developer tools",
+      "open-source"
     ],
-    "lastUpdated": "2026-08-15"
+    "lastUpdated": "2026-08-27"
   },
   {
     "slug": "wolfmarkdown",

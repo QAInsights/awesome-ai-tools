@@ -1056,6 +1056,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "sandbase-cli-sandbase",
+    "name": "SandBase CLI",
+    "company": "SandBase",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
