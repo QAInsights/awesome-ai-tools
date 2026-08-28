@@ -402,6 +402,12 @@
     "category": "IDE Extensions & Plugins"
   },
   {
+    "slug": "aicode",
+    "name": "AICode",
+    "company": "AI Sovereign Labs",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
     "slug": "claude-code",
     "name": "Claude Code",
     "company": "Anthropic",

@@ -134,6 +134,7 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[SF Pi](https://github.com/salesforce/sf-pi)** | Salesforce | Opinionated Salesforce extensions for the [Pi coding agent](https://pi.dev/): focused lifecycle tools, Salesforce-aware status and safety surfaces, Agent Script authoring, and one Manager for package settings and extension enablement.; [GitHub](https://github.com/salesforce/sf-pi) |
 | **[Blume](https://blume.codes/invite/coral-buttercup-awakening-gracefully)** | Blume | Blume helps you build an agentic-native codebase with consistent and correct context. Fewer mistakes, fewer headaches.; [GitHub](_No response_) |
 | **[Codex++](https://github.com/b-nnett/codex-plusplus)** | bennett | Codex++ tweak system for the Codex desktop app; [GitHub](https://github.com/b-nnett/codex-plusplus) |
+| **[AICode](https://ai-code.ai/)** | AI Sovereign Labs | AICOde is an AI coding assistant, as a VS Code extension: Spec-driven ; human validation gate before code generation ; MCP/skills support ; BYOK Azure/OpenAI ; 5D local index ; built-in QA harness. Specialized in quality code generation using a 5 step workflow: Ideate → Specify → Refine → Code → Verify.; [GitHub](_No response_) |
 
 ---
 

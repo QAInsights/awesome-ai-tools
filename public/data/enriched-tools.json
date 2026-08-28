@@ -1814,6 +1814,35 @@
     "lastUpdated": "2026-08-16"
   },
   {
+    "slug": "aicode",
+    "name": "AICode",
+    "company": "AI Sovereign Labs",
+    "pricing": "freemium",
+    "pricingDetail": "AICode offers a free-forever plan and a free trial, with detailed pricing available on request. It is a VS Code extension with BYOK (bring your own key) support, meaning users can connect their own OpenAI or Azure API keys.",
+    "description": "AICode is a spec-driven AI coding assistant for VS Code, designed to maintain complex legacy enterprise software with full data sovereignty. It enforces a five-stage workflow (Ideate, Specify, Refine, Code, Verify) and uses a 5D codebase index to catch bugs before code generation.",
+    "keyFeatures": [
+      "Spec-driven workflow (Ideate → Specify → Refine → Code → Verify)",
+      "5D codebase index (project map, lexical, vector, symbols, Git history)",
+      "Offline-first, BYOK architecture with no intermediate servers",
+      "Human validation gate before code generation",
+      "Built-in QA harness with refine and verify loops",
+      "MCP protocol support and skills",
+      "Virtual workspace patch system with file-by-file approval"
+    ],
+    "bestFor": "Developers and teams maintaining large, poorly documented legacy enterprise codebases who need strict quality control, data sovereignty, and reduced code review overhead.",
+    "notIdealFor": "Developers seeking a lightweight, quick code completion tool or those who prefer fully autonomous AI agents without human-in-the-loop specification steps.",
+    "recentUpdates": "As of July 2026, AICode is listed on SaaSworthy with a free-forever plan. The tool is actively promoted with a case study published on arXiv demonstrating a 3-day rebuild with zero bugs. It is built on 700,000 lines of TypeScript, dogfooded by a solo developer.",
+    "verdict": "AICode offers a unique spec-first approach that dramatically reduces code review bottlenecks and technical debt, with strong data sovereignty features. However, its structured workflow may be overkill for simple projects, and its effectiveness depends on the user's willingness to adopt a disciplined process.",
+    "tags": [
+      "AI coding assistant",
+      "VS Code extension",
+      "spec-driven development",
+      "legacy code",
+      "data sovereignty"
+    ],
+    "lastUpdated": "2026-08-28"
+  },
+  {
     "slug": "claude-code",
     "name": "Claude Code",
     "company": "Anthropic",
