@@ -4810,6 +4810,33 @@
     "lastUpdated": "2026-08-19"
   },
   {
+    "slug": "aipm",
+    "name": "AIPM",
+    "company": "Abhishek Srivastava",
+    "pricing": "open-source",
+    "pricingDetail": "AIPM is an open-source project, free to use and contribute to. No paid tiers or pricing plans are mentioned in the search results.",
+    "description": "AIPM is an open-source AI package manager and registry, similar to npm but for AI, allowing publishing, versioning, discovering, and installing reusable AI skills across tools like Codex, Claude Code, and Cursor.",
+    "keyFeatures": [
+      "CLI tool for managing AI skills",
+      "Registry for AI skills/tools/MCP",
+      "User dashboard",
+      "Supports Codex, Claude Code, and Cursor",
+      "Open-source and community-driven"
+    ],
+    "bestFor": "Developers and teams who want to share, discover, and reuse AI skills across multiple AI coding tools in a standardized way.",
+    "notIdealFor": "Users looking for a fully polished, production-ready tool with extensive documentation and support, as it is still in early development.",
+    "recentUpdates": "As of June 2026, the creator is actively developing AIPM and seeking contributors. The project is in early stages with a CLI, registry, and dashboard planned.",
+    "verdict": "AIPM is a promising open-source project addressing the need for a package manager for AI skills. It is early-stage and community-driven, so users should expect ongoing development and potential rough edges.",
+    "tags": [
+      "AI package manager",
+      "open-source",
+      "CLI",
+      "registry",
+      "AI skills"
+    ],
+    "lastUpdated": "2026-08-28"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",

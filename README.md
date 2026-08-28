@@ -317,6 +317,7 @@ AI-powered tools for managing context, snippets, and developer documentation.
 | **[Codex Quota Overlay](https://cpys.github.io/codex-quota-overlay/)** | cpys (maintainer; independent community project) | An independent Windows and macOS overlay that shows remaining Codex quota, next reset time, and available reset credits beside the active Codex conversation. It reads the documented local rate-limits method, stays out of the way, and does not capture screenshots, conversations, or browser cookies.; [GitHub](https://github.com/cpys/codex-quota-overlay) |
 | **[DeskCue](https://deskcue.io)** | Alexander Kornev | DeskCue is an open-source, local-first workspace for reviewing and steering coding-agent work. It keeps sessions, git diff, files, live preview, notifications, and the next prompt accessible from another browser or phone while the agents and workspace stay on your machine.; [GitHub](https://github.com/AleksandrKornev/DeskCue) |
 | **[SandBase CLI](https://sandbase.ai)** | SandBase | Open-source CLI and MCP server that gives developers and AI coding agents one interface to discover and call 2,000+ AI models and APIs. It supports structured JSON output, 25 AI clients, local/remote MCP transports, and six MCP tools.; [GitHub](https://github.com/sandbaseai/cli) |
+| **[AIPM](https://www.aipm-registry.com/)** | Abhishek Srivastava | Open-source registry and CLI for publishing, versioning, discovering, and installing reusable AI skills across Codex, Claude Code, and Cursor.; [GitHub](https://github.com/abhisri2090/aipm) |
 
 ---
 
