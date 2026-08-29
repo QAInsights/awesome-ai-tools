@@ -1038,12 +1038,6 @@
     "category": "Developer Productivity & Workflow"
   },
   {
-    "slug": "sandbase-cli",
-    "name": "SandBase CLI",
-    "company": "SandBase AI",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
     "slug": "wolfmarkdown",
     "name": "WolfMarkDown",
     "company": "WolfMark",
@@ -1062,7 +1056,7 @@
     "category": "Developer Productivity & Workflow"
   },
   {
-    "slug": "sandbase-cli-sandbase",
+    "slug": "sandbase-cli",
     "name": "SandBase CLI",
     "company": "SandBase",
     "category": "Developer Productivity & Workflow"
