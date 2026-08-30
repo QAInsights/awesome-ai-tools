@@ -1,5 +1,18 @@
 import { filterTools, renderTools } from '../renderer.js';
 
+const TYPING_TAGS = new Set(['input', 'textarea', 'select']);
+
+export function isSearchShortcutEvent(event) {
+    if (!event || event.key !== '/') return false;
+    if (event.ctrlKey || event.metaKey || event.altKey) return false;
+    if (event.defaultPrevented) return false;
+
+    const target = event.target;
+    if (!target) return true;
+    if (target.isContentEditable) return false;
+    return !TYPING_TAGS.has(target.tagName?.toLowerCase());
+}
+
 export function initFilterManager(config) {
     const { toolsData, categories, onFilter } = config;
     let currentCategory = 'all';
@@ -144,6 +157,12 @@ export function initFilterManager(config) {
     // Bind event listeners
     if (searchInput) {
         searchInput.addEventListener('input', filterAndRender);
+        document.addEventListener('keydown', (e) => {
+            if (!isSearchShortcutEvent(e)) return;
+            e.preventDefault();
+            searchInput.focus();
+            searchInput.select?.();
+        });
     }
     if (searchClear) {
         searchClear.addEventListener('click', () => {
