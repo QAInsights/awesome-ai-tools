@@ -349,7 +349,7 @@ function loadBatch() {
  */
 function createToolRow(tool, index) {
     const row = document.createElement('div');
-    row.className = 'compare-row flex flex-col md:flex-row gap-2 md:gap-0 py-5 md:py-6 border-b border-[#222] text-white transition-all duration-200 items-start group row-anim cursor-pointer';
+    row.className = 'compare-row flex flex-col md:flex-row gap-2 md:gap-0 py-5 md:py-6 border-b border-[#222] text-white transition-all duration-200 items-start md:items-baseline group row-anim cursor-pointer';
     row.style.animationDelay = `${(index % 15) * 0.02}s`;
     row.dataset.compareRow = 'true';
     row.dataset.slug = tool.slug;
@@ -374,7 +374,7 @@ function createToolRow(tool, index) {
 
     row.innerHTML = `
         <div class="w-full flex justify-between items-start md:contents mb-1 md:mb-0">
-            <div class="w-auto md:w-[280px] md:pr-6 shrink-0 text-[20px] md:text-[18px] font-medium flex items-center gap-3 md:order-1">
+            <div class="reg-col-name w-auto text-[20px] md:text-[18px] font-medium flex items-center gap-3 md:order-1">
                 <label class="compare-checkbox ${isSelected(tool.slug) ? 'active' : ''}" data-slug="${escapeHtml(tool.slug)}" title="Select ${safeName} for comparison" aria-label="Select ${safeName} for comparison">
                     <input type="checkbox" ${isSelected(tool.slug) ? 'checked' : ''}>
                     <span class="compare-checkbox-box">
@@ -403,13 +403,13 @@ function createToolRow(tool, index) {
                     </a>
                 </div>
             </div>
-            <div class="shrink-0 md:w-[120px] md:pr-6 flex justify-end md:justify-center md:order-5">
+            <div class="reg-col-zap shrink-0 flex justify-end md:justify-center md:order-5">
 ${createZapButtonHtml(toolId, tool.name, initialVoteCount)}
             </div>
         </div>
-        <div class="w-full md:w-[200px] md:pr-6 shrink-0 font-mono text-[14px] text-[#a3a3a3] uppercase tracking-wide mb-2 md:mb-0 md:order-2">${escapeHtml(tool.company)}</div>
-        <div class="w-full md:w-auto md:pr-6 grow text-[16px] text-[#a3a3a3] leading-relaxed transition-colors group-hover:text-[#e0e0e0] mb-3 md:mb-0 md:order-3 tool-notes" title="${isLong ? escapeHtml(fullNotes) : ''}">${escapeHtml(displayNotes)}</div>
-        <div class="w-full md:hidden lg:block lg:w-[180px] md:px-6 shrink-0 text-left lg:text-center mt-1 md:mt-0 md:order-4">
+        <div class="reg-col-company w-full font-mono text-[14px] text-[#a3a3a3] uppercase tracking-wide mb-2 md:mb-0 md:order-2">${escapeHtml(tool.company)}</div>
+        <div class="reg-col-desc w-full text-[16px] text-[#a3a3a3] leading-relaxed transition-colors group-hover:text-[#e0e0e0] mb-3 md:mb-0 md:order-3 tool-notes" title="${isLong ? escapeHtml(fullNotes) : ''}">${escapeHtml(displayNotes)}</div>
+        <div class="reg-col-category w-full md:hidden lg:block text-left lg:text-center mt-1 md:mt-0 md:order-4">
             <a href="/category/${catShort.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}" class="inline-block px-3 py-1 border border-[#222] rounded-full bg-white/5 font-mono text-[13px] tracking-wide text-[#a3a3a3] hover:text-white hover:border-[#444] transition-colors" title="${escapeHtml(catClean)}" onclick="event.stopPropagation()">${escapeHtml(catShort)}</a>
         </div>`;
 

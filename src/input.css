@@ -438,6 +438,55 @@
         cursor: wait;
     }
 
+    /* Directory grid columns: single source of truth for the sticky table
+       header (index.astro), the SSR row (ToolRow.astro) and the client
+       rendered row (js/renderer.js). */
+    .reg-col-name,
+    .reg-col-company,
+    .reg-col-desc,
+    .reg-col-category,
+    .reg-col-zap {
+        min-width: 0;
+    }
+
+    @media (min-width: 768px) {
+        .reg-col-name {
+            flex: 0 1 280px;
+            min-width: 7rem;
+            padding-right: 1.5rem;
+        }
+
+        .reg-col-company {
+            flex: 0 1 200px;
+            min-width: 4.5rem;
+            padding-right: 1.5rem;
+        }
+
+        .reg-col-desc {
+            flex: 1 1 0%;
+            min-width: 5.5rem;
+            padding-right: 1.5rem;
+        }
+
+        .reg-col-category {
+            flex: 0 0 180px;
+            padding-inline: 1.5rem;
+        }
+
+        .reg-col-zap {
+            flex: 0 0 120px;
+            padding-right: 1.5rem;
+        }
+    }
+
+    /* Once the viewport is wide enough for it, the description keeps a readable
+       width and the name/company columns give up space instead. */
+    @media (min-width: 1280px) {
+        .reg-col-desc {
+            min-width: 14rem;
+        }
+    }
+
     .compare-row {
         border-radius: 22px;
         padding-inline: 0.9rem;

@@ -196,12 +196,12 @@ const toolsJson = JSON.stringify(tools);
                 </div>
 
                 <!-- Table Header -->
-                <div class="table-header hidden md:flex items-center px-8 py-5 border-b border-[#222] font-mono text-[14px] text-[#a3a3a3] uppercase tracking-widest bg-black shrink-0 transition-all duration-300 sticky top-[89px] z-10" id="tableHeader">
-                    <div class="w-[280px] pr-6 shrink-0 text-sm transition-all duration-300 cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="name" id="thName">Name <span class="sort-icon opacity-50">↕</span></div>
-                    <div class="w-[200px] pr-6 shrink-0 text-sm cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="company">Company <span class="sort-icon opacity-50">↕</span></div>
-                    <div class="grow pr-6 text-sm cursor-pointer hover:text-white select-none" style="pointer-events: none;">Description</div>
-                    <div class="hidden lg:flex w-[180px] px-6 shrink-0 text-sm cursor-pointer hover:text-white select-none items-center justify-center gap-2" data-sort="category">Category <span class="sort-icon opacity-50">↕</span></div>
-                    <div class="w-[120px] pr-6 shrink-0 text-sm cursor-pointer hover:text-white select-none flex items-center justify-center gap-2" data-sort="votes">⚡ Zap <span class="sort-icon opacity-50">↕</span></div>
+                <div class="table-header hidden md:flex items-center px-8 py-5 border-b border-[#222] font-mono text-[14px] text-[#a3a3a3] uppercase tracking-widest bg-black shrink-0 transition-all duration-300 sticky top-[89px] z-10 overflow-y-auto" id="tableHeader">
+                    <div class="reg-col-name text-sm transition-all duration-300 cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="name" id="thName">Name <span class="sort-icon opacity-50">↕</span></div>
+                    <div class="reg-col-company text-sm cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="company">Company <span class="sort-icon opacity-50">↕</span></div>
+                    <div class="reg-col-desc text-sm cursor-pointer hover:text-white select-none" style="pointer-events: none;">Description</div>
+                    <div class="reg-col-category hidden lg:flex text-sm cursor-pointer hover:text-white select-none items-center justify-center gap-2" data-sort="category">Category <span class="sort-icon opacity-50">↕</span></div>
+                    <div class="reg-col-zap text-sm cursor-pointer hover:text-white select-none flex items-center justify-center gap-2" data-sort="votes">⚡ Zap <span class="sort-icon opacity-50">↕</span></div>
                 </div>
 
                 <!-- Tool Grid - pre-rendered at build time (SSR); JS hydrates compare/zap
