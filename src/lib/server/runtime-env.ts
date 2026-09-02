@@ -1,6 +1,8 @@
 import { env } from 'cloudflare:workers';
 import type { Database } from './db';
 
+const runtimeEnv = env as typeof env & Record<string, unknown>;
+
 function configuredValue(...values: unknown[]): string {
     for (const value of values) {
         if (typeof value === 'string' && value) return value;
@@ -26,6 +28,24 @@ export function getCloudflareAccountId(): string {
 
 export function getCloudflareAnalyticsToken(): string {
     return configuredValue(env.CF_ANALYTICS_TOKEN, process.env.CF_ANALYTICS_TOKEN);
+}
+
+export function getEmailFrom(): string {
+    return configuredValue(runtimeEnv.EMAIL_FROM, import.meta.env.EMAIL_FROM, process.env.EMAIL_FROM) || 'updates@ai.dosa.dev';
+}
+
+export function isEmailDryRun(): boolean {
+    return ['1', 'true', 'yes'].includes(
+        configuredValue(runtimeEnv.EMAIL_DRY_RUN, import.meta.env.EMAIL_DRY_RUN, process.env.EMAIL_DRY_RUN).toLowerCase(),
+    );
+}
+
+export function getSiteOrigin(): string {
+    return configuredValue(runtimeEnv.SITE_ORIGIN, import.meta.env.SITE_ORIGIN, process.env.SITE_ORIGIN) || 'https://ai.dosa.dev';
+}
+
+export function getEmailBinding(): SendEmail | undefined {
+    return runtimeEnv.EMAIL as SendEmail | undefined;
 }
 
 export function getAnalyticsDataset(): 'aat_events' | 'aat_events_staging' {

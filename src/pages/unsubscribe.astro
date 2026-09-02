@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { unsubscribeByToken } from '../lib/server/notification-prefs-repository';
+import { requireDatabase } from '../lib/server/runtime-env';
+
+export const prerender = false;
+
+let valid = false;
+const token = Astro.url.searchParams.get('token') ?? '';
+try {
+    valid = await unsubscribeByToken(requireDatabase(), token);
+} catch (error) {
+    console.error('[Notifications] Unsubscribe failed:', error instanceof Error ? error.message : String(error));
+}
+
+if (Astro.request.method === 'POST') {
+    return new Response(null, {
+        status: 200,
+        headers: { 'Cache-Control': 'no-store' },
+    });
+}
+---
+
+<BaseLayout
+    title="Unsubscribe | ai.dosa.dev"
+    description="Manage email notifications from ai.dosa.dev."
+    canonical="https://ai.dosa.dev/unsubscribe"
+    robots="noindex, nofollow"
+>
+    <main class="min-h-screen bg-black text-white flex items-center justify-center p-6">
+        <section class="max-w-lg w-full border border-[#222] bg-white/[0.02] rounded-xl p-8 text-center">
+            {valid ? (
+                <>
+                    <h1 class="text-2xl font-semibold mb-3">You&apos;re unsubscribed</h1>
+                    <p class="text-[#a3a3a3] mb-6">You will no longer receive email digests from ai.dosa.dev.</p>
+                    <a href="/settings" class="inline-flex items-center py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 transition-colors">Manage notifications</a>
+                </>
+            ) : (
+                <>
+                    <h1 class="text-2xl font-semibold mb-3">Invalid link</h1>
+                    <p class="text-[#a3a3a3]">This unsubscribe link is invalid or has expired.</p>
+                </>
+            )}
+        </section>
+    </main>
+</BaseLayout>

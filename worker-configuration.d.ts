@@ -5,6 +5,7 @@ interface __BaseEnv_Env {
 	ANALYTICS: AnalyticsEngineDataset;
 	CF_VERSION_METADATA: WorkerVersionMetadata;
 	ASSETS: Fetcher;
+	EMAIL: SendEmail;
 	CF_ACCOUNT_ID: "79a56f7656f972b064b9d4ec3662b8d0";
 	ADMIN_USER_IDS: "github:2826376,github:local-staging-tester" | "github:2826376";
 	ANALYTICS_DATASET: "aat_events_staging" | "aat_events";
@@ -19,6 +20,7 @@ declare namespace Cloudflare {
 		ANALYTICS: AnalyticsEngineDataset;
 		CF_VERSION_METADATA: WorkerVersionMetadata;
 		ASSETS: Fetcher;
+		EMAIL: SendEmail;
 		CF_ACCOUNT_ID: "79a56f7656f972b064b9d4ec3662b8d0";
 		ADMIN_USER_IDS: "github:2826376,github:local-staging-tester";
 		ANALYTICS_DATASET: "aat_events_staging";

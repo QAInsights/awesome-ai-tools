@@ -6,6 +6,7 @@ const migration1 = new URL('../../../migrations/0001_accounts_and_favorites.sql'
 const migration2 = new URL('../../../migrations/0002_flatten_user_identity.sql', import.meta.url);
 const migration3 = new URL('../../../migrations/0003_enforce_flattened_user_identity.sql', import.meta.url);
 const migration4 = new URL('../../../migrations/0004_user_activity_columns.sql', import.meta.url);
+const migration6 = new URL('../../../migrations/0006_notification_prefs.sql', import.meta.url);
 
 function applyMigration(db: Database, migration: URL) {
     const statements = readFileSync(migration, 'utf8')
@@ -29,6 +30,48 @@ function insertLegacyUser(db: Database, withIdentity = true) {
 }
 
 describe('accounts and favorites migrations', () => {
+    test('adds notification preferences and email log tables', () => {
+        const db = new Database(':memory:');
+        applyMigration(db, migration1);
+        applyMigration(db, migration2);
+        applyMigration(db, migration3);
+        applyMigration(db, migration4);
+        applyMigration(db, migration6);
+
+        const tables = db.query(`
+            SELECT name
+            FROM sqlite_schema
+            WHERE type = 'table' AND name IN ('notification_prefs', 'email_log')
+            ORDER BY name
+        `).all();
+        expect(tables).toEqual([{ name: 'email_log' }, { name: 'notification_prefs' }]);
+        expect(db.query(`
+            SELECT name
+            FROM sqlite_schema
+            WHERE type = 'index' AND name = 'email_log_user_sent_idx'
+        `).get()).toEqual({ name: 'email_log_user_sent_idx' });
+
+        db.run(
+            'INSERT INTO users (id, provider, provider_user_id, display_name, email_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            ['github:42', 'github', '42', 'Ada', 1, 1, 1],
+        );
+        db.run(
+            'INSERT INTO notification_prefs (user_id, unsubscribe_token, updated_at) VALUES (?, ?, ?)',
+            ['github:42', 'token', 2],
+        );
+        expect(db.query('SELECT email_enabled, last_digest_sent_at FROM notification_prefs').get()).toEqual({
+            email_enabled: 1,
+            last_digest_sent_at: null,
+        });
+        expect(() => db.run(
+            'INSERT INTO notification_prefs (user_id, unsubscribe_token, updated_at) VALUES (?, ?, ?)',
+            ['github:42', 'other-token', 3],
+        )).toThrow();
+        db.run('DELETE FROM users WHERE id = ?', ['github:42']);
+        expect(db.query('SELECT COUNT(*) AS count FROM notification_prefs').get()).toEqual({ count: 0 });
+        db.close();
+    });
+
     test('adds durable user activity columns and backfills last seen', () => {
         const db = new Database(':memory:');
         applyMigration(db, migration1);

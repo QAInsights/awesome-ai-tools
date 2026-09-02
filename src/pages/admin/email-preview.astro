@@ -1,0 +1,46 @@
+---
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import { renderDigest } from '../../lib/server/email-templates/digest';
+import { getAdminUserIds, requireDatabase } from '../../lib/server/runtime-env';
+import { getCookieSessionUser } from '../../lib/server/route-auth';
+import enrichedTools from '../../../public/data/enriched-tools.json';
+
+export const prerender = false;
+
+const user = await getCookieSessionUser(Astro.cookies, requireDatabase());
+if (!user || !getAdminUserIds().has(user.id)) {
+    return new Response('Not found', { status: 404 });
+}
+
+const sampleTools = enrichedTools.slice(0, 3).map(tool => ({
+    slug: tool.slug,
+    name: tool.name,
+    description: tool.description,
+    recentUpdates: [tool.recentUpdates],
+    lastUpdated: tool.lastUpdated,
+}));
+const digest = renderDigest({
+    userName: user.name,
+    tools: sampleTools,
+    unsubscribeUrl: 'https://ai.dosa.dev/unsubscribe?token=preview',
+});
+---
+
+<DashboardLayout
+    title="Email Preview | ai.dosa.dev"
+    description="Preview the ai.dosa.dev notification digest."
+    robots="noindex, nofollow"
+    activeNav="admin"
+>
+    <div class="max-w-[900px] mx-auto w-full p-5 md:p-8">
+        <header class="mb-7">
+            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-2">Private dashboard</p>
+            <h1 class="text-2xl md:text-3xl font-semibold">Email digest preview</h1>
+        </header>
+        <iframe
+            title="Digest email preview"
+            class="w-full min-h-[900px] rounded-lg border border-[#222] bg-[#090909]"
+            srcdoc={digest.html}
+        ></iframe>
+    </div>
+</DashboardLayout>
