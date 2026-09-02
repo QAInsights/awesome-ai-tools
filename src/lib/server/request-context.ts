@@ -1,7 +1,7 @@
 const staticRoutes = new Set([
     '/', '/advertise', '/blog', '/compare', '/favorites', '/help', '/news', '/settings', '/zap',
     '/tools/token-counter', '/tools/hallucination-scorer',
-    '/api/events', '/api/favorites', '/api/notifications/prefs', '/api/auth/session', '/api/auth/github', '/api/auth/dev',
+    '/api/events', '/api/favorites', '/api/notifications/prefs', '/api/admin/digest/run', '/api/auth/session', '/api/auth/github', '/api/auth/dev',
     '/api/follows',
 ]);
 
