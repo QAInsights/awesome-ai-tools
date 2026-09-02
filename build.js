@@ -54,6 +54,7 @@ const result = await build({
         './js/hallucination-scorer.js',
     ],
     outdir: './public/dist',
+    root: './js',
     splitting: true,
     minify: true,
     define: {
