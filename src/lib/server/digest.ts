@@ -202,18 +202,20 @@ export async function runDigest(opts: DigestRunOptions): Promise<DigestRunSummar
             });
             successfulSends.push(result);
             throttleBeforeNextSend = !result.dryRun;
-            const toolSlugs = JSON.stringify(changedTools.map(({ source, lastUpdated }) => `${source.slug}@${lastUpdated}`));
-            await opts.db.batch([
-                opts.db.prepare(`
-                    INSERT INTO email_log (user_id, kind, tool_slugs, message_id, sent_at)
-                    VALUES (?, 'digest', ?, ?, ?)
-                `).bind(candidate.id, toolSlugs, result.messageId, now),
-                opts.db.prepare(`
-                    UPDATE notification_prefs
-                    SET last_digest_sent_at = ?, updated_at = ?
-                    WHERE user_id = ?
-                `).bind(now, now, candidate.id),
-            ]);
+            if (!result.dryRun) {
+                const toolSlugs = JSON.stringify(changedTools.map(({ source, lastUpdated }) => `${source.slug}@${lastUpdated}`));
+                await opts.db.batch([
+                    opts.db.prepare(`
+                        INSERT INTO email_log (user_id, kind, tool_slugs, message_id, sent_at)
+                        VALUES (?, 'digest', ?, ?, ?)
+                    `).bind(candidate.id, toolSlugs, result.messageId, now),
+                    opts.db.prepare(`
+                        UPDATE notification_prefs
+                        SET last_digest_sent_at = ?, updated_at = ?
+                        WHERE user_id = ?
+                    `).bind(now, now, candidate.id),
+                ]);
+            }
             summary.sent += 1;
         } catch (error) {
             summary.failed += 1;

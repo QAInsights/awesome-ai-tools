@@ -158,6 +158,30 @@ describe('digest service', () => {
         sqlite.close();
     });
 
+    test('does not persist a dry-run send', async () => {
+        const { db, sqlite } = makeDatabase();
+        const sentAt = Date.parse('2026-08-01');
+        addUser(sqlite, { id: 'github:user-a' });
+        addFollow(sqlite, 'github:user-a', 'cursor', Date.parse('2026-07-01'));
+        addPrefs(sqlite, 'github:user-a', 'token-a', 1, sentAt);
+        const mail = sender({ messageId: null, dryRun: true });
+
+        const summary = await runDigest({
+            db,
+            tools: [tool],
+            sendEmail: mail.sendEmail,
+            siteOrigin: 'https://ai.dosa.dev',
+            now: Date.parse('2026-09-02'),
+        });
+
+        expect(summary).toMatchObject({ candidates: 1, sent: 1, dryRun: true });
+        expect(sqlite.query('SELECT COUNT(*) AS count FROM email_log').get()).toEqual({ count: 0 });
+        expect(sqlite.query('SELECT last_digest_sent_at FROM notification_prefs WHERE user_id = ?').get('github:user-a')).toEqual({
+            last_digest_sent_at: sentAt,
+        });
+        sqlite.close();
+    });
+
     test('skips a tool last updated before the follow was created', async () => {
         const { db, sqlite } = makeDatabase();
         addUser(sqlite, { id: 'github:user-a' });
