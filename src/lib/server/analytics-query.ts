@@ -99,7 +99,7 @@ export function buildFunnelViewModel(rows: FunnelEventRow[]): FunnelViewModel {
     };
 }
 
-export async function queryFunnel(range: FunnelRange): Promise<FunnelViewModel> {
+export async function runAnalyticsSql(sql: string): Promise<unknown[]> {
     const accountId = getCloudflareAccountId();
     const token = getCloudflareAnalyticsToken();
     if (!accountId || !token) throw new Error('Cloudflare Analytics query credentials are not configured');
@@ -107,12 +107,17 @@ export async function queryFunnel(range: FunnelRange): Promise<FunnelViewModel> 
     const response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${accountId}/analytics_engine/sql`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
-        body: funnelQuery(getAnalyticsDataset(), range),
+        body: sql,
     });
     if (!response.ok) throw new Error(`Cloudflare Analytics query failed: ${response.status}`);
 
-    const payload = await response.json() as { data?: FunnelEventRow[] };
-    return buildFunnelViewModel(payload.data ?? []);
+    const payload = await response.json() as { data?: unknown[] };
+    return payload.data ?? [];
+}
+
+export async function queryFunnel(range: FunnelRange): Promise<FunnelViewModel> {
+    const rows = await runAnalyticsSql(funnelQuery(getAnalyticsDataset(), range));
+    return buildFunnelViewModel(rows as FunnelEventRow[]);
 }
 
 export async function loadFunnel(range: FunnelRange): Promise<{ data: FunnelViewModel; error: string }> {

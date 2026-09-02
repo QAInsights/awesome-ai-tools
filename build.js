@@ -45,6 +45,7 @@ const result = await build({
         './js/app.js',
         './js/dashboard.js',
         './js/favorites-page.js',
+        './js/zap-page.js',
         './js/settings-page.js',
         './js/compare.js',
         './js/blog.js',

@@ -1,5 +1,26 @@
 ---
 import DashboardLayout from '../layouts/DashboardLayout.astro';
+import { getAllTools } from '../lib/tools';
+import { getCookieSessionUser } from '../lib/server/route-auth';
+import { requireDatabase } from '../lib/server/runtime-env';
+import { loadUserZaps } from '../lib/server/zap-query';
+
+export const prerender = false;
+
+Astro.response.headers.set('Cache-Control', 'private, no-store');
+
+const user = await getCookieSessionUser(Astro.cookies, requireDatabase());
+const tools = getAllTools().map(tool => ({
+    slug: tool.slug,
+    name: tool.enriched?.name ?? tool.name,
+    company: tool.enriched?.company ?? tool.company,
+    category: tool.categoryShort,
+}));
+const dashboard = user ? await loadUserZaps(user.id, tools) : null;
+const formatZapDate = (value: string) => {
+    const timestamp = Date.parse(value);
+    return Number.isNaN(timestamp) ? value : new Date(timestamp).toISOString().slice(0, 10);
+};
 ---
 
 <DashboardLayout
@@ -9,17 +30,79 @@ import DashboardLayout from '../layouts/DashboardLayout.astro';
     robots="noindex, nofollow"
     activeNav="zap"
 >
-    <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-0 p-8">
-        <div class="max-w-2xl">
-            <h2 class="text-2xl font-semibold mb-6 flex items-center gap-3">
-                <svg class="w-6 h-6 text-[#F2C040]" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                </svg>
-                Zap Dashboard
-            </h2>
-            <div class="border border-[#222] bg-white/5 rounded-md p-6">
-                <p class="text-[#a3a3a3]">Zap management and analytics are coming soon.</p>
+    <div class="max-w-[1100px] mx-auto w-full flex flex-col flex-1 min-h-0 p-5 md:p-8">
+        {user ? (
+            <>
+                <header class="mb-7">
+                    <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-2">Your activity</p>
+                    <h1 class="text-2xl md:text-3xl font-semibold tracking-tight">Zap Dashboard</h1>
+                    <p class="text-[#a3a3a3] text-[15px] mt-2">Tools you zapped in the last 90 days.</p>
+                </header>
+
+                {dashboard?.error && (
+                    <div class="border border-amber-400/20 bg-amber-400/[0.06] rounded-xl p-4 mb-5 text-amber-100">
+                        {dashboard.error}
+                    </div>
+                )}
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-7">
+                    <div class="border border-[#222] bg-white/[0.02] rounded-xl p-5">
+                        <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-[#737373]">Tools zapped</p>
+                        <p class="text-2xl font-semibold mt-2">{dashboard?.data.total ?? 0}</p>
+                    </div>
+                    <div class="border border-[#222] bg-white/[0.02] rounded-xl p-5">
+                        <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-[#737373]">Last 30 days</p>
+                        <p class="text-2xl font-semibold mt-2">{dashboard?.data.last30Days ?? 0}</p>
+                    </div>
+                    <div class="border border-[#222] bg-white/[0.02] rounded-xl p-5">
+                        <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-[#737373]">Top category</p>
+                        <p class="text-2xl font-semibold mt-2">{dashboard?.data.topCategory || '—'}</p>
+                    </div>
+                </div>
+
+                {dashboard?.data.tools.length ? (
+                    <div id="zapGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {dashboard.data.tools.map(tool => (
+                            <article class="group border border-[#222] bg-white/[0.02] rounded-xl p-5 transition-all hover:border-[#3a3a3a] hover:bg-white/[0.035]">
+                                <div class="flex items-start justify-between gap-4">
+                                    <div class="min-w-0">
+                                        <a href={`/tools/${tool.slug}`} class="text-lg font-semibold text-white hover:text-[#e2c48a] transition-colors">{tool.name}</a>
+                                        <div class="font-mono text-[11px] uppercase tracking-wide text-[#737373] mt-1">{tool.company} · {tool.category}</div>
+                                        <div class="text-[13px] text-[#a3a3a3] mt-2">Zapped {formatZapDate(tool.zappedAt)}</div>
+                                    </div>
+                                    <div class="flex items-center gap-2 shrink-0">
+                                        <button class="favorite-btn detail" type="button" data-tool-slug={tool.slug} data-tool-name={tool.name} aria-label={`Save ${tool.name}`} aria-pressed="false" title={`Save ${tool.name}`}>
+                                            <svg class="favorite-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.75L6 21V4.75Z"/></svg>
+                                            <span data-favorite-label>Save</span>
+                                        </button>
+                                        <button class="follow-btn detail" type="button" data-tool-slug={tool.slug} data-tool-name={tool.name} aria-label={`Follow ${tool.name}`} aria-pressed="false" title={`Get email updates about ${tool.name}`}>
+                                            <svg class="follow-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
+                                            <span data-follow-label>Follow</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between gap-3 mt-4">
+                                    <span data-zap-count data-tool-id={tool.toolId} class="font-mono text-[12px] text-[#F2C040]"></span>
+                                </div>
+                            </article>
+                        ))}
+                    </div>
+                ) : (
+                    <div class="border border-[#222] bg-white/[0.02] rounded-xl p-7">
+                        <h2 class="text-lg font-semibold mb-2">No zaps yet</h2>
+                        <p class="text-[#a3a3a3] text-[14px] mb-2">No zaps yet — zap tools from the directory and your activity will appear here.</p>
+                        <p class="text-[#737373] text-[13px] mb-5">Only zaps from now on are tracked.</p>
+                        <a href="/" class="inline-flex items-center py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 transition-colors">Browse tools</a>
+                    </div>
+                )}
+            </>
+        ) : (
+            <div class="border border-[#222] bg-white/[0.02] rounded-xl p-7 max-w-2xl">
+                <h2 class="text-lg font-semibold mb-2">Sign in to see your zaps</h2>
+                <p class="text-[#a3a3a3] text-[14px] mb-5">Your Zap history is private and syncs across your devices.</p>
+                <a href="/?signin=1" data-auth-trigger="zap_btn" class="inline-flex items-center py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 transition-colors">Sign in</a>
             </div>
-        </div>
+        )}
     </div>
+    <script src="/dist/zap-page.js" type="module" defer></script>
 </DashboardLayout>

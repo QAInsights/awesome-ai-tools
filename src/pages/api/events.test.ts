@@ -1,9 +1,28 @@
 import { afterAll, beforeEach, describe, expect, mock, test } from 'bun:test';
 
 const points: Array<{ indexes: string[]; blobs: string[] }> = [];
+let hasSession = false;
+const sessionRow = {
+    id: 'github:1',
+    provider: 'github',
+    provider_user_id: '1',
+    display_name: 'Test User',
+    email: null,
+    avatar_url: null,
+    github_username: null,
+    email_verified: 1,
+    last_seen_at: Date.now(),
+};
 mock.module('cloudflare:workers', () => ({
     env: {
-        DB: {},
+        DB: {
+            prepare: () => ({
+                bind: () => ({
+                    first: async () => sessionRow,
+                    run: async () => ({ success: true, meta: { changes: 0 } }),
+                }),
+            }),
+        },
         ANALYTICS: { writeDataPoint: (point: { indexes: string[]; blobs: string[] }) => points.push(point) },
     },
 }));
@@ -11,9 +30,14 @@ mock.module('cloudflare:workers', () => ({
 const { POST } = await import(`./events.ts?test=${Date.now()}`);
 
 afterAll(() => mock.restore());
-beforeEach(() => points.splice(0));
+beforeEach(() => {
+    points.splice(0);
+    hasSession = false;
+});
 
-const cookies = { get: () => undefined };
+const cookies = {
+    get: (name: string) => name === 'aat_session' && hasSession ? { value: 'session-token' } : undefined,
+};
 
 function request(events: unknown[], origin = 'https://ai.dosa.dev') {
     return new Request('https://ai.dosa.dev/api/events', {
@@ -44,6 +68,30 @@ describe('POST /api/events', () => {
         expect(points[0]!.indexes).toEqual(['gate_blocked']);
         expect(points[0]!.blobs[2]).toBe('');
         expect(points[0]!.blobs[4]).toBe('cursor');
+    });
+
+    test('attaches the signed-in user to zap events without trusting client data', async () => {
+        hasSession = true;
+        const response = await POST({
+            request: request([{ event: 'zap_cast', userId: 'attacker', subject: 'anysphere-cursor' }]),
+            cookies,
+        } as never);
+
+        expect(response.status).toBe(204);
+        expect(points).toHaveLength(1);
+        expect(points[0]!.blobs[2]).toBe('github:1');
+        expect(points[0]!.blobs[8]).toBe('auth');
+    });
+
+    test('leaves zap events anonymous without a session cookie', async () => {
+        const response = await POST({
+            request: request([{ event: 'zap_cast', subject: 'anysphere-cursor' }]),
+            cookies,
+        } as never);
+
+        expect(response.status).toBe(204);
+        expect(points).toHaveLength(1);
+        expect(points[0]!.blobs[2]).toBe('');
     });
 
     test('caps a batch at twenty events and validates subjects', async () => {
