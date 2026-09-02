@@ -1,7 +1,7 @@
 ---
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
 import { renderDigest } from '../../lib/server/email-templates/digest';
-import { getAdminUserIds, requireDatabase } from '../../lib/server/runtime-env';
+import { getAdminUserIds, getSiteOrigin, requireDatabase } from '../../lib/server/runtime-env';
 import { getCookieSessionUser } from '../../lib/server/route-auth';
 import enrichedTools from '../../../public/data/enriched-tools.json';
 
@@ -19,10 +19,12 @@ const sampleTools = enrichedTools.slice(0, 3).map(tool => ({
     recentUpdates: [tool.recentUpdates],
     lastUpdated: tool.lastUpdated,
 }));
+const siteOrigin = getSiteOrigin();
 const digest = renderDigest({
     userName: user.name,
     tools: sampleTools,
-    unsubscribeUrl: 'https://ai.dosa.dev/unsubscribe?token=preview',
+    unsubscribeUrl: `${siteOrigin}/unsubscribe?token=preview`,
+    siteOrigin,
 });
 ---
 
