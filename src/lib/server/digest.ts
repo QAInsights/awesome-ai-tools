@@ -1,7 +1,7 @@
 import type { Database } from './db';
 import { getOrCreatePrefs } from './notification-prefs-repository';
 import { renderDigest } from './email-templates/digest';
-import { maskEmail, type EmailSendResult, type OutboundEmail } from './email';
+import type { EmailSendResult, OutboundEmail } from './email';
 
 const DAY_MS = 86_400_000;
 
@@ -79,6 +79,12 @@ function parsePreviousDigest(value: string | null | undefined): Set<string> {
 function safeErrorMessage(error: unknown): string {
     const message = error instanceof Error ? error.message : String(error);
     return message.replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, '[redacted]');
+}
+
+function maskEmail(value: string): string {
+    const [local, domain] = value.split('@');
+    if (!local || !domain) return '***';
+    return `${local.slice(0, 1)}***@${domain}`;
 }
 
 function emptySummary(): DigestRunSummary {
