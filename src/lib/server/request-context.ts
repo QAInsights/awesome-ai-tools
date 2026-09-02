@@ -2,6 +2,7 @@ const staticRoutes = new Set([
     '/', '/advertise', '/blog', '/compare', '/favorites', '/help', '/news', '/settings', '/zap',
     '/tools/token-counter', '/tools/hallucination-scorer',
     '/api/events', '/api/favorites', '/api/auth/session', '/api/auth/github', '/api/auth/dev',
+    '/api/follows',
 ]);
 
 export function normalizeRoute(pathname: string): string {
@@ -12,6 +13,7 @@ export function normalizeRoute(pathname: string): string {
     if (/^\/blog\/[^/]+\/?$/.test(pathname)) return '/blog/:id';
     if (/^\/news\/[^/]+\/?$/.test(pathname)) return '/news/:page';
     if (/^\/api\/favorites\/[^/]+\/?$/.test(pathname)) return '/api/favorites/:slug';
+    if (/^\/api\/follows\/[^/]+\/?$/.test(pathname)) return '/api/follows/:slug';
     const normalized = pathname.length > 1 ? pathname.replace(/\/$/, '') : pathname;
     return staticRoutes.has(normalized) ? normalized : '/other';
 }

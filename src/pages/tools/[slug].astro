@@ -228,6 +228,12 @@ const jsonLd = JSON.stringify(jsonLdObj);
                                 </svg>
                                 <span data-favorite-label>Favorite</span>
                             </button>
+                            <button class="follow-btn detail" type="button" data-tool-slug={tool.slug} data-tool-name={displayName} aria-label={`Sign in to follow ${displayName}`} aria-pressed="false" title={`Get email updates about ${displayName}`}>
+                                <svg class="follow-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/>
+                                </svg>
+                                <span data-follow-label>Follow</span>
+                            </button>
                             <a href={addOutboundUtmParams(tool.url)} target="_blank" rel="noopener noreferrer"
                                 class="inline-flex items-center gap-2 py-2.5 px-5 bg-white text-black text-sm font-semibold rounded-md transition-all duration-200 hover:bg-gray-200 hover:-translate-y-px shrink-0"
                                 aria-label={`Visit ${displayName} website`}>

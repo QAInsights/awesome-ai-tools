@@ -6,6 +6,7 @@ const migration1 = new URL('../../../migrations/0001_accounts_and_favorites.sql'
 const migration2 = new URL('../../../migrations/0002_flatten_user_identity.sql', import.meta.url);
 const migration3 = new URL('../../../migrations/0003_enforce_flattened_user_identity.sql', import.meta.url);
 const migration4 = new URL('../../../migrations/0004_user_activity_columns.sql', import.meta.url);
+const migration5 = new URL('../../../migrations/0005_follows.sql', import.meta.url);
 
 function applyMigration(db: Database, migration: URL) {
     const statements = readFileSync(migration, 'utf8')
@@ -36,9 +37,11 @@ describe('accounts and favorites migrations', () => {
         applyMigration(db, migration2);
         applyMigration(db, migration3);
         applyMigration(db, migration4);
+        applyMigration(db, migration5);
 
         expect(db.query('SELECT last_seen_at FROM users').get()).toEqual({ last_seen_at: 1 });
         expect(db.query("SELECT COUNT(*) AS count FROM sqlite_schema WHERE type = 'index' AND name IN ('users_created_at_idx', 'users_last_seen_at_idx')").get()).toEqual({ count: 2 });
+        expect(db.query("SELECT COUNT(*) AS count FROM sqlite_schema WHERE type = 'index' AND name = 'follows_user_created_idx'").get()).toEqual({ count: 1 });
     });
 
     test('normalizes existing identities and preserves related rows', () => {

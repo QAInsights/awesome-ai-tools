@@ -84,12 +84,19 @@ describe('favorites page bootstrap', () => {
                 return () => {};
             },
         };
+        const followsApi = {
+            initFollows: () => {},
+            syncFollows: async () => ({ authenticated: true, follows: [], stale: false }),
+            refreshFollowButtons: () => {},
+            subscribeFollows: () => () => {},
+        };
         const { initializeFavoritesPage } = await import(`./favorites-page.js?test=${Date.now()}`);
 
-        await initializeFavoritesPage({ authManager, favoritesApi });
+        await initializeFavoritesPage({ authManager, favoritesApi, followsApi });
 
         expect(elements.favoritesSignedOut.classList.removals).toEqual([]);
         expect(elements.favoritesGrid.classList.contains('hidden')).toBe(false);
         expect(elements.favoriteCount.textContent).toBe('1 saved');
+        expect(elements.favoritesGrid.innerHTML).toContain('follow-btn');
     });
 });

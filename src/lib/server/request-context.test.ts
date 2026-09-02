@@ -6,6 +6,7 @@ describe('analytics request context', () => {
         expect(normalizeRoute('/tools/cursor')).toBe('/tools/:slug');
         expect(normalizeRoute('/tools/cursor/alternatives')).toBe('/tools/:slug/alternatives');
         expect(normalizeRoute('/compare/cursor-vs-devin')).toBe('/compare/:pair');
+        expect(normalizeRoute('/api/follows/cursor')).toBe('/api/follows/:slug');
     });
 
     test('attributes collector requests to the same-origin referring page', () => {

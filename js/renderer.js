@@ -394,6 +394,11 @@ function createToolRow(tool, index) {
                             <path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.75L6 21V4.75Z"/>
                         </svg>
                     </button>
+                    <button class="follow-btn" type="button" data-tool-slug="${escapeHtml(tool.slug)}" data-tool-name="${safeName}" aria-label="Sign in to follow ${safeName}" aria-pressed="false" title="Get email updates about ${safeName}">
+                        <svg class="follow-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/>
+                        </svg>
+                    </button>
                     <a href="${escapeHtml(addOutboundUtmParams(tool.url))}" target="_blank" rel="noopener noreferrer" class="shrink-0 text-[#737373] hover:text-white p-1 -m-1 rounded transition-colors duration-200" aria-label="Open ${safeName} site in a new tab" title="Open site in new tab" onclick="event.stopPropagation()">
                         <svg class="w-3.5 h-3.5 opacity-60 hover:opacity-100 transition-all duration-200 stroke-current" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>

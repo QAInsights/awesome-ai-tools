@@ -99,6 +99,15 @@ mock.module('./favorites.js', () => ({
     }
 }));
 
+mock.module('./follows.js', () => ({
+    initFollows: () => {},
+    clearFollows: () => {},
+    getFollowRecords: () => [],
+    refreshFollowButtons: () => {},
+    subscribeFollows: () => () => {},
+    syncFollows: async () => ({ authenticated: true, follows: [], stale: false }),
+}));
+
 mock.module('./auth.js', () => ({
     AuthManager,
     auth: {

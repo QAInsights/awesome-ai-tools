@@ -76,12 +76,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 4. Defer auth/voting to improve first interactivity
     let syncVotingUi = () => {};
     let syncFavoritesUi = () => {};
+    let syncFollowsUi = () => {};
 
     const deferredBootstrap = async () => {
-        const [{ initAuthManager }, { initVoting, getVoteCount }, favorites] = await Promise.all([
+        const [{ initAuthManager }, { initVoting, getVoteCount }, favorites, follows] = await Promise.all([
             import('./modules/auth-manager.js'),
             import('./voting.js'),
-            import('./favorites.js')
+            import('./favorites.js'),
+            import('./follows.js')
         ]);
 
         const authManager = initAuthManager({
@@ -89,6 +91,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             onStateChange: user => {
                 syncVotingUi();
                 void syncFavoritesUi(user);
+                void syncFollowsUi(user);
             }
         });
         await authManager.initializeAuth();
@@ -106,7 +109,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         const { auth } = await import('./auth.js');
         favorites.initFavorites({
             isAuthenticated: () => auth.isAuthenticated(),
-            onUnauthorized: () => auth.signOut()
+            onUnauthorized: () => auth.signOut(),
+            onToggle: added => {
+                if (!added) follows.refreshFollowButtons();
+            },
+        });
+        follows.initFollows({
+            isAuthenticated: () => auth.isAuthenticated(),
+            onUnauthorized: () => auth.signOut(),
+            onToggle: added => {
+                if (added) favorites.refreshFavoriteButtons();
+            },
         });
         setFavoriteContext({ refreshFavoriteButtons: favorites.refreshFavoriteButtons });
         syncVotingUi = () => {
@@ -131,8 +144,24 @@ document.addEventListener('DOMContentLoaded', async () => {
                 console.warn('[favorites] sync failed:', error);
             }
         };
+        syncFollowsUi = async user => {
+            try {
+                const result = await follows.syncFollows(user);
+                if (
+                    user
+                    && !result.stale
+                    && !result.authenticated
+                    && auth.getCurrentUser()?.id === user.id
+                ) {
+                    await auth.signOut();
+                }
+            } catch (error) {
+                console.warn('[follows] sync failed:', error);
+            }
+        };
         syncVotingUi();
         await syncFavoritesUi(auth.getCurrentUser());
+        await syncFollowsUi(auth.getCurrentUser());
 
         if (ENABLE_VOTING) {
             await initVoting().catch(err => console.warn('[voting] init failed:', err));
