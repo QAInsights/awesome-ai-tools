@@ -1,6 +1,6 @@
 import {
-    getEmailBinding,
     getEmailFrom,
+    getResendApiKey,
     isEmailDryRun,
 } from './runtime-env';
 
@@ -24,24 +24,33 @@ function maskEmail(value: string): string {
 }
 
 export async function sendEmail(message: OutboundEmail): Promise<EmailSendResult> {
-    const binding = getEmailBinding();
-    if (isEmailDryRun() || !binding) {
+    const apiKey = getResendApiKey();
+    if (isEmailDryRun() || !apiKey) {
         console.log(`[Email] dry-run to=${maskEmail(message.to)} subject=${message.subject.replace(/[\r\n]/g, ' ')}`);
         return { messageId: null, dryRun: true };
     }
 
-    const headers = message.unsubscribeUrl
-        ? {
-            'List-Unsubscribe': `<${message.unsubscribeUrl}>`,
-        }
-        : undefined;
-    const result = await binding.send({
-        to: message.to,
-        from: { email: getEmailFrom(), name: 'ai.dosa.dev' },
-        subject: message.subject,
-        html: message.html,
-        text: message.text,
-        ...(headers ? { headers } : {}),
+    const response = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            from: `ai.dosa.dev <${getEmailFrom()}>`,
+            to: [message.to],
+            subject: message.subject,
+            html: message.html,
+            text: message.text,
+            ...(message.unsubscribeUrl
+                ? { headers: { 'List-Unsubscribe': `<${message.unsubscribeUrl}>` } }
+                : {}),
+        }),
     });
-    return { messageId: result.messageId ?? null, dryRun: false };
+    if (!response.ok) {
+        const body = (await response.text()).slice(0, 200);
+        throw new Error(`Resend send failed (${response.status})${body ? `: ${body}` : ''}`);
+    }
+    const result = await response.json() as { id?: string | null };
+    return { messageId: result.id ?? null, dryRun: false };
 }

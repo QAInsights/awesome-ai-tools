@@ -34,6 +34,10 @@ export function getEmailFrom(): string {
     return configuredValue(runtimeEnv.EMAIL_FROM, import.meta.env.EMAIL_FROM, process.env.EMAIL_FROM) || 'updates@ai.dosa.dev';
 }
 
+export function getResendApiKey(): string {
+    return configuredValue(runtimeEnv.RESEND_API_KEY, import.meta.env.RESEND_API_KEY, process.env.RESEND_API_KEY);
+}
+
 export function isEmailDryRun(): boolean {
     return ['1', 'true', 'yes'].includes(
         configuredValue(runtimeEnv.EMAIL_DRY_RUN, import.meta.env.EMAIL_DRY_RUN, process.env.EMAIL_DRY_RUN).toLowerCase(),
@@ -42,10 +46,6 @@ export function isEmailDryRun(): boolean {
 
 export function getSiteOrigin(): string {
     return configuredValue(runtimeEnv.SITE_ORIGIN, import.meta.env.SITE_ORIGIN, process.env.SITE_ORIGIN) || 'https://ai.dosa.dev';
-}
-
-export function getEmailBinding(): SendEmail | undefined {
-    return runtimeEnv.EMAIL as SendEmail | undefined;
 }
 
 export function getAnalyticsDataset(): 'aat_events' | 'aat_events_staging' {

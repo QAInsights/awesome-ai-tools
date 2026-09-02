@@ -7,7 +7,6 @@
     "binding": "ASSETS",
     "html_handling": "drop-trailing-slash"
   },
-  "send_email": [{ "name": "EMAIL" }],
   "version_metadata": {
     "binding": "CF_VERSION_METADATA"
   },
@@ -46,12 +45,11 @@
     "ANALYTICS_DATASET": "aat_events"
   },
   "secrets": {
-    "required": ["GOOGLE_CLIENT_ID", "GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET", "CF_ANALYTICS_TOKEN"]
+    "required": ["GOOGLE_CLIENT_ID", "GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET", "CF_ANALYTICS_TOKEN", "RESEND_API_KEY"]
   },
   "env": {
     "staging": {
       "name": "awesome-ai-tools-staging",
-      "send_email": [{ "name": "EMAIL" }],
       "assets": {
         "binding": "ASSETS",
         "html_handling": "drop-trailing-slash"
@@ -81,7 +79,7 @@
         "EMAIL_DRY_RUN": "1"
       },
       "secrets": {
-        "required": ["GOOGLE_CLIENT_ID", "GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET", "CF_ANALYTICS_TOKEN"]
+        "required": ["GOOGLE_CLIENT_ID", "GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET", "CF_ANALYTICS_TOKEN", "RESEND_API_KEY"]
       }
     }
   }

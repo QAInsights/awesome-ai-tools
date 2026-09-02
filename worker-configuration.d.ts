@@ -5,7 +5,7 @@ interface __BaseEnv_Env {
 	ANALYTICS: AnalyticsEngineDataset;
 	CF_VERSION_METADATA: WorkerVersionMetadata;
 	ASSETS: Fetcher;
-	EMAIL: SendEmail;
+	RESEND_API_KEY: string;
 	CF_ACCOUNT_ID: "79a56f7656f972b064b9d4ec3662b8d0";
 	ADMIN_USER_IDS: "github:2826376,github:local-staging-tester" | "github:2826376";
 	ANALYTICS_DATASET: "aat_events_staging" | "aat_events";
@@ -20,7 +20,7 @@ declare namespace Cloudflare {
 		ANALYTICS: AnalyticsEngineDataset;
 		CF_VERSION_METADATA: WorkerVersionMetadata;
 		ASSETS: Fetcher;
-		EMAIL: SendEmail;
+		RESEND_API_KEY: string;
 		CF_ACCOUNT_ID: "79a56f7656f972b064b9d4ec3662b8d0";
 		ADMIN_USER_IDS: "github:2826376,github:local-staging-tester";
 		ANALYTICS_DATASET: "aat_events_staging";
@@ -36,5 +36,5 @@ type StringifyValues<EnvType extends Record<string, unknown>> = {
 	[Binding in keyof EnvType]: EnvType[Binding] extends string ? EnvType[Binding] : string;
 };
 declare namespace NodeJS {
-	interface ProcessEnv extends StringifyValues<Pick<Cloudflare.Env, "CF_ACCOUNT_ID" | "ADMIN_USER_IDS" | "ANALYTICS_DATASET" | "GOOGLE_CLIENT_ID" | "GITHUB_CLIENT_ID" | "GITHUB_CLIENT_SECRET" | "CF_ANALYTICS_TOKEN">> {}
+	interface ProcessEnv extends StringifyValues<Pick<Cloudflare.Env, "CF_ACCOUNT_ID" | "ADMIN_USER_IDS" | "ANALYTICS_DATASET" | "GOOGLE_CLIENT_ID" | "GITHUB_CLIENT_ID" | "GITHUB_CLIENT_SECRET" | "CF_ANALYTICS_TOKEN" | "RESEND_API_KEY">> {}
 }

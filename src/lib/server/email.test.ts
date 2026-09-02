@@ -1,33 +1,32 @@
 import { afterAll, beforeEach, describe, expect, mock, test } from 'bun:test';
 
-let binding: { send: (message: unknown) => Promise<{ messageId: string }> } | undefined;
 let dryRun = false;
 let emailFrom = 'updates@ai.dosa.dev';
+let apiKey = 're_test';
+let fetchMock: ReturnType<typeof mock>;
+const originalFetch = globalThis.fetch;
 
 mock.module('./runtime-env', () => ({
-    getEmailBinding: () => binding,
     getEmailFrom: () => emailFrom,
+    getResendApiKey: () => apiKey,
     isEmailDryRun: () => dryRun,
 }));
 
-afterAll(() => mock.restore());
+afterAll(() => {
+    globalThis.fetch = originalFetch;
+    mock.restore();
+});
 
 describe('email sender', () => {
     beforeEach(() => {
-        binding = {
-            send: async message => {
-                bindingMessage = message;
-                return { messageId: 'message-1' };
-            },
-        };
         dryRun = false;
         emailFrom = 'updates@ai.dosa.dev';
-        bindingMessage = null;
+        apiKey = 're_test';
+        fetchMock = mock(async () => new Response(JSON.stringify({ id: 'message-1' }), { status: 200 }));
+        globalThis.fetch = fetchMock as unknown as typeof fetch;
     });
 
-    let bindingMessage: unknown = null;
-
-    test('sends through the Email Service binding with unsubscribe headers', async () => {
+    test('sends through the Resend API with unsubscribe headers', async () => {
         const { sendEmail } = await import(`./email.ts?test=${Date.now()}`);
         await expect(sendEmail({
             to: 'ada@example.com',
@@ -36,21 +35,27 @@ describe('email sender', () => {
             text: 'Hello',
             unsubscribeUrl: 'https://ai.dosa.dev/unsubscribe?token=abc',
         })).resolves.toEqual({ messageId: 'message-1', dryRun: false });
-        expect(bindingMessage).toEqual({
-            to: 'ada@example.com',
-            from: { email: 'updates@ai.dosa.dev', name: 'ai.dosa.dev' },
-            subject: 'Updates',
-            html: '<p>Hello</p>',
-            text: 'Hello',
+        expect(fetchMock).toHaveBeenCalledWith('https://api.resend.com/emails', {
+            method: 'POST',
             headers: {
-                'List-Unsubscribe': '<https://ai.dosa.dev/unsubscribe?token=abc>',
+                Authorization: 'Bearer re_test',
+                'Content-Type': 'application/json',
             },
+            body: JSON.stringify({
+                from: 'ai.dosa.dev <updates@ai.dosa.dev>',
+                to: ['ada@example.com'],
+                subject: 'Updates',
+                html: '<p>Hello</p>',
+                text: 'Hello',
+                headers: {
+                    'List-Unsubscribe': '<https://ai.dosa.dev/unsubscribe?token=abc>',
+                },
+            }),
         });
     });
 
     test('redacts recipients during dry runs', async () => {
-        binding = undefined;
-        dryRun = true;
+        apiKey = '';
         const log = mock(() => {});
         const originalLog = console.log;
         console.log = log;
@@ -66,5 +71,18 @@ describe('email sender', () => {
             console.log = originalLog;
         }
         expect(log).toHaveBeenCalledWith('[Email] dry-run to=a***@example.com subject=Updates');
+        expect(fetchMock).not.toHaveBeenCalled();
+    });
+
+    test('rejects non-successful Resend responses with a truncated body', async () => {
+        fetchMock = mock(async () => new Response('invalid request', { status: 422 }));
+        globalThis.fetch = fetchMock as unknown as typeof fetch;
+        const { sendEmail } = await import(`./email.ts?error=${Date.now()}`);
+        await expect(sendEmail({
+            to: 'ada@example.com',
+            subject: 'Updates',
+            html: '',
+            text: '',
+        })).rejects.toThrow('Resend send failed (422): invalid request');
     });
 });
