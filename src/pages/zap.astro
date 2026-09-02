@@ -12,8 +12,8 @@ Astro.response.headers.set('Cache-Control', 'private, no-store');
 const user = await getCookieSessionUser(Astro.cookies, requireDatabase());
 const tools = getAllTools().map(tool => ({
     slug: tool.slug,
-    name: tool.enriched?.name ?? tool.name,
-    company: tool.enriched?.company ?? tool.company,
+    name: tool.name,
+    company: tool.company,
     category: tool.categoryShort,
 }));
 const dashboard = user ? await loadUserZaps(user.id, tools) : null;

@@ -28,7 +28,9 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 
     const events = Array.isArray(body.events) ? body.events.slice(0, MAX_EVENTS) : [];
     const user = cookies.get(SESSION_COOKIE_NAME)
-        ? await getCookieSessionUser(cookies, requireDatabase()).catch(() => null)
+        ? await Promise.resolve()
+            .then(() => getCookieSessionUser(cookies, requireDatabase()))
+            .catch(() => null)
         : null;
     for (const input of events) {
         const event = normalizeClientEvent(input);
