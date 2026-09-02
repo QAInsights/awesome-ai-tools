@@ -12,6 +12,7 @@ const ENABLE_VOTING = process.env.ENABLE_VOTING === 'true';
 let getVoteCountFn = () => 0;
 let isAuthenticatedFn = () => false;
 let refreshFavoriteButtonsFn = () => {};
+let refreshFollowButtonsFn = () => {};
 
 const BATCH_SIZE = 20;
 let filteredTools = [];
@@ -53,6 +54,7 @@ export function hydrateGrid(tools) {
     filteredTools = tools;
     loadedCount = tools.length;
     refreshFavoriteButtonsFn(grid);
+    refreshFollowButtonsFn(grid);
     syncCompareRows();
     updateCompareBar();
 }
@@ -69,6 +71,9 @@ export function setVotingContext(context = {}) {
 export function setFavoriteContext(context = {}) {
     if (typeof context.refreshFavoriteButtons === 'function') {
         refreshFavoriteButtonsFn = context.refreshFavoriteButtons;
+    }
+    if (typeof context.refreshFollowButtons === 'function') {
+        refreshFollowButtonsFn = context.refreshFollowButtons;
     }
 }
 
@@ -336,6 +341,7 @@ function loadBatch() {
     loadedCount = endIndex;
 
     refreshFavoriteButtonsFn(grid);
+    refreshFollowButtonsFn(grid);
     syncCompareRows();
     updateCompareBar();
     updateSentinel();
@@ -392,6 +398,11 @@ function createToolRow(tool, index) {
                     <button class="favorite-btn" type="button" data-tool-slug="${escapeHtml(tool.slug)}" data-tool-name="${safeName}" aria-label="Save ${safeName} to favorites" aria-pressed="false" title="Save ${safeName} to favorites">
                         <svg class="favorite-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                             <path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.75L6 21V4.75Z"/>
+                        </svg>
+                    </button>
+                    <button class="follow-btn" type="button" data-tool-slug="${escapeHtml(tool.slug)}" data-tool-name="${safeName}" aria-label="Sign in to follow ${safeName}" aria-pressed="false" title="Get email updates about ${safeName}">
+                        <svg class="follow-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/>
                         </svg>
                     </button>
                     <a href="${escapeHtml(addOutboundUtmParams(tool.url))}" target="_blank" rel="noopener noreferrer" class="shrink-0 text-[#737373] hover:text-white p-1 -m-1 rounded transition-colors duration-200" aria-label="Open ${safeName} site in a new tab" title="Open site in new tab" onclick="event.stopPropagation()">

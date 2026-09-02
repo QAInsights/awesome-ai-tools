@@ -3,10 +3,18 @@ import { bindAuthSession } from './auth-session-binding.js';
 import {
     getFavoriteRecords,
     initFavorites,
+    loadFavorites,
     refreshFavoriteButtons,
     subscribeFavorites,
     syncFavorites,
 } from './favorites.js';
+import {
+    initFollows,
+    loadFollows,
+    refreshFollowButtons,
+    subscribeFollows,
+    syncFollows,
+} from './follows.js';
 
 const defaultFavoritesApi = {
     getFavoriteRecords,
@@ -14,6 +22,14 @@ const defaultFavoritesApi = {
     refreshFavoriteButtons,
     subscribeFavorites,
     syncFavorites,
+};
+
+const defaultFollowsApi = {
+    initFollows,
+    loadFollows,
+    refreshFollowButtons,
+    subscribeFollows,
+    syncFollows,
 };
 
 function escapeHtml(value) {
@@ -37,15 +53,24 @@ function readTools(root = document) {
 export async function initializeFavoritesPage({
     authManager = auth,
     favoritesApi = defaultFavoritesApi,
+    followsApi = defaultFollowsApi,
     root = document,
 } = {}) {
     const {
         getFavoriteRecords: getRecords,
         initFavorites: initializeFavorites,
+        loadFavorites: load,
         refreshFavoriteButtons: refreshButtons,
         subscribeFavorites: subscribe,
         syncFavorites: sync,
     } = favoritesApi;
+    const {
+        initFollows: initializeFollows,
+        loadFollows,
+        refreshFollowButtons,
+        subscribeFollows,
+        syncFollows,
+    } = followsApi;
     const tools = readTools(root);
     const loading = root.getElementById('favoritesLoading');
     const signedOut = root.getElementById('favoritesSignedOut');
@@ -88,6 +113,10 @@ export async function initializeFavoritesPage({
                             <svg class="favorite-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.75L6 21V4.75Z"/></svg>
                             <span data-favorite-label>Saved</span>
                         </button>
+                        <button class="follow-btn detail" type="button" data-tool-slug="${slug}" data-tool-name="${name}" aria-label="Sign in to follow ${name}" aria-pressed="false" title="Get email updates about ${name}">
+                            <svg class="follow-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
+                            <span data-follow-label>Follow</span>
+                        </button>
                     </div>
                     <p class="text-[14px] text-[#a3a3a3] leading-relaxed mt-4">${escapeHtml(tool.description)}</p>
                 </article>`;
@@ -104,11 +133,22 @@ export async function initializeFavoritesPage({
         count.textContent = `${cards.length} saved`;
         count.classList.remove('hidden');
         refreshButtons(grid);
+        refreshFollowButtons(grid);
     }
 
     initializeFavorites({
         isAuthenticated: () => authManager.isAuthenticated(),
         onUnauthorized: () => authManager.signOut(),
+        onToggle: added => {
+            if (!added) void loadFollows();
+        },
+    });
+    initializeFollows({
+        isAuthenticated: () => authManager.isAuthenticated(),
+        onUnauthorized: () => authManager.signOut(),
+        onToggle: added => {
+            if (added) void load();
+        },
     });
 
     function showError() {
@@ -118,11 +158,20 @@ export async function initializeFavoritesPage({
     }
 
     async function syncForUser(user) {
-        const result = await sync(user);
+        const [result, followsResult] = await Promise.all([sync(user), syncFollows(user)]);
         if (
             user
             && !result.stale
             && !result.authenticated
+            && authManager.getCurrentUser()?.id === user.id
+        ) {
+            await authManager.signOut();
+            return;
+        }
+        if (
+            user
+            && !followsResult.stale
+            && !followsResult.authenticated
             && authManager.getCurrentUser()?.id === user.id
         ) {
             await authManager.signOut();
@@ -134,6 +183,7 @@ export async function initializeFavoritesPage({
     try {
         const session = await bindAuthSession({ authManager, root });
         subscribe(render);
+        subscribeFollows(() => refreshFollowButtons(grid));
         session.subscribe(({ user }) => {
             void syncForUser(user).catch(showError);
         }, { emitCurrent: false });

@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'bun:test';
 import type { Database } from './db';
 import {
-    addFavorite,
-    listFavorites,
-    removeFavorite,
-    removeFavoriteWithFollow,
-} from './favorites-repository';
+    addFollow,
+    followWithFavorite,
+    listFollows,
+    removeFollow,
+} from './follows-repository';
 
 function makeDatabase(
     result: unknown,
@@ -41,8 +41,8 @@ function makeDatabase(
     return { db, calls, batches, getRunCalls: () => runCalls };
 }
 
-describe('favorites repository', () => {
-    test('lists favorites newest first using database column names', async () => {
+describe('follows repository', () => {
+    test('lists follows newest first using database column names', async () => {
         const { db, calls } = makeDatabase({
             results: [
                 { tool_slug: 'cursor', created_at: 20 },
@@ -50,7 +50,7 @@ describe('favorites repository', () => {
             ],
         });
 
-        expect(await listFavorites(db, 'google:123')).toEqual([
+        expect(await listFollows(db, 'google:123')).toEqual([
             { slug: 'cursor', createdAt: 20 },
             { slug: 'claude-code', createdAt: 10 },
         ]);
@@ -58,59 +58,54 @@ describe('favorites repository', () => {
         expect(calls[0]?.values).toEqual(['google:123']);
     });
 
-    test('returns the persisted timestamp when adding a favorite', async () => {
+    test('returns the persisted timestamp when adding a follow', async () => {
         const { db, calls } = makeDatabase({
             results: [{ tool_slug: 'cursor', created_at: 30 }],
             meta: { changes: 1 },
         });
 
-        expect(await addFavorite(db, 'github:456', 'cursor', 30)).toEqual({
-            favorite: { slug: 'cursor', createdAt: 30 },
+        expect(await addFollow(db, 'github:456', 'cursor', 30)).toEqual({
+            follow: { slug: 'cursor', createdAt: 30 },
             created: true,
         });
         expect(calls[0]?.sql).toContain('RETURNING tool_slug, created_at');
         expect(calls[0]?.values).toEqual(['github:456', 'cursor', 30]);
     });
 
-    test('returns the original timestamp when the favorite already exists', async () => {
+    test('returns the original timestamp when the follow already exists', async () => {
         const { db, calls } = makeDatabase(
             { results: [], meta: { changes: 0 } },
             { tool_slug: 'cursor', created_at: 10 },
         );
 
-        expect(await addFavorite(db, 'github:456', 'cursor', 30)).toEqual({
-            favorite: { slug: 'cursor', createdAt: 10 },
+        expect(await addFollow(db, 'github:456', 'cursor', 30)).toEqual({
+            follow: { slug: 'cursor', createdAt: 10 },
             created: false,
         });
         expect(calls[1]?.sql).toContain('WHERE user_id = ? AND tool_slug = ?');
         expect(calls[1]?.values).toEqual(['github:456', 'cursor']);
     });
 
-    test('removes only the current user favorite', async () => {
-        const { db, calls } = makeDatabase({ meta: { changes: 1 } });
-
-        expect(await removeFavorite(db, 'github:456', 'cursor')).toBe(true);
-        expect(calls[0]?.sql).toContain('user_id = ?');
-        expect(calls[0]?.values).toEqual(['github:456', 'cursor']);
-    });
-
-    test('removes the favorite and follow in one batch', async () => {
+    test('writes the follow and favorite in one batch', async () => {
         const { db, calls, batches } = makeDatabase(
             {},
             undefined,
             [
-                { meta: { changes: 1 } },
+                { results: [{ tool_slug: 'cursor', created_at: 30 }] },
                 { meta: { changes: 1 } },
             ],
         );
 
-        expect(await removeFavoriteWithFollow(db, 'github:456', 'cursor')).toBe(true);
+        expect(await followWithFavorite(db, 'github:456', 'cursor', 30)).toEqual({
+            follow: { slug: 'cursor', createdAt: 30 },
+            created: true,
+        });
         expect(batches[0]).toHaveLength(2);
-        expect(calls[0]?.sql).toContain('DELETE FROM favorites');
-        expect(calls[1]?.sql).toContain('DELETE FROM follows');
+        expect(calls[0]?.sql).toContain('INSERT OR IGNORE INTO follows');
+        expect(calls[1]?.sql).toContain('INSERT OR IGNORE INTO favorites');
     });
 
-    test('does not fall back to individual deletes when the batch fails', async () => {
+    test('does not fall back to individual writes when the batch fails', async () => {
         const { db, batches, getRunCalls } = makeDatabase(
             {},
             undefined,
@@ -118,8 +113,16 @@ describe('favorites repository', () => {
             new Error('batch failed'),
         );
 
-        await expect(removeFavoriteWithFollow(db, 'github:456', 'cursor')).rejects.toThrow('batch failed');
+        await expect(followWithFavorite(db, 'github:456', 'cursor', 30)).rejects.toThrow('batch failed');
         expect(batches).toHaveLength(1);
         expect(getRunCalls()).toBe(0);
+    });
+
+    test('removes only the current user follow', async () => {
+        const { db, calls } = makeDatabase({ meta: { changes: 1 } });
+
+        expect(await removeFollow(db, 'github:456', 'cursor')).toBe(true);
+        expect(calls[0]?.sql).toContain('user_id = ?');
+        expect(calls[0]?.values).toEqual(['github:456', 'cursor']);
     });
 });

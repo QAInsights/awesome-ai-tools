@@ -15,7 +15,7 @@ const subjectPolicies = {
     },
 };
 
-export const AUTH_TRIGGERS = Object.freeze(['sidebar', 'favorite_heart', 'zap_btn']);
+export const AUTH_TRIGGERS = Object.freeze(['sidebar', 'favorite_heart', 'follow_bell', 'zap_btn']);
 export const OUTBOUND_TRIGGERS = Object.freeze(['tool_card', 'tool_detail', 'comparison', 'category', 'unknown']);
 export const ANALYTICS_PROVIDERS = Object.freeze(['github', 'google', 'dev']);
 
@@ -24,6 +24,8 @@ export const EVENTS = Object.freeze({
     SIGNOUT: 'signout',
     FAVORITE_ADDED: 'favorite_added',
     FAVORITE_REMOVED: 'favorite_removed',
+    FOLLOW_ADDED: 'follow_added',
+    FOLLOW_REMOVED: 'follow_removed',
     AUTH_ERROR: 'auth_error',
     SIGNIN_MODAL_SHOWN: 'signin_modal_shown',
     SIGNIN_STARTED: 'signin_started',
@@ -38,10 +40,12 @@ export const EVENT_CATALOG = Object.freeze({
     [EVENTS.SIGNOUT]: { client: false, triggers: [], subject: subjectPolicies.none },
     [EVENTS.FAVORITE_ADDED]: { client: false, triggers: ['favorite_heart'], subject: subjectPolicies.slug },
     [EVENTS.FAVORITE_REMOVED]: { client: false, triggers: ['favorite_heart'], subject: subjectPolicies.slug },
+    [EVENTS.FOLLOW_ADDED]: { client: false, triggers: ['follow_bell'], subject: subjectPolicies.slug },
+    [EVENTS.FOLLOW_REMOVED]: { client: false, triggers: ['follow_bell'], subject: subjectPolicies.slug },
     [EVENTS.AUTH_ERROR]: { client: false, triggers: AUTH_TRIGGERS, subject: value => typeof value === 'string' ? value.slice(0, 128) : '' },
     [EVENTS.SIGNIN_MODAL_SHOWN]: { client: true, triggers: AUTH_TRIGGERS, subject: subjectPolicies.none },
     [EVENTS.SIGNIN_STARTED]: { client: true, triggers: AUTH_TRIGGERS, subject: subjectPolicies.none },
-    [EVENTS.GATE_BLOCKED]: { client: true, triggers: ['favorite_heart', 'zap_btn'], subject: subjectPolicies.slug },
+    [EVENTS.GATE_BLOCKED]: { client: true, triggers: ['favorite_heart', 'follow_bell', 'zap_btn'], subject: subjectPolicies.slug },
     [EVENTS.ZAP_CAST]: { client: true, triggers: ['zap_btn'], subject: subjectPolicies.slug },
     [EVENTS.OUTBOUND_CLICK]: { client: true, triggers: OUTBOUND_TRIGGERS, subject: subjectPolicies.slug },
     [EVENTS.COMPARE_BUILT]: { client: true, triggers: ['comparison'], subject: subjectPolicies.comparison },

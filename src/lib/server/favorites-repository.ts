@@ -73,3 +73,22 @@ export async function removeFavorite(
 
     return (result.meta?.changes ?? 0) > 0;
 }
+
+export async function removeFavoriteWithFollow(
+    db: Database,
+    userId: string,
+    slug: string,
+): Promise<boolean> {
+    const results = await db.batch([
+        db.prepare(`
+            DELETE FROM favorites
+            WHERE user_id = ? AND tool_slug = ?
+        `).bind(userId, slug),
+        db.prepare(`
+            DELETE FROM follows
+            WHERE user_id = ? AND tool_slug = ?
+        `).bind(userId, slug),
+    ]);
+
+    return (results[0]?.meta?.changes ?? 0) > 0;
+}

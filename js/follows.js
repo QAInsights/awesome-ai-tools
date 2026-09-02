@@ -1,9 +1,9 @@
 import { EVENTS } from '../src/lib/analytics-events.js';
 import { analytics } from './analytics-client.js';
 import { authAttribution } from './auth-attribution.js';
-import { createFavoritesStore } from './favorites-store.js';
+import { createFollowsStore } from './follows-store.js';
 
-const store = createFavoritesStore();
+const store = createFollowsStore();
 let initialized = false;
 let activeUserId = null;
 let syncGeneration = 0;
@@ -15,45 +15,48 @@ let context = {
 
 function buttonLabel(button, active, authenticated) {
     const toolName = button.dataset.toolName || 'tool';
-    if (!authenticated) return `Sign in to save ${toolName}`;
-    return active ? `Remove ${toolName} from favorites` : `Save ${toolName} to favorites`;
+    if (!authenticated) return `Sign in to follow ${toolName}`;
+    return active ? `Unfollow ${toolName}` : `Follow ${toolName}`;
 }
 
-export function refreshFavoriteButtons(root = document) {
+function buttonTitle(button) {
+    return `Get email updates about ${button.dataset.toolName || 'tool'}`;
+}
+
+export function refreshFollowButtons(root = document) {
     const authenticated = context.isAuthenticated();
-    root.querySelectorAll('.favorite-btn[data-tool-slug]').forEach(button => {
+    root.querySelectorAll('.follow-btn[data-tool-slug]').forEach(button => {
         const active = authenticated && store.has(button.dataset.toolSlug);
-        const label = buttonLabel(button, active, authenticated);
-        button.classList.toggle('favorited', active);
+        button.classList.toggle('followed', active);
         button.setAttribute('aria-pressed', active ? 'true' : 'false');
-        button.setAttribute('aria-label', label);
-        button.title = label;
-        const icon = button.querySelector('.favorite-icon');
+        button.setAttribute('aria-label', buttonLabel(button, active, authenticated));
+        button.title = buttonTitle(button);
+        const icon = button.querySelector('.follow-icon');
         if (icon) icon.setAttribute('fill', active ? 'currentColor' : 'none');
-        const text = button.querySelector('[data-favorite-label]');
-        if (text) text.textContent = active ? 'Saved' : 'Favorite';
+        const text = button.querySelector('[data-follow-label]');
+        if (text) text.textContent = active ? 'Following' : 'Follow';
     });
 }
 
-export function initFavorites(options = {}) {
+export function initFollows(options = {}) {
     context = { ...context, ...options };
     if (initialized) {
-        refreshFavoriteButtons();
+        refreshFollowButtons();
         return;
     }
 
     initialized = true;
-    store.subscribe(() => refreshFavoriteButtons());
+    store.subscribe(() => refreshFollowButtons());
     document.addEventListener('click', async event => {
-        const button = event.target.closest?.('.favorite-btn[data-tool-slug]');
+        const button = event.target.closest?.('.follow-btn[data-tool-slug]');
         if (!button) return;
         event.preventDefault();
         event.stopPropagation();
 
         if (!context.isAuthenticated()) {
             const subject = button.dataset.toolSlug;
-            analytics.track(EVENTS.GATE_BLOCKED, { trigger: 'favorite_heart', subject });
-            authAttribution.open('favorite_heart');
+            analytics.track(EVENTS.GATE_BLOCKED, { trigger: 'follow_bell', subject });
+            authAttribution.open('follow_bell');
             return;
         }
 
@@ -63,22 +66,22 @@ export function initFavorites(options = {}) {
             context.onToggle(added, button.dataset.toolSlug);
         } catch (error) {
             if (error?.status === 401) await context.onUnauthorized();
-            button.dataset.tip = 'Could not update favorite. Try again.';
+            button.dataset.tip = 'Could not update follow. Try again.';
             setTimeout(() => delete button.dataset.tip, 2500);
         } finally {
             button.disabled = false;
         }
     });
-    refreshFavoriteButtons();
+    refreshFollowButtons();
 }
 
-export async function loadFavorites() {
+export async function loadFollows() {
     const result = await store.load();
-    refreshFavoriteButtons();
+    refreshFollowButtons();
     return result;
 }
 
-export async function syncFavorites(user) {
+export async function syncFollows(user) {
     const userId = user?.id ?? null;
     const sync = ++syncGeneration;
     if (activeUserId !== userId) {
@@ -86,29 +89,29 @@ export async function syncFavorites(user) {
         store.clear();
     }
     if (!userId) {
-        refreshFavoriteButtons();
-        return { authenticated: false, favorites: [], stale: false };
+        refreshFollowButtons();
+        return { authenticated: false, follows: [], stale: false };
     }
 
     const result = await store.load();
     if (sync !== syncGeneration || activeUserId !== userId || result.stale) {
-        return { ...result, favorites: store.records(), stale: true };
+        return { ...result, follows: store.records(), stale: true };
     }
-    refreshFavoriteButtons();
+    refreshFollowButtons();
     return result;
 }
 
-export function clearFavorites() {
+export function clearFollows() {
     activeUserId = null;
     syncGeneration += 1;
     store.clear();
-    refreshFavoriteButtons();
+    refreshFollowButtons();
 }
 
-export function getFavoriteRecords() {
+export function getFollowRecords() {
     return store.records();
 }
 
-export function subscribeFavorites(listener) {
+export function subscribeFollows(listener) {
     return store.subscribe(listener);
 }
