@@ -149,6 +149,19 @@ describe('renderer', () => {
         expect(refreshedRoot).toBe(grid);
     });
 
+    test('refreshes follow buttons through injected context during hydration', async () => {
+        const renderer = await import(`./renderer.js?test=${Date.now()}`);
+        let refreshedRoot = null;
+        renderer.initRenderer(grid);
+        renderer.setFavoriteContext({
+            refreshFollowButtons: (root) => { refreshedRoot = root; },
+        });
+
+        renderer.hydrateGrid([]);
+
+        expect(refreshedRoot).toBe(grid);
+    });
+
     test('updates compare bar through the real delegated click handler', async () => {
         ({ initRenderer, refreshVotingButtons, setVotingContext } = await import(`./renderer.js?test=${Date.now()}`));
         initRenderer(grid);

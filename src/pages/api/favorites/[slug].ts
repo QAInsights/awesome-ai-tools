@@ -1,8 +1,7 @@
 import type { APIRoute } from 'astro';
 import { EVENTS } from '../../../lib/analytics-events.js';
 import { trackRequest } from '../../../lib/server/analytics';
-import { addFavorite, removeFavorite } from '../../../lib/server/favorites-repository';
-import { removeFollow } from '../../../lib/server/follows-repository';
+import { addFavorite, removeFavoriteWithFollow } from '../../../lib/server/favorites-repository';
 import { isAllowedMutationRequest, jsonError } from '../../../lib/server/request-security';
 import { requireDatabase } from '../../../lib/server/runtime-env';
 import { getCookieSessionUser } from '../../../lib/server/route-auth';
@@ -50,8 +49,7 @@ export const DELETE: APIRoute = async ({ request, cookies, params }) => {
         const user = await getCookieSessionUser(cookies, db);
         if (!user) return jsonError('Unauthorized', 401);
 
-        const removed = await removeFavorite(db, user.id, params.slug);
-        await removeFollow(db, user.id, params.slug);
+        const removed = await removeFavoriteWithFollow(db, user.id, params.slug);
         if (removed) {
             trackRequest(request, EVENTS.FAVORITE_REMOVED, {
                 userId: user.id,

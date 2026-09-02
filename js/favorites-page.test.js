@@ -59,7 +59,9 @@ describe('favorites page bootstrap', () => {
         let authenticated = false;
         let storeListener = null;
         let followOptions = null;
+        let favoriteOptions = null;
         let loadFavoritesCalls = 0;
+        let loadFollowsCalls = 0;
         const authListeners = [];
         const user = { id: 'github:user-1', provider: 'github' };
         const authManager = {
@@ -75,7 +77,9 @@ describe('favorites page bootstrap', () => {
         };
         const favoritesApi = {
             getFavoriteRecords: () => [{ slug: 'cursor', createdAt: 10 }],
-            initFavorites: () => {},
+            initFavorites: options => {
+                favoriteOptions = options;
+            },
             loadFavorites: async () => {
                 loadFavoritesCalls += 1;
             },
@@ -93,6 +97,9 @@ describe('favorites page bootstrap', () => {
             initFollows: options => {
                 followOptions = options;
             },
+            loadFollows: async () => {
+                loadFollowsCalls += 1;
+            },
             syncFollows: async () => ({ authenticated: true, follows: [], stale: false }),
             refreshFollowButtons: () => {},
             subscribeFollows: () => () => {},
@@ -108,5 +115,8 @@ describe('favorites page bootstrap', () => {
 
         followOptions.onToggle(true, 'cursor');
         expect(loadFavoritesCalls).toBe(1);
+
+        favoriteOptions.onToggle(false, 'cursor');
+        expect(loadFollowsCalls).toBe(1);
     });
 });

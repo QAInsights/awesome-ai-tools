@@ -61,6 +61,45 @@ export async function addFollow(
     };
 }
 
+export async function followWithFavorite(
+    db: Database,
+    userId: string,
+    slug: string,
+    createdAt = Date.now(),
+): Promise<FollowWriteResult> {
+    const results = await db.batch([
+        db.prepare(`
+            INSERT OR IGNORE INTO follows (user_id, tool_slug, created_at)
+            VALUES (?, ?, ?)
+            RETURNING tool_slug, created_at
+        `).bind(userId, slug, createdAt),
+        db.prepare(`
+            INSERT OR IGNORE INTO favorites (user_id, tool_slug, created_at)
+            VALUES (?, ?, ?)
+            RETURNING tool_slug, created_at
+        `).bind(userId, slug, createdAt),
+    ]);
+    const inserted = results[0]?.results?.[0] as FollowRow | undefined;
+    if (inserted) {
+        return {
+            follow: { slug: inserted.tool_slug, createdAt: inserted.created_at },
+            created: true,
+        };
+    }
+
+    const existing = await db.prepare(`
+        SELECT tool_slug, created_at
+        FROM follows
+        WHERE user_id = ? AND tool_slug = ?
+    `).bind(userId, slug).first<FollowRow>();
+    if (!existing) throw new Error('Follow insert did not return or persist a row');
+
+    return {
+        follow: { slug: existing.tool_slug, createdAt: existing.created_at },
+        created: false,
+    };
+}
+
 export async function removeFollow(
     db: Database,
     userId: string,

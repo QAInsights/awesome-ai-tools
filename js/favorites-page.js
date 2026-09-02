@@ -10,6 +10,7 @@ import {
 } from './favorites.js';
 import {
     initFollows,
+    loadFollows,
     refreshFollowButtons,
     subscribeFollows,
     syncFollows,
@@ -25,6 +26,7 @@ const defaultFavoritesApi = {
 
 const defaultFollowsApi = {
     initFollows,
+    loadFollows,
     refreshFollowButtons,
     subscribeFollows,
     syncFollows,
@@ -64,6 +66,7 @@ export async function initializeFavoritesPage({
     } = favoritesApi;
     const {
         initFollows: initializeFollows,
+        loadFollows,
         refreshFollowButtons,
         subscribeFollows,
         syncFollows,
@@ -137,7 +140,7 @@ export async function initializeFavoritesPage({
         isAuthenticated: () => authManager.isAuthenticated(),
         onUnauthorized: () => authManager.signOut(),
         onToggle: added => {
-            if (!added) refreshFollowButtons(grid);
+            if (!added) void loadFollows();
         },
     });
     initializeFollows({

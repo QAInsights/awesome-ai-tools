@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             isAuthenticated: () => auth.isAuthenticated(),
             onUnauthorized: () => auth.signOut(),
             onToggle: added => {
-                if (!added) follows.refreshFollowButtons();
+                if (!added) void follows.loadFollows();
             },
         });
         follows.initFollows({
@@ -121,7 +121,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (added) void favorites.loadFavorites();
             },
         });
-        setFavoriteContext({ refreshFavoriteButtons: favorites.refreshFavoriteButtons });
+        setFavoriteContext({
+            refreshFavoriteButtons: favorites.refreshFavoriteButtons,
+            refreshFollowButtons: follows.refreshFollowButtons,
+        });
         syncVotingUi = () => {
             setVotingContext({
                 getVoteCount,

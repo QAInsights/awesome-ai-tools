@@ -12,6 +12,7 @@ const ENABLE_VOTING = process.env.ENABLE_VOTING === 'true';
 let getVoteCountFn = () => 0;
 let isAuthenticatedFn = () => false;
 let refreshFavoriteButtonsFn = () => {};
+let refreshFollowButtonsFn = () => {};
 
 const BATCH_SIZE = 20;
 let filteredTools = [];
@@ -53,6 +54,7 @@ export function hydrateGrid(tools) {
     filteredTools = tools;
     loadedCount = tools.length;
     refreshFavoriteButtonsFn(grid);
+    refreshFollowButtonsFn(grid);
     syncCompareRows();
     updateCompareBar();
 }
@@ -69,6 +71,9 @@ export function setVotingContext(context = {}) {
 export function setFavoriteContext(context = {}) {
     if (typeof context.refreshFavoriteButtons === 'function') {
         refreshFavoriteButtonsFn = context.refreshFavoriteButtons;
+    }
+    if (typeof context.refreshFollowButtons === 'function') {
+        refreshFollowButtonsFn = context.refreshFollowButtons;
     }
 }
 
@@ -336,6 +341,7 @@ function loadBatch() {
     loadedCount = endIndex;
 
     refreshFavoriteButtonsFn(grid);
+    refreshFollowButtonsFn(grid);
     syncCompareRows();
     updateCompareBar();
     updateSentinel();

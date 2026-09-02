@@ -5,6 +5,8 @@ let domReadyHandler = null;
 let refreshVotingButtonsCalls = 0;
 let setVotingContextCalls = 0;
 let loadFavoritesCalls = 0;
+let loadFollowsCalls = 0;
+let capturedFavoriteOptions = null;
 let capturedOnStateChange = null;
 
 function flushMicrotasks(times = 5) {
@@ -88,7 +90,9 @@ mock.module('./modules/auth-manager.js', () => ({
 }));
 
 mock.module('./favorites.js', () => ({
-    initFavorites: () => {},
+    initFavorites: options => {
+        capturedFavoriteOptions = options;
+    },
     clearFavorites: () => {},
     getFavoriteRecords: () => [],
     loadFavorites: async () => {
@@ -106,6 +110,9 @@ mock.module('./follows.js', () => ({
     initFollows: () => {},
     clearFollows: () => {},
     getFollowRecords: () => [],
+    loadFollows: async () => {
+        loadFollowsCalls += 1;
+    },
     refreshFollowButtons: () => {},
     subscribeFollows: () => () => {},
     syncFollows: async () => ({ authenticated: true, follows: [], stale: false }),
@@ -128,6 +135,8 @@ describe('app deferred auth bootstrap', () => {
         refreshVotingButtonsCalls = 0;
         setVotingContextCalls = 0;
         loadFavoritesCalls = 0;
+        loadFollowsCalls = 0;
+        capturedFavoriteOptions = null;
         capturedOnStateChange = null;
         const iconSidebar = makeContainer();
 
@@ -191,5 +200,9 @@ describe('app deferred auth bootstrap', () => {
         expect(setVotingContextCalls).toBeGreaterThanOrEqual(3);
         expect(refreshVotingButtonsCalls).toBe(2);
         expect(loadFavoritesCalls).toBeGreaterThanOrEqual(2);
+
+        capturedFavoriteOptions.onToggle(false, 'cursor');
+        await flushMicrotasks();
+        expect(loadFollowsCalls).toBe(1);
     });
 });

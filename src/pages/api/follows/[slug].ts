@@ -1,8 +1,7 @@
 import type { APIRoute } from 'astro';
 import { EVENTS } from '../../../lib/analytics-events.js';
 import { trackRequest } from '../../../lib/server/analytics';
-import { addFavorite } from '../../../lib/server/favorites-repository';
-import { addFollow, removeFollow } from '../../../lib/server/follows-repository';
+import { followWithFavorite, removeFollow } from '../../../lib/server/follows-repository';
 import { isAllowedMutationRequest, jsonError } from '../../../lib/server/request-security';
 import { requireDatabase } from '../../../lib/server/runtime-env';
 import { getCookieSessionUser } from '../../../lib/server/route-auth';
@@ -22,8 +21,7 @@ export const PUT: APIRoute = async ({ request, cookies, params }) => {
         const user = await getCookieSessionUser(cookies, db);
         if (!user) return jsonError('Unauthorized', 401);
 
-        const result = await addFollow(db, user.id, params.slug);
-        await addFavorite(db, user.id, params.slug);
+        const result = await followWithFavorite(db, user.id, params.slug);
         if (result.created) {
             trackRequest(request, EVENTS.FOLLOW_ADDED, {
                 userId: user.id,

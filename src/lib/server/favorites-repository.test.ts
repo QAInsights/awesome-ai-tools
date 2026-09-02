@@ -4,10 +4,18 @@ import {
     addFavorite,
     listFavorites,
     removeFavorite,
+    removeFavoriteWithFollow,
 } from './favorites-repository';
 
-function makeDatabase(result: unknown, firstResult: unknown = result) {
+function makeDatabase(
+    result: unknown,
+    firstResult: unknown = result,
+    batchResult: unknown[] = [],
+    batchError: Error | null = null,
+) {
     const calls: Array<{ sql: string; values: unknown[] }> = [];
+    const batches: unknown[][] = [];
+    let runCalls = 0;
     const db = {
         prepare(sql: string) {
             return {
@@ -16,13 +24,21 @@ function makeDatabase(result: unknown, firstResult: unknown = result) {
                     return {
                         all: async () => result,
                         first: async () => firstResult,
-                        run: async () => result,
+                        run: async () => {
+                            runCalls += 1;
+                            return result;
+                        },
                     };
                 },
             };
         },
+        batch: async (statements: unknown[]) => {
+            batches.push(statements);
+            if (batchError) throw batchError;
+            return batchResult;
+        },
     } as unknown as Database;
-    return { db, calls };
+    return { db, calls, batches, getRunCalls: () => runCalls };
 }
 
 describe('favorites repository', () => {
@@ -76,5 +92,34 @@ describe('favorites repository', () => {
         expect(await removeFavorite(db, 'github:456', 'cursor')).toBe(true);
         expect(calls[0]?.sql).toContain('user_id = ?');
         expect(calls[0]?.values).toEqual(['github:456', 'cursor']);
+    });
+
+    test('removes the favorite and follow in one batch', async () => {
+        const { db, calls, batches } = makeDatabase(
+            {},
+            undefined,
+            [
+                { meta: { changes: 1 } },
+                { meta: { changes: 1 } },
+            ],
+        );
+
+        expect(await removeFavoriteWithFollow(db, 'github:456', 'cursor')).toBe(true);
+        expect(batches[0]).toHaveLength(2);
+        expect(calls[0]?.sql).toContain('DELETE FROM favorites');
+        expect(calls[1]?.sql).toContain('DELETE FROM follows');
+    });
+
+    test('does not fall back to individual deletes when the batch fails', async () => {
+        const { db, batches, getRunCalls } = makeDatabase(
+            {},
+            undefined,
+            [],
+            new Error('batch failed'),
+        );
+
+        await expect(removeFavoriteWithFollow(db, 'github:456', 'cursor')).rejects.toThrow('batch failed');
+        expect(batches).toHaveLength(1);
+        expect(getRunCalls()).toBe(0);
     });
 });
