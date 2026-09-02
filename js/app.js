@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             isAuthenticated: () => auth.isAuthenticated(),
             onUnauthorized: () => auth.signOut(),
             onToggle: added => {
-                if (added) favorites.refreshFavoriteButtons();
+                if (added) void favorites.loadFavorites();
             },
         });
         setFavoriteContext({ refreshFavoriteButtons: favorites.refreshFavoriteButtons });

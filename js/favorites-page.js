@@ -3,6 +3,7 @@ import { bindAuthSession } from './auth-session-binding.js';
 import {
     getFavoriteRecords,
     initFavorites,
+    loadFavorites,
     refreshFavoriteButtons,
     subscribeFavorites,
     syncFavorites,
@@ -56,6 +57,7 @@ export async function initializeFavoritesPage({
     const {
         getFavoriteRecords: getRecords,
         initFavorites: initializeFavorites,
+        loadFavorites: load,
         refreshFavoriteButtons: refreshButtons,
         subscribeFavorites: subscribe,
         syncFavorites: sync,
@@ -141,6 +143,9 @@ export async function initializeFavoritesPage({
     initializeFollows({
         isAuthenticated: () => authManager.isAuthenticated(),
         onUnauthorized: () => authManager.signOut(),
+        onToggle: added => {
+            if (added) void load();
+        },
     });
 
     function showError() {

@@ -91,6 +91,9 @@ mock.module('./favorites.js', () => ({
     initFavorites: () => {},
     clearFavorites: () => {},
     getFavoriteRecords: () => [],
+    loadFavorites: async () => {
+        loadFavoritesCalls += 1;
+    },
     refreshFavoriteButtons: () => {},
     subscribeFavorites: () => () => {},
     syncFavorites: async () => {

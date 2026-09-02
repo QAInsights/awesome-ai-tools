@@ -58,6 +58,8 @@ describe('favorites page bootstrap', () => {
     test('does not render signed-out state when the initial authenticated load emits', async () => {
         let authenticated = false;
         let storeListener = null;
+        let followOptions = null;
+        let loadFavoritesCalls = 0;
         const authListeners = [];
         const user = { id: 'github:user-1', provider: 'github' };
         const authManager = {
@@ -74,6 +76,9 @@ describe('favorites page bootstrap', () => {
         const favoritesApi = {
             getFavoriteRecords: () => [{ slug: 'cursor', createdAt: 10 }],
             initFavorites: () => {},
+            loadFavorites: async () => {
+                loadFavoritesCalls += 1;
+            },
             syncFavorites: async () => {
                 storeListener?.();
                 return { authenticated: true, favorites: [{ slug: 'cursor', createdAt: 10 }], stale: false };
@@ -85,7 +90,9 @@ describe('favorites page bootstrap', () => {
             },
         };
         const followsApi = {
-            initFollows: () => {},
+            initFollows: options => {
+                followOptions = options;
+            },
             syncFollows: async () => ({ authenticated: true, follows: [], stale: false }),
             refreshFollowButtons: () => {},
             subscribeFollows: () => () => {},
@@ -98,5 +105,8 @@ describe('favorites page bootstrap', () => {
         expect(elements.favoritesGrid.classList.contains('hidden')).toBe(false);
         expect(elements.favoriteCount.textContent).toBe('1 saved');
         expect(elements.favoritesGrid.innerHTML).toContain('follow-btn');
+
+        followOptions.onToggle(true, 'cursor');
+        expect(loadFavoritesCalls).toBe(1);
     });
 });
