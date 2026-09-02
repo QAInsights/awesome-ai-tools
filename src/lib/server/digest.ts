@@ -20,12 +20,14 @@ export interface DigestRunOptions {
     siteOrigin: string;
     now?: number;
     maxUsers?: number;
+    minIntervalDays?: number;
 }
 
 export interface DigestRunSummary {
     candidates: number;
     sent: number;
     skippedNoChanges: number;
+    skippedTooSoon: number;
     failed: number;
     dryRun: boolean;
     errors: string[];
@@ -92,6 +94,7 @@ function emptySummary(): DigestRunSummary {
         candidates: 0,
         sent: 0,
         skippedNoChanges: 0,
+        skippedTooSoon: 0,
         failed: 0,
         dryRun: true,
         errors: [],
@@ -101,6 +104,7 @@ function emptySummary(): DigestRunSummary {
 export async function runDigest(opts: DigestRunOptions): Promise<DigestRunSummary> {
     const now = opts.now ?? Date.now();
     const maxUsers = opts.maxUsers ?? 90;
+    const minIntervalDays = opts.minIntervalDays ?? 13;
     const candidatesResult = await opts.db.prepare(`
         SELECT u.id, u.display_name, u.email,
                p.email_enabled, p.unsubscribe_token, p.last_digest_sent_at
@@ -129,6 +133,10 @@ export async function runDigest(opts: DigestRunOptions): Promise<DigestRunSummar
                 const prefs = await getOrCreatePrefs(opts.db, candidate.id);
                 token = prefs.unsubscribeToken;
                 lastDigestSentAt = prefs.lastDigestSentAt;
+            }
+            if (lastDigestSentAt != null && now - lastDigestSentAt < minIntervalDays * DAY_MS) {
+                summary.skippedTooSoon += 1;
+                continue;
             }
 
             const followsResult = await opts.db.prepare(`
@@ -216,6 +224,6 @@ export async function runDigest(opts: DigestRunOptions): Promise<DigestRunSummar
     }
 
     summary.dryRun = successfulSends.length === 0 || successfulSends.every(result => result.dryRun);
-    console.log(`[Digest] candidates=${summary.candidates} sent=${summary.sent} skipped=${summary.skippedNoChanges} failed=${summary.failed} dryRun=${summary.dryRun}`);
+    console.log(`[Digest] candidates=${summary.candidates} sent=${summary.sent} skipped=${summary.skippedNoChanges} tooSoon=${summary.skippedTooSoon} failed=${summary.failed} dryRun=${summary.dryRun}`);
     return summary;
 }

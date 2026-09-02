@@ -224,6 +224,7 @@ describe('digest service', () => {
             sendEmail: mail.sendEmail,
             siteOrigin: 'https://ai.dosa.dev',
             now: Date.parse('2026-09-02'),
+            minIntervalDays: 0,
         };
 
         await runDigest(options);
@@ -283,6 +284,49 @@ describe('digest service', () => {
         expect(prefs.email_enabled).toBe(1);
         expect(prefs.unsubscribe_token).toBeTruthy();
         expect(mail.calls[0]?.unsubscribeUrl).toContain(encodeURIComponent(prefs.unsubscribe_token));
+        sqlite.close();
+    });
+
+    test('skips a changed digest when the previous send was too recent', async () => {
+        const { db, sqlite } = makeDatabase();
+        const now = Date.parse('2026-09-10');
+        addUser(sqlite, { id: 'github:user-a' });
+        addFollow(sqlite, 'github:user-a', 'cursor', Date.parse('2026-08-01'));
+        addPrefs(sqlite, 'github:user-a', 'token-a', 1, now - 5 * 86_400_000);
+        const mail = sender();
+
+        const summary = await runDigest({
+            db,
+            tools: [{ ...tool, lastUpdated: '2026-09-10' }],
+            sendEmail: mail.sendEmail,
+            siteOrigin: 'https://ai.dosa.dev',
+            now,
+        });
+
+        expect(summary).toMatchObject({ candidates: 1, skippedTooSoon: 1, sent: 0 });
+        expect(mail.calls).toHaveLength(0);
+        expect(sqlite.query('SELECT COUNT(*) AS count FROM email_log').get()).toEqual({ count: 0 });
+        sqlite.close();
+    });
+
+    test('sends a changed digest after the minimum spacing interval', async () => {
+        const { db, sqlite } = makeDatabase();
+        const now = Date.parse('2026-09-15');
+        addUser(sqlite, { id: 'github:user-a' });
+        addFollow(sqlite, 'github:user-a', 'cursor', Date.parse('2026-08-01'));
+        addPrefs(sqlite, 'github:user-a', 'token-a', 1, Date.parse('2026-09-01'));
+        const mail = sender();
+
+        const summary = await runDigest({
+            db,
+            tools: [tool],
+            sendEmail: mail.sendEmail,
+            siteOrigin: 'https://ai.dosa.dev',
+            now,
+        });
+
+        expect(summary).toMatchObject({ candidates: 1, skippedTooSoon: 0, sent: 1 });
+        expect(mail.calls).toHaveLength(1);
         sqlite.close();
     });
 

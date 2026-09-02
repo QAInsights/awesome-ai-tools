@@ -18,6 +18,7 @@ export async function runScheduledDigest(trigger: string): Promise<DigestRunSumm
             candidates: 0,
             sent: 0,
             skippedNoChanges: 0,
+            skippedTooSoon: 0,
             failed: 1,
             dryRun: true,
             errors: [`${trigger}: ${message}`],
