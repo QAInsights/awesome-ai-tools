@@ -17,7 +17,7 @@ export interface EmailSendResult {
     dryRun: boolean;
 }
 
-export function maskEmail(value: string): string {
+function maskEmail(value: string): string {
     const [local, domain] = value.split('@');
     if (!local || !domain) return '***';
     return `${local.slice(0, 1)}***@${domain}`;
