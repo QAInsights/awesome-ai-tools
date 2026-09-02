@@ -30,6 +30,19 @@ async function readPrefs(db: Database, userId: string): Promise<NotificationPref
     return toNotificationPrefs(row);
 }
 
+export async function findPrefsByUnsubscribeToken(
+    db: Database,
+    token: string,
+): Promise<NotificationPrefs | null> {
+    if (!token) return null;
+    const row = await db.prepare(`
+        SELECT email_enabled, unsubscribe_token, last_digest_sent_at
+        FROM notification_prefs
+        WHERE unsubscribe_token = ?
+    `).bind(token).first<NotificationPrefsRow>();
+    return row ? toNotificationPrefs(row) : null;
+}
+
 export async function getOrCreatePrefs(
     db: Database,
     userId: string,

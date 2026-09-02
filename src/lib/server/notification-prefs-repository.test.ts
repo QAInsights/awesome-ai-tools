@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'bun:test';
 import type { Database } from './db';
 import {
+    findPrefsByUnsubscribeToken,
     getOrCreatePrefs,
     setEmailEnabled,
     unsubscribeByToken,
@@ -81,5 +82,24 @@ describe('notification preferences repository', () => {
 
         const noMatch = makeDatabase([], { meta: { changes: 0 } });
         expect(await unsubscribeByToken(noMatch.db, 'missing')).toBe(false);
+    });
+
+    test('finds preferences by unsubscribe token without writing', async () => {
+        const { db, calls } = makeDatabase([{
+            email_enabled: 1,
+            unsubscribe_token: 'token-1',
+            last_digest_sent_at: 10,
+        }]);
+        expect(await findPrefsByUnsubscribeToken(db, 'token-1')).toEqual({
+            emailEnabled: true,
+            unsubscribeToken: 'token-1',
+            lastDigestSentAt: 10,
+        });
+        expect(calls).toHaveLength(1);
+        expect(calls[0]?.sql).toContain('SELECT');
+        expect(calls[0]?.values).toEqual(['token-1']);
+
+        const noMatch = makeDatabase([null]);
+        await expect(findPrefsByUnsubscribeToken(noMatch.db, 'missing')).resolves.toBeNull();
     });
 });

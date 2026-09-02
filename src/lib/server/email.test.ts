@@ -44,7 +44,6 @@ describe('email sender', () => {
             text: 'Hello',
             headers: {
                 'List-Unsubscribe': '<https://ai.dosa.dev/unsubscribe?token=abc>',
-                'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
             },
         });
     });

@@ -1,23 +1,29 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { unsubscribeByToken } from '../lib/server/notification-prefs-repository';
+import {
+    findPrefsByUnsubscribeToken,
+    unsubscribeByToken,
+} from '../lib/server/notification-prefs-repository';
 import { requireDatabase } from '../lib/server/runtime-env';
 
 export const prerender = false;
+Astro.response.headers.set('Cache-Control', 'no-store');
 
+let confirmed = false;
 let valid = false;
-const token = Astro.url.searchParams.get('token') ?? '';
+const token = Astro.request.method === 'POST'
+    ? (await Astro.request.formData()).get('token')?.toString() ?? ''
+    : Astro.url.searchParams.get('token') ?? '';
 try {
-    valid = await unsubscribeByToken(requireDatabase(), token);
+    const db = requireDatabase();
+    if (Astro.request.method === 'POST') {
+        await unsubscribeByToken(db, token);
+        confirmed = true;
+    } else {
+        valid = Boolean(await findPrefsByUnsubscribeToken(db, token));
+    }
 } catch (error) {
     console.error('[Notifications] Unsubscribe failed:', error instanceof Error ? error.message : String(error));
-}
-
-if (Astro.request.method === 'POST') {
-    return new Response(null, {
-        status: 200,
-        headers: { 'Cache-Control': 'no-store' },
-    });
 }
 ---
 
@@ -29,11 +35,20 @@ if (Astro.request.method === 'POST') {
 >
     <main class="min-h-screen bg-black text-white flex items-center justify-center p-6">
         <section class="max-w-lg w-full border border-[#222] bg-white/[0.02] rounded-xl p-8 text-center">
-            {valid ? (
+            {confirmed ? (
                 <>
                     <h1 class="text-2xl font-semibold mb-3">You&apos;re unsubscribed</h1>
                     <p class="text-[#a3a3a3] mb-6">You will no longer receive email digests from ai.dosa.dev.</p>
                     <a href="/settings" class="inline-flex items-center py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 transition-colors">Manage notifications</a>
+                </>
+            ) : valid ? (
+                <>
+                    <h1 class="text-2xl font-semibold mb-3">Unsubscribe from email updates?</h1>
+                    <p class="text-[#a3a3a3] mb-6">Confirm that you no longer want to receive email digests from ai.dosa.dev.</p>
+                    <form method="post">
+                        <input type="hidden" name="token" value={token} />
+                        <button type="submit" class="inline-flex items-center py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 transition-colors">Unsubscribe</button>
+                    </form>
                 </>
             ) : (
                 <>

@@ -33,7 +33,6 @@ export async function sendEmail(message: OutboundEmail): Promise<EmailSendResult
     const headers = message.unsubscribeUrl
         ? {
             'List-Unsubscribe': `<${message.unsubscribeUrl}>`,
-            'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
         }
         : undefined;
     const result = await binding.send({
