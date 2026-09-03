@@ -1,0 +1,15 @@
+@theme {
+    --color-page: #000;
+    --color-panel: #0a0a0a;
+    --color-border: #222;
+    --color-border-strong: #444;
+    --color-ink: #fff;
+    --color-ink-secondary: #a3a3a3;
+    --color-ink-muted: #737373;
+    --color-ink-disabled: #525252;
+    --color-gold: #F2C040;
+    --color-gold-soft: #e2c48a;
+    --color-gold-hi: #f1d99f;
+    --color-gold-lo: #d6b77a;
+    --color-danger: #f87171;
+}
