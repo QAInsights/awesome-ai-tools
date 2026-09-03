@@ -103,10 +103,8 @@ const toolsJson = JSON.stringify(tools);
                         <span class="hidden sm:inline">Scope</span>
                         <span id="activeFilterBadge" class="hidden font-mono text-[10px] bg-white text-black px-1.5 py-0.5 rounded-full"></span>
                     </button>
-                </SiteHeader>
-
                     <!-- Filter Mega Menu Overlay -->
-                    <div id="filterAccordion" class="hidden">
+                    <div id="filterAccordion" class="hidden" slot="overlay">
                         <div class="px-8 py-8 max-w-[1400px] mx-auto">
                             <div class="font-mono text-[11px] uppercase text-[#525252] mb-6 tracking-[0.2em] px-1">Browse by Category</div>
                             <div id="categoryFilters">
@@ -114,6 +112,7 @@ const toolsJson = JSON.stringify(tools);
                             </div>
                         </div>
                     </div>
+                </SiteHeader>
                 <!-- Hero: one-line orientation for first-time visitors -->
                 <div class="px-4 md:px-8 pt-6 md:pt-8 pb-2 shrink-0">
                     <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-2.5 flex items-center gap-2">
