@@ -224,6 +224,7 @@ Agents that operate independently on tasks, often outside your local editor.
 | **[Omnigent](https://github.com/omnigent-ai/omnigent)** | Omnigent | Omnigent is an open-source AI agent framework and meta-harness: orchestrate Claude Code, Codex, Cursor, Pi, and custom agents — swap harnesses without rewriting, enforce policies and sandboxing, and collaborate in real time from any device.; [GitHub](https://github.com/omnigent-ai/omnigent) |
 | **[Manus](https://manus.im/invitation/KK5RLBDPBSGLZD?utm_source=invitation&utm_medium=social&utm_campaign=copy_link)** | Monica | Manus is an autonomous AI agent that can plan, code, and execute complex tasks end-to-end in the browser. |
 | **[LoopTroop](https://www.looptroop.ovh/)** | LoopTroop AI | Local, open-source GUI for running multi-step AI coding tickets across projects. Uses an LLM council for planning, atomic Beads in isolated git worktrees, and time-boxed retry loops for execution.; [GitHub](https://github.com/looptroop-ai/LoopTroop) |
+| **[Superagent](https://github.com/pungme/superagent-desktop)** | — | Open-source macOS desktop app that gives Claude Code and Codex a real browser to drive, an iOS Simulator to install and screenshot apps in, and a phone companion app for remote monitoring.; [GitHub](https://github.com/pungme/superagent-desktop) |
 
 ---
 
