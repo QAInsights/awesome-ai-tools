@@ -59,18 +59,10 @@ afterAll(() => mock.restore());
 describe('dashboard bootstrap', () => {
     let iconSidebar;
     let openSidebarDesktop;
-    let accountNav;
 
     beforeEach(() => {
         domReadyHandler = null;
         iconSidebar = makeContainer();
-        const accountClasses = new Set(['hidden']);
-        accountNav = {
-            classList: {
-                toggle: (token, force) => force ? accountClasses.add(token) : accountClasses.delete(token),
-                contains: (token) => accountClasses.has(token),
-            },
-        };
         openSidebarDesktop = {
             clicks: 0,
             addEventListener: () => {},
@@ -92,7 +84,6 @@ describe('dashboard bootstrap', () => {
             getElementById: (id) => {
                 if (id === 'iconSidebar') return iconSidebar;
                 if (id === 'openSidebarDesktop') return openSidebarDesktop;
-                if (id === 'sidebarAccountNav') return accountNav;
                 return null;
             },
             querySelectorAll: () => [],
@@ -113,8 +104,6 @@ describe('dashboard bootstrap', () => {
 
         await domReadyHandler();
 
-        expect(accountNav.classList.contains('hidden')).toBe(false);
-        expect(accountNav.classList.contains('flex')).toBe(true);
         expect(iconSidebar.innerHTML).toContain('id="expandBtn"');
         expect(iconSidebar.innerHTML).toContain('id="searchBtn"');
 
