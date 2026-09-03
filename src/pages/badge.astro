@@ -23,28 +23,28 @@ const defaultHtml = `<a href="${defaultLink}" target="_blank" rel="noopener"><im
 >
     <div class="max-w-[1100px] mx-auto w-full flex flex-col flex-1 min-h-0 p-6 md:p-8">
         <header class="mb-7 max-w-3xl">
-            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-2">Growth kit</p>
+            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted mb-2">Growth kit</p>
             <h1 class="text-2xl md:text-3xl font-semibold tracking-tight">Featured on ai.dosa.dev</h1>
-            <p class="text-[#a3a3a3] text-[15px] mt-2">Listed in the directory? Show it. Paste the badge into your README or site. It links back to your tool's page.</p>
+            <p class="text-ink-secondary text-[15px] mt-2">Listed in the directory? Show it. Paste the badge into your README or site. It links back to your tool's page.</p>
         </header>
 
-        <section class="border border-[#222] bg-white/[0.02] rounded-xl p-5 mb-7">
-            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-4">Preview</p>
+        <section class="border border-border bg-white/[0.02] rounded-xl p-5 mb-7">
+            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted mb-4">Preview</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="border border-[#222] rounded-xl p-5 bg-[#0a0a0a]">
-                    <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-4">Dark</p>
+                <div class="border border-border rounded-xl p-5 bg-panel">
+                    <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted mb-4">Dark</p>
                     <img src="/badge/featured.svg" width="212" height="44" alt="Featured on ai.dosa.dev" />
                 </div>
-                <div class="border border-[#222] rounded-xl p-5 bg-white">
-                    <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-4">Light</p>
+                <div class="border border-border rounded-xl p-5 bg-white">
+                    <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted mb-4">Light</p>
                     <img src="/badge/featured.svg" width="212" height="44" alt="Featured on ai.dosa.dev" />
                 </div>
             </div>
         </section>
 
-        <section class="border border-[#222] bg-white/[0.02] rounded-xl p-5 mb-7">
-            <label for="badgeTool" class="block font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-3">Link target</label>
-            <select id="badgeTool" class="w-full bg-black border border-[#222] rounded-2xl px-4 py-2.5 text-[14px] text-white outline-none focus:border-[#444]">
+        <section class="border border-border bg-white/[0.02] rounded-xl p-5 mb-7">
+            <label for="badgeTool" class="block font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted mb-3">Link target</label>
+            <select id="badgeTool" class="w-full bg-black border border-border rounded-2xl px-4 py-2.5 text-[14px] text-white outline-none focus:border-[#444]">
                 <option value="">Directory home (ai.dosa.dev)</option>
                 {tools.map(tool => (
                     <option value={tool.slug}>{tool.name} ({tool.company})</option>
@@ -53,25 +53,25 @@ const defaultHtml = `<a href="${defaultLink}" target="_blank" rel="noopener"><im
         </section>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-7">
-            <section class="border border-[#222] bg-white/[0.02] rounded-xl p-5">
+            <section class="border border-border bg-white/[0.02] rounded-xl p-5">
                 <div class="flex items-center justify-between gap-3 mb-4">
-                    <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373]">Markdown</p>
-                    <button type="button" data-copy-target="badgeMd" class="rounded-full border border-[#222] px-4 py-1.5 text-[12px] text-[#a3a3a3] hover:text-white hover:border-[#444] transition-colors active:scale-[0.98]">Copy</button>
+                    <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted">Markdown</p>
+                    <button type="button" data-copy-target="badgeMd" class="rounded-full border border-border px-4 py-1.5 text-[12px] text-ink-secondary hover:text-white hover:border-[#444] transition-colors active:scale-[0.98]">Copy</button>
                 </div>
-                <pre class="m-0"><code id="badgeMd" class="font-mono text-[12px] text-[#a3a3a3] whitespace-pre-wrap break-all">{defaultMarkdown}</code></pre>
+                <pre class="m-0"><code id="badgeMd" class="font-mono text-[12px] text-ink-secondary whitespace-pre-wrap break-all">{defaultMarkdown}</code></pre>
             </section>
-            <section class="border border-[#222] bg-white/[0.02] rounded-xl p-5">
+            <section class="border border-border bg-white/[0.02] rounded-xl p-5">
                 <div class="flex items-center justify-between gap-3 mb-4">
-                    <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373]">HTML</p>
-                    <button type="button" data-copy-target="badgeHtml" class="rounded-full border border-[#222] px-4 py-1.5 text-[12px] text-[#a3a3a3] hover:text-white hover:border-[#444] transition-colors active:scale-[0.98]">Copy</button>
+                    <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted">HTML</p>
+                    <button type="button" data-copy-target="badgeHtml" class="rounded-full border border-border px-4 py-1.5 text-[12px] text-ink-secondary hover:text-white hover:border-[#444] transition-colors active:scale-[0.98]">Copy</button>
                 </div>
-                <pre class="m-0"><code id="badgeHtml" class="font-mono text-[12px] text-[#a3a3a3] whitespace-pre-wrap break-all">{defaultHtml}</code></pre>
+                <pre class="m-0"><code id="badgeHtml" class="font-mono text-[12px] text-ink-secondary whitespace-pre-wrap break-all">{defaultHtml}</code></pre>
             </section>
         </div>
 
-        <section class="border border-[#222] bg-white/[0.02] rounded-xl p-5">
-            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-4">Guidelines</p>
-            <ul class="list-disc pl-5 flex flex-col gap-2 text-[14px] text-[#a3a3a3]">
+        <section class="border border-border bg-white/[0.02] rounded-xl p-5">
+            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted mb-4">Guidelines</p>
+            <ul class="list-disc pl-5 flex flex-col gap-2 text-[14px] text-ink-secondary">
                 <li>Keep the badge unmodified: no recolouring or stretching.</li>
                 <li>Keep at least 8px of clear space around it.</li>
                 <li>Always link to ai.dosa.dev.</li>
