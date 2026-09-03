@@ -2,20 +2,12 @@ import { auth } from './auth.js';
 
 const bindings = new WeakMap();
 
-export function syncAccountNav(user, root = document) {
-    const accountNav = root.getElementById('sidebarAccountNav');
-    if (!accountNav) return;
-    accountNav.classList.toggle('hidden', !user);
-    accountNav.classList.toggle('flex', Boolean(user));
-}
-
 function createBinding(authManager, root) {
     const listeners = new Set();
     let current = null;
 
     function publish(change) {
         current = change;
-        syncAccountNav(change.user, root);
         listeners.forEach(listener => {
             try {
                 listener(change);
