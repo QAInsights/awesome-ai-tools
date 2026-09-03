@@ -3,7 +3,7 @@ import DashboardLayout from '../layouts/DashboardLayout.astro';
 import { getAllTools } from '../lib/tools';
 import { getCookieSessionUser } from '../lib/server/route-auth';
 import { requireDatabase } from '../lib/server/runtime-env';
-import { loadUserZaps } from '../lib/server/zap-query';
+import { loadTrendingZaps, loadUserZaps, zapToolId } from '../lib/server/zap-query';
 
 export const prerender = false;
 
@@ -16,7 +16,19 @@ const tools = getAllTools().map(tool => ({
     company: tool.company,
     category: tool.categoryShort,
 }));
-const dashboard = user ? await loadUserZaps(user.id, tools) : null;
+const [dashboard, trending] = user
+    ? await Promise.all([loadUserZaps(user.id, tools), loadTrendingZaps(tools)])
+    : [null, await loadTrendingZaps(tools)];
+const weekly = dashboard?.data.weekly ?? [];
+const weeklyMax = Math.max(...weekly, 1);
+const weeklyBarHeight = (count: number) => Math.max(4, Math.round((count / weeklyMax) * 100));
+const analyticsError = dashboard?.error || trending.error;
+const zapToolsJson = JSON.stringify(tools.map(tool => ({
+    id: zapToolId(tool.company, tool.name),
+    slug: tool.slug,
+    name: tool.name,
+    category: tool.category,
+}))).replace(/<\//g, '<\\/');
 const formatZapDate = (value: string) => {
     const timestamp = Date.parse(value);
     return Number.isNaN(timestamp) ? value : new Date(timestamp).toISOString().slice(0, 10);
@@ -39,12 +51,6 @@ const formatZapDate = (value: string) => {
                     <p class="text-[#a3a3a3] text-[15px] mt-2">Tools you zapped in the last 90 days.</p>
                 </header>
 
-                {dashboard?.error && (
-                    <div class="border border-amber-400/20 bg-amber-400/[0.06] rounded-xl p-4 mb-5 text-amber-100">
-                        {dashboard.error}
-                    </div>
-                )}
-
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-7">
                     <div class="border border-[#222] bg-white/[0.02] rounded-xl p-5">
                         <p class="font-mono text-[11px] uppercase tracking-[0.16em] text-[#737373]">Tools zapped</p>
@@ -59,6 +65,29 @@ const formatZapDate = (value: string) => {
                         <p class="text-2xl font-semibold mt-2">{dashboard?.data.topCategory || '—'}</p>
                     </div>
                 </div>
+
+                <section class="border border-[#222] bg-white/[0.02] rounded-xl p-5 mb-7">
+                    <div class="flex items-center justify-between gap-3 mb-4">
+                        <h2 class="font-mono text-[11px] uppercase tracking-[0.16em] text-[#737373]">Activity · last 12 weeks</h2>
+                    </div>
+                    <div class="h-24 flex items-end gap-1.5" aria-label="Zap activity over the last 12 weeks">
+                        {weekly.map(count => (
+                            <div
+                                class={`flex-1 rounded-t-sm ${count > 0 ? 'bg-[#F2C040]' : 'bg-white/10'}`}
+                                style={`height: ${weeklyBarHeight(count)}%`}
+                                title={`${count} zaps`}
+                            ></div>
+                        ))}
+                    </div>
+                    <div class="flex justify-between gap-1 mt-2 text-[10px] font-mono text-[#525252]">
+                        {weekly.map((_, index) => (
+                            <span class="flex-1 text-center">{index === 11 ? 'now' : `${12 - index}w ago`}</span>
+                        ))}
+                    </div>
+                    {!weekly.some(count => count > 0) && (
+                        <p class="text-[12px] text-[#737373] mt-3">No activity yet</p>
+                    )}
+                </section>
 
                 {dashboard?.data.tools.length ? (
                     <div id="zapGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -103,6 +132,47 @@ const formatZapDate = (value: string) => {
                 <a href="/?signin=1" data-auth-trigger="zap_btn" class="inline-flex items-center py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 transition-colors">Sign in</a>
             </div>
         )}
+
+        {analyticsError && (
+            <div class="border border-amber-400/20 bg-amber-400/[0.06] rounded-xl p-4 mb-7 text-amber-100">
+                {analyticsError}
+            </div>
+        )}
+
+        <section class="mt-2">
+            <div class="mb-4">
+                <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-2">Community</p>
+                <h2 class="text-xl font-semibold tracking-tight">What the community is zapping</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="border border-[#222] bg-white/[0.02] rounded-xl p-5">
+                    <h3 class="text-[15px] font-semibold mb-4">Top zapped tools</h3>
+                    <ol id="zapLeaderboard" class="flex flex-col gap-2">
+                        <li data-leaderboard-empty class="text-[13px] text-[#737373]">Loading…</li>
+                    </ol>
+                </div>
+                <div class="border border-[#222] bg-white/[0.02] rounded-xl p-5">
+                    <h3 class="text-[15px] font-semibold mb-4">Trending this week</h3>
+                    {trending.data.length ? (
+                        <ol class="flex flex-col gap-3">
+                            {trending.data.map((tool, index) => (
+                                <li class="flex items-center gap-3">
+                                    <span class="font-mono text-[12px] text-[#525252] w-4">{index + 1}</span>
+                                    <div class="min-w-0 grow">
+                                        <a href={`/tools/${tool.slug}`} class="text-[14px] font-medium text-white hover:text-[#e2c48a] transition-colors">{tool.name}</a>
+                                        <div class="font-mono text-[10px] uppercase tracking-wide text-[#737373] mt-0.5">{tool.company} · {tool.category}</div>
+                                    </div>
+                                    <span class="font-mono text-[11px] text-[#F2C040] whitespace-nowrap">+{tool.count} this week</span>
+                                </li>
+                            ))}
+                        </ol>
+                    ) : (
+                        <p class="text-[13px] text-[#737373]">Nothing trending yet</p>
+                    )}
+                </div>
+            </div>
+        </section>
     </div>
+    <script type="application/json" id="zapToolsData" set:html={zapToolsJson}></script>
     <script src="/dist/zap-page.js" type="module" defer></script>
 </DashboardLayout>
