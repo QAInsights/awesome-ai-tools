@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 import { readFileSync } from 'node:fs';
-import { parseNewsPost, utcDateString } from './news-source';
+import { parseNewsPost, renderNewsPostHtml, utcDateString } from './news-source';
 
 const source = readFileSync(new URL('../../content/blog/today-in-ai-2026-09-02.mdx', import.meta.url), 'utf8');
 
@@ -70,5 +70,26 @@ draft: false
     test('formats UTC dates', () => {
         expect(utcDateString(Date.parse('2026-09-02T23:59:59.000Z'))).toBe('2026-09-02');
         expect(utcDateString(Date.parse('2026-09-03T00:00:00.000Z'))).toBe('2026-09-03');
+    });
+
+    test('escapes rendered headings and source labels', () => {
+        const html = renderNewsPostHtml({
+            id: 'today-in-ai-2026-09-02',
+            date: '2026-09-02',
+            title: 'Brief',
+            description: 'Description',
+            intro: [],
+            items: [{
+                heading: '<script>alert(1)</script>',
+                whatHappened: 'A release happened.',
+                whyItMatters: 'It matters.',
+                sourceLabel: 'A & B',
+                sourceUrl: 'https://example.com/source?a=1&b=2',
+            }],
+        });
+
+        expect(html).toContain('<h2>&lt;script&gt;alert(1)&lt;/script&gt;</h2>');
+        expect(html).toContain('Source: A &amp; B');
+        expect(html).toContain('href="https://example.com/source?a=1&amp;b=2"');
     });
 });

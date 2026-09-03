@@ -26,6 +26,15 @@ function stripMarkup(value: string): string {
         .trim();
 }
 
+function escapeHtml(value: string): string {
+    return value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 function readFrontmatter(raw: string): { metadata: string; body: string } | null {
     const match = raw.match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);
     return match ? { metadata: match[1], body: match[2] } : null;
@@ -86,6 +95,30 @@ export function parseNewsPost(id: string, raw: string): NewsPost | null {
         intro,
         items,
     };
+}
+
+export function renderNewsPostHtml(post: NewsPost): string {
+    const intro = post.intro
+        .map(paragraph => `<p>${escapeHtml(paragraph)}</p>`)
+        .join('');
+    const items = post.items
+        .map(item => {
+            const whyItMatters = item.whyItMatters
+                ? `<p><strong>Why it matters:</strong> ${escapeHtml(item.whyItMatters)}</p>`
+                : '';
+            const source = item.sourceUrl
+                ? `<p><a href="${escapeHtml(item.sourceUrl)}">Source: ${escapeHtml(item.sourceLabel)}</a></p>`
+                : '';
+            return [
+                `<h2>${escapeHtml(item.heading)}</h2>`,
+                `<p><strong>What happened:</strong> ${escapeHtml(item.whatHappened)}</p>`,
+                whyItMatters,
+                source,
+            ].join('');
+        })
+        .join('');
+    const closingLink = escapeHtml(`https://ai.dosa.dev/blog/${encodeURIComponent(post.id)}/`);
+    return `${intro}${items}<p><a href="${closingLink}">Read the full brief on ai.dosa.dev</a></p>`;
 }
 
 export function getNewsPostForDate(date: string): NewsPost | null {

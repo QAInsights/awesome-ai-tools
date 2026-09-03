@@ -85,7 +85,9 @@ const resolvedTwitterDesc = twitterDescription ?? description;
           { name: "keywords", content: keywords }
         ],
         link: [
-          { rel: "alternate", type: "application/rss+xml", title: "ai.dosa.dev Blog RSS", href: "/rss.xml" }
+          { rel: "alternate", type: "application/rss+xml", title: "ai.dosa.dev Blog RSS", href: "/rss.xml" },
+          { rel: "alternate", type: "application/rss+xml", title: "Today in AI RSS", href: "/news/rss.xml" },
+          { rel: "alternate", type: "application/feed+json", title: "ai.dosa.dev tools feed", href: "/tools/feed.json" }
         ]
       }}
     />
