@@ -102,6 +102,9 @@ const latestNewsDate = latestNews
                 <a href="/compare" class="filter-btn flex items-center gap-2">
                     Comparisons
                 </a>
+                <a href="/badge" class={`filter-btn flex items-center gap-2${activeNav === 'badge' ? ' active' : ''}`}>
+                    Featured Badge
+                </a>
 
                 <div class="font-mono text-[12px] uppercase text-[#737373] mb-1 pl-2 tracking-widest mt-4 hidden md:block">AI Utilities</div>
                 <a href="/tools/token-counter" class="filter-btn flex items-center gap-2">
@@ -130,6 +133,9 @@ const latestNewsDate = latestNews
                     </a>
                     <a href="/compare" class="filter-btn flex items-center gap-2 w-full text-left">
                         Comparisons
+                    </a>
+                    <a href="/badge" class={`filter-btn flex items-center gap-2 w-full text-left${activeNav === 'badge' ? ' active' : ''}`}>
+                        Featured Badge
                     </a>
 
                     <div class="font-mono text-[11px] uppercase text-[#737373] mb-1.5 pl-2 tracking-widest mt-4">AI Utilities</div>

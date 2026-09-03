@@ -8,6 +8,11 @@ body:
       value: |
         Thanks for contributing to **ai.dosa.dev**! Please fill in the details below.
 
+  - type: markdown
+    attributes:
+      value: |
+        **Optional — show you're listed.** Once approved, you can add the *Featured on ai.dosa.dev* badge to your README or site (Markdown and HTML snippets at https://ai.dosa.dev/badge). It links back to your tool's page and helps others discover the directory.
+
   - type: input
     id: tool-name
     attributes:
@@ -90,3 +95,5 @@ body:
           required: true
         - label: The URL is working and publicly accessible
           required: true
+        - label: I'd like to add the "Featured on ai.dosa.dev" badge to my README/site once listed (optional)
+          required: false
