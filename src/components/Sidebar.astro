@@ -3,13 +3,11 @@ import { getCollection } from 'astro:content';
 import PrompticonFeature from './PrompticonFeature.astro';
 
 /**
- * Sidebar component - replaces js/shell.js runtime HTML injection.
- * 
+ * Static Astro sidebar shared by the directory and dashboard layouts.
+ *
  * Props:
  *  - variant: 'index' for the main directory page, 'tool' for tool detail pages
- *  - showSearch: whether to render the search input (index page only)
- *  - showFilters: whether to render category filters placeholder (index page only)
- *  - showCompare: whether to render compare bar (index page only)
+ *  - activeNav: the current dashboard navigation item
  */
 
 interface Props {
@@ -70,8 +68,6 @@ const latestNewsDate = latestNews
                     <a href="https://buymeacoffee.com/qainsights" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center py-2 px-4 bg-white/5 text-white text-sm font-medium border border-[#222] rounded-md transition-all duration-200 hover:bg-white/10 w-full hover:-translate-y-px">Support the Project</a>
                 </div>
             </div>
-
-
         ) : (
             <!-- Tool page: back + nav links -->
             <div class="py-5 px-6 text-[#a3a3a3] border-b border-[#222] shrink-0">
@@ -81,67 +77,35 @@ const latestNewsDate = latestNews
                     <a href="https://github.com/QAInsights/awesome-ai-tools/issues/new?template=submit-tool.yml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center py-2 px-4 bg-white/5 text-white text-sm font-medium border border-[#222] rounded-md transition-all duration-200 hover:bg-white/10 w-full hover:-translate-y-px">Submit a Tool</a>
                 </div>
             </div>
+        )}
 
-            <nav class="flex flex-col px-4 py-2 gap-1 border-b border-[#222] md:flex-1 md:min-h-0 md:overflow-y-auto" id="dashboardNav" style="scrollbar-width: thin;">
-                <div id="sidebarAccountNav" class="hidden flex-col gap-1">
-                    <div class="font-mono text-[12px] uppercase text-[#737373] mb-2 pl-2 tracking-widest mt-2 hidden md:block">Account</div>
-                    <a href="/favorites" class={`filter-btn flex items-center${activeNav === 'favorites' ? ' active' : ''}`}>Favorites</a>
-                    <a href="/zap" class={`filter-btn flex items-center${activeNav === 'zap' ? ' active' : ''}`}>Zap Dashboard</a>
-                    <a href="/settings" class={`filter-btn flex items-center${activeNav === 'settings' ? ' active' : ''}`}>Settings</a>
-                    <button class="filter-btn text-left badge-trigger flex items-center">Get Badge</button>
-                </div>
+        <nav class="flex flex-col px-4 py-2 gap-1 border-b border-[#222] md:flex-1 md:min-h-0 md:overflow-y-auto" id="dashboardNav" style="scrollbar-width: thin;">
+            <div class="font-mono text-[11px] uppercase text-[#737373] mb-1 pl-2 tracking-widest mt-4">Resources</div>
+            <a href="/help" class={`filter-btn flex items-center${activeNav === 'help' ? ' active' : ''}`}>Help &amp; Support</a>
+            <a href="/news" class={`filter-btn flex items-center gap-2${activeNav === 'news' ? ' active' : ''}`}>
+                Today in AI
+            </a>
+            <a href="/blog" class={`filter-btn flex items-center gap-2${activeNav === 'blog' ? ' active' : ''}`}>
+                Blog
+            </a>
+            <a href="/compare" class={`filter-btn flex items-center gap-2${activeNav === 'compare' ? ' active' : ''}`}>
+                Comparisons
+            </a>
 
-                <div class="font-mono text-[12px] uppercase text-[#737373] mb-1 pl-2 tracking-widest mt-4 hidden md:block">Resources</div>
-                <a href="/help" class="filter-btn flex items-center">Help &amp; Support</a>
-                <a href="/news" class="filter-btn flex items-center gap-2">
-                    Today in AI
-                </a>
-                <a href="/blog" class="filter-btn flex items-center gap-2">
-                    Blog
-                </a>
-                <a href="/compare" class="filter-btn flex items-center gap-2">
-                    Comparisons
-                </a>
+            <div class="font-mono text-[11px] uppercase text-[#737373] mb-1 pl-2 tracking-widest mt-4">AI Utilities</div>
+            <a href="/tools/token-counter" class={`filter-btn flex items-center gap-2${activeNav === 'token-counter' ? ' active' : ''}`}>
+                Token Counter
+            </a>
+            <a href="/tools/hallucination-scorer" class={`filter-btn flex items-center gap-2${activeNav === 'hallucination-scorer' ? ' active' : ''}`}>
+                Hallucination Scorer
+            </a>
 
-                <div class="font-mono text-[12px] uppercase text-[#737373] mb-1 pl-2 tracking-widest mt-4 hidden md:block">AI Utilities</div>
-                <a href="/tools/token-counter" class="filter-btn flex items-center gap-2">
-                    Token Counter
-                </a>
-                <a href="/tools/hallucination-scorer" class="filter-btn flex items-center gap-2">
-                    Hallucination Scorer
-                </a>
-
+            {!isIndex && (
                 <div class="mt-4 pb-2">
                     <a href="/" class="text-[14px] text-[#737373] hover:text-white transition-colors flex items-center gap-2 pl-2">&larr; Back to Directory</a>
                 </div>
-            </nav>
-        )}
-
-        <!-- AI Utilities (index only, below filters) -->
-        {isIndex && (
-            <div class="px-4 py-4 shrink-0 border-b border-[#222]">
-                <div class="font-mono text-[11px] uppercase text-[#737373] mb-3 pl-2 tracking-widest">Resources</div>
-                <div class="flex flex-col gap-1.5">
-                    <a href="/news" class="filter-btn flex items-center gap-2 w-full text-left">
-                        Today in AI
-                    </a>
-                    <a href="/blog" class="filter-btn flex items-center gap-2 w-full text-left">
-                        Blog
-                    </a>
-                    <a href="/compare" class="filter-btn flex items-center gap-2 w-full text-left">
-                        Comparisons
-                    </a>
-
-                    <div class="font-mono text-[11px] uppercase text-[#737373] mb-1.5 pl-2 tracking-widest mt-4">AI Utilities</div>
-                    <a href="/tools/token-counter" class="filter-btn flex items-center gap-2 w-full text-left">
-                        Token Counter
-                    </a>
-                    <a href="/tools/hallucination-scorer" class="filter-btn flex items-center gap-2 w-full text-left">
-                        Hallucination Scorer
-                    </a>
-                </div>
-            </div>
-        )}
+            )}
+        </nav>
 
         {isIndex && latestNews && (
             <div class="mx-4 mt-3 p-3 border border-[#222] rounded-md bg-white/[0.01] shrink-0">
