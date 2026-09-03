@@ -46,11 +46,11 @@ function makeDatabase() {
     return { db, sqlite };
 }
 
-function addUser(db: SqliteDatabase, id: string, emailVerified = 1) {
+function addUser(db: SqliteDatabase, id: string, emailVerified = 1, createdAt = 1) {
     db.query(`
         INSERT INTO users (id, provider, provider_user_id, display_name, email, email_verified, created_at, updated_at)
-        VALUES (?, 'github', ?, ?, ?, ?, 1, 1)
-    `).run(id, id.replace('github:', ''), id, `${id}@example.com`, emailVerified);
+        VALUES (?, 'github', ?, ?, ?, ?, ?, ?)
+    `).run(id, id.replace('github:', ''), id, `${id}@example.com`, emailVerified, createdAt, createdAt);
 }
 
 function addPrefs(db: SqliteDatabase, id: string, newsEnabled: number) {
@@ -115,8 +115,42 @@ describe('news service', () => {
         await runNewsSend({ db, post, sendEmail: mail.sendEmail, siteOrigin: 'https://ai.dosa.dev', throttleMs: 0 });
         const second = await runNewsSend({ db, post, sendEmail: mail.sendEmail, siteOrigin: 'https://ai.dosa.dev', throttleMs: 0 });
 
-        expect(second).toMatchObject({ candidates: 1, sent: 0, skippedAlreadySent: 1, failed: 0 });
+        expect(second).toMatchObject({ candidates: 0, sent: 0, skippedAlreadySent: 0, failed: 0 });
         expect(mail.calls).toHaveLength(1);
+        sqlite.close();
+    });
+
+    test('fills the limit with users who have not received the post', async () => {
+        const { db, sqlite } = makeDatabase();
+        addUser(sqlite, 'github:user-a', 1, 1);
+        addPrefs(sqlite, 'github:user-a', 1);
+        addUser(sqlite, 'github:user-b', 1, 2);
+        addPrefs(sqlite, 'github:user-b', 1);
+        const mail = sender();
+
+        const first = await runNewsSend({
+            db,
+            post,
+            sendEmail: mail.sendEmail,
+            siteOrigin: 'https://ai.dosa.dev',
+            maxUsers: 1,
+            throttleMs: 0,
+        });
+        const second = await runNewsSend({
+            db,
+            post,
+            sendEmail: mail.sendEmail,
+            siteOrigin: 'https://ai.dosa.dev',
+            maxUsers: 1,
+            throttleMs: 0,
+        });
+
+        expect(first).toMatchObject({ candidates: 1, sent: 1, failed: 0 });
+        expect(second).toMatchObject({ candidates: 1, sent: 1, failed: 0 });
+        expect(mail.calls.map(call => call.to)).toEqual([
+            'github:user-a@example.com',
+            'github:user-b@example.com',
+        ]);
         sqlite.close();
     });
 

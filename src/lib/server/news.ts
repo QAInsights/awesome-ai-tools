@@ -39,8 +39,13 @@ export async function runNewsSend(opts: NewsRunOptions): Promise<NewsRunSummary>
         SELECT u.id, u.display_name, u.email, p.unsubscribe_token
         FROM users u JOIN notification_prefs p ON p.user_id = u.id
         WHERE u.email IS NOT NULL AND u.email_verified = 1 AND p.news_enabled = 1
+          AND NOT EXISTS (
+              SELECT 1
+              FROM email_log l
+              WHERE l.user_id = u.id AND l.kind = 'news' AND l.tool_slugs = ?
+          )
         ORDER BY u.created_at LIMIT ?
-    `).bind(opts.maxUsers ?? 90).all<CandidateRow>();
+    `).bind(opts.post.id, opts.maxUsers ?? 90).all<CandidateRow>();
     const candidates = candidatesResult.results ?? [];
     const summary: NewsRunSummary = {
         candidates: candidates.length,
