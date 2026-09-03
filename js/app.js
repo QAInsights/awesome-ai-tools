@@ -8,11 +8,13 @@ import { authAttribution } from './auth-attribution.js';
 import { CollapsedSidebar } from './collapsed-sidebar.js';
 import { initGradientSelection } from './gradient-selection.js';
 import { initFilterManager } from './modules/filter-manager.js';
+import { initGlobalSearch } from './modules/global-search.js';
 import { initUiManager } from './modules/ui-manager.js';
 import { initSortManager } from './modules/sort-manager.js';
 import { sortTools } from './sorting.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
+    initGlobalSearch();
     initGradientSelection();
     const grid = document.getElementById('toolGrid');
     const searchInput = document.getElementById('searchInput');

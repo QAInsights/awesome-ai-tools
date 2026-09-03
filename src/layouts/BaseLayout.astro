@@ -1,5 +1,6 @@
 ---
 import { SEO } from 'astro-seo';
+import SignInModal from '../components/SignInModal.astro';
 
 // Base layout used by all pages
 // Props: title, description, keywords, canonical, ogImage, ogType
@@ -109,6 +110,7 @@ const resolvedTwitterDesc = twitterDescription ?? description;
 <body class="bg-black text-white font-sans antialiased leading-relaxed">
     <slot />
 
+    <SignInModal />
     <div id="turnstile-container"></div>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
     <script src="/dist/site-analytics.js" type="module" defer></script>
