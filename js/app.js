@@ -86,9 +86,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             import('./follows.js')
         ]);
 
+        const syncSignedOutOnly = user => document.querySelectorAll('[data-signed-out-only]').forEach(el => {
+            el.hidden = Boolean(user);
+        });
+
         const authManager = initAuthManager({
             collapsedSidebar,
             onStateChange: user => {
+                syncSignedOutOnly(user);
                 syncVotingUi();
                 void syncFavoritesUi(user);
                 void syncFollowsUi(user);
@@ -107,6 +112,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         const { auth } = await import('./auth.js');
+        syncSignedOutOnly(auth.getCurrentUser());
         favorites.initFavorites({
             isAuthenticated: () => auth.isAuthenticated(),
             onUnauthorized: () => auth.signOut(),
