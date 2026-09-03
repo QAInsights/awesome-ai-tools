@@ -11,13 +11,19 @@ Astro.response.headers.set('Cache-Control', 'no-store');
 
 let confirmed = false;
 let valid = false;
-const token = Astro.request.method === 'POST'
-    ? (await Astro.request.formData()).get('token')?.toString() ?? ''
-    : Astro.url.searchParams.get('token') ?? '';
+const formData = Astro.request.method === 'POST' ? await Astro.request.formData() : null;
+const token = formData?.get('token')?.toString() ?? Astro.url.searchParams.get('token') ?? '';
+const requestedKind = formData?.get('kind')?.toString() ?? Astro.url.searchParams.get('kind') ?? '';
+const kind = requestedKind === 'digest' || requestedKind === 'news' ? requestedKind : 'all';
+const confirmation = kind === 'news'
+    ? 'You will no longer receive the daily Today in AI brief.'
+    : kind === 'digest'
+        ? 'You will no longer receive follow digests.'
+        : 'You will no longer receive email digests from ai.dosa.dev.';
 try {
     const db = requireDatabase();
     if (Astro.request.method === 'POST') {
-        await unsubscribeByToken(db, token);
+        await unsubscribeByToken(db, token, kind);
         confirmed = true;
     } else {
         valid = Boolean(await findPrefsByUnsubscribeToken(db, token));
@@ -38,15 +44,16 @@ try {
             {confirmed ? (
                 <>
                     <h1 class="text-2xl font-semibold mb-3">You&apos;re unsubscribed</h1>
-                    <p class="text-[#a3a3a3] mb-6">You will no longer receive email digests from ai.dosa.dev.</p>
+                    <p class="text-[#a3a3a3] mb-6">{confirmation}</p>
                     <a href="/settings" class="inline-flex items-center py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 transition-colors">Manage notifications</a>
                 </>
             ) : valid ? (
                 <>
                     <h1 class="text-2xl font-semibold mb-3">Unsubscribe from email updates?</h1>
-                    <p class="text-[#a3a3a3] mb-6">Confirm that you no longer want to receive email digests from ai.dosa.dev.</p>
+                    <p class="text-[#a3a3a3] mb-6">Confirm that you no longer want to receive {kind === 'news' ? 'the daily Today in AI brief' : kind === 'digest' ? 'follow digests' : 'email digests from ai.dosa.dev'}.</p>
                     <form method="post">
                         <input type="hidden" name="token" value={token} />
+                        <input type="hidden" name="kind" value={kind} />
                         <button type="submit" class="inline-flex items-center py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 transition-colors">Unsubscribe</button>
                     </form>
                 </>

@@ -8,6 +8,7 @@ const migration3 = new URL('../../../migrations/0003_enforce_flattened_user_iden
 const migration4 = new URL('../../../migrations/0004_user_activity_columns.sql', import.meta.url);
 const migration5 = new URL('../../../migrations/0005_follows.sql', import.meta.url);
 const migration6 = new URL('../../../migrations/0006_notification_prefs.sql', import.meta.url);
+const migration7 = new URL('../../../migrations/0007_news_prefs.sql', import.meta.url);
 
 function applyMigration(db: Database, migration: URL) {
     const statements = readFileSync(migration, 'utf8')
@@ -38,6 +39,7 @@ describe('accounts and favorites migrations', () => {
         applyMigration(db, migration3);
         applyMigration(db, migration4);
         applyMigration(db, migration6);
+        applyMigration(db, migration7);
 
         const tables = db.query(`
             SELECT name
@@ -60,10 +62,15 @@ describe('accounts and favorites migrations', () => {
             'INSERT INTO notification_prefs (user_id, unsubscribe_token, updated_at) VALUES (?, ?, ?)',
             ['github:42', 'token', 2],
         );
-        expect(db.query('SELECT email_enabled, last_digest_sent_at FROM notification_prefs').get()).toEqual({
+        expect(db.query('SELECT email_enabled, news_enabled, last_digest_sent_at FROM notification_prefs').get()).toEqual({
             email_enabled: 1,
+            news_enabled: 0,
             last_digest_sent_at: null,
         });
+        expect(() => db.run(
+            'UPDATE notification_prefs SET news_enabled = ? WHERE user_id = ?',
+            [2, 'github:42'],
+        )).toThrow();
         expect(() => db.run(
             'INSERT INTO notification_prefs (user_id, unsubscribe_token, updated_at) VALUES (?, ?, ?)',
             ['github:42', 'other-token', 3],

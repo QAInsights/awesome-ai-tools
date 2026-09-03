@@ -66,6 +66,15 @@ mock.module('./gradient-selection.js', () => ({
 }));
 
 mock.module('./modules/filter-manager.js', () => ({
+    isSearchShortcutEvent: event => event?.key === '/'
+        && !event.ctrlKey
+        && !event.metaKey
+        && !event.altKey
+        && !event.defaultPrevented
+        && !event.target?.isContentEditable
+        && event.target?.tagName !== 'INPUT'
+        && event.target?.tagName !== 'TEXTAREA'
+        && event.target?.tagName !== 'SELECT',
     initFilterManager: () => ({
         renderFilters: () => {},
         filterAndRender: () => {}

@@ -24,6 +24,19 @@ const defaultNotificationsApi = {
         }
         return response.json();
     },
+    async setNewsEnabled(newsEnabled) {
+        const response = await fetch('/api/notifications/prefs', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ newsEnabled }),
+        });
+        if (!response.ok) {
+            const error = new Error('Unable to save notification preferences');
+            error.status = response.status;
+            throw error;
+        }
+        return response.json();
+    },
 };
 
 export async function initializeSettingsPage({
@@ -36,6 +49,7 @@ export async function initializeSettingsPage({
     const errorState = root.getElementById('settingsError');
     const card = root.getElementById('notificationsCard');
     const toggle = root.getElementById('notificationEmailToggle');
+    const newsToggle = root.getElementById('notificationNewsToggle');
     const email = root.getElementById('notificationEmail');
     const warning = root.getElementById('notificationEmailWarning');
 
@@ -46,13 +60,18 @@ export async function initializeSettingsPage({
     function renderPrefs(prefs) {
         hideStates();
         card?.classList.remove('hidden');
-        toggle?.setAttribute('aria-checked', prefs.emailEnabled ? 'true' : 'false');
-        toggle?.classList.toggle('bg-[#c9aa6e]', prefs.emailEnabled);
-        toggle?.classList.toggle('bg-[#333]', !prefs.emailEnabled);
-        toggle?.querySelector('span')?.classList.toggle('translate-x-5', prefs.emailEnabled);
-        toggle?.querySelector('span')?.classList.toggle('translate-x-0', !prefs.emailEnabled);
+        renderToggle(toggle, prefs.emailEnabled);
+        renderToggle(newsToggle, prefs.newsEnabled);
         email.textContent = prefs.email || 'No email on file';
         warning?.classList.toggle('hidden', Boolean(prefs.emailVerified));
+    }
+
+    function renderToggle(element, enabled) {
+        element?.setAttribute('aria-checked', enabled ? 'true' : 'false');
+        element?.classList.toggle('bg-[#c9aa6e]', enabled);
+        element?.classList.toggle('bg-[#333]', !enabled);
+        element?.querySelector('span')?.classList.toggle('translate-x-5', enabled);
+        element?.querySelector('span')?.classList.toggle('translate-x-0', !enabled);
     }
 
     function showSignedOut() {
@@ -87,6 +106,19 @@ export async function initializeSettingsPage({
             showError();
         } finally {
             toggle.disabled = false;
+        }
+    });
+
+    newsToggle?.addEventListener('click', async () => {
+        if (!authManager.isAuthenticated() || newsToggle.disabled) return;
+        const nextValue = newsToggle.getAttribute('aria-checked') !== 'true';
+        newsToggle.disabled = true;
+        try {
+            renderPrefs(await notificationsApi.setNewsEnabled(nextValue));
+        } catch {
+            showError();
+        } finally {
+            newsToggle.disabled = false;
         }
     });
 

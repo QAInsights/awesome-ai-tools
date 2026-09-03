@@ -12,6 +12,7 @@ const migrations = [
     new URL('../../../migrations/0004_user_activity_columns.sql', import.meta.url),
     new URL('../../../migrations/0005_follows.sql', import.meta.url),
     new URL('../../../migrations/0006_notification_prefs.sql', import.meta.url),
+    new URL('../../../migrations/0007_news_prefs.sql', import.meta.url),
 ];
 
 function applyMigrations(db: SqliteDatabase) {

@@ -37,6 +37,7 @@ describe('settings page bootstrap', () => {
             settingsError: makeElement(['hidden']),
             notificationsCard: makeElement(['hidden']),
             notificationEmailToggle: makeElement(),
+            notificationNewsToggle: makeElement(),
             notificationEmail: makeElement(),
             notificationEmailWarning: makeElement(['hidden']),
         };
@@ -61,11 +62,17 @@ describe('settings page bootstrap', () => {
         };
         let savedValue = null;
         const notificationsApi = {
-            getPrefs: async () => ({ emailEnabled: true, email: 'ada@example.com', emailVerified: true }),
+            getPrefs: async () => ({ emailEnabled: true, newsEnabled: true, email: 'ada@example.com', emailVerified: true }),
             setEmailEnabled: async value => {
                 savedValue = value;
-                return { emailEnabled: value, email: 'ada@example.com', emailVerified: true };
+                return { emailEnabled: value, newsEnabled: true, email: 'ada@example.com', emailVerified: true };
             },
+            setNewsEnabled: async value => ({
+                emailEnabled: true,
+                newsEnabled: value,
+                email: 'ada@example.com',
+                emailVerified: true,
+            }),
         };
         const { initializeSettingsPage } = await import(`./settings-page.js?test=${Date.now()}`);
         await initializeSettingsPage({ authManager, notificationsApi });
@@ -76,5 +83,8 @@ describe('settings page bootstrap', () => {
         await elements.notificationEmailToggle.dispatch('click');
         expect(savedValue).toBe(false);
         expect(elements.notificationEmailToggle.attributes['aria-checked']).toBe('false');
+        expect(elements.notificationNewsToggle.attributes['aria-checked']).toBe('true');
+        await elements.notificationNewsToggle.dispatch('click');
+        expect(elements.notificationNewsToggle.attributes['aria-checked']).toBe('false');
     });
 });
