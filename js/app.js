@@ -182,9 +182,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     if ('requestIdleCallback' in window) {
-        window.requestIdleCallback(() => {
-            deferredBootstrap().catch(err => console.warn('[bootstrap] deferred init failed:', err));
-        }, { timeout: 1500 });
+        window.requestIdleCallback(
+            () => deferredBootstrap().catch(err => console.warn('[bootstrap] deferred init failed:', err)),
+            { timeout: 1500 }
+        );
     } else {
         setTimeout(() => {
             deferredBootstrap().catch(err => console.warn('[bootstrap] deferred init failed:', err));

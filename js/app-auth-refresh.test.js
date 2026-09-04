@@ -8,6 +8,7 @@ let loadFavoritesCalls = 0;
 let loadFollowsCalls = 0;
 let capturedFavoriteOptions = null;
 let capturedOnStateChange = null;
+let idleBootstrapPromise = null;
 
 function flushMicrotasks(times = 5) {
     let chain = Promise.resolve();
@@ -147,6 +148,7 @@ describe('app deferred auth bootstrap', () => {
         loadFollowsCalls = 0;
         capturedFavoriteOptions = null;
         capturedOnStateChange = null;
+        idleBootstrapPromise = null;
         const iconSidebar = makeContainer();
 
         const elements = {
@@ -166,7 +168,7 @@ describe('app deferred auth bootstrap', () => {
         global.window = {
             location: { search: '' },
             requestIdleCallback: (callback) => {
-                callback();
+                idleBootstrapPromise = callback();
                 return 1;
             }
         };
@@ -195,9 +197,7 @@ describe('app deferred auth bootstrap', () => {
         expect(typeof domReadyHandler).toBe('function');
 
         await domReadyHandler();
-        await flushMicrotasks();
-        await new Promise(resolve => setTimeout(resolve, 0));
-        await flushMicrotasks();
+        await idleBootstrapPromise;
 
         expect(setVotingContextCalls).toBeGreaterThanOrEqual(2);
         expect(refreshVotingButtonsCalls).toBe(1);
