@@ -14,7 +14,7 @@
     "dev": "bun run astro:dev",
     "dev:staging": "CLOUDFLARE_ENV=staging bun run astro:dev",
     "dev:js": "bun run build.js",
-    "test": "bun test",
+    "test": "bun test --isolate",
     "test:watch": "bun test --watch js/*.test.js",
     "report:enrichment": "node scripts/report-enrichment-status.js --markdown",
     "validate:slugs": "node scripts/check-slugs-sync.js",
