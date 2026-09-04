@@ -708,6 +708,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "xirp",
+    "name": "XIRP",
+    "company": "Spotify",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

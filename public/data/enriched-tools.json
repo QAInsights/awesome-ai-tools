@@ -3203,6 +3203,34 @@
     "lastUpdated": "2026-09-01"
   },
   {
+    "slug": "xirp",
+    "name": "XIRP",
+    "company": "Spotify",
+    "pricing": "freemium",
+    "pricingDetail": "Xirp is currently in free public beta, requiring a Spotify Technology account. The beta includes a Portal instance. No commercial pricing has been announced yet.",
+    "description": "Xirp is a macOS desktop app by Spotify that manages multiple AI coding agent sessions (Claude Code, Gemini CLI, Codex) in parallel using git worktrees, with optional integration to Spotify Portal for organizational context and institutional memory.",
+    "keyFeatures": [
+      "Vendor-neutral session management across Claude Code, Gemini CLI, and Codex",
+      "Git worktree isolation for parallel sessions on the same repository",
+      "Context portability: switch agents mid-session without losing state",
+      "Portal integration for organizational context (service ownership, dependencies, architectural decisions)",
+      "Auto-generated living documentation from sessions",
+      "Workspace plugin for shared context and session storage"
+    ],
+    "bestFor": "Engineering teams and platform teams running many AI coding agents in parallel who need to avoid vendor lock-in and preserve organizational context across sessions.",
+    "notIdealFor": "Individual developers or small teams not yet managing multiple concurrent agent sessions, or those needing Windows/Linux support (currently macOS only).",
+    "recentUpdates": "Launched public beta on August 10, 2026, with over 1,300 Spotify engineers and 36,000+ internal sessions prior to launch. No other updates reported.",
+    "verdict": "Xirp is a promising vendor-neutral session manager that addresses real pain points of scaling AI coding agents, but it's early-stage (beta, macOS only) and tied to Spotify's ecosystem, with no clear pricing or open-source commitment yet.",
+    "tags": [
+      "AI coding agents",
+      "session management",
+      "git worktrees",
+      "Spotify",
+      "developer tools"
+    ],
+    "lastUpdated": "2026-09-04"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
