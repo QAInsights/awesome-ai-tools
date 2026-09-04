@@ -1,7 +1,7 @@
 import enrichedTools from '../../../public/data/enriched-tools.json';
 import { sendEmail } from './email';
 import { runDigest, type DigestRunSummary } from './digest';
-import { getLatestNewsPost } from './news-source';
+import { getNewsPostForDate, utcDateString } from './news-source';
 import { runNewsSend, type NewsRunSummary } from './news';
 import { getSiteOrigin, isEmailDryRun, requireDatabase } from './runtime-env';
 
@@ -35,7 +35,7 @@ export async function runScheduledDigest(trigger: string): Promise<DigestRunSumm
 export type ScheduledNewsSummary = NewsRunSummary & { skippedNoPost: boolean };
 
 export async function runScheduledNews(trigger: string, now = Date.now()): Promise<ScheduledNewsSummary> {
-    const post = getLatestNewsPost(now);
+    const post = getNewsPostForDate(utcDateString(now));
     if (!post) {
         return {
             candidates: 0,
