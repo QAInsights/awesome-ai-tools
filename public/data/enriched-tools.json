@@ -4817,6 +4817,35 @@
     "lastUpdated": "2026-09-01"
   },
   {
+    "slug": "superagent",
+    "name": "Superagent",
+    "company": "pungme",
+    "pricing": "free",
+    "pricingDetail": "Superagent is free and open-source (MIT licensed). It runs locally on your Mac using your existing Claude subscription; no separate API key or additional billing is required.",
+    "description": "Superagent is an open-source macOS desktop app that gives coding agents like Claude Code a real browser, an iOS Simulator, and a git worktree per chat, with an optional iPhone companion for remote monitoring and control.",
+    "keyFeatures": [
+      "Real browser pane that agents can drive with your logged-in sessions",
+      "iOS Simulator streamed in the window for app testing",
+      "Each chat runs on its own git worktree and branch",
+      "Persistent sessions that survive app restarts",
+      "iPhone companion app for remote monitoring and approvals",
+      "End-to-end encrypted relay for phone pairing",
+      "No account, no telemetry, no middleman server"
+    ],
+    "bestFor": "Developers using Claude Code on macOS who want a visual, private, and persistent environment for their coding agents, especially those building web or iOS apps.",
+    "notIdealFor": "Users on Windows or Linux, or those who prefer a terminal-based workflow; also not for those seeking a hosted or multi-platform agent solution.",
+    "recentUpdates": "Launched on Product Hunt on August 30, 2026, reaching Product of the Day 10th place with 109 upvotes. The iOS companion app and relay were created in late August 2026. Codex and Antigravity support are listed as 'coming soon'.",
+    "verdict": "Superagent offers a unique, privacy-focused approach by giving agents a real computer environment rather than just a chat window. Its strengths are local execution, open-source transparency, and deep integration with Claude Code, but it is limited to macOS and currently only supports Claude Code.",
+    "tags": [
+      "open-source",
+      "macOS",
+      "Claude Code",
+      "browser automation",
+      "iOS Simulator"
+    ],
+    "lastUpdated": "2026-09-04"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
