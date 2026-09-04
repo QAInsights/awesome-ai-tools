@@ -10,14 +10,19 @@ export function GET(context) {
             const bTime = Number.isNaN(bParsed) ? Number.NEGATIVE_INFINITY : bParsed;
             return bTime - aTime || a.name.localeCompare(b.name);
         })
-        .map(tool => ({
-            title: tool.name,
-            link: `/tools/${tool.slug}`,
-            description: tool.enriched?.description ?? tool.notes ?? '',
-            ...(tool.enriched?.recentUpdates ? { content: tool.enriched.recentUpdates } : {}),
-            categories: [...new Set([tool.categoryClean, ...(tool.enriched?.tags ?? [])])],
-            ...(tool.enriched?.lastUpdated ? { pubDate: new Date(tool.enriched.lastUpdated) } : {}),
-        }));
+        .map(tool => {
+            const lastUpdated = tool.enriched?.lastUpdated;
+            return {
+                title: tool.name,
+                link: `/tools/${tool.slug}`,
+                description: tool.enriched?.description ?? tool.notes ?? '',
+                ...(tool.enriched?.recentUpdates ? { content: tool.enriched.recentUpdates } : {}),
+                categories: [...new Set([tool.categoryClean, ...(tool.enriched?.tags ?? [])])],
+                ...(lastUpdated && Number.isFinite(Date.parse(lastUpdated))
+                    ? { pubDate: new Date(lastUpdated) }
+                    : {}),
+            };
+        });
 
     return rss({
         title: 'AI developer tools on ai.dosa.dev',

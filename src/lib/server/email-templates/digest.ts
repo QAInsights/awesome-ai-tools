@@ -45,7 +45,7 @@ export function renderDigest({ userName, tools, unsubscribeUrl, siteOrigin }: Di
         `Hi ${userName}, here are the latest changes to tools in your library.`,
         ...tools.flatMap(tool => [
             '',
-            `${tool.name} — ${siteOrigin}/tools/${tool.slug} — updated ${tool.lastUpdated}`,
+            `${tool.name}: ${siteOrigin}/tools/${tool.slug}: updated ${tool.lastUpdated}`,
             tool.description,
             ...tool.recentUpdates.map(update => `- ${update}`),
         ]),

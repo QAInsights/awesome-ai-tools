@@ -28,5 +28,24 @@ describe('digest email template', () => {
         expect(result.text).toContain('https://ai.dosa.dev/settings');
         expect(result.text).toContain('https://ai.dosa.dev/tools/cursor');
         expect(result.text).toContain('https://ai.dosa.dev/unsubscribe?token=abc');
+        expect(`${result.html}${result.text}`).not.toContain(String.fromCodePoint(0x2014));
+    });
+
+    test('omits optional update lines when a tool has no updates', () => {
+        const result = renderDigest({
+            userName: 'Ada',
+            tools: [{
+                slug: 'cursor',
+                name: 'Cursor',
+                description: 'A tool',
+                recentUpdates: [],
+                lastUpdated: '2026-09-01',
+            }],
+            unsubscribeUrl: 'https://ai.dosa.dev/unsubscribe?token=abc',
+            siteOrigin: 'https://ai.dosa.dev',
+        });
+
+        expect(result.html).not.toContain('<ul');
+        expect(result.text).not.toContain('\n- ');
     });
 });
