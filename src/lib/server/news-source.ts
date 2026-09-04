@@ -130,3 +130,21 @@ export function getNewsPostForDate(date: string): NewsPost | null {
 export function utcDateString(milliseconds: number): string {
     return new Date(milliseconds).toISOString().slice(0, 10);
 }
+
+export function pickLatestPostDate(
+    now: number,
+    lookbackDays: number,
+    exists: (date: string) => boolean,
+): string | null {
+    const days = Math.max(0, Math.floor(lookbackDays));
+    for (let offset = 0; offset <= days; offset++) {
+        const date = utcDateString(now - offset * 24 * 60 * 60 * 1000);
+        if (exists(date)) return date;
+    }
+    return null;
+}
+
+export function getLatestNewsPost(now: number, lookbackDays = 1): NewsPost | null {
+    const date = pickLatestPostDate(now, lookbackDays, candidate => getNewsPostForDate(candidate) !== null);
+    return date ? getNewsPostForDate(date) : null;
+}

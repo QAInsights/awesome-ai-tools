@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 import { readFileSync } from 'node:fs';
-import { parseNewsPost, renderNewsPostHtml, utcDateString } from './news-source';
+import { parseNewsPost, pickLatestPostDate, renderNewsPostHtml, utcDateString } from './news-source';
 
 const source = readFileSync(new URL('../../content/blog/today-in-ai-2026-09-02.mdx', import.meta.url), 'utf8');
 
@@ -70,6 +70,31 @@ draft: false
     test('formats UTC dates', () => {
         expect(utcDateString(Date.parse('2026-09-02T23:59:59.000Z'))).toBe('2026-09-02');
         expect(utcDateString(Date.parse('2026-09-03T00:00:00.000Z'))).toBe('2026-09-03');
+    });
+
+    test('picks today when a post exists today', () => {
+        const now = Date.parse('2026-09-04T06:00:00.000Z');
+        expect(pickLatestPostDate(now, 1, date => date === '2026-09-04')).toBe('2026-09-04');
+    });
+
+    test('falls back to yesterday when today is missing', () => {
+        const now = Date.parse('2026-09-04T06:00:00.000Z');
+        expect(pickLatestPostDate(now, 1, date => date === '2026-09-03')).toBe('2026-09-03');
+    });
+
+    test('returns null when no post exists in the lookback window', () => {
+        const now = Date.parse('2026-09-04T06:00:00.000Z');
+        expect(pickLatestPostDate(now, 1, () => false)).toBeNull();
+    });
+
+    test('lookback zero does not check yesterday', () => {
+        const now = Date.parse('2026-09-04T06:00:00.000Z');
+        const checked: string[] = [];
+        expect(pickLatestPostDate(now, 0, date => {
+            checked.push(date);
+            return date === '2026-09-03';
+        })).toBeNull();
+        expect(checked).toEqual(['2026-09-04']);
     });
 
     test('escapes rendered headings and source labels', () => {
