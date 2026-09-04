@@ -1,7 +1,5 @@
 import { beforeEach, describe, expect, mock, test } from 'bun:test';
 
-export const prerender = false;
-
 let hasSession = false;
 let prefs = { emailEnabled: true, newsEnabled: false };
 const emailCalls: boolean[] = [];
@@ -31,7 +29,7 @@ const database = {
 };
 
 mock.module('cloudflare:workers', () => ({ env: { DB: database } }));
-mock.module('../../../lib/server/notification-prefs-repository', () => ({
+mock.module('../../../../src/lib/server/notification-prefs-repository', () => ({
     getOrCreatePrefs: async () => ({ ...prefs }),
     setEmailEnabled: async (_db: unknown, _userId: string, enabled: boolean) => {
         emailCalls.push(enabled);
@@ -45,7 +43,7 @@ mock.module('../../../lib/server/notification-prefs-repository', () => ({
     },
 }));
 
-const { GET, PUT } = await import(`./prefs.ts?test=${Date.now()}`);
+const { GET, PUT } = await import(`../../../../src/pages/api/notifications/prefs.ts?test=${Date.now()}`);
 
 mock.restore();
 

@@ -27,7 +27,7 @@ mock.module('cloudflare:workers', () => ({
     },
 }));
 
-const { POST } = await import(`./events.ts?test=${Date.now()}`);
+const { POST } = await import(`../../../src/pages/api/events.ts?test=${Date.now()}`);
 
 afterAll(() => mock.restore());
 beforeEach(() => {

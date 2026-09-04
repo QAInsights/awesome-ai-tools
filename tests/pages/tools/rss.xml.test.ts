@@ -64,11 +64,11 @@ const tools = [
     },
 ];
 
-mock.module('../../lib/tools', () => ({
+mock.module('../../../src/lib/tools', () => ({
     getAllTools: () => tools,
 }));
 
-const { GET } = await import(`./rss.xml.ts?test=${Date.now()}`);
+const { GET } = await import(`../../../src/pages/tools/rss.xml.ts?test=${Date.now()}`);
 
 mock.restore();
 

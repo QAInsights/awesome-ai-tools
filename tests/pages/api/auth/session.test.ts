@@ -29,8 +29,8 @@ mock.module('cloudflare:workers', () => ({
 }));
 
 const importId = Date.now();
-const { GET: GET_CONFIG } = await import(`./config.ts?test=${importId}`);
-const { DELETE } = await import(`./session.ts?test=${importId}`);
+const { GET: GET_CONFIG } = await import(`../../../../src/pages/api/auth/config.ts?test=${importId}`);
+const { DELETE } = await import(`../../../../src/pages/api/auth/session.ts?test=${importId}`);
 
 afterAll(() => mock.restore());
 

@@ -43,7 +43,7 @@ mock.module('astro:content', () => ({
         fixtures.filter(filter),
 }));
 
-const { GET } = await import(`./rss.xml.ts?test=${Date.now()}`);
+const { GET } = await import(`../../../src/pages/news/rss.xml.ts?test=${Date.now()}`);
 
 afterAll(() => mock.restore());
 

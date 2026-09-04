@@ -1,17 +1,15 @@
 import { beforeEach, describe, expect, mock, test } from 'bun:test';
 
-export const prerender = false;
-
 let hasSession = false;
 let sessionId = 'github:2';
 const summary = {
     candidates: 3,
     sent: 2,
-    skippedAlreadySent: 1,
+    skippedNoChanges: 1,
+    skippedTooSoon: 0,
     failed: 0,
     dryRun: false,
     errors: [],
-    skippedNoPost: false,
 };
 const globalState = globalThis as typeof globalThis & {
     __aatAdminRunnerCalls?: string[];
@@ -49,18 +47,18 @@ mock.module('cloudflare:workers', () => ({
         ADMIN_USER_IDS: 'github:1',
     },
 }));
-mock.module('../../../../lib/server/digest-runner', () => ({
-    runScheduledNews: async (trigger: string) => {
-        globalState.__aatAdminRunnerCalls?.push(`news:${trigger}`);
-        return globalState.__aatAdminSummary;
-    },
+mock.module('../../../../../src/lib/server/digest-runner', () => ({
     runScheduledDigest: async (trigger: string) => {
         globalState.__aatAdminRunnerCalls?.push(`digest:${trigger}`);
         return globalState.__aatAdminSummary;
     },
+    runScheduledNews: async (trigger: string) => {
+        globalState.__aatAdminRunnerCalls?.push(`news:${trigger}`);
+        return globalState.__aatAdminSummary;
+    },
 }));
 
-const { POST } = await import(`./run.ts?test=${Date.now()}`);
+const { POST } = await import(`../../../../../src/pages/api/admin/digest/run.ts?test=${Date.now()}`);
 
 mock.restore();
 
@@ -76,13 +74,13 @@ const cookies = {
 };
 
 function request(origin = 'https://ai.dosa.dev') {
-    return new Request('https://ai.dosa.dev/api/admin/news/run', {
+    return new Request('https://ai.dosa.dev/api/admin/digest/run', {
         method: 'POST',
         headers: { Origin: origin },
     });
 }
 
-describe('POST /api/admin/news/run', () => {
+describe('POST /api/admin/digest/run', () => {
     test('rejects cross-origin requests', async () => {
         const response = await POST({ request: request('https://example.com'), cookies } as never);
 
@@ -105,7 +103,7 @@ describe('POST /api/admin/news/run', () => {
         expect(globalState.__aatAdminRunnerCalls).toHaveLength(0);
     });
 
-    test('runs the news job for an admin', async () => {
+    test('runs the digest job for an admin', async () => {
         hasSession = true;
         sessionId = 'github:1';
 
@@ -114,6 +112,6 @@ describe('POST /api/admin/news/run', () => {
         expect(response.status).toBe(200);
         expect(await response.json()).toEqual(summary);
         expect(response.headers.get('Cache-Control')).toBe('no-store');
-        expect(globalState.__aatAdminRunnerCalls).toContain('news:manual');
+        expect(globalState.__aatAdminRunnerCalls).toContain('digest:manual');
     });
 });

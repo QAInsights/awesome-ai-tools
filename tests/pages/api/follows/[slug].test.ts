@@ -1,7 +1,5 @@
 import { beforeEach, describe, expect, mock, test } from 'bun:test';
 
-export const prerender = false;
-
 let hasSession = false;
 let repositoryError = false;
 let created = true;
@@ -32,18 +30,18 @@ mock.module('cloudflare:workers', () => ({
         },
     },
 }));
-mock.module('../../../lib/server/favorites-repository', () => ({
-    addFavorite: async (_db: unknown, _userId: string, slug: string) => {
+mock.module('../../../../src/lib/server/follows-repository', () => ({
+    followWithFavorite: async (_db: unknown, _userId: string, slug: string) => {
         if (repositoryError) throw new Error('database unavailable');
-        return { favorite: { slug, createdAt: 1 }, created };
+        return { follow: { slug, createdAt: 1 }, created };
     },
-    removeFavoriteWithFollow: async () => {
+    removeFollow: async () => {
         if (repositoryError) throw new Error('database unavailable');
         return true;
     },
 }));
 
-const { PUT, DELETE } = await import(`./[slug].ts?test=${Date.now()}`);
+const { PUT, DELETE } = await import(`../../../../src/pages/api/follows/[slug].ts?test=${Date.now()}`);
 
 mock.restore();
 
@@ -58,9 +56,16 @@ const cookies = {
     get: () => hasSession ? { value: 'session-token' } : undefined,
 };
 
+function request(method: string, origin = 'https://ai.dosa.dev') {
+    return new Request('https://ai.dosa.dev/api/follows/cursor', {
+        method,
+        headers: { Origin: origin },
+    });
+}
+
 function context(method: string, slug = 'cursor', origin = 'https://ai.dosa.dev') {
     return {
-        request: new Request(`https://ai.dosa.dev/api/favorites/${slug}`, {
+        request: new Request(`https://ai.dosa.dev/api/follows/${slug}`, {
             method,
             headers: { Origin: origin },
         }),
@@ -69,7 +74,7 @@ function context(method: string, slug = 'cursor', origin = 'https://ai.dosa.dev'
     } as never;
 }
 
-describe('PUT /api/favorites/[slug]', () => {
+describe('PUT /api/follows/[slug]', () => {
     test('rejects cross-origin requests', async () => {
         const response = await PUT(context('PUT', 'cursor', 'https://example.com'));
 
@@ -96,14 +101,14 @@ describe('PUT /api/favorites/[slug]', () => {
 
         expect(response.status).toBe(201);
         expect(await response.json()).toEqual({
-            favorite: { slug: 'cursor', createdAt: 1 },
+            follow: { slug: 'cursor', createdAt: 1 },
             created: true,
         });
         expect(points).toHaveLength(1);
         expect(response.headers.get('Cache-Control')).toBe('private, no-store');
     });
 
-    test('returns an existing favorite without recording analytics', async () => {
+    test('returns an existing follow without recording analytics', async () => {
         hasSession = true;
         created = false;
 
@@ -123,8 +128,8 @@ describe('PUT /api/favorites/[slug]', () => {
     });
 });
 
-describe('DELETE /api/favorites/[slug]', () => {
-    test('removes a favorite with private no-store caching', async () => {
+describe('DELETE /api/follows/[slug]', () => {
+    test('removes a follow with private no-store caching', async () => {
         hasSession = true;
 
         const response = await DELETE(context('DELETE'));
