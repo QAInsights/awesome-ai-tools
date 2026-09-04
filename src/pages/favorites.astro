@@ -1,5 +1,6 @@
 ---
 import DashboardLayout from '../layouts/DashboardLayout.astro';
+import OnboardingChecklist from '../components/OnboardingChecklist.astro';
 import { getAllTools } from '../lib/tools';
 import { safeJsonForScript } from '../lib/serialize';
 
@@ -31,6 +32,8 @@ const toolsJson = safeJsonForScript(tools);
                 <span id="favoriteCount" class="hidden font-mono text-[12px] text-[#c9aa6e] border border-[#3a3225] bg-[#211c16] rounded-full px-3 py-1.5"></span>
             </div>
         </header>
+
+        <OnboardingChecklist />
 
         <div id="favoritesLoading" class="border border-[#222] bg-white/[0.02] rounded-xl p-6 text-[#a3a3a3]">
             Loading your favorites…

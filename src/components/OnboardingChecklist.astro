@@ -1,0 +1,13 @@
+---
+/**
+ * Mount point for the post-signup onboarding checklist (★ favorite 3 tools →
+ * 🔔 follow 1 tool → 🤖 get your badge).
+ *
+ * The card itself is rendered client-side by /dist/onboarding.js once the
+ * session, /api/onboarding state, and the shared favorite/follow stores are
+ * ready. It stays hidden for signed-out, dismissed, or already-activated
+ * visitors, so it is safe to include on any dashboard page.
+ */
+---
+
+<div id="onboardingChecklist" class="hidden mb-7" role="region" aria-label="Account setup"></div>

@@ -23,4 +23,29 @@ describe('analytics event catalog', () => {
         expect(sanitizeAuthTrigger('follow_bell')).toBe('follow_bell');
         expect(sanitizeAuthTrigger('first_run')).toBe('sidebar');
     });
+
+    test('accepts onboarding events with whitelisted triggers and step subjects', () => {
+        expect(normalizeClientEvent({
+            event: EVENTS.ONBOARDING_SHOWN,
+            trigger: 'float',
+        })).toMatchObject({ event: 'onboarding_shown', trigger: 'float', subject: '' });
+
+        expect(normalizeClientEvent({
+            event: EVENTS.ONBOARDING_STEP_COMPLETED,
+            trigger: 'inline',
+            subject: 'favorites',
+        })).toMatchObject({ event: 'onboarding_step_completed', trigger: 'inline', subject: 'favorites' });
+
+        expect(normalizeClientEvent({
+            event: EVENTS.ONBOARDING_DISMISSED,
+            trigger: 'modal',
+            subject: 'cursor',
+        })).toMatchObject({ event: 'onboarding_dismissed', trigger: '', subject: '' });
+
+        expect(normalizeClientEvent({
+            event: EVENTS.ONBOARDING_STEP_COMPLETED,
+            trigger: 'unknown',
+            subject: 'vote_stuffing',
+        })?.subject).toBe('');
+    });
 });

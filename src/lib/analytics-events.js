@@ -13,10 +13,15 @@ const subjectPolicies = {
             ? parts.join(',')
             : '';
     },
+    onboardingStep(value) {
+        return ONBOARDING_STEP_SUBJECTS.includes(value) ? value : '';
+    },
 };
 
 export const AUTH_TRIGGERS = Object.freeze(['sidebar', 'favorite_heart', 'follow_bell', 'zap_btn']);
 export const OUTBOUND_TRIGGERS = Object.freeze(['tool_card', 'tool_detail', 'comparison', 'category', 'unknown']);
+export const ONBOARDING_TRIGGERS = Object.freeze(['inline', 'float', 'unknown']);
+export const ONBOARDING_STEP_SUBJECTS = Object.freeze(['favorites', 'follows', 'badge']);
 export const ANALYTICS_PROVIDERS = Object.freeze(['github', 'google', 'dev']);
 
 export const EVENTS = Object.freeze({
@@ -33,6 +38,9 @@ export const EVENTS = Object.freeze({
     ZAP_CAST: 'zap_cast',
     OUTBOUND_CLICK: 'outbound_click',
     COMPARE_BUILT: 'compare_built',
+    ONBOARDING_SHOWN: 'onboarding_shown',
+    ONBOARDING_DISMISSED: 'onboarding_dismissed',
+    ONBOARDING_STEP_COMPLETED: 'onboarding_step_completed',
 });
 
 export const EVENT_CATALOG = Object.freeze({
@@ -49,6 +57,9 @@ export const EVENT_CATALOG = Object.freeze({
     [EVENTS.ZAP_CAST]: { client: true, triggers: ['zap_btn'], subject: subjectPolicies.slug },
     [EVENTS.OUTBOUND_CLICK]: { client: true, triggers: OUTBOUND_TRIGGERS, subject: subjectPolicies.slug },
     [EVENTS.COMPARE_BUILT]: { client: true, triggers: ['comparison'], subject: subjectPolicies.comparison },
+    [EVENTS.ONBOARDING_SHOWN]: { client: true, triggers: ONBOARDING_TRIGGERS, subject: subjectPolicies.none },
+    [EVENTS.ONBOARDING_DISMISSED]: { client: true, triggers: ONBOARDING_TRIGGERS, subject: subjectPolicies.none },
+    [EVENTS.ONBOARDING_STEP_COMPLETED]: { client: true, triggers: ONBOARDING_TRIGGERS, subject: subjectPolicies.onboardingStep },
 });
 
 export function sanitizeAuthTrigger(value) {

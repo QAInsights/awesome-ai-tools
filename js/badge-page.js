@@ -1,3 +1,5 @@
+import { completeBadgeStep } from './onboarding.js';
+
 const BADGE_URL = 'https://ai.dosa.dev/badge/featured.svg';
 const SITE_URL = 'https://ai.dosa.dev';
 
@@ -28,6 +30,9 @@ function initializeBadgePage() {
             const target = document.getElementById(button.dataset.copyTarget);
             if (!target) return;
             await navigator.clipboard.writeText(target.textContent ?? '');
+            // Copying a snippet is the "get your badge" onboarding step's
+            // completion signal; a no-op for signed-out visitors (401).
+            void completeBadgeStep();
             button.textContent = 'Copied';
             setTimeout(() => {
                 button.textContent = 'Copy';

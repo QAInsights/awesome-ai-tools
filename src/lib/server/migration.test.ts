@@ -9,6 +9,7 @@ const migration4 = new URL('../../../migrations/0004_user_activity_columns.sql',
 const migration5 = new URL('../../../migrations/0005_follows.sql', import.meta.url);
 const migration6 = new URL('../../../migrations/0006_notification_prefs.sql', import.meta.url);
 const migration7 = new URL('../../../migrations/0007_news_prefs.sql', import.meta.url);
+const migration8 = new URL('../../../migrations/0008_onboarding.sql', import.meta.url);
 
 function applyMigration(db: Database, migration: URL) {
     const statements = readFileSync(migration, 'utf8')
@@ -191,6 +192,49 @@ describe('accounts and favorites migrations', () => {
         `).get()).toEqual({ count: 1 });
         expect(() => applyMigration(db, migration3)).toThrow();
         expect(db.query('SELECT COUNT(*) AS count FROM sessions').get()).toEqual({ count: 1 });
+        db.close();
+    });
+
+    test('adds per-user onboarding progress that cascades with the account', () => {
+        const db = new Database(':memory:');
+        applyMigration(db, migration1);
+        insertLegacyUser(db);
+        applyMigration(db, migration2);
+        applyMigration(db, migration3);
+        applyMigration(db, migration4);
+        applyMigration(db, migration5);
+        applyMigration(db, migration8);
+
+        const columns = db.query("PRAGMA table_info('user_onboarding')").all() as Array<{
+            name: string;
+            notnull: number;
+        }>;
+        expect(columns.map(column => column.name)).toEqual([
+            'user_id',
+            'badge_completed_at',
+            'dismissed_at',
+            'completed_at',
+            'updated_at',
+        ]);
+        expect(columns.find(column => column.name === 'updated_at')?.notnull).toBe(1);
+
+        db.run(
+            'INSERT INTO user_onboarding (user_id, badge_completed_at, updated_at) VALUES (?, ?, ?)',
+            ['github:42', 10, 10],
+        );
+        expect(db.query('SELECT badge_completed_at, dismissed_at, completed_at FROM user_onboarding').get()).toEqual({
+            badge_completed_at: 10,
+            dismissed_at: null,
+            completed_at: null,
+        });
+        // One row per user
+        expect(() => db.run(
+            'INSERT INTO user_onboarding (user_id, updated_at) VALUES (?, ?)',
+            ['github:42', 20],
+        )).toThrow();
+        // Rows follow account deletion
+        db.run('DELETE FROM users WHERE id = ?', ['github:42']);
+        expect(db.query('SELECT COUNT(*) AS count FROM user_onboarding').get()).toEqual({ count: 0 });
         db.close();
     });
 });
