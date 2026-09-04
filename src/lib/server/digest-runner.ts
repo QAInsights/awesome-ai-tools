@@ -1,7 +1,8 @@
 import enrichedTools from '../../../public/data/enriched-tools.json';
 import { sendEmail } from './email';
 import { runDigest, type DigestRunSummary } from './digest';
-import { getNewsPostForDate, utcDateString } from './news-source';
+import { utcDateString } from './news-source';
+import { getNewsPostForDate } from './news-files';
 import { runNewsSend, type NewsRunSummary } from './news';
 import { getSiteOrigin, isEmailDryRun, requireDatabase } from './runtime-env';
 

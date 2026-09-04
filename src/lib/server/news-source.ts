@@ -1,7 +1,3 @@
-const files = typeof import.meta.glob === 'function'
-    ? import.meta.glob('../../content/blog/today-in-ai-*.mdx', { query: '?raw', import: 'default', eager: true }) as Record<string, string>
-    : {};
-
 export interface NewsPost {
     id: string;
     date: string;
@@ -119,12 +115,6 @@ export function renderNewsPostHtml(post: NewsPost): string {
         .join('');
     const closingLink = escapeHtml(`https://ai.dosa.dev/blog/${encodeURIComponent(post.id)}/`);
     return `${intro}${items}<p><a href="${closingLink}">Read the full brief on ai.dosa.dev</a></p>`;
-}
-
-export function getNewsPostForDate(date: string): NewsPost | null {
-    const id = `today-in-ai-${date}`;
-    const entry = Object.entries(files).find(([path]) => path.endsWith(`${id}.mdx`));
-    return entry ? parseNewsPost(id, entry[1]) : null;
 }
 
 export function utcDateString(milliseconds: number): string {
