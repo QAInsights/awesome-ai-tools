@@ -4396,6 +4396,35 @@
     "lastUpdated": "2026-09-01"
   },
   {
+    "slug": "contextstream",
+    "name": "ContextStream",
+    "company": "ContextStream",
+    "pricing": "freemium",
+    "pricingDetail": "Starter is free forever with 3,000 Context Credits per month, 1 user, 5 workspaces, 15 projects, and 5-day memory retention. Paid plans: Pro at $19/month (25,000 credits), Elite at $49/month (100,000 credits), and Team at $79/user/month with a 3-seat minimum. Extra credits can be topped up.",
+    "description": "ContextStream provides shared project memory for AI coding assistants like Cursor, Claude Code, Codex, and Grok via a hosted MCP server and npm package. It offers semantic code search, a knowledge graph, and decision tracking so every AI tool has consistent, persistent context.",
+    "keyFeatures": [
+      "Persistent project memory across sessions and tools",
+      "Semantic code search by intent",
+      "Knowledge Atlas for dependency and impact analysis",
+      "Decision, lesson, and guardrail capture",
+      "ContextCapsules for sharing context",
+      "MCP server integration with Cursor, Claude Code, Codex, Cline, Windsurf",
+      "ContextCode first-party coding agent with StreamPilot"
+    ],
+    "bestFor": "Individual developers and teams using multiple AI coding tools who want to avoid re-explaining project context and need consistent memory across sessions.",
+    "notIdealFor": "Those needing full data sovereignty without enterprise plans, or users who prefer a purely local solution without cloud dependency.",
+    "recentUpdates": "Published June 14, 2026: scored 90.0% on LongMemEval-S benchmark. GitHub repo created 2025-12-12. ContextCode is in beta.",
+    "verdict": "ContextStream offers a robust solution for persistent AI memory with strong benchmark results and broad tool compatibility. However, it is a paid service with credit-based usage, and the free tier has limited retention and features.",
+    "tags": [
+      "AI memory",
+      "MCP server",
+      "semantic search",
+      "knowledge graph",
+      "developer tools"
+    ],
+    "lastUpdated": "2026-09-05"
+  },
+  {
     "slug": "pieces-for-developers",
     "name": "Pieces for Developers",
     "company": "Pieces",
