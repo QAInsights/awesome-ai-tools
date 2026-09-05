@@ -210,6 +210,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "monocode",
+    "name": "MonoCode",
+    "company": "Nick",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
