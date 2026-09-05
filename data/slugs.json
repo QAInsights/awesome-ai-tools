@@ -1098,6 +1098,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "qwencloud",
+    "name": "QwenCloud",
+    "company": "Alibaba Cloud",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
