@@ -714,6 +714,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "kolkrabbi",
+    "name": "Kolkrabbi",
+    "company": "onembyte (Franco Michetti)",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

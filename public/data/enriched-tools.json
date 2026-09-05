@@ -3231,6 +3231,33 @@
     "lastUpdated": "2026-09-04"
   },
   {
+    "slug": "kolkrabbi",
+    "name": "Kolkrabbi",
+    "company": "onembyte (Franco Michetti)",
+    "pricing": "free",
+    "pricingDetail": "Kolkrabbi is free and open-source under the Apache-2.0 license. There is no paid tier mentioned in the search results.",
+    "description": "Kolkrabbi is a Go single-binary terminal coding agent that runs any OpenRouter model, local models via Ollama/vLLM, or OpenAI-compatible endpoints, and can drive Claude and ChatGPT CLIs as subprocesses without holding credentials.",
+    "keyFeatures": [
+      "Single effort dial (low/medium/high/max) selects which model runs the turn",
+      "Runs any OpenRouter model, local model (Ollama/vLLM), or OpenAI-compatible URL",
+      "Can use Claude and ChatGPT subscriptions via vendor CLIs as subprocesses",
+      "Opt-in OS sandbox (Seatbelt on macOS, Landlock on Linux)",
+      "Local logging of every call with cost, latency, and user ratings; no telemetry"
+    ],
+    "bestFor": "Developers who want a free, open-source, model-agnostic terminal coding agent with full control over model selection and local logging.",
+    "notIdealFor": "Users who prefer a GUI-based coding assistant or need a managed cloud service with support.",
+    "recentUpdates": "No recent updates or news found in search results.",
+    "verdict": "Kolkrabbi offers a unique approach with a single effort dial and broad model support, but lacks a large community or extensive documentation based on search results. It is a promising tool for developers seeking a lightweight, privacy-focused CLI agent.",
+    "tags": [
+      "terminal",
+      "coding agent",
+      "open-source",
+      "CLI",
+      "AI"
+    ],
+    "lastUpdated": "2026-09-05"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
