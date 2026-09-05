@@ -4874,6 +4874,34 @@
     "lastUpdated": "2026-09-04"
   },
   {
+    "slug": "xiurouter",
+    "name": "XiuRouter",
+    "company": "XiuLab Inc",
+    "pricing": "paid",
+    "pricingDetail": "XiuRouter is a usage-based paid service. It offers two service tiers (福利档/Value and 满血档/Managed) with per-token pricing for input, output, and cache reads/writes. Prices are listed in USD with CNY reference, and discounts range from 10% to over 95% off provider reference prices.",
+    "description": "XiuRouter is a usage-based model API gateway that provides unified access to leading AI models (Claude, GPT, Gemini, etc.) through multiple API protocols, including OpenAI Chat Completions and Responses, Anthropic Messages, and Gemini GenerateContent.",
+    "keyFeatures": [
+      "Multi-protocol support: OpenAI Chat Completions, Responses, Anthropic Messages, Gemini GenerateContent",
+      "Scoped API keys with model and service tier restrictions",
+      "Public pricing catalog with per-token rates for input, output, and cache",
+      "Two service tiers: Value (discount) and Managed (full-access) with varying discounts",
+      "Usage records with request-level token usage and cost tracking",
+      "Agent integrations for Codex, Claude Code, Cursor, and other developer tools"
+    ],
+    "bestFor": "Developers and teams using coding agents (like Codex, Claude Code) or building AI applications who want a single API key to access multiple leading models at discounted rates with transparent usage-based billing.",
+    "notIdealFor": "Users needing provider-specific features like stored conversations, background mode, web search, file search, or hosted tools, as these are not supported through the gateway.",
+    "recentUpdates": "Documentation updated on 08/22/2026, reflecting current model catalog and integration guides. The catalog includes recent models like claude-fable-5, gpt-5.6-sol, and gemini-3.6-flash.",
+    "verdict": "XiuRouter offers significant cost savings (up to 90%+ off) and broad protocol compatibility, making it a strong choice for cost-conscious developers. However, it lacks advanced provider-specific features and service tiers do not guarantee speed or reliability, so users should test with real requests.",
+    "tags": [
+      "API gateway",
+      "multi-model",
+      "coding agents",
+      "usage-based",
+      "discount"
+    ],
+    "lastUpdated": "2026-09-05"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",

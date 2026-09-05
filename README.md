@@ -319,6 +319,7 @@ AI-powered tools for managing context, snippets, and developer documentation.
 | **[SandBase CLI](https://sandbase.ai)** | SandBase | Open-source CLI and MCP server that gives developers and AI coding agents one interface to discover and call 2,000+ AI models and APIs. It supports structured JSON output, 25 AI clients, local/remote MCP transports, and six MCP tools.; [GitHub](https://github.com/sandbaseai/cli) |
 | **[AIPM](https://www.aipm-registry.com/)** | Abhishek Srivastava | Open-source registry and CLI for publishing, versioning, discovering, and installing reusable AI skills across Codex, Claude Code, and Cursor.; [GitHub](https://github.com/abhisri2090/aipm) |
 | **[Superagent](https://superagent.computer)** | pungme | Open-source (MIT) macOS desktop app that gives Claude Code and Codex a real browser to drive, an iOS Simulator to install and screenshot apps in, and a phone companion app for remote monitoring.; [GitHub](https://github.com/pungme/superagent-desktop) |
+| **[XiuRouter](https://router.xiu.ai/)** | XiuLab Inc | XiuRouter is a usage-based model API gateway for coding agents and developer tools. It supports OpenAI Chat Completions and Responses, Anthropic Messages, and Gemini GenerateContent, with scoped API keys, public pricing, and request-level usage records. |
 
 ---
 
