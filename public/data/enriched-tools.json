@@ -947,6 +947,34 @@
     "lastUpdated": "2026-09-01"
   },
   {
+    "slug": "monocode",
+    "name": "MonoCode",
+    "company": "Nick",
+    "pricing": "free",
+    "pricingDetail": "MonoCode is free and open-source (MIT license). It does not sell tokens; it works with your existing subscriptions to Claude Code, Codex, Cursor, and OpenCode.",
+    "description": "MonoCode is a desktop GUI for coding agents, providing a unified interface to run Claude Code, Codex, Cursor, and OpenCode if they are installed and logged in.",
+    "keyFeatures": [
+      "Desktop UI for coding agents",
+      "Works with Claude Code, Codex, Cursor, and OpenCode",
+      "Tabs represent sessions",
+      "Composer as input",
+      "No token selling",
+      "Open-source (MIT)"
+    ],
+    "bestFor": "Developers who already use multiple CLI coding agents and want a unified desktop interface to manage sessions.",
+    "notIdealFor": "Users on Linux, Windows, or Intel Macs, as only macOS Apple Silicon is supported; also not for those seeking a cloud-based or mobile solution.",
+    "recentUpdates": "Repository created 2026-08-20; very early stage with only 3 stars and 8 contributions, indicating initial release.",
+    "verdict": "MonoCode is a promising early-stage open-source desktop UI for coding agents, but it's limited to macOS Apple Silicon and requires existing agent subscriptions. It may appeal to developers wanting a unified GUI, but expect bugs and limited platform support.",
+    "tags": [
+      "desktop UI",
+      "coding agents",
+      "open-source",
+      "macOS",
+      "Claude Code"
+    ],
+    "lastUpdated": "2026-09-05"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
