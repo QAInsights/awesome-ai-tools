@@ -3259,6 +3259,33 @@
     "lastUpdated": "2026-09-04"
   },
   {
+    "slug": "kolkrabbi",
+    "name": "Kolkrabbi",
+    "company": "onembyte (Franco Michetti)",
+    "pricing": "free",
+    "pricingDetail": "Kolkrabbi is free and open-source under the Apache-2.0 license. There is no paid tier mentioned in the search results.",
+    "description": "Kolkrabbi is a Go single-binary terminal coding agent that runs any OpenRouter model, local models via Ollama/vLLM, or OpenAI-compatible endpoints, and can drive Claude and ChatGPT CLIs as subprocesses without holding credentials.",
+    "keyFeatures": [
+      "Single effort dial (low/medium/high/max) selects which model runs the turn",
+      "Runs any OpenRouter model, local model (Ollama/vLLM), or OpenAI-compatible URL",
+      "Can use Claude and ChatGPT subscriptions via vendor CLIs as subprocesses",
+      "Opt-in OS sandbox (Seatbelt on macOS, Landlock on Linux)",
+      "Local logging of every call with cost, latency, and user ratings; no telemetry"
+    ],
+    "bestFor": "Developers who want a free, open-source, model-agnostic terminal coding agent with full control over model selection and local logging.",
+    "notIdealFor": "Users who prefer a GUI-based coding assistant or need a managed cloud service with support.",
+    "recentUpdates": "No recent updates or news found in search results.",
+    "verdict": "Kolkrabbi offers a unique approach with a single effort dial and broad model support, but lacks a large community or extensive documentation based on search results. It is a promising tool for developers seeking a lightweight, privacy-focused CLI agent.",
+    "tags": [
+      "terminal",
+      "coding agent",
+      "open-source",
+      "CLI",
+      "AI"
+    ],
+    "lastUpdated": "2026-09-05"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
@@ -4955,6 +4982,34 @@
       "coding agents",
       "usage-based",
       "discount"
+    ],
+    "lastUpdated": "2026-09-05"
+  },
+  {
+    "slug": "qwencloud",
+    "name": "QwenCloud",
+    "company": "Alibaba Cloud",
+    "pricing": "paid",
+    "pricingDetail": "QwenCloud offers multiple paid plans: Coding Plan at $50/month with 90,000 requests/month; Token Plan Personal Edition from $8/month (Lite) to $80/month (Pro) with 7-day credit quotas; Token Plan Team Edition from $30/seat/month (Standard) to $200/seat/month (Max); pay-as-you-go API billing with free quota for new users.",
+    "description": "QwenCloud is Alibaba Cloud's AI model subscription service providing access to Qwen and third-party models (GLM, Kimi, MiniMax) via OpenAI- and Anthropic-compatible APIs for AI coding tools and agents.",
+    "keyFeatures": [
+      "Credits-based Token Plan with Personal and Team editions",
+      "Coding Plan fixed monthly subscription with request quotas",
+      "OpenAI- and Anthropic-compatible APIs for tools like Claude Code, Cursor, Qwen Code, Codex",
+      "Multimodal support: text, image, video, speech, real-time voice",
+      "Harness tools: web search, code interpreter",
+      "Exact-string model allowlist for supported models"
+    ],
+    "bestFor": "Individual developers and teams seeking predictable, fixed-cost access to top AI models across multiple coding tools and agent workflows.",
+    "notIdealFor": "Users needing unlimited usage or those who prefer open-source self-hosted solutions; also not ideal for batch/script usage (Coding Plan is for interactive tools only).",
+    "recentUpdates": "As of 2026, Qwen3.8-Max was launched with exclusive access via Token Plan; Lite Coding Plan discontinued for new subscriptions as of March 20, 2026; Token Plan promotions include limited-time discounts (e.g., $6/month Lite).",
+    "verdict": "QwenCloud offers flexible, cost-effective subscription plans with broad model and tool compatibility, but quota limitations and exact model allowlists may restrict heavy users. It's a strong choice for developers wanting multi-model access without surprise bills.",
+    "tags": [
+      "AI coding",
+      "model API",
+      "subscription",
+      "Qwen",
+      "agent tools"
     ],
     "lastUpdated": "2026-09-05"
   },

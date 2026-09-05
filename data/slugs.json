@@ -720,6 +720,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "kolkrabbi",
+    "name": "Kolkrabbi",
+    "company": "onembyte (Franco Michetti)",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
@@ -1095,6 +1101,12 @@
     "slug": "xiurouter",
     "name": "XiuRouter",
     "company": "XiuLab Inc",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "qwencloud",
+    "name": "QwenCloud",
+    "company": "Alibaba Cloud",
     "category": "Developer Productivity & Workflow"
   },
   {
