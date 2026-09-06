@@ -738,5 +738,9 @@
   {
     "companyName": "Alibaba Cloud",
     "toolName": "QwenCloud"
+  },
+  {
+    "companyName": "okf-memory",
+    "toolName": "OKF Agent Memory"
   }
 ]
