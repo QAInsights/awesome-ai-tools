@@ -3286,6 +3286,35 @@
     "lastUpdated": "2026-09-05"
   },
   {
+    "slug": "yylo",
+    "name": "YYLO",
+    "company": "yylo-dev",
+    "pricing": "open-source",
+    "pricingDetail": "YYLO is open-source under the MIT License, distributed as the npm package @yylo/cli. Companion tools YYLO Ledger and YYLO Benchmark are also MIT-licensed. There is no paid tier mentioned.",
+    "description": "YYLO is an open-source command-line orchestrator for AI coding agents, enabling structured development workflows, bounded agent loops, validation evidence, and guarded Git delivery across multiple model providers.",
+    "keyFeatures": [
+      "Multi-agent orchestration (Claude Code, Codex, Gemini, Pi)",
+      "Bounded coding loops with iteration limits",
+      "Reusable YAML workflows",
+      "Session continuity and branching",
+      "Validation evidence with content-addressed hashes",
+      "Task worktrees and guarded merge queue",
+      "Companion tools: YYLO Ledger and YYLO Benchmark"
+    ],
+    "bestFor": "Developers and teams who want to orchestrate multiple AI coding agents with controlled, observable, and evidence-backed workflows while keeping provider flexibility.",
+    "notIdealFor": "Users seeking a fully managed, GUI-based solution or those who prefer a single all-in-one tool without needing to install companion packages.",
+    "recentUpdates": "The repository was created in January 2026 and has seen active development with over 1000 contributions. YYLO Ledger and YYLO Benchmark were created in August 2026, indicating recent ecosystem expansion.",
+    "verdict": "YYLO offers a robust, open-source control plane for AI coding agents with strong emphasis on safety, evidence, and workflow repeatability. Its complexity and reliance on companion tools may require a learning curve, but it provides unique value for teams needing rigorous agent orchestration.",
+    "tags": [
+      "AI agents",
+      "CLI",
+      "orchestration",
+      "workflow automation",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-06"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
