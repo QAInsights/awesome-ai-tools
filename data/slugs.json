@@ -990,6 +990,12 @@
     "category": "AI Codebase Knowledge & Generation"
   },
   {
+    "slug": "okf-agent-memory",
+    "name": "OKF Agent Memory",
+    "company": "okf-memory",
+    "category": "AI Codebase Knowledge & Generation"
+  },
+  {
     "slug": "pieces-for-developers",
     "name": "Pieces for Developers",
     "company": "Pieces",
