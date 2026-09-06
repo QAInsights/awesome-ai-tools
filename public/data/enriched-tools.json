@@ -4509,6 +4509,35 @@
     "lastUpdated": "2026-09-05"
   },
   {
+    "slug": "okf-agent-memory",
+    "name": "OKF Agent Memory",
+    "company": "okf-memory",
+    "pricing": "open-source",
+    "pricingDetail": "OKF Agent Memory is open-source under the MIT license. It is free to use with no external dependencies or API costs.",
+    "description": "OKF Agent Memory is a Git-native persistent memory layer for AI coding agents, implementing Google's Open Knowledge Format (OKF) v0.2. It stores project knowledge as plain Markdown with YAML frontmatter in a knowledge/ directory, providing sub-300µs in-memory BM25 search and an embedded MCP server, all with zero external dependencies.",
+    "keyFeatures": [
+      "Sub-300µs in-memory BM25 search",
+      "Embedded MCP server for Claude Code, Cursor, Codex integration",
+      "Progressive disclosure via hierarchical index.md files",
+      "Zero external databases or dependencies",
+      "Built in pure Go",
+      "CLI for validation, search, concept creation, and updates",
+      "Single-command bootstrap"
+    ],
+    "bestFor": "Developers and teams using AI coding agents who want persistent, version-controlled project memory without external databases or vendor lock-in, and who value performance and transparency.",
+    "notIdealFor": "Teams needing semantic search capabilities beyond lexical matching, or those requiring a managed cloud solution with built-in collaboration features.",
+    "recentUpdates": "Launched on GitHub in early September 2026, with coverage on LavX News on September 6, 2026.",
+    "verdict": "OKF Agent Memory offers a compelling open-source solution for persistent agent memory with impressive performance and zero dependencies. However, it relies on lexical search only, which may not suit all use cases, and it is relatively new with a small community.",
+    "tags": [
+      "open-source",
+      "OKF",
+      "agent-memory",
+      "MCP",
+      "Go"
+    ],
+    "lastUpdated": "2026-09-06"
+  },
+  {
     "slug": "pieces-for-developers",
     "name": "Pieces for Developers",
     "company": "Pieces",
