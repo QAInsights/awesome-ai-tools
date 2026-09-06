@@ -726,6 +726,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "yylo",
+    "name": "YYLO",
+    "company": "yylo-dev",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
