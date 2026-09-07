@@ -5101,6 +5101,35 @@
     "lastUpdated": "2026-09-05"
   },
   {
+    "slug": "orcareplay",
+    "name": "OrcaReplay",
+    "company": "Continuum AI",
+    "pricing": "open-source",
+    "pricingDetail": "OrcaReplay is fully open source under the Apache-2.0 license. There are no paid tiers or credit models mentioned; it can be used independently or with OrcaRouter's paid API services.",
+    "description": "OrcaReplay is an open-source record-and-replay engine for AI coding agents. It attaches to agents like Claude Code, Codex, Grok CLI, and Hermes to capture model calls, shell commands, file operations, and MCP calls into a replayable timeline, enabling offline replay and forking from any step onto a different model.",
+    "keyFeatures": [
+      "Records agent runs without patching the agent (attaches or wraps the process)",
+      "Replays runs offline byte-for-byte with the network off",
+      "Forks from any checkpoint onto a different model to compare decisions",
+      "Captures model calls, shell exit codes, per-turn file changes, and MCP calls on one timeline",
+      "Reuses recorded outputs during replay to handle nondeterministic side effects",
+      "Agent-agnostic and model-agnostic; replay data stays local for privacy",
+      "Provides CLI commands like 'orca record', 'orca replay', and 'orca show'"
+    ],
+    "bestFor": "Developers debugging AI coding agents who need to reproduce failures deterministically, understand why an agent made a decision, or compare how different models would handle the same state.",
+    "notIdealFor": "Teams looking for a full observability or cost-analytics platform; OrcaReplay focuses on replay and debugging rather than high-level metrics like cost and token usage.",
+    "recentUpdates": "Launched on September 1-2, 2026, with press coverage from PRNewswire and The Agent Times. The project is available on GitHub with an npm package (@orcareplay/plugin-api version 0.2.2).",
+    "verdict": "OrcaReplay fills a critical gap in AI agent debugging by providing deterministic replay and model forking, which is a novel capability. Its open-source nature and agent-agnostic design are strong positives, but as a new tool, it may lack maturity and community adoption.",
+    "tags": [
+      "AI agents",
+      "debugging",
+      "record-replay",
+      "open-source",
+      "developer tools"
+    ],
+    "lastUpdated": "2026-09-07"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
