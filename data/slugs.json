@@ -1128,6 +1128,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "orcareplay",
+    "name": "OrcaReplay",
+    "company": "Continuum AI",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
