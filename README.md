@@ -94,6 +94,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[Paseo](https://github.com/getpaseo/paseo)** | getpaseo | Orchestrate multiple coding agents from desktop and mobile.; [GitHub](https://github.com/getpaseo/paseo) |
 | **[OpenWorker](https://github.com/andrewyng/openworker)** | Andrew Ng | OpenWorker is an open-source AI coworker that lives on your desktop and delivers finished work, not just chat: a polished document, a Slack reply with the numbers, an updated calendar, a triaged inbox.; [GitHub](_No response_) |
 | **[MonoCode](https://github.com/hardbeat920/monocode/)** | Nick | A desktop UI for your coding agents.; [GitHub](https://github.com/hardbeat920/monocode/) |
+| **[Emdash](https://emdash.com)** | generalaction | Emdash is an open-source agentic development environment for running multiple coding agents in parallel, each isolated in its own Git worktree. It supports local and remote SSH projects and works with Claude Code, Codex, Cursor, OpenCode, Amp, Devin, and other provider CLIs.; [GitHub](https://github.com/generalaction/emdash) |
 
 
 ---
