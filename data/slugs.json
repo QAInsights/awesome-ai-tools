@@ -216,6 +216,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "emdash",
+    "name": "Emdash",
+    "company": "generalaction",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",

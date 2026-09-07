@@ -975,6 +975,35 @@
     "lastUpdated": "2026-09-05"
   },
   {
+    "slug": "emdash",
+    "name": "Emdash",
+    "company": "generalaction",
+    "pricing": "open-source",
+    "pricingDetail": "Emdash is free and open-source (Apache 2.0 license) for individual developers. For teams, cloud-hosted workspaces (Emdash Cloud) and enterprise tiers are available with contact-based pricing.",
+    "description": "Emdash is an open-source agentic development environment (ADE) that runs multiple coding agents in parallel, each isolated in its own Git worktree, with support for local and remote SSH projects and integration with various CLI agents like Claude Code, Codex, and Cursor.",
+    "keyFeatures": [
+      "Parallel agents in isolated Git worktrees",
+      "Supports 25+ CLI coding agents (Claude Code, Codex, Cursor, etc.)",
+      "Issue integration with Linear, Jira, GitHub, Notion, Asana, and more",
+      "In-app browser for previewing apps",
+      "Automations for scheduled recurring agent runs",
+      "Remote development over SSH with automatic port forwarding",
+      "Diff review, PR creation, and CI/CD monitoring"
+    ],
+    "bestFor": "Full-stack developers and teams comfortable with CLI agents and Git who want to parallelize AI coding tasks across a repo without agent lock-in.",
+    "notIdealFor": "Beginners without CLI coding agent or Git experience, or users seeking a fully hosted, managed cloud IDE with a web-based dashboard for non-technical stakeholders.",
+    "recentUpdates": "Emdash v1.2.0 (recent) focuses on remote development. v1.1.32 (June 10, 2026) added automations, multiple GitHub accounts, in-app browser tabs, Trello/Monday.com/Plane integrations, and Grok CLI hooks. The project crossed 5,000 GitHub stars in June 2026 and has over 1M downloads.",
+    "verdict": "Emdash is a powerful, free, open-source solution for orchestrating multiple coding agents in parallel with strong Git isolation and broad agent support. However, it requires Git and CLI experience, and cloud/enterprise features are not yet fully priced or mature.",
+    "tags": [
+      "agentic development environment",
+      "parallel agents",
+      "open-source",
+      "git worktree",
+      "multi-agent orchestration"
+    ],
+    "lastUpdated": "2026-09-07"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
