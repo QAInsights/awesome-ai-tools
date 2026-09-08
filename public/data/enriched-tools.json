@@ -1955,6 +1955,33 @@
     "lastUpdated": "2026-09-01"
   },
   {
+    "slug": "amp",
+    "name": "Amp",
+    "company": "Sourcegraph",
+    "pricing": "freemium",
+    "pricingDetail": "Amp offers a free tier with usage limits and paid usage for additional model and agent capacity.",
+    "description": "Amp is a multi-model coding agent from Sourcegraph that works in the terminal and VS Code. It supports shareable threads, MCP servers, custom skills, and an SDK for extending agent workflows.",
+    "keyFeatures": [
+      "Terminal and VS Code interfaces",
+      "Multi-model agent routing",
+      "Shareable coding threads",
+      "MCP and custom skill support",
+      "SDK for programmatic workflows"
+    ],
+    "bestFor": "Developers who want a flexible coding agent with multiple model choices and team-readable work threads.",
+    "notIdealFor": "Teams that require a fully self-hosted coding agent or a single-vendor model stack.",
+    "recentUpdates": "Amp continues to expand its CLI, editor, MCP, SDK, and multi-model workflow surfaces.",
+    "verdict": "Amp is a strong addition for developers who want an extensible, model-flexible agent rather than another editor-only copilot.",
+    "tags": [
+      "coding agent",
+      "CLI",
+      "VS Code",
+      "MCP",
+      "multi-model"
+    ],
+    "lastUpdated": "2026-09-08"
+  },
+  {
     "slug": "aider",
     "name": "Aider",
     "company": "Aider-AI",
@@ -3967,6 +3994,113 @@
     "lastUpdated": "2026-09-01"
   },
   {
+    "slug": "dyad",
+    "name": "Dyad",
+    "company": "Dyad",
+    "pricing": "open-source",
+    "pricingDetail": "Dyad is open source and can be used locally with bring-your-own model providers; hosted model and provider costs may apply separately.",
+    "description": "Dyad is a local, open-source AI app builder for creating web applications with natural language while keeping projects on the developer's machine and allowing bring-your-own model providers.",
+    "keyFeatures": [
+      "Local-first app generation",
+      "Open-source codebase",
+      "Bring-your-own model support",
+      "No required sign-up",
+      "Editable application source"
+    ],
+    "bestFor": "Developers and teams who want a local alternative to hosted vibe-coding platforms with control over models and source code.",
+    "notIdealFor": "Users who want a fully managed cloud deployment experience with no local setup.",
+    "recentUpdates": "Dyad has grown as a local and open-source alternative for prompt-driven application development.",
+    "verdict": "Dyad fills an important local-first gap in the app-builder category and is especially relevant for privacy-conscious developers.",
+    "tags": [
+      "app builder",
+      "open-source",
+      "local-first",
+      "BYOM"
+    ],
+    "lastUpdated": "2026-09-08"
+  },
+  {
+    "slug": "onlook",
+    "name": "Onlook",
+    "company": "Onlook",
+    "pricing": "open-source",
+    "pricingDetail": "Onlook provides an open-source visual editor; model, hosting, or related service costs may vary by deployment.",
+    "description": "Onlook is an open-source visual editor for React and Tailwind applications. It lets developers visually edit interfaces while keeping changes connected to the underlying code and design system.",
+    "keyFeatures": [
+      "Visual React editing",
+      "Tailwind-aware styling",
+      "Code-connected design changes",
+      "Open-source workflow",
+      "AI-assisted interface generation"
+    ],
+    "bestFor": "Product teams and frontend developers who want visual iteration without abandoning a real React codebase.",
+    "notIdealFor": "Teams building non-React applications or looking for a no-code system with no source-code concepts.",
+    "recentUpdates": "Onlook continues to develop its visual editing and AI-assisted React workflow around open-source collaboration.",
+    "verdict": "Onlook is a compelling bridge between design tools and code editors for React teams that need both visual speed and code ownership.",
+    "tags": [
+      "React",
+      "visual editor",
+      "Tailwind",
+      "open-source",
+      "design-to-code"
+    ],
+    "lastUpdated": "2026-09-08"
+  },
+  {
+    "slug": "base44",
+    "name": "Base44",
+    "company": "Base44",
+    "pricing": "freemium",
+    "pricingDetail": "Base44 offers hosted plans with usage and feature limits that vary by tier; current pricing should be checked on the product site.",
+    "description": "Base44 is a hosted natural-language platform for building full-stack applications, websites, and AI agents with managed data, authentication, integrations, and deployment.",
+    "keyFeatures": [
+      "Prompt-driven full-stack apps",
+      "Managed database and authentication",
+      "Built-in integrations",
+      "AI agent creation",
+      "Hosted deployment and domains"
+    ],
+    "bestFor": "Founders, product teams, and non-specialist developers who want to move from an idea to a hosted application quickly.",
+    "notIdealFor": "Teams that need complete infrastructure portability, low-level runtime control, or a traditional local Git workflow.",
+    "recentUpdates": "Base44 has expanded from prompt-driven app creation toward a broader hosted platform for apps and AI agents.",
+    "verdict": "Base44 is a notable hosted app-builder option, with speed and managed infrastructure as its primary advantages.",
+    "tags": [
+      "app builder",
+      "full-stack",
+      "AI agents",
+      "no-code",
+      "hosting"
+    ],
+    "lastUpdated": "2026-09-08"
+  },
+  {
+    "slug": "rork",
+    "name": "Rork",
+    "company": "Rork",
+    "pricing": "freemium",
+    "pricingDetail": "Rork uses hosted plans and usage limits for AI-assisted mobile app generation; current plan details vary by product offering.",
+    "description": "Rork turns natural-language descriptions into mobile applications for iOS, Android, and the web, with live previews and workflows for testing and publishing.",
+    "keyFeatures": [
+      "Prompt-to-mobile-app generation",
+      "iOS and Android support",
+      "Web output",
+      "Live simulation and previews",
+      "App Store and TestFlight publishing workflows"
+    ],
+    "bestFor": "Founders and mobile developers prototyping or shipping cross-platform app ideas with minimal initial setup.",
+    "notIdealFor": "Teams requiring deeply customized native architecture or complete control over every generated mobile dependency.",
+    "recentUpdates": "Rork has focused on making prompt-generated mobile apps previewable and publishable across major platforms.",
+    "verdict": "Rork broadens the AI app-builder category beyond web apps by targeting native mobile delivery and iteration.",
+    "tags": [
+      "mobile apps",
+      "iOS",
+      "Android",
+      "app builder",
+      "React Native"
+    ],
+    "lastUpdated": "2026-09-08"
+  },
+  {
     "slug": "coderabbit",
     "name": "CodeRabbit",
     "company": "CodeRabbit, Inc.",
@@ -4210,6 +4344,87 @@
       "web-development"
     ],
     "lastUpdated": "2026-09-01"
+  },
+  {
+    "slug": "vercel-agent",
+    "name": "Vercel Agent",
+    "company": "Vercel",
+    "pricing": "commercial",
+    "pricingDetail": "Vercel Agent capabilities are offered through Vercel's commercial developer platform and plan-dependent usage.",
+    "description": "Vercel Agent is a production-aware agent for investigating issues and reviewing or fixing pull requests. It can validate proposed changes in secure sandboxes against real builds, tests, and linters.",
+    "keyFeatures": [
+      "Production issue investigation",
+      "Pull-request review and fixes",
+      "Secure sandbox execution",
+      "Build, test, and lint validation",
+      "Vercel deployment context"
+    ],
+    "bestFor": "Teams deploying on Vercel that want an agent to investigate real production context and verify fixes before merge.",
+    "notIdealFor": "Teams looking for a general-purpose local coding assistant unrelated to deployment and production workflows.",
+    "recentUpdates": "Vercel has positioned its agent capabilities around production investigation and sandbox-validated code changes rather than only code completion.",
+    "verdict": "Vercel Agent is a distinct production engineering workflow and complements, rather than duplicates, Vercel's v0 UI generation product.",
+    "tags": [
+      "code review",
+      "production",
+      "testing",
+      "Vercel",
+      "deployment"
+    ],
+    "lastUpdated": "2026-09-08"
+  },
+  {
+    "slug": "graphite",
+    "name": "Graphite",
+    "company": "Graphite",
+    "pricing": "freemium",
+    "pricingDetail": "Graphite offers hosted plans with free and paid tiers for AI review, stacked pull requests, and engineering workflow features.",
+    "description": "Graphite combines AI code review with stacked pull requests, merge queues, and engineering workflow analytics to help teams ship smaller, safer changes more quickly.",
+    "keyFeatures": [
+      "AI pull-request review",
+      "Stacked pull requests",
+      "Merge queue automation",
+      "Repository-aware feedback",
+      "Engineering workflow analytics"
+    ],
+    "bestFor": "Engineering teams that want code review intelligence together with a structured stacked-PR workflow.",
+    "notIdealFor": "Individual developers who do not use pull requests or teams that require a fully self-hosted review system.",
+    "recentUpdates": "Graphite continues to combine its stacked-PR workflow with AI review and team-level engineering insights.",
+    "verdict": "Graphite is a meaningful gap-filler for teams that view review and merge workflow as one engineering system rather than separate tools.",
+    "tags": [
+      "code review",
+      "pull requests",
+      "stacked PRs",
+      "merge queue",
+      "engineering analytics"
+    ],
+    "lastUpdated": "2026-09-08"
+  },
+  {
+    "slug": "bito",
+    "name": "Bito",
+    "company": "Bito",
+    "pricing": "freemium",
+    "pricingDetail": "Bito provides free and paid plans for AI development and code-review capabilities, with enterprise features available on commercial tiers.",
+    "description": "Bito is a context-aware AI code-review agent for GitHub, GitLab, and Bitbucket. It analyzes repository context and dependencies, applies custom rules, and can propose one-click fixes.",
+    "keyFeatures": [
+      "Multi-provider pull-request review",
+      "Cross-repository context analysis",
+      "Custom review rules",
+      "Security and quality findings",
+      "Suggested one-click fixes"
+    ],
+    "bestFor": "Teams that want repository-aware automated reviews across more than one Git hosting provider.",
+    "notIdealFor": "Teams seeking only local review tooling or a platform dedicated exclusively to security scanning.",
+    "recentUpdates": "Bito has expanded its AI review positioning around repository context, cross-repo impact, customizable rules, and fix suggestions.",
+    "verdict": "Bito adds a practical multi-host code-review option for teams that need more context than line-level generic comments.",
+    "tags": [
+      "code review",
+      "GitHub",
+      "GitLab",
+      "Bitbucket",
+      "security"
+    ],
+    "lastUpdated": "2026-09-08"
   },
   {
     "slug": "gitauto",
@@ -5128,6 +5343,60 @@
       "developer tools"
     ],
     "lastUpdated": "2026-09-07"
+  },
+  {
+    "slug": "magic-patterns",
+    "name": "Magic Patterns",
+    "company": "Magic Patterns",
+    "pricing": "freemium",
+    "pricingDetail": "Magic Patterns offers hosted product-design plans with limits and team features that vary by tier.",
+    "description": "Magic Patterns is an AI product-design and prototyping platform for generating high-fidelity interfaces, applying existing design systems, collaborating with teams, and exporting production-oriented code.",
+    "keyFeatures": [
+      "AI-generated UI concepts",
+      "Design-system import and reuse",
+      "High-fidelity prototyping",
+      "Collaborative product design",
+      "Code export and handoff"
+    ],
+    "bestFor": "Product and frontend teams that want to explore UI ideas quickly while staying close to their design system and implementation stack.",
+    "notIdealFor": "Teams looking only for a general-purpose code agent or a pixel-perfect replacement for a mature design suite.",
+    "recentUpdates": "Magic Patterns has expanded its focus from rapid UI generation toward design-system-aware product development workflows.",
+    "verdict": "Magic Patterns is a strong design-to-code candidate for teams that need fast exploration without losing implementation context.",
+    "tags": [
+      "UI design",
+      "prototyping",
+      "design systems",
+      "code generation",
+      "frontend"
+    ],
+    "lastUpdated": "2026-09-08"
+  },
+  {
+    "slug": "builderio-visual-copilot",
+    "name": "Builder.io Visual Copilot",
+    "company": "Builder.io",
+    "pricing": "commercial",
+    "pricingDetail": "Builder.io provides commercial plans for its visual development, CMS, and AI-assisted design-to-code capabilities.",
+    "description": "Builder.io Visual Copilot and Fusion connect design and development workflows by translating designs into framework-aware code and generating interfaces grounded in existing components, tokens, and backend integrations.",
+    "keyFeatures": [
+      "Design-to-code generation",
+      "Framework-aware output",
+      "Existing component and token grounding",
+      "Visual editing and CMS integration",
+      "AI-assisted full-stack development workflows"
+    ],
+    "bestFor": "Organizations with established design systems and frontend platforms that want AI acceleration without discarding their component architecture.",
+    "notIdealFor": "Small projects that do not have an existing design system or teams seeking a completely self-hosted toolchain.",
+    "recentUpdates": "Builder.io has broadened Visual Copilot into a more comprehensive AI-assisted visual development workflow through Fusion and related platform capabilities.",
+    "verdict": "Builder.io is one of the most enterprise-ready options for connecting design systems, visual editing, and production code generation.",
+    "tags": [
+      "design-to-code",
+      "visual development",
+      "design systems",
+      "CMS",
+      "frontend"
+    ],
+    "lastUpdated": "2026-09-08"
   },
   {
     "slug": "jackalope",

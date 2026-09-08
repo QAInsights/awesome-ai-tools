@@ -756,6 +756,46 @@
     "toolName": "OrcaReplay"
   },
   {
+    "companyName": "Sourcegraph",
+    "toolName": "Amp"
+  },
+  {
+    "companyName": "Dyad",
+    "toolName": "Dyad"
+  },
+  {
+    "companyName": "Onlook",
+    "toolName": "Onlook"
+  },
+  {
+    "companyName": "Base44",
+    "toolName": "Base44"
+  },
+  {
+    "companyName": "Rork",
+    "toolName": "Rork"
+  },
+  {
+    "companyName": "Magic Patterns",
+    "toolName": "Magic Patterns"
+  },
+  {
+    "companyName": "Builder.io",
+    "toolName": "Builder.io Visual Copilot"
+  },
+  {
+    "companyName": "Vercel",
+    "toolName": "Vercel Agent"
+  },
+  {
+    "companyName": "Graphite",
+    "toolName": "Graphite"
+  },
+  {
+    "companyName": "Bito",
+    "toolName": "Bito"
+  },
+  {
     "companyName": "Jackalope Digital LLC",
     "toolName": "Jackalope"
   }

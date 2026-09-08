@@ -432,6 +432,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "amp",
+    "name": "Amp",
+    "company": "Sourcegraph",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "aider",
     "name": "Aider",
     "company": "Aider",
@@ -876,6 +882,30 @@
     "category": "Browser-Based & App Builders"
   },
   {
+    "slug": "dyad",
+    "name": "Dyad",
+    "company": "Dyad",
+    "category": "Browser-Based & App Builders"
+  },
+  {
+    "slug": "onlook",
+    "name": "Onlook",
+    "company": "Onlook",
+    "category": "Browser-Based & App Builders"
+  },
+  {
+    "slug": "base44",
+    "name": "Base44",
+    "company": "Base44",
+    "category": "Browser-Based & App Builders"
+  },
+  {
+    "slug": "rork",
+    "name": "Rork",
+    "company": "Rork",
+    "category": "Browser-Based & App Builders"
+  },
+  {
     "slug": "coderabbit",
     "name": "CodeRabbit",
     "company": "CodeRabbit",
@@ -927,6 +957,24 @@
     "slug": "mydentify-ai-crawler-access-checker",
     "name": "Mydentify AI Crawler Access Checker",
     "company": "Mydentify / Timothy Allard",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "vercel-agent",
+    "name": "Vercel Agent",
+    "company": "Vercel",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "graphite",
+    "name": "Graphite",
+    "company": "Graphite",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "bito",
+    "name": "Bito",
+    "company": "Bito",
     "category": "AI Code Review & Security"
   },
   {
@@ -1131,6 +1179,18 @@
     "slug": "orcareplay",
     "name": "OrcaReplay",
     "company": "Continuum AI",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "magic-patterns",
+    "name": "Magic Patterns",
+    "company": "Magic Patterns",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "builderio-visual-copilot",
+    "name": "Builder.io Visual Copilot",
+    "company": "Builder.io",
     "category": "Developer Productivity & Workflow"
   },
   {
