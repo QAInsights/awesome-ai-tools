@@ -5536,5 +5536,167 @@
       "GitHub Copilot"
     ],
     "lastUpdated": "2026-09-01"
+  },
+  {
+    "slug": "termrover",
+    "name": "TermRover",
+    "company": "TermRover",
+    "pricing": "freemium",
+    "pricingDetail": "The core SSH, tmux, and Mosh terminal is free; Pro adds voice and image attachments, port forwarding, and themes through yearly or lifetime purchases with no monthly subscription.",
+    "description": "TermRover is a native SSH and Mosh terminal for iPhone and Android designed around tmux, with mobile-friendly tabs, prefix actions, scrolling, saved hosts, and optional attachments.",
+    "keyFeatures": [
+      "Native iPhone and Android SSH client",
+      "tmux and Mosh support",
+      "Browser-style tabs and saved hosts",
+      "One-tap tmux prefix actions",
+      "Port forwarding and optional voice/image attachments"
+    ],
+    "bestFor": "Developers and operators who need to manage tmux-backed development or production sessions from a phone.",
+    "notIdealFor": "Users seeking a desktop terminal, a full local development environment, or a cloud-hosted coding agent.",
+    "recentUpdates": "The current product supports iOS and Android distribution, a free core terminal, and optional Pro features sold yearly or as a lifetime purchase.",
+    "verdict": "A focused mobile terminal for developers who already rely on SSH and tmux and want controls that work well on a small screen.",
+    "tags": [
+      "ssh",
+      "tmux",
+      "mosh",
+      "mobile",
+      "terminal"
+    ],
+    "lastUpdated": "2026-09-08"
+  },
+  {
+    "slug": "director",
+    "name": "Director",
+    "company": "Director",
+    "pricing": "paid",
+    "pricingDetail": "Free to try with no account required; the macOS app uses a one-time purchase to unlock the full product.",
+    "description": "Director is a native macOS workspace that puts coding agents on a canvas so developers can plan, build, review, and ship in parallel across isolated Git worktrees.",
+    "keyFeatures": [
+      "Canvas-based agent workspaces",
+      "Parallel planning, building, and review nodes",
+      "Isolated Git worktrees per workspace",
+      "GitHub and Linear issue integration",
+      "Skills, plugins, routing, subagents, and voice input"
+    ],
+    "bestFor": "Mac developers coordinating several coding agents across parallel implementation and review tasks.",
+    "notIdealFor": "Windows or Linux users, teams that need a browser-first product, or simple one-agent coding sessions.",
+    "recentUpdates": "The current release targets Apple Silicon on macOS 15+ and includes project configuration through director.json, worktree isolation, and integrated issue and pull-request workflows.",
+    "verdict": "A polished native Mac command center for agent-heavy development, especially when parallel work and review matter more than a conventional editor layout.",
+    "tags": [
+      "coding-agents",
+      "macos",
+      "worktrees",
+      "orchestration",
+      "developer-workflow"
+    ],
+    "lastUpdated": "2026-09-08"
+  },
+  {
+    "slug": "claudete",
+    "name": "Claudete",
+    "company": "Claudete",
+    "pricing": "freemium",
+    "pricingDetail": "Free for up to three instances with no account or trial timer; Pro is available as a lifetime license, currently advertised at $39 before promotions.",
+    "description": "Claudete is a macOS control panel for running Claude Code, Codex, Grok, and OpenCode instances side by side, with grid views, shells, usage tracking, and broadcast prompts.",
+    "keyFeatures": [
+      "Multi-agent grid with named tabs and search",
+      "Embedded terminal shells and file editor",
+      "Broadcast prompts across instances",
+      "Live usage windows and reset timers",
+      "CPU, memory, and provider-status monitoring"
+    ],
+    "bestFor": "Developers who already pay for AI coding subscriptions and want to supervise many CLI agents in one Mac window.",
+    "notIdealFor": "Users who need a standalone coding model, do not use supported agent CLIs, or want a native Windows/Linux desktop app.",
+    "recentUpdates": "The product currently supports macOS 13+, Claude Code, Codex, Grok, and OpenCode, with Apple Silicon and Intel downloads plus an optional Linux server CLI.",
+    "verdict": "A practical fleet dashboard that improves throughput by removing the need to alt-tab among many agent terminals.",
+    "tags": [
+      "multi-agent",
+      "macos",
+      "claude-code",
+      "codex",
+      "agent-orchestration"
+    ],
+    "lastUpdated": "2026-09-08"
+  },
+  {
+    "slug": "fractal-os",
+    "name": "Fractal OS",
+    "company": "Nubler Digital",
+    "pricing": "free",
+    "pricingDetail": "The site presents Fractal as free to start, with the application available across macOS, Linux, Windows, and web; verify any hosted-plan terms before deployment.",
+    "description": "Fractal OS is a workspace for humans and agents that gives coding and business agents persistent memory, execution tools, connected integrations, and adaptive interfaces instead of isolated chat sessions.",
+    "keyFeatures": [
+      "Persistent agent memory and context",
+      "Autonomous skills and execution tools",
+      "Marketplace of connected MCP capabilities",
+      "Workspace-level agent and project management",
+      "Isolated environments with review before changes go live"
+    ],
+    "bestFor": "Teams that want agents to retain context, use connected tools, and produce ongoing work inside a shared workspace.",
+    "notIdealFor": "Users seeking a minimal terminal agent or a narrowly scoped code-completion extension.",
+    "recentUpdates": "The product site highlights a 2026 alpha release cadence, ready-made capabilities, connected tools, and more reliable agent workspaces.",
+    "verdict": "A broad agent workspace aimed at turning recurring AI work into a durable operating environment rather than a sequence of chats.",
+    "tags": [
+      "agent-workspace",
+      "persistent-memory",
+      "mcp",
+      "automation",
+      "developer-tools"
+    ],
+    "lastUpdated": "2026-09-08"
+  },
+  {
+    "slug": "zuse",
+    "name": "Zuse",
+    "company": "Zuse",
+    "pricing": "free",
+    "pricingDetail": "The product is currently presented as a beta workspace; public pricing is not specified on the homepage.",
+    "description": "Zuse is a coding-agent workspace for running agents side by side, carrying context between them, and isolating each task in its own Git worktree.",
+    "keyFeatures": [
+      "Side-by-side coding-agent sessions",
+      "Context handoff between agents",
+      "Per-task Git worktree isolation",
+      "Project and chat organization",
+      "Desktop-style workspace for agent workflows"
+    ],
+    "bestFor": "Developers coordinating multiple coding agents and wanting each task separated from the main working tree.",
+    "notIdealFor": "Users who only need a single CLI agent or require mature enterprise administration and published pricing.",
+    "recentUpdates": "The homepage currently labels Zuse as beta and emphasizes cloud coding agents, Claude Code and Codex workflows, and Git worktree management.",
+    "verdict": "A promising beta for developers who want a lightweight control surface over parallel agent tasks without giving up Git isolation.",
+    "tags": [
+      "coding-agents",
+      "worktrees",
+      "multi-agent",
+      "workspace",
+      "beta"
+    ],
+    "lastUpdated": "2026-09-08"
+  },
+  {
+    "slug": "cydonia",
+    "name": "Cydonia",
+    "company": "Crabtalk",
+    "pricing": "open-source",
+    "pricingDetail": "Open-source under the MIT license; the site currently says packaged builds are not yet available and documents installation from crates.io.",
+    "description": "Cydonia is a desktop workspace for ACP coding agents that turns sessions into durable local artifacts such as articles, boards, and tables instead of leaving work in a chat log.",
+    "keyFeatures": [
+      "ACP agent desktop workspace",
+      "Local-first project directories",
+      "Durable article, board, and table artifacts",
+      "Rust installation through crates.io",
+      "Open-source MIT license"
+    ],
+    "bestFor": "Developers who want agent sessions to produce structured, inspectable artifacts that remain on their own disk.",
+    "notIdealFor": "Users expecting ready-made installers, cloud collaboration, or a conventional chat-only coding assistant.",
+    "recentUpdates": "The project is actively developing its desktop experience; the official site currently directs users to install from crates.io because packaged builds are not yet available.",
+    "verdict": "An interesting local-first ACP client that treats agent output as durable project material, with early-stage distribution still requiring a Rust toolchain.",
+    "tags": [
+      "acp",
+      "desktop",
+      "open-source",
+      "local-first",
+      "agent-workspace"
+    ],
+    "lastUpdated": "2026-09-08"
   }
 ]

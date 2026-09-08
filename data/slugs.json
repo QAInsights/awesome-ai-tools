@@ -756,6 +756,12 @@
     "category": "AI-Native Terminals"
   },
   {
+    "slug": "termrover",
+    "name": "TermRover",
+    "company": "TermRover",
+    "category": "AI-Native Terminals"
+  },
+  {
     "slug": "jules",
     "name": "Jules",
     "company": "Google",
@@ -1071,6 +1077,36 @@
     "slug": "vibe-kanban",
     "name": "Vibe Kanban",
     "company": "Vibe",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "director",
+    "name": "Director",
+    "company": "Director",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "claudete",
+    "name": "Claudete",
+    "company": "Claudete",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "fractal-os",
+    "name": "Fractal OS",
+    "company": "Nubler Digital",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "zuse",
+    "name": "Zuse",
+    "company": "Zuse",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "cydonia",
+    "name": "Cydonia",
+    "company": "Crabtalk",
     "category": "Developer Productivity & Workflow"
   },
   {

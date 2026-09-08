@@ -209,6 +209,7 @@ Full terminal emulators built from the ground up with AI capabilities integrated
 |------|---------|-------|
 | **[Warp](https://app.warp.dev/referral/VNKYYE)** | Warp | The wildly popular rust-based terminal with "Warp AI" built directly into the command line interface |
 | **[Wave](https://www.waveterm.dev/)** | Wave | An open-source, modern AI-native terminal alternative |
+| **[TermRover](https://termrover.sh/)** | TermRover | Native SSH and Mosh terminal for iPhone and Android, optimized for tmux with mobile-friendly tabs, prefix actions, and scrolling |
 
 ---
 
@@ -318,6 +319,11 @@ AI-powered tools for managing context, snippets, and developer documentation.
 | **[Pieces for Developers](https://pieces.app/)** | Pieces | AI-powered context management; "Artificial Memory" for your workflow; snippet management |
 | **[agenttrace](https://github.com/luoyuctl/agenttrace)** | luoyuctl | Open-source observability and audit trail for AI coding agent sessions |
 | **[Vibe Kanban](https://vibekanban.com/)** | Vibe | Project management and productivity platform integrated with AI |
+| **[Director](https://director.sh/)** | Director | Native macOS workspace that places coding agents on a canvas for parallel planning, building, reviewing, and isolated Git worktrees |
+| **[Claudete](https://claudete.co/)** | Claudete | macOS control panel for running Claude Code, Codex, and Grok agents side by side with grids, shells, usage tracking, and broadcast prompts |
+| **[Fractal OS](https://tryfractal.co/)** | Nubler Digital | Workspace for humans and agents with persistent memory, autonomous skills, connected tools, and adaptive interfaces across macOS, Linux, Windows, and web |
+| **[Zuse](https://zuse.sh/)** | Zuse | Coding-agent workspace for running agents side by side, carrying context between them, and isolating tasks in Git worktrees |
+| **[Cydonia](https://cydonia.sh/)** | Crabtalk | Desktop workspace for ACP coding agents that turns sessions into durable on-disk artifacts such as articles, boards, and tables |
 | **[AI Product Adoption Deck](https://aiproduct.cards)** | aiproduct.cards | The AI Product Adoption Deck is a 124-page playbook of 104 cards that helps product teams diagnose and fix the specific moments where AI products lose users — empty prompts, trust gaps, broken correction loops, agents nobody trusts. It's built for PMs, designers, founders, and AI engineers shipping copilots, agents, and embedded AI features who need concrete patterns, not generic UX advice. Each card maps a symptom to a diagnosis, an action, and a workshop you can run with your team this week.; [GitHub](https://github.com/AIProductCards/ai-product-adoption-deck-skill) |
 | **[CoderPlan](https://coderplan.ai)** | CoderPlan | LLM API Gateway with OpenAI-compatible interface. Pay-per-use access to Claude, GPT, Gemini, DeepSeek, Grok, and 100+ models. One-line config for Claude Code, Codex CLI, and Gemini CLI — switch providers without changing tools.; [GitHub](N/A — closed-source service) |
 | **[AIFlowLearn](https://www.aiflowlearn.net)** | AIFlowLearn / 木子霖 | AIFlowLearn is an AI learning-and-practice platform for AI engineering learners and builders. It turns AI frameworks, PDFs, articles, course materials, and open-source projects into structured learning collections, memory cards, and hands-on practice tasks so developers can move from reading to reviewable, repeatable engineering practice. |
