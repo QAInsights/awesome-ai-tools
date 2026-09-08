@@ -338,6 +338,7 @@ AI-powered tools for managing context, snippets, and developer documentation.
 | **[OrcaReplay](https://github.com/Continuum-AI-Corp/OrcaReplay)** | Continuum AI | A record/replay/fork debugger for AI coding agents rather than an agent itself: it records a run of Claude Code, Codex, opencode, Qwen Code or Cursor below the harness, so model traffic, shell exit codes, per-turn file changes and MCP calls land on one timeline. The recording replays offline byte-for-byte with the network off, or forks from any checkpoint onto a different model to compare what each would have decided from the same state.; [GitHub](https://github.com/Continuum-AI-Corp/OrcaReplay) |
 | **[Magic Patterns](https://www.magicpatterns.com/)** | Magic Patterns | AI product-design tool for generating high-fidelity UI, importing design systems, collaborating, and exporting production-ready code |
 | **[Builder.io Visual Copilot](https://www.builder.io/ai)** | Builder.io | Design-to-code and AI development workflow grounded in existing frameworks, design tokens, components, and backend integrations |
+| **[Jackalope](https://jackalope.dev/)** | Jackalope Digital LLC | A desktop workspace for coding agents that brings projects, agent tasks, isolated Git worktrees, project context, recurring tasks, account profiles, usage reporting, and code review into one place. It is currently in early access with a waitlist. |
 
 ---
 

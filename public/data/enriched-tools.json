@@ -5399,6 +5399,35 @@
     "lastUpdated": "2026-09-08"
   },
   {
+    "slug": "jackalope",
+    "name": "Jackalope",
+    "company": "Jackalope Digital LLC",
+    "pricing": "freemium",
+    "pricingDetail": "Jackalope is currently in early access with a waitlist. Pricing details are not yet public, but the submitter indicates a freemium model.",
+    "description": "Jackalope is a desktop workspace for coding agents that centralizes projects, agent tasks, isolated Git worktrees, project context, recurring tasks, account profiles, usage reporting, and code review into a single interface.",
+    "keyFeatures": [
+      "Centralized project and agent task management",
+      "Isolated Git worktrees for safe parallel work",
+      "Project context storage and retrieval",
+      "Recurring task automation",
+      "Account profile management",
+      "Usage reporting and analytics",
+      "Integrated code review workflow"
+    ],
+    "bestFor": "Developers and teams who heavily use AI coding agents and need a unified desktop environment to manage multiple projects, tasks, and code reviews efficiently.",
+    "notIdealFor": "Those seeking a stable, publicly documented tool with clear pricing, as Jackalope is in early access with limited public information.",
+    "recentUpdates": "Jackalope is in early access with a waitlist; no specific recent updates or launch dates are available in the search results.",
+    "verdict": "Jackalope addresses a real need for organizing AI-assisted development workflows, but its early access status and lack of public details make it a tool to watch rather than adopt immediately.",
+    "tags": [
+      "coding agents",
+      "developer workspace",
+      "Git worktrees",
+      "early access",
+      "productivity"
+    ],
+    "lastUpdated": "2026-09-08"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
