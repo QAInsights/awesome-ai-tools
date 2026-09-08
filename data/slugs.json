@@ -1134,6 +1134,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "jackalope",
+    "name": "Jackalope",
+    "company": "Jackalope Digital LLC",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
