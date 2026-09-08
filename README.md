@@ -231,6 +231,7 @@ Agents that operate independently on tasks, often outside your local editor.
 | **[Omnigent](https://github.com/omnigent-ai/omnigent)** | Omnigent | Omnigent is an open-source AI agent framework and meta-harness: orchestrate Claude Code, Codex, Cursor, Pi, and custom agents — swap harnesses without rewriting, enforce policies and sandboxing, and collaborate in real time from any device.; [GitHub](https://github.com/omnigent-ai/omnigent) |
 | **[Manus](https://manus.im/invitation/KK5RLBDPBSGLZD?utm_source=invitation&utm_medium=social&utm_campaign=copy_link)** | Monica | Manus is an autonomous AI agent that can plan, code, and execute complex tasks end-to-end in the browser. |
 | **[LoopTroop](https://www.looptroop.ovh/)** | LoopTroop AI | Local, open-source GUI for running multi-step AI coding tickets across projects. Uses an LLM council for planning, atomic Beads in isolated git worktrees, and time-boxed retry loops for execution.; [GitHub](https://github.com/looptroop-ai/LoopTroop) |
+| **[Muse](https://muse.ai/)** | Meta | Personal AI agent that pursues goals and everyday tasks using a secure persistent computer, connected apps, approvals, and proactive suggestions |
 
 ---
 
@@ -346,6 +347,7 @@ AI-powered tools for managing context, snippets, and developer documentation.
 | **[Magic Patterns](https://www.magicpatterns.com/)** | Magic Patterns | AI product-design tool for generating high-fidelity UI, importing design systems, collaborating, and exporting production-ready code |
 | **[Builder.io Visual Copilot](https://www.builder.io/ai)** | Builder.io | Design-to-code and AI development workflow grounded in existing frameworks, design tokens, components, and backend integrations |
 | **[Jackalope](https://jackalope.dev/)** | Jackalope Digital LLC | A desktop workspace for coding agents that brings projects, agent tasks, isolated Git worktrees, project context, recurring tasks, account profiles, usage reporting, and code review into one place. It is currently in early access with a waitlist. |
+| **[Cabinet](https://runcabinet.com/)** | Cabinet AI | Free, self-hosted AI workspace that combines company knowledge, files, AI teams, live apps, dashboards, tasks, and team chat while letting teams bring their own model providers |
 
 ---
 

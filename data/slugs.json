@@ -840,6 +840,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "muse",
+    "name": "Muse",
+    "company": "Meta",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1239,6 +1245,12 @@
     "slug": "jackalope",
     "name": "Jackalope",
     "company": "Jackalope Digital LLC",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "cabinet",
+    "name": "Cabinet",
+    "company": "Cabinet AI",
     "category": "Developer Productivity & Workflow"
   },
   {
