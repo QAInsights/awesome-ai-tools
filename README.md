@@ -147,6 +147,7 @@ AI coding agents that live in your terminal or command line.
 |------|---------|-------|
 | **[Claude Code](https://docs.anthropic.com/en/docs/claude-code)** | Anthropic | Terminal-native agentic coding; top-rated for complex reasoning & large refactors |
 | **[Codex CLI](https://github.com/openai/codex)** | OpenAI | Re-emerged as agent-first tool; runs against real repos from the CLI |
+| **[Amp](https://ampcode.com/)** | Sourcegraph | Multi-model coding agent available through a CLI and VS Code, with shareable threads, MCP, custom skills, and an SDK |
 | **[Aider](https://aider.chat)** | Aider | Git-native terminal pair programmer; 39K GitHub stars; auto-commits changes |
 | **[Gemini CLI](https://github.com/google-gemini/gemini-cli)** | Google | Terminal agent for local repo tasks; lightweight; no UI overhead |
 | **[Goose](https://block.github.io/goose/)** | Block | Open-source AI agent framework; fully local; write/execute/debug from CLI |
@@ -245,6 +246,10 @@ AI tools that generate full apps or UIs from natural language, no local setup re
 | **[Emergent.sh](https://app.emergent.sh/register?ref=catc151141)** | Emergent | Agentic vibe-coding platform for building and deploying full-stack apps from natural language |
 | **[Bitrig](https://bitrig.com/)** | Bitrig | Describe what you want to build, and Bitrig turns it into real Swift code you can ship to the App Store. |
 | **[Floot](https://floot.com/)** | Floot | Floot turns Claude or ChatGPT into a full app builder - backend, database, and hosting included. No git, no terminal, no build credits.; [GitHub](_No response_) |
+| **[Dyad](https://www.dyad.sh/)** | Dyad | Local, open-source AI app builder with BYO model support, no sign-up, and no vendor lock-in; [GitHub](https://github.com/dyad-sh/dyad) |
+| **[Onlook](https://onlook.com/)** | Onlook | Open-source visual AI editor for building, styling, and editing React/Tailwind apps directly in code; [GitHub](https://github.com/onlook-dev/onlook) |
+| **[Base44](https://base44.com/)** | Base44 | Natural-language platform for building and hosting full-stack apps, websites, and AI agents with managed data, auth, integrations, and domains |
+| **[Rork](https://rork.com/)** | Rork | Prompt-to-mobile-app builder for iOS, Android, and web with live simulation and App Store/TestFlight publishing |
 
 ---
 
@@ -262,6 +267,9 @@ Tools focused on reviewing, securing, and validating code — not generating it.
 | **[Bubo](https://github.com/mountainowl/bubo)** | MountainOwl | I maintain Bubo, a self-hosted AI reviewer for GitHub PRs and GitLab MRs. I built it to run CLI-driven models, post evidence-backed inline findings or LGTM, and learn from maintainer feedback to reduce repository-specific noise.; [GitHub](https://github.com/mountainowl/bubo) |
 | **[heygrc](https://heygrc.com)** | ISMS Copilot / Better ISMS | GitHub App that reviews every pull request against compliance frameworks (ISO 27001, SOC 2, GDPR, EU AI Act, and more), cites the control clause, and says what to fix. Public repositories always free. Install: https://github.com/apps/heygrc; [GitHub](_No response_) |
 | **[Mydentify AI Crawler Access Checker](https://mydentify.com/tools/ai-crawler-access-checker)** | Mydentify / Timothy Allard | A free browser-based checker that tests whether AI crawlers can access a site by inspecting robots.txt, page-level directives, response headers, and user-agent behavior. It reports observable access signals and their limits; it does not claim to measure crawler indexing or guarantee AI visibility.; [GitHub](https://github.com/mitdralla/mydentify-ai-crawler-access-checker) |
+| **[Vercel Agent](https://vercel.com/docs/agent)** | Vercel | Production-aware agent for investigations and PR reviews; validates proposed fixes in secure sandboxes against real builds, tests, and linters |
+| **[Graphite](https://graphite.com/)** | Graphite | AI code review platform combined with stacked pull requests, merge queues, and engineering workflow analytics |
+| **[Bito](https://bito.ai/product/ai-code-review-agent/)** | Bito | Context-aware AI code review for GitHub, GitLab, and Bitbucket with cross-repo impact analysis, custom rules, and one-click fixes |
 
 ---
 
@@ -328,6 +336,8 @@ AI-powered tools for managing context, snippets, and developer documentation.
 | **[XiuRouter](https://router.xiu.ai/)** | XiuLab Inc | XiuRouter is a usage-based model API gateway for coding agents and developer tools. It supports OpenAI Chat Completions and Responses, Anthropic Messages, and Gemini GenerateContent, with scoped API keys, public pricing, and request-level usage records. |
 | **[QwenCloud](https://www.qwencloud.com/benefits/tokenplan?shareCode=subTask..68620011..12..)** | Alibaba Cloud | QwenCloud provides model APIs and a Credits-based Token Plan subscription for coding and agent workflows. It supports OpenAI- and Anthropic-compatible APIs for tools such as Claude Code, Cursor, Qwen Code, and Codex.; [GitHub](_No response_) |
 | **[OrcaReplay](https://github.com/Continuum-AI-Corp/OrcaReplay)** | Continuum AI | A record/replay/fork debugger for AI coding agents rather than an agent itself: it records a run of Claude Code, Codex, opencode, Qwen Code or Cursor below the harness, so model traffic, shell exit codes, per-turn file changes and MCP calls land on one timeline. The recording replays offline byte-for-byte with the network off, or forks from any checkpoint onto a different model to compare what each would have decided from the same state.; [GitHub](https://github.com/Continuum-AI-Corp/OrcaReplay) |
+| **[Magic Patterns](https://www.magicpatterns.com/)** | Magic Patterns | AI product-design tool for generating high-fidelity UI, importing design systems, collaborating, and exporting production-ready code |
+| **[Builder.io Visual Copilot](https://www.builder.io/ai)** | Builder.io | Design-to-code and AI development workflow grounded in existing frameworks, design tokens, components, and backend integrations |
 
 ---
 
