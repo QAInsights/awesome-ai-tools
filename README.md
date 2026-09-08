@@ -347,6 +347,7 @@ AI-powered tools for managing context, snippets, and developer documentation.
 | **[Magic Patterns](https://www.magicpatterns.com/)** | Magic Patterns | AI product-design tool for generating high-fidelity UI, importing design systems, collaborating, and exporting production-ready code |
 | **[Builder.io Visual Copilot](https://www.builder.io/ai)** | Builder.io | Design-to-code and AI development workflow grounded in existing frameworks, design tokens, components, and backend integrations |
 | **[Jackalope](https://jackalope.dev/)** | Jackalope Digital LLC | A desktop workspace for coding agents that brings projects, agent tasks, isolated Git worktrees, project context, recurring tasks, account profiles, usage reporting, and code review into one place. It is currently in early access with a waitlist. |
+| **[Cabinet](https://runcabinet.com/)** | Cabinet AI | Free, self-hosted AI workspace that combines company knowledge, files, AI teams, live apps, dashboards, tasks, and team chat while letting teams bring their own model providers |
 
 ---
 

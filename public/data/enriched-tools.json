@@ -5753,5 +5753,33 @@
       "consumer-ai"
     ],
     "lastUpdated": "2026-09-08"
+  },
+  {
+    "slug": "cabinet",
+    "name": "Cabinet",
+    "company": "Cabinet AI",
+    "pricing": "free",
+    "pricingDetail": "The official site describes Cabinet as free, with no subscription, trial, or paywall; users bring their own AI provider accounts and keys.",
+    "description": "Cabinet is a self-hosted AI workspace that combines company knowledge and files with AI teams, live apps, dashboards, tasks, and team chat.",
+    "keyFeatures": [
+      "Self-hosted workspace with file-based knowledge and git-backed history",
+      "AI specialists and always-on teams for company workflows",
+      "Live apps, dashboards, missions, tasks, and scheduled jobs",
+      "Web terminal, internal chat, full-text search, and linked Git repositories",
+      "Bring-your-own AI provider accounts and keys without an inference markup",
+      "Security features including SOC 2 Type II, SSO, SCIM, audit history, and data residency controls"
+    ],
+    "bestFor": "Startups and teams that want an owned, self-hosted operating workspace for company knowledge, AI-assisted work, and internal tools.",
+    "notIdealFor": "Users looking for a simple consumer chatbot, a coding-only IDE, or a fully managed SaaS product without self-hosting and model-provider setup.",
+    "recentUpdates": "The current product site highlights a free no-paywall core, downloadable desktop releases, self-hosted deployment, AI teams, file-based workflows, live apps, and bring-your-own-AI connectivity.",
+    "verdict": "A broad self-hosted AI operating system for teams rather than a narrowly focused coding assistant, with strong ownership and BYOAI positioning but more setup responsibility than a hosted workspace.",
+    "tags": [
+      "ai-workspace",
+      "self-hosted",
+      "ai-agents",
+      "knowledge-management",
+      "byoai"
+    ],
+    "lastUpdated": "2026-09-08"
   }
 ]

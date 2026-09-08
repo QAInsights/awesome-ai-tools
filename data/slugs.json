@@ -1248,6 +1248,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "cabinet",
+    "name": "Cabinet",
+    "company": "Cabinet AI",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
