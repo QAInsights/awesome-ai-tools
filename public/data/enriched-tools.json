@@ -5809,5 +5809,142 @@
       "collaboration"
     ],
     "lastUpdated": "2026-09-09"
+  },
+  {
+    "slug": "hermes-agent",
+    "name": "Hermes Agent",
+    "company": "Nous Research",
+    "pricing": "open-source",
+    "pricingDetail": "Hermes Agent is open source and self-hosted; users bring their own model access via Nous Portal, OpenRouter, OpenAI, or any compatible endpoint, so costs are model-provider and infrastructure dependent.",
+    "description": "Hermes Agent is Nous Research's self-improving agent with a built-in learning loop: it creates skills from experience, improves them during use, searches past conversations, and maintains a user model across sessions. It runs as a full terminal TUI or through messaging gateways like Telegram, Discord, Slack, WhatsApp, and Signal.",
+    "keyFeatures": [
+      "Learning loop with autonomous skill creation and self-improvement",
+      "Agent-curated memory, FTS5 session search, and cross-session recall",
+      "Multi-surface gateway: CLI, TUI, Telegram, Discord, Slack, WhatsApp, Signal",
+      "Isolated subagents for parallel workstreams and Python RPC tool scripting",
+      "Built-in cron scheduler for unattended automations",
+      "Seven terminal backends including local, Docker, SSH, Modal, Daytona, and Vercel Sandbox"
+    ],
+    "bestFor": "Developers who want a long-running, self-improving agent that persists across sessions and can be reached from chat apps while working on cloud or local machines.",
+    "notIdealFor": "Users who want a managed, hosted assistant with a fixed subscription, or teams that need vendor SLAs and centralized administration.",
+    "recentUpdates": "The project is actively developed with recent releases covering native Windows support, a bundled portable Git Bash installer, serverless backends (Modal, Daytona, Vercel Sandbox), and voice-memo transcription across messaging platforms.",
+    "verdict": "An unusually ambitious agent product whose distinguishing feature is genuine self-improvement — skill creation, memory curation, and user modeling — at the cost of running and operating your own infrastructure.",
+    "tags": [
+      "autonomous-agents",
+      "self-improving",
+      "tui",
+      "self-hosted",
+      "multi-agent"
+    ],
+    "lastUpdated": "2026-09-09"
+  },
+  {
+    "slug": "pi-desktop",
+    "name": "PI-Desktop",
+    "company": "vastsa",
+    "pricing": "open-source",
+    "pricingDetail": "PI-Desktop is open source and free to download for macOS, Windows, and Linux; users bring their own models and provider accounts.",
+    "description": "PI-Desktop is a local-first desktop workspace for AI coding agents, built on Electron and a Rust host core around the Pi agent harness. It gives agents a dedicated workspace for projects, models, tools, and long-running sessions without an account, a mandatory relay, or editor lock-in.",
+    "keyFeatures": [
+      "Local-first workspace: no account or mandatory cloud relay",
+      "Manages projects, models, tools, and long-running agent sessions",
+      "User-installable plugin system for extending agent capabilities",
+      "Bring-your-own-model support across providers",
+      "Cross-platform desktop app on macOS, Windows, and Linux"
+    ],
+    "bestFor": "Developers who run Pi-based coding agents and want a standalone, editor-agnostic desktop workspace instead of a terminal-only workflow.",
+    "notIdealFor": "Users who prefer cloud-hosted agents, managed team features, or are invested in a different agent harness than Pi.",
+    "recentUpdates": "PI-Desktop is in Early Preview; the maintainers describe it as usable for real coding workflows while APIs, extension interfaces, and some desktop behaviors continue to evolve.",
+    "verdict": "A promising local-first agent workspace for the Pi ecosystem, still in early preview, best suited to developers comfortable with a BYO-model, self-managed setup.",
+    "tags": [
+      "agent-workspace",
+      "desktop-app",
+      "local-first",
+      "pi-agent",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-09"
+  },
+  {
+    "slug": "ruflo",
+    "name": "Ruflo",
+    "company": "ruvnet",
+    "pricing": "open-source",
+    "pricingDetail": "Ruflo is MIT-licensed and installed via npm (`npx ruflo init`); it drives agents like Claude Code and Codex on the user's own subscriptions, so model costs remain with the provider.",
+    "description": "Ruflo is an open-source agent meta-harness for Claude Code and Codex. A single init gives the host agent 100+ specialized agents that self-organize into coordinated swarms, learn from every task, remember across sessions, and federate securely with agents on other machines.",
+    "keyFeatures": [
+      "One-command init that adds an orchestration layer to Claude Code and Codex",
+      "100+ specialized agents with swarm coordination",
+      "Self-learning memory and cross-session recall",
+      "Federated communication with agents on remote machines",
+      "Plugin system with Codex and Claude Code integrations",
+      "RAG integration and adaptive memory"
+    ],
+    "bestFor": "Developers already using Claude Code or Codex who want multi-agent orchestration, persistent memory, and coordination without switching tools.",
+    "notIdealFor": "Users who want a single-agent workflow, a hosted product with support, or are not already invested in a compatible agent harness.",
+    "recentUpdates": "Recent releases added a UI beta at flo.ruv.io, a goal planner, live agent dashboards, and an expanding plugin ecosystem with published adoption metrics in the repository.",
+    "verdict": "A maximalist orchestration layer that turns one coding agent into a coordinated fleet; powerful for heavy agentic workflows but adds a coordination layer that simple tasks do not need.",
+    "tags": [
+      "agent-harness",
+      "multi-agent",
+      "orchestration",
+      "claude-code",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-09"
+  },
+  {
+    "slug": "context-mode",
+    "name": "Context Mode",
+    "company": "mksglu",
+    "pricing": "open-source",
+    "pricingDetail": "Context Mode is source-available under the Elastic License v2 (ELv2) and free to self-host via its plugin or npm package; it works with the user's existing agent subscriptions.",
+    "description": "Context Mode is an MCP server that keeps raw tool output out of an agent's context window. It sandboxes tool calls (roughly 98% context reduction), tracks session state in SQLite with FTS5 and BM25 recall, and enforces routing across 17 agent platforms via MCP and hooks.",
+    "keyFeatures": [
+      "Sandboxed tool output with ~98% context reduction",
+      "Session continuity: file edits, git ops, tasks, and decisions indexed for post-compaction recall",
+      "Think-in-code routing that replaces many tool calls with one executed script",
+      "Support for 17 agent clients including Claude Code, Codex, Cursor, and OpenCode",
+      "Plugin marketplace install for hook-capable platforms"
+    ],
+    "bestFor": "Heavy agent users who burn through context windows on tool output and want sessions to survive compaction without losing task state.",
+    "notIdealFor": "Light users whose sessions rarely approach context limits, or teams that require permissively licensed (MIT/Apache) dependencies.",
+    "recentUpdates": "Context Mode recently hit #1 on Hacker News and added routing across 17 platforms, an OpenClaw gateway integration, and fresh-session clean-slate behavior that deletes prior data unless continuing.",
+    "verdict": "A focused and well-evidenced answer to context-window exhaustion, with a clear paradigm (sandbox data, retrieve by search) — the ELv2 license is the main caveat for commercial use.",
+    "tags": [
+      "context-management",
+      "mcp-server",
+      "claude-code",
+      "session-memory",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-09"
+  },
+  {
+    "slug": "superpowers",
+    "name": "Superpowers",
+    "company": "obra",
+    "pricing": "open-source",
+    "pricingDetail": "Superpowers is free and open source, installed as a plugin or skill set into compatible agents; it works on the user's existing agent subscriptions.",
+    "description": "Superpowers is an agentic skills framework and software development methodology that installs composable skills plus the instructions that make agents reliably use them. It supports Claude Code, Codex, Cursor, Antigravity, and other agents, covering workflows like brainstorming, TDD, and subagent-driven development.",
+    "keyFeatures": [
+      "Composable skills library that installs into multiple coding agents",
+      "Workflow methodology covering brainstorming through shipping",
+      "Subagent-driven development and parallel work patterns",
+      "Plugin installs for Claude Code, Codex App/CLI, Cursor, and Antigravity",
+      "Initial instructions that ensure agents consistently apply the skills"
+    ],
+    "bestFor": "Developers who want a proven, opinionated methodology for agentic coding rather than assembling their own prompts, rules, and skills from scratch.",
+    "notIdealFor": "Users who want a standalone product with a UI, teams needing centrally managed policies, or developers whose agent platform is not supported.",
+    "recentUpdates": "Superpowers is trending on GitHub with continuing releases expanding platform support and its skills catalog for agentic development workflows.",
+    "verdict": "The most widely adopted skills-and-methodology layer for coding agents; it is a framework you install into an agent rather than a tool you run, which is exactly its strength for multi-tool teams.",
+    "tags": [
+      "agent-skills",
+      "framework",
+      "methodology",
+      "claude-code",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-09"
   }
 ]

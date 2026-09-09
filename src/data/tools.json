@@ -838,5 +838,25 @@
   {
     "companyName": "OtoDock",
     "toolName": "OtoDock"
+  },
+  {
+    "companyName": "Nous Research",
+    "toolName": "Hermes Agent"
+  },
+  {
+    "companyName": "vastsa",
+    "toolName": "PI-Desktop"
+  },
+  {
+    "companyName": "ruvnet",
+    "toolName": "Ruflo"
+  },
+  {
+    "companyName": "mksglu",
+    "toolName": "Context Mode"
+  },
+  {
+    "companyName": "obra",
+    "toolName": "Superpowers"
   }
 ]
