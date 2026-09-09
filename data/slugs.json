@@ -846,6 +846,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "otodock",
+    "name": "OtoDock",
+    "company": "OtoDock",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
