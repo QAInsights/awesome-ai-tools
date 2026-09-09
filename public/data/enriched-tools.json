@@ -5781,5 +5781,33 @@
       "byoai"
     ],
     "lastUpdated": "2026-09-08"
+  },
+  {
+    "slug": "otodock",
+    "name": "OtoDock",
+    "company": "OtoDock",
+    "pricing": "free",
+    "pricingDetail": "The project is self-hosted and fair-source; users bring their own Anthropic or OpenAI subscriptions, API keys, or local models. Hosting and model-provider costs are separate.",
+    "description": "OtoDock is a self-hosted, multi-tenant agentic company OS where teams create collaborative AI agents powered by Claude Code, Codex, or local models.",
+    "keyFeatures": [
+      "Multi-tenant agents with personal, shared, and mixed workspaces",
+      "Persistent memory, knowledge, skills, tools, and role-based access",
+      "Delegation, departments, meetings, schedules, webhooks, and notifications",
+      "Server-side sandboxing with network isolation and encrypted credentials",
+      "Phone calls through Twilio, Asterisk, or FreePBX",
+      "Remote machines, live dashboards, document editing, artifacts, and terminal access"
+    ],
+    "bestFor": "Teams that want to self-host a shared fleet of specialized AI workers with controlled access, persistent workspaces, and autonomous business workflows.",
+    "notIdealFor": "Users seeking a simple chat assistant, a narrow coding IDE, or a fully managed platform that includes model inference and hosting.",
+    "recentUpdates": "The repository README currently identifies version 1.6.0 and emphasizes Claude Code/Codex subscriptions, local models, multi-tenant collaboration, scheduled agents, phone access, remote machines, and kernel/network isolation.",
+    "verdict": "A broad agent platform that treats AI workers as collaborative digital employees, offering unusually deep team, automation, and self-hosting controls at the cost of operational setup and separate model-provider expenses.",
+    "tags": [
+      "agent-platform",
+      "self-hosted",
+      "multi-tenant",
+      "autonomous-agents",
+      "collaboration"
+    ],
+    "lastUpdated": "2026-09-09"
   }
 ]

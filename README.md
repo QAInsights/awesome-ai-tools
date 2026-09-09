@@ -232,6 +232,7 @@ Agents that operate independently on tasks, often outside your local editor.
 | **[Manus](https://manus.im/invitation/KK5RLBDPBSGLZD?utm_source=invitation&utm_medium=social&utm_campaign=copy_link)** | Monica | Manus is an autonomous AI agent that can plan, code, and execute complex tasks end-to-end in the browser. |
 | **[LoopTroop](https://www.looptroop.ovh/)** | LoopTroop AI | Local, open-source GUI for running multi-step AI coding tickets across projects. Uses an LLM council for planning, atomic Beads in isolated git worktrees, and time-boxed retry loops for execution.; [GitHub](https://github.com/looptroop-ai/LoopTroop) |
 | **[Muse](https://muse.ai/)** | Meta | Personal AI agent that pursues goals and everyday tasks using a secure persistent computer, connected apps, approvals, and proactive suggestions |
+| **[OtoDock](https://github.com/OtoDock/oto-dock)** | OtoDock | Fair-source, self-hosted agentic company OS for multi-tenant teams that lets Claude Code, Codex, and local models run collaborative agents with memory, tools, delegation, schedules, phone access, and isolated workspaces |
 
 ---
 
