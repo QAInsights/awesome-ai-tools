@@ -18,7 +18,8 @@
     "test:watch": "bun test --watch js/*.test.js",
     "report:enrichment": "node scripts/report-enrichment-status.js --markdown",
     "validate:slugs": "node scripts/check-slugs-sync.js",
-    "validate:enriched": "bun run scripts/validate-enriched.js"
+    "validate:enriched": "bun run scripts/validate-enriched.js",
+    "og:homepage": "node scripts/render-homepage-og.mjs"
   },
   "devDependencies": {
     "@astrojs/cloudflare": "13.0.2",
