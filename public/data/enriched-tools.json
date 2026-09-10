@@ -1574,6 +1574,34 @@
     "lastUpdated": "2026-09-01"
   },
   {
+    "slug": "corust",
+    "name": "Corust AI",
+    "company": "Corust AI",
+    "pricing": "freemium",
+    "pricingDetail": "Previously offered a zero-cost free tier on a fine-tuned model, with paid options for custom models, private indexing, and team quotas. Current availability cannot be confirmed because the product site is unreachable.",
+    "description": "Corust AI is a platform providing specialized AI tooling for the Rust programming language, focusing on ownership, lifetimes, and async patterns. It features an integrated agent for editors like Zed to assist with reliable refactoring, bug fixes, and code generation. As of September 2026 the canonical site (corust.ai) does not resolve — the domain has an active DNS zone and MX records but no A/AAAA record — so the link has been removed from the catalog while the entry remains for reference.",
+    "keyFeatures": [
+      "Cargo-aware code generation",
+      "Rust-specific semantic graph indexing",
+      "Inline AI assistance for refactoring and bug fixes",
+      "Terminal-native agent for prototyping",
+      "Seamless integration with Rust community tools"
+    ],
+    "bestFor": "Rust developers working on system software, backend services, or complex projects requiring high code safety and idiomatic patterns.",
+    "notIdealFor": "Anyone right now: the product site does not resolve, so the tool cannot be evaluated, installed, or purchased until the domain is restored.",
+    "recentUpdates": "Version 0.6.0 was released in May 2026, but as of September 2026 the domain corust.ai has no A/AAAA record and the product site is unreachable, suggesting the project may be discontinued or abandoned.",
+    "verdict": "A highly specialized tool for Rustaceans that is currently unverifiable and unreachable — its domain has no web record. Treat the listing as historical until the site returns or an official repository surfaces.",
+    "tags": [
+      "rust",
+      "ai",
+      "ide-plugin",
+      "coding-assistant",
+      "zed",
+      "possibly-discontinued"
+    ],
+    "lastUpdated": "2026-09-09"
+  },
+  {
     "slug": "toprank",
     "name": "Toprank",
     "company": "nowork-studio",
