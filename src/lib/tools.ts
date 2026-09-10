@@ -62,6 +62,7 @@ const CATEGORY_MAPPING: Record<string, string> = {
     'AI Codebase Knowledge & Generation': 'Codebase AI',
     'Developer Productivity & Workflow': 'Productivity',
     'Editor Platforms with Native AI Features': 'Native Editors',
+    'Hardware & Edge AI': 'Hardware & Edge',
 };
 
 /**

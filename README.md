@@ -49,6 +49,7 @@ The GitHub OAuth callback URL remains `https://ai.dosa.dev/api/auth/github`.
 - [🧰 General-Purpose AI Assistants](#general-purpose-ai-assistants-with-strong-coding-capability)
 - [🛠️ Developer Productivity & Workflow](#developer-productivity--workflow)
 - [🖊️ Editor Platforms with Native AI Features](#editor-platforms-with-native-ai-features)
+- [🔧 Hardware & Edge AI](#hardware--edge-ai)
 
 
 ---
@@ -366,6 +367,17 @@ Established editors that have shipped first-party AI capabilities.
 | **[Xcode](https://developer.apple.com/xcode/)** | Apple | Predictive code completion + Swift Assist for Apple platform development |
 | **[JetBrains IDEs](https://www.jetbrains.com/ai/)** | JetBrains | IntelliJ, PyCharm, WebStorm etc. with JetBrains AI (Junie agent) built in |
 | **[Visual Studio](https://visualstudio.microsoft.com)** | Microsoft | GitHub Copilot deeply integrated; .NET and C++ focused |
+
+---
+
+## 🔧 Hardware & Edge AI
+Agentic tools and runtimes that bring AI to hardware design and local/edge inference.
+
+| Tool | Company | Notes |
+|------|---------|-------|
+| **[Copperhead](https://copperhead.sh/)** | Copperhead | "Cursor for circuit boards" — agentic CLI that designs, documents, and validates real KiCad PCBs from a prompt; runs inside Claude Code, Cursor, and Codex ([GitHub](https://github.com/copperheadhq/copperhead)) |
+| **[Personal AI Router](https://github.com/NVIDIA/Personal-AI-Router)** | NVIDIA | Local inference router (PAIR) that distributes requests across machines on a home network; exposes Ollama- and OpenAI-compatible endpoints for local agents and multi-agent workloads |
+| **[WebLLM](https://github.com/mlc-ai/web-llm)** | MLC AI | High-performance in-browser LLM inference engine accelerated by WebGPU with full OpenAI API compatibility — run open models locally in the browser with no server |
 
 *Last updated: July 2026*
 
