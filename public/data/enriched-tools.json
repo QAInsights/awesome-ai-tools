@@ -1574,33 +1574,6 @@
     "lastUpdated": "2026-09-01"
   },
   {
-    "slug": "corust",
-    "name": "Corust AI",
-    "company": "Corust AI",
-    "pricing": "freemium",
-    "pricingDetail": "Offers a zero-cost free tier on a fine-tuned model for daily coding tasks, with paid options for custom models, private indexing, and team quotas.",
-    "description": "Corust AI is a platform providing specialized AI tooling for the Rust programming language, focusing on ownership, lifetimes, and async patterns. It features an integrated agent for editors like Zed to assist with reliable refactoring, bug fixes, and code generation.",
-    "keyFeatures": [
-      "Cargo-aware code generation",
-      "Rust-specific semantic graph indexing",
-      "Inline AI assistance for refactoring and bug fixes",
-      "Terminal-native agent for prototyping",
-      "Seamless integration with Rust community tools"
-    ],
-    "bestFor": "Rust developers working on system software, backend services, or complex projects requiring high code safety and idiomatic patterns.",
-    "notIdealFor": "Developers working primarily outside of the Rust ecosystem, as the tooling is specialized for Rust crate patterns and language features.",
-    "recentUpdates": "The platform continues to iterate its agent, with version 0.6.0 released in May 2026, featuring ongoing performance and compatibility improvements for various operating systems.",
-    "verdict": "A highly specialized and promising tool for Rustaceans that effectively bridges the gap between generic AI coding assistants and the specific, complex needs of the Rust language.",
-    "tags": [
-      "rust",
-      "ai",
-      "ide-plugin",
-      "coding-assistant",
-      "zed"
-    ],
-    "lastUpdated": "2026-09-01"
-  },
-  {
     "slug": "toprank",
     "name": "Toprank",
     "company": "nowork-studio",

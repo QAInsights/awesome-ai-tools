@@ -125,7 +125,6 @@ Plug-in assistants that enhance your existing editor (VS Code, JetBrains, Neovim
 | **[Cortex Code](https://www.snowflake.com/en/product/features/cortex-code/)** | Snowflake | MCP-compatible AI code assistant extension |
 | **[Kode](https://github.com/shareAI-lab/Kode-Agent)** | ShareAI | AI developer assistant and workspace integration |
 | **[Apertis](https://apertis.ai/)** | Stima | One API key works across all major coding agents |
-| **[Corust](https://corust.ai/)** | Corust | Your seasoned Rust co-pilot: production-grade code generation, zero hallucinations on Rust idioms, and tools built for real Rustaceans. |
 | **[Toprank](https://github.com/nowork-studio/toprank)** | nowork-studio | Open-source Claude Code plugin for SEO, Google Ads, content writing, and CMS optimization workflows |
 | **[WozCode](https://www.wozcode.com/)** | WozCode | A Claude Code plugin that supercharges performance, cost, and speed |
 | **[Claude Code Skills 中文精选集](https://claude-skills.bt199.com/)** | 老实人实验室 | Chinese curated directory of Claude Code Skills, Agents, Plugins, and workflows with 140+ resources |
