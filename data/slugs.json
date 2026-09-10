@@ -852,6 +852,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "hermes-agent",
+    "name": "Hermes Agent",
+    "company": "Nous Research",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1257,6 +1263,30 @@
     "slug": "cabinet",
     "name": "Cabinet",
     "company": "Cabinet AI",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "pi-desktop",
+    "name": "PI-Desktop",
+    "company": "vastsa",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "ruflo",
+    "name": "Ruflo",
+    "company": "ruvnet",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "context-mode",
+    "name": "Context Mode",
+    "company": "mksglu",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "superpowers",
+    "name": "Superpowers",
+    "company": "obra",
     "category": "Developer Productivity & Workflow"
   },
   {

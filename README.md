@@ -233,6 +233,7 @@ Agents that operate independently on tasks, often outside your local editor.
 | **[LoopTroop](https://www.looptroop.ovh/)** | LoopTroop AI | Local, open-source GUI for running multi-step AI coding tickets across projects. Uses an LLM council for planning, atomic Beads in isolated git worktrees, and time-boxed retry loops for execution.; [GitHub](https://github.com/looptroop-ai/LoopTroop) |
 | **[Muse](https://muse.ai/)** | Meta | Personal AI agent that pursues goals and everyday tasks using a secure persistent computer, connected apps, approvals, and proactive suggestions |
 | **[OtoDock](https://github.com/OtoDock/oto-dock)** | OtoDock | Fair-source, self-hosted agentic company OS for multi-tenant teams that lets Claude Code, Codex, and local models run collaborative agents with memory, tools, delegation, schedules, phone access, and isolated workspaces |
+| **[Hermes Agent](https://github.com/NousResearch/hermes-agent)** | Nous Research | Self-improving agent with a built-in learning loop that creates and refines its own skills, searches past sessions, and builds a persistent user model. Runs as a terminal TUI or via Telegram, Discord, Slack, and more, on local machines, Docker, SSH, or serverless backends like Modal and Daytona |
 
 ---
 
@@ -349,6 +350,10 @@ AI-powered tools for managing context, snippets, and developer documentation.
 | **[Builder.io Visual Copilot](https://www.builder.io/ai)** | Builder.io | Design-to-code and AI development workflow grounded in existing frameworks, design tokens, components, and backend integrations |
 | **[Jackalope](https://jackalope.dev/)** | Jackalope Digital LLC | A desktop workspace for coding agents that brings projects, agent tasks, isolated Git worktrees, project context, recurring tasks, account profiles, usage reporting, and code review into one place. It is currently in early access with a waitlist. |
 | **[Cabinet](https://runcabinet.com/)** | Cabinet AI | Free, self-hosted AI workspace that combines company knowledge, files, AI teams, live apps, dashboards, tasks, and team chat while letting teams bring their own model providers |
+| **[PI-Desktop](https://github.com/vastsa/PI-Desktop)** | vastsa | Local-first desktop workspace for AI coding agents — Electron + Rust host around the Pi agent harness with projects, models, tools, long-running sessions, and user-installable plugins |
+| **[Ruflo](https://github.com/ruvnet/ruflo)** | ruvnet | Open-source agent meta-harness for Claude Code and Codex — one `npx ruflo init` adds 100+ specialized agents, coordinated swarms, self-learning memory, and federated communication across machines |
+| **[Context Mode](https://github.com/mksglu/context-mode)** | mksglu | MCP server that keeps raw tool output out of the context window — sandboxed execution (~98% context reduction), SQLite/FTS5 session memory with BM25 recall, and routing enforcement across 17 agent platforms |
+| **[Superpowers](https://github.com/obra/superpowers)** | obra | Agentic skills framework and software development methodology that installs into Claude Code, Codex, Cursor, Antigravity, and other agents as composable skills |
 
 ---
 
