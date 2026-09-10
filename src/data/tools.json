@@ -858,5 +858,17 @@
   {
     "companyName": "obra",
     "toolName": "Superpowers"
+  },
+  {
+    "companyName": "Copperhead",
+    "toolName": "Copperhead"
+  },
+  {
+    "companyName": "NVIDIA",
+    "toolName": "Personal AI Router"
+  },
+  {
+    "companyName": "MLC AI",
+    "toolName": "WebLLM"
   }
 ]

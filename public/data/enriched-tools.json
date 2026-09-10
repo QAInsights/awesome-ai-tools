@@ -5946,5 +5946,89 @@
       "open-source"
     ],
     "lastUpdated": "2026-09-09"
+  },
+  {
+    "slug": "copperhead",
+    "name": "Copperhead",
+    "company": "Copperhead",
+    "pricing": "open-source",
+    "pricingDetail": "Open-source and free to use via npm (`npm install -g copperhead`); requires your own model backend — Claude Code, Cursor Agent, Codex CLI login, or ANTHROPIC_API_KEY/OPENAI_API_KEY.",
+    "description": "Copperhead is an agentic CLI for hardware development — 'Cursor for circuit boards.' From a natural-language product brief it produces a spec, architecture, part selection, KiCad schematic, first-draft PCB layout, gerbers, a firmware scaffold, and a development plan, then verifies its own work by running kicad-cli ERC/DRC until checks pass. It works directly on existing KiCad repositories the way a coding agent works on a codebase, maintaining markdown design docs as memory and propagating changes across all artifacts.",
+    "keyFeatures": [
+      "copperhead create: end-to-end pipeline from brief to schematic, layout, gerbers, firmware scaffold, and dev plan",
+      "Operates on real KiCad .kicad_sch/.kicad_pcb s-expression files inside existing repos",
+      "Self-verification loop running kicad-cli ERC/DRC until checks pass",
+      "Plugs into Claude Code, Cursor, and Codex via a one-line agent install prompt",
+      "Pluggable model backends: saved Claude Code/Cursor/Codex logins or API keys"
+    ],
+    "bestFor": "Hardware engineers and makers who want an AI agent to draft and validate KiCad PCB designs, firmware scaffolds, and build plans inside their normal coding-agent workflow.",
+    "notIdealFor": "Production hardware teams needing a mature, stable tool — the project is explicitly early-phase and its surface is still moving toward 1.0. Also not for users without KiCad >= 8 and a configured LLM backend.",
+    "recentUpdates": "Phase 1 is implemented and the CLI runs (published to npm as `copperhead`); the technical specification is the source of truth ahead of a 1.0 release. Public repo created July 2026 with active commits.",
+    "verdict": "One of the first credible agentic tools aimed at hardware design: it reads and edits real KiCad files, verifies its own output with ERC/DRC, and slots into existing coding agents. Early-stage — promising for prototyping rather than production sign-off.",
+    "tags": [
+      "hardware",
+      "pcb",
+      "kicad",
+      "agent",
+      "cli",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-09"
+  },
+  {
+    "slug": "personal-ai-router",
+    "name": "Personal AI Router",
+    "company": "NVIDIA",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under Apache-2.0; uses local inference engines on your own hardware.",
+    "description": "NVIDIA Personal AI Router (PAIR) is a local inference router for a group of compatible computers on the same network. It discovers participating nodes, manages supported inference engines, and exposes Ollama-compatible and OpenAI-compatible proxy endpoints to applications and agents, routing each independent request to an eligible node based on engine, model, and current workload.",
+    "keyFeatures": [
+      "Discovers and manages inference nodes on a LAN with live GPU/memory reporting",
+      "Ollama-compatible and OpenAI-compatible proxy endpoints for apps and agents",
+      "Workload-aware routing of independent requests across eligible nodes",
+      "Prompts and responses stay on the local network when all components are local",
+      "Apache-2.0 licensed, official NVIDIA project"
+    ],
+    "bestFor": "Developers running multi-agent or concurrent local LLM workloads across several machines at home or in a lab who want a single OpenAI/Ollama-compatible front door.",
+    "notIdealFor": "Anyone expecting pooled GPU memory or model sharding — PAIR routes whole requests to one node and does not combine GPUs or split a single inference across machines.",
+    "recentUpdates": "Publicly released by NVIDIA in July 2026 under Apache-2.0, with active development and a demo UI showing per-node GPU and memory utilization.",
+    "verdict": "A clean, officially maintained way to turn a handful of home machines into a shared local-inference pool with standard endpoints — especially useful for multi-agent setups.",
+    "tags": [
+      "inference",
+      "local-llm",
+      "router",
+      "openai-compatible",
+      "ollama",
+      "open-source",
+      "nvidia"
+    ],
+    "lastUpdated": "2026-09-09"
+  },
+  {
+    "slug": "webllm",
+    "name": "WebLLM",
+    "company": "MLC AI",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source; distributed as the npm package @mlc-ai/web-llm. Models run client-side, so there is no server cost.",
+    "description": "WebLLM is a high-performance in-browser LLM inference engine from MLC AI that runs open-source models entirely inside the browser with WebGPU hardware acceleration — no server required. It is fully OpenAI API compatible, supporting streaming, JSON mode, logit-level control, and function calling, and ships as an npm package for building privacy-preserving AI web apps.",
+    "keyFeatures": [
+      "In-browser LLM inference accelerated by WebGPU — everything runs client-side",
+      "Full OpenAI API compatibility: streaming, JSON mode, seeds, logit control, function calling",
+      "npm package (@mlc-ai/web-llm) plus examples and the deployable WebLLM Chat app",
+      "Companion to MLC LLM for universal model deployment across hardware"
+    ],
+    "bestFor": "Web developers building AI features that must run locally in the browser for privacy, offline support, or zero-inference-cost reasons.",
+    "notIdealFor": "Apps that need frontier-scale models or guaranteed performance — browser/WebGPU constraints limit model size and throughput compared to server-side GPU inference.",
+    "recentUpdates": "Actively maintained with ~19k GitHub stars; formalized in the WebLLM paper (arXiv 2412.15803) with ongoing releases of the npm package and WebLLM Chat.",
+    "verdict": "The standard choice for running LLMs in the browser: mature, OpenAI-compatible, and hardware-accelerated — the pragmatic path to local, private AI in web apps.",
+    "tags": [
+      "inference",
+      "browser",
+      "webgpu",
+      "openai-compatible",
+      "open-source",
+      "edge"
+    ],
+    "lastUpdated": "2026-09-09"
   }
 ]

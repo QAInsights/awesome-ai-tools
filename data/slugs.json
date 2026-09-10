@@ -1312,5 +1312,23 @@
     "name": "Visual Studio",
     "company": "Microsoft",
     "category": "Editor Platforms with Native AI Features"
+  },
+  {
+    "slug": "copperhead",
+    "name": "Copperhead",
+    "company": "Copperhead",
+    "category": "Hardware & Edge AI"
+  },
+  {
+    "slug": "personal-ai-router",
+    "name": "Personal AI Router",
+    "company": "NVIDIA",
+    "category": "Hardware & Edge AI"
+  },
+  {
+    "slug": "webllm",
+    "name": "WebLLM",
+    "company": "MLC AI",
+    "category": "Hardware & Edge AI"
   }
 ]
