@@ -33,6 +33,7 @@ export interface EnrichedTool {
     recentUpdates?: string;
     verdict?: string;
     tags?: string[];
+    status?: string;
     lastUpdated?: string;
 }
 

@@ -36,6 +36,8 @@ const { enriched } = tool;
 // Prefer enriched data, fall back to seed
 const displayName = enriched?.name ?? tool.name;
 const displayCompany = enriched?.company ?? tool.company;
+const isDiscontinued = (enriched?.status ?? '').toLowerCase() === 'discontinued';
+const hasSiteLink = typeof tool.url === 'string' && /^https?:\/\//i.test(tool.url);
 const displayDescription = enriched?.description ?? tool.notes;
 
 // Meta description (truncated to 155 chars)
@@ -59,7 +61,7 @@ const softwareApp: Record<string, unknown> = {
     "@type": "SoftwareApplication",
     "@id": `https://ai.dosa.dev/tools/${tool.slug}#app`,
     "name": displayName,
-    "url": tool.url || `https://ai.dosa.dev/tools/${tool.slug}`,
+    "url": hasSiteLink ? tool.url : `https://ai.dosa.dev/tools/${tool.slug}`,
     "description": displayDescription,
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Any",
@@ -192,6 +194,15 @@ const jsonLd = JSON.stringify(jsonLdObj);
                                 <span class="font-mono text-[14px] text-[#a3a3a3] uppercase tracking-wide">{displayCompany}</span>
                                 <span class="text-[#333]">·</span>
                                 <span class="inline-block px-3 py-1 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide">{tool.categoryClean}</span>
+                                {isDiscontinued && (
+                                    <>
+                                        <span class="text-[#333]">·</span>
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 border border-[#f87171]/30 rounded-full bg-[#f87171]/10 font-mono text-[12px] text-[#f87171] tracking-wide">
+                                            <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#f87171]" aria-hidden="true"></span>
+                                            Discontinued
+                                        </span>
+                                    </>
+                                )}
                                 {enriched?.lastUpdated && (
                                     <>
                                         <span class="text-[#333]">·</span>
@@ -216,12 +227,14 @@ const jsonLd = JSON.stringify(jsonLdObj);
                                 </svg>
                                 <span data-follow-label>Follow</span>
                             </button>
-                            <a href={addOutboundUtmParams(tool.url)} target="_blank" rel="noopener noreferrer"
-                                class="inline-flex items-center gap-2 py-2.5 px-5 bg-white text-black text-sm font-semibold rounded-md transition-all duration-200 hover:bg-gray-200 hover:-translate-y-px shrink-0"
-                                aria-label={`Visit ${displayName} website`}>
-                                Visit site
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                            </a>
+                            {hasSiteLink && (
+                                <a href={addOutboundUtmParams(tool.url)} target="_blank" rel="noopener noreferrer"
+                                    class="inline-flex items-center gap-2 py-2.5 px-5 bg-white text-black text-sm font-semibold rounded-md transition-all duration-200 hover:bg-gray-200 hover:-translate-y-px shrink-0"
+                                    aria-label={`Visit ${displayName} website`}>
+                                    Visit site
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                </a>
+                            )}
                         </div>
                     </div>
                     <p class="text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">{displayDescription}</p>

@@ -1596,9 +1596,9 @@
       "ai",
       "ide-plugin",
       "coding-assistant",
-      "zed",
-      "possibly-discontinued"
+      "zed"
     ],
+    "status": "discontinued",
     "lastUpdated": "2026-09-09"
   },
   {
