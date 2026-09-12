@@ -1004,6 +1004,37 @@
     "lastUpdated": "2026-09-07"
   },
   {
+    "slug": "atlarix",
+    "name": "Atlarix",
+    "company": "NorahLabs",
+    "pricing": "freemium",
+    "pricingDetail": "Free tier ($0, 1 workspace, limited MCP servers/automations/skills) and Pro at $19/month per developer for unlimited workspaces, marketplace access, and full parallel workers. AI usage is billed separately via pay-as-you-go Atlarix Core credits (from $10 top-up); BYOK and local models are free on every plan. A Workforce tier at $79/month is also listed.",
+    "description": "Atlarix is a private, local-first AI coding workstation (native desktop app for macOS, Linux, and Windows) where teams plan, build, debug, and review code with AI agents. It runs on your own machine with BYOK or fully local models, and every edit or command waits in an approval queue before executing.",
+    "keyFeatures": [
+      "Explore/Plan/Build/Debug/Review work modes bound to Blueprint context tiers",
+      "Bring any model via BYOK (OpenAI, Anthropic, Gemini, Groq, Mistral, xAI, OpenRouter, Together AI, AWS Bedrock) or run fully local with Ollama/LM Studio",
+      "Blueprint codebase graph (RTE + RAG) stored locally in SQLite as persistent long-term memory",
+      "Approval queue and OS-level command sandbox gating every edit and command",
+      "Bundled ripgrep lexical search with no indexing required",
+      "Parallel sub-agents (up to five efforts), built-in browser, real terminal, and scheduled/triggered automations",
+      "MCP servers, skills marketplace, and one-click OAuth connectors (Slack, Jira, Linear, Notion) on Pro",
+      "Atlarix Reviewer posts findings on pull requests without writing or running code"
+    ],
+    "bestFor": "Engineering teams and individual developers handling proprietary or sensitive code who want local-first, sovereign AI coding with full oversight and the flexibility to use any model.",
+    "notIdealFor": "Developers wanting a fully hosted web IDE or a single bundled AI subscription, since Atlarix is desktop-only and AI usage is billed separately as pay-as-you-go credits.",
+    "recentUpdates": "v3.7 (March 2026) added Apple notarization/code-signing, Sentry monitoring, consent-based PostHog analytics, a two-stage auto router, and a Blueprint enricher. v5.1.0 (March 2026) introduced the 'Private Sovereign AI IDE' positioning with Compass managed tiers. The releases repo shows latest release v14.10.0 (July 12, 2026), and PeerPush lists an update on Sep 10, 2026 following the 14.3x line (self-testing, sessions).",
+    "verdict": "Atlarix stands out for its genuinely local-first, sovereign architecture, approval-gated edits, and any-model flexibility, with code from open-weight models merged into real projects like Traefik and Apollo Client. However, it is a solo-built desktop-only tool, AI usage costs are separate from the subscription, and Windows builds are currently unsigned.",
+    "tags": [
+      "AI coding IDE",
+      "local-first",
+      "BYOK",
+      "open-weight models",
+      "agentic coding",
+      "privacy"
+    ],
+    "lastUpdated": "2026-09-12"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -3805,6 +3836,89 @@
     "lastUpdated": "2026-09-01"
   },
   {
+    "slug": "muse",
+    "name": "Muse",
+    "company": "Meta",
+    "pricing": "unknown",
+    "pricingDetail": "The public product site does not publish pricing; access appears to be account-based and availability may vary by rollout.",
+    "description": "Muse is a personal AI agent that takes goals and everyday tasks, then carries out multi-step work using a persistent secure computer, browser, connected apps, and approval controls.",
+    "keyFeatures": [
+      "Persistent isolated Linux virtual machine with a full browser",
+      "Goal-driven execution for research, shopping, health, finance, and everyday tasks",
+      "Messaging-oriented interaction and proactive suggestions",
+      "Human approval controls for purchases, messages, and other consequential actions",
+      "Secure credential storage, privacy controls, and app connectors"
+    ],
+    "bestFor": "People who want an agent to complete practical web-based tasks while keeping approval and privacy controls in the loop.",
+    "notIdealFor": "Developers seeking a coding-specific agent, users needing fully local execution, or teams requiring published enterprise pricing and administration.",
+    "recentUpdates": "The current product site presents Muse as a personal agent with a dedicated secure computer, app connectors, proactive goal support, and safety-focused approvals; public availability and pricing are not detailed.",
+    "verdict": "A broad consumer-oriented agent focused on getting real-world tasks done rather than answering in chat, with a strong emphasis on delegated browser work and user approval.",
+    "tags": [
+      "personal-agent",
+      "browser-agent",
+      "automation",
+      "secure-vm",
+      "consumer-ai"
+    ],
+    "lastUpdated": "2026-09-08"
+  },
+  {
+    "slug": "otodock",
+    "name": "OtoDock",
+    "company": "OtoDock",
+    "pricing": "free",
+    "pricingDetail": "The project is self-hosted and fair-source; users bring their own Anthropic or OpenAI subscriptions, API keys, or local models. Hosting and model-provider costs are separate.",
+    "description": "OtoDock is a self-hosted, multi-tenant agentic company OS where teams create collaborative AI agents powered by Claude Code, Codex, or local models.",
+    "keyFeatures": [
+      "Multi-tenant agents with personal, shared, and mixed workspaces",
+      "Persistent memory, knowledge, skills, tools, and role-based access",
+      "Delegation, departments, meetings, schedules, webhooks, and notifications",
+      "Server-side sandboxing with network isolation and encrypted credentials",
+      "Phone calls through Twilio, Asterisk, or FreePBX",
+      "Remote machines, live dashboards, document editing, artifacts, and terminal access"
+    ],
+    "bestFor": "Teams that want to self-host a shared fleet of specialized AI workers with controlled access, persistent workspaces, and autonomous business workflows.",
+    "notIdealFor": "Users seeking a simple chat assistant, a narrow coding IDE, or a fully managed platform that includes model inference and hosting.",
+    "recentUpdates": "The repository README currently identifies version 1.6.0 and emphasizes Claude Code/Codex subscriptions, local models, multi-tenant collaboration, scheduled agents, phone access, remote machines, and kernel/network isolation.",
+    "verdict": "A broad agent platform that treats AI workers as collaborative digital employees, offering unusually deep team, automation, and self-hosting controls at the cost of operational setup and separate model-provider expenses.",
+    "tags": [
+      "agent-platform",
+      "self-hosted",
+      "multi-tenant",
+      "autonomous-agents",
+      "collaboration"
+    ],
+    "lastUpdated": "2026-09-09"
+  },
+  {
+    "slug": "hermes-agent",
+    "name": "Hermes Agent",
+    "company": "Nous Research",
+    "pricing": "open-source",
+    "pricingDetail": "Hermes Agent is open source and self-hosted; users bring their own model access via Nous Portal, OpenRouter, OpenAI, or any compatible endpoint, so costs are model-provider and infrastructure dependent.",
+    "description": "Hermes Agent is Nous Research's self-improving agent with a built-in learning loop: it creates skills from experience, improves them during use, searches past conversations, and maintains a user model across sessions. It runs as a full terminal TUI or through messaging gateways like Telegram, Discord, Slack, WhatsApp, and Signal.",
+    "keyFeatures": [
+      "Learning loop with autonomous skill creation and self-improvement",
+      "Agent-curated memory, FTS5 session search, and cross-session recall",
+      "Multi-surface gateway: CLI, TUI, Telegram, Discord, Slack, WhatsApp, Signal",
+      "Isolated subagents for parallel workstreams and Python RPC tool scripting",
+      "Built-in cron scheduler for unattended automations",
+      "Seven terminal backends including local, Docker, SSH, Modal, Daytona, and Vercel Sandbox"
+    ],
+    "bestFor": "Developers who want a long-running, self-improving agent that persists across sessions and can be reached from chat apps while working on cloud or local machines.",
+    "notIdealFor": "Users who want a managed, hosted assistant with a fixed subscription, or teams that need vendor SLAs and centralized administration.",
+    "recentUpdates": "The project is actively developed with recent releases covering native Windows support, a bundled portable Git Bash installer, serverless backends (Modal, Daytona, Vercel Sandbox), and voice-memo transcription across messaging platforms.",
+    "verdict": "An unusually ambitious agent product whose distinguishing feature is genuine self-improvement — skill creation, memory curation, and user modeling — at the cost of running and operating your own infrastructure.",
+    "tags": [
+      "autonomous-agents",
+      "self-improving",
+      "tui",
+      "self-hosted",
+      "multi-agent"
+    ],
+    "lastUpdated": "2026-09-09"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -5619,143 +5733,6 @@
     "lastUpdated": "2026-09-08"
   },
   {
-    "slug": "visual-studio-code",
-    "name": "Visual Studio Code",
-    "company": "Microsoft",
-    "pricing": "free",
-    "pricingDetail": "Free for both private and commercial use. Optional AI features may require a GitHub Copilot subscription or a third-party API key, though a free tier for Copilot is available.",
-    "description": "Visual Studio Code is a streamlined, open-source code editor that combines lightweight performance with deep extensibility. It supports a comprehensive edit-build-debug cycle and features robust, multi-agent AI integration for assisted development.",
-    "keyFeatures": [
-      "Unified Agent Sessions for multi-agent orchestration",
-      "Extensive ecosystem of extensions and MCP servers",
-      "Intelligent IntelliSense and built-in Git version control",
-      "Rubber Duck experimental agent for AI-driven code review",
-      "Cross-platform support with remote development capabilities"
-    ],
-    "bestFor": "Web development, polyglot programming, and AI-assisted workflows where developers need a balance of speed and extensibility.",
-    "notIdealFor": "Large-scale legacy enterprise systems or projects requiring deep semantic refactoring that necessitates the heavy indexing capabilities of a full-featured IDE like JetBrains IntelliJ.",
-    "recentUpdates": "Version 1.135 introduced the Rubber Duck experimental agent for peer-reviewing AI code, new Agent Host Protocol (AHP) for persistent sessions, and improved Agents window UX.",
-    "verdict": "An industry-standard editor that perfectly balances being a lightweight tool and a powerful, AI-driven development platform for modern web and software projects.",
-    "tags": [
-      "code-editor",
-      "ai-coding-assistant",
-      "multi-agent",
-      "development-tools",
-      "extensible"
-    ],
-    "lastUpdated": "2026-09-01"
-  },
-  {
-    "slug": "xcode",
-    "name": "Xcode",
-    "company": "Apple",
-    "pricing": "freemium",
-    "pricingDetail": "The IDE is free to download, but publishing to the App Store requires a $99/year Apple Developer Program membership. Xcode Cloud includes 25 compute hours per month, with additional usage available via paid subscription tiers.",
-    "description": "Xcode is Apple's integrated development environment (IDE) for building software across all Apple platforms, including iOS, macOS, watchOS, and visionOS. It provides a comprehensive suite of tools for coding, testing, debugging, and distributing applications within the Apple ecosystem.",
-    "keyFeatures": [
-      "Agentic coding support for automated tasks and code generation",
-      "Device Hub for unified simulator and physical device management",
-      "Instruments for deep performance profiling and system diagnostics",
-      "Built-in Xcode Cloud for continuous integration and delivery",
-      "Swift Testing and XCTest frameworks for automated test suites"
-    ],
-    "bestFor": "Developers building native applications exclusively for Apple platforms.",
-    "notIdealFor": "Developers requiring cross-platform development support for non-Apple operating systems like Android or Windows.",
-    "recentUpdates": "Xcode 27 introduces advanced coding agents, a redesigned Device Hub for easier testing, enhanced localization workflows, and significant improvements to the Organizer for performance issue tracking.",
-    "verdict": "Indispensable for Apple platform development, Xcode 27 significantly advances developer productivity through deep AI integration and refined performance analysis tools, though it remains restricted to macOS.",
-    "tags": [
-      "IDE",
-      "Apple",
-      "Development Tools",
-      "Swift",
-      "Mobile Development"
-    ],
-    "lastUpdated": "2026-09-01"
-  },
-  {
-    "slug": "jetbrains-ides",
-    "name": "JetBrains IDEs",
-    "company": "JetBrains",
-    "pricing": "freemium",
-    "pricingDetail": "Core functionality is free for Java and Kotlin development. Advanced features and broader language support are available via an Ultimate subscription, with a 30-day free trial, or the All Products Pack subscription for access to all IDEs.",
-    "description": "JetBrains IDEs provide a family of powerful, language-specific development environments designed to maximize productivity through deep code intelligence and project-wide analysis. The suite includes specialized tools like IntelliJ IDEA, PyCharm, WebStorm, and GoLand, all built on a unified platform that offers consistent shortcuts, refactoring capabilities, and debugging workflows.",
-    "keyFeatures": [
-      "Intelligent code analysis and refactoring",
-      "Deep framework support (e.g., Spring, Jakarta EE)",
-      "Built-in debugger and database tools",
-      "Natively integrated AI Assistant",
-      "Extensive plugin ecosystem"
-    ],
-    "bestFor": "Professional software developers, particularly those working with Java, Kotlin,.NET, or enterprise-grade frameworks who require deep project-wide refactoring and reliable code analysis.",
-    "notIdealFor": "Developers on extremely tight budgets, those working on hardware with limited resources (e.g., <16GB RAM), or individuals who prefer a lightweight, fast-starting editor for simple tasks.",
-    "recentUpdates": "As of late 2026, JetBrains has unified its IntelliJ IDEA distribution into a single product, streamlined AI agent integrations (including support for GitHub Copilot, Codex, and Claude), and introduced enhanced features like logpoints, Spring runtime insights, and native support for Java 27 and Kotlin 2.4.",
-    "verdict": "JetBrains IDEs remain the gold standard for professional JVM and.NET development, offering a level of deep language intelligence and reliability that free alternatives struggle to match, despite the higher resource and cost requirements.",
-    "tags": [
-      "IDE",
-      "Java",
-      "Kotlin",
-      "Refactoring",
-      "DeveloperTools"
-    ],
-    "lastUpdated": "2026-09-01"
-  },
-  {
-    "slug": "visual-studio",
-    "name": "Visual Studio",
-    "company": "Microsoft",
-    "pricing": "freemium",
-    "pricingDetail": "Visual Studio Community is free for individuals, students, open-source projects, and small non-enterprise teams. Professional and Enterprise editions are available through monthly or annual paid subscriptions, which include additional benefits like Azure credits, support, and specialized tools.",
-    "description": "Visual Studio is a comprehensive, feature-rich integrated development environment (IDE) optimized for Windows-based software development. It provides an end-to-end ecosystem for building, debugging, and testing applications across web, cloud, desktop, and mobile platforms.",
-    "keyFeatures": [
-      "AI-powered coding assistance with GitHub Copilot",
-      "Advanced debugging, diagnostic, and profiling tools",
-      "Integrated support for.NET, C++, and cloud-native development",
-      "Robust Git and CI/CD pipeline management",
-      "First-class Git submodule and multi-branch worktree support"
-    ],
-    "bestFor": ".NET and C++ developers building complex, large-scale applications on the Windows platform.",
-    "notIdealFor": "Developers primarily seeking a lightweight, cross-platform code editor for web development, for which Visual Studio Code is the recommended alternative.",
-    "recentUpdates": "The August 2026 update (v18.9) introduced adjustable 'thinking effort' controls for AI models, Bring Your Own Model (BYOM) preview support, first-class Git submodule management, and improved Git worktree workflows.",
-    "verdict": "Visual Studio remains the premier IDE for enterprise-grade Windows and.NET development, now significantly enhanced by deeply integrated, customizable AI-agentic workflows.",
-    "tags": [
-      "IDE",
-      ".NET",
-      "C++",
-      "Windows",
-      "DevOps",
-      "AI",
-      "GitHub Copilot"
-    ],
-    "lastUpdated": "2026-09-01"
-  },
-  {
-    "slug": "muse",
-    "name": "Muse",
-    "company": "Meta",
-    "pricing": "unknown",
-    "pricingDetail": "The public product site does not publish pricing; access appears to be account-based and availability may vary by rollout.",
-    "description": "Muse is a personal AI agent that takes goals and everyday tasks, then carries out multi-step work using a persistent secure computer, browser, connected apps, and approval controls.",
-    "keyFeatures": [
-      "Persistent isolated Linux virtual machine with a full browser",
-      "Goal-driven execution for research, shopping, health, finance, and everyday tasks",
-      "Messaging-oriented interaction and proactive suggestions",
-      "Human approval controls for purchases, messages, and other consequential actions",
-      "Secure credential storage, privacy controls, and app connectors"
-    ],
-    "bestFor": "People who want an agent to complete practical web-based tasks while keeping approval and privacy controls in the loop.",
-    "notIdealFor": "Developers seeking a coding-specific agent, users needing fully local execution, or teams requiring published enterprise pricing and administration.",
-    "recentUpdates": "The current product site presents Muse as a personal agent with a dedicated secure computer, app connectors, proactive goal support, and safety-focused approvals; public availability and pricing are not detailed.",
-    "verdict": "A broad consumer-oriented agent focused on getting real-world tasks done rather than answering in chat, with a strong emphasis on delegated browser work and user approval.",
-    "tags": [
-      "personal-agent",
-      "browser-agent",
-      "automation",
-      "secure-vm",
-      "consumer-ai"
-    ],
-    "lastUpdated": "2026-09-08"
-  },
-  {
     "slug": "cabinet",
     "name": "Cabinet",
     "company": "Cabinet AI",
@@ -5782,62 +5759,6 @@
       "byoai"
     ],
     "lastUpdated": "2026-09-08"
-  },
-  {
-    "slug": "otodock",
-    "name": "OtoDock",
-    "company": "OtoDock",
-    "pricing": "free",
-    "pricingDetail": "The project is self-hosted and fair-source; users bring their own Anthropic or OpenAI subscriptions, API keys, or local models. Hosting and model-provider costs are separate.",
-    "description": "OtoDock is a self-hosted, multi-tenant agentic company OS where teams create collaborative AI agents powered by Claude Code, Codex, or local models.",
-    "keyFeatures": [
-      "Multi-tenant agents with personal, shared, and mixed workspaces",
-      "Persistent memory, knowledge, skills, tools, and role-based access",
-      "Delegation, departments, meetings, schedules, webhooks, and notifications",
-      "Server-side sandboxing with network isolation and encrypted credentials",
-      "Phone calls through Twilio, Asterisk, or FreePBX",
-      "Remote machines, live dashboards, document editing, artifacts, and terminal access"
-    ],
-    "bestFor": "Teams that want to self-host a shared fleet of specialized AI workers with controlled access, persistent workspaces, and autonomous business workflows.",
-    "notIdealFor": "Users seeking a simple chat assistant, a narrow coding IDE, or a fully managed platform that includes model inference and hosting.",
-    "recentUpdates": "The repository README currently identifies version 1.6.0 and emphasizes Claude Code/Codex subscriptions, local models, multi-tenant collaboration, scheduled agents, phone access, remote machines, and kernel/network isolation.",
-    "verdict": "A broad agent platform that treats AI workers as collaborative digital employees, offering unusually deep team, automation, and self-hosting controls at the cost of operational setup and separate model-provider expenses.",
-    "tags": [
-      "agent-platform",
-      "self-hosted",
-      "multi-tenant",
-      "autonomous-agents",
-      "collaboration"
-    ],
-    "lastUpdated": "2026-09-09"
-  },
-  {
-    "slug": "hermes-agent",
-    "name": "Hermes Agent",
-    "company": "Nous Research",
-    "pricing": "open-source",
-    "pricingDetail": "Hermes Agent is open source and self-hosted; users bring their own model access via Nous Portal, OpenRouter, OpenAI, or any compatible endpoint, so costs are model-provider and infrastructure dependent.",
-    "description": "Hermes Agent is Nous Research's self-improving agent with a built-in learning loop: it creates skills from experience, improves them during use, searches past conversations, and maintains a user model across sessions. It runs as a full terminal TUI or through messaging gateways like Telegram, Discord, Slack, WhatsApp, and Signal.",
-    "keyFeatures": [
-      "Learning loop with autonomous skill creation and self-improvement",
-      "Agent-curated memory, FTS5 session search, and cross-session recall",
-      "Multi-surface gateway: CLI, TUI, Telegram, Discord, Slack, WhatsApp, Signal",
-      "Isolated subagents for parallel workstreams and Python RPC tool scripting",
-      "Built-in cron scheduler for unattended automations",
-      "Seven terminal backends including local, Docker, SSH, Modal, Daytona, and Vercel Sandbox"
-    ],
-    "bestFor": "Developers who want a long-running, self-improving agent that persists across sessions and can be reached from chat apps while working on cloud or local machines.",
-    "notIdealFor": "Users who want a managed, hosted assistant with a fixed subscription, or teams that need vendor SLAs and centralized administration.",
-    "recentUpdates": "The project is actively developed with recent releases covering native Windows support, a bundled portable Git Bash installer, serverless backends (Modal, Daytona, Vercel Sandbox), and voice-memo transcription across messaging platforms.",
-    "verdict": "An unusually ambitious agent product whose distinguishing feature is genuine self-improvement — skill creation, memory curation, and user modeling — at the cost of running and operating your own infrastructure.",
-    "tags": [
-      "autonomous-agents",
-      "self-improving",
-      "tui",
-      "self-hosted",
-      "multi-agent"
-    ],
-    "lastUpdated": "2026-09-09"
   },
   {
     "slug": "pi-desktop",
@@ -5947,6 +5868,116 @@
       "open-source"
     ],
     "lastUpdated": "2026-09-09"
+  },
+  {
+    "slug": "visual-studio-code",
+    "name": "Visual Studio Code",
+    "company": "Microsoft",
+    "pricing": "free",
+    "pricingDetail": "Free for both private and commercial use. Optional AI features may require a GitHub Copilot subscription or a third-party API key, though a free tier for Copilot is available.",
+    "description": "Visual Studio Code is a streamlined, open-source code editor that combines lightweight performance with deep extensibility. It supports a comprehensive edit-build-debug cycle and features robust, multi-agent AI integration for assisted development.",
+    "keyFeatures": [
+      "Unified Agent Sessions for multi-agent orchestration",
+      "Extensive ecosystem of extensions and MCP servers",
+      "Intelligent IntelliSense and built-in Git version control",
+      "Rubber Duck experimental agent for AI-driven code review",
+      "Cross-platform support with remote development capabilities"
+    ],
+    "bestFor": "Web development, polyglot programming, and AI-assisted workflows where developers need a balance of speed and extensibility.",
+    "notIdealFor": "Large-scale legacy enterprise systems or projects requiring deep semantic refactoring that necessitates the heavy indexing capabilities of a full-featured IDE like JetBrains IntelliJ.",
+    "recentUpdates": "Version 1.135 introduced the Rubber Duck experimental agent for peer-reviewing AI code, new Agent Host Protocol (AHP) for persistent sessions, and improved Agents window UX.",
+    "verdict": "An industry-standard editor that perfectly balances being a lightweight tool and a powerful, AI-driven development platform for modern web and software projects.",
+    "tags": [
+      "code-editor",
+      "ai-coding-assistant",
+      "multi-agent",
+      "development-tools",
+      "extensible"
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+  {
+    "slug": "xcode",
+    "name": "Xcode",
+    "company": "Apple",
+    "pricing": "freemium",
+    "pricingDetail": "The IDE is free to download, but publishing to the App Store requires a $99/year Apple Developer Program membership. Xcode Cloud includes 25 compute hours per month, with additional usage available via paid subscription tiers.",
+    "description": "Xcode is Apple's integrated development environment (IDE) for building software across all Apple platforms, including iOS, macOS, watchOS, and visionOS. It provides a comprehensive suite of tools for coding, testing, debugging, and distributing applications within the Apple ecosystem.",
+    "keyFeatures": [
+      "Agentic coding support for automated tasks and code generation",
+      "Device Hub for unified simulator and physical device management",
+      "Instruments for deep performance profiling and system diagnostics",
+      "Built-in Xcode Cloud for continuous integration and delivery",
+      "Swift Testing and XCTest frameworks for automated test suites"
+    ],
+    "bestFor": "Developers building native applications exclusively for Apple platforms.",
+    "notIdealFor": "Developers requiring cross-platform development support for non-Apple operating systems like Android or Windows.",
+    "recentUpdates": "Xcode 27 introduces advanced coding agents, a redesigned Device Hub for easier testing, enhanced localization workflows, and significant improvements to the Organizer for performance issue tracking.",
+    "verdict": "Indispensable for Apple platform development, Xcode 27 significantly advances developer productivity through deep AI integration and refined performance analysis tools, though it remains restricted to macOS.",
+    "tags": [
+      "IDE",
+      "Apple",
+      "Development Tools",
+      "Swift",
+      "Mobile Development"
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+  {
+    "slug": "jetbrains-ides",
+    "name": "JetBrains IDEs",
+    "company": "JetBrains",
+    "pricing": "freemium",
+    "pricingDetail": "Core functionality is free for Java and Kotlin development. Advanced features and broader language support are available via an Ultimate subscription, with a 30-day free trial, or the All Products Pack subscription for access to all IDEs.",
+    "description": "JetBrains IDEs provide a family of powerful, language-specific development environments designed to maximize productivity through deep code intelligence and project-wide analysis. The suite includes specialized tools like IntelliJ IDEA, PyCharm, WebStorm, and GoLand, all built on a unified platform that offers consistent shortcuts, refactoring capabilities, and debugging workflows.",
+    "keyFeatures": [
+      "Intelligent code analysis and refactoring",
+      "Deep framework support (e.g., Spring, Jakarta EE)",
+      "Built-in debugger and database tools",
+      "Natively integrated AI Assistant",
+      "Extensive plugin ecosystem"
+    ],
+    "bestFor": "Professional software developers, particularly those working with Java, Kotlin,.NET, or enterprise-grade frameworks who require deep project-wide refactoring and reliable code analysis.",
+    "notIdealFor": "Developers on extremely tight budgets, those working on hardware with limited resources (e.g., <16GB RAM), or individuals who prefer a lightweight, fast-starting editor for simple tasks.",
+    "recentUpdates": "As of late 2026, JetBrains has unified its IntelliJ IDEA distribution into a single product, streamlined AI agent integrations (including support for GitHub Copilot, Codex, and Claude), and introduced enhanced features like logpoints, Spring runtime insights, and native support for Java 27 and Kotlin 2.4.",
+    "verdict": "JetBrains IDEs remain the gold standard for professional JVM and.NET development, offering a level of deep language intelligence and reliability that free alternatives struggle to match, despite the higher resource and cost requirements.",
+    "tags": [
+      "IDE",
+      "Java",
+      "Kotlin",
+      "Refactoring",
+      "DeveloperTools"
+    ],
+    "lastUpdated": "2026-09-01"
+  },
+  {
+    "slug": "visual-studio",
+    "name": "Visual Studio",
+    "company": "Microsoft",
+    "pricing": "freemium",
+    "pricingDetail": "Visual Studio Community is free for individuals, students, open-source projects, and small non-enterprise teams. Professional and Enterprise editions are available through monthly or annual paid subscriptions, which include additional benefits like Azure credits, support, and specialized tools.",
+    "description": "Visual Studio is a comprehensive, feature-rich integrated development environment (IDE) optimized for Windows-based software development. It provides an end-to-end ecosystem for building, debugging, and testing applications across web, cloud, desktop, and mobile platforms.",
+    "keyFeatures": [
+      "AI-powered coding assistance with GitHub Copilot",
+      "Advanced debugging, diagnostic, and profiling tools",
+      "Integrated support for.NET, C++, and cloud-native development",
+      "Robust Git and CI/CD pipeline management",
+      "First-class Git submodule and multi-branch worktree support"
+    ],
+    "bestFor": ".NET and C++ developers building complex, large-scale applications on the Windows platform.",
+    "notIdealFor": "Developers primarily seeking a lightweight, cross-platform code editor for web development, for which Visual Studio Code is the recommended alternative.",
+    "recentUpdates": "The August 2026 update (v18.9) introduced adjustable 'thinking effort' controls for AI models, Bring Your Own Model (BYOM) preview support, first-class Git submodule management, and improved Git worktree workflows.",
+    "verdict": "Visual Studio remains the premier IDE for enterprise-grade Windows and.NET development, now significantly enhanced by deeply integrated, customizable AI-agentic workflows.",
+    "tags": [
+      "IDE",
+      ".NET",
+      "C++",
+      "Windows",
+      "DevOps",
+      "AI",
+      "GitHub Copilot"
+    ],
+    "lastUpdated": "2026-09-01"
   },
   {
     "slug": "copperhead",

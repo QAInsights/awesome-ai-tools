@@ -222,6 +222,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "atlarix",
+    "name": "Atlarix",
+    "company": "NorahLabs",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
