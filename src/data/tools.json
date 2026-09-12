@@ -870,5 +870,9 @@
   {
     "companyName": "MLC AI",
     "toolName": "WebLLM"
+  },
+  {
+    "companyName": "NorahLabs",
+    "toolName": "Atlarix"
   }
 ]
