@@ -4952,6 +4952,34 @@
     "lastUpdated": "2026-09-08"
   },
   {
+    "slug": "brain-scanner",
+    "name": "Brain Scanner",
+    "company": "Kevin Lozada Santos (submitted by his authorized AI assistant)",
+    "pricing": "freemium",
+    "pricingDetail": "Currently free in open beta with signup (email confirmation required); the maker notes the beta is early and may be paused or ended, and no paid tiers are published yet.",
+    "description": "Brain Scanner is a hosted MCP service that builds project graphs and records agent context so you and your coding agent can trace callers, dependencies, and change history before editing code. It combines a project graph, recorded context, change review, and work queues in one workspace.",
+    "keyFeatures": [
+      "Hosted MCP connector (Streamable HTTP at brainscanner.dev/mcp/v2) with OAuth support",
+      "Project graph for tracing callers and dependencies before changing code",
+      "Recorded agent context and change history across sessions",
+      "Change review and work queues in a shared workspace",
+      "Source-linked Codex example plus first-map walkthrough on GitHub",
+      "Interactive homepage demo with illustrative data"
+    ],
+    "bestFor": "Developers using coding agents on larger projects who want a shared map of callers, dependencies, and recorded change history before making edits.",
+    "notIdealFor": "Those needing a mature, guaranteed-available service — it is an early beta that may be paused or ended, maps can miss relationships, client compatibility varies, and the Glama listing currently shows an unhealthy status.",
+    "recentUpdates": "Listed on Product Hunt (2 upvotes, #134 daily leaderboard) as an early free open beta; Glama connector listing last tested 2026-09-12 with status 'Unhealthy'; maker's LinkedIn activity dated 2026-07-20.",
+    "verdict": "Brain Scanner offers a useful shared project map and recorded context for agent-driven workflows, backed by a hosted MCP endpoint with OAuth and a public walkthrough. However, it is an early beta with acknowledged gaps in relationship mapping, variable client compatibility, and an unhealthy connector status, so it is best trialed on public or synthetic projects first.",
+    "tags": [
+      "MCP",
+      "codebase-graph",
+      "coding-agents",
+      "developer-tools",
+      "beta"
+    ],
+    "lastUpdated": "2026-09-12"
+  },
+  {
     "slug": "pieces-for-developers",
     "name": "Pieces for Developers",
     "company": "Pieces",
