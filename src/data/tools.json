@@ -796,6 +796,10 @@
     "toolName": "Bito"
   },
   {
+    "companyName": "Alibaba",
+    "toolName": "Open Code Review"
+  },
+  {
     "companyName": "Jackalope Digital LLC",
     "toolName": "Jackalope"
   },
@@ -854,6 +858,18 @@
   {
     "companyName": "mksglu",
     "toolName": "Context Mode"
+  },
+  {
+    "companyName": "Worktrunk",
+    "toolName": "Worktrunk"
+  },
+  {
+    "companyName": "RTK-AI",
+    "toolName": "RTK"
+  },
+  {
+    "companyName": "Gentleman Programming",
+    "toolName": "Gentle-AI"
   },
   {
     "companyName": "obra",

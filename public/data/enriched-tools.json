@@ -6090,5 +6090,119 @@
       "edge"
     ],
     "lastUpdated": "2026-09-09"
+  },
+  {
+    "slug": "open-code-review",
+    "name": "Open Code Review",
+    "company": "Alibaba",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under Apache-2.0 (`npm install -g @alibaba-group/open-code-review`); bring your own OpenAI- or Anthropic-compatible model endpoint, or use Delegation Mode so your existing coding agent's LLM performs the review with no separate API key.",
+    "description": "Open Code Review (OCR) is an AI-powered code review CLI incubated from Alibaba Group's internal review assistant, which the project says served tens of thousands of developers over two years. It combines deterministic rule pipelines (NPE, thread-safety, XSS, SQL injection, and more) with an LLM agent that reads Git diffs, pulls full-file and cross-file context, searches the codebase, and emits structured, line-level review comments. `ocr scan` audits whole files or directories with no meaningful diff, and integrations expose OCR as a skill/plugin inside Claude Code, Codex, and Cursor.",
+    "keyFeatures": [
+      "Hybrid architecture: deterministic multi-language rulesets plus a tool-using LLM review agent",
+      "Line-level review comments on staged/unstaged changes, commits, or branch comparisons",
+      "`ocr scan` for whole-file and directory audits of unfamiliar codebases",
+      "OpenAI- and Anthropic-compatible endpoints; Delegation Mode reuses your coding agent's model",
+      "Agent skill and plugin integrations for Claude Code, Codex, and Cursor",
+      "Apache-2.0, Go implementation, distributed via npm, install script, and GitHub Release binaries"
+    ],
+    "bestFor": "Teams and individual developers who want a self-hosted, model-agnostic reviewer they can run locally or in CI, especially those already using Claude Code, Codex, or Cursor and wanting a second opinion with security-focused rules.",
+    "notIdealFor": "Teams looking for a hosted SaaS reviewer with GitHub App-style PR comments, dashboards, and org analytics out of the box — OCR is CLI-first and expects you to wire it into your own pipelines.",
+    "recentUpdates": "Open-sourced May 2026 and rapidly passed 23k GitHub stars; v1.12.0 released September 12, 2026 with active daily commits. Trending on GitHub (September 2026).",
+    "verdict": "A credible, battle-tested open-source alternative to hosted AI review services: fast, precise, and easy to drop into existing coding-agent workflows. The best fit for developers who want control over the model and review rules rather than a turnkey SaaS.",
+    "tags": [
+      "code-review",
+      "cli",
+      "open-source",
+      "security",
+      "agent",
+      "apache-2.0"
+    ],
+    "lastUpdated": "2026-09-13"
+  },
+  {
+    "slug": "worktrunk",
+    "name": "Worktrunk",
+    "company": "Worktrunk",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source, dual-licensed MIT/Apache-2.0; installs via Homebrew, Cargo, or prebuilt binaries.",
+    "description": "Worktrunk is a Rust CLI (`wt`) that makes Git worktrees as easy as branches so developers can run 5-10+ coding agents like Claude Code and Codex in parallel, each in its own isolated directory. Worktrees are addressed by branch name with paths computed from a template; `wt switch -c -x claude feat` creates a worktree and launches an agent in one step, and `wt merge` squashes, rebases, merges, and cleans up from inside the feature worktree. It adds hooks, LLM-generated commit messages, an interactive picker with live diff previews, build-cache copying between worktrees, PR checkout, and `wt list --full` with CI status and AI summaries per branch.",
+    "keyFeatures": [
+      "Three core commands (`wt switch`, `wt merge`, `wt remove`) that manage the full worktree lifecycle",
+      "Create a worktree and launch Claude Code, Codex, or any command in a single invocation",
+      "Hooks for create, pre-merge, post-merge automation and build-cache sharing across worktrees",
+      "LLM-generated commit messages and per-branch AI summaries with CI status in `wt list --full`",
+      "Interactive picker with live diff/log previews and `wt switch pr:123` PR checkout",
+      "Single Rust binary; macOS, Linux, and Windows"
+    ],
+    "bestFor": "Developers orchestrating several terminal coding agents at once who want isolation per task without the friction of raw `git worktree` commands.",
+    "notIdealFor": "Users who prefer a GUI workspace for parallel agents (see Emdash, Director, Zuse, or Parallel Code) or who rarely run more than one agent at a time.",
+    "recentUpdates": "Released at the start of 2026 and, per the maintainer, quickly became the most popular git worktree manager; v0.77.0 shipped September 8, 2026 with ~7.5k GitHub stars and daily commits. Trending on GitHub Rust (September 2026).",
+    "verdict": "The sharpest CLI answer to the parallel-agent worktree problem: fast, well-documented, and opinionated in the right places. If you live in the terminal and juggle multiple agents, this is the tool to reach for.",
+    "tags": [
+      "git",
+      "worktree",
+      "cli",
+      "parallel-agents",
+      "rust",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-13"
+  },
+  {
+    "slug": "rtk",
+    "name": "RTK",
+    "company": "RTK-AI",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under Apache-2.0; single Rust binary with zero dependencies, installed via Homebrew, Cargo, or install script.",
+    "description": "RTK (\"Rust Token Killer\") is a CLI proxy that intercepts shell commands run by coding agents and filters or compresses their output before it reaches the model's context. It supports 100+ common dev commands (git, cargo, npm, pytest, docker, ls, grep, find, and more) with <10ms overhead, plus helpers like `rtk json`, `rtk log`, `rtk deps`, `rtk env`, and `rtk summary`. `rtk init` installs a transparent Bash-rewrite hook or plugin for Claude Code, GitHub Copilot, Codex, Gemini CLI, Cursor, Windsurf, Cline/Roo Code, Kilo Code, Antigravity, Kimi, Pi, Hermes, and Factory Droid, and tracks per-session savings via `rtk gain`.",
+    "keyFeatures": [
+      "Compresses output of 100+ dev commands before the agent reads it, reporting up to 90% reduction in bash output",
+      "One-command hook/plugin setup for a dozen-plus coding agents (`rtk init -g --agent <name>`)",
+      "Helpers for JSON structure, deduplicated logs, filtered env vars, dependency summaries, and truncated curl/wget",
+      "`rtk gain` analytics for measuring saved context per session",
+      "Single Rust binary, zero dependencies, <10ms overhead; localized docs in seven languages"
+    ],
+    "bestFor": "Heavy Claude Code, Codex, or Gemini CLI users whose agents shell out constantly and who want to keep verbose command output from crowding the context window.",
+    "notIdealFor": "Anyone expecting a guaranteed cut in API spend — RTK only touches Bash tool output (not built-in Read/Grep tools), and an independent JetBrains benchmark measured no net cost savings on real agent tasks despite large reductions in raw command output.",
+    "recentUpdates": "v0.49.0 released September 11, 2026; ~80k GitHub stars with daily commits. Benchmarked independently by JetBrains AI in July 2026. Trending on GitHub Rust (September 2026).",
+    "verdict": "Massively popular and genuinely useful for taming noisy shell output in agent sessions, with the caveat that its headline token-savings claims don't necessarily translate to lower bills. Install it for cleaner context, not as a cost-cutting silver bullet.",
+    "tags": [
+      "context-optimization",
+      "cli",
+      "proxy",
+      "claude-code",
+      "rust",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-13"
+  },
+  {
+    "slug": "gentle-ai",
+    "name": "Gentle-AI",
+    "company": "Gentleman Programming",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT; single Go binary for macOS, Linux, and Windows.",
+    "description": "Gentle-AI is a configurator that turns the coding agent you already use into a deterministic engineering environment. Rather than replacing your agent, it layers persistent memory (via its companion Engram memory system), Spec-Driven Development workflows, curated skills, MCP servers, personas, and optional bounded review onto 16 supported agents including Pi, OpenCode, Claude Code, Codex, Cursor, VS Code Copilot, Gemini CLI, and Kilo Code — so the agent has an opinion about your project, a repeatable workflow, and evidence of what it did.",
+    "keyFeatures": [
+      "Configures 16 coding agents (Pi, OpenCode, Claude Code, Codex, Cursor, Copilot, Gemini CLI, Kilo Code, and more) with no agent lock-in",
+      "Persistent memory across sessions through the Engram companion project",
+      "Spec-Driven Development workflow and curated skills library",
+      "MCP server, persona, and bounded-review configuration from one place",
+      "Open source (MIT), Go binary; documentation wiki and quickstart"
+    ],
+    "bestFor": "Developers who bounce between multiple coding agents and want one consistent, opinionated setup — memory, specs, skills, and review — applied to all of them.",
+    "notIdealFor": "Teams that want a fully managed hosted platform or that have already standardized on a single agent's native memory and skills features.",
+    "recentUpdates": "v2.8.1 released September 13, 2026 with ~6.7k GitHub stars; trending on GitHub Go alongside its Engram memory companion (September 2026).",
+    "verdict": "A pragmatic, agent-agnostic way to add memory, workflow, and review discipline to whatever coding agent you use. Best appreciated by polyglot-agent developers tired of re-configuring each tool by hand.",
+    "tags": [
+      "agent-configuration",
+      "memory",
+      "spec-driven",
+      "mcp",
+      "skills",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-13"
   }
 ]

@@ -276,6 +276,7 @@ Tools focused on reviewing, securing, and validating code — not generating it.
 | **[Vercel Agent](https://vercel.com/docs/agent)** | Vercel | Production-aware agent for investigations and PR reviews; validates proposed fixes in secure sandboxes against real builds, tests, and linters |
 | **[Graphite](https://graphite.com/)** | Graphite | AI code review platform combined with stacked pull requests, merge queues, and engineering workflow analytics |
 | **[Bito](https://bito.ai/product/ai-code-review-agent/)** | Bito | Context-aware AI code review for GitHub, GitLab, and Bitbucket with cross-repo impact analysis, custom rules, and one-click fixes |
+| **[Open Code Review](https://open-codereview.ai)** | Alibaba | Open-source (Apache-2.0) AI code review CLI (`ocr`) incubated from Alibaba's internal reviewer; hybrid deterministic rules + LLM agent with line-level comments, `ocr scan` for whole-file audits, and integrations for Claude Code, Codex, and Cursor; [GitHub](https://github.com/alibaba/open-code-review) |
 
 ---
 
@@ -356,6 +357,9 @@ AI-powered tools for managing context, snippets, and developer documentation.
 | **[PI-Desktop](https://github.com/vastsa/PI-Desktop)** | vastsa | Local-first desktop workspace for AI coding agents — Electron + Rust host around the Pi agent harness with projects, models, tools, long-running sessions, and user-installable plugins |
 | **[Ruflo](https://github.com/ruvnet/ruflo)** | ruvnet | Open-source agent meta-harness for Claude Code and Codex — one `npx ruflo init` adds 100+ specialized agents, coordinated swarms, self-learning memory, and federated communication across machines |
 | **[Context Mode](https://github.com/mksglu/context-mode)** | mksglu | MCP server that keeps raw tool output out of the context window — sandboxed execution (~98% context reduction), SQLite/FTS5 session memory with BM25 recall, and routing enforcement across 17 agent platforms |
+| **[Worktrunk](https://worktrunk.dev/)** | Worktrunk | Open-source Rust CLI (`wt`) for Git worktree management built for running Claude Code, Codex, and other agents in parallel — branch-addressed worktrees, create-and-launch-agent in one command, hooks, LLM commit messages, and a one-shot squash/rebase/merge/cleanup workflow; [GitHub](https://github.com/max-sixty/worktrunk) |
+| **[RTK](https://www.rtk-ai.app)** | RTK-AI | Open-source Rust CLI proxy ("Rust Token Killer") that filters and compresses shell command output before it reaches a coding agent's context; installs a Bash-rewrite hook for Claude Code, Codex, Gemini CLI, Cursor, Cline, Pi, Hermes, and more; [GitHub](https://github.com/rtk-ai/rtk) |
+| **[Gentle-AI](https://gentle-ai.gentlemanprogramming.com/)** | Gentleman Programming | Open-source (MIT) configurator that layers persistent memory, spec-driven development, curated skills, MCP servers, personas, and bounded review onto Pi, OpenCode, Claude Code, Codex, Cursor, Copilot, Gemini CLI, and Kilo Code without agent lock-in; [GitHub](https://github.com/Gentleman-Programming/gentle-ai) |
 | **[Superpowers](https://github.com/obra/superpowers)** | obra | Agentic skills framework and software development methodology that installs into Claude Code, Codex, Cursor, Antigravity, and other agents as composable skills |
 
 ---

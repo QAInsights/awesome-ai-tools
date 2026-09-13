@@ -1008,6 +1008,12 @@
     "category": "AI Code Review & Security"
   },
   {
+    "slug": "open-code-review",
+    "name": "Open Code Review",
+    "company": "Alibaba",
+    "category": "AI Code Review & Security"
+  },
+  {
     "slug": "gitauto",
     "name": "GitAuto",
     "company": "GitAuto",
@@ -1293,6 +1299,24 @@
     "slug": "context-mode",
     "name": "Context Mode",
     "company": "mksglu",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "worktrunk",
+    "name": "Worktrunk",
+    "company": "Worktrunk",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "rtk",
+    "name": "RTK",
+    "company": "RTK-AI",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "gentle-ai",
+    "name": "Gentle-AI",
+    "company": "Gentleman Programming",
     "category": "Developer Productivity & Workflow"
   },
   {
