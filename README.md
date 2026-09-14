@@ -277,6 +277,7 @@ Tools focused on reviewing, securing, and validating code — not generating it.
 | **[Graphite](https://graphite.com/)** | Graphite | AI code review platform combined with stacked pull requests, merge queues, and engineering workflow analytics |
 | **[Bito](https://bito.ai/product/ai-code-review-agent/)** | Bito | Context-aware AI code review for GitHub, GitLab, and Bitbucket with cross-repo impact analysis, custom rules, and one-click fixes |
 | **[Open Code Review](https://open-codereview.ai)** | Alibaba | Open-source (Apache-2.0) AI code review CLI (`ocr`) incubated from Alibaba's internal reviewer; hybrid deterministic rules + LLM agent with line-level comments, `ocr scan` for whole-file audits, and integrations for Claude Code, Codex, and Cursor; [GitHub](https://github.com/alibaba/open-code-review) |
+| **[DeployReview](https://poe.com/DeployReview)** | cjaime708 | Chat-based code reviewer on Poe: paste a diff, get a verdict with severity-tagged findings and the fixed code |
 
 ---
 
@@ -361,6 +362,8 @@ AI-powered tools for managing context, snippets, and developer documentation.
 | **[RTK](https://www.rtk-ai.app)** | RTK-AI | Open-source Rust CLI proxy ("Rust Token Killer") that filters and compresses shell command output before it reaches a coding agent's context; installs a Bash-rewrite hook for Claude Code, Codex, Gemini CLI, Cursor, Cline, Pi, Hermes, and more; [GitHub](https://github.com/rtk-ai/rtk) |
 | **[Gentle-AI](https://gentle-ai.gentlemanprogramming.com/)** | Gentleman Programming | Open-source (MIT) configurator that layers persistent memory, spec-driven development, curated skills, MCP servers, personas, and bounded review onto Pi, OpenCode, Claude Code, Codex, Cursor, Copilot, Gemini CLI, and Kilo Code without agent lock-in; [GitHub](https://github.com/Gentleman-Programming/gentle-ai) |
 | **[Superpowers](https://github.com/obra/superpowers)** | obra | Agentic skills framework and software development methodology that installs into Claude Code, Codex, Cursor, Antigravity, and other agents as composable skills |
+| **[DiffExplainerHQ](https://poe.com/DiffExplainerHQ)** | cjaime708 | Poe bot that explains what a diff's author was actually doing, then writes the commit message |
+| **[LLMAuditor](https://poe.com/LLMAuditor)** | cjaime708 | Poe bot that audits your llms.txt: what's leaking, what's wasting tokens, what's missing |
 
 ---
 
