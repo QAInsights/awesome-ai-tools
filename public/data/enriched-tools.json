@@ -6204,5 +6204,150 @@
       "open-source"
     ],
     "lastUpdated": "2026-09-13"
+  },
+  {
+    "slug": "ponytail",
+    "name": "Ponytail",
+    "company": "Dietrich Gebert",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT; installed as a native plugin (`/plugin marketplace add DietrichGebert/ponytail`) for Claude Code, Codex, and Copilot CLI, as Cursor hooks, or via npm (`@dietrichgebert/ponytail`).",
+    "description": "Ponytail is an agent skill/plugin that puts \"the laziest senior dev in the room\" inside your coding agent. Before writing code, the agent walks a seven-rung ladder — does this need to exist (YAGNI), is it already in the codebase, does the stdlib or a native platform feature do it, is there an installed dependency, can it be one line — and only then writes the minimum that works, while never cutting validation, error handling, security, or accessibility. Its published agentic benchmark (headless Claude Code editing the full-stack-fastapi-template across 12 feature tickets) reports ~54% less code, ~22% fewer tokens, ~20% lower cost, and ~27% less time versus the same agent with no skill. It ships plugins for Claude Code, Codex, GitHub Copilot CLI, Pi, and Cursor hooks, claiming support for roughly 20 agents.",
+    "keyFeatures": [
+      "Seven-rung YAGNI decision ladder applied before every code change",
+      "Always-on activation via two lightweight Node.js lifecycle hooks, plus `ultra` and `review` modes",
+      "Published reproducible benchmarks (promptfoo single-shot and headless Claude Code agentic runs)",
+      "Native plugin installs for Claude Code, Codex (CLI and desktop), and GitHub Copilot CLI; Cursor hooks and Pi support",
+      "Safety guardrails: trust-boundary validation, data-loss handling, security, and accessibility are never cut",
+      "MIT-licensed with active releases (v4.10.0 in September 2026)"
+    ],
+    "bestFor": "Developers frustrated by agents that over-engineer — pulling in dependencies, wrapper components, and speculative abstractions — who want smaller diffs and lower token spend without writing custom prompts.",
+    "notIdealFor": "Teams that want a full methodology or multi-agent harness (see Superpowers, ECC, or Gentle-AI); Ponytail is deliberately single-purpose. The maintainer notes terse reasoning models such as GPT-5.5 can spend more thinking tokens deliberating the ladder.",
+    "recentUpdates": "Launched mid-June 2026 and passed 50k GitHub stars in 1.5 weeks and 100k by August 10 (per the maintainer on X); ~138k stars and v4.10.0 released September 14, 2026. Trending on GitHub (September 2026).",
+    "verdict": "One of the fastest-growing agent plugins of 2026 and one of the few with honest, reproducible benchmarks behind its claims. If your agent writes too much code, this is the cheapest fix available.",
+    "tags": [
+      "agent-skills",
+      "plugin",
+      "claude-code",
+      "codex",
+      "yagni",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-14"
+  },
+  {
+    "slug": "ecc",
+    "name": "ECC",
+    "company": "Affaan Mustafa",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT; guided setup via `npx ecc-universal@2.2.1 setup`, native `ecc@ecc` plugin for Claude Code, and an optional GitHub App (ECC Tools).",
+    "description": "ECC is an \"agent harness performance optimization system\" — a coordinated engineering process your coding agent follows instead of being re-prompted every session: plan → test → implement → review → verify → remember → improve. It bundles 68 specialized agents (planning, review, build repair, security, architecture, domain work), 292 skills, 94 legacy command shims, hooks, selective always-loaded rules, session memory, continuous learning \"instincts,\" and AgentShield scanning for prompts, hooks, MCP config, permissions, secrets, and agent files. It works best with Claude Code today, has a supported Codex sync path and Kimi Code managed install, and provides capability-limited adapters for Cursor, OpenCode, Gemini, Zed, GitHub Copilot, Antigravity, and Qwen.",
+    "keyFeatures": [
+      "68 agents, 292 skills, and 94 commands installed once as an `ecc@ecc` plugin",
+      "Plan → test → implement → review → verify → remember → improve loop enforced through hooks",
+      "Multi-harness guided installer for Claude Code, Codex, and Kimi Code with dry-run and scope selection",
+      "Memory, session summaries, continuous learning, and context-window controls",
+      "AgentShield security scanning for agent configs, hooks, MCP servers, and secrets",
+      "Adapters for Cursor, OpenCode, Gemini, Zed, Copilot, Antigravity, and Qwen (see support matrix)"
+    ],
+    "bestFor": "Claude Code and Codex power users who want a batteries-included engineering discipline — TDD, self-review, memory, and security scanning — rather than assembling skills and hooks by hand.",
+    "notIdealFor": "Developers who prefer minimal, single-purpose skills (see Ponytail or Superpowers) or who rely primarily on harnesses where ECC's adapters are capability-limited; the project also warns to install only from official channels due to malicious mirrors.",
+    "recentUpdates": "One of the most-starred developer repositories of 2026 (~258k GitHub stars, ~38k forks); v2.2.1 released September 8, 2026 with guided multi-harness setup for Claude Code, Codex, and Kimi Code. Trending on GitHub weekly (September 2026).",
+    "verdict": "The maximalist counterpart to Superpowers: an enormous, actively maintained harness that turns Claude Code into a full engineering workflow. Its scale is both the appeal and the learning curve — start with the core profile.",
+    "tags": [
+      "agent-harness",
+      "skills",
+      "claude-code",
+      "codex",
+      "security",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-14"
+  },
+  {
+    "slug": "atlas",
+    "name": "Atlas",
+    "company": "pacifio",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT; macOS `.dmg` from tryatlas.cc or GitHub Releases (alpha), Linux/Windows build from source. Local mode needs no account; optional sign-in for organisation sync.",
+    "description": "Atlas is a Tauri/Rust desktop app that describes itself as source control for coding agents. It runs Claude Code and Codex as ACP subprocesses, ships its own in-process agent (a fork of the Codex engine), and can spawn any agent in the ACP registry (Cursor, OpenCode, Kilo Code) side by side against the same codebase. Every session is recorded locally to `.atlas/sessions.db` with secrets scrubbed, and each commit — even one made from a terminal while Atlas is closed — is linked back to the session, prompt, tool calls, and reasoning that produced it as a checkpoint that survives amends and rebases. An on-device semantic memory index (local embeddings, HNSW search) is shared across agents so a decision Claude Code made appears in Codex's next prompt, and `@` mentions resolve files, symbols, branches, commits, notes, skills, papers, and past sessions locally before the prompt is sent.",
+    "keyFeatures": [
+      "Checkpoints link commits to the agent session, prompts, and tool calls that produced them; chat with a checkpoint to recover context",
+      "Run Claude Code, Codex, Atlas Agent, and ACP-registry agents in parallel tabs on one codebase",
+      "Shared on-device semantic memory and session handoff across different agents",
+      "`@` mentions for files, folders, symbols, branches, commits, notes, skills, papers, and past sessions",
+      "Skills and packs (SKILL.md, skills.sh index) scoped globally or per project",
+      "Local-first: notes are Markdown, sessions JSONL, checkpoint record in gitignored SQLite; optional org sync"
+    ],
+    "bestFor": "Developers running several agents on one repo who want a durable record of why agent-written code looks the way it does, and shared context when switching between Claude Code and Codex mid-task.",
+    "notIdealFor": "Linux or Windows users (untested builds) and anyone wary of alpha-stage software; teams that only want a terminal worktree manager should look at Worktrunk or workmux.",
+    "recentUpdates": "alpha-0.3.1 released September 6, 2026 with ~4.4k GitHub stars and daily commits. Trending on GitHub Rust (September 2026).",
+    "verdict": "A genuinely new angle on the agent-workspace category — treating agent sessions as first-class version-control metadata rather than disposable scrollback. Alpha-stage and macOS-only, but the checkpoint idea alone makes it worth watching.",
+    "tags": [
+      "agent-workspace",
+      "source-control",
+      "acp",
+      "macos",
+      "rust",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-14"
+  },
+  {
+    "slug": "archify",
+    "name": "Archify",
+    "company": "tt-a1i",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT; install as an agent skill with `npx skills add tt-a1i/archify -g` for Cursor, Claude Code, Codex CLI, and OpenCode (also packaged for Raven and DeepSeek Harness).",
+    "description": "Archify is a Node.js rendering and validation system, packaged as an agent skill, that turns a codebase or a plain-language system description into a polished interactive system map directly from an agent chat. The agent emits typed JSON IR; Archify deterministically compiles it into self-contained HTML/SVG with five diagram types (architecture, workflow, sequence, data-flow, lifecycle), four presets, dark/light themes, and finite motion. Two validated snapshots can be compared as Before / Delta / After with exact added, removed, changed, moved, and rerouted facts for reviewing architecture changes before merge, and every interaction stays grounded — node search, optional revision-verified source links, upstream/downstream tracing, and guided stories without invented topology. Outputs include HTML plus PNG, SVG, WebM, and 1200×630 share cards; `validate --json` and `deliver --json` return stable rule codes and supported repair controls so agents can self-correct.",
+    "keyFeatures": [
+      "Five diagram types compiled deterministically from typed JSON IR into self-contained HTML/SVG",
+      "Before / Delta / After comparison of validated snapshots for architecture review",
+      "Grounded interactions: node search, source links verified against a revision, reach and route tracing, guided stories",
+      "Exports to PNG, SVG, WebM, and share cards; no repository required",
+      "Machine-readable validation failures with stable rule codes and repair hints for agent self-correction",
+      "Works as a skill in Cursor, Claude Code, Codex CLI, OpenCode, Raven, and DeepSeek Harness"
+    ],
+    "bestFor": "Engineers who want agents to produce trustworthy, presentable architecture and sequence diagrams from real code — and to diff those diagrams as part of code review.",
+    "notIdealFor": "Anyone needing hand-editable diagram sources in Mermaid or PlantUML syntax, or a hosted collaborative whiteboard; Archify is a compile-and-validate pipeline driven by agents.",
+    "recentUpdates": "v2.16.0 released August 30, 2026 with v2.17.0-dev in progress; ~62k GitHub stars and daily commits. Trending on GitHub weekly (September 2026).",
+    "verdict": "The strongest agent-native answer to \"draw me the architecture\": deterministic rendering plus validation means the diagram matches the IR the agent actually produced, and the snapshot diffing turns diagrams into a review artifact rather than decoration.",
+    "tags": [
+      "agent-skills",
+      "diagrams",
+      "architecture",
+      "code-visualization",
+      "claude-code",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-14"
+  },
+  {
+    "slug": "workmux",
+    "name": "workmux",
+    "company": "raine",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT; single Rust binary installed via Homebrew, Cargo, or prebuilt release binaries.",
+    "description": "workmux is an opinionated Rust CLI that ties git worktrees to tmux windows (with kitty, WezTerm, and Zellij as alternative backends) so each task — and each AI coding agent — gets its own isolated environment with its own terminal state, editor session, dev server, and agent. `workmux add` creates a worktree plus a matching window with your preferred pane layout, copies or symlinks config files such as `.env` and `node_modules`, and runs post-creation hooks; `workmux merge` merges the branch and removes the worktree, window, and local branch in one command. A dashboard and persistent sidebar show agent status across windows (also reflected in tmux window names), a `/worktree` skill lets a primary agent delegate tasks to worktree agents, agents can be sandboxed in containers or VMs, and branch names can be generated from prompts with an LLM.",
+    "keyFeatures": [
+      "One-command worktree + tmux window creation and one-command merge/cleanup lifecycle",
+      "Dashboard and sidebar for monitoring parallel agents, reviewing changes, and sending commands",
+      "`/worktree` skill for delegating tasks to worktree agents; agent status in tmux window names",
+      "Configurable pane layouts, post-create hooks, and config copy/symlink into new worktrees",
+      "Container/VM sandboxing for agents; LLM-generated branch names",
+      "tmux, kitty, WezTerm, and Zellij backends; shell completions"
+    ],
+    "bestFor": "Terminal-centric developers who already live in tmux and want to run several coding agents in parallel worktrees without adopting a GUI workspace.",
+    "notIdealFor": "Developers who don't use a multiplexer-style terminal, or who want a GUI agent workspace (see Emdash, Director, or Atlas); Worktrunk is the closest CLI alternative if you don't want the tmux coupling.",
+    "recentUpdates": "v0.1.262 released September 12, 2026 with ~2.6k GitHub stars and daily commits since late 2025; featured on Hacker News. Trending on GitHub Rust (September 2026).",
+    "verdict": "A pragmatic, well-maintained glue tool for the tmux crowd: it builds on tools you already use instead of another agent GUI, and the agent dashboard and delegation skill push it beyond a plain worktree wrapper.",
+    "tags": [
+      "git",
+      "worktree",
+      "tmux",
+      "parallel-agents",
+      "rust",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-14"
   }
 ]

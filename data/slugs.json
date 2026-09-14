@@ -420,6 +420,12 @@
     "category": "IDE Extensions & Plugins"
   },
   {
+    "slug": "ponytail",
+    "name": "Ponytail",
+    "company": "Dietrich Gebert",
+    "category": "IDE Extensions & Plugins"
+  },
+  {
     "slug": "aicode",
     "name": "AICode",
     "company": "AI Sovereign Labs",
@@ -1317,6 +1323,30 @@
     "slug": "gentle-ai",
     "name": "Gentle-AI",
     "company": "Gentleman Programming",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "ecc",
+    "name": "ECC",
+    "company": "Affaan Mustafa",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "atlas",
+    "name": "Atlas",
+    "company": "pacifio",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "archify",
+    "name": "Archify",
+    "company": "tt-a1i",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "workmux",
+    "name": "workmux",
+    "company": "raine",
     "category": "Developer Productivity & Workflow"
   },
   {
