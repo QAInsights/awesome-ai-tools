@@ -222,6 +222,7 @@ Agents that operate independently on tasks, often outside your local editor.
 |------|---------|-------|
 | **[Jules](https://jules.google)** | Google | Async GitHub-integrated agent; clones repo into GCP VM; works while you code; powered by Gemini 2.5 Pro |
 | **[OpenHands](https://github.com/All-Hands-AI/OpenHands)** | All Hands | Open-source autonomous coding agent; 95K+ GitHub stars |
+| **[Solgrok](https://github.com/LMajster/sgrok)** | Solgrok | Autonomous Solana creator-ops agent ($SGROK on Bags); live site https://lmajster.github.io/sgrok/ ; trade https://bags.fm/7QpJ8Pb3pGhoArRPJu3TXbx1p3ezn3TCwz6cMcwQBAGS |
 | **[SWE-agent](https://swe-agent.com)** | Princeton NLP | Open-source agent for autonomously solving GitHub issues |
 | **[Sweep](https://sweep.dev/)** | Sweep | Acts as an autonomous junior developer. Branches, writes code, and opens PRs from issues |
 | **[Ellipsis](https://www.ellipsis.dev/)** | Ellipsis | AI agent that reviews pull requests and converts comments directly into runnable code commits |
