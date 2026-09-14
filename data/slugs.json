@@ -1,1370 +1,1388 @@
 [
-  {
-    "slug": "cursor",
-    "name": "Cursor",
-    "company": "Anysphere",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "devin",
-    "name": "Devin",
-    "company": "Cognition",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "trae",
-    "name": "Trae",
-    "company": "ByteDance",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "zed",
-    "name": "Zed",
-    "company": "Zed Industries",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "pearai",
-    "name": "PearAI",
-    "company": "PearAI",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "antigravity",
-    "name": "Antigravity",
-    "company": "Google",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "void",
-    "name": "Void",
-    "company": "Void",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "verdent",
-    "name": "Verdent",
-    "company": "Verdent",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "pochi",
-    "name": "Pochi",
-    "company": "Pochi",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "qoder",
-    "name": "Qoder",
-    "company": "Qoder",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "z-code",
-    "name": "Z Code",
-    "company": "Z",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "toad",
-    "name": "toad",
-    "company": "Batrachian AI",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "nimbalyst",
-    "name": "Nimbalyst",
-    "company": "Nimbalyst",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "superset",
-    "name": "Superset",
-    "company": "Superset",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "archestra",
-    "name": "archestra",
-    "company": "Archestra Inc.",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "codex-profiles",
-    "name": "codex-profiles",
-    "company": "Chai Pin Zheng",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "reasonix",
-    "name": "Reasonix",
-    "company": "ESEngine",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "minimax-code",
-    "name": "MiniMax Code",
-    "company": "MiniMax",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "meta-muse",
-    "name": "Meta Muse",
-    "company": "Meta",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "deepcode",
-    "name": "DeepCode",
-    "company": "HKUDS",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "fletch",
-    "name": "Fletch",
-    "company": "FWDAI",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "factory-ai",
-    "name": "Factory AI",
-    "company": "Factory",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "ante",
-    "name": "ante",
-    "company": "AntigmaLabs",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "unsloth",
-    "name": "unsloth",
-    "company": "unsloth",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "bb",
-    "name": "bb",
-    "company": "bb",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "openchamber",
-    "name": "OpenChamber",
-    "company": "OpenChamber",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "waku",
-    "name": "Waku",
-    "company": "EGOIST",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "jcode",
-    "name": "jcode",
-    "company": "Jeremy Huang",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "grok-bot",
-    "name": "Grok Bot",
-    "company": "X",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "ori",
-    "name": "Ori",
-    "company": "OpenRouter",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "agentone",
-    "name": "AgentOne",
-    "company": "BestCodes",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "onecli",
-    "name": "OneCLI",
-    "company": "OneCLI",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "termy",
-    "name": "Termy",
-    "company": "Lasse",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "paseo",
-    "name": "Paseo",
-    "company": "getpaseo",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "openworker",
-    "name": "OpenWorker",
-    "company": "Andrew Ng",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "monocode",
-    "name": "MonoCode",
-    "company": "Nick",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "emdash",
-    "name": "Emdash",
-    "company": "generalaction",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "atlarix",
-    "name": "Atlarix",
-    "company": "NorahLabs",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
-    "slug": "github-copilot",
-    "name": "GitHub Copilot",
-    "company": "GitHub",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "junie",
-    "name": "Junie",
-    "company": "JetBrains",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "gemini-code-assist",
-    "name": "Gemini Code Assist",
-    "company": "Google",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "amazon-q-developer",
-    "name": "Amazon Q Developer",
-    "company": "AWS",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "tabnine",
-    "name": "Tabnine",
-    "company": "Tabnine",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "cline",
-    "name": "Cline",
-    "company": "Cline",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "kilo-code",
-    "name": "Kilo Code",
-    "company": "Kilo Code",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "roo-code",
-    "name": "Roo Code",
-    "company": "Roo Code",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "continue",
-    "name": "Continue",
-    "company": "Continue",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "augment-code",
-    "name": "Augment Code",
-    "company": "Augment",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "cody",
-    "name": "Cody",
-    "company": "Sourcegraph",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "supermaven",
-    "name": "Supermaven",
-    "company": "Supermaven",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "blackbox",
-    "name": "Blackbox",
-    "company": "Blackbox",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "snyk-code",
-    "name": "Snyk Code",
-    "company": "Snyk",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "qodo",
-    "name": "Qodo",
-    "company": "Qodo",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "marscode",
-    "name": "MarsCode",
-    "company": "ByteDance",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "replit-ai",
-    "name": "Replit AI",
-    "company": "Replit",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "codebuddy",
-    "name": "CodeBuddy",
-    "company": "Tencent",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "cortex-code",
-    "name": "Cortex Code",
-    "company": "Snowflake",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "kode",
-    "name": "Kode",
-    "company": "ShareAI",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "apertis",
-    "name": "Apertis",
-    "company": "Stima",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "corust",
-    "name": "Corust",
-    "company": "Corust",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "toprank",
-    "name": "Toprank",
-    "company": "nowork-studio",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "wozcode",
-    "name": "WozCode",
-    "company": "WozCode",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "claude-code-skills",
-    "name": "Claude Code Skills 中文精选集",
-    "company": "老实人实验室",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "oh-my-codex",
-    "name": "Oh My codeX",
-    "company": "Yeachan-Heo",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "bob",
-    "name": "Bob",
-    "company": "IBM",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "firebender",
-    "name": "Firebender",
-    "company": "Firebender",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "feather-wand",
-    "name": "Feather Wand",
-    "company": "NaveenKumar Namachivayam",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "sf-pi",
-    "name": "SF Pi",
-    "company": "Salesforce",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "blume",
-    "name": "Blume",
-    "company": "Blume",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "codex",
-    "name": "Codex++",
-    "company": "bennett",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "aicode",
-    "name": "AICode",
-    "company": "AI Sovereign Labs",
-    "category": "IDE Extensions & Plugins"
-  },
-  {
-    "slug": "claude-code",
-    "name": "Claude Code",
-    "company": "Anthropic",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "codex-cli",
-    "name": "Codex CLI",
-    "company": "OpenAI",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "amp",
-    "name": "Amp",
-    "company": "Sourcegraph",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "aider",
-    "name": "Aider",
-    "company": "Aider",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "gemini-cli",
-    "name": "Gemini CLI",
-    "company": "Google",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "goose",
-    "name": "Goose",
-    "company": "Block",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "amazon-q-cli",
-    "name": "Amazon Q CLI",
-    "company": "AWS",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "letta-code",
-    "name": "Letta Code",
-    "company": "Letta",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "qwen-cli",
-    "name": "Qwen CLI",
-    "company": "Alibaba",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "codebuff",
-    "name": "Codebuff",
-    "company": "Codebuff",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "openclaw",
-    "name": "OpenClaw",
-    "company": "OpenClaw",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "command-code",
-    "name": "Command Code",
-    "company": "Command Code",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "crush",
-    "name": "Crush",
-    "company": "Charmbracelet",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "iflow-cli",
-    "name": "iFlow CLI",
-    "company": "iFlow",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "kiro-cli",
-    "name": "Kiro CLI",
-    "company": "AWS",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "lucinate",
-    "name": "lucinate",
-    "company": "lucinate-ai",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "mcpjam",
-    "name": "MCPJam",
-    "company": "MCPJam",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "mistral-vibe",
-    "name": "Mistral Vibe",
-    "company": "Mistral",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "mux",
-    "name": "Mux",
-    "company": "Coder",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "zencoder",
-    "name": "Zencoder",
-    "company": "Zencoder",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "neovate",
-    "name": "Neovate",
-    "company": "Neovate",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "adal",
-    "name": "AdaL",
-    "company": "Sylph",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "cline-kanban",
-    "name": "Cline Kanban",
-    "company": "Cline",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "parallel-code",
-    "name": "Parallel Code",
-    "company": "Parallel Code",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "pi",
-    "name": "Pi",
-    "company": "badlogic",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "autohand-acp",
-    "name": "Autohand ACP",
-    "company": "Autohand",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "crow-cli",
-    "name": "Crow CLI",
-    "company": "Crow",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "fast-agent",
-    "name": "Fast Agent",
-    "company": "EvalState",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "minion-code",
-    "name": "Minion Code",
-    "company": "Femto",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "compass-nova-cli",
-    "name": "Compass Nova CLI",
-    "company": "Compass",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "pi-acp",
-    "name": "Pi ACP",
-    "company": "svkozak",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "stakpak-agent",
-    "name": "Stakpak Agent",
-    "company": "Stakpak",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "opencode",
-    "name": "OpenCode",
-    "company": "Anomaly",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "antigravity-cli",
-    "name": "Antigravity CLI",
-    "company": "Google",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "nanocoder",
-    "name": "Nanocoder",
-    "company": "Nano Collective",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "ai-prompt-architect",
-    "name": "AI Prompt Architect",
-    "company": "AI Prompt Architect",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "ai-badger",
-    "name": "AI Badger",
-    "company": "PVR Labs",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "agentbox",
-    "name": "AgentBox",
-    "company": "Marco D'Alia",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "oh-my-pi",
-    "name": "Oh My Pi",
-    "company": "Can Bölük",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "grok-build",
-    "name": "Grok Build",
-    "company": "X",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "bitfun",
-    "name": "BitFun",
-    "company": "GCWing",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "deepseek-harness",
-    "name": "DeepSeek Harness",
-    "company": "DeepSeek",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "atomic-agent",
-    "name": "Atomic Agent",
-    "company": "AtomicBot",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "kane-cli",
-    "name": "Kane CLI",
-    "company": "TestMU AI",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "caveman-code",
-    "name": "Caveman Code",
-    "company": "Julius Brussee",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "sillage",
-    "name": "Sillage",
-    "company": "MarlBurroW (open source)",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "mathcode",
-    "name": "MathCode",
-    "company": "Math-AI",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "fxsh",
-    "name": "fx.sh",
-    "company": "Vercel",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "zero",
-    "name": "Zero",
-    "company": "Gitlawb",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "headlong",
-    "name": "Headlong",
-    "company": "Laude Institute",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "ob-1",
-    "name": "OB-1",
-    "company": "Overbrilliant",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "xirp",
-    "name": "XIRP",
-    "company": "Spotify",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "kolkrabbi",
-    "name": "Kolkrabbi",
-    "company": "onembyte (Franco Michetti)",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "yylo",
-    "name": "YYLO",
-    "company": "yylo-dev",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "warp",
-    "name": "Warp",
-    "company": "Warp",
-    "category": "AI-Native Terminals"
-  },
-  {
-    "slug": "wave",
-    "name": "Wave",
-    "company": "Wave",
-    "category": "AI-Native Terminals"
-  },
-  {
-    "slug": "termrover",
-    "name": "TermRover",
-    "company": "TermRover",
-    "category": "AI-Native Terminals"
-  },
-  {
-    "slug": "jules",
-    "name": "Jules",
-    "company": "Google",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "openhands",
-    "name": "OpenHands",
-    "company": "All Hands",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "swe-agent",
-    "name": "SWE-agent",
-    "company": "Princeton NLP",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "sweep",
-    "name": "Sweep",
-    "company": "Sweep",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "ellipsis",
-    "name": "Ellipsis",
-    "company": "Ellipsis",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "genie",
-    "name": "Genie",
-    "company": "Cosine",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "open-yak",
-    "name": "Open-yak",
-    "company": "Open-yak",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "deepagents-js",
-    "name": "DeepAgents JS",
-    "company": "LangChain",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "orkas",
-    "name": "Orkas",
-    "company": "Orkas-AI",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "kody",
-    "name": "Kody",
-    "company": "Kent C. Dodds",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "omnigent",
-    "name": "Omnigent",
-    "company": "Omnigent",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "manus",
-    "name": "Manus",
-    "company": "Monica",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "looptroop",
-    "name": "LoopTroop",
-    "company": "LoopTroop AI",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "muse",
-    "name": "Muse",
-    "company": "Meta",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "otodock",
-    "name": "OtoDock",
-    "company": "OtoDock",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "hermes-agent",
-    "name": "Hermes Agent",
-    "company": "Nous Research",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "boltnew",
-    "name": "Bolt.new",
-    "company": "StackBlitz",
-    "category": "Browser-Based & App Builders"
-  },
-  {
-    "slug": "v0",
-    "name": "v0",
-    "company": "Vercel",
-    "category": "Browser-Based & App Builders"
-  },
-  {
-    "slug": "lovable",
-    "name": "Lovable",
-    "company": "Lovable",
-    "category": "Browser-Based & App Builders"
-  },
-  {
-    "slug": "replit",
-    "name": "Replit",
-    "company": "Replit",
-    "category": "Browser-Based & App Builders"
-  },
-  {
-    "slug": "playcode",
-    "name": "PlayCode",
-    "company": "PlayCode",
-    "category": "Browser-Based & App Builders"
-  },
-  {
-    "slug": "emergentsh",
-    "name": "Emergent.sh",
-    "company": "Emergent",
-    "category": "Browser-Based & App Builders"
-  },
-  {
-    "slug": "bitrig",
-    "name": "Bitrig",
-    "company": "Bitrig",
-    "category": "Browser-Based & App Builders"
-  },
-  {
-    "slug": "floot",
-    "name": "Floot",
-    "company": "Floot",
-    "category": "Browser-Based & App Builders"
-  },
-  {
-    "slug": "dyad",
-    "name": "Dyad",
-    "company": "Dyad",
-    "category": "Browser-Based & App Builders"
-  },
-  {
-    "slug": "onlook",
-    "name": "Onlook",
-    "company": "Onlook",
-    "category": "Browser-Based & App Builders"
-  },
-  {
-    "slug": "base44",
-    "name": "Base44",
-    "company": "Base44",
-    "category": "Browser-Based & App Builders"
-  },
-  {
-    "slug": "rork",
-    "name": "Rork",
-    "company": "Rork",
-    "category": "Browser-Based & App Builders"
-  },
-  {
-    "slug": "coderabbit",
-    "name": "CodeRabbit",
-    "company": "CodeRabbit",
-    "category": "AI Code Review & Security"
-  },
-  {
-    "slug": "qodo-qodo",
-    "name": "Qodo",
-    "company": "Qodo",
-    "category": "AI Code Review & Security"
-  },
-  {
-    "slug": "snyk-code-snyk",
-    "name": "Snyk Code",
-    "company": "Snyk",
-    "category": "AI Code Review & Security"
-  },
-  {
-    "slug": "cubic",
-    "name": "cubic",
-    "company": "Cubic",
-    "category": "AI Code Review & Security"
-  },
-  {
-    "slug": "kodus",
-    "name": "Kodus",
-    "company": "Kodus",
-    "category": "AI Code Review & Security"
-  },
-  {
-    "slug": "gito",
-    "name": "Gito",
-    "company": "Vitalii Stepanenko",
-    "category": "AI Code Review & Security"
-  },
-  {
-    "slug": "bubo",
-    "name": "Bubo",
-    "company": "MountainOwl",
-    "category": "AI Code Review & Security"
-  },
-  {
-    "slug": "heygrc",
-    "name": "heygrc",
-    "company": "ISMS Copilot / Better ISMS",
-    "category": "AI Code Review & Security"
-  },
-  {
-    "slug": "mydentify-ai-crawler-access-checker",
-    "name": "Mydentify AI Crawler Access Checker",
-    "company": "Mydentify / Timothy Allard",
-    "category": "AI Code Review & Security"
-  },
-  {
-    "slug": "vercel-agent",
-    "name": "Vercel Agent",
-    "company": "Vercel",
-    "category": "AI Code Review & Security"
-  },
-  {
-    "slug": "graphite",
-    "name": "Graphite",
-    "company": "Graphite",
-    "category": "AI Code Review & Security"
-  },
-  {
-    "slug": "bito",
-    "name": "Bito",
-    "company": "Bito",
-    "category": "AI Code Review & Security"
-  },
-  {
-    "slug": "open-code-review",
-    "name": "Open Code Review",
-    "company": "Alibaba",
-    "category": "AI Code Review & Security"
-  },
-  {
-    "slug": "gitauto",
-    "name": "GitAuto",
-    "company": "GitAuto",
-    "category": "AI Testing & Quality Assurance"
-  },
-  {
-    "slug": "agentdiff",
-    "name": "AgentDiff",
-    "company": "AgentStatus",
-    "category": "AI Testing & Quality Assurance"
-  },
-  {
-    "slug": "agent-qa",
-    "name": "Agent QA",
-    "company": "Vostride",
-    "category": "AI Testing & Quality Assurance"
-  },
-  {
-    "slug": "claude",
-    "name": "Claude",
-    "company": "Anthropic",
-    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
-  },
-  {
-    "slug": "chatgpt",
-    "name": "ChatGPT",
-    "company": "OpenAI",
-    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
-  },
-  {
-    "slug": "gemini",
-    "name": "Gemini",
-    "company": "Google",
-    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
-  },
-  {
-    "slug": "deepseek",
-    "name": "DeepSeek",
-    "company": "DeepSeek",
-    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
-  },
-  {
-    "slug": "perplexity",
-    "name": "Perplexity",
-    "company": "Perplexity",
-    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
-  },
-  {
-    "slug": "greptile",
-    "name": "Greptile",
-    "company": "Greptile",
-    "category": "AI Codebase Knowledge & Generation"
-  },
-  {
-    "slug": "fern",
-    "name": "Fern",
-    "company": "Fern",
-    "category": "AI Codebase Knowledge & Generation"
-  },
-  {
-    "slug": "remio",
-    "name": "Remio",
-    "company": "Remio",
-    "category": "AI Codebase Knowledge & Generation"
-  },
-  {
-    "slug": "contextstream",
-    "name": "ContextStream",
-    "company": "ContextStream",
-    "category": "AI Codebase Knowledge & Generation"
-  },
-  {
-    "slug": "okf-agent-memory",
-    "name": "OKF Agent Memory",
-    "company": "okf-memory",
-    "category": "AI Codebase Knowledge & Generation"
-  },
-  {
-    "slug": "tseha",
-    "name": "Tseha",
-    "company": "Tseha",
-    "category": "AI Codebase Knowledge & Generation"
-  },
-  {
-    "slug": "brain-scanner",
-    "name": "Brain Scanner",
-    "company": "Kevin Lozada Santos (submitted by his authorized AI assistant)",
-    "category": "AI Codebase Knowledge & Generation"
-  },
-  {
-    "slug": "pieces-for-developers",
-    "name": "Pieces for Developers",
-    "company": "Pieces",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "agenttrace",
-    "name": "agenttrace",
-    "company": "luoyuctl",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "vibe-kanban",
-    "name": "Vibe Kanban",
-    "company": "Vibe",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "director",
-    "name": "Director",
-    "company": "Director",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "claudete",
-    "name": "Claudete",
-    "company": "Claudete",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "fractal-os",
-    "name": "Fractal OS",
-    "company": "Nubler Digital",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "zuse",
-    "name": "Zuse",
-    "company": "Zuse",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "cydonia",
-    "name": "Cydonia",
-    "company": "Crabtalk",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "ai-product-adoption-deck",
-    "name": "AI Product Adoption Deck",
-    "company": "aiproduct.cards",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "coderplan",
-    "name": "CoderPlan",
-    "company": "CoderPlan",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "aiflowlearn",
-    "name": "AIFlowLearn",
-    "company": "AIFlowLearn / 木子霖",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "faryo",
-    "name": "Faryo",
-    "company": "Snailflyer",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "tree-ring-memory",
-    "name": "Tree Ring Memory",
-    "company": "TerminallyLazy",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "openagentrelay",
-    "name": "OpenAgentRelay",
-    "company": "ShakespeareLabs",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "better-agent",
-    "name": "Better Agent",
-    "company": "Ofek Ron",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "tura",
-    "name": "Tura",
-    "company": "Tura-AI",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "fractal",
-    "name": "fractal",
-    "company": "Plasma AI",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "wolfmarkdown",
-    "name": "WolfMarkDown",
-    "company": "WolfMark",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "codex-quota-overlay",
-    "name": "Codex Quota Overlay",
-    "company": "cpys (maintainer; independent community project)",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "deskcue",
-    "name": "DeskCue",
-    "company": "Alexander Kornev",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "sandbase-cli",
-    "name": "SandBase CLI",
-    "company": "SandBase",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "aipm",
-    "name": "AIPM",
-    "company": "Abhishek Srivastava",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "superagent",
-    "name": "Superagent",
-    "company": "pungme",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "xiurouter",
-    "name": "XiuRouter",
-    "company": "XiuLab Inc",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "qwencloud",
-    "name": "QwenCloud",
-    "company": "Alibaba Cloud",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "orcareplay",
-    "name": "OrcaReplay",
-    "company": "Continuum AI",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "magic-patterns",
-    "name": "Magic Patterns",
-    "company": "Magic Patterns",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "builderio-visual-copilot",
-    "name": "Builder.io Visual Copilot",
-    "company": "Builder.io",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "jackalope",
-    "name": "Jackalope",
-    "company": "Jackalope Digital LLC",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "cabinet",
-    "name": "Cabinet",
-    "company": "Cabinet AI",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "pi-desktop",
-    "name": "PI-Desktop",
-    "company": "vastsa",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "ruflo",
-    "name": "Ruflo",
-    "company": "ruvnet",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "context-mode",
-    "name": "Context Mode",
-    "company": "mksglu",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "worktrunk",
-    "name": "Worktrunk",
-    "company": "Worktrunk",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "rtk",
-    "name": "RTK",
-    "company": "RTK-AI",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "gentle-ai",
-    "name": "Gentle-AI",
-    "company": "Gentleman Programming",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "superpowers",
-    "name": "Superpowers",
-    "company": "obra",
-    "category": "Developer Productivity & Workflow"
-  },
-  {
-    "slug": "visual-studio-code",
-    "name": "Visual Studio Code",
-    "company": "Microsoft",
-    "category": "Editor Platforms with Native AI Features"
-  },
-  {
-    "slug": "xcode",
-    "name": "Xcode",
-    "company": "Apple",
-    "category": "Editor Platforms with Native AI Features"
-  },
-  {
-    "slug": "jetbrains-ides",
-    "name": "JetBrains IDEs",
-    "company": "JetBrains",
-    "category": "Editor Platforms with Native AI Features"
-  },
-  {
-    "slug": "visual-studio",
-    "name": "Visual Studio",
-    "company": "Microsoft",
-    "category": "Editor Platforms with Native AI Features"
-  },
-  {
-    "slug": "copperhead",
-    "name": "Copperhead",
-    "company": "Copperhead",
-    "category": "Hardware & Edge AI"
-  },
-  {
-    "slug": "personal-ai-router",
-    "name": "Personal AI Router",
-    "company": "NVIDIA",
-    "category": "Hardware & Edge AI"
-  },
-  {
-    "slug": "webllm",
-    "name": "WebLLM",
-    "company": "MLC AI",
-    "category": "Hardware & Edge AI"
-  }
+ {
+  "slug": "cursor",
+  "name": "Cursor",
+  "company": "Anysphere",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "devin",
+  "name": "Devin",
+  "company": "Cognition",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "trae",
+  "name": "Trae",
+  "company": "ByteDance",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "zed",
+  "name": "Zed",
+  "company": "Zed Industries",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "pearai",
+  "name": "PearAI",
+  "company": "PearAI",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "antigravity",
+  "name": "Antigravity",
+  "company": "Google",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "void",
+  "name": "Void",
+  "company": "Void",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "verdent",
+  "name": "Verdent",
+  "company": "Verdent",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "pochi",
+  "name": "Pochi",
+  "company": "Pochi",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "qoder",
+  "name": "Qoder",
+  "company": "Qoder",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "z-code",
+  "name": "Z Code",
+  "company": "Z",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "toad",
+  "name": "toad",
+  "company": "Batrachian AI",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "nimbalyst",
+  "name": "Nimbalyst",
+  "company": "Nimbalyst",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "superset",
+  "name": "Superset",
+  "company": "Superset",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "archestra",
+  "name": "archestra",
+  "company": "Archestra Inc.",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "codex-profiles",
+  "name": "codex-profiles",
+  "company": "Chai Pin Zheng",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "reasonix",
+  "name": "Reasonix",
+  "company": "ESEngine",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "minimax-code",
+  "name": "MiniMax Code",
+  "company": "MiniMax",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "meta-muse",
+  "name": "Meta Muse",
+  "company": "Meta",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "deepcode",
+  "name": "DeepCode",
+  "company": "HKUDS",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "fletch",
+  "name": "Fletch",
+  "company": "FWDAI",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "factory-ai",
+  "name": "Factory AI",
+  "company": "Factory",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "ante",
+  "name": "ante",
+  "company": "AntigmaLabs",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "unsloth",
+  "name": "unsloth",
+  "company": "unsloth",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "bb",
+  "name": "bb",
+  "company": "bb",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "openchamber",
+  "name": "OpenChamber",
+  "company": "OpenChamber",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "waku",
+  "name": "Waku",
+  "company": "EGOIST",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "jcode",
+  "name": "jcode",
+  "company": "Jeremy Huang",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "grok-bot",
+  "name": "Grok Bot",
+  "company": "X",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "ori",
+  "name": "Ori",
+  "company": "OpenRouter",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "agentone",
+  "name": "AgentOne",
+  "company": "BestCodes",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "onecli",
+  "name": "OneCLI",
+  "company": "OneCLI",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "termy",
+  "name": "Termy",
+  "company": "Lasse",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "paseo",
+  "name": "Paseo",
+  "company": "getpaseo",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "openworker",
+  "name": "OpenWorker",
+  "company": "Andrew Ng",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "monocode",
+  "name": "MonoCode",
+  "company": "Nick",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "emdash",
+  "name": "Emdash",
+  "company": "generalaction",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "atlarix",
+  "name": "Atlarix",
+  "company": "NorahLabs",
+  "category": "AI-Native IDEs & Editors"
+ },
+ {
+  "slug": "github-copilot",
+  "name": "GitHub Copilot",
+  "company": "GitHub",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "junie",
+  "name": "Junie",
+  "company": "JetBrains",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "gemini-code-assist",
+  "name": "Gemini Code Assist",
+  "company": "Google",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "amazon-q-developer",
+  "name": "Amazon Q Developer",
+  "company": "AWS",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "tabnine",
+  "name": "Tabnine",
+  "company": "Tabnine",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "cline",
+  "name": "Cline",
+  "company": "Cline",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "kilo-code",
+  "name": "Kilo Code",
+  "company": "Kilo Code",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "roo-code",
+  "name": "Roo Code",
+  "company": "Roo Code",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "continue",
+  "name": "Continue",
+  "company": "Continue",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "augment-code",
+  "name": "Augment Code",
+  "company": "Augment",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "cody",
+  "name": "Cody",
+  "company": "Sourcegraph",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "supermaven",
+  "name": "Supermaven",
+  "company": "Supermaven",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "blackbox",
+  "name": "Blackbox",
+  "company": "Blackbox",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "snyk-code",
+  "name": "Snyk Code",
+  "company": "Snyk",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "qodo",
+  "name": "Qodo",
+  "company": "Qodo",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "marscode",
+  "name": "MarsCode",
+  "company": "ByteDance",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "replit-ai",
+  "name": "Replit AI",
+  "company": "Replit",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "codebuddy",
+  "name": "CodeBuddy",
+  "company": "Tencent",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "cortex-code",
+  "name": "Cortex Code",
+  "company": "Snowflake",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "kode",
+  "name": "Kode",
+  "company": "ShareAI",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "apertis",
+  "name": "Apertis",
+  "company": "Stima",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "corust",
+  "name": "Corust",
+  "company": "Corust",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "toprank",
+  "name": "Toprank",
+  "company": "nowork-studio",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "wozcode",
+  "name": "WozCode",
+  "company": "WozCode",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "claude-code-skills",
+  "name": "Claude Code Skills \u4e2d\u6587\u7cbe\u9009\u96c6",
+  "company": "\u8001\u5b9e\u4eba\u5b9e\u9a8c\u5ba4",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "oh-my-codex",
+  "name": "Oh My codeX",
+  "company": "Yeachan-Heo",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "bob",
+  "name": "Bob",
+  "company": "IBM",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "firebender",
+  "name": "Firebender",
+  "company": "Firebender",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "feather-wand",
+  "name": "Feather Wand",
+  "company": "NaveenKumar Namachivayam",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "sf-pi",
+  "name": "SF Pi",
+  "company": "Salesforce",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "blume",
+  "name": "Blume",
+  "company": "Blume",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "codex",
+  "name": "Codex++",
+  "company": "bennett",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "aicode",
+  "name": "AICode",
+  "company": "AI Sovereign Labs",
+  "category": "IDE Extensions & Plugins"
+ },
+ {
+  "slug": "claude-code",
+  "name": "Claude Code",
+  "company": "Anthropic",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "codex-cli",
+  "name": "Codex CLI",
+  "company": "OpenAI",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "amp",
+  "name": "Amp",
+  "company": "Sourcegraph",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "aider",
+  "name": "Aider",
+  "company": "Aider",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "gemini-cli",
+  "name": "Gemini CLI",
+  "company": "Google",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "goose",
+  "name": "Goose",
+  "company": "Block",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "amazon-q-cli",
+  "name": "Amazon Q CLI",
+  "company": "AWS",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "letta-code",
+  "name": "Letta Code",
+  "company": "Letta",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "qwen-cli",
+  "name": "Qwen CLI",
+  "company": "Alibaba",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "codebuff",
+  "name": "Codebuff",
+  "company": "Codebuff",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "openclaw",
+  "name": "OpenClaw",
+  "company": "OpenClaw",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "command-code",
+  "name": "Command Code",
+  "company": "Command Code",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "crush",
+  "name": "Crush",
+  "company": "Charmbracelet",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "iflow-cli",
+  "name": "iFlow CLI",
+  "company": "iFlow",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "kiro-cli",
+  "name": "Kiro CLI",
+  "company": "AWS",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "lucinate",
+  "name": "lucinate",
+  "company": "lucinate-ai",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "mcpjam",
+  "name": "MCPJam",
+  "company": "MCPJam",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "mistral-vibe",
+  "name": "Mistral Vibe",
+  "company": "Mistral",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "mux",
+  "name": "Mux",
+  "company": "Coder",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "zencoder",
+  "name": "Zencoder",
+  "company": "Zencoder",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "neovate",
+  "name": "Neovate",
+  "company": "Neovate",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "adal",
+  "name": "AdaL",
+  "company": "Sylph",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "cline-kanban",
+  "name": "Cline Kanban",
+  "company": "Cline",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "parallel-code",
+  "name": "Parallel Code",
+  "company": "Parallel Code",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "pi",
+  "name": "Pi",
+  "company": "badlogic",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "autohand-acp",
+  "name": "Autohand ACP",
+  "company": "Autohand",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "crow-cli",
+  "name": "Crow CLI",
+  "company": "Crow",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "fast-agent",
+  "name": "Fast Agent",
+  "company": "EvalState",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "minion-code",
+  "name": "Minion Code",
+  "company": "Femto",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "compass-nova-cli",
+  "name": "Compass Nova CLI",
+  "company": "Compass",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "pi-acp",
+  "name": "Pi ACP",
+  "company": "svkozak",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "stakpak-agent",
+  "name": "Stakpak Agent",
+  "company": "Stakpak",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "opencode",
+  "name": "OpenCode",
+  "company": "Anomaly",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "antigravity-cli",
+  "name": "Antigravity CLI",
+  "company": "Google",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "nanocoder",
+  "name": "Nanocoder",
+  "company": "Nano Collective",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "ai-prompt-architect",
+  "name": "AI Prompt Architect",
+  "company": "AI Prompt Architect",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "ai-badger",
+  "name": "AI Badger",
+  "company": "PVR Labs",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "agentbox",
+  "name": "AgentBox",
+  "company": "Marco D'Alia",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "oh-my-pi",
+  "name": "Oh My Pi",
+  "company": "Can B\u00f6l\u00fck",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "grok-build",
+  "name": "Grok Build",
+  "company": "X",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "bitfun",
+  "name": "BitFun",
+  "company": "GCWing",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "deepseek-harness",
+  "name": "DeepSeek Harness",
+  "company": "DeepSeek",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "atomic-agent",
+  "name": "Atomic Agent",
+  "company": "AtomicBot",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "kane-cli",
+  "name": "Kane CLI",
+  "company": "TestMU AI",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "caveman-code",
+  "name": "Caveman Code",
+  "company": "Julius Brussee",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "sillage",
+  "name": "Sillage",
+  "company": "MarlBurroW (open source)",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "mathcode",
+  "name": "MathCode",
+  "company": "Math-AI",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "fxsh",
+  "name": "fx.sh",
+  "company": "Vercel",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "zero",
+  "name": "Zero",
+  "company": "Gitlawb",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "headlong",
+  "name": "Headlong",
+  "company": "Laude Institute",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "ob-1",
+  "name": "OB-1",
+  "company": "Overbrilliant",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "xirp",
+  "name": "XIRP",
+  "company": "Spotify",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "kolkrabbi",
+  "name": "Kolkrabbi",
+  "company": "onembyte (Franco Michetti)",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "yylo",
+  "name": "YYLO",
+  "company": "yylo-dev",
+  "category": "Terminal & CLI Agents"
+ },
+ {
+  "slug": "warp",
+  "name": "Warp",
+  "company": "Warp",
+  "category": "AI-Native Terminals"
+ },
+ {
+  "slug": "wave",
+  "name": "Wave",
+  "company": "Wave",
+  "category": "AI-Native Terminals"
+ },
+ {
+  "slug": "termrover",
+  "name": "TermRover",
+  "company": "TermRover",
+  "category": "AI-Native Terminals"
+ },
+ {
+  "slug": "jules",
+  "name": "Jules",
+  "company": "Google",
+  "category": "Autonomous & Async Agents"
+ },
+ {
+  "slug": "openhands",
+  "name": "OpenHands",
+  "company": "All Hands",
+  "category": "Autonomous & Async Agents"
+ },
+ {
+  "slug": "swe-agent",
+  "name": "SWE-agent",
+  "company": "Princeton NLP",
+  "category": "Autonomous & Async Agents"
+ },
+ {
+  "slug": "sweep",
+  "name": "Sweep",
+  "company": "Sweep",
+  "category": "Autonomous & Async Agents"
+ },
+ {
+  "slug": "ellipsis",
+  "name": "Ellipsis",
+  "company": "Ellipsis",
+  "category": "Autonomous & Async Agents"
+ },
+ {
+  "slug": "genie",
+  "name": "Genie",
+  "company": "Cosine",
+  "category": "Autonomous & Async Agents"
+ },
+ {
+  "slug": "open-yak",
+  "name": "Open-yak",
+  "company": "Open-yak",
+  "category": "Autonomous & Async Agents"
+ },
+ {
+  "slug": "deepagents-js",
+  "name": "DeepAgents JS",
+  "company": "LangChain",
+  "category": "Autonomous & Async Agents"
+ },
+ {
+  "slug": "orkas",
+  "name": "Orkas",
+  "company": "Orkas-AI",
+  "category": "Autonomous & Async Agents"
+ },
+ {
+  "slug": "kody",
+  "name": "Kody",
+  "company": "Kent C. Dodds",
+  "category": "Autonomous & Async Agents"
+ },
+ {
+  "slug": "omnigent",
+  "name": "Omnigent",
+  "company": "Omnigent",
+  "category": "Autonomous & Async Agents"
+ },
+ {
+  "slug": "manus",
+  "name": "Manus",
+  "company": "Monica",
+  "category": "Autonomous & Async Agents"
+ },
+ {
+  "slug": "looptroop",
+  "name": "LoopTroop",
+  "company": "LoopTroop AI",
+  "category": "Autonomous & Async Agents"
+ },
+ {
+  "slug": "muse",
+  "name": "Muse",
+  "company": "Meta",
+  "category": "Autonomous & Async Agents"
+ },
+ {
+  "slug": "otodock",
+  "name": "OtoDock",
+  "company": "OtoDock",
+  "category": "Autonomous & Async Agents"
+ },
+ {
+  "slug": "hermes-agent",
+  "name": "Hermes Agent",
+  "company": "Nous Research",
+  "category": "Autonomous & Async Agents"
+ },
+ {
+  "slug": "boltnew",
+  "name": "Bolt.new",
+  "company": "StackBlitz",
+  "category": "Browser-Based & App Builders"
+ },
+ {
+  "slug": "v0",
+  "name": "v0",
+  "company": "Vercel",
+  "category": "Browser-Based & App Builders"
+ },
+ {
+  "slug": "lovable",
+  "name": "Lovable",
+  "company": "Lovable",
+  "category": "Browser-Based & App Builders"
+ },
+ {
+  "slug": "replit",
+  "name": "Replit",
+  "company": "Replit",
+  "category": "Browser-Based & App Builders"
+ },
+ {
+  "slug": "playcode",
+  "name": "PlayCode",
+  "company": "PlayCode",
+  "category": "Browser-Based & App Builders"
+ },
+ {
+  "slug": "emergentsh",
+  "name": "Emergent.sh",
+  "company": "Emergent",
+  "category": "Browser-Based & App Builders"
+ },
+ {
+  "slug": "bitrig",
+  "name": "Bitrig",
+  "company": "Bitrig",
+  "category": "Browser-Based & App Builders"
+ },
+ {
+  "slug": "floot",
+  "name": "Floot",
+  "company": "Floot",
+  "category": "Browser-Based & App Builders"
+ },
+ {
+  "slug": "dyad",
+  "name": "Dyad",
+  "company": "Dyad",
+  "category": "Browser-Based & App Builders"
+ },
+ {
+  "slug": "onlook",
+  "name": "Onlook",
+  "company": "Onlook",
+  "category": "Browser-Based & App Builders"
+ },
+ {
+  "slug": "base44",
+  "name": "Base44",
+  "company": "Base44",
+  "category": "Browser-Based & App Builders"
+ },
+ {
+  "slug": "rork",
+  "name": "Rork",
+  "company": "Rork",
+  "category": "Browser-Based & App Builders"
+ },
+ {
+  "slug": "coderabbit",
+  "name": "CodeRabbit",
+  "company": "CodeRabbit",
+  "category": "AI Code Review & Security"
+ },
+ {
+  "slug": "qodo-qodo",
+  "name": "Qodo",
+  "company": "Qodo",
+  "category": "AI Code Review & Security"
+ },
+ {
+  "slug": "snyk-code-snyk",
+  "name": "Snyk Code",
+  "company": "Snyk",
+  "category": "AI Code Review & Security"
+ },
+ {
+  "slug": "cubic",
+  "name": "cubic",
+  "company": "Cubic",
+  "category": "AI Code Review & Security"
+ },
+ {
+  "slug": "kodus",
+  "name": "Kodus",
+  "company": "Kodus",
+  "category": "AI Code Review & Security"
+ },
+ {
+  "slug": "gito",
+  "name": "Gito",
+  "company": "Vitalii Stepanenko",
+  "category": "AI Code Review & Security"
+ },
+ {
+  "slug": "bubo",
+  "name": "Bubo",
+  "company": "MountainOwl",
+  "category": "AI Code Review & Security"
+ },
+ {
+  "slug": "heygrc",
+  "name": "heygrc",
+  "company": "ISMS Copilot / Better ISMS",
+  "category": "AI Code Review & Security"
+ },
+ {
+  "slug": "mydentify-ai-crawler-access-checker",
+  "name": "Mydentify AI Crawler Access Checker",
+  "company": "Mydentify / Timothy Allard",
+  "category": "AI Code Review & Security"
+ },
+ {
+  "slug": "vercel-agent",
+  "name": "Vercel Agent",
+  "company": "Vercel",
+  "category": "AI Code Review & Security"
+ },
+ {
+  "slug": "graphite",
+  "name": "Graphite",
+  "company": "Graphite",
+  "category": "AI Code Review & Security"
+ },
+ {
+  "slug": "bito",
+  "name": "Bito",
+  "company": "Bito",
+  "category": "AI Code Review & Security"
+ },
+ {
+  "slug": "open-code-review",
+  "name": "Open Code Review",
+  "company": "Alibaba",
+  "category": "AI Code Review & Security"
+ },
+ {
+  "slug": "gitauto",
+  "name": "GitAuto",
+  "company": "GitAuto",
+  "category": "AI Testing & Quality Assurance"
+ },
+ {
+  "slug": "agentdiff",
+  "name": "AgentDiff",
+  "company": "AgentStatus",
+  "category": "AI Testing & Quality Assurance"
+ },
+ {
+  "slug": "agent-qa",
+  "name": "Agent QA",
+  "company": "Vostride",
+  "category": "AI Testing & Quality Assurance"
+ },
+ {
+  "slug": "claude",
+  "name": "Claude",
+  "company": "Anthropic",
+  "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+ },
+ {
+  "slug": "chatgpt",
+  "name": "ChatGPT",
+  "company": "OpenAI",
+  "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+ },
+ {
+  "slug": "gemini",
+  "name": "Gemini",
+  "company": "Google",
+  "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+ },
+ {
+  "slug": "deepseek",
+  "name": "DeepSeek",
+  "company": "DeepSeek",
+  "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+ },
+ {
+  "slug": "perplexity",
+  "name": "Perplexity",
+  "company": "Perplexity",
+  "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+ },
+ {
+  "slug": "greptile",
+  "name": "Greptile",
+  "company": "Greptile",
+  "category": "AI Codebase Knowledge & Generation"
+ },
+ {
+  "slug": "fern",
+  "name": "Fern",
+  "company": "Fern",
+  "category": "AI Codebase Knowledge & Generation"
+ },
+ {
+  "slug": "remio",
+  "name": "Remio",
+  "company": "Remio",
+  "category": "AI Codebase Knowledge & Generation"
+ },
+ {
+  "slug": "contextstream",
+  "name": "ContextStream",
+  "company": "ContextStream",
+  "category": "AI Codebase Knowledge & Generation"
+ },
+ {
+  "slug": "okf-agent-memory",
+  "name": "OKF Agent Memory",
+  "company": "okf-memory",
+  "category": "AI Codebase Knowledge & Generation"
+ },
+ {
+  "slug": "tseha",
+  "name": "Tseha",
+  "company": "Tseha",
+  "category": "AI Codebase Knowledge & Generation"
+ },
+ {
+  "slug": "brain-scanner",
+  "name": "Brain Scanner",
+  "company": "Kevin Lozada Santos (submitted by his authorized AI assistant)",
+  "category": "AI Codebase Knowledge & Generation"
+ },
+ {
+  "slug": "pieces-for-developers",
+  "name": "Pieces for Developers",
+  "company": "Pieces",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "agenttrace",
+  "name": "agenttrace",
+  "company": "luoyuctl",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "vibe-kanban",
+  "name": "Vibe Kanban",
+  "company": "Vibe",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "director",
+  "name": "Director",
+  "company": "Director",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "claudete",
+  "name": "Claudete",
+  "company": "Claudete",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "fractal-os",
+  "name": "Fractal OS",
+  "company": "Nubler Digital",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "zuse",
+  "name": "Zuse",
+  "company": "Zuse",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "cydonia",
+  "name": "Cydonia",
+  "company": "Crabtalk",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "ai-product-adoption-deck",
+  "name": "AI Product Adoption Deck",
+  "company": "aiproduct.cards",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "coderplan",
+  "name": "CoderPlan",
+  "company": "CoderPlan",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "aiflowlearn",
+  "name": "AIFlowLearn",
+  "company": "AIFlowLearn / \u6728\u5b50\u9716",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "faryo",
+  "name": "Faryo",
+  "company": "Snailflyer",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "tree-ring-memory",
+  "name": "Tree Ring Memory",
+  "company": "TerminallyLazy",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "openagentrelay",
+  "name": "OpenAgentRelay",
+  "company": "ShakespeareLabs",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "better-agent",
+  "name": "Better Agent",
+  "company": "Ofek Ron",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "tura",
+  "name": "Tura",
+  "company": "Tura-AI",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "fractal",
+  "name": "fractal",
+  "company": "Plasma AI",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "wolfmarkdown",
+  "name": "WolfMarkDown",
+  "company": "WolfMark",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "codex-quota-overlay",
+  "name": "Codex Quota Overlay",
+  "company": "cpys (maintainer; independent community project)",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "deskcue",
+  "name": "DeskCue",
+  "company": "Alexander Kornev",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "sandbase-cli",
+  "name": "SandBase CLI",
+  "company": "SandBase",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "aipm",
+  "name": "AIPM",
+  "company": "Abhishek Srivastava",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "superagent",
+  "name": "Superagent",
+  "company": "pungme",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "xiurouter",
+  "name": "XiuRouter",
+  "company": "XiuLab Inc",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "qwencloud",
+  "name": "QwenCloud",
+  "company": "Alibaba Cloud",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "orcareplay",
+  "name": "OrcaReplay",
+  "company": "Continuum AI",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "magic-patterns",
+  "name": "Magic Patterns",
+  "company": "Magic Patterns",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "builderio-visual-copilot",
+  "name": "Builder.io Visual Copilot",
+  "company": "Builder.io",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "jackalope",
+  "name": "Jackalope",
+  "company": "Jackalope Digital LLC",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "cabinet",
+  "name": "Cabinet",
+  "company": "Cabinet AI",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "pi-desktop",
+  "name": "PI-Desktop",
+  "company": "vastsa",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "ruflo",
+  "name": "Ruflo",
+  "company": "ruvnet",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "context-mode",
+  "name": "Context Mode",
+  "company": "mksglu",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "worktrunk",
+  "name": "Worktrunk",
+  "company": "Worktrunk",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "rtk",
+  "name": "RTK",
+  "company": "RTK-AI",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "gentle-ai",
+  "name": "Gentle-AI",
+  "company": "Gentleman Programming",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "superpowers",
+  "name": "Superpowers",
+  "company": "obra",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "visual-studio-code",
+  "name": "Visual Studio Code",
+  "company": "Microsoft",
+  "category": "Editor Platforms with Native AI Features"
+ },
+ {
+  "slug": "xcode",
+  "name": "Xcode",
+  "company": "Apple",
+  "category": "Editor Platforms with Native AI Features"
+ },
+ {
+  "slug": "jetbrains-ides",
+  "name": "JetBrains IDEs",
+  "company": "JetBrains",
+  "category": "Editor Platforms with Native AI Features"
+ },
+ {
+  "slug": "visual-studio",
+  "name": "Visual Studio",
+  "company": "Microsoft",
+  "category": "Editor Platforms with Native AI Features"
+ },
+ {
+  "slug": "copperhead",
+  "name": "Copperhead",
+  "company": "Copperhead",
+  "category": "Hardware & Edge AI"
+ },
+ {
+  "slug": "personal-ai-router",
+  "name": "Personal AI Router",
+  "company": "NVIDIA",
+  "category": "Hardware & Edge AI"
+ },
+ {
+  "slug": "webllm",
+  "name": "WebLLM",
+  "company": "MLC AI",
+  "category": "Hardware & Edge AI"
+ },
+ {
+  "slug": "deployreview",
+  "name": "DeployReview",
+  "company": "cjaime708",
+  "category": "AI Code Review & Security"
+ },
+ {
+  "slug": "diffexplainerhq",
+  "name": "DiffExplainerHQ",
+  "company": "cjaime708",
+  "category": "Developer Productivity & Workflow"
+ },
+ {
+  "slug": "llmauditor",
+  "name": "LLMAuditor",
+  "company": "cjaime708",
+  "category": "Developer Productivity & Workflow"
+ }
 ]
