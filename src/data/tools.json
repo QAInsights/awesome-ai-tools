@@ -1,898 +1,910 @@
 [
-  {
-    "companyName": "Anysphere",
-    "toolName": "Cursor"
-  },
-  {
-    "companyName": "Cognition",
-    "toolName": "Devin"
-  },
-  {
-    "companyName": "ByteDance",
-    "toolName": "Trae"
-  },
-  {
-    "companyName": "Zed Industries",
-    "toolName": "Zed"
-  },
-  {
-    "companyName": "PearAI",
-    "toolName": "PearAI"
-  },
-  {
-    "companyName": "Google",
-    "toolName": "Antigravity"
-  },
-  {
-    "companyName": "Void",
-    "toolName": "Void"
-  },
-  {
-    "companyName": "Verdent",
-    "toolName": "Verdent"
-  },
-  {
-    "companyName": "Pochi",
-    "toolName": "Pochi"
-  },
-  {
-    "companyName": "Qoder",
-    "toolName": "Qoder"
-  },
-  {
-    "companyName": "Z",
-    "toolName": "Z Code"
-  },
-  {
-    "companyName": "GitHub",
-    "toolName": "GitHub Copilot"
-  },
-  {
-    "companyName": "JetBrains",
-    "toolName": "Junie"
-  },
-  {
-    "companyName": "Google",
-    "toolName": "Gemini Code Assist"
-  },
-  {
-    "companyName": "AWS",
-    "toolName": "Amazon Q Developer"
-  },
-  {
-    "companyName": "Tabnine",
-    "toolName": "Tabnine"
-  },
-  {
-    "companyName": "Cline",
-    "toolName": "Cline"
-  },
-  {
-    "companyName": "Kilo Code",
-    "toolName": "Kilo Code"
-  },
-  {
-    "companyName": "Roo Code",
-    "toolName": "Roo Code"
-  },
-  {
-    "companyName": "Continue",
-    "toolName": "Continue"
-  },
-  {
-    "companyName": "Augment",
-    "toolName": "Augment Code"
-  },
-  {
-    "companyName": "Sourcegraph",
-    "toolName": "Cody"
-  },
-  {
-    "companyName": "Supermaven",
-    "toolName": "Supermaven"
-  },
-  {
-    "companyName": "Blackbox",
-    "toolName": "Blackbox"
-  },
-  {
-    "companyName": "Snyk",
-    "toolName": "Snyk Code"
-  },
-  {
-    "companyName": "Qodo",
-    "toolName": "Qodo"
-  },
-  {
-    "companyName": "ByteDance",
-    "toolName": "MarsCode"
-  },
-  {
-    "companyName": "Replit",
-    "toolName": "Replit AI"
-  },
-  {
-    "companyName": "Tencent",
-    "toolName": "CodeBuddy"
-  },
-  {
-    "companyName": "Snowflake",
-    "toolName": "Cortex Code"
-  },
-  {
-    "companyName": "ShareAI",
-    "toolName": "Kode"
-  },
-  {
-    "companyName": "Stima",
-    "toolName": "Apertis"
-  },
-  {
-    "companyName": "Corust",
-    "toolName": "Corust"
-  },
-  {
-    "companyName": "nowork-studio",
-    "toolName": "Toprank"
-  },
-  {
-    "companyName": "WozCode",
-    "toolName": "WozCode"
-  },
-  {
-    "companyName": "Yeachan-Heo",
-    "toolName": "Oh My codeX"
-  },
-  {
-    "companyName": "IBM",
-    "toolName": "Bob"
-  },
-  {
-    "companyName": "Firebender",
-    "toolName": "Firebender"
-  },
-  {
-    "companyName": "Anthropic",
-    "toolName": "Claude Code"
-  },
-  {
-    "companyName": "OpenAI",
-    "toolName": "Codex CLI"
-  },
-  {
-    "companyName": "Aider",
-    "toolName": "Aider"
-  },
-  {
-    "companyName": "Google",
-    "toolName": "Gemini CLI"
-  },
-  {
-    "companyName": "Block",
-    "toolName": "Goose"
-  },
-  {
-    "companyName": "AWS",
-    "toolName": "Amazon Q CLI"
-  },
-  {
-    "companyName": "Letta",
-    "toolName": "Letta Code"
-  },
-  {
-    "companyName": "Alibaba",
-    "toolName": "Qwen CLI"
-  },
-  {
-    "companyName": "Codebuff",
-    "toolName": "Codebuff"
-  },
-  {
-    "companyName": "OpenClaw",
-    "toolName": "OpenClaw"
-  },
-  {
-    "companyName": "Command Code",
-    "toolName": "Command Code"
-  },
-  {
-    "companyName": "Charmbracelet",
-    "toolName": "Crush"
-  },
-  {
-    "companyName": "iFlow",
-    "toolName": "iFlow CLI"
-  },
-  {
-    "companyName": "AWS",
-    "toolName": "Kiro CLI"
-  },
-  {
-    "companyName": "MCPJam",
-    "toolName": "MCPJam"
-  },
-  {
-    "companyName": "Mistral",
-    "toolName": "Mistral Vibe"
-  },
-  {
-    "companyName": "Coder",
-    "toolName": "Mux"
-  },
-  {
-    "companyName": "Zencoder",
-    "toolName": "Zencoder"
-  },
-  {
-    "companyName": "Neovate",
-    "toolName": "Neovate"
-  },
-  {
-    "companyName": "Sylph",
-    "toolName": "AdaL"
-  },
-  {
-    "companyName": "Cline",
-    "toolName": "Cline Kanban"
-  },
-  {
-    "companyName": "Parallel Code",
-    "toolName": "Parallel Code"
-  },
-  {
-    "companyName": "badlogic",
-    "toolName": "Pi"
-  },
-  {
-    "companyName": "Autohand",
-    "toolName": "Autohand ACP"
-  },
-  {
-    "companyName": "Crow",
-    "toolName": "Crow CLI"
-  },
-  {
-    "companyName": "EvalState",
-    "toolName": "Fast Agent"
-  },
-  {
-    "companyName": "Femto",
-    "toolName": "Minion Code"
-  },
-  {
-    "companyName": "Compass",
-    "toolName": "Compass Nova CLI"
-  },
-  {
-    "companyName": "svkozak",
-    "toolName": "Pi ACP"
-  },
-  {
-    "companyName": "Stakpak",
-    "toolName": "Stakpak Agent"
-  },
-  {
-    "companyName": "Anomaly",
-    "toolName": "OpenCode"
-  },
-  {
-    "companyName": "Warp",
-    "toolName": "Warp"
-  },
-  {
-    "companyName": "Wave",
-    "toolName": "Wave"
-  },
-  {
-    "companyName": "Google",
-    "toolName": "Jules"
-  },
-  {
-    "companyName": "All Hands",
-    "toolName": "OpenHands"
-  },
-  {
-    "companyName": "Princeton NLP",
-    "toolName": "SWE-agent"
-  },
-  {
-    "companyName": "Sweep",
-    "toolName": "Sweep"
-  },
-  {
-    "companyName": "Ellipsis",
-    "toolName": "Ellipsis"
-  },
-  {
-    "companyName": "Cosine",
-    "toolName": "Genie"
-  },
-  {
-    "companyName": "Open-yak",
-    "toolName": "Open-yak"
-  },
-  {
-    "companyName": "LangChain",
-    "toolName": "DeepAgents JS"
-  },
-  {
-    "companyName": "StackBlitz",
-    "toolName": "Bolt.new"
-  },
-  {
-    "companyName": "Vercel",
-    "toolName": "v0"
-  },
-  {
-    "companyName": "Lovable",
-    "toolName": "Lovable"
-  },
-  {
-    "companyName": "Replit",
-    "toolName": "Replit"
-  },
-  {
-    "companyName": "PlayCode",
-    "toolName": "PlayCode"
-  },
-  {
-    "companyName": "Emergent",
-    "toolName": "Emergent.sh"
-  },
-  {
-    "companyName": "Bitrig",
-    "toolName": "Bitrig"
-  },
-  {
-    "companyName": "Monica",
-    "toolName": "Manus"
-  },
-  {
-    "companyName": "CodeRabbit",
-    "toolName": "CodeRabbit"
-  },
-  {
-    "companyName": "Qodo",
-    "toolName": "Qodo"
-  },
-  {
-    "companyName": "Snyk",
-    "toolName": "Snyk Code"
-  },
-  {
-    "companyName": "GitAuto",
-    "toolName": "GitAuto"
-  },
-  {
-    "companyName": "Anthropic",
-    "toolName": "Claude"
-  },
-  {
-    "companyName": "OpenAI",
-    "toolName": "ChatGPT"
-  },
-  {
-    "companyName": "Google",
-    "toolName": "Gemini"
-  },
-  {
-    "companyName": "DeepSeek",
-    "toolName": "DeepSeek"
-  },
-  {
-    "companyName": "Perplexity",
-    "toolName": "Perplexity"
-  },
-  {
-    "companyName": "Greptile",
-    "toolName": "Greptile"
-  },
-  {
-    "companyName": "Fern",
-    "toolName": "Fern"
-  },
-  {
-    "companyName": "Pieces",
-    "toolName": "Pieces for Developers"
-  },
-  {
-    "companyName": "Vibe",
-    "toolName": "Vibe Kanban"
-  },
-  {
-    "companyName": "Microsoft",
-    "toolName": "Visual Studio Code"
-  },
-  {
-    "companyName": "Apple",
-    "toolName": "Xcode"
-  },
-  {
-    "companyName": "JetBrains",
-    "toolName": "JetBrains IDEs"
-  },
-  {
-    "companyName": "Microsoft",
-    "toolName": "Visual Studio"
-  },
-  {
-    "companyName": "Batrachian AI",
-    "toolName": "toad"
-  },
-  {
-    "companyName": "Superset",
-    "toolName": "Superset"
-  },
-  {
-    "companyName": "AgentStatus",
-    "toolName": "AgentDiff"
-  },
-  {
-    "companyName": "Archestra Inc.",
-    "toolName": "archestra"
-  },
-  {
-    "companyName": "Chai Pin Zheng",
-    "toolName": "codex-profiles"
-  },
-  {
-    "companyName": "ESEngine",
-    "toolName": "Reasonix"
-  },
-  {
-    "companyName": "Cubic",
-    "toolName": "cubic"
-  },
-  {
-    "companyName": "aiproduct.cards",
-    "toolName": "AI Product Adoption Deck"
-  },
-  {
-    "companyName": "Kodus",
-    "toolName": "Kodus"
-  },
-  {
-    "companyName": "Google",
-    "toolName": "Antigravity CLI"
-  },
-  {
-    "companyName": "CoderPlan",
-    "toolName": "CoderPlan"
-  },
-  {
-    "companyName": "AIFlowLearn / 木子霖",
-    "toolName": "AIFlowLearn"
-  },
-  {
-    "companyName": "Snailflyer",
-    "toolName": "Faryo"
-  },
-  {
-    "companyName": "Nano Collective",
-    "toolName": "Nanocoder"
-  },
-  {
-    "companyName": "Vitalii Stepanenko",
-    "toolName": "Gito"
-  },
-  {
-    "companyName": "AI Prompt Architect",
-    "toolName": "AI Prompt Architect"
-  },
-  {
-    "companyName": "PVR Labs",
-    "toolName": "AI Badger"
-  },
-  {
-    "companyName": "Remio",
-    "toolName": "Remio"
-  },
-  {
-    "companyName": "TerminallyLazy",
-    "toolName": "Tree Ring Memory"
-  },
-  {
-    "companyName": "ShakespeareLabs",
-    "toolName": "OpenAgentRelay"
-  },
-  {
-    "companyName": "Ofek Ron",
-    "toolName": "Better Agent"
-  },
-  {
-    "companyName": "Tura-AI",
-    "toolName": "Tura"
-  },
-  {
-    "companyName": "Plasma AI",
-    "toolName": "fractal"
-  },
-  {
-    "companyName": "Marco D'Alia",
-    "toolName": "AgentBox"
-  },
-  {
-    "companyName": "Orkas-AI",
-    "toolName": "Orkas"
-  },
-  {
-    "companyName": "MiniMax",
-    "toolName": "MiniMax Code"
-  },
-  {
-    "companyName": "Meta",
-    "toolName": "Meta Muse"
-  },
-  {
-    "companyName": "Can Bölük",
-    "toolName": "Oh My Pi"
-  },
-  {
-    "companyName": "HKUDS",
-    "toolName": "DeepCode"
-  },
-  {
-    "companyName": "MountainOwl",
-    "toolName": "Bubo"
-  },
-  {
-    "companyName": "FWDAI",
-    "toolName": "Fletch"
-  },
-  {
-    "companyName": "Kent C. Dodds",
-    "toolName": "Kody"
-  },
-  {
-    "companyName": "Omnigent",
-    "toolName": "Omnigent"
-  },
-  {
-    "companyName": "Factory",
-    "toolName": "Factory AI"
-  },
-  {
-    "companyName": "NaveenKumar Namachivayam",
-    "toolName": "Feather Wand"
-  },
-  {
-    "companyName": "AntigmaLabs",
-    "toolName": "ante"
-  },
-  {
-    "companyName": "ISMS Copilot / Better ISMS",
-    "toolName": "heygrc"
-  },
-  {
-    "companyName": "unsloth",
-    "toolName": "unsloth"
-  },
-  {
-    "companyName": "bb",
-    "toolName": "bb"
-  },
-  {
-    "companyName": "Salesforce",
-    "toolName": "SF Pi"
-  },
-  {
-    "companyName": "OpenChamber",
-    "toolName": "OpenChamber"
-  },
-  {
-    "companyName": "EGOIST",
-    "toolName": "Waku"
-  },
-  {
-    "companyName": "Jeremy Huang",
-    "toolName": "jcode"
-  },
-  {
-    "companyName": "Blume",
-    "toolName": "Blume"
-  },
-  {
-    "companyName": "X",
-    "toolName": "Grok Build"
-  },
-  {
-    "companyName": "X",
-    "toolName": "Grok Bot"
-  },
-  {
-    "companyName": "OpenRouter",
-    "toolName": "Ori"
-  },
-  {
-    "companyName": "GCWing",
-    "toolName": "BitFun"
-  },
-  {
-    "companyName": "DeepSeek",
-    "toolName": "DeepSeek Harness"
-  },
-  {
-    "companyName": "AtomicBot",
-    "toolName": "Atomic Agent"
-  },
-  {
-    "companyName": "TestMU AI",
-    "toolName": "Kane CLI"
-  },
-  {
-    "companyName": "Julius Brussee",
-    "toolName": "Caveman Code"
-  },
-  {
-    "companyName": "LoopTroop AI",
-    "toolName": "LoopTroop"
-  },
-  {
-    "companyName": "MarlBurroW (open source)",
-    "toolName": "Sillage"
-  },
-  {
-    "companyName": "SandBase",
-    "toolName": "SandBase CLI"
-  },
-  {
-    "companyName": "Mydentify / Timothy Allard",
-    "toolName": "Mydentify AI Crawler Access Checker"
-  },
-  {
-    "companyName": "WolfMark",
-    "toolName": "WolfMarkDown"
-  },
-  {
-    "companyName": "bennett",
-    "toolName": "Codex++"
-  },
-  {
-    "companyName": "Vostride",
-    "toolName": "Agent QA"
-  },
-  {
-    "companyName": "cpys (maintainer; independent community project)",
-    "toolName": "Codex Quota Overlay"
-  },
-  {
-    "companyName": "Math-AI",
-    "toolName": "MathCode"
-  },
-  {
-    "companyName": "BestCodes",
-    "toolName": "AgentOne"
-  },
-  {
-    "companyName": "Vercel",
-    "toolName": "fx.sh"
-  },
-  {
-    "companyName": "Gitlawb",
-    "toolName": "Zero"
-  },
-  {
-    "companyName": "Alexander Kornev",
-    "toolName": "DeskCue"
-  },
-  {
-    "companyName": "OneCLI",
-    "toolName": "OneCLI"
-  },
-  {
-    "companyName": "Floot",
-    "toolName": "Floot"
-  },
-  {
-    "companyName": "Lasse",
-    "toolName": "Termy"
-  },
-  {
-    "companyName": "getpaseo",
-    "toolName": "Paseo"
-  },
-  {
-    "companyName": "Laude Institute",
-    "toolName": "Headlong"
-  },
-  {
-    "companyName": "Andrew Ng",
-    "toolName": "OpenWorker"
-  },
-  {
-    "companyName": "Overbrilliant",
-    "toolName": "OB-1"
-  },
-  {
-    "companyName": "AI Sovereign Labs",
-    "toolName": "AICode"
-  },
-  {
-    "companyName": "Abhishek Srivastava",
-    "toolName": "AIPM"
-  },
-  {
-    "companyName": "pungme",
-    "toolName": "Superagent"
-  },
-  {
-    "companyName": "Spotify",
-    "toolName": "XIRP"
-  },
-  {
-    "companyName": "XiuLab Inc",
-    "toolName": "XiuRouter"
-  },
-  {
-    "companyName": "ContextStream",
-    "toolName": "ContextStream"
-  },
-  {
-    "companyName": "Nick",
-    "toolName": "MonoCode"
-  },
-  {
-    "companyName": "onembyte",
-    "toolName": "Kolkrabbi"
-  },
-  {
-    "companyName": "Alibaba Cloud",
-    "toolName": "QwenCloud"
-  },
-  {
-    "companyName": "yylo-dev",
-    "toolName": "YYLO"
-  },
-  {
-    "companyName": "okf-memory",
-    "toolName": "OKF Agent Memory"
-  },
-  {
-    "companyName": "generalaction",
-    "toolName": "Emdash"
-  },
-  {
-    "companyName": "Continuum AI",
-    "toolName": "OrcaReplay"
-  },
-  {
-    "companyName": "Sourcegraph",
-    "toolName": "Amp"
-  },
-  {
-    "companyName": "Dyad",
-    "toolName": "Dyad"
-  },
-  {
-    "companyName": "Onlook",
-    "toolName": "Onlook"
-  },
-  {
-    "companyName": "Base44",
-    "toolName": "Base44"
-  },
-  {
-    "companyName": "Rork",
-    "toolName": "Rork"
-  },
-  {
-    "companyName": "Magic Patterns",
-    "toolName": "Magic Patterns"
-  },
-  {
-    "companyName": "Builder.io",
-    "toolName": "Builder.io Visual Copilot"
-  },
-  {
-    "companyName": "Vercel",
-    "toolName": "Vercel Agent"
-  },
-  {
-    "companyName": "Graphite",
-    "toolName": "Graphite"
-  },
-  {
-    "companyName": "Bito",
-    "toolName": "Bito"
-  },
-  {
-    "companyName": "Alibaba",
-    "toolName": "Open Code Review"
-  },
-  {
-    "companyName": "Jackalope Digital LLC",
-    "toolName": "Jackalope"
-  },
-  {
-    "companyName": "TermRover",
-    "toolName": "TermRover"
-  },
-  {
-    "companyName": "Director",
-    "toolName": "Director"
-  },
-  {
-    "companyName": "Claudete",
-    "toolName": "Claudete"
-  },
-  {
-    "companyName": "Nubler Digital",
-    "toolName": "Fractal OS"
-  },
-  {
-    "companyName": "Zuse",
-    "toolName": "Zuse"
-  },
-  {
-    "companyName": "Crabtalk",
-    "toolName": "Cydonia"
-  },
-  {
-    "companyName": "Tseha",
-    "toolName": "Tseha"
-  },
-  {
-    "companyName": "Meta",
-    "toolName": "Muse"
-  },
-  {
-    "companyName": "Cabinet AI",
-    "toolName": "Cabinet"
-  },
-  {
-    "companyName": "OtoDock",
-    "toolName": "OtoDock"
-  },
-  {
-    "companyName": "Nous Research",
-    "toolName": "Hermes Agent"
-  },
-  {
-    "companyName": "vastsa",
-    "toolName": "PI-Desktop"
-  },
-  {
-    "companyName": "ruvnet",
-    "toolName": "Ruflo"
-  },
-  {
-    "companyName": "mksglu",
-    "toolName": "Context Mode"
-  },
-  {
-    "companyName": "Worktrunk",
-    "toolName": "Worktrunk"
-  },
-  {
-    "companyName": "RTK-AI",
-    "toolName": "RTK"
-  },
-  {
-    "companyName": "Gentleman Programming",
-    "toolName": "Gentle-AI"
-  },
-  {
-    "companyName": "obra",
-    "toolName": "Superpowers"
-  },
-  {
-    "companyName": "Copperhead",
-    "toolName": "Copperhead"
-  },
-  {
-    "companyName": "NVIDIA",
-    "toolName": "Personal AI Router"
-  },
-  {
-    "companyName": "MLC AI",
-    "toolName": "WebLLM"
-  },
-  {
-    "companyName": "NorahLabs",
-    "toolName": "Atlarix"
-  },
-  {
-    "companyName": "Kevin Lozada Santos (submitted by his authorized AI assistant)",
-    "toolName": "Brain Scanner"
-  }
+ {
+  "companyName": "Anysphere",
+  "toolName": "Cursor"
+ },
+ {
+  "companyName": "Cognition",
+  "toolName": "Devin"
+ },
+ {
+  "companyName": "ByteDance",
+  "toolName": "Trae"
+ },
+ {
+  "companyName": "Zed Industries",
+  "toolName": "Zed"
+ },
+ {
+  "companyName": "PearAI",
+  "toolName": "PearAI"
+ },
+ {
+  "companyName": "Google",
+  "toolName": "Antigravity"
+ },
+ {
+  "companyName": "Void",
+  "toolName": "Void"
+ },
+ {
+  "companyName": "Verdent",
+  "toolName": "Verdent"
+ },
+ {
+  "companyName": "Pochi",
+  "toolName": "Pochi"
+ },
+ {
+  "companyName": "Qoder",
+  "toolName": "Qoder"
+ },
+ {
+  "companyName": "Z",
+  "toolName": "Z Code"
+ },
+ {
+  "companyName": "GitHub",
+  "toolName": "GitHub Copilot"
+ },
+ {
+  "companyName": "JetBrains",
+  "toolName": "Junie"
+ },
+ {
+  "companyName": "Google",
+  "toolName": "Gemini Code Assist"
+ },
+ {
+  "companyName": "AWS",
+  "toolName": "Amazon Q Developer"
+ },
+ {
+  "companyName": "Tabnine",
+  "toolName": "Tabnine"
+ },
+ {
+  "companyName": "Cline",
+  "toolName": "Cline"
+ },
+ {
+  "companyName": "Kilo Code",
+  "toolName": "Kilo Code"
+ },
+ {
+  "companyName": "Roo Code",
+  "toolName": "Roo Code"
+ },
+ {
+  "companyName": "Continue",
+  "toolName": "Continue"
+ },
+ {
+  "companyName": "Augment",
+  "toolName": "Augment Code"
+ },
+ {
+  "companyName": "Sourcegraph",
+  "toolName": "Cody"
+ },
+ {
+  "companyName": "Supermaven",
+  "toolName": "Supermaven"
+ },
+ {
+  "companyName": "Blackbox",
+  "toolName": "Blackbox"
+ },
+ {
+  "companyName": "Snyk",
+  "toolName": "Snyk Code"
+ },
+ {
+  "companyName": "Qodo",
+  "toolName": "Qodo"
+ },
+ {
+  "companyName": "ByteDance",
+  "toolName": "MarsCode"
+ },
+ {
+  "companyName": "Replit",
+  "toolName": "Replit AI"
+ },
+ {
+  "companyName": "Tencent",
+  "toolName": "CodeBuddy"
+ },
+ {
+  "companyName": "Snowflake",
+  "toolName": "Cortex Code"
+ },
+ {
+  "companyName": "ShareAI",
+  "toolName": "Kode"
+ },
+ {
+  "companyName": "Stima",
+  "toolName": "Apertis"
+ },
+ {
+  "companyName": "Corust",
+  "toolName": "Corust"
+ },
+ {
+  "companyName": "nowork-studio",
+  "toolName": "Toprank"
+ },
+ {
+  "companyName": "WozCode",
+  "toolName": "WozCode"
+ },
+ {
+  "companyName": "Yeachan-Heo",
+  "toolName": "Oh My codeX"
+ },
+ {
+  "companyName": "IBM",
+  "toolName": "Bob"
+ },
+ {
+  "companyName": "Firebender",
+  "toolName": "Firebender"
+ },
+ {
+  "companyName": "Anthropic",
+  "toolName": "Claude Code"
+ },
+ {
+  "companyName": "OpenAI",
+  "toolName": "Codex CLI"
+ },
+ {
+  "companyName": "Aider",
+  "toolName": "Aider"
+ },
+ {
+  "companyName": "Google",
+  "toolName": "Gemini CLI"
+ },
+ {
+  "companyName": "Block",
+  "toolName": "Goose"
+ },
+ {
+  "companyName": "AWS",
+  "toolName": "Amazon Q CLI"
+ },
+ {
+  "companyName": "Letta",
+  "toolName": "Letta Code"
+ },
+ {
+  "companyName": "Alibaba",
+  "toolName": "Qwen CLI"
+ },
+ {
+  "companyName": "Codebuff",
+  "toolName": "Codebuff"
+ },
+ {
+  "companyName": "OpenClaw",
+  "toolName": "OpenClaw"
+ },
+ {
+  "companyName": "Command Code",
+  "toolName": "Command Code"
+ },
+ {
+  "companyName": "Charmbracelet",
+  "toolName": "Crush"
+ },
+ {
+  "companyName": "iFlow",
+  "toolName": "iFlow CLI"
+ },
+ {
+  "companyName": "AWS",
+  "toolName": "Kiro CLI"
+ },
+ {
+  "companyName": "MCPJam",
+  "toolName": "MCPJam"
+ },
+ {
+  "companyName": "Mistral",
+  "toolName": "Mistral Vibe"
+ },
+ {
+  "companyName": "Coder",
+  "toolName": "Mux"
+ },
+ {
+  "companyName": "Zencoder",
+  "toolName": "Zencoder"
+ },
+ {
+  "companyName": "Neovate",
+  "toolName": "Neovate"
+ },
+ {
+  "companyName": "Sylph",
+  "toolName": "AdaL"
+ },
+ {
+  "companyName": "Cline",
+  "toolName": "Cline Kanban"
+ },
+ {
+  "companyName": "Parallel Code",
+  "toolName": "Parallel Code"
+ },
+ {
+  "companyName": "badlogic",
+  "toolName": "Pi"
+ },
+ {
+  "companyName": "Autohand",
+  "toolName": "Autohand ACP"
+ },
+ {
+  "companyName": "Crow",
+  "toolName": "Crow CLI"
+ },
+ {
+  "companyName": "EvalState",
+  "toolName": "Fast Agent"
+ },
+ {
+  "companyName": "Femto",
+  "toolName": "Minion Code"
+ },
+ {
+  "companyName": "Compass",
+  "toolName": "Compass Nova CLI"
+ },
+ {
+  "companyName": "svkozak",
+  "toolName": "Pi ACP"
+ },
+ {
+  "companyName": "Stakpak",
+  "toolName": "Stakpak Agent"
+ },
+ {
+  "companyName": "Anomaly",
+  "toolName": "OpenCode"
+ },
+ {
+  "companyName": "Warp",
+  "toolName": "Warp"
+ },
+ {
+  "companyName": "Wave",
+  "toolName": "Wave"
+ },
+ {
+  "companyName": "Google",
+  "toolName": "Jules"
+ },
+ {
+  "companyName": "All Hands",
+  "toolName": "OpenHands"
+ },
+ {
+  "companyName": "Princeton NLP",
+  "toolName": "SWE-agent"
+ },
+ {
+  "companyName": "Sweep",
+  "toolName": "Sweep"
+ },
+ {
+  "companyName": "Ellipsis",
+  "toolName": "Ellipsis"
+ },
+ {
+  "companyName": "Cosine",
+  "toolName": "Genie"
+ },
+ {
+  "companyName": "Open-yak",
+  "toolName": "Open-yak"
+ },
+ {
+  "companyName": "LangChain",
+  "toolName": "DeepAgents JS"
+ },
+ {
+  "companyName": "StackBlitz",
+  "toolName": "Bolt.new"
+ },
+ {
+  "companyName": "Vercel",
+  "toolName": "v0"
+ },
+ {
+  "companyName": "Lovable",
+  "toolName": "Lovable"
+ },
+ {
+  "companyName": "Replit",
+  "toolName": "Replit"
+ },
+ {
+  "companyName": "PlayCode",
+  "toolName": "PlayCode"
+ },
+ {
+  "companyName": "Emergent",
+  "toolName": "Emergent.sh"
+ },
+ {
+  "companyName": "Bitrig",
+  "toolName": "Bitrig"
+ },
+ {
+  "companyName": "Monica",
+  "toolName": "Manus"
+ },
+ {
+  "companyName": "CodeRabbit",
+  "toolName": "CodeRabbit"
+ },
+ {
+  "companyName": "Qodo",
+  "toolName": "Qodo"
+ },
+ {
+  "companyName": "Snyk",
+  "toolName": "Snyk Code"
+ },
+ {
+  "companyName": "GitAuto",
+  "toolName": "GitAuto"
+ },
+ {
+  "companyName": "Anthropic",
+  "toolName": "Claude"
+ },
+ {
+  "companyName": "OpenAI",
+  "toolName": "ChatGPT"
+ },
+ {
+  "companyName": "Google",
+  "toolName": "Gemini"
+ },
+ {
+  "companyName": "DeepSeek",
+  "toolName": "DeepSeek"
+ },
+ {
+  "companyName": "Perplexity",
+  "toolName": "Perplexity"
+ },
+ {
+  "companyName": "Greptile",
+  "toolName": "Greptile"
+ },
+ {
+  "companyName": "Fern",
+  "toolName": "Fern"
+ },
+ {
+  "companyName": "Pieces",
+  "toolName": "Pieces for Developers"
+ },
+ {
+  "companyName": "Vibe",
+  "toolName": "Vibe Kanban"
+ },
+ {
+  "companyName": "Microsoft",
+  "toolName": "Visual Studio Code"
+ },
+ {
+  "companyName": "Apple",
+  "toolName": "Xcode"
+ },
+ {
+  "companyName": "JetBrains",
+  "toolName": "JetBrains IDEs"
+ },
+ {
+  "companyName": "Microsoft",
+  "toolName": "Visual Studio"
+ },
+ {
+  "companyName": "Batrachian AI",
+  "toolName": "toad"
+ },
+ {
+  "companyName": "Superset",
+  "toolName": "Superset"
+ },
+ {
+  "companyName": "AgentStatus",
+  "toolName": "AgentDiff"
+ },
+ {
+  "companyName": "Archestra Inc.",
+  "toolName": "archestra"
+ },
+ {
+  "companyName": "Chai Pin Zheng",
+  "toolName": "codex-profiles"
+ },
+ {
+  "companyName": "ESEngine",
+  "toolName": "Reasonix"
+ },
+ {
+  "companyName": "Cubic",
+  "toolName": "cubic"
+ },
+ {
+  "companyName": "aiproduct.cards",
+  "toolName": "AI Product Adoption Deck"
+ },
+ {
+  "companyName": "Kodus",
+  "toolName": "Kodus"
+ },
+ {
+  "companyName": "Google",
+  "toolName": "Antigravity CLI"
+ },
+ {
+  "companyName": "CoderPlan",
+  "toolName": "CoderPlan"
+ },
+ {
+  "companyName": "AIFlowLearn / \u6728\u5b50\u9716",
+  "toolName": "AIFlowLearn"
+ },
+ {
+  "companyName": "Snailflyer",
+  "toolName": "Faryo"
+ },
+ {
+  "companyName": "Nano Collective",
+  "toolName": "Nanocoder"
+ },
+ {
+  "companyName": "Vitalii Stepanenko",
+  "toolName": "Gito"
+ },
+ {
+  "companyName": "AI Prompt Architect",
+  "toolName": "AI Prompt Architect"
+ },
+ {
+  "companyName": "PVR Labs",
+  "toolName": "AI Badger"
+ },
+ {
+  "companyName": "Remio",
+  "toolName": "Remio"
+ },
+ {
+  "companyName": "TerminallyLazy",
+  "toolName": "Tree Ring Memory"
+ },
+ {
+  "companyName": "ShakespeareLabs",
+  "toolName": "OpenAgentRelay"
+ },
+ {
+  "companyName": "Ofek Ron",
+  "toolName": "Better Agent"
+ },
+ {
+  "companyName": "Tura-AI",
+  "toolName": "Tura"
+ },
+ {
+  "companyName": "Plasma AI",
+  "toolName": "fractal"
+ },
+ {
+  "companyName": "Marco D'Alia",
+  "toolName": "AgentBox"
+ },
+ {
+  "companyName": "Orkas-AI",
+  "toolName": "Orkas"
+ },
+ {
+  "companyName": "MiniMax",
+  "toolName": "MiniMax Code"
+ },
+ {
+  "companyName": "Meta",
+  "toolName": "Meta Muse"
+ },
+ {
+  "companyName": "Can B\u00f6l\u00fck",
+  "toolName": "Oh My Pi"
+ },
+ {
+  "companyName": "HKUDS",
+  "toolName": "DeepCode"
+ },
+ {
+  "companyName": "MountainOwl",
+  "toolName": "Bubo"
+ },
+ {
+  "companyName": "FWDAI",
+  "toolName": "Fletch"
+ },
+ {
+  "companyName": "Kent C. Dodds",
+  "toolName": "Kody"
+ },
+ {
+  "companyName": "Omnigent",
+  "toolName": "Omnigent"
+ },
+ {
+  "companyName": "Factory",
+  "toolName": "Factory AI"
+ },
+ {
+  "companyName": "NaveenKumar Namachivayam",
+  "toolName": "Feather Wand"
+ },
+ {
+  "companyName": "AntigmaLabs",
+  "toolName": "ante"
+ },
+ {
+  "companyName": "ISMS Copilot / Better ISMS",
+  "toolName": "heygrc"
+ },
+ {
+  "companyName": "unsloth",
+  "toolName": "unsloth"
+ },
+ {
+  "companyName": "bb",
+  "toolName": "bb"
+ },
+ {
+  "companyName": "Salesforce",
+  "toolName": "SF Pi"
+ },
+ {
+  "companyName": "OpenChamber",
+  "toolName": "OpenChamber"
+ },
+ {
+  "companyName": "EGOIST",
+  "toolName": "Waku"
+ },
+ {
+  "companyName": "Jeremy Huang",
+  "toolName": "jcode"
+ },
+ {
+  "companyName": "Blume",
+  "toolName": "Blume"
+ },
+ {
+  "companyName": "X",
+  "toolName": "Grok Build"
+ },
+ {
+  "companyName": "X",
+  "toolName": "Grok Bot"
+ },
+ {
+  "companyName": "OpenRouter",
+  "toolName": "Ori"
+ },
+ {
+  "companyName": "GCWing",
+  "toolName": "BitFun"
+ },
+ {
+  "companyName": "DeepSeek",
+  "toolName": "DeepSeek Harness"
+ },
+ {
+  "companyName": "AtomicBot",
+  "toolName": "Atomic Agent"
+ },
+ {
+  "companyName": "TestMU AI",
+  "toolName": "Kane CLI"
+ },
+ {
+  "companyName": "Julius Brussee",
+  "toolName": "Caveman Code"
+ },
+ {
+  "companyName": "LoopTroop AI",
+  "toolName": "LoopTroop"
+ },
+ {
+  "companyName": "MarlBurroW (open source)",
+  "toolName": "Sillage"
+ },
+ {
+  "companyName": "SandBase",
+  "toolName": "SandBase CLI"
+ },
+ {
+  "companyName": "Mydentify / Timothy Allard",
+  "toolName": "Mydentify AI Crawler Access Checker"
+ },
+ {
+  "companyName": "WolfMark",
+  "toolName": "WolfMarkDown"
+ },
+ {
+  "companyName": "bennett",
+  "toolName": "Codex++"
+ },
+ {
+  "companyName": "Vostride",
+  "toolName": "Agent QA"
+ },
+ {
+  "companyName": "cpys (maintainer; independent community project)",
+  "toolName": "Codex Quota Overlay"
+ },
+ {
+  "companyName": "Math-AI",
+  "toolName": "MathCode"
+ },
+ {
+  "companyName": "BestCodes",
+  "toolName": "AgentOne"
+ },
+ {
+  "companyName": "Vercel",
+  "toolName": "fx.sh"
+ },
+ {
+  "companyName": "Gitlawb",
+  "toolName": "Zero"
+ },
+ {
+  "companyName": "Alexander Kornev",
+  "toolName": "DeskCue"
+ },
+ {
+  "companyName": "OneCLI",
+  "toolName": "OneCLI"
+ },
+ {
+  "companyName": "Floot",
+  "toolName": "Floot"
+ },
+ {
+  "companyName": "Lasse",
+  "toolName": "Termy"
+ },
+ {
+  "companyName": "getpaseo",
+  "toolName": "Paseo"
+ },
+ {
+  "companyName": "Laude Institute",
+  "toolName": "Headlong"
+ },
+ {
+  "companyName": "Andrew Ng",
+  "toolName": "OpenWorker"
+ },
+ {
+  "companyName": "Overbrilliant",
+  "toolName": "OB-1"
+ },
+ {
+  "companyName": "AI Sovereign Labs",
+  "toolName": "AICode"
+ },
+ {
+  "companyName": "Abhishek Srivastava",
+  "toolName": "AIPM"
+ },
+ {
+  "companyName": "pungme",
+  "toolName": "Superagent"
+ },
+ {
+  "companyName": "Spotify",
+  "toolName": "XIRP"
+ },
+ {
+  "companyName": "XiuLab Inc",
+  "toolName": "XiuRouter"
+ },
+ {
+  "companyName": "ContextStream",
+  "toolName": "ContextStream"
+ },
+ {
+  "companyName": "Nick",
+  "toolName": "MonoCode"
+ },
+ {
+  "companyName": "onembyte",
+  "toolName": "Kolkrabbi"
+ },
+ {
+  "companyName": "Alibaba Cloud",
+  "toolName": "QwenCloud"
+ },
+ {
+  "companyName": "yylo-dev",
+  "toolName": "YYLO"
+ },
+ {
+  "companyName": "okf-memory",
+  "toolName": "OKF Agent Memory"
+ },
+ {
+  "companyName": "generalaction",
+  "toolName": "Emdash"
+ },
+ {
+  "companyName": "Continuum AI",
+  "toolName": "OrcaReplay"
+ },
+ {
+  "companyName": "Sourcegraph",
+  "toolName": "Amp"
+ },
+ {
+  "companyName": "Dyad",
+  "toolName": "Dyad"
+ },
+ {
+  "companyName": "Onlook",
+  "toolName": "Onlook"
+ },
+ {
+  "companyName": "Base44",
+  "toolName": "Base44"
+ },
+ {
+  "companyName": "Rork",
+  "toolName": "Rork"
+ },
+ {
+  "companyName": "Magic Patterns",
+  "toolName": "Magic Patterns"
+ },
+ {
+  "companyName": "Builder.io",
+  "toolName": "Builder.io Visual Copilot"
+ },
+ {
+  "companyName": "Vercel",
+  "toolName": "Vercel Agent"
+ },
+ {
+  "companyName": "Graphite",
+  "toolName": "Graphite"
+ },
+ {
+  "companyName": "Bito",
+  "toolName": "Bito"
+ },
+ {
+  "companyName": "Alibaba",
+  "toolName": "Open Code Review"
+ },
+ {
+  "companyName": "Jackalope Digital LLC",
+  "toolName": "Jackalope"
+ },
+ {
+  "companyName": "TermRover",
+  "toolName": "TermRover"
+ },
+ {
+  "companyName": "Director",
+  "toolName": "Director"
+ },
+ {
+  "companyName": "Claudete",
+  "toolName": "Claudete"
+ },
+ {
+  "companyName": "Nubler Digital",
+  "toolName": "Fractal OS"
+ },
+ {
+  "companyName": "Zuse",
+  "toolName": "Zuse"
+ },
+ {
+  "companyName": "Crabtalk",
+  "toolName": "Cydonia"
+ },
+ {
+  "companyName": "Tseha",
+  "toolName": "Tseha"
+ },
+ {
+  "companyName": "Meta",
+  "toolName": "Muse"
+ },
+ {
+  "companyName": "Cabinet AI",
+  "toolName": "Cabinet"
+ },
+ {
+  "companyName": "OtoDock",
+  "toolName": "OtoDock"
+ },
+ {
+  "companyName": "Nous Research",
+  "toolName": "Hermes Agent"
+ },
+ {
+  "companyName": "vastsa",
+  "toolName": "PI-Desktop"
+ },
+ {
+  "companyName": "ruvnet",
+  "toolName": "Ruflo"
+ },
+ {
+  "companyName": "mksglu",
+  "toolName": "Context Mode"
+ },
+ {
+  "companyName": "Worktrunk",
+  "toolName": "Worktrunk"
+ },
+ {
+  "companyName": "RTK-AI",
+  "toolName": "RTK"
+ },
+ {
+  "companyName": "Gentleman Programming",
+  "toolName": "Gentle-AI"
+ },
+ {
+  "companyName": "obra",
+  "toolName": "Superpowers"
+ },
+ {
+  "companyName": "Copperhead",
+  "toolName": "Copperhead"
+ },
+ {
+  "companyName": "NVIDIA",
+  "toolName": "Personal AI Router"
+ },
+ {
+  "companyName": "MLC AI",
+  "toolName": "WebLLM"
+ },
+ {
+  "companyName": "NorahLabs",
+  "toolName": "Atlarix"
+ },
+ {
+  "companyName": "Kevin Lozada Santos (submitted by his authorized AI assistant)",
+  "toolName": "Brain Scanner"
+ },
+ {
+  "companyName": "cjaime708",
+  "toolName": "DeployReview"
+ },
+ {
+  "companyName": "cjaime708",
+  "toolName": "DiffExplainerHQ"
+ },
+ {
+  "companyName": "cjaime708",
+  "toolName": "LLMAuditor"
+ }
 ]
