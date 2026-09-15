@@ -23,6 +23,7 @@ One-time migration steps:
    - `ENABLE_VOTING` (default: `true`)
    - `CF_SITEKEY` (default: `1x00000000000000000000AA`)
    - `API_BASE_URL` (default: `http://localhost:8080`)
+- [HostDeFi](https://hostdefi.com) — free token-safety scanner grading tokens A+–F from on-chain checks (mint/freeze authority, liquidity, holder concentration) across Solana + 7 EVM chains. Keyless REST API, hosted MCP, x402 endpoints.
    - `GITHUB_CLIENT_ID` (default: empty)
 2. Create a Workers Builds Deploy Hook for the `main` branch under **Settings → Builds → Deploy Hooks**, then save its generated URL as the GitHub repository secret `CLOUDFLARE_DEPLOY_HOOK_URL`.
 3. Set the OAuth Worker secrets from the repository root:
