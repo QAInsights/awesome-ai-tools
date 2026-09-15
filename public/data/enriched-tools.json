@@ -6332,5 +6332,120 @@
       "offline"
     ],
     "lastUpdated": "2026-09-15"
+  },
+  {
+    "slug": "spec-kit",
+    "name": "Spec Kit",
+    "company": "GitHub",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT; the `specify` CLI is installed with `uv tool install specify-cli` and the process runs on whatever coding agent and model subscription you already use.",
+    "description": "Spec Kit is GitHub's open-source toolkit for Spec-Driven Development (SDD): instead of prompting an agent straight into code, you define what to build and why first, and the specification drives planning, task breakdown, implementation, and a final convergence check. The `specify` CLI scaffolds a project for your agent (`specify init my-project --integration copilot`), after which you invoke `/speckit-constitution`, `/speckit-specify`, `/speckit-plan`, `/speckit-tasks`, `/speckit-implement`, and `/speckit-converge` skills in the agent's chat. SDD ships in core, while bug-fixing and idea-assessment processes are bundled extensions. It works with 30+ coding agents including GitHub Copilot, Claude Code, Codex, Gemini CLI, Cursor, Windsurf, and Qwen Code, and is extensible for organization-specific processes.",
+    "keyFeatures": [
+      "`specify` CLI scaffolds SDD templates and agent-specific skills into a project",
+      "Constitution → specify → plan → tasks → implement → converge skill workflow",
+      "Bundled extensions for structured bug fixing and evidence-based idea assessment",
+      "Works with 30+ coding agents (Copilot, Claude Code, Codex, Gemini CLI, Cursor, and more)",
+      "Extensible templates and processes for team- or org-wide standards",
+      "Documentation site with walkthroughs, bundles, and community extensions"
+    ],
+    "bestFor": "Teams and individual developers who want a repeatable, documented process for greenfield features or whole applications with a coding agent, especially where requirements need to be reviewed before code is written.",
+    "notIdealFor": "Quick throwaway prototypes or small fixes where a full spec/plan/tasks cycle is overhead; developers who prefer a lighter skills pack (see Agent Skills or Superpowers) or a spec workflow baked into a single agent such as Kiro.",
+    "recentUpdates": "v1.0.7 released September 15, 2026 with the repository at ~137k GitHub stars and ~2,000 commits; originally announced on the GitHub Blog in September 2025 and trending on GitHub in September 2026.",
+    "verdict": "The most widely adopted spec-first workflow for coding agents, with the credibility of an official GitHub project and agent-agnostic integrations; heavyweight by design, but that discipline is exactly what it delivers.",
+    "tags": [
+      "spec-driven",
+      "agent-skills",
+      "workflow",
+      "cli",
+      "github",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-15"
+  },
+  {
+    "slug": "agent-skills",
+    "name": "Agent Skills",
+    "company": "Addy Osmani",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT; installed into your existing agents with `npx skills add addyosmani/agent-skills` (all 25 skills or individual ones) and runs on your current agent subscription.",
+    "description": "Agent Skills is Addy Osmani's pack of production-grade engineering skills for AI coding agents. It encodes the workflows, quality gates, and judgment senior engineers apply across the development lifecycle — define, plan, build, verify, review, ship — as nine slash commands (`/spec`, `/plan`, `/build`, `/test`, `/constraints`, `/review`, `/webperf`, `/code-simplify`, `/ship`) that activate the right skills automatically. Skills such as test-driven-development, incremental-implementation, api-and-interface-design, frontend-ui-engineering, and code-review-and-quality also trigger contextually based on what the agent is doing, and each is a structured workflow with steps, verification gates, and anti-rationalization tables. `/build` can run plan-and-implement autonomously after one approval while keeping every task test-driven and individually committed. The open skills CLI installs into 70+ agents including Claude Code, Cursor, Codex, Copilot, and Cline.",
+    "keyFeatures": [
+      "25 lifecycle skills covering spec, planning, TDD, incremental implementation, review, and shipping",
+      "Nine slash commands mapped to the SDLC that auto-load the relevant skills",
+      "Contextual auto-activation (API design, frontend UI, debugging, web performance)",
+      "Anti-rationalization tables and verification gates inside every skill",
+      "Autonomous `/build` mode that pauses on failures or risky steps",
+      "One-command install into 70+ agents via `npx skills add`; per-skill installs supported"
+    ],
+    "bestFor": "Developers and teams who want their coding agents to follow senior-engineer practices (specs, tests, review, scope discipline) consistently without hand-writing rules files for each agent.",
+    "notIdealFor": "Users looking for a standalone product with a UI, teams needing centrally enforced policy, or those who prefer a more prescriptive end-to-end methodology such as Superpowers or Spec Kit.",
+    "recentUpdates": "Release 0.6.9 on September 5, 2026; ~94.6k GitHub stars and 500+ commits, trending on GitHub in September 2026. Accompanied by the author's design write-up and the skills.addy.ie documentation site.",
+    "verdict": "A well-reasoned, broadly compatible skills pack from a respected Chrome/Google engineer; lighter than a full methodology framework while still pushing agents through the phases they usually skip.",
+    "tags": [
+      "agent-skills",
+      "sdlc",
+      "tdd",
+      "code-review",
+      "claude-code",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-15"
+  },
+  {
+    "slug": "9router",
+    "name": "9Router",
+    "company": "decolua",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT; install with `npm install -g 9router` or run via Docker. You pay only the underlying providers you connect (existing subscriptions, cheap API tiers, or free tiers).",
+    "description": "9Router is a local AI gateway that sits between your coding tools and 40+ AI providers. Point Claude Code, Codex, Cursor, Cline, Copilot, Antigravity, Gemini CLI, OpenCode, or OpenClaw at `http://localhost:20128/v1` and 9Router handles format translation (OpenAI ↔ Anthropic ↔ Gemini), quota tracking, token refresh, and three-tier automatic fallback: use existing subscriptions first, drop to cheap providers such as GLM, MiniMax, or Kimi when quota runs out, then to free tiers such as Kiro, iFlow, Qwen, or OpenCode Free. It bundles RTK and Caveman-style compression of tool results to cut 20–40% of tokens, supports multi-account round-robin per provider, provider combos with sticky routing, and a web dashboard for connecting providers via OAuth or API key.",
+    "keyFeatures": [
+      "Single OpenAI-compatible endpoint for 10+ CLI/IDE coding tools",
+      "Three-tier auto-fallback: subscription → cheap → free providers, zero downtime",
+      "Real-time quota tracking, reset countdowns, and cost estimation per provider",
+      "Built-in RTK/Caveman token compression of tool_result content",
+      "Multi-account round-robin, provider combos, and format translation across OpenAI/Anthropic/Gemini APIs",
+      "Local dashboard, Docker image, and tunnel/proxy options"
+    ],
+    "bestFor": "Heavy coding-agent users who hit subscription rate limits mid-session and want to keep working across multiple providers and accounts without manually switching endpoints.",
+    "notIdealFor": "Teams needing a governed, audited enterprise gateway; users routing IDE subscription traffic should check each vendor's terms — the project itself notes to 'mind each tool's policy'. For local multi-machine inference see Personal AI Router; for a hosted metered gateway see XiuRouter.",
+    "recentUpdates": "v0.5.35 tagged in September 2026 with ~28.9k GitHub stars and 1,200+ commits; README localized into 10 languages, and trending on GitHub (JavaScript) in September 2026.",
+    "verdict": "A pragmatic, feature-dense router for keeping agents running through quota walls; the free-tier and IDE-interception features are powerful but sit close to provider policy lines, so use with care.",
+    "tags": [
+      "router",
+      "gateway",
+      "openai-compatible",
+      "fallback",
+      "token-saving",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-15"
+  },
+  {
+    "slug": "i-have-adhd",
+    "name": "i-have-adhd",
+    "company": "ayghri",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT; installed as a plugin or skill into your existing coding agent.",
+    "description": "i-have-adhd is an agent skill that changes how a coding assistant writes its answers so the next action is never buried: lead with the action, number multi-step tasks, end with one concrete next step, suppress tangents, restate state every turn, give specific time estimates, make wins visible, report errors matter-of-factly, cap lists at five items, and drop preambles, recaps, and closers. It is loosely adapted from the Adult ADHD Tool Kit but framed as an output style for LLMs, not a diagnosis. Installation is documented for Claude Code (plugin marketplace), Codex (`codex plugin add`), Gemini CLI (extension or custom command), GitHub Copilot, Antigravity, Hermes, and OpenCode (server plugin plus native skills), or via `npx skills add ayghri/i-have-adhd`; invoke with `/i-have-adhd` and turn it off with 'stop adhd mode'. Forking and editing the single SKILL.md is the intended way to tune it.",
+    "keyFeatures": [
+      "10 concise output rules that put the next action first and eliminate filler",
+      "Opt-in slash command that stays on for the session until disabled",
+      "Plugin/skill installs for Claude Code, Codex, Gemini CLI, Copilot, Antigravity, Hermes, and OpenCode",
+      "Single SKILL.md designed to be forked and customized",
+      "Localized READMEs in eight languages"
+    ],
+    "bestFor": "Developers who find verbose agent replies hard to act on and want terse, action-first output from every coding assistant they use.",
+    "notIdealFor": "Users who want detailed explanations and reasoning in agent responses, or teams looking for a full skills framework rather than a single output-style skill (see Agent Skills, Superpowers, or Ponytail).",
+    "recentUpdates": "~46k GitHub stars with ~17.6k added in the week of September 15, 2026 and 220+ commits; top of GitHub Trending (weekly) in September 2026.",
+    "verdict": "A small, sharply focused skill that fixes one of the most common annoyances with coding agents; its explosive adoption shows how much demand there is for less filler.",
+    "tags": [
+      "agent-skills",
+      "output-style",
+      "productivity",
+      "claude-code",
+      "codex",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-15"
   }
 ]

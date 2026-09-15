@@ -1350,6 +1350,30 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "spec-kit",
+    "name": "Spec Kit",
+    "company": "GitHub",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "agent-skills",
+    "name": "Agent Skills",
+    "company": "Addy Osmani",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "9router",
+    "name": "9Router",
+    "company": "decolua",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "i-have-adhd",
+    "name": "i-have-adhd",
+    "company": "ayghri",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "superpowers",
     "name": "Superpowers",
     "company": "obra",
