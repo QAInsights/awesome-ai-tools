@@ -6447,5 +6447,123 @@
       "open-source"
     ],
     "lastUpdated": "2026-09-15"
+  },
+  {
+    "slug": "firstmate",
+    "name": "firstmate",
+    "company": "kunchenguid",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT; the cloned repo is the product. You pay only for the agent harness (Claude Code, Codex, OpenCode, Pi, Grok, or Cursor Agent CLI) and models you already use. The optional myfirstmate.io Relay for X/Discord mentions is a separate hosted service.",
+    "description": "firstmate is an \"agent distro\": a portable directory of AGENTS.md instructions, bundled skills, helper scripts, policies, and state conventions that turns any terminal coding agent into a first mate that commands a crew. You talk only to the first mate; it clones your projects, spawns autonomous crewmates in a visible session backend (tmux by default, or herdr, zellij, cmux, and Orca), gives each one a disposable git worktree, supervises them with an event-driven bash watcher that wakes the primary session only when a decision is needed, and hands back finished pull requests, approved local merges, or standalone scout reports. Projects declare a mode (`no-mistakes`, `direct-PR`, `local-only`, optional `+yolo`), the first mate is read-only over your repos outside guarded operations, all state lives on disk so sessions are restart-proof, and larger fleets can opt into persistent secondmates running from isolated homes locally or over SSH.",
+    "keyFeatures": [
+      "Single liaison agent that dispatches, supervises, and escalates only real decisions",
+      "One clean git worktree per crewmate so parallel work on a repo never collides",
+      "Zero-token watcher plus turn-end backstops for Claude Code, Grok, Pi, Codex, OpenCode, and Cursor Agent CLI",
+      "Ship tasks (PRs or local merges) and scout tasks (investigation reports) with explicit project modes",
+      "Restart-proof on-disk state with tmux, herdr, zellij, cmux, or Orca backends",
+      "Optional secondmates and X/Discord Relay for remote fleets"
+    ],
+    "bestFor": "Developers who already run a terminal coding agent and want to fan work out to several autonomous agents without babysitting tabs or copy-pasting context between repos.",
+    "notIdealFor": "Users who want a packaged GUI or hosted service rather than a repo-as-product; teams needing centralized governance or audit trails. For a desktop take on parallel agents see Atlas, Orkas, or LoopTroop; for worktree-only tooling see workmux or Worktrunk.",
+    "recentUpdates": "~6.1k GitHub stars and 650+ commits as of September 2026; trending on GitHub (weekly) in mid-September 2026 with Cursor Agent CLI, Grok, and Oh My Pi added as verified primary harnesses and a documentation restructure.",
+    "verdict": "A thoughtfully engineered, harness-agnostic way to run a crew of coding agents from one conversation; the distro model is unusual but keeps everything inspectable and portable.",
+    "tags": [
+      "multi-agent",
+      "orchestration",
+      "git-worktrees",
+      "tmux",
+      "claude-code",
+      "codex",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-16"
+  },
+  {
+    "slug": "openresearch",
+    "name": "OpenResearch",
+    "company": "alphaXiv",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT; install with `curl -LsSf https://openresearch.sh/install.sh | sh` (macOS/Linux) or the Windows beta download. Runs on your own hardware or remote hosts; an openresearch.sh account is only needed for optional managed OpenResearch compute and organizations.",
+    "description": "OpenResearch from alphaXiv is a local-first workspace that turns Claude Code, Codex, OpenCode, or Cursor into research agents that review literature, form hypotheses, edit code, launch experiments, inspect results, and produce research artifacts. `orx up` starts a local dashboard on 127.0.0.1:4791 backed by SQLite; each research direction gets its own agent session and isolated git worktree, and variants are tracked in a git-native experiment tree where every run receives an immutable archive of its recorded commit with logs, diffs, and artifacts tied to it. In autoresearch mode, agents run the full propose → change → launch → inspect → decide loop autonomously, in parallel. The same committed snapshot can execute locally, over SSH (`orx up --remote user@host`), or on Slurm, Kubernetes, Ray, Hugging Face Jobs, Modal, Tinker, and managed compute, and `orx install-skills` adds an OpenResearch skill to supported coding agents along with `orx discover` and `orx paper` for literature lookup.",
+    "keyFeatures": [
+      "Turns Claude Code, Codex, OpenCode, or Cursor into research agents with harness and model chosen per session",
+      "Parallel agent sessions in isolated git worktrees with a git-native experiment tree",
+      "Autonomous autoresearch loop: propose, change code, run, inspect evidence, iterate",
+      "Run the same snapshot locally, over SSH, or on Slurm/Kubernetes/Ray/Modal/HF Jobs/Tinker",
+      "Local-first SQLite store with projects, runs, logs, and artifacts kept on your machine",
+      "`orx` CLI plus installable agent skill, arXiv/DOI paper lookup, and local-model support via LM Studio, Ollama, or oMLX"
+    ],
+    "bestFor": "ML researchers and engineers who want coding agents to run reproducible, parallel experiments with lineage tracking instead of ad-hoc notebooks and scratch branches.",
+    "notIdealFor": "General app development or teams that need multi-user auth on the workspace (the remote service binds to loopback with no application-level authentication). Official builds send opt-out coarse usage analytics.",
+    "recentUpdates": "~4.1k GitHub stars and 340+ commits as of September 2026; reached #1 on GitHub Trending for the day and added Cursor as a supported agent and a Windows beta in September 2026.",
+    "verdict": "A well-scoped bridge between coding agents and rigorous experiment tracking; the git-native experiment tree and multi-backend execution make autoresearch practical beyond a laptop.",
+    "tags": [
+      "research-agents",
+      "experiments",
+      "git-worktrees",
+      "local-first",
+      "claude-code",
+      "codex",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-16"
+  },
+  {
+    "slug": "security-audit",
+    "name": "security-audit",
+    "company": "Cloudflare",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT; installed as a skill into your existing coding agent. Cost is the model usage of the many parallel hunter, validator, and verifier agents it spawns.",
+    "description": "security-audit is the coding-agent skill that seeded Cloudflare's fleet-wide vulnerability discovery harness (described in the Cloudflare blog post \"Build your own vulnerability harness\"), released as a single-repo starting point. It orchestrates isolated agents through six phases: reconnaissance that maps architecture, trust boundaries, and input surfaces into `architecture.md` and a `coverage-ledger.json`; coverage-led hunting where isolated hunters attack ledger units and coverage critics look for gaps; candidate validation where a fresh verifier tries to disprove each finding; structured output of `confirmed`, `needs_validation`, and `rejected` records into a schema-validated `findings.json`; independent record verification of every source claim; and target-neutral `REPORT.md`, `FINDINGS-DETAIL.md`, and `NEEDS-VALIDATION.md` reports. Attack-class playbooks cover web protocol and auth, client-side, supply chain and release, cloud and deployment, RPC and messaging, resource exhaustion, data isolation, desktop/mobile/local IPC, memory safety and binaries, and prompt-injection and tool-use classes for LLM-backed targets. Repeat runs are additive, reusing prior ledgers and findings to target gaps and revalidate changed code.",
+    "keyFeatures": [
+      "Six-phase audit pipeline: recon, coverage-led hunting, adversarial validation, structured output, independent verification, reporting",
+      "Machine-readable `findings.json` validated against `report-schema.json` with distinct confirmed/needs_validation/rejected verdicts",
+      "Coverage ledger and validator scripts (`validate-coverage-ledger.cjs`, `validate-findings.cjs`)",
+      "Per-domain attack-class playbooks including AI/LLM prompt-injection and agent tool-use classes",
+      "Additive multi-run behavior that targets gaps and revalidates changed source",
+      "Battle-tested origin: the prompts that grew into Cloudflare's production vulnerability harness"
+    ],
+    "bestFor": "Security-minded engineering teams who want a rigorous, repeatable agent-driven security audit of a repository with verified, low-false-positive findings.",
+    "notIdealFor": "Quick PR-level review or teams wanting a hosted SAST product with a UI; it is prompt-heavy and spends significant tokens. For inline PR review see Open Code Review, CodeRabbit, or Kodus; for classic SAST see Snyk Code.",
+    "recentUpdates": "Published by Cloudflare in 2026 alongside the \"Build your own vulnerability harness\" blog post; ~6.2k GitHub stars and trending on GitHub (daily) in mid-September 2026.",
+    "verdict": "One of the most credible open security-audit skills available, with a verification-first design that directly targets the false-positive problem plaguing agent security reviews.",
+    "tags": [
+      "security",
+      "vulnerability-discovery",
+      "agent-skills",
+      "code-audit",
+      "claude-code",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-16"
+  },
+  {
+    "slug": "oh-my-hermes",
+    "name": "Oh My Hermes",
+    "company": "rlaope",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT; install via `brew install rlaope/tap/omh`, `bun install -g oh-my-hermes`, `npm install -g oh-my-hermes`, the shell/PowerShell installer, or the Hermes skill tap. Requires Hermes Agent and whatever model providers you route to.",
+    "description": "Oh My Hermes (OMH) is an operating layer that installs on top of Nous Research's Hermes Agent and keeps Hermes as the natural-language surface while adding governed workflows. `omh setup` registers 116 installable skills organized into seven capability families and nine `ulw-*` workflows for planning, research, creation, coding handoffs, operations, and project memory, each with explicit evidence boundaries so the run reports what actually happened. `omh model` (or `/omh-model` inside the Hermes TUI) sets a head model and effort per work category with editable model chains in `~/.omh/routing/model-chains.json`, and the Maestro lane dispatches coding units to Claude Code or Codex rather than hiding a coding executor behind Hermes. It works in the Hermes CLI, Hermes Desktop, and messenger integrations, ships `omh doctor` and `omh update` for maintenance, and offers an agent-installable protocol pinned to a commit SHA.",
+    "keyFeatures": [
+      "116 skills in seven capability families plus nine ulw-* workflows for Hermes Agent",
+      "Per-category model chains and effort dials configurable from CLI or inside the Hermes TUI",
+      "Maestro lane that hands coding work to Claude Code or Codex with explicit evidence gates",
+      "Project memory and honest run records with evidence boundaries",
+      "Homebrew, Bun, npm, shell, PowerShell, and Hermes skill-tap install paths with `omh doctor`",
+      "Runs across Hermes CLI, Desktop, and Discord/Slack-style messenger surfaces; READMEs in English, Korean, Japanese, and Chinese"
+    ],
+    "bestFor": "Hermes Agent users who want a structured, professional workflow layer (planning, research, ops, coding handoffs) instead of building their own skill stack.",
+    "notIdealFor": "Anyone not running Hermes Agent; users of Claude Code or Codex alone should look at Agent Skills, Superpowers, or ECC instead.",
+    "recentUpdates": "v2.0.2 with ~2.5k GitHub stars and 3,500+ commits as of September 2026; trending on GitHub (daily) in mid-September 2026 with package-manager installs (Homebrew, Bun, npm) public since v1.0.6.",
+    "verdict": "The most complete community operating layer for Hermes Agent so far; its explicit routing and evidence gates make Hermes more predictable for real work, though it is only useful inside that ecosystem.",
+    "tags": [
+      "hermes-agent",
+      "agent-skills",
+      "workflows",
+      "model-routing",
+      "plugin",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-16"
   }
 ]

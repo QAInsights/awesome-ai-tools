@@ -864,6 +864,18 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "firstmate",
+    "name": "firstmate",
+    "company": "kunchenguid",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "openresearch",
+    "name": "OpenResearch",
+    "company": "alphaXiv",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "hermes-agent",
     "name": "Hermes Agent",
     "company": "Nous Research",
@@ -1011,6 +1023,12 @@
     "slug": "bito",
     "name": "Bito",
     "company": "Bito",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "security-audit",
+    "name": "security-audit",
+    "company": "Cloudflare",
     "category": "AI Code Review & Security"
   },
   {
@@ -1371,6 +1389,12 @@
     "slug": "i-have-adhd",
     "name": "i-have-adhd",
     "company": "ayghri",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "oh-my-hermes",
+    "name": "Oh My Hermes",
+    "company": "rlaope",
     "category": "Developer Productivity & Workflow"
   },
   {
