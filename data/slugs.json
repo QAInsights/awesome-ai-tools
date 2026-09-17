@@ -1404,6 +1404,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "blabla",
+    "name": "BlaBla",
+    "company": "Petro Yakovyshyn (independent; I maintain BlaBla)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
