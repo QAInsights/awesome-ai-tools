@@ -6565,5 +6565,121 @@
       "open-source"
     ],
     "lastUpdated": "2026-09-16"
+  },
+  {
+    "slug": "orca",
+    "name": "Orca",
+    "company": "Stably AI",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT. Desktop builds for macOS (Apple Silicon and Intel), Windows, and Linux from onorca.dev, `brew install --cask stablyai/orca/orca`, or the AUR (`stably-orca-bin`); iOS App Store/TestFlight and Android APK companion apps. You bring your own agent subscriptions or API keys; Orca does not resell model usage.",
+    "description": "Orca is an open-source \"agent development environment\" (ADE) from Stably AI built for running a fleet of CLI coding agents side by side rather than one person typing in an editor. Any terminal agent works — Claude Code, Codex, OpenCode, Pi, Grok, Cursor CLI, GitHub Copilot, Amp, Antigravity, Hermes Agent, Devin, Goose, Cline, Droid, Kilocode, Kimi, Kiro, Qwen Code, Rovo Dev, and more — and each runs in its own isolated git worktree so you can fan one prompt across several agents, compare results, and merge the winner. The app bundles Ghostty-class WebGL terminals with infinite splits and persistent scrollback, a VS Code-based editor with autosave, an embedded Chromium browser whose Design Mode sends an element's HTML, CSS, and cropped screenshot into an agent prompt, inline diff annotations that go back to the agent, native GitHub and Linear boards to open a worktree from any issue or PR, SSH worktrees for running agents on a remote box, account switching with Claude/Codex usage and rate-limit tracking, Computer Use for desktop apps, and an `orca` CLI (`orca worktree create`, `snapshot`, `click`, `fill`) so coordinator agents can drive the environment. A mobile companion for iOS and Android pairs with the desktop app to monitor agents, receive completion notifications, and send follow-ups from your phone; `orca serve` runs headless on a Linux server.",
+    "keyFeatures": [
+      "Parallel worktrees: fan one prompt across multiple agents, each in an isolated git worktree, then merge the best result",
+      "Works with any CLI agent — 27+ supported out of the box including Claude Code, Codex, OpenCode, Pi, Grok, Cursor, Copilot, Amp, Hermes, Devin, and Goose",
+      "Ghostty-class terminal splits, VS Code editor, and embedded Chromium browser with Design Mode for element-to-prompt handoff",
+      "Inline diff annotations sent back to the agent, plus native GitHub and Linear task boards",
+      "SSH worktrees, headless `orca serve`, and an `orca` CLI so agents can script the environment",
+      "iOS and Android companion app for monitoring and steering agents remotely; account switcher with usage and rate-limit tracking"
+    ],
+    "bestFor": "Developers who juggle several coding agents at once and want one open-source, cross-platform app to isolate, watch, review, and merge their work — including from a phone.",
+    "notIdealFor": "Anyone who only runs a single agent inside an IDE, or teams that need a hosted cloud workspace product with billing and admin controls; see Conductor (cloud workspaces) or Cursor Projects for managed alternatives.",
+    "recentUpdates": "~71k GitHub stars, 11k+ commits, and daily releases as of September 2026; trending on GitHub (weekly) in mid-September 2026 with Homebrew and AUR packages, an iOS App Store release, and Android APK 0.0.48.",
+    "verdict": "The most fully featured open-source parallel-agent workspace right now — terminals, browser, diff review, mobile, and CLI in one MIT app — and its 'any CLI agent' stance keeps you out of vendor lock-in.",
+    "tags": [
+      "parallel-agents",
+      "git-worktrees",
+      "agent-workspace",
+      "desktop-app",
+      "mobile-companion",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-17"
+  },
+  {
+    "slug": "conductor",
+    "name": "Conductor",
+    "company": "Conductor (YC)",
+    "pricing": "freemium",
+    "pricingDetail": "Free for individuals: unlimited parallel agents in local workspaces on your Mac, bring your own subscriptions or API keys (Conductor does not bill model usage). Pro at $50/month adds Conductor Cloud workspace hours, Multiplayer shared workspaces, the Conductor API, and the upcoming mobile app; Team adds org-wide Multiplayer, centralized billing, and an admin portal; Enterprise adds security and privacy controls.",
+    "description": "Conductor is a macOS app from a YC-backed team for running Claude Code, Codex, Cursor, and OpenCode agents in parallel. Each task becomes a workspace backed by its own git worktree and branch, with a terminal, diff viewer, setup and run scripts, checks, and a pull-request path, so several agents can work on one repository without colliding. You can start a workspace from a GitHub issue, Linear issue, pull request, or branch, watch at a glance what every agent is doing, review the diff, open a PR, merge, and archive the workspace. Conductor bundles compatible Claude Code and Codex binaries and reuses the auth tokens already on your machine (API key, Claude Pro/Max, Codex login), with Cursor via API key and OpenCode via its provider credentials. Environment variables like `CONDUCTOR_PORT` and `CONDUCTOR_IS_LOCAL` let each workspace run its own dev server, and paid tiers add cloud workspaces that keep running after you close the laptop, live Multiplayer collaboration inside an org, and a Conductor API.",
+    "keyFeatures": [
+      "One isolated git worktree workspace per task with branch, terminal, diff, setup/run scripts, checks, and PR flow",
+      "Runs Claude Code, Codex, Cursor, and OpenCode in parallel using your existing subscriptions or keys",
+      "Start work from GitHub issues, Linear issues, pull requests, or branches; review, merge, and archive in-app",
+      "Bundled, version-pinned Claude Code and Codex binaries for compatibility",
+      "`CONDUCTOR_PORT` / `CONDUCTOR_IS_LOCAL` for per-workspace dev servers and cloud-safe setup scripts",
+      "Pro/Team: Conductor Cloud workspaces, Multiplayer shared workspaces, Conductor API, admin portal"
+    ],
+    "bestFor": "Mac developers who want a polished, low-setup way to run several Claude Code or Codex sessions in parallel with a proper review-and-PR workflow, and teams wanting cloud workspaces and shared sessions.",
+    "notIdealFor": "Windows or Linux users (see Orca or Maestro), and anyone who wants an open-source or fully self-hosted tool; the agent lineup is limited to Claude Code, Codex, Cursor, and OpenCode.",
+    "recentUpdates": "Launched on YC in August 2025 as a free Mac app for parallel Claude Codes; by September 2026 supports Codex, Cursor, and OpenCode, ships a $50/month Pro tier with cloud workspaces, Multiplayer, and a Conductor API, and is the reference workflow that open-source clones like Maestro explicitly copy.",
+    "verdict": "The polished original of the parallel-agent workspace category on macOS; free local use makes it an easy default for Claude Code and Codex users, with the trade-off of a closed, Mac-only client.",
+    "tags": [
+      "parallel-agents",
+      "git-worktrees",
+      "agent-workspace",
+      "macos",
+      "claude-code",
+      "codex"
+    ],
+    "lastUpdated": "2026-09-17"
+  },
+  {
+    "slug": "browserskill",
+    "name": "BrowserSkill",
+    "company": "Tencent",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT. Install the `bsk` CLI via `curl -fsSL https://raw.githubusercontent.com/Tencent/BrowserSkill/main/install.sh | sh` (or the PowerShell installer on Windows) and the extension from the Chrome Web Store or Edge Add-ons; no account or hosted service required.",
+    "description": "BrowserSkill is Tencent's open-source bridge between shell-capable AI agents and the browser you are already signed in to. It has two local pieces: the `bsk` CLI/daemon and a Chrome/Edge extension. Agents such as Cursor, Claude Code, Codex, OpenClaw, CodeBuddy, WorkBuddy, Pi, Hermes Agent, and DeepSeek Harness call `bsk` to open pages, click, fill, and screenshot in a separate, visible Agent Window, so they reuse your real login state without test accounts while you keep using your own tabs. Touching an existing tab requires explicit borrowing and returning it afterwards, and a built-in human-in-the-loop handoff lets the agent ask you to clear a captcha, log in, or confirm a dialog before continuing. `bsk install-skill` installs the bundled SKILL.md into detected harnesses (with `--harness` and `--json` for non-interactive use and a DeepSeek Harness plugin), `bsk doctor` diagnoses connectivity and skill state, `bsk screenshot --full-page` captures long pages, `bsk update` upgrades in place, and a sandboxed-agent mode keeps the daemon in a persistent host environment via `BSK_HOME` and `BSK_AUTO_START=0`. Runs on macOS (Apple Silicon and Intel), Linux (x64/ARM64), and Windows x64; Firefox support is planned.",
+    "keyFeatures": [
+      "Agents drive your already-logged-in Chrome or Edge in a separate visible Agent Window; existing tabs must be explicitly borrowed and returned",
+      "Harness-agnostic `bsk` CLI: any agent that can run a shell command can use it, with bundled skills for Cursor, Claude Code, Codex, OpenClaw, CodeBuddy, WorkBuddy, Pi, and Hermes Agent plus a DeepSeek Harness plugin",
+      "Built-in human-in-the-loop handoff for captchas, logins, and confirmation dialogs",
+      "One-line agent-driven setup via AGENT_INSTALL.md, `bsk install-skill`, and `bsk doctor` diagnostics",
+      "Full-page screenshots, `bsk update`, and a sandboxed-agent daemon mode (`BSK_HOME`, `BSK_AUTO_START=0`)",
+      "Cross-platform: macOS, Linux (x64/ARM64), Windows x64; Chrome and Edge today, Firefox planned"
+    ],
+    "bestFor": "Developers who want their coding agent to test, scrape, or operate web apps and internal dashboards using real login sessions, without handing over credentials or interrupting their own browsing.",
+    "notIdealFor": "Headless CI automation or teams that need a hosted browser fleet; use Playwright/Browserbase-style infrastructure for that. Firefox users must wait for planned support.",
+    "recentUpdates": "~3.9k GitHub stars and 500 commits as of September 2026; trending on GitHub (daily) in mid-September 2026 with Chrome Web Store and Edge Add-ons listings and a DeepSeek Harness plugin.",
+    "verdict": "A well-engineered, vendor-neutral way to give any coding agent a real browser; the explicit tab-borrowing and human-handoff design makes it safer than raw CDP automation for logged-in sites.",
+    "tags": [
+      "browser-automation",
+      "agent-skills",
+      "cli",
+      "browser-extension",
+      "human-in-the-loop",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-17"
+  },
+  {
+    "slug": "agent-reach",
+    "name": "Agent Reach",
+    "company": "Panniantong",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT; every upstream tool and API it routes to is free. The only optional cost is a ~$1/month proxy when running on a server; local machines need none. Some channels (Twitter/X, Reddit, LinkedIn, XiaoHongShu) require your own login cookies or an existing browser session, which stay on your machine.",
+    "description": "Agent Reach is an open-source Python CLI and installer that gives command-line AI agents — Claude Code, Cursor, OpenClaw, Windsurf, or anything that can run a shell — reliable access to the parts of the internet they normally cannot reach. Instead of being a scraper itself, it selects, installs, health-checks, and routes to the best available upstream tools (Jina Reader, yt-dlp, gh CLI, twitter-cli, rdt-cli, bili-cli, OpenCLI, mcporter, Exa search, and others), with a primary-plus-fallback backend list per platform so a blocked channel is swapped out without user action. Zero-config channels include clean-Markdown web reading, YouTube transcripts and search, GitHub repos and search, RSS/Atom feeds, free semantic web search via MCP, and V2EX; cookie- or browser-session-unlocked channels add Twitter/X search and timelines, Reddit posts and comments, LinkedIn profiles and jobs, Bilibili subtitles, XiaoHongShu, Facebook, Instagram, Xueqiu, and Xiaoyuzhou podcast transcription. Setup is one sentence pasted to your agent pointing at docs/install.md; `agent-reach install --env=auto` is check-only by default, `--system` explicitly allows installs, `--dry-run` previews, and `agent-reach doctor` reports what works and how to fix what does not.",
+    "keyFeatures": [
+      "One-sentence, agent-driven install with check-only default, `--system` opt-in, `--dry-run`, and `--safe` modes",
+      "Primary + fallback backend routing per platform so blocked access paths are swapped without user action",
+      "Zero-config channels: web-to-Markdown, YouTube transcripts/search, GitHub, RSS, free semantic search (MCP), V2EX",
+      "Cookie/browser-session channels: Twitter/X, Reddit, LinkedIn, Bilibili, XiaoHongShu, Facebook, Instagram, Xueqiu, podcasts",
+      "`agent-reach doctor` diagnostics; cookies stay local and never leave your machine",
+      "Works with Claude Code, Cursor, OpenClaw, Windsurf, and any shell-capable agent; docs in Chinese, English, Japanese, Korean"
+    ],
+    "bestFor": "Developers whose coding or research agents keep hitting paywalled APIs, 403s, or login walls when asked to read tweets, Reddit threads, YouTube tutorials, or Chinese platforms like Bilibili and XiaoHongShu.",
+    "notIdealFor": "Teams that need an officially supported, ToS-clean data API or an enterprise browser/scraping fleet; several channels depend on personal cookies and community CLIs that can break as platforms change.",
+    "recentUpdates": "~83k GitHub stars and 7k+ forks as of September 2026; Trendshift #1 repository of the day and trending on GitHub (weekly) in mid-September 2026; June 2026 backend swap from yt-dlp to bili-cli for Bilibili after platform blocking.",
+    "verdict": "The most widely adopted 'give my agent the internet' toolkit, with a smart selector-and-router design instead of yet another scraper; expect the best experience on Chinese platforms and accept cookie-based access on Western social networks.",
+    "tags": [
+      "web-access",
+      "agent-tools",
+      "cli",
+      "research",
+      "social-media",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-17"
   }
 ]

@@ -946,5 +946,21 @@
   {
     "companyName": "rlaope",
     "toolName": "Oh My Hermes"
+  },
+  {
+    "companyName": "Stably AI",
+    "toolName": "Orca"
+  },
+  {
+    "companyName": "Conductor (YC)",
+    "toolName": "Conductor"
+  },
+  {
+    "companyName": "Tencent",
+    "toolName": "BrowserSkill"
+  },
+  {
+    "companyName": "Panniantong",
+    "toolName": "Agent Reach"
   }
 ]

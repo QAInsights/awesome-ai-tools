@@ -1398,6 +1398,30 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "orca",
+    "name": "Orca",
+    "company": "Stably AI",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "conductor",
+    "name": "Conductor",
+    "company": "Conductor (YC)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "browserskill",
+    "name": "BrowserSkill",
+    "company": "Tencent",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "agent-reach",
+    "name": "Agent Reach",
+    "company": "Panniantong",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "superpowers",
     "name": "Superpowers",
     "company": "obra",
