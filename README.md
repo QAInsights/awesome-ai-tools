@@ -72,6 +72,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[MonoCode](https://github.com/hardbeat920/monocode/)** | Nick | A desktop UI for your coding agents.; [GitHub](https://github.com/hardbeat920/monocode/) |
 | **[Emdash](https://emdash.com)** | generalaction | Emdash is an open-source agentic development environment for running multiple coding agents in parallel, each isolated in its own Git worktree. It supports local and remote SSH projects and works with Claude Code, Codex, Cursor, OpenCode, Amp, Devin, and other provider CLIs.; [GitHub](https://github.com/generalaction/emdash) |
 | **[Atlarix](https://atlarix.dev)** | NorahLabs | Private AI workstation — a native desktop app (macOS/Linux/Windows) with Explore/Plan/Build/Debug/Review modes. Bring any model via BYOK or run fully local (Ollama/LM Studio), or use its managed Core tier; code never leaves the machine, an OS-level sandbox and hunk-level approval gate every edit, and bundled-ripgrep search needs no index.; [GitHub](_No response_) |
+| **[Atomic Chat](https://github.com/AtomicBot-ai/Atomic-Chat)** | Atomic Local Ai | Atomic is an open-source AI agent optimized for local models.; [GitHub](_No response_) |
 
 
 ---

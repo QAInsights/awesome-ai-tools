@@ -228,6 +228,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "atomic-chat",
+    "name": "Atomic Chat",
+    "company": "Atomic Local Ai",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",

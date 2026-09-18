@@ -962,5 +962,9 @@
   {
     "companyName": "Tencent",
     "toolName": "BrowserSkill"
+  },
+  {
+    "companyName": "Atomic Local Ai",
+    "toolName": "Atomic Chat"
   }
 ]
