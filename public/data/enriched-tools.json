@@ -6595,5 +6595,92 @@
       "offline"
     ],
     "lastUpdated": "2026-09-15"
+  },
+  {
+    "slug": "coder",
+    "name": "Coder",
+    "company": "Coder",
+    "pricing": "freemium",
+    "pricingDetail": "Core platform is open-source under AGPL-3.0 and free to self-host (`curl -L https://coder.com/install.sh | sh`, then `coder server`). Coder Premium adds paid features for large teams (governance, dedicated support, advanced admin controls); see coder.com/pricing.",
+    "description": "Coder is a self-hosted platform for cloud development environments and AI coding agents. Workspaces are declared as Terraform templates that provision EC2 VMs, Kubernetes pods, Docker containers, or other infrastructure, are reached through a secure WireGuard tunnel from VS Code, JetBrains, or the terminal, and shut down automatically when idle. Coder Agents runs a native AI coding agent whose loop executes in the Coder control plane on your own infrastructure, so no LLM credentials live inside workspaces, every action carries the user's identity, and you can bring any model (Anthropic, OpenAI, Google, Bedrock, or self-hosted). The AI Gateway centralizes authentication, auditing, and cost tracking for AI tooling, and Coder Registry modules run Claude Code, Codex, and OpenCode isolated inside workspaces.",
+    "keyFeatures": [
+      "Terraform-defined cloud development environments on Kubernetes, Docker, VMs, or any provider",
+      "Coder Agents: native coding agent loop running in the control plane with no API keys in workspaces",
+      "Bring any model (Anthropic, OpenAI, Google, Bedrock, self-hosted) with centralized governance",
+      "AI Gateway for authentication, audit logging, and cost controls across AI tools",
+      "Registry modules to run Claude Code, Codex, and OpenCode isolated in workspaces",
+      "WireGuard-secured access from VS Code, JetBrains, and the CLI; idle auto-shutdown"
+    ],
+    "bestFor": "Platform and security teams that want to give developers and coding agents governed, ephemeral cloud environments on their own infrastructure instead of running agents on laptops.",
+    "notIdealFor": "Solo developers who just want a local agent runner; Coder requires operating a server, a PostgreSQL database, and Terraform templates. For lightweight local parallel-agent workspaces see Orkas, Atlas, or AgentBox.",
+    "recentUpdates": "v2.36.5 released September 2026; ~15.1k GitHub stars and trending on GitHub (daily) in mid-September 2026 after repositioning around Coder Agents and the AI Gateway for self-hosted coding agents.",
+    "verdict": "The most mature open-source option for running coding agents inside governed, self-hosted dev environments; heavier to operate than desktop agent workspaces but built for enterprise control.",
+    "tags": [
+      "cloud-dev-environments",
+      "self-hosted",
+      "agent-orchestration",
+      "enterprise",
+      "terraform",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-18"
+  },
+  {
+    "slug": "openspec",
+    "name": "OpenSpec",
+    "company": "Fission-AI",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT; install with `npm install -g @fission-ai/openspec@latest` (Node.js 20.19+). You pay only for the AI coding assistant you already use.",
+    "description": "OpenSpec is a lightweight Spec-Driven Development (SDD) framework that acts as an agreement layer between you and your AI coding assistant. After `openspec init`, slash commands drive the workflow: `/opsx:explore` is a no-stakes thinking partner that reads your code and shapes a plan, `/opsx:propose` creates a per-change folder under `openspec/changes/` containing `proposal.md`, `specs/`, `design.md`, and `tasks.md` for you to review before any code is written, `/opsx:apply` implements the task checklist, and `/opsx:archive` folds the change back into the living specs in `openspec/specs/`. Specs are plain Markdown requirements (SHALL) with WHEN/THEN scenarios and no special syntax. An expanded profile adds `/opsx:new`, `/opsx:continue`, `/opsx:ff`, `/opsx:verify`, `/opsx:bulk-archive`, and `/opsx:onboard`; Stores (beta) move planning into a shared repo so cross-repo features and platform-owned requirements have one source of truth every coding agent can read. It works with 20+ assistants including Claude Code, Cursor, GitHub Copilot, Windsurf, Cline, RooCode, Codex, and Amazon Q.",
+    "keyFeatures": [
+      "Artifact-guided workflow: /opsx:explore → propose → apply → archive",
+      "Per-change proposal.md, specs/, design.md, and tasks.md reviewed before code is written",
+      "Plain-Markdown SHALL/WHEN/THEN specs versioned alongside code",
+      "Iterative, brownfield-friendly: update any artifact anytime, no rigid phase gates",
+      "Stores (beta) for cross-repo, team-shared specs",
+      "Works with 20+ AI assistants via slash commands with no vendor lock-in"
+    ],
+    "bestFor": "Developers and teams who want predictable AI output by agreeing on a proposal and spec before implementation, without adopting a heavyweight process.",
+    "notIdealFor": "Throwaway prototypes where writing a proposal is overhead. Compare with GitHub's Spec Kit (more structured phase gates, Python-based CLI) or Kiro (IDE-bound spec workflow).",
+    "recentUpdates": "v1.13.1 released 2026-09-17; ~69k GitHub stars, 110+ contributors, and trending on GitHub (daily) in mid-September 2026 after the rebuilt artifact-guided `/opsx` workflow and Stores beta.",
+    "verdict": "The most widely adopted lightweight SDD framework for coding agents; a pragmatic middle ground between ad-hoc prompting and heavyweight spec toolkits.",
+    "tags": [
+      "spec-driven-development",
+      "planning",
+      "agent-workflow",
+      "claude-code",
+      "cursor",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-18"
+  },
+  {
+    "slug": "browserskill",
+    "name": "BrowserSkill",
+    "company": "Tencent",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under MIT; install the `bsk` CLI via the install script (macOS/Linux) or PowerShell (Windows) and the extension from the Chrome Web Store or Edge Add-ons. Runs entirely locally with your existing agent and model.",
+    "description": "BrowserSkill connects shell-capable AI coding agents (Cursor, Claude Code, Codex, OpenClaw, CodeBuddy, WorkBuddy, Pi, Hermes Agent, DeepSeek Harness) to the Chromium browser you are already logged into. It has two local pieces: the `bsk` CLI/daemon and a Chrome/Edge extension. Browser tasks run in a separate, visible Agent Window so you can keep working, agents reuse your real login state without test accounts, and touching one of your own tabs requires an explicit borrow-and-return. When a task hits a captcha, login, or confirmation dialog the agent hands control to you and resumes afterwards. `bsk install-skill` installs a harness-specific skill that teaches the agent to open pages, read text, fill forms, scrape data, run UI regression checks on a PR, and capture full-page screenshots (`bsk screenshot --full-page`). A sandboxed-agent mode keeps the daemon in a persistent host environment via a shared `BSK_HOME`.",
+    "keyFeatures": [
+      "Agents drive your real, logged-in Chrome or Edge without separate test accounts",
+      "Isolated visible Agent Window; your own tabs are protected unless explicitly borrowed",
+      "Built-in human-in-the-loop handoff for captchas, logins, and confirmations",
+      "Harness-agnostic `bsk` CLI; `bsk install-skill` for Cursor, Claude Code, Codex, OpenClaw, Pi, Hermes",
+      "Full-page screenshots, form filling, scraping, and UI regression checks",
+      "macOS, Linux, and Windows; sandboxed-agent daemon mode"
+    ],
+    "bestFor": "Developers who want their coding agent to verify deployed pages, test UI flows, or pull data from sites they are signed into, without handing over credentials or interrupting their own browsing.",
+    "notIdealFor": "Headless CI browser automation (use Playwright or a hosted browser API) or Firefox users (support is planned). For a desktop app alternative see Superagent; for agent-driven E2E testing see Kane CLI.",
+    "recentUpdates": "cli-v0.3.0 released 2026-09-17; ~5k GitHub stars and trending on GitHub (daily, +1.3k stars) in mid-September 2026 after adding DeepSeek Harness support and sandboxed-agent setup docs.",
+    "verdict": "A clean, safety-conscious way to give any coding agent a real browser; the explicit tab-borrowing and human handoff design set it apart from raw CDP bridges.",
+    "tags": [
+      "browser-automation",
+      "agent-skills",
+      "human-in-the-loop",
+      "claude-code",
+      "cursor",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-18"
   }
 ]

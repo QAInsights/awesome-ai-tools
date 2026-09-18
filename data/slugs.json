@@ -882,6 +882,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "coder",
+    "name": "Coder",
+    "company": "Coder",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1407,6 +1413,18 @@
     "slug": "blabla",
     "name": "BlaBla",
     "company": "Petro Yakovyshyn (independent; I maintain BlaBla)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "openspec",
+    "name": "OpenSpec",
+    "company": "Fission-AI",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "browserskill",
+    "name": "BrowserSkill",
+    "company": "Tencent",
     "category": "Developer Productivity & Workflow"
   },
   {

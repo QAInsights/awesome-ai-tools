@@ -950,5 +950,17 @@
   {
     "companyName": "Petro Yakovyshyn (independent; I maintain BlaBla)",
     "toolName": "BlaBla"
+  },
+  {
+    "companyName": "Coder",
+    "toolName": "Coder"
+  },
+  {
+    "companyName": "Fission-AI",
+    "toolName": "OpenSpec"
+  },
+  {
+    "companyName": "Tencent",
+    "toolName": "BrowserSkill"
   }
 ]
