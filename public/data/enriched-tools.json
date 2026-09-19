@@ -1090,6 +1090,34 @@
     "lastUpdated": "2026-09-19"
   },
   {
+    "slug": "orca",
+    "name": "Orca",
+    "company": "Stably AI",
+    "pricing": "open-source",
+    "pricingDetail": "MIT-licensed and free to download for macOS, Windows and Linux. Orca has no model fees of its own; you plug in the agent subscriptions you already have (Claude Code, Codex, OpenCode, Grok, etc.).",
+    "description": "Orca is an open-source 'agent development environment' (ADE) for working with a fleet of parallel coding agents. It runs Claude Code, Codex, Cursor, OpenCode and 25+ other CLI agents side by side, each in its own isolated Git worktree, and bundles terminals, diffs, a built-in browser, a scriptable CLI and a mobile companion into one desktop app.",
+    "keyFeatures": [
+      "Parallel agents, each in an isolated Git worktree",
+      "Fan one prompt across several agents, compare diffs and merge the winner",
+      "27+ supported agent CLIs with bring-your-own subscription",
+      "Terminals, diffs and a built-in browser in one window",
+      "`orca` CLI (worktree create, snapshot, click, fill) so agents can drive the environment",
+      "iOS/Android companion app and SSH/VPS worktrees for remote work"
+    ],
+    "bestFor": "Developers who run several CLI coding agents at once and want worktree isolation, side-by-side comparison and remote monitoring without a terminal-tab sprawl.",
+    "notIdealFor": "Developers who use a single agent inside a traditional IDE, or who want a hosted/cloud agent service rather than a desktop app they run themselves.",
+    "recentUpdates": "Desktop release v1.4.205 (Sep 17, 2026) and Android companion mobile-android-v0.0.50 (Sep 18, 2026). The repo passed 72k GitHub stars roughly six months after its first commit and sits on GitHub Trending (weekly) in September 2026; an r/OrcaADE community is active.",
+    "verdict": "One of the fastest-growing agent orchestration desktops of 2026 and a strong pick if parallel worktree-isolated agents are your daily workflow; the trade-off is a young, fast-moving codebase and a UI that is built around agents rather than hand editing.",
+    "tags": [
+      "agent orchestration",
+      "git worktrees",
+      "desktop app",
+      "open source",
+      "parallel agents"
+    ],
+    "lastUpdated": "2026-09-19"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -6548,6 +6576,90 @@
       "open-source"
     ],
     "lastUpdated": "2026-09-18"
+  },
+  {
+    "slug": "multica",
+    "name": "Multica",
+    "company": "Multica",
+    "pricing": "open-source",
+    "pricingDetail": "Open source and self-hostable via Docker Compose or Helm at no cost; a hosted version is offered at multica.ai. Agents run on your own runtime using your existing agent subscriptions or API keys.",
+    "description": "Multica is an open-source workspace where AI coding agents appear on the issue board like teammates. You assign an issue to Claude Code, Codex, Cursor, Copilot, Kimi, OpenCode or 20+ other agent CLIs; the agent runs on a daemon on your own machine or cloud box, comments progress, raises blockers and hands the diff back for human review.",
+    "keyFeatures": [
+      "Assign issues, @-mention or chat with agents like teammates",
+      "20+ agent CLIs (Claude Code, Codex, Cursor, Copilot, Kimi, OpenCode...)",
+      "Runtime daemon on your own machine or cloud box; code never leaves it",
+      "Squads mixing people and agents, reusable Skills, cron-based Autopilots",
+      "Execution log and diff stay attached to the issue",
+      "Self-host with Docker Compose/Helm; GitHub, GitLab, Gitea and Forgejo support; roles and access scopes"
+    ],
+    "bestFor": "Teams that want to manage coding agents through an issue tracker style workflow with human review gates, and that need self-hosting and per-member agent permissions.",
+    "notIdealFor": "Solo developers who just want an agent in their editor or terminal, or teams unwilling to run a server plus runtime daemons.",
+    "recentUpdates": "v0.5.0 released Sep 18, 2026 following v0.4.44 on Sep 15; the project surpassed 50k GitHub stars and appears on GitHub Trending (weekly) in September 2026.",
+    "verdict": "A credible open-source answer to 'Linear for agents': the issue-as-unit-of-work model and self-hosting make it attractive for teams, though it is heavier to operate than single-user agent orchestrators.",
+    "tags": [
+      "agent workspace",
+      "issue tracking",
+      "self-hosted",
+      "open source",
+      "team collaboration"
+    ],
+    "lastUpdated": "2026-09-19"
+  },
+  {
+    "slug": "engram",
+    "name": "Engram",
+    "company": "Gentleman Programming",
+    "pricing": "freemium",
+    "pricingDetail": "The Engram binary is open source and free (brew install gentleman-programming/tap/engram, or direct downloads for Windows/macOS/Linux). An optional Engram Cloud tier provides hosted, shared team memory.",
+    "description": "Engram gives AI coding agents persistent, searchable memory across sessions. It is a single Go binary backed by SQLite + FTS5 that exposes 15 MCP tools (mem_save, mem_search, mem_context, mem_session_summary, mem_timeline...), an HTTP API, a CLI and a TUI, and works with any MCP-capable agent including Claude Code, Codex, Gemini CLI, OpenCode, Cursor, Windsurf, VS Code Copilot and Antigravity.",
+    "keyFeatures": [
+      "Agent-agnostic persistent memory via MCP",
+      "Single Go binary; no Node, Python, Docker or vector DB",
+      "SQLite + FTS5 full-text search in one local engram.db file",
+      "One-command `engram setup <agent>` for a dozen+ agents",
+      "HTTP API, CLI and interactive TUI to inspect memories",
+      "Optional Engram Cloud for shared team memory"
+    ],
+    "bestFor": "Developers who switch between coding agents and want decisions, bugfixes and conventions remembered across sessions without running extra services.",
+    "notIdealFor": "Users who want automatic capture of every tool call (Engram relies on the agent deciding what to save), or teams that need a vector-search memory layer.",
+    "recentUpdates": "v2.0.0 shipped Sep 18, 2026 (after a series of release candidates) introducing the 'one brain, local or cloud' model with Engram Cloud. The repo has 6.7k+ GitHub stars and is on GitHub Trending (Go) in September 2026.",
+    "verdict": "A pragmatic, dependency-free memory layer that is easy to inspect and works with essentially every agent; keep saved memories focused on decisions and constraints to avoid retrieving noise.",
+    "tags": [
+      "agent memory",
+      "MCP server",
+      "SQLite",
+      "Go",
+      "open source"
+    ],
+    "lastUpdated": "2026-09-19"
+  },
+  {
+    "slug": "webcodex",
+    "name": "WebCodex",
+    "company": "yyjeqhc",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source; self-hosted Server + Runner. You use your own ChatGPT/Claude subscription and, optionally, a free Cloudflare Quick Tunnel or the OpenAI Secure MCP Tunnel for connectivity.",
+    "description": "WebCodex lets ChatGPT, Claude and other MCP clients work directly with repositories and developer tools that stay on your own machines. A Runner executes file, Git, command and test operations where the code lives, while the Server exposes those capabilities to the chat client, with a Console to inspect readiness and accept or reject proposed work.",
+    "keyFeatures": [
+      "Repositories stay on your machine; no hosted workspace needed",
+      "Read/search files, guarded edits, Git, commands, tests and long-running jobs",
+      "`webcodex share` one-command setup with a Cloudflare Quick Tunnel",
+      "Desktop app for Windows/macOS paired with the OpenAI Secure MCP Tunnel",
+      "Console to guide, cancel, accept or reject agent work",
+      "Optional GPT Actions / Custom GPT integration"
+    ],
+    "bestFor": "Developers who want to drive real development work from the ChatGPT or Claude chat UI against local or private repos without moving code to a cloud sandbox.",
+    "notIdealFor": "Developers who already live in a terminal or IDE agent, or Windows users who need the full Server locally (Windows supports CLI + Runner against a remote Linux Server).",
+    "recentUpdates": "v0.4.1 released Sep 10, 2026 and v0.4.0 on Sep 7; the repo reached GitHub Trending (daily) in mid-September 2026 with 1.4k+ stars.",
+    "verdict": "A niche but well-scoped bridge that turns ChatGPT/Claude chat into a coding agent over your own machines; smaller community than mainstream agents, so expect rough edges.",
+    "tags": [
+      "MCP",
+      "ChatGPT",
+      "self-hosted",
+      "remote development",
+      "open source"
+    ],
+    "lastUpdated": "2026-09-19"
   },
   {
     "slug": "visual-studio-code",

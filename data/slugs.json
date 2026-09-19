@@ -240,6 +240,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "orca",
+    "name": "Orca",
+    "company": "Stably AI",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -1437,6 +1443,24 @@
     "slug": "browserskill",
     "name": "BrowserSkill",
     "company": "Tencent",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "multica",
+    "name": "Multica",
+    "company": "Multica",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "engram",
+    "name": "Engram",
+    "company": "Gentleman Programming",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "webcodex",
+    "name": "WebCodex",
+    "company": "yyjeqhc",
     "category": "Developer Productivity & Workflow"
   },
   {
