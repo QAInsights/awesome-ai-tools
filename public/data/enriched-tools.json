@@ -1062,6 +1062,34 @@
     "lastUpdated": "2026-09-18"
   },
   {
+    "slug": "tastecode",
+    "name": "TasteCode",
+    "company": "Leon Lin",
+    "pricing": "open-source",
+    "pricingDetail": "TasteCode is open source and free to download; it works with your existing AI subscriptions (Codex, Claude Code, Grok Build plans) rather than charging its own fee. The related Taste Skill repo is MIT-licensed and free with no API key required.",
+    "description": "TasteCode is a local desktop workspace for AI coding agents with a built-in Design Mode that aims to avoid generic 'slop' UI and produce better frontends. It unifies Codex, Claude Code, and Grok Build plans into one workspace with a terminal, browser preview, diffs, and checkpoints.",
+    "keyFeatures": [
+      "Dedicated Design Mode for better AI-generated UI",
+      "Unified workspace for Codex, Claude Code, and Grok Build plans",
+      "Built-in terminal, browser preview, diffs, and checkpoints",
+      "Works with your existing AI subscriptions",
+      "Open source",
+      "Public beta for Windows and macOS (Apple Silicon)"
+    ],
+    "bestFor": "Developers using AI coding agents who want a local desktop workspace with design-focused guardrails to produce better-looking frontends.",
+    "notIdealFor": "Users on Linux or Intel Macs (beta is Windows and Apple Silicon only), and those not building frontend UI.",
+    "recentUpdates": "TasteCode was introduced by @LexnLin on Sep 18, 2026 as a desktop app for coding agents with Design Mode, launched in public beta for Windows and macOS (Apple Silicon) and featured on Product Hunt. It follows the earlier TasteSkill/Taste Skill project (repo created Feb 19, 2026).",
+    "verdict": "TasteCode offers a promising, free and open-source desktop workspace that unifies popular AI coding agents and adds design guardrails to reduce generic output. However, it is still early-stage with a limited platform beta (Windows and Apple Silicon only), so stability and feature completeness may lag more mature IDEs.",
+    "tags": [
+      "AI coding agents",
+      "desktop app",
+      "design mode",
+      "open source",
+      "frontend"
+    ],
+    "lastUpdated": "2026-09-19"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
