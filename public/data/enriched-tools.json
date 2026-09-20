@@ -6852,5 +6852,63 @@
       "offline"
     ],
     "lastUpdated": "2026-09-15"
+  },
+  {
+    "slug": "codenotch",
+    "name": "Codenotch",
+    "company": "vinzdg",
+    "pricing": "open-source",
+    "pricingDetail": "MIT-licensed and free. Official builds ship as a signed, notarized macOS DMG (universal binary, macOS 15+) with Sparkle auto-update; a Rust/Tauri 2 Windows installer lives in the same repo. No account or subscription of its own — it reads the coding-assistant sessions already on your machine.",
+    "description": "Codenotch is a macOS app that pins a small black notch to a screen edge and draws one ring per coding assistant's usage limit — Claude Code, Cursor, Codex, Antigravity, GitHub Copilot, GLM, Grok and others — so you can see how much of a five-hour or weekly window you have burned without running /usage. Hover a ring for its limit windows and reset times; the ring's shape shows whether the agent is still working, done, or waiting on your input.",
+    "keyFeatures": [
+      "One ring per assistant for 9+ providers (Claude Code, Cursor, Codex, Antigravity, Copilot, GLM, Grok, Ollama Cloud, LM Studio)",
+      "Claude Code numbers come from the same /usage endpoint the CLI itself reports, so app and CLI never disagree",
+      "Reads local sessions only: Cursor's SQLite state store, Codex rollout logs, Claude Code's OAuth token",
+      "Ring doubles as an activity light: working, done, or waiting on you",
+      "Signed, notarized DMG with EdDSA-signed Sparkle auto-updates",
+      "Rust/Tauri 2 Windows port with the same design and providers"
+    ],
+    "bestFor": "Developers juggling two or more agent subscriptions with session or weekly rate limits who want ambient, always-visible headroom instead of discovering the wall by hitting it.",
+    "notIdealFor": "Linux users (no native build), teams that need centralized or multi-user usage reporting, or anyone who wants a full cost/token analytics dashboard rather than a limit gauge.",
+    "recentUpdates": "Frequent releases in September 2026 (v1.15.0 on Sep 19 and v1.16.0 on Sep 20, 2026); the repo passed 2,100 GitHub stars with 30 contributors about two weeks after its first commit and is listed on several Claude Code tool directories.",
+    "verdict": "A small, well-executed utility that solves one real annoyance for multi-agent users — knowing your remaining quota at a glance — and does it without asking for credentials; it is macOS-first and young, so expect the provider list and Windows port to keep moving.",
+    "tags": [
+      "usage limits",
+      "macOS app",
+      "Claude Code",
+      "Cursor",
+      "Codex",
+      "open source"
+    ],
+    "lastUpdated": "2026-09-20"
+  },
+  {
+    "slug": "agent-native",
+    "name": "Agent-Native",
+    "company": "Builder.io",
+    "pricing": "open-source",
+    "pricingDetail": "MIT-licensed open-source framework (@agent-native/core on npm). Bring your own LLM, SQL database (any Drizzle-supported database; PostgreSQL in production, PGlite locally) and Nitro-compatible host; there is no hosted tier or per-seat fee.",
+    "description": "Agent-Native is Builder.io's open-source TypeScript framework for building apps that are agents and applications at the same time. Each capability is defined once as an action; the agent uses it as a tool while the UI calls it from code, and the same action is also exposed over HTTP, MCP, A2A and a CLI with shared validation, permissions and data. The runtime ships agent chat, skills, memory, jobs, observability, automations and agent teams, and the repo includes open-source example agents (Clips, Plans, Design, Content, Analytics, Chat) to start from.",
+    "keyFeatures": [
+      "Define an action once; it is available to the UI, the agent, HTTP, MCP, A2A and the CLI",
+      "Agent runtime with chat, tools, skills, memory, jobs, observability and handoffs",
+      "Claude Code/Codex-style workspace of instructions, skills, memories, files and subagents per user and org",
+      "Automations that run agent work on schedules or events, plus agent teams",
+      "Append /mcp to any Agent-Native app URL to connect it to another agent",
+      "PostgreSQL/PGlite via Drizzle on any Nitro-compatible host; `npx @agent-native/core@latest create my-app`"
+    ],
+    "bestFor": "Product teams building internal tools or SaaS where an agent and a conventional UI must share the same data, permissions and capabilities, and developers who want a scaffold that coding agents can extend from a working app.",
+    "notIdealFor": "Developers who only need a chat wrapper or a lightweight agent SDK, Python-first teams, or projects that cannot adopt the framework's opinionated TypeScript/Nitro/Drizzle stack.",
+    "recentUpdates": "Active daily development with nightly releases (e.g. clips-nightly v0.1.381 on Sep 19, 2026) and @agent-native/core at 0.182.x; the repo reached 5,000+ GitHub stars with 30 contributors and appeared on GitHub Trending (daily) in September 2026. Builder.io has published guides on building agent-native and agent-first apps with it.",
+    "verdict": "A credible, well-funded attempt at making 'agent + UI share one action layer' the default architecture for agentic apps; it is still pre-1.0 and opinionated, so pick it when you buy into the full stack rather than for a single agent endpoint.",
+    "tags": [
+      "agent framework",
+      "TypeScript",
+      "MCP",
+      "app builder",
+      "open source",
+      "Builder.io"
+    ],
+    "lastUpdated": "2026-09-20"
   }
 ]

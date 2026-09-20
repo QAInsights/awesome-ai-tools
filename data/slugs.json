@@ -1464,6 +1464,18 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "codenotch",
+    "name": "Codenotch",
+    "company": "vinzdg",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "agent-native",
+    "name": "Agent-Native",
+    "company": "Builder.io",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
