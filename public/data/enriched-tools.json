@@ -4171,6 +4171,36 @@
     "lastUpdated": "2026-09-18"
   },
   {
+    "slug": "ax",
+    "name": "AX",
+    "company": "Google",
+    "pricing": "open-source",
+    "pricingDetail": "AX is an open-source project released under the Apache License 2.0 and is free to use; costs come from the underlying compute, sandboxing (Agent Substrate) and model providers you connect. It is in active early development with breaking changes expected before a stable release.",
+    "description": "AX (Agent Executor) is Google's open-source distributed harness runtime that dynamically provisions isolated, suspendable/resumable environments to execute agents and harnesses at scale across a cluster. It provides a Kubernetes-like, declarative orchestration layer for running large numbers of autonomous agent workloads.",
+    "keyFeatures": [
+      "Distributed runtime with isolated execution for harnesses, skills, tools and agents",
+      "Automatic recovery and execution resumption from failures or interruptions",
+      "Single-writer architecture with a durable event log for consistent state management",
+      "Built-in support for frontier harnesses plus custom implementations",
+      "Portability across small and large deployments, scaling to billions of tasks per cluster",
+      "Customizable environments, MCP tools, skills and instructions",
+      "Runs on top of Agent Substrate for sandboxed execution"
+    ],
+    "bestFor": "Platform and infrastructure engineers who need to orchestrate large-scale, long-running autonomous agent workloads with reliability and resumability, especially teams already comfortable with Kubernetes-style declarative systems.",
+    "notIdealFor": "Developers wanting a stable, production-ready API today, or those without the infrastructure and model-provider budget to run distributed agent clusters.",
+    "recentUpdates": "Repository created 2026-03-30 and currently in active early development (~1,967 stars, 116 forks, 35 open issues); the team has temporarily paused external pull requests while stabilizing core architecture, resumption protocols and runtime specifications, and encourages issues for feedback.",
+    "verdict": "AX offers a compelling open-source foundation for running massive numbers of autonomous agents with strong resumption and consistency guarantees, backed by Google and an Apache 2.0 license. However, it is explicitly pre-stable with major breaking changes expected and external contributions paused, so it is best suited to experimentation and infrastructure-forward teams rather than production deployments today.",
+    "tags": [
+      "autonomous agents",
+      "distributed runtime",
+      "orchestration",
+      "open-source",
+      "Google",
+      "agent infrastructure"
+    ],
+    "lastUpdated": "2026-09-21"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",

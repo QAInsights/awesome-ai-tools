@@ -918,6 +918,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "ax",
+    "name": "AX",
+    "company": "Google",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
