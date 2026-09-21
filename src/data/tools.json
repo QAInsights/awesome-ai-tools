@@ -1010,5 +1010,17 @@
   {
     "companyName": "Kimi",
     "toolName": "Kimi Code"
+  },
+  {
+    "companyName": "Unstable Build",
+    "toolName": "Rune"
+  },
+  {
+    "companyName": "Apodex AI",
+    "toolName": "FrontierAgent"
+  },
+  {
+    "companyName": "shadcn",
+    "toolName": "shadcn lint"
   }
 ]

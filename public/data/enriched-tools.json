@@ -1147,6 +1147,37 @@
     "lastUpdated": "2026-09-21"
   },
   {
+    "slug": "rune",
+    "name": "Rune",
+    "company": "Unstable Build",
+    "pricing": "open-source",
+    "pricingDetail": "Rune is open source under the GPL-3.0 (open-sourced 2026-09-12) and free to install via `curl -fsSL https://rune.build/install.sh | sh`. Unstable Build sells optional hosted services around it (accounts, the headscale-based peer network, official packages) and runs a contributor revenue-share program; the built-in agent uses your own model provider credentials.",
+    "description": "Rune is a fast, GPU-accelerated, keyboard-driven IDE and terminal multiplexer for macOS and Linux, written in Go with a native OpenGL/Metal graphics pipeline (no Electron). It combines code editing, terminals, CLI tools, language intelligence, debugging, and AI agents in one composable multi-workspace environment, positioned as 'the Unix way, finished as a product' for both manual and agent-driven programming.",
+    "keyFeatures": [
+      "Native GPU-accelerated UI (OpenGL on Linux, Metal on macOS) with no Electron",
+      "Screen-multiplexer layout: nine workspace slots, unlimited terminals, tabs, and windows",
+      "Built-in coding agent plus IDE-grade skills that external agents can use",
+      "Production-grade language intelligence and debugging out of the box (Go and Python first)",
+      "E2E-encrypted peer network (headscale) to reach any of your Rune instances from any machine",
+      "Plugins and extensions installed from Git repos with `pkg install`, plus official packages",
+      "In-IDE guided tutorial and docs loaded as a workspace the agent can reason over"
+    ],
+    "bestFor": "Power users and terminal-centric developers on macOS or Linux who want an IDE, terminal multiplexer, and coding agent in one fast native app, especially Go and Python developers who work across several machines.",
+    "notIdealFor": "Windows users, teams that need a broad language/extension ecosystem today, or developers who want a familiar VS Code-style editor rather than a keyboard-driven multiplexer model.",
+    "recentUpdates": "Open-sourced under GPL-3.0 on 2026-09-12 with a contributor revenue-share program; repository created 2026-09-10 and at ~1,050 stars within two weeks; latest stable release v1.2.1 (2026-09-11). Linux arm64/x86_64 builds are marked beta, while the macOS Apple Silicon build has been a daily driver for years.",
+    "verdict": "Rune is a distinctive take on the AI-native IDE: a native, GPU-rendered multiplexer that treats terminals, language intelligence, and agents as equal citizens rather than bolting chat onto a VS Code fork. It is early as an open-source project and currently strongest for Go/Python on macOS, so evaluate language support and Linux maturity before adopting it as a daily driver.",
+    "tags": [
+      "AI IDE",
+      "terminal multiplexer",
+      "open-source",
+      "native app",
+      "macOS",
+      "Linux",
+      "coding agent"
+    ],
+    "lastUpdated": "2026-09-21"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -3509,6 +3540,36 @@
       "web-scraping"
     ],
     "lastUpdated": "2026-09-15"
+  },
+  {
+    "slug": "frontieragent",
+    "name": "FrontierAgent",
+    "company": "Apodex AI",
+    "pricing": "open-source",
+    "pricingDetail": "FrontierAgent is open source under Apache-2.0 and free to run. It talks to any OpenAI-compatible endpoint: Apodex's hosted Apodex-1.1 API (metered, with a limited-time free period at launch), a self-hosted SGLang deployment of the open-weight Apodex models from Hugging Face, or other compatible providers, so costs come from the model you connect.",
+    "description": "FrontierAgent is Apodex AI's open-source agent runtime, terminal TUI, and evaluation suite for long-horizon research and file-based work. The `frontier-agent` TUI ships a ReAct single-agent workflow and an Agent Team workflow where a coordinator maintains a task board, delegates to parallel sub-agents, collects their reports, and synthesizes the result; the same engine powers the benchmark runner used to evaluate Apodex models.",
+    "keyFeatures": [
+      "ReAct mode: one stateful agent that researches, reads files, writes deliverables, and runs commands",
+      "Agent Team mode: coordinator with a live task board dispatching bounded parallel sub-agents",
+      "Task-scoped sandbox with read-only /inputs, working /workspace, and persistent /outputs; fail-closed authorization",
+      "TUI sidebar with Plan, Activity, Files, and Diff tabs, file previews, and approvals",
+      "Asynchronous intervention: type mid-run to queue new steering instructions",
+      "One-command install on macOS/Linux with no hard Docker dependency; one-shot, line mode, and session resume",
+      "Works with any OpenAI-compatible endpoint, including self-hosted SGLang"
+    ],
+    "bestFor": "Developers and researchers who want an open, inspectable terminal agent harness for multi-step research and file-heavy tasks, or who want to run and evaluate open-weight Apodex models with a ready-made multi-agent workflow.",
+    "notIdealFor": "Teams looking for a purpose-built coding agent with deep repo tooling (LSP, git-aware edits) or an IDE integration; FrontierAgent is oriented toward research and deliverable-generation rather than software engineering specifically.",
+    "recentUpdates": "Open-sourced 2026-08-22 alongside the Apodex-1.1 model release and tech report; ~4,300 stars and ~220 forks by 2026-09-21 with active daily commits. Recent work added the Agent Team task board, Diff sidebar tab, asynchronous intervention, and a limited-time free tier on the Apodex API platform.",
+    "verdict": "FrontierAgent is a well-documented, permissively licensed agent harness from a model lab, with a genuinely useful multi-agent TUI and sandboxing model. It shines for research-style, long-horizon tasks tied to Apodex models; treat it as an agent runtime to build on rather than a drop-in replacement for coding-focused CLIs like Claude Code or Codex.",
+    "tags": [
+      "agent runtime",
+      "terminal TUI",
+      "multi-agent",
+      "open-source",
+      "research agent",
+      "Apodex"
+    ],
+    "lastUpdated": "2026-09-21"
   },
   {
     "slug": "yylo",
@@ -6747,6 +6808,35 @@
       "open source"
     ],
     "lastUpdated": "2026-09-19"
+  },
+  {
+    "slug": "shadcn-lint",
+    "name": "shadcn lint",
+    "company": "shadcn",
+    "pricing": "open-source",
+    "pricingDetail": "@shadcn/lint is MIT-licensed and free; install with `npm install -D @shadcn/lint` alongside ESLint 9.30+ or Oxlint 1.80+ on Node.js 20.19+. No hosted service or paid tier.",
+    "description": "@shadcn/lint is an 'agent-first' linter for Tailwind v4 design systems from shadcn, the creator of shadcn/ui. You declare which components own their styling and what may change; when a coding agent breaks a rule, the error explains what is wrong and suggests the allowed fix (a size, variant, or theme token) read from your own components and theme, so the agent can correct it in one pass. It ships as an ESLint and Oxlint plugin and works with any Tailwind v4 project, shadcn/ui not required.",
+    "keyFeatures": [
+      "Rules: no-restyle, no-raw-colors, no-arbitrary-values, no-inline-styles, no-unknown-classes, and a rule for dynamic classes the linter cannot read",
+      "Error messages generated from your source: lists the actual sizes/variants a component defines and the file they live in",
+      "Per-component contracts (e.g. allow layout/margin but keep spacing and shape inside the Button) without changing the component API",
+      "Available as both an ESLint 9 and an Oxlint plugin",
+      "Agent-driven setup via a prompt pointing at SETUP.md; pairs with an AGENTS.md instruction to run lint and fix errors",
+      "Works with existing Tailwind v4 design systems; shadcn/ui is optional"
+    ],
+    "bestFor": "Frontend teams using Tailwind v4 (with or without shadcn/ui) that let coding agents like Claude Code, Codex, or Cursor write UI and want design-system rules enforced with feedback the agent can act on.",
+    "notIdealFor": "Projects not on Tailwind v4, CSS-in-JS or non-utility styling setups, or teams without a defined component design system to encode as rules.",
+    "recentUpdates": "Released 2026-09-14 and passed 2,200 GitHub stars within a week; frequent 0.1.x releases (0.1.5 on 2026-09-21). The project reports testing its rules with coding agents across 150+ task runs, with nearly every task reaching zero violations in a single correction round.",
+    "verdict": "@shadcn/lint is a sharp, narrowly scoped idea executed well: it turns design-system guardrails into lint errors written for models instead of humans, which is exactly the feedback loop agent-written frontend code has been missing. It is young and Tailwind v4-only, but for shadcn/Tailwind shops using coding agents it is a low-cost, high-leverage addition.",
+    "tags": [
+      "linter",
+      "Tailwind",
+      "design system",
+      "agent guardrails",
+      "ESLint",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-21"
   },
   {
     "slug": "codenotch",

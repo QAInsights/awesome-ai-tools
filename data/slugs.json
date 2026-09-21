@@ -252,6 +252,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "rune",
+    "name": "Rune",
+    "company": "Unstable Build",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "kimi-code",
     "name": "Kimi Code",
     "company": "Kimi",
@@ -777,6 +783,12 @@
     "slug": "kolkrabbi",
     "name": "Kolkrabbi",
     "company": "onembyte (Franco Michetti)",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "frontieragent",
+    "name": "FrontierAgent",
+    "company": "Apodex AI",
     "category": "Terminal & CLI Agents"
   },
   {
@@ -1485,6 +1497,12 @@
     "slug": "webcodex",
     "name": "WebCodex",
     "company": "yyjeqhc",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "shadcn-lint",
+    "name": "shadcn lint",
+    "company": "shadcn",
     "category": "Developer Productivity & Workflow"
   },
   {
