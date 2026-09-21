@@ -774,6 +774,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "pi-agent-ide",
+    "name": "pi-agent-ide",
+    "company": "Aleksandr Shpuntenko",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

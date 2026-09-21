@@ -994,5 +994,9 @@
   {
     "companyName": "Builder.io",
     "toolName": "Agent-Native"
+  },
+  {
+    "companyName": "Aleksandr Shpuntenko",
+    "toolName": "pi-agent-ide"
   }
 ]
