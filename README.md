@@ -75,6 +75,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[Atomic Chat](https://github.com/AtomicBot-ai/Atomic-Chat)** | Atomic Local Ai | Atomic is an open-source AI agent optimized for local models.; [GitHub](_No response_) |
 | **[TasteCode](https://github.com/Leonxlnx/tastecode)** | Leon Lin | A local desktop workspace for AI coding agents, with Design Mode built in.; [GitHub](_No response_) |
 | **[Orca](https://onorca.dev)** | Stably AI | Open-source (MIT) "agent development environment" (ADE): runs Claude Code, Codex, OpenCode, Cursor and 25+ other CLI agents in parallel, each in its own Git worktree, with terminals, diffs, a built-in browser and an `orca` CLI in one desktop app (macOS/Windows/Linux); fan one prompt across agents and merge the winner; iOS/Android companion for remote steering.; [GitHub](https://github.com/stablyai/orca) |
+| **[Supercode](https://github.com/yashdev9274/superCli)** | Yash Dewasthale | The open source harness agent.; [GitHub](_No response_) |
 
 
 ---

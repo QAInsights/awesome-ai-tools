@@ -1118,6 +1118,35 @@
     "lastUpdated": "2026-09-19"
   },
   {
+    "slug": "supercode",
+    "name": "Supercode",
+    "company": "Yash Dewasthale",
+    "pricing": "freemium",
+    "pricingDetail": "The core Supercode CLI is open-source (MIT) and free, including 5 free open models out of the box and bring-your-own-API-key support. A separate paid tier exists on supercode.sh with Basic at $9.99/mo, Premium at $29.99/mo, and Ultra at $49.99/mo for IDE-integrated workflow, context, and voice features.",
+    "description": "Supercode is an open-source, terminal-native AI software-engineering agent (npm package supercode-cli) that understands a codebase, reads and writes files, runs commands, opens apps, and searches the web with full OS access. It also ships a dashboard, docs site, terminal web client, and a companion IDE extension that enhances Claude, Codex, and Cursor workflows.",
+    "keyFeatures": [
+      "Terminal-native SWE agent with full OS access (read files, run commands, edit code, open apps, search web)",
+      "5 free open models included plus bring-your-own API keys (Claude, GPT, Gemini, etc.)",
+      "Granular permissions — user approves every action before execution",
+      "Persistent memory across sessions",
+      "Skills catalog, spec-driven development, prompt enhancement, and voice input",
+      "Token optimization cutting usage by up to 60%",
+      "MCP tool access via Merge Agent Handler and Gateway model routing (Opus 4.8, Kimi K3, Grok 4.5)"
+    ],
+    "bestFor": "Individual developers, open-source maintainers, and engineering teams who want a transparent, permissioned, terminal-first AI agent with broad model choice and no vendor lock-in.",
+    "notIdealFor": "Developers who prefer fully managed cloud sandboxes or GUI-only, editor-centric assistants and don't want to manage API keys, local setup, or permission prompts.",
+    "recentUpdates": "Beta v0.1 launched June 25, 2026 (2,000+ weekly CLI downloads, 65+ GitHub stars, 3M+ tokens processed in week one). v0.1.84 added skills management commands and skill loading (Jul 23, 2026); v0.1.86 added a hallucination guard to the agent runner (Jul 23, 2026); v0.1.88 added Claude Opus 5 to the model catalog (Jul 25, 2026); v0.1.90 added usage_event migration and usage data in streaming responses (Jul 25, 2026). Merge Agent Handler integration went live July 21, 2026.",
+    "verdict": "Supercode stands out as a genuinely open-source, terminal-native agent with full-machine access, granular permissions, and flexible model/provider choice, backed by rapid iteration and early traction. However, it is still in beta (v0.1.x) with 41 open issues, and the paid supercode.sh tiers are a separate IDE-extension product, so users should expect rough edges and verify which offering they need.",
+    "tags": [
+      "AI coding agent",
+      "open-source",
+      "terminal CLI",
+      "SWE agent",
+      "developer tools"
+    ],
+    "lastUpdated": "2026-09-21"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
