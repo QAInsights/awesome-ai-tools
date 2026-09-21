@@ -76,6 +76,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[TasteCode](https://github.com/Leonxlnx/tastecode)** | Leon Lin | A local desktop workspace for AI coding agents, with Design Mode built in.; [GitHub](_No response_) |
 | **[Orca](https://onorca.dev)** | Stably AI | Open-source (MIT) "agent development environment" (ADE): runs Claude Code, Codex, OpenCode, Cursor and 25+ other CLI agents in parallel, each in its own Git worktree, with terminals, diffs, a built-in browser and an `orca` CLI in one desktop app (macOS/Windows/Linux); fan one prompt across agents and merge the winner; iOS/Android companion for remote steering.; [GitHub](https://github.com/stablyai/orca) |
 | **[Supercode](https://github.com/yashdev9274/superCli)** | Yash Dewasthale | The open source harness agent.; [GitHub](_No response_) |
+| **[Kimi Code](https://www.kimi.ai/code)** | Kimi | Kimi Code is now available on desktop, CLI, and IDE plugins engineered to drop into any dev workflow, answer faster and more reliably, and get programming tasks done in record time.; [GitHub](_No response_) |
 
 
 ---
