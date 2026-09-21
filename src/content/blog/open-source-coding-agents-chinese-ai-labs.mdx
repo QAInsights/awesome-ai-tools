@@ -1,0 +1,231 @@
+---
+title: "Open Source Coding Agents from Chinese AI Labs: ZCode, MiniMax Code, Kimi Code, MiMo Code, and Qwen Code"
+description: "Z.ai and MiniMax open-sourced their agents this week. A verified look at open source coding agents from Chinese AI labs: licenses, installs, and what to check."
+pubDate: 2026-09-21
+tags: ["ai", "cli", "coding", "open-source", "roundup", "zcode", "minimax-code", "kimi-code", "qwen-code", "mimo-code"]
+featured: true
+---
+
+In this blog post, we will see what changed this week with the open source coding agents from Chinese AI labs, why two of them went open source within the same 72 hours, and how each one installs, licenses, and bills. I have kept the hype out and the version numbers in.
+
+## Table of Contents
+
+1. [The short answer](#the-short-answer)
+2. [Why this week matters](#why-this-week-matters)
+3. [ZCode (Z.ai)](#zcode-zai)
+4. [MiniMax Code CLI (MiniMax)](#minimax-code-cli-minimax)
+5. [Kimi Code CLI (Moonshot AI)](#kimi-code-cli-moonshot-ai)
+6. [MiMo Code (Xiaomi)](#mimo-code-xiaomi)
+7. [Qwen Code (Alibaba)](#qwen-code-alibaba)
+8. [Side by side](#side-by-side)
+9. [A 10 minute sanity check before you trust any of them](#a-10-minute-sanity-check-before-you-trust-any-of-them)
+10. [FAQ](#faq)
+11. [How this ties to ai.dosa.dev](#how-this-ties-to-aidosadev)
+
+## The short answer
+
+Five Chinese AI labs now ship open source coding agents: Z.ai's ZCode (Apache 2.0, open-sourced September 21, 2026), MiniMax Code CLI (MIT, September 2026), Moonshot's Kimi Code CLI (MIT), Xiaomi's MiMo Code (MIT, an OpenCode fork), and Alibaba's Qwen Code (Apache 2.0). All five are TypeScript terminal agents you can install in one command and point at your own model provider.
+
+## Why this week matters
+
+Two events landed within three days of each other, and they are connected.
+
+On September 17, 2026, a developer who writes as ferstar published a reverse engineering write-up showing that the ZCode desktop app packaged a user's entire workspace, including the `.git` directory, encrypted it with AES-256-CTR under a server-supplied RSA key, and posted it straight to an Alibaba Cloud OSS bucket. In the captured case a 345MB commercial project became a 313MB `.enc` archive that had already failed to upload 564 times and was waiting to retry. Z.ai's own statement traced it to a repository indexing feature that was on by default.
+
+On September 21, Z.ai responded by open-sourcing the whole ZCode client under Apache 2.0, publishing a remediation statement, and naming two third-party assessors (CAICT and NSFOCUS). The repo passed 3,400 stars in its first day according to the dev.to write-up, and 4,000 according to AlphaSignal.
+
+The same week, MiniMax published the source for its `mcode` terminal agent under MIT. I have no evidence the two releases were coordinated, but the effect is the same: once one lab's closed harness was caught shipping workspaces, "you can read the source" became table stakes for the rest.
+
+That gives us five labs with open source agents to compare. The older three (Kimi Code, MiMo Code, Qwen Code) were already open, so they are the useful baseline.
+
+## ZCode (Z.ai)
+
+**What it does.** ZCode is a full coding workbench: an Electron desktop app, a browser UI, and a terminal agent, all in one pnpm monorepo. It is positioned as the official harness for GLM-5.3, with a "Goal" system for long horizon tasks and remote triggering from WeChat, Feishu, and Telegram.
+
+**Who it is for.** Developers already paying for a GLM Coding Plan who want the first-party client, and anyone who wants to read the code behind the September security incident.
+
+**Verified facts (as of September 21, 2026):**
+
+- License: Apache 2.0
+- Repo: github.com/zai-org/ZCode, created September 20, 2026, two commits on launch day (a squashed code drop, not the development history)
+- Stars: 3,400 to 4,000 on day one (two independent reports; the exact count moves hourly)
+- Client version with the fix: v3.14.0
+- Toolchain: Node.js 24.14.0 and pnpm 10.33.2, per the README
+- Pricing: the client is free; hosted GLM plans start at 94.4 CNY per month per AlphaSignal. USD pricing unverified.
+
+**Build from source (from the README):**
+
+```bash
+git clone https://github.com/zai-org/ZCode.git
+cd ZCode
+node --version   # expect 24.14.0
+pnpm --version   # expect 10.33.2
+pnpm bootstrap
+pnpm build:zcode
+```
+
+I could not clone the repo from this machine (the Git proxy returned 403), so I did not run this build myself. The commands and version pins come from the README; treat them as untested by me. Prebuilt binaries for macOS, Windows, and Linux are on the download page if you would rather not build.
+
+**Honest limitation.** The repo launched without a security policy, and two commits of history means you cannot bisect anything. Open source lets you verify the client no longer ships snapshots. It cannot verify what happened to data already accepted server side before the fix. Treat the audit summaries as a claim, not a verdict.
+
+## MiniMax Code CLI (MiniMax)
+
+**What it does.** `mcode` is a terminal agent with an interactive TUI, a headless `mcode exec` mode for scripts and CI, and Agent Client Protocol (ACP) support so ACP-compatible editors can drive it. It works with MiniMax accounts or bring-your-own compatible endpoints, and the docs cover providers, skills, MCP, and plugins.
+
+**Who it is for.** Teams who want one agent binary that works in a terminal, in CI, and inside an ACP editor, without committing to a single model vendor.
+
+**Verified facts:**
+
+- License: MIT for first-party code; third-party components keep their own licenses
+- Source: github.com/MiniMax-AI/minimax-code. A recent report puts the CLI at 0.4.12; I could not confirm that against an official release page, so treat the version as unverified
+- What is not open: the desktop app. Only the TUI, headless CLI, and ACP path are published
+- Stars: unverified. The only count I could find was a stale snapshot from before the source drop, so I am not quoting a number
+- Pricing: MiniMax account plans or your own API key. The Alibaba Cloud Coding Plan also lists MiniMax models
+
+**Install (from the official quick start):**
+
+```bash
+curl -fsSL https://filecdn.minimax.chat/public/install.sh | bash
+mcode --version
+mcode login
+```
+
+The installer reuses a compatible Node.js if you have one, or downloads a managed runtime into your user directory. No `sudo` needed.
+
+**Honest limitation.** The official FAQ says native dependency downloads may need to reach GitHub, and one independent write-up reported `better-sqlite3` build failures on a minimal Linux image. I could not reproduce that here because outbound network is locked down on my test box, so file it as a possible rough edge rather than a confirmed one. Alpine and other musl distros are unsupported, and that one is official.
+
+## Kimi Code CLI (Moonshot AI)
+
+**What it does.** Kimi Code CLI reads and edits code, runs shell commands, searches files, and fetches web pages, using Kimi models by default with other compatible providers configurable. It is a TypeScript rewrite of the older Python `kimi-cli`, which is being wound down.
+
+**Who it is for.** Developers who want a single-binary install with no Node.js prerequisite, and who like the Kimi K3 price point for agentic coding.
+
+**Verified facts:**
+
+- License: MIT
+- Repo: github.com/MoonshotAI/kimi-code
+- Stars: 7,223
+- Latest npm version: 0.42.0, published September 9, 2026; about 33,000 weekly npm downloads
+- Node floor: the published package declares `>=22.19.0`; the README says 24.15.0. An open issue tracks the contradiction. The script install sidesteps it entirely
+- Pricing: log in with `/login` and use your Kimi Code plan, or bring your own key
+
+**Install:**
+
+```bash
+curl -fsSL https://code.kimi.com/kimi-code/install.sh | bash
+kimi --version
+kimi            # then type /login
+```
+
+Or `npm install -g @moonshot-ai/kimi-code` if you already have Node.
+
+**Honest limitation.** Releases are still 0.x and have shipped dozens of minor versions since May, so pin a version in CI and check `kimi --version` before you trust anything you read in a blog post, including this one.
+
+## MiMo Code (Xiaomi)
+
+**What it does.** MiMoCode is a fork of OpenCode that adds persistent cross-session memory, subagent orchestration, goal-driven autonomous loops, "compose" workflows, and a self-improvement step it calls dream/distill. A free-for-limited-time "MiMo Auto" channel means zero configuration on first run.
+
+**Who it is for.** People who already like OpenCode's TUI and want memory and orchestration on top, or who want to test the "models and agents co-evolve" research pitch.
+
+**Verified facts:**
+
+- License: MIT
+- Repo: github.com/XiaomiMiMo/MiMo-Code, first release June 10, 2026
+- Stars: 10,017
+- Latest version: v0.1.14 on npm, published around September 10, 2026 (the npm page I checked still showed 0.1.13 from August 19, so the registry mirror lag the README warns about is real)
+- npm package: `@mimo-ai/cli`, about 9,200 weekly downloads
+- Pricing: MiMo Auto is free for a limited time; any mainstream provider API also works
+
+**Install:**
+
+```bash
+curl -fsSL https://mimo.xiaomi.com/install | bash
+# or, on any platform with Node
+npm install -g @mimo-ai/cli --registry https://registry.npmjs.org
+mimo
+```
+
+The `--registry` flag is straight from the README: mirror registries lag behind on the per-platform binary packages.
+
+**Honest limitation.** The GitHub Releases page only lists v0.1.0 from June; the actual changelog is on Xiaomi's docs site. If you track upstream via GitHub release notifications, you will miss every update since launch. Also, "free for a limited time" is not a pricing page.
+
+## Qwen Code (Alibaba)
+
+**What it does.** Qwen Code is the oldest of the five, a Gemini CLI fork tuned for Qwen Coder models. It is the most mature in terms of releases and the largest by stars.
+
+**Who it is for.** Developers on the Alibaba Cloud ModelStudio Coding Plan, or anyone routing to Qwen models through OpenRouter or Fireworks.
+
+**Verified facts:**
+
+- License: Apache 2.0
+- Repo: github.com/QwenLM/qwen-code
+- Stars: roughly 27,600; nightly builds still landing in September 2026
+- Latest stable: v0.22.0 (August 22, 2026); v0.23.0 nightlies through early September
+- Pricing: the Qwen OAuth free tier (originally 2,000 requests per day, then 1,000, then 100) was discontinued on April 15, 2026. You now need a Coding Plan subscription or a third-party provider
+
+**Install:**
+
+```bash
+npm install -g @qwen-code/qwen-code@latest
+qwen            # then run /auth and pick a provider
+```
+
+**Honest limitation.** Most tutorials online still tell you to log in with the free Qwen OAuth tier. That path is dead and the `/auth` dialog no longer offers it. Budget for a Coding Plan or a provider key before you start.
+
+## Side by side
+
+| Tool | Lab | License | Repo age | Stars (Sep 21, 2026) | Latest version | Lineage |
+|------|-----|---------|----------|----------------------|----------------|---------|
+| [ZCode](/tools/z-code) | Z.ai | Apache 2.0 | 1 day | 3,400 to 4,000 | v3.14.0 | Own codebase |
+| [MiniMax Code](/tools/minimax-code) | MiniMax | MIT (first party) | days | unverified | 0.4.12 (unverified) | Own codebase |
+| [Kimi Code](/tools/kimi-code) | Moonshot AI | MIT | 4 months | 7,223 | 0.42.0 | Rewrite of kimi-cli |
+| MiMo Code | Xiaomi | MIT | 3 months | 10,017 | v0.1.14 | OpenCode fork |
+| [Qwen Code](/tools/qwen-cli) | Alibaba | Apache 2.0 | 14+ months | ~27,600 | v0.22.0 | Gemini CLI fork |
+
+The pattern that surprised me: only two of the five are original codebases. MiMo Code and Qwen Code are forks of OpenCode and Gemini CLI respectively, and Kimi Code is a rewrite of its own predecessor. The "harness" is increasingly commodity; the model deal behind it is the product.
+
+## A 10 minute sanity check before you trust any of them
+
+The ZCode incident is the reason to do this, and it applies equally to Western tools. Here is what I do with any new agent before pointing it at a real repo.
+
+1. Run it inside a throwaway container with a copy of a small public repo, not your work tree.
+2. Watch outbound traffic while the agent idles and while it runs one task. On Linux: `sudo tcpdump -i any -nn 'not port 53' | head -50`. You are looking for uploads that are far larger than a prompt.
+3. Grep the source for upload primitives. In a TypeScript repo, `rg -n "putObject|OSS|S3Client|multipart" --type ts` takes seconds and tells you whether an object storage client even exists in the client code.
+4. Check what the agent's tool list exposes. Z.ai's statement specifically claims the agent's tool surface has no upload tools and that the old snapshot pipeline ran outside the agent loop. That is now checkable in the ZCode source.
+5. Check the licence boundary. MiniMax's MIT covers first-party code only; ZCode's Apache 2.0 covers the client but not the hosted service.
+
+If step 2 shows a multi-hundred-megabyte POST during startup, you have your answer. Save the capture; it is the evidence a bug report needs.
+
+## FAQ
+
+### Is ZCode safe to use after the security incident?
+
+The client source is public as of September 21, 2026, and the v3.14.0 release removes the workspace snapshot upload path. Z.ai says two third-party assessors confirmed the storage bucket is empty. What you can verify yourself is the client behaviour; what you cannot verify is server-side retention before the fix. Run it in a container first.
+
+### Which open source Chinese coding agent works without a paid plan?
+
+MiMo Code's "MiMo Auto" channel is free for a limited time with no configuration. Every other tool here needs either a lab subscription or your own API key. Qwen Code's free OAuth tier ended on April 15, 2026, so ignore tutorials that still mention it.
+
+### Can I use these agents with non-Chinese models?
+
+Yes. All five accept OpenAI-compatible or Anthropic-compatible endpoints, so you can point them at OpenRouter, a local Ollama server, or any hosted provider. MiniMax Code and Kimi Code both document custom provider setup; Qwen Code's `/auth` dialog has a Custom Provider option.
+
+### What is the difference between MiniMax Code CLI and the MiniMax Code desktop app?
+
+Only the CLI (TUI, headless `mcode exec`, and ACP) is open source under MIT. The desktop app is a separate closed download from agent.minimax.io. If you need inspectable code, stay on the CLI.
+
+### Are these coding agents forks of OpenCode or Gemini CLI?
+
+Two are. MiMo Code is an OpenCode fork and says so in its README. Qwen Code is a Gemini CLI fork under Apache 2.0. ZCode, MiniMax Code, and Kimi Code are their own codebases, though Kimi Code is a rewrite of the earlier Python kimi-cli.
+
+## How this ties to ai.dosa.dev
+
+Four of the five are already in the directory under Terminal & CLI Agents: [Z Code](/tools/z-code), [MiniMax Code](/tools/minimax-code), [Kimi Code](/tools/kimi-code), and [Qwen Code](/tools/qwen-cli). Their entries predate this week's source releases, so the GitHub links and licence fields need an update; I have noted that for the next data pass. MiMo Code is not listed yet and belongs in the same category. If you want it there faster than I get to it, Head to https://github.com/QAInsights/awesome-ai-tools/issues/new?template=submit-tool.yml and file it through the submission form.
+
+For the Western equivalents, our [AI coding CLIs roundup](/blog/best-ai-coding-clis) covers Claude Code, Codex CLI, Gemini CLI, and Aider, and the [Claude Code deep dive](/blog/claude-code-deep-dive) is the closest thing we have to a reference harness review. [OpenCode](/tools/opencode) is worth a look on its own, since two of the tools above are downstream of it.
+
+Happy Testing! Which of these five would you actually let touch a private repo, and what did your tcpdump show?
+
+---
+
+*Sources checked on September 21, 2026: zai-org/ZCode README; blog.ferstar.org reverse engineering post; runtimewire.com, dev.to, 36kr, and The Standard coverage of the Z.ai remediation statement; agent.minimax.io/docs/cli quick start and FAQ; TechNode on the MiniMax source release; MoonshotAI/kimi-code repo and the npm registry; kimi.com/code/docs getting started; XiaomiMiMo/MiMo-Code README and the @mimo-ai/cli npm page; QwenLM/qwen-code repo, releases, and the auth documentation. Install commands were copied from official docs and syntax-checked; I could not execute network installs from this machine.*
