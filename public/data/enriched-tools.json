@@ -1206,6 +1206,36 @@
     "lastUpdated": "2026-09-22"
   },
   {
+    "slug": "kimi-code",
+    "name": "Kimi Code",
+    "company": "Kimi",
+    "pricing": "freemium",
+    "pricingDetail": "The Kimi Code CLI is open source (MIT) and free to install. Model usage is billed through a Kimi Code subscription (OAuth login) or pay-as-you-go via a Moonshot AI Open Platform API key; the CLI can also be pointed at other OpenAI/Anthropic-compatible model providers.",
+    "description": "Kimi Code is Moonshot AI’s coding agent, available as a terminal CLI, desktop app, and IDE plugins. The Kimi Code CLI reads and edits code, runs shell commands, searches files, fetches web pages, and plans its next step from tool feedback, powered by the Kimi K2-series models.",
+    "keyFeatures": [
+      "Single-binary CLI install for macOS, Linux, and Windows (also Homebrew and npm) with millisecond TUI startup",
+      "Video input: drop a screen recording or demo clip and let the agent turn it into working code",
+      "Conversational MCP server configuration via `/mcp-config`",
+      "Plugin marketplace for skills, MCP servers, and data sources with surfaced trust levels",
+      "Built-in `coder`, `explore`, and `plan` subagents running in isolated contexts",
+      "Lifecycle hooks to gate risky tool calls, audit decisions, or trigger automation",
+      "Agent Client Protocol (`kimi acp`) integration for Zed, JetBrains, and VS Code extension"
+    ],
+    "bestFor": "Developers who want a fast, terminal-first coding agent with strong Kimi model backing, ACP editor integration, and an extensible skills/MCP ecosystem at a lower price point than US frontier-model agents.",
+    "notIdealFor": "Teams with strict data-residency policies that cannot send code to Moonshot AI, or users who want a GUI-first experience rather than a terminal agent.",
+    "recentUpdates": "The next-generation Kimi Code CLI (MoonshotAI/kimi-code, TypeScript, MIT) shipped v2.0.2 on September 19, 2026 and replaced the archived Python Kimi CLI (kimi-cli 1.52.0, September 22, 2026); it added video input, a plugin marketplace, subagents, lifecycle hooks, and a one-command `kimi migrate` path for existing users.",
+    "verdict": "Kimi Code is a credible, fast-moving alternative to Claude Code and Codex CLI with a polished TUI, ACP editor support, and a growing plugin ecosystem; the recent Python-to-TypeScript rewrite means some plugins and integrations are still catching up.",
+    "tags": [
+      "terminal-agent",
+      "coding-agent",
+      "moonshot-ai",
+      "mcp",
+      "acp",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-22"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
