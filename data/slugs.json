@@ -942,6 +942,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "github-agentic-workflows",
+    "name": "GitHub Agentic Workflows",
+    "company": "GitHub",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "strand-agents",
     "name": "Strand Agents",
     "company": "Strand",
@@ -1209,6 +1215,24 @@
     "slug": "vibe-kanban",
     "name": "Vibe Kanban",
     "company": "Vibe",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "ai-memory",
+    "name": "AI-MEMORY",
+    "company": "AkitaOnRails",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "smolvm",
+    "name": "smolvm",
+    "company": "smol machines",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "claude-code-templates",
+    "name": "Claude Code Templates",
+    "company": "Daniel Avila",
     "category": "Developer Productivity & Workflow"
   },
   {

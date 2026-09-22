@@ -4292,6 +4292,36 @@
     "lastUpdated": "2026-09-22"
   },
   {
+    "slug": "github-agentic-workflows",
+    "name": "GitHub Agentic Workflows",
+    "company": "GitHub",
+    "pricing": "open-source",
+    "pricingDetail": "The gh-aw CLI extension and compiler are free and MIT-licensed. Running workflows consumes GitHub Actions minutes and the tokens of the chosen AI engine (GitHub Copilot, Anthropic, OpenAI, Google), which are billed by those providers.",
+    "description": "GitHub Agentic Workflows (gh-aw) lets developers define AI-powered repository automation in Markdown with YAML frontmatter and compile it into GitHub Actions workflows. A single `gh aw` command turns a natural-language workflow into a locked-down `.lock.yml` that runs coding agents on issues, pull requests, schedules, or commands.",
+    "keyFeatures": [
+      "Markdown + YAML frontmatter workflow definitions compiled to GitHub Actions",
+      "Pluggable engines: GitHub Copilot, Claude Code, OpenAI Codex, Google Gemini, and Pi",
+      "Safe-outputs model: agents propose issues, comments, PRs, and labels that are applied through sandboxed steps",
+      "MCP tool configuration with a curated GitHub MCP server and custom servers",
+      "Network sandboxing, permission scoping, and automatic secret redaction",
+      "Triggers on issues, PRs, discussions, schedules, and slash commands",
+      "Shared reusable workflows and a `gh aw` CLI for compile, run, logs, and audit"
+    ],
+    "bestFor": "Maintainers and platform teams who want to run coding agents on repository events inside GitHub Actions with auditable, version-controlled configuration and strict output controls.",
+    "notIdealFor": "Teams not hosted on GitHub, projects that cannot spend Actions minutes and model tokens on automation, or users looking for an interactive local coding agent rather than event-driven repository automation.",
+    "recentUpdates": "The project reached v0.88.8 on September 8, 2026 with frequent weekly releases, crossed 5,100+ GitHub stars, and continues to add engines and safe-output types; it is developed in the open by GitHub Next.",
+    "verdict": "GitHub Agentic Workflows is the most GitHub-native way to run agents on repository events, with a security posture (safe-outputs, sandboxing) that is stronger than hand-rolled Actions; it is still pre-1.0 and evolving quickly.",
+    "tags": [
+      "open-source",
+      "github-actions",
+      "ai-agents",
+      "automation",
+      "mcp",
+      "cli"
+    ],
+    "lastUpdated": "2026-09-22"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -5520,6 +5550,94 @@
       "Data-Governance"
     ],
     "lastUpdated": "2026-09-15"
+  },
+  {
+    "slug": "ai-memory",
+    "name": "AI-MEMORY",
+    "company": "AkitaOnRails",
+    "pricing": "open-source",
+    "pricingDetail": "AI-MEMORY is free and MIT-licensed. Memory is stored locally per project; the only costs are the tokens consumed by the coding agents you already use, plus optional embedding models if semantic search is enabled.",
+    "description": "AI-MEMORY gives coding agents long-term, project-scoped memory that survives across sessions and across tools. Quit Claude Code mid-task, start OpenAI Codex, Gemini CLI, OpenCode, or Cursor in the same directory, and continue without re-explaining the architecture, the failed approaches, or the open questions.",
+    "keyFeatures": [
+      "Cross-agent memory shared by Claude Code, Codex, Gemini CLI, OpenCode, Cursor, and others",
+      "Automatic capture of decisions, failed approaches, and open questions via hooks",
+      "MCP server for retrieving relevant memory on demand",
+      "Session handoff so one agent can pick up exactly where another stopped",
+      "Local-first storage per project directory with no cloud dependency",
+      "Search and browse memory from the CLI"
+    ],
+    "bestFor": "Developers who rotate between several coding agents on the same codebase and want to stop re-briefing each one on context, history, and dead ends.",
+    "notIdealFor": "Teams that need a hosted, multi-user shared memory service, or users who only ever run a single agent whose built-in memory is sufficient.",
+    "recentUpdates": "Released v2.4.0 on September 21, 2026 with continued daily commits; the project surpassed 8,000 GitHub stars in September 2026 after trending on GitHub and gaining traction on X.",
+    "verdict": "AI-MEMORY solves a real, growing pain point for multi-agent workflows with a simple local-first design; it is young and moving fast, so expect frequent changes to the memory format and integrations.",
+    "tags": [
+      "open-source",
+      "memory",
+      "ai-agents",
+      "mcp",
+      "claude-code",
+      "codex",
+      "local-first"
+    ],
+    "lastUpdated": "2026-09-22"
+  },
+  {
+    "slug": "smolvm",
+    "name": "smolvm",
+    "company": "smol machines",
+    "pricing": "open-source",
+    "pricingDetail": "smolvm is free and Apache-2.0 licensed. It runs entirely on your own hardware (Linux KVM or macOS Hypervisor.framework) with no hosted service or paid tier.",
+    "description": "smolvm is an embeddable, portable, branchable microVM built to run coding agents and untrusted code safely on a local machine. It boots OCI container images inside a hardware-isolated VM in under 200ms and exposes a sandboxed shell, filesystem, and networking that agents such as Claude Code, Codex, and Pi can use as their execution environment.",
+    "keyFeatures": [
+      "Sub-200ms boot of OCI images inside a hardware-isolated microVM",
+      "Snapshot and branch VM state to fork agent runs or roll back",
+      "Sandboxed shell for untrusted programs and agent tool calls",
+      "Runs on Linux (KVM) and macOS (Hypervisor.framework) with a single binary",
+      "Integrations for Claude Code, Codex, and Pi coding agents",
+      "Embeddable library and CLI for scripting VM lifecycles"
+    ],
+    "bestFor": "Developers who want stronger-than-container isolation for coding agents running on their laptop, or who need to fork and replay agent execution state.",
+    "notIdealFor": "Users on Windows hosts, environments without hardware virtualization, or teams that need a managed cloud sandbox service rather than a local runtime.",
+    "recentUpdates": "Released v1.17.0 on September 21, 2026 with near-daily releases; the project passed 6,200 GitHub stars in September 2026 and has been discussed on r/ClaudeCode as a container alternative for agent sandboxes.",
+    "verdict": "smolvm is a practical answer to \"containers are not a security boundary\" for local agent workloads, with fast boot and branching that containers cannot match; it is still early and platform support is limited to Linux and macOS.",
+    "tags": [
+      "open-source",
+      "sandbox",
+      "microvm",
+      "ai-agents",
+      "security",
+      "local-first"
+    ],
+    "lastUpdated": "2026-09-22"
+  },
+  {
+    "slug": "claude-code-templates",
+    "name": "Claude Code Templates",
+    "company": "Daniel Avila",
+    "pricing": "open-source",
+    "pricingDetail": "Free and MIT-licensed; install components with `npx claude-code-templates` or browse the catalog at aitmpl.com. There is no paid tier; usage costs are only your Claude Code subscription or API tokens.",
+    "description": "Claude Code Templates is a CLI and web catalog for configuring and monitoring Claude Code. It installs ready-made agents, commands, hooks, MCP integrations, skills, and settings into a project, and ships a real-time analytics dashboard, health check, and conversation monitor for Claude Code sessions.",
+    "keyFeatures": [
+      "One-command install of agents, commands, hooks, MCPs, skills, and settings",
+      "Web catalog (aitmpl.com) with hundreds of community components",
+      "Real-time analytics dashboard for Claude Code sessions",
+      "Health check that validates the local Claude Code configuration",
+      "Conversation monitor and chats interface for live sessions",
+      "Project templates for common stacks and workflows"
+    ],
+    "bestFor": "Claude Code users who want to bootstrap a project with proven agents, hooks, and MCP setups quickly and observe how their sessions behave.",
+    "notIdealFor": "Developers using other coding agents, or teams that prefer to author and version all agent configuration by hand without third-party components.",
+    "recentUpdates": "Released v1.29.6 on September 17, 2026; the repository has surpassed 30,000 GitHub stars and the maintainer continues to ship weekly component and dashboard updates.",
+    "verdict": "Claude Code Templates is the de facto community hub for Claude Code configuration, with a large catalog and useful observability; review installed components carefully since they execute with your agent’s permissions.",
+    "tags": [
+      "open-source",
+      "claude-code",
+      "templates",
+      "cli",
+      "mcp",
+      "analytics"
+    ],
+    "lastUpdated": "2026-09-22"
   },
   {
     "slug": "claudete",

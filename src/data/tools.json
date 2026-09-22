@@ -1030,5 +1030,21 @@
   {
     "companyName": "Strand",
     "toolName": "Strand Agents"
+  },
+  {
+    "companyName": "GitHub",
+    "toolName": "GitHub Agentic Workflows"
+  },
+  {
+    "companyName": "AkitaOnRails",
+    "toolName": "AI-MEMORY"
+  },
+  {
+    "companyName": "smol machines",
+    "toolName": "smolvm"
+  },
+  {
+    "companyName": "Daniel Avila",
+    "toolName": "Claude Code Templates"
   }
 ]
