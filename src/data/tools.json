@@ -1046,5 +1046,9 @@
   {
     "companyName": "Daniel Avila",
     "toolName": "Claude Code Templates"
+  },
+  {
+    "companyName": "stepfun-ai",
+    "toolName": "Step Code"
   }
 ]

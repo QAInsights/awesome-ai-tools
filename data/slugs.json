@@ -264,6 +264,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "step-code",
+    "name": "Step Code",
+    "company": "stepfun-ai",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",

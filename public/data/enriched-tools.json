@@ -1178,6 +1178,34 @@
     "lastUpdated": "2026-09-21"
   },
   {
+    "slug": "step-code",
+    "name": "Step Code",
+    "company": "stepfun-ai",
+    "pricing": "freemium",
+    "pricingDetail": "Step Code itself is an open-source terminal coding agent (free to use), but it runs on StepFun's Step Plan subscription: four tiers from $6.99/mo (400M Credits) to a $99/mo flagship, with Credits issued monthly (~$1 ≈ 7M Credits), non-rolling, plus booster packs. API token pricing also available (e.g., step-3.5-flash $0.10/$0.30 per 1M tokens).",
+    "description": "Step Code is StepFun's terminal-based coding agent that handles the full task loop — reading code, making changes, and running tests — powered by StepFun's Step-series models.",
+    "keyFeatures": [
+      "Terminal-native agent that reads code, edits files, and runs tests in one loop",
+      "Powered by Step 3.7 Flash (198B/11B sparse MoE, 256K context, native image/video) and Step 3.5 Flash",
+      "Reliable tool calling and multi-step task decomposition/plan execution",
+      "Works with mainstream agent harnesses and protocols (Claude Code, KiloCode, Hermes Agent, OpenClaw, MCP, Skills)",
+      "Step Plan subscription with unified Credit billing across text, reasoning, speech, and image models",
+      "OpenAI-compatible API endpoints with streaming and tool calling"
+    ],
+    "bestFor": "Developers who want an affordable, terminal-first autonomous coding agent backed by StepFun's high-throughput reasoning models and a low-cost subscription.",
+    "notIdealFor": "Teams needing a fully free, no-subscription tool, or those who prefer GUI/IDE-centric workflows over terminal-based agents.",
+    "recentUpdates": "Step Plan launched around March 2026 with tiers starting at $6.99/mo (reported March 22, 2026); Step Plan moved to Credit-based monthly allowance billing; Step 3.7 Flash released ~May 2026 (198B/11B MoE, native multimodal); Step 3.5 Flash released ~Jan 2026; paid service agreement effective 16/03/2026.",
+    "verdict": "Step Code offers a compelling terminal agent loop at a very low entry price, leveraging StepFun's underrated but capable Flash models and broad harness compatibility. However, it is tied to a paid Step Plan subscription with non-rolling monthly Credits, and its ecosystem visibility and tooling maturity lag more established competitors.",
+    "tags": [
+      "terminal-agent",
+      "coding-agent",
+      "stepfun",
+      "step-plan",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-22"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -4262,36 +4290,6 @@
     "lastUpdated": "2026-09-21"
   },
   {
-    "slug": "strand-agents",
-    "name": "Strand Agents",
-    "company": "Strand",
-    "pricing": "open-source",
-    "pricingDetail": "Strands Agents is a free, open-source SDK released under the Apache 2.0 license, with no paid tiers or credit models; users only pay for the underlying model API usage (e.g., Bedrock, Anthropic, OpenAI, Google, Ollama).",
-    "description": "Strands Agents is an open-source, model-driven SDK for building and running production AI agents in Python and TypeScript with just a few lines of code. It pairs any model with tools via an agent loop, and the newer Strands harness offers a fully assembled, deployable general-purpose agent.",
-    "keyFeatures": [
-      "Model-agnostic support for Amazon Bedrock, Anthropic, OpenAI, Gemini, Ollama, and LiteLLM",
-      "Agent loop with invocation limits, cancellation, stop reasons, and concurrent invocations",
-      "Hooks to intercept, log, validate, or redirect any step in the loop",
-      "Built-in MCP, streaming, multi-agent patterns, and structured output",
-      "Sandbox support (e.g., DockerSandbox) for safe shell/code/file execution",
-      "Strands harness with prompt caching and context management defaults (truncation, compaction, recovery)",
-      "Python 3.10+ and Node.js 20+ SDKs with tools, memory, and observability"
-    ],
-    "bestFor": "Developers and teams building production-grade, model-agnostic AI agents who want end-to-end control over context, tools, and deployment across local and cloud environments.",
-    "notIdealFor": "Users seeking a no-code or fully managed agent platform, or those unwilling to handle model API costs, credentials, and tool security auditing themselves.",
-    "recentUpdates": "Strands harness launched September 21, 2026, claiming 28% lower token cost across six benchmarks and 77% lower cost than Claude Code on Terminal-Bench 2.1 with Fable 5; Strands Agents SDK originally introduced May 16, 2025, with 6,700+ GitHub stars.",
-    "verdict": "Strands Agents offers a powerful, Apache 2.0-licensed, model-agnostic foundation with strong production controls and a cost-efficient harness, though it requires developer expertise and self-managed model costs and tool security.",
-    "tags": [
-      "open-source",
-      "ai-agents",
-      "sdk",
-      "python",
-      "typescript",
-      "model-agnostic"
-    ],
-    "lastUpdated": "2026-09-22"
-  },
-  {
     "slug": "github-agentic-workflows",
     "name": "GitHub Agentic Workflows",
     "company": "GitHub",
@@ -4318,6 +4316,36 @@
       "automation",
       "mcp",
       "cli"
+    ],
+    "lastUpdated": "2026-09-22"
+  },
+  {
+    "slug": "strand-agents",
+    "name": "Strand Agents",
+    "company": "Strand",
+    "pricing": "open-source",
+    "pricingDetail": "Strands Agents is a free, open-source SDK released under the Apache 2.0 license, with no paid tiers or credit models; users only pay for the underlying model API usage (e.g., Bedrock, Anthropic, OpenAI, Google, Ollama).",
+    "description": "Strands Agents is an open-source, model-driven SDK for building and running production AI agents in Python and TypeScript with just a few lines of code. It pairs any model with tools via an agent loop, and the newer Strands harness offers a fully assembled, deployable general-purpose agent.",
+    "keyFeatures": [
+      "Model-agnostic support for Amazon Bedrock, Anthropic, OpenAI, Gemini, Ollama, and LiteLLM",
+      "Agent loop with invocation limits, cancellation, stop reasons, and concurrent invocations",
+      "Hooks to intercept, log, validate, or redirect any step in the loop",
+      "Built-in MCP, streaming, multi-agent patterns, and structured output",
+      "Sandbox support (e.g., DockerSandbox) for safe shell/code/file execution",
+      "Strands harness with prompt caching and context management defaults (truncation, compaction, recovery)",
+      "Python 3.10+ and Node.js 20+ SDKs with tools, memory, and observability"
+    ],
+    "bestFor": "Developers and teams building production-grade, model-agnostic AI agents who want end-to-end control over context, tools, and deployment across local and cloud environments.",
+    "notIdealFor": "Users seeking a no-code or fully managed agent platform, or those unwilling to handle model API costs, credentials, and tool security auditing themselves.",
+    "recentUpdates": "Strands harness launched September 21, 2026, claiming 28% lower token cost across six benchmarks and 77% lower cost than Claude Code on Terminal-Bench 2.1 with Fable 5; Strands Agents SDK originally introduced May 16, 2025, with 6,700+ GitHub stars.",
+    "verdict": "Strands Agents offers a powerful, Apache 2.0-licensed, model-agnostic foundation with strong production controls and a cost-efficient harness, though it requires developer expertise and self-managed model costs and tool security.",
+    "tags": [
+      "open-source",
+      "ai-agents",
+      "sdk",
+      "python",
+      "typescript",
+      "model-agnostic"
     ],
     "lastUpdated": "2026-09-22"
   },
@@ -5525,33 +5553,6 @@
     "lastUpdated": "2026-09-15"
   },
   {
-    "slug": "director",
-    "name": "Director-AI",
-    "company": "Anulum",
-    "pricing": "freemium",
-    "pricingDetail": "Open-core runtime is free under Apache-2.0. Advanced production modules and support require a commercial license starting at $490/year for Pro or $980/year for Full, while Director-Class AI is available via scoped order form.",
-    "description": "Director-AI is an open-core guardrail runtime designed to detect and block LLM hallucinations in high-consequence workflows. It sits between the LLM and the user, verifying outputs against governed facts using a 5-tier scoring engine before data is displayed or stored.",
-    "keyFeatures": [
-      "Response-level grounding with NLI contradiction signals",
-      "Opt-in streaming contradiction halt",
-      "Dual-entropy scoring (NLI + RAG)",
-      "Rust-accelerated compute paths",
-      "REST/gRPC server and framework integrations"
-    ],
-    "bestFor": "Scientific, legal, financial, and regulated research pipelines requiring factual-risk control and audited LLM output.",
-    "notIdealFor": "Simple chatbot UI prototyping or tasks where millisecond-scale verification latency is not a priority.",
-    "recentUpdates": "Version 3.15.3 continues to refine the 5-tier scoring system and streaming contradiction halt capabilities, building on v3.12's addition of Rust-accelerated compute paths.",
-    "verdict": "A specialized, high-performance tool for enterprises that must ensure factual accuracy in LLM-driven workflows; the open-core version is highly capable, while paid tiers provide enterprise-grade production support.",
-    "tags": [
-      "AI",
-      "Guardrails",
-      "LLM",
-      "Compliance",
-      "Data-Governance"
-    ],
-    "lastUpdated": "2026-09-15"
-  },
-  {
     "slug": "ai-memory",
     "name": "AI-MEMORY",
     "company": "AkitaOnRails",
@@ -5638,6 +5639,33 @@
       "analytics"
     ],
     "lastUpdated": "2026-09-22"
+  },
+  {
+    "slug": "director",
+    "name": "Director-AI",
+    "company": "Anulum",
+    "pricing": "freemium",
+    "pricingDetail": "Open-core runtime is free under Apache-2.0. Advanced production modules and support require a commercial license starting at $490/year for Pro or $980/year for Full, while Director-Class AI is available via scoped order form.",
+    "description": "Director-AI is an open-core guardrail runtime designed to detect and block LLM hallucinations in high-consequence workflows. It sits between the LLM and the user, verifying outputs against governed facts using a 5-tier scoring engine before data is displayed or stored.",
+    "keyFeatures": [
+      "Response-level grounding with NLI contradiction signals",
+      "Opt-in streaming contradiction halt",
+      "Dual-entropy scoring (NLI + RAG)",
+      "Rust-accelerated compute paths",
+      "REST/gRPC server and framework integrations"
+    ],
+    "bestFor": "Scientific, legal, financial, and regulated research pipelines requiring factual-risk control and audited LLM output.",
+    "notIdealFor": "Simple chatbot UI prototyping or tasks where millisecond-scale verification latency is not a priority.",
+    "recentUpdates": "Version 3.15.3 continues to refine the 5-tier scoring system and streaming contradiction halt capabilities, building on v3.12's addition of Rust-accelerated compute paths.",
+    "verdict": "A specialized, high-performance tool for enterprises that must ensure factual accuracy in LLM-driven workflows; the open-core version is highly capable, while paid tiers provide enterprise-grade production support.",
+    "tags": [
+      "AI",
+      "Guardrails",
+      "LLM",
+      "Compliance",
+      "Data-Governance"
+    ],
+    "lastUpdated": "2026-09-15"
   },
   {
     "slug": "claudete",

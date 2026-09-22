@@ -78,6 +78,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[Supercode](https://github.com/yashdev9274/superCli)** | Yash Dewasthale | The open source harness agent.; [GitHub](_No response_) |
 | **[Rune](https://rune.build)** | Unstable Build | Open-source (GPL-3.0) GPU-accelerated native IDE and terminal multiplexer for macOS/Linux (OpenGL/Metal, no Electron) — nine workspace slots with unlimited terminals/tabs/windows, built-in language intelligence and debugging, a built-in coding agent plus IDE-grade skills for external agents, e2e-encrypted peer network (headscale) to reach your instances from any machine, and `pkg install` extensions from Git repos; [GitHub](https://github.com/unstablebuild/rune) |
 | **[Kimi Code](https://www.kimi.ai/code)** | Kimi | Kimi Code is now available on desktop, CLI, and IDE plugins engineered to drop into any dev workflow, answer faster and more reliably, and get programming tasks done in record time.; [GitHub](_No response_) |
+| **[Step Code](https://github.com/stepfun-ai/Step-Code)** | stepfun-ai | Step Code runs in your terminal and handles the full task loop🤖reading code, making changes, and running tests.; [GitHub](_No response_) |
 
 
 ---
