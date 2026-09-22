@@ -942,6 +942,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "strand-agents",
+    "name": "Strand Agents",
+    "company": "Strand",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",

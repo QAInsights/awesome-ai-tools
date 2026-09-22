@@ -4262,6 +4262,36 @@
     "lastUpdated": "2026-09-21"
   },
   {
+    "slug": "strand-agents",
+    "name": "Strand Agents",
+    "company": "Strand",
+    "pricing": "open-source",
+    "pricingDetail": "Strands Agents is a free, open-source SDK released under the Apache 2.0 license, with no paid tiers or credit models; users only pay for the underlying model API usage (e.g., Bedrock, Anthropic, OpenAI, Google, Ollama).",
+    "description": "Strands Agents is an open-source, model-driven SDK for building and running production AI agents in Python and TypeScript with just a few lines of code. It pairs any model with tools via an agent loop, and the newer Strands harness offers a fully assembled, deployable general-purpose agent.",
+    "keyFeatures": [
+      "Model-agnostic support for Amazon Bedrock, Anthropic, OpenAI, Gemini, Ollama, and LiteLLM",
+      "Agent loop with invocation limits, cancellation, stop reasons, and concurrent invocations",
+      "Hooks to intercept, log, validate, or redirect any step in the loop",
+      "Built-in MCP, streaming, multi-agent patterns, and structured output",
+      "Sandbox support (e.g., DockerSandbox) for safe shell/code/file execution",
+      "Strands harness with prompt caching and context management defaults (truncation, compaction, recovery)",
+      "Python 3.10+ and Node.js 20+ SDKs with tools, memory, and observability"
+    ],
+    "bestFor": "Developers and teams building production-grade, model-agnostic AI agents who want end-to-end control over context, tools, and deployment across local and cloud environments.",
+    "notIdealFor": "Users seeking a no-code or fully managed agent platform, or those unwilling to handle model API costs, credentials, and tool security auditing themselves.",
+    "recentUpdates": "Strands harness launched September 21, 2026, claiming 28% lower token cost across six benchmarks and 77% lower cost than Claude Code on Terminal-Bench 2.1 with Fable 5; Strands Agents SDK originally introduced May 16, 2025, with 6,700+ GitHub stars.",
+    "verdict": "Strands Agents offers a powerful, Apache 2.0-licensed, model-agnostic foundation with strong production controls and a cost-efficient harness, though it requires developer expertise and self-managed model costs and tool security.",
+    "tags": [
+      "open-source",
+      "ai-agents",
+      "sdk",
+      "python",
+      "typescript",
+      "model-agnostic"
+    ],
+    "lastUpdated": "2026-09-22"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
