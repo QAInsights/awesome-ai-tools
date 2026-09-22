@@ -1022,5 +1022,9 @@
   {
     "companyName": "shadcn",
     "toolName": "shadcn lint"
+  },
+  {
+    "companyName": "Screenpipe (Negentropy Labs, Inc.)",
+    "toolName": "Screenpipe"
   }
 ]

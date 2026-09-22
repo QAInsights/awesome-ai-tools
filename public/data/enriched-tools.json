@@ -6897,6 +6897,34 @@
     "lastUpdated": "2026-09-20"
   },
   {
+    "slug": "screenpipe",
+    "name": "Screenpipe",
+    "company": "Screenpipe (Negentropy Labs, Inc.)",
+    "pricing": "freemium",
+    "pricingDetail": "Free tier is fully local and covers personal/non-commercial use; paid plans start at $25/month (Standard), $50/seat/month (Pro with cloud sync, cloud AI, integrations), and $150/seat/month (Enterprise with SSO/SAML, MDM, shared Pipes). Commercial use requires a paid subscription under the Screenpipe Commercial License.",
+    "description": "Screenpipe continuously captures your screen, audio, and app activity locally, indexes it into a searchable history, and exposes it to AI agents (Claude, Codex, Cursor, etc.) via MCP, a local REST API, and markdown-based 'Pipes' automations.",
+    "keyFeatures": [
+      "Continuous local screen, audio, and accessibility-tree capture with OCR fallback",
+      "MCP server and local REST API (localhost:3030) for agent queries",
+      "Pipes: scheduled AI agents defined as plain markdown files",
+      "Privacy controls including app/window/URL exclusions, redaction, and optional encryption at rest",
+      "Cross-platform support for macOS, Windows, and Linux",
+      "Event-driven capture (~5-10% CPU, 0.5-3GB RAM, ~20GB storage/month)"
+    ],
+    "bestFor": "Developers and knowledge workers who want privacy-first, local AI agent memory that can search past screens, meetings, and debugging sessions.",
+    "notIdealFor": "Users wanting a zero-config turnkey tool, organizations needing out-of-the-box SOC2/HIPAA compliance, or those with limited disk space.",
+    "recentUpdates": "Moved from open license to Screenpipe Commercial License in June 2026; Launch HN on July 23, 2026; YC S26 batch launch around August 21, 2026; recent releases v2.7.25–v2.7.27 (as of ~19 days before the RightAIChoice verification).",
+    "verdict": "Screenpipe offers a uniquely auditable, local-first memory layer with strong agent integrations and automation depth via Pipes, backed by 21K+ GitHub stars and active development. However, setup overhead is real, commercial use now requires a paid license, and it lacks turnkey compliance certifications.",
+    "tags": [
+      "local-first",
+      "ai-memory",
+      "screen-recording",
+      "mcp",
+      "agent-context"
+    ],
+    "lastUpdated": "2026-09-22"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",

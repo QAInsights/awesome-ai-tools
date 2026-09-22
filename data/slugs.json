@@ -1518,6 +1518,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "screenpipe",
+    "name": "Screenpipe",
+    "company": "Screenpipe (Negentropy Labs, Inc.)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
