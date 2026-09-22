@@ -15,6 +15,7 @@ import {
     parseFrontmatter,
     readRecentBriefs,
     renderNewsPost,
+    resolveSourceIndexes,
     sanitizeNewsText,
     slugForDate,
     validateNewsOutput,
@@ -135,6 +136,56 @@ test('filters recently cited URLs and near-duplicate story headlines', () => {
     expect(filterRecentResults(results, covered).map((item) => item.url)).toEqual([
         'https://example.com/new',
     ]);
+});
+
+test('resolves source indexes to result URLs without replacing explicit source URLs', () => {
+    const output = {
+        items: [
+            { sourceIndex: 1 },
+            { sourceIndex: 2, sourceUrl: 'https://explicit.example/story' },
+            { sourceIndex: 3 },
+        ],
+    };
+    const results = [
+        result('https://example.com/one', 'First story'),
+        result('https://example.com/two', 'Second story'),
+        result('https://example.com/three', 'Third story'),
+    ];
+
+    const resolved = resolveSourceIndexes(output, results);
+
+    expect(resolved.items).toEqual([
+        { sourceIndex: 1, sourceUrl: 'https://example.com/one' },
+        { sourceIndex: 2, sourceUrl: 'https://explicit.example/story' },
+        { sourceIndex: 3, sourceUrl: 'https://example.com/three' },
+    ]);
+    expect(output.items[0]).toEqual({ sourceIndex: 1 });
+    expect(resolved).not.toBe(output);
+    expect(resolved.items[0]).not.toBe(output.items[0]);
+});
+
+test('reports hard validation for out-of-range and non-integer source indexes', () => {
+    const results = [
+        result('https://example.com/one', 'First story'),
+        result('https://example.com/two', 'Second story'),
+        result('https://example.com/three', 'Third story'),
+    ];
+    const sourceIndexes = [0, results.length + 1, 1.5];
+    const output = {
+        ...validOutput,
+        items: validOutput.items.map((item, index) => ({
+            ...item,
+            sourceIndex: sourceIndexes[index],
+        })),
+    };
+
+    const validation = inspectNewsOutput(output, results);
+
+    expect(validation.hardErrors).toEqual(expect.arrayContaining([
+        'items[0].sourceIndex must be an integer between 1 and 3',
+        'items[1].sourceIndex must be an integer between 1 and 3',
+        'items[2].sourceIndex must be an integer between 1 and 3',
+    ]));
 });
 
 test('renders the none-yet covered prompt section on the first run', async () => {
@@ -363,6 +414,38 @@ test('publishes a short description without enforcing the removed lower bound', 
         expect(generated.created).toBe(true);
         expect(calls).toBe(1);
         expect(inspectNewsOutput(shortDescriptionOutput, validOutput.items).softWarnings).toEqual([]);
+    } finally {
+        rmSync(outputDir, { recursive: true, force: true });
+    }
+});
+
+test('generates Sources links from LLM source indexes', async () => {
+    const outputDir = mkdtempSync(`${tmpdir()}/today-in-ai-source-index-`);
+    const results = [
+        result('https://news.example/first-story', 'First unique AI story'),
+        result('https://news.example/second-story', 'Second unique AI story'),
+        result('https://news.example/third-story', 'Third unique AI story'),
+    ];
+    const output = {
+        ...validOutput,
+        items: validOutput.items.map((item, index) => {
+            const { sourceUrl, ...withoutSourceUrl } = item;
+            return { ...withoutSourceUrl, sourceIndex: index + 1 };
+        }),
+    };
+    try {
+        const generated = await generateNewsPost({
+            dryRun: true,
+            now: new Date('2026-08-21T12:00:00Z'),
+            outputDir,
+            searchImpl: async () => results,
+            llmImpl: async () => output,
+        });
+
+        const sourcesSection = generated.post.split('\n## Sources\n')[1];
+        expect(sourcesSection).toContain('- [Example News](<https://news.example/first-story>)');
+        expect(sourcesSection).toContain('- [Example News](<https://news.example/second-story>)');
+        expect(sourcesSection).toContain('- [Example News](<https://news.example/third-story>)');
     } finally {
         rmSync(outputDir, { recursive: true, force: true });
     }

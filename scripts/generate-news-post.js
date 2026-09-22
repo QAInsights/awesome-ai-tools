@@ -36,7 +36,7 @@ You will be given a list of search results (title, URL, published date, page tex
 
 HARD RULES
 1. Every factual claim must be traceable to the supplied search results. Never add background knowledge, numbers, dates, names, or context that is not present in the supplied text. If you are unsure, leave it out.
-2. Never invent or guess a URL. Every sourceUrl you output must be copied character-for-character from a supplied result.
+2. Never invent or guess a source. Every item must reference one supplied result by its Result number (sourceIndex). Do not output URLs.
 3. Discard any result that is not genuinely news from the last 24 hours: marketing pages, "best tools" listicles, undated evergreen docs, pricing pages, tutorials, and pure opinion columns.
 4. Discard duplicates. If several results cover the same story, pick one, following SOURCE SELECTION below.
 
@@ -80,7 +80,7 @@ Respond with a single JSON object and nothing else, matching exactly this shape:
       "headline": "string, max 70 chars, concrete and specific, no colon-subtitle pattern",
       "whatHappened": "string, 1-2 sentences, max 320 chars, only facts from the source",
       "whyItMatters": "string, 1 sentence, max 220 chars, practical consequence for developers and builders",
-      "sourceUrl": "string, copied verbatim from a supplied result",
+      "sourceIndex": "integer, the 'Result N' number of the supplied result this item comes from",
       "sourceName": "string, publication or company name, max 40 chars"
     }
   ],
@@ -244,6 +244,26 @@ export function formatResults(results) {
     }).join('\n\n---\n\n');
 }
 
+export function resolveSourceIndexes(output, results) {
+    const availableResults = Array.isArray(results) ? results : [];
+    return {
+        ...output,
+        items: Array.isArray(output?.items)
+            ? output.items.map((item) => {
+                if (
+                    item?.sourceUrl === undefined &&
+                    Number.isInteger(item?.sourceIndex) &&
+                    item.sourceIndex >= 1 &&
+                    item.sourceIndex <= availableResults.length
+                ) {
+                    return { ...item, sourceUrl: availableResults[item.sourceIndex - 1].url };
+                }
+                return { ...item };
+            })
+            : output?.items,
+    };
+}
+
 export function isQuietDayOutput(output) {
     return Boolean(
         output &&
@@ -355,7 +375,8 @@ export function inspectNewsOutput(output, exaResults, coveredData = null) {
     if (!Array.isArray(output.items) || output.items.length < 3 || output.items.length > 7) {
         hardErrors.push('items must contain between 3 and 7 stories');
     }
-    const sourceUrls = new Set((exaResults || []).map((result) => result.url));
+    const availableResults = exaResults || [];
+    const sourceUrls = new Set(availableResults.map((result) => result.url));
     const coveredUrls = coveredData?.sourceUrls || new Set();
     for (const [index, item] of (output.items || []).entries()) {
         for (const field of ['headline', 'whatHappened', 'whyItMatters', 'sourceUrl', 'sourceName']) {
@@ -392,6 +413,12 @@ export function inspectNewsOutput(output, exaResults, coveredData = null) {
         }
         if (item?.sourceUrl && !sourceUrls.has(item.sourceUrl)) {
             hardErrors.push(`items[${index}].sourceUrl is not present in Exa results: ${item.sourceUrl}`);
+        }
+        if (
+            item?.sourceIndex !== undefined &&
+            (!Number.isInteger(item.sourceIndex) || item.sourceIndex < 1 || item.sourceIndex > availableResults.length)
+        ) {
+            hardErrors.push(`items[${index}].sourceIndex must be an integer between 1 and ${availableResults.length}`);
         }
         if (item?.sourceUrl && coveredUrls.has(normalizeNewsUrl(item.sourceUrl))) {
             hardErrors.push(`items[${index}].sourceUrl was already cited in a recent brief: ${item.sourceUrl}`);
@@ -583,6 +610,7 @@ export async function generateNewsPost({
             return { created: false, filename, post: null, quiet: true };
         }
         output = fixture.output;
+        output = resolveSourceIndexes(output, results);
         if (isQuietDayOutput(output)) {
             console.log('[news] Quiet day: fewer than three stories survived the editorial rules; no post produced.');
             return { created: false, filename, post: null, quiet: true };
@@ -610,6 +638,7 @@ export async function generateNewsPost({
             { role: 'user', content: prompt },
         ];
         output = await call(messages, { fetchImpl });
+        output = resolveSourceIndexes(output, results);
         if (isQuietDayOutput(output)) {
             console.log('[news] Quiet day: fewer than three stories survived the editorial rules; no post produced.');
             return { created: false, filename, post: null, quiet: true };
@@ -628,10 +657,11 @@ export async function generateNewsPost({
                         content: [
                             'Your first response failed validation for these specific reasons:',
                             ...validationFeedback(validation).map((message) => `- ${message}`),
-                            'Return one corrected JSON object only. Keep all unchanged fields and sourceUrl values grounded in the supplied results.',
+                            'Return one corrected JSON object only. Keep all unchanged fields and sourceIndex values grounded in the supplied results.',
                         ].join('\n'),
                     },
                 ], { fetchImpl });
+                output = resolveSourceIndexes(output, results);
                 if (isQuietDayOutput(output)) {
                     console.log('[news] Quiet day: fewer than three stories survived the editorial rules; no post produced.');
                     return { created: false, filename, post: null, quiet: true };
