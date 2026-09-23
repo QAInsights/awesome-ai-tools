@@ -1058,5 +1058,25 @@
   {
     "companyName": "antiburn",
     "toolName": "antiburn"
+  },
+  {
+    "companyName": "Xiaomi",
+    "toolName": "MiMo Code"
+  },
+  {
+    "companyName": "DeusData",
+    "toolName": "codebase-memory-mcp"
+  },
+  {
+    "companyName": "thedotmack",
+    "toolName": "claude-mem"
+  },
+  {
+    "companyName": "Sisyphus Labs (code-yeongyu)",
+    "toolName": "Oh My OpenAgent"
+  },
+  {
+    "companyName": "HKUDS",
+    "toolName": "CLI-Anything"
   }
 ]

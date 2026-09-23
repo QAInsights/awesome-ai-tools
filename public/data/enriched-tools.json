@@ -7380,5 +7380,151 @@
       "offline"
     ],
     "lastUpdated": "2026-09-15"
+  },
+  {
+    "slug": "mimo-code",
+    "name": "MiMo Code",
+    "company": "Xiaomi",
+    "pricing": "open-source",
+    "pricingDetail": "MiMoCode is open source under the MIT license and free to install (npm, curl or PowerShell installers). Model usage is billed by whichever provider you connect: Xiaomi MiMo Platform (OAuth), Codex via ChatGPT Plus/Pro OAuth, imported Claude Code credentials, or any OpenAI-compatible API key. The MiMo Desktop app is in an invite-only beta.",
+    "description": "MiMoCode is Xiaomi's terminal-native AI coding assistant. It reads and writes code, runs commands, manages Git and keeps a persistent, SQLite FTS5-backed memory of the project (MEMORY.md, checkpoints, scratch notes, per-task progress) so it can resume work across sessions, and it powers the multimodal MiMo Desktop beta as its core engine.",
+    "keyFeatures": [
+      "Three primary agents — build (full tools), plan (read-only analysis) and compose (spec/skill-driven orchestration) — plus system-spawned subagents",
+      "Persistent cross-session memory with SQLite FTS5 full-text search, automatic checkpoints and context reconstruction near the context limit",
+      "Runs against Xiaomi MiMo models, Codex OAuth, imported Claude Code auth or any OpenAI-compatible provider",
+      "`mimo serve` / `mimo attach` split the TUI from a remote server over SSH port forwarding",
+      "One-line installers for macOS, Linux and Windows plus `npm install -g @mimo-ai/cli`",
+      "Core engine of Xiaomi MiMo Desktop (smart model orchestration, browser and computer control) in beta"
+    ],
+    "bestFor": "Developers who want an open-source, provider-agnostic terminal coding agent with strong built-in project memory, and users already on Xiaomi MiMo models or with existing Codex/Claude Code subscriptions to reuse.",
+    "notIdealFor": "Teams that need a GUI-first IDE experience, macOS Terminal.app users (unsupported rendering), or organisations that require a vendor with an established enterprise support track record in Western markets.",
+    "recentUpdates": "The XiaomiMiMo/MiMo-Code repository (created June 2026) passed 13,000 GitHub stars and was trending on GitHub in September 2026; Xiaomi opened an international beta for MiMo Desktop, built on MiMoCode, with trial access to the MiMo-X-Pro-Preview and MiMo-X-Flash-Preview models.",
+    "verdict": "MiMoCode is a credible open-source entrant in the terminal-agent space whose standout is memory and context management rather than a single model lock-in; it is worth evaluating alongside OpenCode and Codex CLI, particularly if you want to mix providers or use Xiaomi's MiMo models.",
+    "tags": [
+      "terminal-agent",
+      "open-source",
+      "persistent-memory",
+      "multi-provider",
+      "xiaomi",
+      "cli"
+    ],
+    "lastUpdated": "2026-09-23"
+  },
+  {
+    "slug": "codebase-memory-mcp",
+    "name": "codebase-memory-mcp",
+    "company": "DeusData",
+    "pricing": "open-source",
+    "pricingDetail": "Open source under the MIT license; distributed as a free single static binary for macOS, Linux and Windows (also on npm, PyPI and Go). No API keys, accounts or paid tiers are required.",
+    "description": "codebase-memory-mcp is a high-performance code intelligence MCP server that indexes a repository into a persistent knowledge graph using tree-sitter across 162 languages, with hybrid LSP type resolution for major languages. Coding agents query the graph through 17 MCP tools — search, call tracing, architecture overviews, impact analysis, dead-code detection, Cypher queries — replacing dozens of grep/read cycles with a few structural queries.",
+    "keyFeatures": [
+      "Indexes an average repo in milliseconds and the 28M-LOC Linux kernel in about three minutes with a RAM-first pipeline",
+      "162 vendored tree-sitter grammars compiled into one zero-dependency binary",
+      "Hybrid LSP semantic type resolution for Python, TypeScript/JavaScript, Go, Rust, Java, Kotlin, C/C++, C#, PHP and Perl",
+      "17 MCP tools including impact analysis, dead code detection, cross-service HTTP linking, ADR management and Cypher queries",
+      "`install` auto-configures Claude Code, Codex, Cursor, OpenCode and 40+ other client surfaces with hooks and skills",
+      "Built-in 3D graph visualisation UI served from the binary at localhost:9749",
+      "Infrastructure-as-code indexing for Dockerfiles, Kubernetes manifests and Kustomize overlays"
+    ],
+    "bestFor": "Developers running Claude Code, Codex, Cursor or other MCP-capable agents on large or polyglot codebases who want structural code understanding with far lower token usage.",
+    "notIdealFor": "Very small projects where plain file search is already cheap, or environments that forbid running third-party native binaries that modify agent configuration files.",
+    "recentUpdates": "The project surpassed 44,000 GitHub stars and trended on GitHub in September 2026; its design and benchmarks were published as an arXiv preprint (2603.27277) reporting evaluation across 31 real-world repositories, and recent releases added a shared session coordination daemon and Kubernetes/Kustomize indexing.",
+    "verdict": "A mature, well-benchmarked way to give coding agents a real map of a codebase; the single-binary install and broad client coverage make it one of the easiest code-intelligence MCP servers to adopt, with the usual caveat of trusting a tool that writes to your agent config.",
+    "tags": [
+      "mcp",
+      "code-intelligence",
+      "knowledge-graph",
+      "tree-sitter",
+      "open-source",
+      "token-optimization"
+    ],
+    "lastUpdated": "2026-09-23"
+  },
+  {
+    "slug": "claude-mem",
+    "name": "claude-mem",
+    "company": "thedotmack",
+    "pricing": "freemium",
+    "pricingDetail": "The claude-mem plugin and SDK are open source under Apache-2.0 and the local observer/provider is free to run. The installer offers an optional hosted memory service (CMEM Pro / claude-mem observer) that is free for the first 30 days after an email sign-in; it can be skipped with an explicit --provider flag or CLAUDE_MEM_ONLINE_OPTIN=false.",
+    "description": "claude-mem is a persistent-memory system for coding agents. It captures tool-usage observations during a session, compresses them with AI into semantic summaries, and injects the relevant context back into future sessions so the agent keeps continuity of project knowledge after a session ends or reconnects. Originally built for Claude Code, it now installs for OpenCode, Antigravity CLI, Cursor, OpenClaw, Grok Bot and other agents.",
+    "keyFeatures": [
+      "Automatic capture of tool-usage observations and AI-compressed session summaries",
+      "Context from previous sessions injected automatically into new sessions",
+      "One-command install (`npx claude-mem install`) or via the Claude Code plugin marketplace",
+      "Adapters for OpenCode, Antigravity CLI, Cursor, OpenClaw and Grok Bot (log-file watching where hosts have no hooks)",
+      "Search tools for querying past decisions, bugfixes and security alerts",
+      "Local observer by default with an optional hosted memory tier"
+    ],
+    "bestFor": "Claude Code and multi-agent users who lose context between sessions and want a drop-in memory layer without changing how they work.",
+    "notIdealFor": "Teams with strict data-handling rules who cannot review what a hook-based plugin captures, or users who want a git-native, human-editable memory format instead of AI-generated summaries.",
+    "recentUpdates": "The repository passed 94,000 GitHub stars and trended on GitHub in September 2026; it added installers for Grok Bot and Antigravity CLI plus an optional hosted CMEM Pro tier, and Reddit threads in r/ClaudeCode and r/ClaudeAI discuss real-world usage and a Kaspersky false-positive warning on Windows.",
+    "verdict": "One of the most widely adopted memory add-ons for Claude Code, with a low-friction install and growing multi-agent support; evaluate the optional hosted tier and hook permissions before rolling it out to a team.",
+    "tags": [
+      "agent-memory",
+      "claude-code",
+      "plugin",
+      "persistent-context",
+      "open-source",
+      "freemium"
+    ],
+    "lastUpdated": "2026-09-23"
+  },
+  {
+    "slug": "oh-my-openagent",
+    "name": "Oh My OpenAgent",
+    "company": "Sisyphus Labs (code-yeongyu)",
+    "pricing": "free",
+    "pricingDetail": "Free to install and use under the source-available SUL-1.0 license. You pay only for the model subscriptions or API keys you connect (Anthropic, OpenAI/Codex, Kimi, OpenAI-compatible gateways, etc.).",
+    "description": "Oh My OpenAgent (OmO, formerly oh-my-opencode) is a multi-agent orchestration layer for coding agents. The Ultimate edition plugs into OpenCode with 11 specialised agents, 54+ lifecycle hooks, built-in websearch, context7, grep_app and LSP MCPs, Team Mode and slash commands; the Light edition ports the portable pieces to Codex CLI; and OmO Native is a standalone `omo` command. Typing `ultrawork` (or `ulw`) with a prompt has the agents plan, execute and keep going until the task is done, across Claude, GPT, Kimi and other models.",
+    "keyFeatures": [
+      "11 specialised agents with 54+ lifecycle hooks for OpenCode (Ultimate edition)",
+      "Codex CLI plugin (Light edition) with rules, comment-checker, LSP, ultrawork loops and Team Mode",
+      "Standalone `omo` CLI (OmO Native, beta) that needs no host",
+      "`ultrawork` / `mass ulw` keywords for autonomous, multi-model task completion",
+      "Built-in websearch, context7, grep_app and LSP MCP servers",
+      "Memory system, CodeMode and Anthropic-subscription support; live workflow DAG view via omo-herdr-dag"
+    ],
+    "bestFor": "OpenCode and Codex CLI power users who want a batteries-included multi-agent setup that orchestrates several model providers instead of committing to one vendor.",
+    "notIdealFor": "Developers who want a minimal, easy-to-audit agent configuration, or organisations that require an OSI-approved open-source license.",
+    "recentUpdates": "Renamed from oh-my-opencode to oh-my-openagent as it expanded from an OpenCode plugin to Codex CLI and a standalone OmO Native beta (`bun add -g omo-ai@beta`); the repo passed 69,000 GitHub stars and was trending on GitHub in September 2026, with active discussion in r/opencodeCLI.",
+    "verdict": "OmO is the most popular community orchestration layer on top of OpenCode and now Codex, with strong adoption signals; it is opinionated and complex, so let an agent run the installer as the maintainers suggest and expect rapid change.",
+    "tags": [
+      "agent-orchestration",
+      "opencode",
+      "codex-cli",
+      "multi-agent",
+      "plugin",
+      "source-available"
+    ],
+    "lastUpdated": "2026-09-23"
+  },
+  {
+    "slug": "cli-anything",
+    "name": "CLI-Anything",
+    "company": "HKUDS",
+    "pricing": "open-source",
+    "pricingDetail": "Open source under the Apache-2.0 license from the University of Hong Kong data science group (HKUDS). The harness generator skill, generated CLIs and the CLI-Hub package manager (`pip install cli-anything-hub`) are all free; you supply the coding agent and model.",
+    "description": "CLI-Anything turns existing software into agent-native tooling. Installed as a skill or plugin for Claude Code, Codex, Pi, OpenClaw, Cursor or Qoder, its 7-phase harness generator wraps an application — Blender, GIMP, FreeCAD, Obsidian, n8n, Godot, Zotero and dozens more — in a structured-JSON command-line interface with a generated SKILL.md, and CLI-Hub is the registry where agents and humans browse, install and update those community-built CLIs.",
+    "keyFeatures": [
+      "7-phase harness generator (HARNESS.md) that produces agent-ready CLIs with tests and SKILL.md files",
+      "CLI-Hub registry and `cli-hub` package manager to list, search, install, update and launch CLIs",
+      "Community harnesses for Blender, GIMP, FreeCAD, Krita, MuseScore, Obsidian, n8n, Godot, Zoom, QGIS and more",
+      "Meta-skill that lets agents discover and install CLIs autonomously",
+      "Skills for Claude Code, Codex, Pi, OpenClaw, Cursor, Qoder and Hermes",
+      "Structured JSON output and --help self-description designed for LLM consumption"
+    ],
+    "bestFor": "Developers and researchers who want coding agents to drive desktop or server software that has no API, and contributors building reusable agent tool harnesses.",
+    "notIdealFor": "Teams that only need to expose their own web service (an MCP server or OpenAPI spec is simpler), or environments where installing many third-party generated CLIs is a security concern.",
+    "recentUpdates": "The HKUDS/CLI-Anything repository reached roughly 50,000 GitHub stars and trended on GitHub in September 2026; the maintainers reported the ecosystem surpassing one million CLI calls, and 2026 releases added CLI-Hub v0.2.0 with multi-source public CLIs, unified skills, and new harnesses such as QGIS, Obsidian, n8n and Godot.",
+    "verdict": "A fast-growing, academically backed project that gives agents deterministic control over real-world software via CLIs rather than screen-scraping; the registry model makes it practical today, though quality varies across community harnesses.",
+    "tags": [
+      "agent-tools",
+      "cli",
+      "skills",
+      "open-source",
+      "harness",
+      "registry"
+    ],
+    "lastUpdated": "2026-09-23"
   }
 ]
