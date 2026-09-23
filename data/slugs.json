@@ -1566,6 +1566,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "antiburn",
+    "name": "antiburn",
+    "company": "antiburn",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
