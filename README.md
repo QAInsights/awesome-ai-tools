@@ -317,6 +317,7 @@ AI-powered tools for managing context, snippets, and developer documentation.
 | Tool | Company | Notes |
 |------|---------|-------|
 | **[Pieces for Developers](https://pieces.app/)** | Pieces | AI-powered context management; "Artificial Memory" for your workflow; snippet management |
+| **[NextReset](https://nextreset.ai/)** | NextReset | Independent source-linked public Codex reset history and official AI service incident reference; browser-local personal timer; no private account access. |
 | **[agenttrace](https://github.com/luoyuctl/agenttrace)** | luoyuctl | Open-source observability and audit trail for AI coding agent sessions |
 | **[Vibe Kanban](https://vibekanban.com/)** | Vibe | Project management and productivity platform integrated with AI |
 | **[AI-MEMORY](https://github.com/akitaonrails/ai-memory)** | AkitaOnRails | Open-source (MIT) long-term memory for coding agents — quit Claude Code mid-task, resume in Codex, Gemini CLI, OpenCode, or Cursor in the same directory without re-explaining architecture, failed approaches, or open questions; cross-agent handoffs via MCP and hooks |
