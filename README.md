@@ -246,6 +246,7 @@ AI tools that generate full apps or UIs from natural language, no local setup re
 | **[Dyad](https://www.dyad.sh/)** | Dyad | Local, open-source AI app builder with BYO model support, no sign-up, and no vendor lock-in; [GitHub](https://github.com/dyad-sh/dyad) |
 | **[Onlook](https://onlook.com/)** | Onlook | Open-source visual AI editor for building, styling, and editing React/Tailwind apps directly in code; [GitHub](https://github.com/onlook-dev/onlook) |
 | **[Base44](https://base44.com/)** | Base44 | Natural-language platform for building and hosting full-stack apps, websites, and AI agents with managed data, auth, integrations, and domains |
+| **[Ploy](https://ploy.ai/r/1YGBA1JY)** | Ploy | AI marketing platform that builds and hosts on-brand websites as production-grade Astro code with GitHub sync, then runs "Ploybook" agents that continuously fix technical SEO, write content, identify visitors, and run ads experiments; free tier with 800 credits/day |
 | **[Rork](https://rork.com/)** | Rork | Prompt-to-mobile-app builder for iOS, Android, and web with live simulation and App Store/TestFlight publishing |
 
 ---

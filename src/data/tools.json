@@ -1050,5 +1050,9 @@
   {
     "companyName": "stepfun-ai",
     "toolName": "Step Code"
+  },
+  {
+    "companyName": "Ploy",
+    "toolName": "Ploy"
   }
 ]

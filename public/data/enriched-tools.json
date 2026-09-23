@@ -4544,6 +4544,36 @@
     "lastUpdated": "2026-09-15"
   },
   {
+    "slug": "ploy",
+    "name": "Ploy",
+    "company": "Ploy",
+    "pricing": "freemium",
+    "pricingDetail": "Free plan with no credit card: 800 credits/day (2,000 max), custom domains, hosting, GitHub sync, and Google Workspace integrations. Starter $50/mo (4,000 credits/month), Pro $300/mo (24,000 credits/month, HubSpot/Attio CRM integrations), Enterprise custom (Salesforce, SSO/SAML, SOC 2 Type II, no training on your data). Credits are spent while Ploy builds or edits; a live site serving traffic uses next to nothing.",
+    "description": "Ploy is an AI marketing platform that turns a company website into a growth engine. Its AI website builder \"slurps\" your existing brand (structure, identity, design tokens) and generates production-grade Astro sites with hosting and GitHub sync, while specialized agents (Ploy Web, Ploy Grow, Ploy Ads) monitor rankings, traffic, and competitors and then act — fixing technical SEO, drafting pages, identifying visitors, and running ad experiments.",
+    "keyFeatures": [
+      "AI website builder that outputs production-grade Astro code with GitHub sync and built-in hosting",
+      "Brand \"slurp\" that deterministically extracts structure, identity, and design tokens from an existing site",
+      "Ploybooks: pre-built growth strategies executed by agents on a schedule, on an event, or autonomously",
+      "Continuous monitoring of rankings, traffic, content gaps, Core Web Vitals, and competitor changes",
+      "Visitor identification and account-based marketing with CRM sync (HubSpot, Attio, Salesforce)",
+      "Answer Engine Optimization (structured FAQ schema, AI-overview presence) and technical SEO fixes",
+      "Ads creation and attribution tracing impressions to closed deals"
+    ],
+    "bestFor": "Startups and lean marketing teams that want an always-on agent to build, host, and continuously optimize their marketing site and outbound growth without hiring a web/SEO team.",
+    "notIdealFor": "Developers looking for a general-purpose full-stack app builder or IDE; teams that need a framework other than Astro; or organizations that must keep all marketing data on-prem.",
+    "recentUpdates": "Ploy announced a $27M seed round to build \"the first website platform that grows your business\" and launched Ploybooks (pre-built, agent-executed growth workflows) alongside a free tier with 800 daily credits; customers listed include Hex, CodeCrafters, Leadbay, and Tonik.",
+    "verdict": "Ploy is a well-funded, agent-driven alternative to Webflow/Framer-style builders for marketing sites, notable for emitting real Astro code and for autonomous SEO/growth agents; it is marketing-focused rather than a general app builder, and credit-based billing can climb for heavy builds.",
+    "tags": [
+      "ai-website-builder",
+      "marketing",
+      "seo",
+      "astro",
+      "ai-agents",
+      "freemium"
+    ],
+    "lastUpdated": "2026-09-22"
+  },
+  {
     "slug": "bitrig",
     "name": "Bitrig",
     "company": "Bitrig, Inc.",
