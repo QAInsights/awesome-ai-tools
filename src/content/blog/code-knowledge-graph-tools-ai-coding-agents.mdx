@@ -1,0 +1,285 @@
+---
+title: "Code Knowledge Graph Tools for AI Coding Agents: Graphify, codebase-memory-mcp, CodeGraph, GitNexus, and Serena"
+description: "Compare 5 code knowledge graph tools for AI coding agents: Graphify, codebase-memory-mcp, CodeGraph, GitNexus, and Serena. Licenses, installs, honest limits."
+pubDate: 2026-09-24
+tags: ["ai", "mcp", "coding", "open-source", "roundup", "knowledge-graph", "graphify", "codebase-memory-mcp", "codegraph", "gitnexus", "serena"]
+featured: true
+---
+
+In this blog post, we will see how code knowledge graph tools for AI coding agents work, why five of them are pulling tens of thousands of GitHub stars this year, and which one I would actually install first. Every version number and licence below was checked on September 24, 2026.
+
+## Table of Contents
+
+1. [The short answer](#the-short-answer)
+2. [Why this is trending right now](#why-this-is-trending-right-now)
+3. [The core idea in 30 lines of Python](#the-core-idea-in-30-lines-of-python)
+4. [Graphify](#graphify)
+5. [codebase-memory-mcp](#codebase-memory-mcp)
+6. [CodeGraph](#codegraph)
+7. [GitNexus](#gitnexus)
+8. [Serena (the non-graph alternative)](#serena-the-non-graph-alternative)
+9. [Side by side](#side-by-side)
+10. [Which one I would pick](#which-one-i-would-pick)
+11. [FAQ](#faq)
+12. [How this ties to ai.dosa.dev](#how-this-ties-to-aidosadev)
+
+## The short answer
+
+A code knowledge graph tool parses your repo once with tree-sitter, stores functions, calls, and imports as a graph, and exposes it to agents like Claude Code, Codex, or Cursor over MCP. The agent asks "who calls this?" instead of grepping. Graphify, codebase-memory-mcp, and CodeGraph are the open source leaders; GitNexus is source-available.
+
+## Why this is trending right now
+
+Three things landed inside the last two weeks:
+
+- **September 15:** codebase-memory-mcp shipped v0.11.0, a release with 171 merged pull requests since v0.10.8.
+- **September 21:** a small Rust code graph server called LAIN launched on Show HN. Tiny project, but it shows where builders are heading.
+- **September 23:** InfoQ ran a feature on Graphify, and Graphify pushed v0.9.67 to PyPI the next day, two days after v0.9.66.
+
+The numbers are what caught my eye. Graphify is at about 121,000 stars less than six months after its first commit (Libraries.io, September 23). CodeGraph sits around 71,000, codebase-memory-mcp around 43,800, and GitNexus around 47,000. For comparison, that is more stars than most of the coding agents these tools plug into.
+
+The pitch is always the same: agents burn most of their tokens re-discovering structure. A graph front-loads that work.
+
+## The core idea in 30 lines of Python
+
+Before looking at any tool, here is the concept stripped down. This script uses only the Python standard library. It walks a folder, records which function calls which, and answers the one question every graph tool is built around: if I change this function, what else is affected?
+
+```python
+import ast
+import sys
+from collections import defaultdict
+from pathlib import Path
+
+def build_graph(root):
+    callers = defaultdict(set)
+    for path in Path(root).rglob("*.py"):
+        tree = ast.parse(path.read_text(), filename=str(path))
+        for fn in ast.walk(tree):
+            if not isinstance(fn, ast.FunctionDef):
+                continue
+            for node in ast.walk(fn):
+                if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
+                    callers[node.func.id].add(f"{path.stem}.{fn.name}")
+    return callers
+
+def blast_radius(callers, target):
+    seen, stack = set(), [target]
+    while stack:
+        name = stack.pop()
+        for caller in callers.get(name, ()):
+            if caller not in seen:
+                seen.add(caller)
+                stack.append(caller.split(".")[-1])
+    return sorted(seen)
+
+if __name__ == "__main__":
+    root, target = sys.argv[1], sys.argv[2]
+    graph = build_graph(root)
+    print(f"Changing {target} affects:")
+    for fn in blast_radius(graph, target):
+        print(f"  {fn}")
+```
+
+I ran it against a three-file toy shop (`pricing.py`, `cart.py`, `checkout.py`) on Python 3.12. The output is shown below:
+
+```text
+$ python3 callgraph.py shop apply_tax
+Changing apply_tax affects:
+  cart.cart_total
+  checkout.checkout
+  checkout.quote
+```
+
+That is the whole trick. An agent without this has to grep for `apply_tax`, open `cart.py`, grep for `cart_total`, then open `checkout.py`. Three or four tool calls for three files. On a real repo it is dozens.
+
+What my 30 lines get wrong is exactly what the real tools spend their effort on: name collisions (two functions called `save`), method calls on objects, imports across languages, and keeping the graph fresh as files change. Keep that list in mind while reading the rest.
+
+## Graphify
+
+**What it does.** Graphify is a skill plus CLI. You type `/graphify .` inside your assistant and it builds a graph of code, docs, PDFs, images, and even video transcripts. Code goes through a deterministic tree-sitter pass with no LLM. Everything else goes through your assistant's model. Output lands in `graphify-out/`, including a clickable `graph.html` and a plain-language `GRAPH_REPORT.md` that the installer tells your assistant to read. A `--mode deep` flag turns up how aggressively it infers extra edges, so keep an eye on which edges were read from source versus guessed.
+
+**Who it is for.** Teams whose "why" lives outside the code: design docs, ADRs, meeting notes, papers. Also anyone who wants a picture of an unfamiliar repo in one command.
+
+**Verified facts:**
+
+- Licence: Apache 2.0 (GitHub and PyPI both say so; InfoQ describes it as dual MIT and Apache 2.0)
+- Latest: v0.9.67 on PyPI, published September 24, 2026; v0.9.66 was September 22
+- Stars: about 121,000 (Libraries.io, September 23, 2026)
+- Maintenance: first PyPI release April 4, 2026; two releases in the last three days
+- Pricing: the open source engine is free. Graphify Labs sells a hosted and on-prem enterprise layer; no public price
+
+**Install (from the README):**
+
+```bash
+uv tool install graphifyy     # note the double y
+graphify install              # registers the skill with your assistant
+```
+
+Then, inside Claude Code, Codex, Cursor, or another supported assistant:
+
+```text
+/graphify .
+```
+
+**Honest limitation.** The PyPI package is `graphifyy`, and the README warns that other `graphify*` packages are not affiliated. That is a typosquat risk the moment someone on your team types it from memory. The second catch: the non-code pass spends your model's tokens, and a May 2026 issue (#857) described the cheap `update` hook silently marking files as processed so semantic edges went stale. I could not confirm whether that is fixed, so rebuild with a full pass before trusting doc-derived edges.
+
+## codebase-memory-mcp
+
+**What it does.** A single native binary that indexes a repo into a SQLite-backed graph and serves 15+ MCP tools: `search_graph`, `trace_path`, impact analysis, dead code detection, Cypher queries, and cross-service HTTP route linking. It combines tree-sitter with hybrid LSP type resolution for the major languages. There is no embedded LLM and no API key. Your agent is the intelligence; this is just the index.
+
+**Who it is for.** People who want the fastest structural answers with zero runtime dependencies. Semantic search embeddings are compiled into the binary, so there is no Ollama or Docker step either.
+
+**Verified facts:**
+
+- Licence: MIT
+- Latest: v0.11.0, published to npm September 15, 2026
+- Stars: about 43,800 (AttentionVC tracker, September 2026)
+- Pricing: free
+
+**Install (from the README):**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh | bash
+# or, with Node already installed
+npm install -g codebase-memory-mcp
+codebase-memory-mcp install    # auto-configures detected agents
+```
+
+Every MCP tool also works as a one-shot CLI call, which is handy for testing before you wire it into an agent:
+
+```bash
+codebase-memory-mcp cli index_repository --repo-path .
+codebase-memory-mcp cli list_projects
+codebase-memory-mcp cli trace_path --project my-project --function-name Search --direction both
+```
+
+Use the project name that `list_projects` prints in place of `my-project`.
+
+**Honest limitation.** v0.11.0 changes the index format, so the first run rebuilds every project. The same release reworks memory-budget handling, which tells you large repos were hitting limits before. I would test on your largest repo before rolling it out to a team. Also, `curl | bash` installers deserve a read before you pipe them into a shell.
+
+## CodeGraph
+
+**What it does.** CodeGraph parses your code into a local SQLite graph (the v1.5.0 release in July moved it to a Rust engine) and exposes it over MCP. By default the server offers just one tool, `codegraph_explore`, which returns relevant source plus call paths in a single call. Extra tools like callers, callees, and impact exist in the codebase and as CLI commands. The README pitches fewer tool calls and tokens, backed by the vendor's own benchmarks.
+
+**Who it is for.** Claude Code and Codex users who want the least setup and the smallest tool surface for the agent to get confused by.
+
+**Verified facts:**
+
+- Licence: MIT
+- Latest: v1.6.0 on npm, August 26, 2026
+- Stars: about 71,000 (GitHub snapshot via search; the count moves daily)
+- npm: about 114,000 weekly downloads
+- Pricing: free
+- Release bundles carry signed build attestations (since July 2026)
+
+**Install (from the docs):**
+
+```bash
+npm i -g @colbymchenry/codegraph
+codegraph install          # wires the MCP server into your agents
+codegraph init             # run once per project to build the graph
+codegraph impact cartTotal # same question as my toy script, from the terminal
+```
+
+**Honest limitation.** `codegraph install` only configures agents. It does not index anything. Until you run `codegraph init`, the MCP server announces itself inactive, lists no tools, and your agent quietly falls back to grep. Also note there is a `codegraph telemetry` command for anonymous usage data; check its state if that matters to you. The savings figures in the README are vendor benchmarks, not independent ones.
+
+## GitNexus
+
+**What it does.** GitNexus indexes a repo into a local graph and adds execution flows, functional clusters, blast radius with confidence scores, change detection, Cypher queries, and coordinated multi-file renames. It also has a browser UI where you can drop in a repo and chat with its graph. Claude Code and Codex get the deepest integration: MCP plus skills plus PreToolUse hooks that enrich plain `grep` calls with graph context.
+
+**Who it is for.** Individuals exploring code for personal or evaluation use, and companies willing to pay for a commercial licence.
+
+**Verified facts:**
+
+- Licence: PolyForm Noncommercial 1.0.0. This is source-available, not open source
+- Latest: v1.6.12, September 12, 2026 (per a September 15 third-party review; I could not open the GitHub release page myself, so treat the exact tag as unverified)
+- Stars: about 47,000 (September 4, 2026)
+- Pricing: free for non-commercial use; commercial licence via Akon Labs, no public price
+
+**Install (from the README):**
+
+```bash
+npx gitnexus analyze   # run from the repo root
+npx gitnexus setup     # one-time MCP config for detected editors
+```
+
+**Honest limitation.** The licence. If you index your employer's code with it, you are outside the free terms. The second thing that surprised me: `analyze` does not just index. It also installs skills into `.claude/skills/`, registers Claude Code hooks, and writes `AGENTS.md` and `CLAUDE.md` into your repo. Run it on a clean branch so you can review that diff.
+
+## Serena (the non-graph alternative)
+
+**What it does.** Serena is not a knowledge graph. It runs real language servers (LSP) and gives your agent symbol-level tools: find symbol, find references, rename, replace symbol body. I include it because it is the most common answer to "do I need a graph at all?" For many questions (where is this defined, who references it) an LSP gives exact answers with no index to go stale.
+
+**Who it is for.** Developers who want IDE-grade navigation and edits in the agent, especially in typed languages where the language server is already excellent.
+
+**Verified facts:**
+
+- Licence: MIT
+- Latest: v1.7.0, August 9, 2026 (PyPI and changelog)
+- Stars: about 29,400 (GitTrend, mid-September 2026); last push September 16
+- Pricing: free
+
+**Install (from the docs):**
+
+```bash
+uv tool install -p 3.13 serena-agent
+serena setup claude-code
+# or register it manually for the current project
+claude mcp add serena -- serena start-mcp-server --context claude-code --project "$(pwd)"
+```
+
+**Honest limitation.** Serena is only as good as the language server behind it, and some servers are slow to start. The docs tell you to raise `MCP_TIMEOUT` to 60000 if Claude Code gives up first. It also cannot answer "which files tend to change together" or "what does this doc say about that function", because there is no graph.
+
+## Side by side
+
+| Tool | Licence | Latest version | Stars (approx.) | Runtime | Indexes docs too? |
+|------|---------|----------------|-----------------|---------|-------------------|
+| Graphify | Apache 2.0 | v0.9.67 (Sep 24, 2026) | 121,000 | Python 3.10+ | Yes, via your model |
+| [codebase-memory-mcp](/tools/codebase-memory-mcp) | MIT | v0.11.0 (Sep 15, 2026) | 43,800 | Single native binary | No |
+| CodeGraph | MIT | v1.6.0 (Aug 26, 2026) | 71,000 | Bundled runtime | No |
+| GitNexus | PolyForm Noncommercial | v1.6.12 (Sep 12, 2026, unverified) | 47,000 | Node.js | No |
+| Serena | MIT | v1.7.0 (Aug 9, 2026) | 29,400 | Python 3.11 to 3.14 + LSPs | No |
+
+The pattern I did not expect: none of these tools include an LLM for code. All four graph tools parse code deterministically with tree-sitter and leave reasoning to your agent. Only Graphify calls a model, and only for non-code files.
+
+## Which one I would pick
+
+- **One repo, mostly code, want the fewest moving parts:** CodeGraph. One default tool, clear docs, MIT.
+- **Big or polyglot repo, care about speed and no runtime:** codebase-memory-mcp.
+- **Knowledge lives in docs and PDFs as much as code:** Graphify, with a full rebuild on a schedule.
+- **Typed language, mostly want find-references and safe renames:** Serena, and skip the graph.
+- **Work code:** skip GitNexus unless your company buys a licence.
+
+What I would skip entirely: running two graph tools against the same agent. Their tool descriptions overlap and the agent will pick between them inconsistently.
+
+## FAQ
+
+### What is a code knowledge graph for AI coding agents?
+
+It is an index of your codebase where functions, classes, files, and routes are nodes and calls, imports, and inheritance are edges. An MCP server exposes that graph so the agent can ask structural questions like "what calls this function" in one tool call instead of grepping and reading files.
+
+### Do code knowledge graphs actually reduce token usage?
+
+The vendors say yes, and my toy example shows why: one graph lookup replaced three or four grep-and-read steps. The published savings numbers are self-reported by each project, so measure tool calls on your own repo before and after.
+
+### Is Graphify or GitNexus free for commercial use?
+
+Graphify is Apache 2.0, so yes. GitNexus is under PolyForm Noncommercial 1.0.0, which allows personal and evaluation use but not commercial use without a separate licence from Akon Labs.
+
+### Graphify vs codebase-memory-mcp: which should I use?
+
+Use Graphify when docs, PDFs, and design notes matter as much as code, since it merges them into one graph. Use codebase-memory-mcp when you want a code-only index that is fast, runs as a single binary, and needs no model or API key.
+
+### Do I need a knowledge graph if my agent already has grep and LSP?
+
+Not always. For "where is this defined" and "who references it", an LSP tool like Serena is exact. Graphs pay off for multi-hop questions (blast radius, call chains, cross-service routes) and for large repos where grep returns hundreds of hits.
+
+## How this ties to ai.dosa.dev
+
+The directory already lists [codebase-memory-mcp](/tools/codebase-memory-mcp) and [ContextStream](/tools/contextstream) in the [Codebase AI category](/category/codebase-ai), plus [claude-mem](/tools/claude-mem) for session memory, which solves the neighbouring problem of what the agent learned rather than what the code is. Graphify, CodeGraph, GitNexus, and Serena are not listed yet and belong in the same category. If you want them in faster than the next data pass, Head to https://github.com/QAInsights/awesome-ai-tools/issues/new?template=submit-tool.yml and file them through the submission form.
+
+All five plug into the agents covered in our [AI coding CLIs roundup](/blog/best-ai-coding-clis), and the [Claude Code deep dive](/blog/claude-code-deep-dive) explains how MCP servers attach to the agent that most of these tools target first.
+
+Happy Testing! Have you measured tool calls before and after adding a code graph to your agent, and did the numbers match the vendor's?
+
+---
+
+*Sources checked on September 24, 2026: Graphify-Labs/graphify README and releases, the graphifyy PyPI page, Libraries.io, and InfoQ's September 23 feature; DeusData/codebase-memory-mcp README, v0.11.0 release notes, and npm registry; colbymchenry/codegraph README, changelog, CLI and MCP docs, and npm registry; abhigyanpatwari/GitNexus README, LICENSE, and quickstart docs, plus reviews by andrew.ooo (September 4) and rywalker.com (September 15); oraios/serena README, changelog, client docs, and the serena-agent PyPI page; the LAIN Show HN post. The Python example was run on Python 3.12.13. Tool install commands were copied from official docs; outbound network is locked down on my test machine, so I could not execute those installs.*
