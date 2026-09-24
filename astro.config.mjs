@@ -3,6 +3,33 @@ import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import { remarkReadingTime } from './remark-reading-time.mjs';
+import { readFileSync, readdirSync } from 'node:fs';
+
+// Honest per-URL <lastmod> for the sitemap: tool pages use the enrichment
+// pipeline's lastUpdated stamp, blog posts use their pubDate. Anything else
+// is left without lastmod rather than stamped with the build date.
+function loadLastmodMap() {
+    const map = new Map();
+    try {
+        const enriched = JSON.parse(readFileSync(new URL('./public/data/enriched-tools.json', import.meta.url), 'utf8'));
+        for (const t of enriched) {
+            if (!t?.slug || !t?.lastUpdated || isNaN(Date.parse(t.lastUpdated))) continue;
+            map.set(`/tools/${t.slug}`, t.lastUpdated);
+            map.set(`/tools/${t.slug}/alternatives`, t.lastUpdated);
+        }
+    } catch { /* enriched data optional */ }
+    try {
+        const blogDir = new URL('./src/content/blog/', import.meta.url);
+        for (const file of readdirSync(blogDir)) {
+            if (!file.endsWith('.mdx')) continue;
+            const src = readFileSync(new URL(file, blogDir), 'utf8');
+            const m = src.match(/^pubDate:\s*["']?(\d{4}-\d{2}-\d{2})/m);
+            if (m) map.set(`/blog/${file.replace(/\.mdx$/, '')}`, m[1]);
+        }
+    } catch { /* blog optional */ }
+    return map;
+}
+const lastmodMap = loadLastmodMap();
 
 // https://astro.build/config
 export default defineConfig({
@@ -24,6 +51,9 @@ export default defineConfig({
             filter: (page) => !page.includes('/settings') && !page.includes('/favorites') && !page.includes('/zap') && !page.includes('/admin'),
             serialize(item) {
                 const url = item.url;
+                const path = new URL(url).pathname.replace(/\/$/, '');
+                const lastmod = lastmodMap.get(path);
+                if (lastmod) item.lastmod = new Date(lastmod).toISOString();
                 if (/\/compare\/[^/]+\/$/.test(url) || /\/compare\/[^/]+$/.test(url)) {
                     item.priority = 0.8;
                     item.changefreq = 'weekly';

@@ -64,7 +64,13 @@ const softwareApp: Record<string, unknown> = {
     "url": hasSiteLink ? tool.url : `https://ai.dosa.dev/tools/${tool.slug}`,
     "description": displayDescription,
     "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": tool.categoryClean,
     "operatingSystem": "Any",
+    "image": `https://ai.dosa.dev/images/og/${tool.slug}.png`,
+    ...(hasSiteLink ? { "sameAs": [tool.url] } : {}),
+    ...(displayCompany ? { "author": { "@type": "Organization", "name": displayCompany }, "publisher": { "@type": "Organization", "name": displayCompany } } : {}),
+    ...(enriched?.keyFeatures?.length ? { "featureList": enriched.keyFeatures } : {}),
+    ...(enriched?.tags?.length ? { "keywords": enriched.tags.join(', ') } : {}),
     // Honest freshness: dateModified reflects the enrichment pipeline's
     // lastUpdated stamp for this tool, not the build date.
     ...(enriched?.lastUpdated ? { "dateModified": enriched.lastUpdated } : {}),
@@ -79,10 +85,27 @@ if (isKnownFree) {
     softwareApp["offers"] = { "@type": "Offer", "price": "0", "priceCurrency": "USD" };
 }
 
+const pageUrl = `https://ai.dosa.dev/tools/${tool.slug}`;
+const webPage: Record<string, unknown> = {
+    "@type": "WebPage",
+    "@id": pageUrl,
+    "url": pageUrl,
+    "name": `${displayName} - ${displayCompany} | ai.dosa.dev`,
+    "description": descMeta,
+    "inLanguage": "en",
+    "isPartOf": { "@id": "https://ai.dosa.dev/#website" },
+    "about": { "@id": `${pageUrl}#app` },
+    "mainEntity": { "@id": `${pageUrl}#app` },
+    "primaryImageOfPage": { "@type": "ImageObject", "url": `https://ai.dosa.dev/images/og/${tool.slug}.png`, "width": 1200, "height": 630 },
+    ...(enriched?.lastUpdated ? { "dateModified": enriched.lastUpdated } : {}),
+    "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["h1", ".td-summary", ".td-verdict"] },
+};
+
 const jsonLdObj = {
     "@context": "https://schema.org",
     "@graph": [
         softwareApp,
+        webPage,
         {
             "@type": "BreadcrumbList",
             "itemListElement": [
@@ -237,7 +260,7 @@ const jsonLd = JSON.stringify(jsonLdObj);
                             )}
                         </div>
                     </div>
-                    <p class="text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">{displayDescription}</p>
+                    <p class="td-summary text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">{displayDescription}</p>
                 </header>
 
                 <!-- Enriched Content Sections (build-time rendered) -->

@@ -19,14 +19,22 @@ interface Props {
     activeNav?: 'settings' | 'zap' | 'help' | 'compare' | string;
     ogType?: string;
     ogImage?: string;
+    ogImageAlt?: string;
+    keywords?: string;
+    publishedTime?: string;
+    modifiedTime?: string;
+    authors?: string[];
+    tags?: string[];
     jsonLd?: string;
     robots?: string;
+    prevUrl?: string;
+    nextUrl?: string;
 }
 
-const { title, description, canonical, activeNav, ogType, ogImage, jsonLd, robots } = Astro.props;
+const { title, activeNav, ...layoutProps } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} ogType={ogType} ogImage={ogImage} jsonLd={jsonLd} robots={robots}>
+<BaseLayout title={title} {...layoutProps}>
     <div class="flex h-[100dvh] overflow-hidden">
         <Sidebar variant="tool" activeNav={activeNav} />
 

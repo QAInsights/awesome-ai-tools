@@ -90,3 +90,7 @@ Allow: /
 
 # --- Sitemap ---
 Sitemap: https://ai.dosa.dev/sitemap-index.xml
+
+# --- LLM-friendly site summaries (llmstxt.org) ---
+# https://ai.dosa.dev/llms.txt       - site overview, categories, how to cite
+# https://ai.dosa.dev/llms-full.txt  - every tool with URL + one-line description

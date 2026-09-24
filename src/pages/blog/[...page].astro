@@ -47,6 +47,44 @@ const searchIndex = allPosts.map((post) => ({
 }));
 const postsJson = safeJsonForScript(searchIndex);
 
+const blogUrl = `https://ai.dosa.dev/blog${page.currentPage > 1 ? `/${page.currentPage}` : ''}`;
+const absUrl = (u: string | undefined) => (u ? new URL(u, 'https://ai.dosa.dev').href : undefined);
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": blogUrl,
+      "url": blogUrl,
+      "name": "ai.dosa.dev Blog - AI coding tools deep dives, comparisons, and tutorials",
+      "description": "Read the latest news, tutorials, and deep dives into AI tools for developers.",
+      "isPartOf": { "@type": "WebSite", "@id": "https://ai.dosa.dev/#website", "url": "https://ai.dosa.dev", "name": "ai.dosa.dev - Awesome AI Tools" },
+      "publisher": { "@id": "https://ai.dosa.dev/#organization" },
+      "inLanguage": "en",
+      ...(allPosts[0] ? { "dateModified": allPosts[0].data.pubDate.toISOString() } : {}),
+    },
+    {
+      "@type": "ItemList",
+      "name": "Blog posts",
+      "numberOfItems": page.data.length,
+      "itemListOrder": "https://schema.org/ItemListOrderDescending",
+      "itemListElement": page.data.map((post, i) => ({
+        "@type": "ListItem",
+        "position": page.start + i + 1,
+        "url": `https://ai.dosa.dev/blog/${post.id}`,
+        "name": post.data.title,
+      })),
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ai.dosa.dev" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://ai.dosa.dev/blog" },
+      ],
+    },
+  ],
+});
+
 // On page 1, featured posts are shown in their own section — don't repeat
 // them in the regular list.
 const listPosts =
@@ -56,7 +94,11 @@ const listPosts =
 <DashboardLayout
   title={`Blog | ai.dosa.dev${page.currentPage > 1 ? ` (Page ${page.currentPage})` : ''}`}
   description="Read the latest news, tutorials, and deep dives into AI tools for developers."
-  canonical={`https://ai.dosa.dev/blog${page.currentPage > 1 ? `/${page.currentPage}` : ''}`}
+  canonical={blogUrl}
+  keywords="AI coding tools blog, AI IDE comparisons, coding agent tutorials, developer AI news, ai.dosa.dev"
+  prevUrl={absUrl(page.url.prev)}
+  nextUrl={absUrl(page.url.next)}
+  jsonLd={jsonLd}
   activeNav="blog"
 >
   <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-full p-6 md:p-8">

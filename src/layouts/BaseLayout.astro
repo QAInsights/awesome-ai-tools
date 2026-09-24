@@ -15,10 +15,20 @@ interface Props {
     ogType?: string;
     /** ISO date - emitted as article:modified_time when ogType is "article" */
     modifiedTime?: string;
+    /** ISO date - emitted as article:published_time when ogType is "article" */
+    publishedTime?: string;
+    /** Author names - emitted as article:author + <meta name="author"> */
+    authors?: string[];
+    /** Topic tags - emitted as article:tag when ogType is "article" */
+    tags?: string[];
+    ogImageAlt?: string;
     twitterTitle?: string;
     twitterDescription?: string;
     jsonLd?: string;
     robots?: string;
+    /** Paginated collections: rel=prev / rel=next hints */
+    prevUrl?: string;
+    nextUrl?: string;
 }
 
 const {
@@ -31,10 +41,16 @@ const {
     ogImage = "https://ai.dosa.dev/images/og-image.png",
     ogType = "website",
     modifiedTime,
+    publishedTime,
+    authors,
+    tags,
+    ogImageAlt,
     twitterTitle,
     twitterDescription,
     jsonLd,
     robots,
+    prevUrl,
+    nextUrl,
 } = Astro.props;
 
 const resolvedCanonical = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
@@ -42,6 +58,35 @@ const resolvedOgTitle = ogTitle ?? title;
 const resolvedOgDesc = ogDescription ?? description;
 const resolvedTwitterTitle = twitterTitle ?? title;
 const resolvedTwitterDesc = twitterDescription ?? description;
+const resolvedOgImageAlt = ogImageAlt ?? resolvedOgTitle;
+const isNoindex = robots?.includes('noindex') ?? false;
+// Indexable pages opt into large image previews and unlimited snippets so
+// search + answer engines can quote the page and show the OG card in full.
+const robotsExtras = isNoindex
+    ? undefined
+    : 'max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+const articleMeta = ogType === 'article'
+    ? {
+        ...(publishedTime ? { publishedTime } : {}),
+        ...(modifiedTime ? { modifiedTime } : {}),
+        ...(authors?.length ? { authors } : {}),
+        ...(tags?.length ? { tags } : {}),
+    }
+    : null;
+const extraMeta: { name: string; content: string }[] = [
+    { name: 'keywords', content: keywords },
+    { name: 'author', content: authors?.length ? authors.join(', ') : 'dosa.dev' },
+    { name: 'publisher', content: 'dosa.dev' },
+];
+const extraLinks: { rel: string; href: string; type?: string; title?: string }[] = [
+    { rel: 'sitemap', type: 'application/xml', title: 'Sitemap', href: '/sitemap-index.xml' },
+    { rel: 'alternate', type: 'application/rss+xml', title: 'ai.dosa.dev Blog RSS', href: '/rss.xml' },
+    { rel: 'alternate', type: 'application/rss+xml', title: 'Today in AI RSS', href: '/news/rss.xml' },
+    { rel: 'alternate', type: 'application/rss+xml', title: 'ai.dosa.dev tools RSS', href: '/tools/rss.xml' },
+    { rel: 'alternate', type: 'text/plain', title: 'llms.txt', href: '/llms.txt' },
+];
+if (prevUrl) extraLinks.push({ rel: 'prev', href: prevUrl });
+if (nextUrl) extraLinks.push({ rel: 'next', href: nextUrl });
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -62,33 +107,34 @@ const resolvedTwitterDesc = twitterDescription ?? description;
         },
         optional: {
           description: resolvedOgDesc,
+          siteName: "ai.dosa.dev",
+          locale: "en_US",
         },
         image: {
           width: 1200,
           height: 630,
+          alt: resolvedOgImageAlt,
+          type: "image/png",
         },
-        ...(ogType === "article" && modifiedTime
-          ? { article: { modifiedTime } }
+        ...(articleMeta && Object.keys(articleMeta).length
+          ? { article: articleMeta }
           : {}),
       }}
       twitter={{
         card: "summary_large_image",
         site: "@dosadev",
+        creator: "@dosadev",
         title: resolvedTwitterTitle,
         description: resolvedTwitterDesc,
         image: ogImage,
+        imageAlt: resolvedOgImageAlt,
       }}
-      noindex={robots?.includes('noindex')}
+      noindex={isNoindex}
       nofollow={robots?.includes('nofollow')}
+      robotsExtras={robotsExtras}
       extend={{
-        meta: [
-          { name: "keywords", content: keywords }
-        ],
-        link: [
-          { rel: "alternate", type: "application/rss+xml", title: "ai.dosa.dev Blog RSS", href: "/rss.xml" },
-          { rel: "alternate", type: "application/rss+xml", title: "Today in AI RSS", href: "/news/rss.xml" },
-          { rel: "alternate", type: "application/rss+xml", title: "ai.dosa.dev tools RSS", href: "/tools/rss.xml" }
-        ]
+        meta: extraMeta,
+        link: extraLinks,
       }}
     />
 

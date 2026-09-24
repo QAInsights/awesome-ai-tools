@@ -17,14 +17,22 @@ const { Content, headings, remarkPluginFrontmatter } = await render(entry);
 const postUrl = `https://ai.dosa.dev/blog/${entry.id}`;
 const isNewsPost = entry.data.tags?.includes('news');
 
-const jsonLdData = {
-  "@context": "https://schema.org",
+const ogImage = 'https://ai.dosa.dev/images/og-image.png';
+const publishedIso = entry.data.pubDate.toISOString();
+const wordCount = (entry.body ?? '').split(/\s+/).filter(Boolean).length;
+const topicTags = (entry.data.tags ?? []).filter(tag => tag !== 'news' && tag !== 'today-in-ai');
+const sectionName = isNewsPost ? 'Today in AI' : 'Blog';
+const sectionUrl = isNewsPost ? 'https://ai.dosa.dev/news' : 'https://ai.dosa.dev/blog';
+
+const articleData: Record<string, unknown> = {
   "@type": isNewsPost ? "NewsArticle" : "Article",
   "@id": `${postUrl}#article`,
   "headline": entry.data.title,
   "description": entry.data.description,
-  "datePublished": entry.data.pubDate.toISOString(),
-  "author": { "@type": "Person", "name": entry.data.author },
+  "image": { "@type": "ImageObject", "url": ogImage, "width": 1200, "height": 630 },
+  "datePublished": publishedIso,
+  "dateModified": publishedIso,
+  "author": { "@type": "Person", "name": entry.data.author, "url": "https://ai.dosa.dev" },
   "publisher": {
     "@type": "Organization",
     "@id": "https://ai.dosa.dev/#organization",
@@ -33,14 +41,32 @@ const jsonLdData = {
     "logo": { "@type": "ImageObject", "url": "https://ai.dosa.dev/images/icons/favicon-96x96.png", "width": 96, "height": 96 }
   },
   "mainEntityOfPage": { "@type": "WebPage", "@id": postUrl },
+  "isPartOf": { "@type": "WebSite", "@id": "https://ai.dosa.dev/#website", "url": "https://ai.dosa.dev", "name": "ai.dosa.dev - Awesome AI Tools" },
+  "url": postUrl,
   "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "articleSection": sectionName,
+  "wordCount": wordCount,
+  "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["article h1", ".post-lede"] },
   ...(entry.data.tags?.length ? { "keywords": entry.data.tags.join(', ') } : {}),
 };
 if (isNewsPost) {
-  jsonLdData.dateModified = entry.data.pubDate.toISOString();
-  jsonLdData.citation = extractNewsCitations(entry.body);
+  articleData.citation = extractNewsCitations(entry.body);
 }
-const jsonLd = JSON.stringify(jsonLdData);
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    articleData,
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ai.dosa.dev" },
+        { "@type": "ListItem", "position": 2, "name": sectionName, "item": sectionUrl },
+        { "@type": "ListItem", "position": 3, "name": entry.data.title, "item": postUrl }
+      ]
+    }
+  ]
+});
 
 // Table of contents: h2/h3 only, and only worth showing on longer pieces.
 const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
@@ -111,6 +137,13 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
   description={entry.data.description}
   canonical={postUrl}
   ogType="article"
+  ogImage={ogImage}
+  ogImageAlt={entry.data.title}
+  publishedTime={publishedIso}
+  modifiedTime={publishedIso}
+  authors={[entry.data.author]}
+  tags={topicTags}
+  keywords={[...topicTags, 'AI coding tools', 'ai.dosa.dev'].join(', ')}
   jsonLd={jsonLd}
   activeNav="blog"
 >
@@ -130,6 +163,7 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
           <h1 class="text-3xl sm:text-4xl font-semibold text-white tracking-tight mb-3 select-text">
             {entry.data.title}
           </h1>
+          <p class="post-lede text-base sm:text-lg text-[#a3a3a3] leading-relaxed mb-4 select-text">{entry.data.description}</p>
           <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-[#737373] font-mono">
             <time datetime={entry.data.pubDate.toISOString()}>
               {entry.data.pubDate.toLocaleDateString('en-us', {
