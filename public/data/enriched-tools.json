@@ -489,29 +489,30 @@
   },
   {
     "slug": "meta-muse",
-    "name": "Muse",
+    "name": "Meta Muse",
     "company": "Meta",
     "pricing": "freemium",
-    "pricingDetail": "Offers a free tier with weekly usage limits and two subscription plans: Power at $20/month and Maximum at $100/month.",
-    "description": "Muse is a personal AI agent that performs autonomous, multi-step tasks across a user's connected accounts, such as booking travel, managing calendars, and making purchases. It operates within a secure virtual machine that utilizes an isolated browser to execute actions on the user's behalf.",
+    "pricingDetail": "Free developer access during beta/preview with usage limits on Meta Model API.",
+    "description": "Meta Muse (also known as Muse Code) is an agentic coding harness and terminal assistant designed for complex software development workflows. Powered by Meta's Muse Spark model, it assists developers with building, debugging, refactoring, and shipping code, featuring persistent background agent sessions and computer-use capabilities.",
     "keyFeatures": [
-      "Autonomous task execution via isolated virtual machines",
-      "Sentinel system for vetting and approving sensitive actions",
-      "Integration with email, calendar, fitness, and shopping services",
-      "Secure payment processing via Stripe Link with buyer protections",
-      "Proactive, personalized suggestions based on user data and goals"
+      "Terminal-based coding agent and harness powered by Meta's Muse Spark model",
+      "End-to-end software development workflows: plan, code, build, debug, and ship",
+      "Computer use capabilities allowing the agent to interact with desktop and browser environments",
+      "Autonomous GitHub bot and repository automation integration",
+      "Persistent background agent sessions with action logging and crash recovery"
     ],
-    "bestFor": "Handling personal administrative tasks like travel booking, restaurant reservations, grocery list creation, and calendar management for US-based adults.",
-    "notIdealFor": "Business-critical tasks involving CRM integration, shared team inboxes, complex professional project tracking, or users residing outside of the United States.",
-    "recentUpdates": "Launched on September 8, 2026, featuring Muse Spark 1.3, with a promised upgrade to a fully encrypted Confidential VM later in 2026.",
-    "verdict": "A technically sophisticated and ambitious agent that bridges the gap between chat and execution, though its success depends on whether users are willing to trust Meta with high-level access to their personal accounts and finances.",
+    "bestFor": "Developers and software engineering teams looking for a terminal-based coding agent and harness to automate complex coding, debugging, and repository workflows.",
+    "notIdealFor": "Non-technical users looking for everyday personal assistance (e.g. booking travel or shopping—see Meta's Muse personal agent) or developers wanting a full-GUI standalone editor.",
+    "recentUpdates": "Released in beta for macOS and Linux, featuring the Muse Spark model, persistent background agent sessions, computer use, and GitHub agent integration.",
+    "verdict": "A strong developer-focused coding harness from Meta that brings agentic automation and computer use into terminal and repository workstreams.",
     "tags": [
-      "AI Agent",
-      "Automation",
-      "Personal Assistant",
-      "Productivity"
+      "AI Coding Agent",
+      "Terminal Agent",
+      "Developer Tools",
+      "Autonomous Coding",
+      "Computer Use"
     ],
-    "lastUpdated": "2026-09-15"
+    "lastUpdated": "2026-09-23"
   },
   {
     "slug": "deepcode",
@@ -4134,7 +4135,7 @@
       "Proactive task suggestions based on personal data and history"
     ],
     "bestFor": "Delegating time-consuming administrative tasks, complex errand running, and routine shopping or scheduling where the agent can manage the workflow end-to-end.",
-    "notIdealFor": "Users with high privacy sensitivity regarding data access, tasks requiring deep human nuance or creative judgment, or scenarios involving sensitive shared accounts where granular, scoped permissions are unavailable.",
+    "notIdealFor": "Developers seeking a coding-specific agent (see Meta Muse for coding workflows), users with high privacy sensitivity regarding data access, tasks requiring deep human nuance or creative judgment, or scenarios involving sensitive shared accounts where granular, scoped permissions are unavailable.",
     "recentUpdates": "Launched in the U.S. on September 8, 2026, for users 18+; features include a secure virtual machine, WhatsApp and web integration, and upcoming support for Meta’s AI glasses and a 'Confidential VM' encryption mode.",
     "verdict": "A powerful and ambitious step toward agentic AI that successfully removes the 'human-in-the-loop' burden for tedious tasks, though its utility is weighed heavily against the significant trust required to grant it access to one's personal digital life.",
     "tags": [
