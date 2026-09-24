@@ -1608,6 +1608,24 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "cc-switch",
+    "name": "CC Switch",
+    "company": "farion1231",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "hindsight",
+    "name": "Hindsight",
+    "company": "Vectorize",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "treg",
+    "name": "Treg",
+    "company": "Superdesign",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
@@ -1647,6 +1665,12 @@
     "slug": "webllm",
     "name": "WebLLM",
     "company": "MLC AI",
+    "category": "Hardware & Edge AI"
+  },
+  {
+    "slug": "magnitude",
+    "name": "Magnitude",
+    "company": "Magnitude (YC)",
     "category": "Hardware & Edge AI"
   }
 ]

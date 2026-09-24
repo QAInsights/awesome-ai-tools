@@ -7558,5 +7558,130 @@
       "cross-platform"
     ],
     "lastUpdated": "2026-09-24"
+  },
+  {
+    "slug": "cc-switch",
+    "name": "CC Switch",
+    "company": "farion1231",
+    "pricing": "open-source",
+    "pricingDetail": "CC Switch is free and open source under the MIT license, with signed desktop builds for Windows, macOS and Linux (Homebrew, WinGet, Scoop, .deb/.rpm/AppImage). It manages configurations only; model usage is billed by whichever API providers or subscriptions you switch between.",
+    "description": "CC Switch is a cross-platform Tauri 2 desktop app that acts as a single control surface for AI coding tools. It centrally manages the configuration files of Claude Code, Claude Desktop, Codex, Gemini CLI, Grok Build, OpenCode, OpenClaw and Hermes Agent, letting you import providers with one click, switch between 50+ built-in provider presets (official APIs, AWS Bedrock, NVIDIA NIM, community relays), and share a universal provider across apps. It also unifies MCP server and Skills management with bidirectional sync, shows usage and balance, speed-tests endpoints, offers an optional local routing layer with format conversion, hot switching, failover and request logs, and stores everything in SQLite with atomic writes.",
+    "keyFeatures": [
+      "Manages Claude Code, Claude Desktop, Codex, Gemini CLI, Grok Build, OpenCode, OpenClaw and Hermes Agent from one app",
+      "One-click switching between 50+ API-provider presets, including Bedrock, NVIDIA NIM and community relays",
+      "Unified MCP and Skills management with bidirectional sync across tools",
+      "Usage and balance queries, endpoint speed testing and session/prompt management",
+      "Local routing with format conversion, hot switching, failover and usage analytics",
+      "System-tray quick switch and cloud sync via Dropbox, OneDrive, iCloud or WebDAV",
+      "SQLite-backed storage with atomic writes to protect configs from corruption"
+    ],
+    "bestFor": "Developers who juggle several CLI coding agents and multiple API providers or relays and want to stop hand-editing JSON/TOML/.env files every time they switch.",
+    "notIdealFor": "Developers who use a single agent with a single official subscription and never change providers, or teams that need centrally enforced enterprise configuration policy.",
+    "recentUpdates": "CC Switch shipped v3.20.4 on 22 September 2026 and has been on GitHub's weekly trending list, with the repository passing 136,000 stars; recent releases added Grok Build and Hermes Agent support, Claude Desktop third-party profiles and model mapping, and expanded local-routing and skills features.",
+    "verdict": "CC Switch has become the de facto configuration manager for the multi-agent, multi-provider coding workflow; it is mature, extremely popular and actively maintained, though its sponsor-heavy README and relay-provider presets mean you should still vet the providers you route through.",
+    "tags": [
+      "desktop-app",
+      "open-source",
+      "claude-code",
+      "codex",
+      "provider-switching",
+      "mcp",
+      "skills",
+      "tauri"
+    ],
+    "lastUpdated": "2026-09-24"
+  },
+  {
+    "slug": "hindsight",
+    "name": "Hindsight",
+    "company": "Vectorize",
+    "pricing": "open-source",
+    "pricingDetail": "Hindsight is open source under the MIT license and can be self-hosted with Docker (PostgreSQL + pgvector) or embedded in Python; you pay only for the LLM/embedding provider you configure. Vectorize also offers a managed Hindsight Cloud service.",
+    "description": "Hindsight is an agent memory system from Vectorize built around the idea that agents should learn over time, not just recall conversation history. It exposes three operations — retain, recall and reflect — over memory banks stored in PostgreSQL with pgvector, organising knowledge as world facts, experience facts, auto-consolidated observations and user-curated mental models with entity, temporal and semantic pathways. Retrieval runs semantic, BM25, graph and temporal strategies in parallel (TEMPR). Developers add it to an existing agent with a two-line LLM-client wrapper, via Python/TypeScript SDKs or plain HTTP, an MCP server, or coding-agent integrations for Claude Code and Cursor.",
+    "keyFeatures": [
+      "retain / recall / reflect API for storing, searching and reasoning over agent memory",
+      "Memory banks with world facts, experience facts, consolidated observations and mental models",
+      "Multi-strategy retrieval combining semantic, keyword (BM25), graph and temporal search",
+      "Two-line LLM wrapper that adds memory to existing agents automatically",
+      "Python and TypeScript SDKs, HTTP API, MCP server and Claude Code / Cursor integrations",
+      "Self-hosted Docker deployment on PostgreSQL + pgvector, or managed Hindsight Cloud",
+      "State-of-the-art LongMemEval results with independently reproduced benchmarks"
+    ],
+    "bestFor": "Developers building agents or coding-assistant workflows that need persistent, evolving memory across sessions and want an open-source system they can run on their own Postgres.",
+    "notIdealFor": "Simple chatbots that only need short conversation history, or teams that cannot run PostgreSQL/pgvector and an LLM provider for memory consolidation.",
+    "recentUpdates": "Hindsight released v0.10.1 on 21 September 2026 and reached GitHub's daily and weekly trending lists with over 27,000 stars; recent work added coding-agent integrations, an installable documentation skill (npx skills add), MCP support and the hosted Hindsight Cloud.",
+    "verdict": "Hindsight is one of the most credible open-source agent-memory options available, backed by published benchmarks and production use; expect more setup than a plug-in memory file, but far stronger recall and consolidation.",
+    "tags": [
+      "agent-memory",
+      "open-source",
+      "mcp",
+      "postgresql",
+      "pgvector",
+      "sdk",
+      "self-hosted"
+    ],
+    "lastUpdated": "2026-09-24"
+  },
+  {
+    "slug": "treg",
+    "name": "Treg",
+    "company": "Superdesign",
+    "pricing": "freemium",
+    "pricingDetail": "Treg is source-available under Apache-2.0 with additional terms (self-hosting for your own team is expressly permitted; offering it as a competing hosted service is restricted). The hosted registry at treg.to meters catalog calls against a prepaid team balance at per-call prices from a cent with 0% markup and gives new verified teams $1.00 free; calls through your own registered keys are never metered.",
+    "description": "Treg, built by the Superdesign team, is an 'OpenRouter for agent tools': a tool registry and proxy that gives an AI agent one base URL and one token to call roughly 2,800 catalogued API endpoints across about 60 providers — SEO and backlinks, social and trends, people and company enrichment, ads, scraping, and image/video generation — without signing up with each vendor. Agents search the catalog by task, read the price, and call the endpoint. Teams can also register their own tools — paid API accounts, OAuth connections, vendor CLIs such as stripe, gh or vercel, and SKILL.md bundles — so every teammate's agent can use them while credentials are injected server-side and never leave the registry. The proxy relays requests rather than modelling upstream APIs, so it survives provider changes.",
+    "keyFeatures": [
+      "Single base URL and token for 2,800+ catalogued endpoints across ~60 providers",
+      "Task-based tool search with per-call pricing shown before you call",
+      "Own-tool registry for API keys, OAuth connections, vendor CLIs and SKILL.md bundles",
+      "Server-side credential injection so agents never hold secrets",
+      "Relay-only proxy design that survives upstream API changes",
+      "Hosted at treg.to or fully self-hostable",
+      "Team balances, free anonymous routes and $1 starter credit"
+    ],
+    "bestFor": "Teams running coding or research agents that need occasional access to paid data and marketing APIs without buying subscriptions or managing dozens of vendor keys.",
+    "notIdealFor": "Organisations that prohibit routing API traffic through a third-party proxy, or developers who only need a handful of tools they already have direct credentials for.",
+    "recentUpdates": "Treg launched on Product Hunt in August 2026, moved to the treg.to domain, and appeared on GitHub's daily and weekly trending lists in September 2026 with about 3,000 stars while the catalog grew from ~2,600 to 2,800+ endpoints.",
+    "verdict": "Treg is an early but well-designed answer to the tool-access problem for agents; the pay-per-call catalog is compelling for bursty research and growth workloads, while the self-hostable registry for team credentials is useful even if you never touch the paid catalog.",
+    "tags": [
+      "agent-tools",
+      "api-gateway",
+      "tool-registry",
+      "pay-per-call",
+      "self-hosted",
+      "skills",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-24"
+  },
+  {
+    "slug": "magnitude",
+    "name": "Magnitude",
+    "company": "Magnitude (YC)",
+    "pricing": "open-source",
+    "pricingDetail": "Magnitude is free and open source under the Apache-2.0 license, with desktop downloads for macOS, Windows and Linux that bundle the magnitude CLI. Models run locally, so there are no token costs, API keys or rate limits.",
+    "description": "Magnitude is an open-source inference engine and desktop app for running open models on the hardware you already own. It profiles your machine, estimates tokens-per-second for every model and quantisation in its catalog before you download anything, ranks candidates by speed, accuracy, intelligence and memory, and then tunes the chosen model end to end — context size, placement, batching and speculative decoding — for your exact hardware. A Rust engine built on llama.cpp keeps full context windows for parallel agents and stays responsive while other work runs. One click connects the local model to coding agents such as Pi, OpenCode, Hermes, OpenClaw, Codex, Claude Code, Oh My Pi and Cline; models load on demand and unload when idle.",
+    "keyFeatures": [
+      "Hardware profiling with tok/s estimates for every model before download",
+      "Model recommendations ranked by speed, accuracy, intelligence and memory",
+      "End-to-end tuning including speculative decoding, placement and batching",
+      "One-click connection to Pi, OpenCode, Hermes, OpenClaw, Codex, Claude Code, Oh My Pi and Cline",
+      "Runs on Apple Silicon, NVIDIA, AMD and CPU-only machines, including DGX Spark and Strix Halo",
+      "On-demand model loading and unloading when idle or memory is tight",
+      "Fully private and offline after download; bundled magnitude CLI"
+    ],
+    "bestFor": "Developers who want to run coding agents against local open models but do not want to guess which model and quant their laptop or workstation can actually handle.",
+    "notIdealFor": "Teams that need frontier-model quality for every task, or users on machines too small for useful coding models regardless of tuning.",
+    "recentUpdates": "Magnitude (a Y Combinator company) published @magnitudedev/cli 0.1.5 on 23 September 2026 and reached GitHub's monthly trending list with about 5,000 stars; the project recently repositioned from a browser-agent/coding-agent focus to a hardware-aware local inference engine with one-click agent connections.",
+    "verdict": "Magnitude fills a real gap next to Ollama and LM Studio by helping you choose and tune a model rather than just run one; it is young and evolving quickly, but the hardware-aware recommendations make local agent workflows far less trial-and-error.",
+    "tags": [
+      "local-inference",
+      "open-source",
+      "desktop-app",
+      "llama-cpp",
+      "rust",
+      "offline",
+      "coding-agents"
+    ],
+    "lastUpdated": "2026-09-24"
   }
 ]
