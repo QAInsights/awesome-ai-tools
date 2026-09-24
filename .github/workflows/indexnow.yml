@@ -1,0 +1,76 @@
+name: Notify IndexNow
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - README.md
+      - 'src/content/blog/**'
+      - 'public/data/enriched-tools.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  INDEXNOW_KEY: b1e6fad239fe5829fc047b78da7479b6
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Submit changed URLs to IndexNow
+        env:
+          INDEXNOW_KEY: ${{ env.INDEXNOW_KEY }}
+        run: |
+          set -euo pipefail
+          changed="$(git diff --name-only HEAD^ HEAD)"
+          urls=()
+          add_url() {
+            case " ${urls[*]} " in
+              *" $1 "*) ;;
+              *) urls+=("$1") ;;
+            esac
+          }
+          while IFS= read -r file; do
+            [[ -z "$file" ]] && continue
+            if [[ "$file" == src/content/blog/*.mdx ]]; then
+              add_url "https://ai.dosa.dev/blog/$(basename "$file" .mdx)"
+              add_url "https://ai.dosa.dev/blog"
+              add_url "https://ai.dosa.dev/news"
+              add_url "https://ai.dosa.dev/rss.xml"
+            fi
+            if [[ "$file" == README.md || "$file" == public/data/enriched-tools.json ]]; then
+              add_url "https://ai.dosa.dev"
+              add_url "https://ai.dosa.dev/llms.txt"
+              add_url "https://ai.dosa.dev/llms-full.txt"
+              add_url "https://ai.dosa.dev/tools/rss.xml"
+            fi
+            if [[ "$file" == public/data/enriched-tools.json ]]; then
+              while IFS= read -r slug; do
+                [[ -n "$slug" ]] && add_url "https://ai.dosa.dev/tools/$slug"
+              done < <(
+                diff <(git show HEAD^:public/data/enriched-tools.json | jq -r '.[] | [.slug, (.lastUpdated // "")] | @tsv' | sort) \
+                     <(git show HEAD:public/data/enriched-tools.json | jq -r '.[] | [.slug, (.lastUpdated // "")] | @tsv' | sort) \
+                  | awk '/^[<>]/{print $2}' | cut -f1 | sort -u
+              )
+            fi
+          done <<< "$changed"
+          urls=("${urls[@]:0:10000}")
+          if ((${#urls[@]} == 0)); then
+            echo "No URLs to notify"
+            exit 0
+          fi
+          echo "Waiting 300 seconds for the site deployment..."
+          sleep 300
+          payload="$(jq -n --arg host ai.dosa.dev --arg key "$INDEXNOW_KEY" \
+            --arg keyLocation "https://ai.dosa.dev/$INDEXNOW_KEY.txt" \
+            --argjson urlList "$(printf '%s\n' "${urls[@]}" | jq -R . | jq -s .)" \
+            '{host: $host, key: $key, keyLocation: $keyLocation, urlList: $urlList}')"
+          curl --fail-with-body --silent --show-error \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            --data "$payload" \
+            https://api.indexnow.org/indexnow

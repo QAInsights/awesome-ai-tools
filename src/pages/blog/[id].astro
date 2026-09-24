@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
 import { safeJsonForScript } from '../../lib/serialize';
 import { extractNewsCitations } from '../../lib/news-citations.js';
+import { DEFAULT_AUTHOR, ORGANIZATION } from '../../lib/site';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog', ({ data }) => data.draft !== true);
@@ -17,7 +18,7 @@ const { Content, headings, remarkPluginFrontmatter } = await render(entry);
 const postUrl = `https://ai.dosa.dev/blog/${entry.id}`;
 const isNewsPost = entry.data.tags?.includes('news');
 
-const ogImage = 'https://ai.dosa.dev/images/og-image.png';
+const ogImage = `https://ai.dosa.dev/images/og/blog/${entry.id}.png`;
 const publishedIso = entry.data.pubDate.toISOString();
 const wordCount = (entry.body ?? '').split(/\s+/).filter(Boolean).length;
 const topicTags = (entry.data.tags ?? []).filter(tag => tag !== 'news' && tag !== 'today-in-ai');
@@ -32,14 +33,10 @@ const articleData: Record<string, unknown> = {
   "image": { "@type": "ImageObject", "url": ogImage, "width": 1200, "height": 630 },
   "datePublished": publishedIso,
   "dateModified": publishedIso,
-  "author": { "@type": "Person", "name": entry.data.author, "url": "https://ai.dosa.dev" },
-  "publisher": {
-    "@type": "Organization",
-    "@id": "https://ai.dosa.dev/#organization",
-    "name": "dosa.dev",
-    "url": "https://ai.dosa.dev",
-    "logo": { "@type": "ImageObject", "url": "https://ai.dosa.dev/images/icons/favicon-96x96.png", "width": 96, "height": 96 }
-  },
+  "author": entry.data.author === DEFAULT_AUTHOR
+    ? { "@id": "https://ai.dosa.dev/#organization" }
+    : { "@type": "Person", "name": entry.data.author, "url": "https://ai.dosa.dev/blog", "worksFor": { "@id": "https://ai.dosa.dev/#organization" } },
+  "publisher": ORGANIZATION,
   "mainEntityOfPage": { "@type": "WebPage", "@id": postUrl },
   "isPartOf": { "@type": "WebSite", "@id": "https://ai.dosa.dev/#website", "url": "https://ai.dosa.dev", "name": "ai.dosa.dev - Awesome AI Tools" },
   "url": postUrl,
@@ -57,6 +54,7 @@ const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@graph": [
     articleData,
+    ORGANIZATION,
     {
       "@type": "BreadcrumbList",
       "itemListElement": [

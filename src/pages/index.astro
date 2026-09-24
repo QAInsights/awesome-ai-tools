@@ -16,6 +16,7 @@ import Sidebar from '../components/Sidebar.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import ToolRow from '../components/ToolRow.astro';
 import { formatDate, getAllTools, getLatestUpdate } from '../lib/tools';
+import { ORGANIZATION } from '../lib/site';
 
 const tools = getAllTools();
 const categoryCount = new Set(tools.map(t => t.category)).size;
@@ -56,13 +57,7 @@ const jsonLd = JSON.stringify({
             "dateModified": latestUpdate ?? new Date().toISOString().slice(0, 10),
             "image": { "@type": "ImageObject", "url": "https://ai.dosa.dev/images/og-image.png", "width": 1200, "height": 630 }
         },
-        {
-            "@type": "Organization",
-            "@id": "https://ai.dosa.dev/#organization",
-            "name": "dosa.dev",
-            "url": "https://ai.dosa.dev",
-            "logo": { "@type": "ImageObject", "url": "https://ai.dosa.dev/images/icons/favicon-96x96.png", "width": 96, "height": 96 }
-        },
+        ORGANIZATION,
         {
             "@type": "ItemList",
             "@id": "https://ai.dosa.dev/#toollist",
