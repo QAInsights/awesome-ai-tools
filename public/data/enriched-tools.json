@@ -7527,5 +7527,36 @@
       "registry"
     ],
     "lastUpdated": "2026-09-23"
+  },
+  {
+    "slug": "athas",
+    "name": "Athas",
+    "company": "Athas",
+    "pricing": "open-source",
+    "pricingDetail": "Athas is free and open source under the AGPL-3.0 license, with prebuilt macOS, Windows and Linux builds (Homebrew cask, WinGet, Scoop, .deb/.rpm and install scripts). Model and agent usage is billed by the providers you connect (Anthropic, OpenAI, Google, OpenRouter, etc.) or free with local Ollama models.",
+    "description": "Athas is a lightweight, cross-platform code editor built with Tauri (Rust backend, React frontend) that treats coding agents as first-class citizens. It runs Claude Code, Codex, Gemini CLI, GitHub Copilot CLI, OpenCode, Qwen Code and Kimi CLI as in-editor agent sessions over the Agent Client Protocol (ACP) and the Codex app-server protocol, with permission prompts, queued messages and persistent chat history, and it also offers direct model chat via Anthropic, OpenAI, Google, DeepSeek, Mistral, xAI Grok, OpenRouter and Ollama. Traditional editor features — Git, LSP, syntax highlighting, vim keybindings, integrated terminal, database viewers and collaboration — are built in.",
+    "keyFeatures": [
+      "In-editor agent sessions for Claude Code, Codex, Gemini CLI, GitHub Copilot CLI, OpenCode, Qwen Code and Kimi CLI via ACP and the Codex app-server",
+      "Multi-provider model chat (Anthropic, OpenAI, Google, DeepSeek, Mistral, Grok, OpenRouter, Ollama) with attachments and follow-up actions",
+      "Tauri (Rust + React) architecture for a small, fast native binary on macOS, Windows and Linux",
+      "Git integration, LSP support, vim keybindings and an integrated terminal",
+      "Built-in database viewers for PostgreSQL, MySQL, SQLite, DuckDB, MongoDB and Redis",
+      "Collaboration plus enterprise policy controls (managed mode and extension allowlist)",
+      "Extension system with a registry, and one-line installers for every platform"
+    ],
+    "bestFor": "Developers who want a fast, native, open-source editor that hosts the CLI coding agents they already pay for (Claude Code, Codex, Gemini CLI, Copilot) side by side, without the weight of Electron-based IDEs.",
+    "notIdealFor": "Teams that depend on the VS Code extension ecosystem or JetBrains-grade refactoring tooling, or organisations that cannot adopt AGPL-licensed software.",
+    "recentUpdates": "Athas shipped v0.14.2 in September 2026 (preview channel at v0.14.1-preview.x), with the GitHub repo passing 3,000 stars and receiving daily commits; recent work added ACP-based agent sessions, Codex app-server integration, enterprise managed mode with an extension allowlist, and Homebrew/WinGet/Scoop distribution.",
+    "verdict": "Athas is a promising, actively developed open-source alternative to Cursor- and Zed-style AI editors whose differentiator is bringing existing terminal agents into a lightweight native UI; it is young and moving fast, so expect rough edges but a very capable agent workspace.",
+    "tags": [
+      "ai-ide",
+      "code-editor",
+      "tauri",
+      "open-source",
+      "acp",
+      "agent-workspace",
+      "cross-platform"
+    ],
+    "lastUpdated": "2026-09-24"
   }
 ]
