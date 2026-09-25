@@ -276,6 +276,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "ccgui",
+    "name": "ccgui",
+    "company": "zhukunpenglinyutong",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -972,6 +978,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "paperclip",
+    "name": "Paperclip",
+    "company": "Paperclip Labs",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1623,6 +1635,18 @@
     "slug": "treg",
     "name": "Treg",
     "company": "Superdesign",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "impeccable",
+    "name": "Impeccable",
+    "company": "Paul Bakaus",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "chrome-devtools-mcp",
+    "name": "Chrome DevTools MCP",
+    "company": "Google (Chrome DevTools)",
     "category": "Developer Productivity & Workflow"
   },
   {

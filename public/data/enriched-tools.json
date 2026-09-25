@@ -7683,5 +7683,133 @@
       "coding-agents"
     ],
     "lastUpdated": "2026-09-24"
+  },
+  {
+    "slug": "ccgui",
+    "name": "ccgui",
+    "company": "zhukunpenglinyutong",
+    "pricing": "open-source",
+    "pricingDetail": "ccgui (Desktop CC GUI) is free and open source under the MIT license, with signed macOS (Apple Silicon) builds plus Windows and Linux installers on GitHub Releases and in-app auto-update. It is a client only: model usage is billed by whichever CLI subscription or API provider channel you configure for each engine.",
+    "description": "ccgui is a multi-engine AI coding desktop client built with Tauri 2, React 18, TypeScript and Rust. Instead of watching a black terminal, you pick a project and chat with Claude Code, Codex CLI, Kimi CLI, Grok CLI, Pi, OMP, DeepSeek Harness (DSH), Antigravity, OpenCode or Qoder, each wired in through a dedicated protocol adapter in the Rust backend so streaming events, session history and provider channels are handled natively rather than scraped off a terminal screen. The chat surface renders per-token streaming with cached syntax highlighting, folding thinking traces, live tool-call rows with Git diff and Bash viewers, todo snapshots, question cards and permission prompts, and supports per-tab model and reasoning-effort overrides. Around it sit a virtualized Git-aware file tree with a CodeMirror editor, a PTY-backed xterm terminal, a Git panel, a command palette, a first-party plugin SDK, proxy settings and token-authenticated LAN web access with a QR-code entry so you can drive sessions from another device. Provider channels are written to each CLI's own native config files with presets for GLM, Kimi, DeepSeek, MiniMax, MiMo, Bailian, OpenRouter and more, and can be imported from CC Switch.",
+    "keyFeatures": [
+      "Ten engines in one GUI: Claude Code, Codex CLI, Kimi CLI, Grok CLI, Pi, OMP, DeepSeek Harness, Antigravity, OpenCode and Qoder",
+      "Native Rust protocol adapters for streaming, session history/resume, interrupts and message queues",
+      "Thinking traces, tool-call rows with Git diff and Bash viewers, todo strip and question cards",
+      "Per-tab model and reasoning-effort overrides; provider-channel presets and CC Switch import",
+      "Built-in file tree with CodeMirror editor, PTY terminal, Git panel and command palette",
+      "Plugin SDK (@ccgui/plugin-sdk) with declarative plugins and a trust boundary",
+      "LAN web access over a token-authenticated WebSocket bridge; bilingual Chinese/English UI"
+    ],
+    "bestFor": "Developers who run several CLI coding agents (especially Claude Code, Codex, Kimi, DeepSeek Harness and other Chinese-ecosystem engines) and want one desktop chat client with real session history, diffs and a terminal rather than juggling terminal tabs.",
+    "notIdealFor": "Developers who prefer a terminal-first workflow, need multi-agent team orchestration (not yet supported), or want a full IDE with language intelligence rather than an agent chat client.",
+    "recentUpdates": "ccgui shipped v1.0.8 and v1.0.9 on 23-24 September 2026 and reached GitHub's daily trending list with about 4,400 stars; recent releases added Qoder and Antigravity adapters, DeepSeek Harness support, an OMP fast-mode toggle and the plugin runtime.",
+    "verdict": "ccgui is one of the broadest multi-engine desktop front-ends available for CLI coding agents, with unusually deep per-engine adapters and a compatibility matrix that is honest about gaps; it is young and fast-moving, but already a practical alternative to running ten different CLIs in ten terminals.",
+    "tags": [
+      "desktop-app",
+      "open-source",
+      "tauri",
+      "claude-code",
+      "codex",
+      "deepseek",
+      "multi-agent",
+      "cross-platform"
+    ],
+    "lastUpdated": "2026-09-25"
+  },
+  {
+    "slug": "paperclip",
+    "name": "Paperclip",
+    "company": "Paperclip Labs",
+    "pricing": "open-source",
+    "pricingDetail": "Paperclip is free and open source under the MIT license (MIT (c) 2026 Paperclip Labs, Inc). You self-host the Node.js server and React UI via the paperclip.ing install script, Docker or Kubernetes, and pay only for the agents and model providers you connect; cloud and sandbox agent runtimes (e2b, Cloudflare, Daytona, Modal, Novita) are billed by those providers.",
+    "description": "Paperclip is an open-source control plane for running a team of AI agents like a company: if OpenClaw is an employee, Paperclip is the company. You define a goal, hire agents into an org chart with roles, titles and reporting lines (any bot, any provider — OpenClaw, Claude Code, Codex, Cursor, bash or HTTP, anything that can receive a heartbeat), approve the strategy, set budgets and monitor from a task-manager-style dashboard or your phone. Agents wake on scheduled heartbeats, check out ticketed tasks that carry full goal ancestry, delegate up and down the org chart, and resume persistent task context across runs. Task checkout and budget enforcement are atomic so there is no double work or runaway spend; approval gates, revisioned config with rollback, full tool-call tracing and an immutable audit log provide governance; and every entity is company-scoped so one deployment can run many isolated organizations with portable, secret-scrubbed import/export templates. A Skill Studio, shared org-wide skills, evals and performance reviews round out the agent-training pillar.",
+    "keyFeatures": [
+      "Org chart for agents with roles, reporting lines, delegation and mixed human + agent governance",
+      "Bring your own agent: OpenClaw, Claude Code, Codex, Cursor, bash or HTTP adapters, plus e2b/Cloudflare/Daytona/Modal/Kubernetes sandboxes",
+      "Ticketed tasks with goal ancestry, approval gates and review from diffs, screenshots and tests",
+      "Scheduled heartbeats with persistent agent state across runs",
+      "Per-agent monthly budgets with atomic task checkout and throttling",
+      "Full tool-call tracing, immutable audit log and revisioned config with rollback",
+      "Multi-organization isolation, portable company templates and a mobile-ready UI"
+    ],
+    "bestFor": "Builders and small teams who coordinate many autonomous agents toward business goals and want budgets, governance and an audit trail instead of twenty unattended Claude Code tabs.",
+    "notIdealFor": "Individual developers who just want a single coding agent in their editor, or organisations that need a fully managed SaaS rather than a self-hosted server.",
+    "recentUpdates": "Paperclip released v2026.916.1 on 21 September 2026 and topped GitHub's daily trending list on 25 September with about 84,000 stars and 15,000 forks; several dedicated Reddit communities (r/PaperClip_AI, r/PaperclipAI, r/PaperclipUseCases) have formed around it, and the roadmap lists cloud/sandbox agents as shipped with multi-tenant cloud deployments in progress.",
+    "verdict": "Paperclip is the most complete open-source answer so far to the 'how do I run a company of agents' problem, with unusually careful orchestration primitives (atomic checkout, budgets, rollback); it is ambitious and still maturing, but its adoption and pace make it the reference point in this space.",
+    "tags": [
+      "agent-orchestration",
+      "open-source",
+      "self-hosted",
+      "multi-agent",
+      "governance",
+      "openclaw",
+      "claude-code",
+      "codex"
+    ],
+    "lastUpdated": "2026-09-25"
+  },
+  {
+    "slug": "impeccable",
+    "name": "Impeccable",
+    "company": "Paul Bakaus",
+    "pricing": "open-source",
+    "pricingDetail": "Impeccable is free and open source under the Apache-2.0 license. The skill, 24 commands, CLI and browser extension are all free; the deterministic detector rules run locally with no LLM or API key, and the skill itself runs inside whatever coding agent and model subscription you already use.",
+    "description": "Impeccable is design guidance for AI coding agents, created by Paul Bakaus and grown out of Anthropic's frontend-design skill. Its premise is that every model trained on the same SaaS templates produces the same tells — Inter everywhere, purple-to-blue gradients, cards nested in cards, gray text on colored backgrounds — unless it is given a design language. `npx impeccable install` detects your harness folders (~/.claude, ~/.codex, ~/.grok, ~/.hermes, .cursor and more) and installs one skill plus provider-native hook manifests; `/impeccable init` then records durable product truth in PRODUCT.md so later commands know audience, purpose, constraints and voice. Twenty-four commands give you a shared vocabulary with the agent: craft, shape, document, extract, critique, audit, polish, bolder, quieter, distill, harden, onboard, animate, colorize, typeset, layout, delight, overdrive, clarify, adapt, optimize, live and generate, plus pin for shortcuts. Sixty-one deterministic detector rules, run by the CLI or a browser extension without any LLM, catch AI-generated design anti-patterns, and live mode lets you iterate on element variants directly in the browser.",
+    "keyFeatures": [
+      "One skill, 24 slash commands and a shared design vocabulary for your coding agent",
+      "`/impeccable init` writes PRODUCT.md with durable product context; DESIGN.md captures the visual system",
+      "61 deterministic detector rules via CLI and browser extension, no LLM or API key needed",
+      "Live browser mode for visual variant iteration and `generate` for automatic variants",
+      "Explicit anti-pattern guidance (overused fonts, gray-on-color text, nested cards, bounce easing)",
+      "Installs into Claude Code, Codex, Cursor, Gemini CLI, Grok Build, Hermes Agent, Veto and GitHub Copilot with provider-native edit hooks",
+      "Git-submodule install option for teams that vendor and pin skills"
+    ],
+    "bestFor": "Developers and small teams shipping AI-built frontends who want their agent to produce distinctive, accessible, well-structured UI instead of generic template output.",
+    "notIdealFor": "Backend-only projects, or teams with a mature in-house design system and design review process that already constrains agent output.",
+    "recentUpdates": "Impeccable published engine-v0.1.6 on 25 September 2026 (skill v4.3.1 on 9 September), appears on GitHub's weekly and monthly trending lists with about 71,000 stars and 4,300 forks, and recently added the deterministic detector engine, browser extension, live/generate modes and Codex, Grok Build and Hermes hook support.",
+    "verdict": "Impeccable has become the de facto design skill for coding agents; the command vocabulary and PRODUCT.md setup are genuinely useful, and the deterministic detectors make it more than a prompt pack, though the hook installs modify harness config and deserve a review before you apply them.",
+    "tags": [
+      "agent-skill",
+      "design",
+      "frontend",
+      "open-source",
+      "claude-code",
+      "codex",
+      "cursor",
+      "cli"
+    ],
+    "lastUpdated": "2026-09-25"
+  },
+  {
+    "slug": "chrome-devtools-mcp",
+    "name": "Chrome DevTools MCP",
+    "company": "Google (Chrome DevTools)",
+    "pricing": "open-source",
+    "pricingDetail": "Chrome DevTools MCP is free and open source under the Apache-2.0 license, published to npm as chrome-devtools-mcp. It requires Node.js LTS and a current stable Chrome. Google collects anonymous usage statistics by default (opt out with --no-usage-statistics or the CHROME_DEVTOOLS_MCP_NO_USAGE_STATISTICS/CI environment variables), and performance tools may query the Google CrUX API unless --no-performance-crux is set.",
+    "description": "Chrome DevTools MCP is the Chrome team's official Model Context Protocol server that gives coding agents the full power of Chrome DevTools against a live browser. Added to any MCP client with `npx -y chrome-devtools-mcp@latest`, it lets an agent record performance traces and extract actionable DevTools insights, analyse network requests, read console messages with source-mapped stack traces, take screenshots and drive pages reliably through Puppeteer with automatic waiting for action results. A `--slim` mode exposes only basic browser tasks, `--headless` runs without a window, and advanced options cover concurrent sessions, persistent user-data directories, attaching to an already-running Chrome over WebSocket, and debugging on Android. A standalone CLI is provided for use without MCP, and the docs include client configuration guides for Antigravity, Claude Code, Cursor and VS Code plus guidance on running it as a browser subagent. It officially supports Google Chrome and Chrome for Testing, tracking the latest Extended Stable release.",
+    "keyFeatures": [
+      "Official Chrome team MCP server and CLI for coding agents",
+      "Performance tracing with DevTools-derived insights and optional CrUX field data",
+      "Network request analysis, console messages with source-mapped stack traces and screenshots",
+      "Reliable Puppeteer-based automation that waits for action results",
+      "--slim, --headless and --isolated modes; connect to a running Chrome; Android debugging",
+      "Client configuration guides for Antigravity, Claude Code, Cursor and VS Code",
+      "Design principles for use as a browser subagent inside larger harnesses"
+    ],
+    "bestFor": "Web developers who want their coding agent to verify, debug and performance-profile the actual page in Chrome rather than guessing from source code.",
+    "notIdealFor": "Teams that need cross-browser (Firefox/Safari) automation, or environments where exposing a live browser session and its data to an MCP client is unacceptable.",
+    "recentUpdates": "Chrome DevTools MCP released v1.10.0 and v1.10.1 on 23 September 2026, appears on GitHub's monthly trending list with about 52,600 stars, and is now documented at developer.chrome.com/docs/devtools/agents; community plugins and posts (for example a Jev-Reach plugin that reduces model turns per click) show active third-party use.",
+    "verdict": "Chrome DevTools MCP is the reference way to give an agent real browser observability — first-party, well maintained and far deeper than screenshot-only browser tools — with the caveat that you should review its default telemetry and the data it exposes to MCP clients.",
+    "tags": [
+      "mcp-server",
+      "browser",
+      "chrome",
+      "debugging",
+      "performance",
+      "puppeteer",
+      "open-source",
+      "google"
+    ],
+    "lastUpdated": "2026-09-25"
   }
 ]

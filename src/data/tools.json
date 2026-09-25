@@ -1098,5 +1098,21 @@
   {
     "companyName": "Magnitude (YC)",
     "toolName": "Magnitude"
+  },
+  {
+    "companyName": "zhukunpenglinyutong",
+    "toolName": "ccgui"
+  },
+  {
+    "companyName": "Paperclip Labs",
+    "toolName": "Paperclip"
+  },
+  {
+    "companyName": "Paul Bakaus",
+    "toolName": "Impeccable"
+  },
+  {
+    "companyName": "Google (Chrome DevTools)",
+    "toolName": "Chrome DevTools MCP"
   }
 ]
