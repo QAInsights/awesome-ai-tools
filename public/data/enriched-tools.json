@@ -7811,5 +7811,37 @@
       "google"
     ],
     "lastUpdated": "2026-09-25"
+  },
+  {
+    "slug": "nenva",
+    "name": "nenva",
+    "company": "Anjadhe",
+    "pricing": "freemium",
+    "pricingDetail": "nenva is source-available under the PolyForm Noncommercial 1.0.0 license — free for personal and other noncommercial use, with the source on GitHub. The default local model is a free one-time download; nenva Cloud (hosted open-weight model) includes a free monthly allowance with no account, and you can alternatively point it at your own OpenAI-compatible server or your own OpenAI/Anthropic key.",
+    "description": "nenva (from Anjadhe) is a privacy-first personal AI assistant for macOS that inverts the usual cloud-AI model: your life stays in nenva's own apps on your Mac — email, calendar, tasks, notes, journal, investments — and the AI comes to where the data is rather than your data going to a service. By default everything runs on a local open-weight model sized to your machine (nenva's own tuned small Qwen model on 8-16 GB Macs, larger models from 32 GB), so nothing leaves the device. Opening Actions gives one short finishable list for the day — tasks due, action items pulled from your Gmail (analyzed on-device), and your calendar — with Plan holding focus areas and goals behind it. The assistant reads your tasks, goals, notes, journal and calendar, answers questions, creates documents, slide decks and small interactive pages exportable to PDF, and can search the web with your own key. The built-in apps are a starter set: point any coding agent (Claude Code, Codex, ...) at ~/Anjadhe/apps/ to build your own — new apps get storage, encrypted backup, sync and the assistant's attention automatically. There is no account or nenva database; Gmail connects straight from Google to your Mac, and sync between Macs travels encrypted through your own iCloud.",
+    "keyFeatures": [
+      "Local-first AI: open-weight model downloaded once runs entirely on your Mac; nothing leaves by default",
+      "Built-in apps for email, calendar, tasks, notes, journal, investments and goals — the assistant reads across all of them",
+      "Daily Actions view: one short list combining due tasks, email action items and calendar",
+      "Gmail integration analyzed on-device; no account, no nenva database",
+      "Extensible: point a coding agent at ~/Anjadhe/apps/ to build custom apps with storage, encrypted backup and sync",
+      "Flexible brains: local model, nenva Cloud free tier, own OpenAI-compatible server, or your own OpenAI/Anthropic key — each an explicit choice",
+      "iCloud-encrypted sync between Macs; runs on any Mac with 8 GB+ memory"
+    ],
+    "bestFor": "Mac users who want a capable personal AI assistant over their email, calendar, notes and tasks without sending personal data to a cloud service — and tinkerers who like extending the app canvas with a coding agent.",
+    "notIdealFor": "Windows/Linux users (macOS only), people who want the strongest frontier models without configuring their own key or server, and teams needing shared/multi-user assistants.",
+    "recentUpdates": "nenva publishes signed releases with an auto-update feed from anjadhe.ai/download and is developed in the open at github.com/Anjadhe/Anjadhe under the PolyForm Noncommercial license.",
+    "verdict": "nenva is a thoughtfully private take on the personal-AI-assistant idea — local by default, no account, and genuinely useful built-in apps — with the coding-agent-extensible app canvas as an unusual bonus; the PolyForm license and macOS-only scope are the main constraints.",
+    "tags": [
+      "personal-assistant",
+      "privacy",
+      "local-llm",
+      "macos",
+      "source-available",
+      "open-weight",
+      "email",
+      "productivity"
+    ],
+    "lastUpdated": "2026-09-26"
   }
 ]
