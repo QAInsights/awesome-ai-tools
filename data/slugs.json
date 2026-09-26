@@ -282,6 +282,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "zeron",
+    "name": "Zeron",
+    "company": "Zeron",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -1248,6 +1254,12 @@
     "category": "AI Codebase Knowledge & Generation"
   },
   {
+    "slug": "gitdiagram",
+    "name": "GitDiagram",
+    "company": "Ahmed Khaleel",
+    "category": "AI Codebase Knowledge & Generation"
+  },
+  {
     "slug": "pieces-for-developers",
     "name": "Pieces for Developers",
     "company": "Pieces",
@@ -1275,6 +1287,12 @@
     "slug": "smolvm",
     "name": "smolvm",
     "company": "smol machines",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "coop",
+    "name": "coop",
+    "company": "Trail of Bits",
     "category": "Developer Productivity & Workflow"
   },
   {
@@ -1653,6 +1671,12 @@
     "slug": "chrome-devtools-mcp",
     "name": "Chrome DevTools MCP",
     "company": "Google (Chrome DevTools)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "mobile-mcp",
+    "name": "Mobile MCP",
+    "company": "Mobile Next",
     "category": "Developer Productivity & Workflow"
   },
   {

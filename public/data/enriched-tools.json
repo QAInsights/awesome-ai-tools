@@ -7843,5 +7843,139 @@
       "productivity"
     ],
     "lastUpdated": "2026-09-26"
+  },
+  {
+    "slug": "zeron",
+    "name": "Zeron",
+    "company": "Zeron",
+    "pricing": "open-source",
+    "pricingDetail": "Zeron is free and open source under the MIT license (github.com/zeronsh/zeron), with a one-line installer at zeron.sh/install.sh for Linux, a desktop release for macOS and a portable ZIP for Windows. Local-only mode needs no account. Optional multi-device sync uses a Zeron account; the project is sponsor-funded (GitHub Sponsors) rather than paywalled.",
+    "description": "Zeron is a native control plane for the coding agents you already use. It is not a new harness: it drives Claude Code, Codex, Cursor, Devin, Grok, Hermes, Pi and Antigravity sessions on your own machines and shows them in one fast native window, with every machine's sessions in a single list, live branch diffs as agents work, integrated terminals and per-session worktrees. Each device runs a small Rust engine daemon that stores sessions locally; a fresh install starts in local-only mode with no account or network connection. Sign in only when you want multi-device sync — then you can start an agent at your desk, follow it from your phone and approve the diff from the couch, and an always-on machine such as a VPS keeps agents working after you close your laptop. Synced devices are trusted with remote workspace read/write access (.git is always excluded), local sessions stay local when you sign in or out, and the login/logout commands refuse to touch credentials while an engine owns the data directory.",
+    "keyFeatures": [
+      "Drives Claude Code, Codex, Cursor, Devin, Grok, Hermes, Pi and Antigravity — no new harness",
+      "One native window listing every machine's agent sessions with live branch diffs",
+      "Local-only by default: per-device Rust engine daemon, no account or network required",
+      "Optional multi-device sync: start at your desk, steer from phone or another laptop",
+      "Headless engine on an always-on VPS keeps agents running after you close your laptop",
+      "Integrated terminals, worktrees and remote workspace file access for synced devices",
+      "Linux installer, macOS desktop release, Windows portable build; MIT-licensed"
+    ],
+    "bestFor": "Developers running several coding-agent sessions across machines who want one native cockpit to watch, steer and approve them from any device without giving up their existing CLI tools.",
+    "notIdealFor": "Teams looking for a hosted, multi-user agent orchestration SaaS, or users who only ever run one agent in one terminal and do not need cross-device control.",
+    "recentUpdates": "Zeron is under very active development in 2026 (rewritten natively in Rust with a gpui UI, formerly known as Comet) and was trending on GitHub in September 2026 with 2K+ stars; it recently added Devin and Antigravity to its list of supported agents and is sponsored by The Context Company.",
+    "verdict": "Zeron is a well-built local-first answer to the 'too many agent terminals' problem — one native window over the agents you already pay for, with genuinely useful phone/VPS follow-along — and its MIT license and no-account default make it low-risk to try.",
+    "tags": [
+      "agent-control-plane",
+      "multi-agent",
+      "claude-code",
+      "codex",
+      "cursor",
+      "devin",
+      "remote-control",
+      "open-source",
+      "rust",
+      "local-first"
+    ],
+    "lastUpdated": "2026-09-26"
+  },
+  {
+    "slug": "gitdiagram",
+    "name": "GitDiagram",
+    "company": "Ahmed Khaleel",
+    "pricing": "freemium",
+    "pricingDetail": "GitDiagram is open source under the MIT license and free to use on gitdiagram.com for public repositories; private repositories work by pasting your own GitHub token. Watching existing explainer videos is free and making new ones is in early access. Self-hosting requires Bun, Cloudflare R2, Upstash Redis and your own OpenAI or OpenRouter API key.",
+    "description": "GitDiagram turns any public or private GitHub repository into an interactive, AI-generated architecture diagram with a streamed explanation. Replace `hub` with `diagram` in any GitHub URL (or paste the repo on gitdiagram.com) and you get a Mermaid system diagram where clicking a component jumps straight to the linked file or directory; diagrams export as PNG or raw Mermaid source. A newer explainer mode renders a roughly one-minute narrated video of the codebase — what the project is for, how its main parts fit together and one decision under the hood — downloadable as MP4 in landscape or 9:16 with burned-in captions. It is built with Next.js, React, TypeScript, Tailwind and Mermaid, uses Claude or GPT for scripts and scenes and OpenRouter TTS for voice, and can be self-hosted with your own keys.",
+    "keyFeatures": [
+      "Interactive AI-generated architecture diagram for any GitHub repo",
+      "URL trick: swap `hub` for `diagram` in a GitHub URL",
+      "Click any component to jump to the linked file or directory",
+      "Private repositories via your own GitHub token",
+      "Export as PNG or copy the Mermaid source",
+      "Explainer videos: ~1-minute narrated MP4 (landscape or 9:16) per repository",
+      "Open source (MIT), self-hostable with OpenAI/OpenRouter keys"
+    ],
+    "bestFor": "Developers onboarding to an unfamiliar codebase, maintainers who want a shareable architecture overview, and educators explaining open-source projects.",
+    "notIdealFor": "Non-GitHub repositories, teams needing deep semantic code search or Q&A over a codebase, and precise, hand-maintained architecture documentation.",
+    "recentUpdates": "GitDiagram passed 17K GitHub stars and was trending in September 2026 after adding AI-narrated explainer videos (gitdiagram.com/owner/repo/video) alongside the interactive diagrams.",
+    "verdict": "GitDiagram is the quickest way to get a first mental model of a repository — one URL edit and you have a clickable architecture map — and the new narrated videos make it a handy onboarding and open-source-showcase tool, though it is an overview, not a code-intelligence engine.",
+    "tags": [
+      "architecture-diagram",
+      "codebase-understanding",
+      "mermaid",
+      "onboarding",
+      "github",
+      "open-source",
+      "video",
+      "visualization"
+    ],
+    "lastUpdated": "2026-09-26"
+  },
+  {
+    "slug": "coop",
+    "name": "coop",
+    "company": "Trail of Bits",
+    "pricing": "open-source",
+    "pricingDetail": "coop is free and open source under the Apache-2.0 license from security firm Trail of Bits. Install with the one-line script or build from source (Rust + CMake). Linux needs KVM for Firecracker; macOS needs Lima (brew install lima) and Apple Silicon. You bring your own Claude Code / Codex subscription or API keys.",
+    "description": "coop is a Rust CLI from Trail of Bits that runs Claude Code and Codex inside disposable, isolated virtual machines so the agents can have full tool access — Docker, git, compilers, package managers, passwordless sudo — without any risk to your host. On Linux it boots Firecracker microVMs on KVM; on macOS it uses Lima with Apple's Virtualization.framework, choosing the backend automatically. `coop up` creates or reuses an environment for the current project and syncs the workspace in, then `coop claude` or `coop codex` launches the agent with permission prompts disabled by default because the VM itself is the isolation boundary (pass --ask to restore prompts). coop forwards API keys, GitHub tokens and chosen env vars into the guest — or keeps model keys entirely host-side in proxy mode — injects CLAUDE.md, syncs ~/.codex config, supports plugins/marketplaces and MCP server configuration, understands devcontainer.json, and offers editor integration, multi-instance workflows and shell completion. A published trust model documents the VM boundary and how guest-authored data is treated as untrusted.",
+    "keyFeatures": [
+      "Disposable isolated VMs for Claude Code and Codex: Firecracker microVMs (Linux/KVM) or Lima + Virtualization.framework (macOS)",
+      "Agents run with bypassPermissions / full tool access — the VM is the blast radius",
+      "coop up / coop claude / coop codex with project workspace sync",
+      "API-key forwarding or proxy mode that keeps model keys off the guest",
+      "CLAUDE.md injection, ~/.codex sync, plugins, MCP server config, devcontainer.json support",
+      "Multi-instance, editor integration, shell completion and coop update",
+      "Documented trust model and security policy from Trail of Bits"
+    ],
+    "bestFor": "Security-conscious developers who want to let Claude Code or Codex run fully autonomously on real projects without exposing their host machine.",
+    "notIdealFor": "Windows users, machines without KVM or Apple Silicon virtualization, and agents other than Claude Code and Codex (no generic agent support yet).",
+    "recentUpdates": "coop was trending on GitHub in September 2026; recent releases added Codex support with a dedicated `coop codex` launcher, devcontainer.json inspection, an in-app `coop update` command and a formal trust-model document.",
+    "verdict": "coop brings Trail of Bits' security rigor to the 'run the agent in YOLO mode' problem: hardware-isolated microVMs that spin up cheaply, sync your project in and keep secrets out — a serious upgrade over Docker sandboxes for anyone letting agents run unattended.",
+    "tags": [
+      "sandbox",
+      "isolation",
+      "firecracker",
+      "microvm",
+      "claude-code",
+      "codex",
+      "security",
+      "open-source",
+      "rust",
+      "trail-of-bits"
+    ],
+    "lastUpdated": "2026-09-26"
+  },
+  {
+    "slug": "mobile-mcp",
+    "name": "Mobile MCP",
+    "company": "Mobile Next",
+    "pricing": "open-source",
+    "pricingDetail": "Mobile MCP is free and open source under the Apache-2.0 license, published to npm as @mobilenext/mobile-mcp (run with npx). You need Xcode/simulators or Android SDK/emulators, or physical devices, on the host. Mobile Next offers documentation at mobilenext.ai; the MCP server itself has no paid tier.",
+    "description": "Mobile MCP is a Model Context Protocol server from Mobile Next that lets coding agents and LLMs drive native iOS and Android apps on simulators, emulators and real devices through one platform-agnostic interface — no XCUITest, Espresso or per-platform glue required. It is accessibility-first: agents read the native accessibility tree for fast, cheap, deterministic element access and fall back to screenshots plus coordinate taps only when needed. Tools cover taps, swipes and gestures, typing, app install/launch/terminate, deep links, orientation, hardware buttons, screen recording and structured data extraction, which makes it suitable for agent-driven UI testing, scripted flows and multi-step user journeys as well as data-entry and scraping scenarios. The docs include step-by-step install guides for Amp, Claude Code, Claude Desktop, Cline, Codex, Copilot, Cursor, Gemini CLI, Goose, Kiro, opencode, Qodo Gen, VS Code and Windsurf, and any MCP-compatible client works with the standard configuration.",
+    "keyFeatures": [
+      "One MCP API for iOS and Android — simulators, emulators and real devices",
+      "Accessibility-tree first (no vision tokens), screenshot + coordinates fallback",
+      "Taps, swipes, gestures, typing, hardware buttons, orientation and deep links",
+      "App install/launch/terminate and screen recording",
+      "Structured, deterministic UI output for data extraction and assertions",
+      "Install guides for Claude Code, Codex, Cursor, Cline, Copilot, Gemini CLI, Windsurf and more",
+      "Apache-2.0, npm package @mobilenext/mobile-mcp"
+    ],
+    "bestFor": "Mobile developers and QA engineers who want their coding agent to actually launch, exercise and verify iOS/Android builds instead of reasoning about them blind.",
+    "notIdealFor": "Web-only teams, environments without simulators/emulators or device access, and shops that need a full hosted device farm and CI reporting out of the box.",
+    "recentUpdates": "Mobile MCP passed 7K GitHub stars and was trending in September 2026; the project now documents support for 14+ MCP clients including Codex, Antigravity and Kiro and continues to ship frequent releases on npm.",
+    "verdict": "Mobile MCP is the de-facto open-source bridge between coding agents and real mobile devices — accessibility-first, cross-platform and client-agnostic — and belongs next to Chrome DevTools MCP in any agent toolbelt that touches native apps.",
+    "tags": [
+      "mcp",
+      "mobile",
+      "ios",
+      "android",
+      "automation",
+      "testing",
+      "accessibility",
+      "open-source",
+      "claude-code",
+      "codex"
+    ],
+    "lastUpdated": "2026-09-26"
   }
 ]
