@@ -16,6 +16,7 @@ import Sidebar from '../../components/Sidebar.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import { formatDate, getAlternativesFor, getAllTools, getCategorySlug, getToolBySlug, type Tool } from '../../lib/tools';
 import { getComparisonsForTool, hasAlternativesPage, humanizePricing, truncate } from '../../lib/compare';
+import { buildToolReview, buildToolSeo } from '../../lib/tool-seo';
 import { addOutboundUtmParams } from '../../lib/outbound-utm.js';
 
 export async function getStaticPaths() {
@@ -40,8 +41,12 @@ const isDiscontinued = (enriched?.status ?? '').toLowerCase() === 'discontinued'
 const hasSiteLink = typeof tool.url === 'string' && /^https?:\/\//i.test(tool.url);
 const displayDescription = enriched?.description ?? tool.notes;
 
+// ── Related tools (same category, enriched first) ───────────────────────────
+const related = getAlternativesFor(tool).slice(0, 6);
+
 // Meta description (truncated to 155 chars)
-const descMeta = truncate(displayDescription, 155);
+const { title: seoTitle, description: seoDescription } = buildToolSeo(tool, related);
+const descMeta = truncate(seoDescription, 155);
 
 const keywords = [
     tool.name,
@@ -53,9 +58,10 @@ const keywords = [
 ].filter(Boolean).join(', ');
 
 // JSON-LD structured data
+const review = buildToolReview(tool);
 // Only emit a free Offer when pricing is actually known to be free -
 // hardcoding price:0 for paid/freemium tools is misleading structured data.
-const KNOWN_FREE = new Set(['free', 'open-source', 'open_source', 'oss']);
+const KNOWN_FREE = new Set(['free']);
 const isKnownFree = KNOWN_FREE.has((enriched?.pricing ?? '').toLowerCase());
 const softwareApp: Record<string, unknown> = {
     "@type": "SoftwareApplication",
@@ -71,6 +77,7 @@ const softwareApp: Record<string, unknown> = {
     ...(displayCompany ? { "author": { "@type": "Organization", "name": displayCompany }, "publisher": { "@type": "Organization", "name": displayCompany } } : {}),
     ...(enriched?.keyFeatures?.length ? { "featureList": enriched.keyFeatures } : {}),
     ...(enriched?.tags?.length ? { "keywords": enriched.tags.join(', ') } : {}),
+    ...(review ? { "review": review } : {}),
     // Honest freshness: dateModified reflects the enrichment pipeline's
     // lastUpdated stamp for this tool, not the build date.
     ...(enriched?.lastUpdated ? { "dateModified": enriched.lastUpdated } : {}),
@@ -90,7 +97,7 @@ const webPage: Record<string, unknown> = {
     "@type": "WebPage",
     "@id": pageUrl,
     "url": pageUrl,
-    "name": `${displayName} - ${displayCompany} | ai.dosa.dev`,
+    "name": seoTitle,
     "description": descMeta,
     "inLanguage": "en",
     "isPartOf": { "@id": "https://ai.dosa.dev/#website" },
@@ -117,8 +124,6 @@ const jsonLdObj = {
     ]
 };
 
-// ── Related tools (same category, enriched first) ───────────────────────────
-const related = getAlternativesFor(tool).slice(0, 6);
 const showAlternativesLink = hasAlternativesPage(tool.slug);
 
 // ── Curated comparison pages featuring this tool ────────────────────────────
@@ -166,16 +171,16 @@ const jsonLd = JSON.stringify(jsonLdObj);
 ---
 
 <BaseLayout
-    title={`${displayName} - ${displayCompany} | ai.dosa.dev`}
+    title={seoTitle}
     description={descMeta}
     keywords={keywords}
     canonical={`https://ai.dosa.dev/tools/${tool.slug}`}
-    ogTitle={`${displayName} - ${displayCompany} | ai.dosa.dev`}
+    ogTitle={seoTitle}
     ogDescription={descMeta}
     ogImage={`https://ai.dosa.dev/images/og/${tool.slug}.png`}
     ogType="article"
     modifiedTime={enriched?.lastUpdated}
-    twitterTitle={`${displayName} - ${displayCompany} | ai.dosa.dev`}
+    twitterTitle={seoTitle}
     twitterDescription={descMeta}
     jsonLd={jsonLd}
 >
