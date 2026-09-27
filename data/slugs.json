@@ -1254,6 +1254,12 @@
     "category": "AI Codebase Knowledge & Generation"
   },
   {
+    "slug": "gortex",
+    "name": "Gortex",
+    "company": "zzet",
+    "category": "AI Codebase Knowledge & Generation"
+  },
+  {
     "slug": "gitdiagram",
     "name": "GitDiagram",
     "company": "Ahmed Khaleel",
@@ -1647,6 +1653,12 @@
     "slug": "cc-switch",
     "name": "CC Switch",
     "company": "farion1231",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "magpie",
+    "name": "magpie",
+    "company": "yetone",
     "category": "Developer Productivity & Workflow"
   },
   {

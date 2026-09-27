@@ -7977,5 +7977,48 @@
       "codex"
     ],
     "lastUpdated": "2026-09-26"
+  },
+  {
+    "slug": "gortex",
+    "name": "Gortex",
+    "company": "zzet",
+    "pricing": "open-source",
+    "pricingDetail": "Gortex is free and open source under Apache-2.0. Its core code-indexing tools run locally as a single binary; optional external model providers require their own credentials and may incur provider charges.",
+    "description": "Gortex is a local code-intelligence engine for AI coding agents. It indexes symbols, calls, dependencies and cross-repository API contracts into a persistent graph, then serves structural context and change-impact queries through a CLI, MCP server and web UI. Agents can inspect callers and blast radius before editing rather than loading entire files into context.",
+    "keyFeatures": [
+      "Persistent code graph with symbol lookup, call chains and impact analysis",
+      "Cross-repository indexing and API contract matching",
+      "MCP server and CLI integrations for coding agents",
+      "Graph-grounded pull request review and speculative edit analysis",
+      "Local single-binary distribution for macOS, Linux and Windows",
+      "Web UI for exploring the repository graph"
+    ],
+    "bestFor": "Developers using AI coding agents on large or multi-repository codebases who need structural context and cross-service impact analysis.",
+    "notIdealFor": "Small projects where ordinary file search is enough, or teams unwilling to run a local code indexer and agent integration.",
+    "recentUpdates": "Gortex's public repository was active in September 2026, with roughly 1,400 stars at review time; its code-graph tooling was also covered in a September 27 developer article.",
+    "verdict": "A capable local code map for coding agents, with multi-repository contracts and change analysis distinguishing it from simpler search tools. Performance and token-savings figures in the project documentation are first-party claims.",
+    "tags": ["code-intelligence", "mcp", "knowledge-graph", "multi-repo", "open-source", "cli"],
+    "lastUpdated": "2026-09-27"
+  },
+  {
+    "slug": "magpie",
+    "name": "magpie",
+    "company": "yetone",
+    "pricing": "open-source",
+    "pricingDetail": "magpie is free and open source under the MIT license. The application and local gateway require no subscription; connected model providers may charge for inference or require an existing plan.",
+    "description": "magpie is a local model picker for AI coding agents with desktop, terminal UI and CLI interfaces. It shows the models configured for Claude Code, Codex, Gemini CLI, OpenCode and other agents, changes their native configuration, and runs a local gateway that translates OpenAI and Anthropic API protocols so developers can choose providers across agents.",
+    "keyFeatures": [
+      "One model picker across installed coding agents",
+      "Local gateway translating OpenAI Chat/Responses and Anthropic Messages requests",
+      "Surgical edits to each agent's native configuration",
+      "Provider presets and named profiles for switching several agents",
+      "Menu-bar desktop interface, TUI and CLI on macOS, Linux and Windows"
+    ],
+    "bestFor": "Developers who use several coding agents and want to change their models and providers from a single local interface.",
+    "notIdealFor": "Developers using only one provider and one agent, or teams requiring a hosted gateway with centrally managed accounts.",
+    "recentUpdates": "The repository was created in September 2026 and reached more than 1,000 GitHub stars within days; RepositoryStats tracked rapid commit and star activity that week.",
+    "verdict": "A focused cross-agent model picker and protocol gateway for developers who frequently switch providers, with overlap in configuration management with broader tools such as CC Switch.",
+    "tags": ["model-routing", "coding-agents", "gateway", "open-source", "desktop", "cli"],
+    "lastUpdated": "2026-09-27"
   }
 ]
