@@ -429,3 +429,5 @@ Agentic tools and runtimes that bring AI to hardware design and local/edge infer
 
 > [!NOTE]
 > Some links in this guide are referral links (e.g., Emergent.sh). Using them helps support the ongoing maintenance of this curated list at no additional cost to you.
+>
+> - [APIClaw](https://apiclaw.biz) — Flat-rate OpenAI-compatible AI API (Claude, GPT, Kimi, Qwen, DeepSeek, GLM), $19–$129/mo, 50 free trial.
