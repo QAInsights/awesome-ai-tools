@@ -52,6 +52,37 @@ const reachNote = siteStats.traffic
     ? `Cloudflare Web Analytics and GitHub, updated ${fullDate(siteStats.generatedAt)}. *All-time figures cover Cloudflare's available retention window (since ${sinceDate}).`
     : 'Traffic figures are shared on request.';
 
+const pricingTiers = [
+    {
+        name: 'Founding sponsor',
+        price: '$149',
+        period: '/ month',
+        note: 'First 3 sponsors only. Rate locked for 6 months.',
+        highlight: true,
+    },
+    {
+        name: 'Monthly',
+        price: '$199',
+        period: '/ month',
+        note: 'Rolling, cancel anytime.',
+        highlight: false,
+    },
+    {
+        name: 'Quarterly',
+        price: '$499',
+        period: '/ 3 months',
+        note: 'Paid upfront. Save $98 vs monthly.',
+        highlight: false,
+    },
+];
+
+const pricingIncludes = [
+    'Featured slot in the sidebar of every page, site-wide',
+    'Mention in every daily Today in AI newsletter issue',
+    'One copy change per month, no extra charge',
+    'Reach report at the end of the term',
+];
+
 const faqs = [
     {
         q: 'Who visits ai.dosa.dev?',
@@ -64,6 +95,10 @@ const faqs = [
     {
         q: 'Can I get traffic stats before booking?',
         a: 'Yes - the Reach numbers above are refreshed daily from Cloudflare Web Analytics and GitHub, not hand-typed. Ask when you book if you want a per-page or per-category breakdown.',
+    },
+    {
+        q: 'How is pricing set?',
+        a: 'Flat rate, not auction. Prices are pegged to the Reach numbers above and will move as the audience grows - booking early locks your rate for the term.',
     },
     {
         q: 'What formats are supported?',
@@ -131,8 +166,41 @@ const faqs = [
                     </div>
                 </div>
                 <p class="text-[13px] text-ink-muted mt-3 leading-relaxed">
-                    Rendered in the sidebar of every page - directory, tool pages, and category pages.
+                    Rendered in the sidebar of every page - directory, tool pages, and category pages - and
+                    repeated in each daily Today in AI newsletter issue.
                 </p>
+            </div>
+
+            <!-- Pricing -->
+            <div class="mb-10">
+                <div class="font-mono text-[11px] uppercase text-ink-muted mb-3 tracking-widest">Pricing</div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {pricingTiers.map(tier => (
+                        <div class:list={[
+                            'relative border rounded-md px-5 py-4 flex flex-col',
+                            tier.highlight ? 'border-gold/60 bg-gold/[0.06]' : 'border-border bg-white/[0.02]',
+                        ]}>
+                            {tier.highlight && (
+                                <span class="absolute -top-2 left-4 font-mono text-[10px] uppercase tracking-widest bg-gold text-black px-1.5 py-0.5 rounded-sm">Limited</span>
+                            )}
+                            <div class="text-[13px] text-ink-secondary font-medium">{tier.name}</div>
+                            <div class="mt-2 flex items-baseline gap-1">
+                                <span class="text-2xl font-semibold text-ink font-mono">{tier.price}</span>
+                                <span class="text-[12px] text-ink-muted font-mono">{tier.period}</span>
+                            </div>
+                            <div class="text-[12px] text-ink-muted mt-2 leading-relaxed">{tier.note}</div>
+                        </div>
+                    ))}
+                </div>
+                <ul class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+                    {pricingIncludes.map(item => (
+                        <li class="flex items-start gap-2 text-[13px] text-ink-secondary leading-relaxed">
+                            <span aria-hidden="true" class="mt-[7px] h-1.5 w-1.5 rounded-full bg-gold shrink-0"></span>
+                            {item}
+                        </li>
+                    ))}
+                </ul>
+                <p class="text-[12px] text-ink-disabled mt-3">All plans include the same placement. Prices in USD.</p>
             </div>
 
             <!-- CTA -->
