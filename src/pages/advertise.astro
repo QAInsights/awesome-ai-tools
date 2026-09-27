@@ -4,13 +4,15 @@
  *
  * Replaces the bare external booking link with a real pitch page:
  * who the audience is, where the placement appears, and a booking CTA.
- * Directory stats are computed from build-time content; reach stats load
- * live from Cloudflare Web Analytics and GitHub.
+ * Directory stats are computed from build-time content; reach stats are
+ * rendered at build time from public/data/site-stats.json (refreshed daily
+ * by the site-stats workflow from Cloudflare Web Analytics and GitHub).
  */
 import { getCollection } from 'astro:content';
 import DashboardLayout from '../layouts/DashboardLayout.astro';
 import { getResolvedComparisons } from '../lib/compare';
 import { getAllTools, getCategoriesDetailed } from '../lib/tools';
+import siteStats from '../../public/data/site-stats.json';
 
 const tools = getAllTools();
 const toolCount = tools.length;
@@ -37,6 +39,19 @@ const reachStats = [
     { path: 'github.stars', label: 'GitHub stars' },
 ];
 
+const compactNumber = new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 });
+const resolvePath = (value: unknown, path: string): unknown =>
+    path.split('.').reduce<unknown>((current, key) => (current as Record<string, unknown> | null)?.[key], value);
+const formatReachStat = (value: unknown) =>
+    typeof value === 'number' && Number.isFinite(value)
+        ? { text: compactNumber.format(value), title: value.toLocaleString('en') }
+        : { text: '—', title: '' };
+const fullDate = (value: string) => new Date(value).toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' });
+const sinceDate = siteStats.traffic ? new Date(siteStats.traffic.lifetime.since).toLocaleDateString('en', { month: 'short', year: 'numeric' }) : '';
+const reachNote = siteStats.traffic
+    ? `Cloudflare Web Analytics and GitHub, updated ${fullDate(siteStats.generatedAt)}. *All-time figures cover Cloudflare's available retention window (since ${sinceDate}).`
+    : 'Traffic figures are shared on request.';
+
 const faqs = [
     {
         q: 'Who visits ai.dosa.dev?',
@@ -48,7 +63,7 @@ const faqs = [
     },
     {
         q: 'Can I get traffic stats before booking?',
-        a: 'Yes - the Reach numbers above are pulled live from Cloudflare Web Analytics and GitHub, not hand-typed. Ask when you book if you want a per-page or per-category breakdown.',
+        a: 'Yes - the Reach numbers above are refreshed daily from Cloudflare Web Analytics and GitHub, not hand-typed. Ask when you book if you want a per-page or per-category breakdown.',
     },
     {
         q: 'What formats are supported?',
@@ -86,25 +101,21 @@ const faqs = [
                 </div>
             </div>
 
-            <div data-live-stats class="mb-10">
+            <div class="mb-10">
                 <div class="font-mono text-[11px] uppercase text-ink-muted mb-3 tracking-widest">Reach</div>
-                <div data-stat-grid aria-busy="true" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {reachStats.map(stat => (
-                        <div class="border border-border bg-white/[0.02] rounded-md px-5 py-4">
-                            <div class="text-2xl font-semibold text-ink font-mono" data-stat={stat.path}>
-                                <span aria-hidden="true" class="block h-8 w-14 rounded-sm bg-white/10 motion-safe:animate-pulse"></span>
-                                <span class="sr-only">Loading</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {reachStats.map(stat => {
+                        const display = formatReachStat(resolvePath(siteStats, stat.path));
+                        return (
+                            <div class="border border-border bg-white/[0.02] rounded-md px-5 py-4">
+                                <div class="text-2xl font-semibold text-ink font-mono" title={display.title || undefined}>{display.text}</div>
+                                <div class="text-[13px] text-ink-muted mt-1">{stat.label}</div>
                             </div>
-                            <div class="text-[13px] text-ink-muted mt-1">{stat.label}</div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
-                <p data-stat-note role="status" aria-live="polite" class="text-[12px] text-ink-disabled mt-2">
-                    <span data-stat-loading class="inline-flex items-center gap-1.5 mr-1 text-gold-soft">
-                        <span aria-hidden="true" class="inline-block h-1.5 w-1.5 rounded-full bg-gold motion-safe:animate-pulse"></span>
-                        Loading reach…
-                    </span>
-                    Live from Cloudflare Web Analytics and GitHub. *All-time figures cover Cloudflare's available retention window<span data-stat="traffic.lifetime.since"></span>.
+                <p class="text-[12px] text-ink-disabled mt-2">
+                    {reachNote}
                 </p>
             </div>
 
@@ -149,5 +160,4 @@ const faqs = [
             </div>
         </div>
     </div>
-    <script src="/dist/advertise-page.js" type="module" defer></script>
 </DashboardLayout>

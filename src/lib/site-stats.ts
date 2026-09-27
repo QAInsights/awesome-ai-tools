@@ -1,5 +1,3 @@
-import { getCloudflareAccountId, getCloudflareAnalyticsToken } from './runtime-env';
-
 export const SITE_HOSTS = ['ai.dosa.dev'];
 export const GITHUB_REPO = 'QAInsights/awesome-ai-tools';
 
@@ -132,9 +130,12 @@ async function queryCloudflare(fetchImpl: Fetcher, token: string, query: string)
     return payload;
 }
 
-export async function fetchTrafficStats(fetchImpl: Fetcher = fetch, now = new Date()): Promise<TrafficStats> {
-    const accountId = getCloudflareAccountId();
-    const token = getCloudflareAnalyticsToken();
+export async function fetchTrafficStats(
+    credentials: { accountId: string; token: string },
+    fetchImpl: Fetcher = fetch,
+    now = new Date(),
+): Promise<TrafficStats> {
+    const { accountId, token } = credentials;
     if (!accountId || !token) throw new Error('Cloudflare Web Analytics credentials are not configured');
 
     const settingsQuery = `query { viewer { accounts(filter: { accountTag: ${JSON.stringify(accountId)} }) { settings { rumPageloadEventsAdaptiveGroups { enabled maxDuration notOlderThan } } } } }`;
@@ -169,23 +170,26 @@ export async function fetchTrafficStats(fetchImpl: Fetcher = fetch, now = new Da
     };
 }
 
-export async function fetchGitHubStats(fetchImpl = fetch): Promise<GitHubStats> {
-    const response = await fetchImpl(`https://api.github.com/repos/${GITHUB_REPO}`, {
-        headers: {
-            Accept: 'application/vnd.github+json',
-            'User-Agent': 'ai.dosa.dev-stats',
-        },
-    });
+export async function fetchGitHubStats(fetchImpl: Fetcher = fetch, token = ''): Promise<GitHubStats> {
+    const headers: Record<string, string> = {
+        Accept: 'application/vnd.github+json',
+        'User-Agent': 'ai.dosa.dev-stats',
+    };
+    if (token) headers.Authorization = `Bearer ${token}`;
+    const response = await fetchImpl(`https://api.github.com/repos/${GITHUB_REPO}`, { headers });
     if (!response.ok) throw new Error(`GitHub stats request failed: ${response.status}`);
     const stats = parseGitHubRepo(await response.json());
     if (!stats) throw new Error('GitHub stats response is invalid');
     return stats;
 }
 
-export async function loadSiteStats(fetchImpl = fetch): Promise<SiteStats> {
+export async function loadSiteStats(
+    options: { accountId: string; token: string; githubToken?: string },
+    fetchImpl: Fetcher = fetch,
+): Promise<SiteStats> {
     const [trafficResult, githubResult] = await Promise.allSettled([
-        fetchTrafficStats(fetchImpl),
-        fetchGitHubStats(fetchImpl),
+        fetchTrafficStats({ accountId: options.accountId, token: options.token }, fetchImpl),
+        fetchGitHubStats(fetchImpl, options.githubToken ?? ''),
     ]);
     if (trafficResult.status === 'rejected') {
         console.error('[Site Stats] Traffic unavailable:', trafficResult.reason instanceof Error ? trafficResult.reason.message : String(trafficResult.reason));

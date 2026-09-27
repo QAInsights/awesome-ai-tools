@@ -1,23 +1,16 @@
-import { afterAll, describe, expect, mock, test } from 'bun:test';
+import { describe, expect, test } from 'bun:test';
 
-mock.module('cloudflare:workers', () => ({
-    env: {
-        CF_ACCOUNT_ID: 'account-123',
-        CF_ANALYTICS_TOKEN: 'token-456',
-    },
-}));
-
-const {
+import {
     SITE_HOSTS,
     buildRetentionChunks,
     buildRumQuery,
+    fetchGitHubStats,
     fetchTrafficStats,
     parseGitHubRepo,
     summarizeRumGroups,
-} = await import(`./site-stats.ts?test=${Date.now()}`) as typeof import('./site-stats');
+} from './site-stats';
 
-afterAll(() => mock.restore());
-
+const credentials = { accountId: 'account-123', token: 'token-456' };
 const now = new Date('2026-09-26T10:00:00Z');
 
 function durationSeconds(chunk: { from: string; to: string }): number {
@@ -130,7 +123,7 @@ describe('fetchTrafficStats', () => {
             return responses.shift()!;
         };
 
-        const stats = await fetchTrafficStats(fetchImpl, now);
+        const stats = await fetchTrafficStats(credentials, fetchImpl, now);
 
         expect(stats).toEqual({
             last30: { pageViews: 10, visits: 4 },
@@ -154,6 +147,40 @@ describe('fetchTrafficStats', () => {
             errors: [{ message: 'dataset unavailable' }, { message: 'second error' }],
         });
 
-        await expect(fetchTrafficStats(fetchImpl, now)).rejects.toThrow('dataset unavailable');
+        await expect(fetchTrafficStats(credentials, fetchImpl, now)).rejects.toThrow('dataset unavailable');
+    });
+});
+
+describe('fetchGitHubStats', () => {
+    test('sends the Authorization header when a token is provided', async () => {
+        const calls: Array<{ input: RequestInfo | URL; init?: RequestInit }> = [];
+        const fetchImpl = async (input: RequestInfo | URL, init?: RequestInit) => {
+            calls.push({ input, init });
+            return Response.json({ stargazers_count: 125, forks_count: 17 });
+        };
+
+        const stats = await fetchGitHubStats(fetchImpl, 'gh-token-1');
+
+        expect(stats).toEqual({ stars: 125, forks: 17 });
+        expect(calls[0]?.init?.headers).toEqual({
+            Accept: 'application/vnd.github+json',
+            'User-Agent': 'ai.dosa.dev-stats',
+            Authorization: 'Bearer gh-token-1',
+        });
+    });
+
+    test('omits the Authorization header when no token is provided', async () => {
+        const calls: Array<{ input: RequestInfo | URL; init?: RequestInit }> = [];
+        const fetchImpl = async (input: RequestInfo | URL, init?: RequestInit) => {
+            calls.push({ input, init });
+            return Response.json({ stargazers_count: 125, forks_count: 17 });
+        };
+
+        await fetchGitHubStats(fetchImpl);
+
+        expect(calls[0]?.init?.headers).toEqual({
+            Accept: 'application/vnd.github+json',
+            'User-Agent': 'ai.dosa.dev-stats',
+        });
     });
 });
