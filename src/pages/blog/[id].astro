@@ -1,9 +1,13 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
 import { safeJsonForScript } from '../../lib/serialize';
 import { extractNewsCitations } from '../../lib/news-citations.js';
 import { DEFAULT_AUTHOR, ORGANIZATION } from '../../lib/site';
+
+interface Props {
+  entry: CollectionEntry<'blog'>;
+}
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog', ({ data }) => data.draft !== true);

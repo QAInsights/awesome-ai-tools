@@ -32,19 +32,19 @@ describe('notification preferences repository', () => {
         const { db, calls } = makeDatabase([{
             email_enabled: 1,
             news_enabled: 0,
-            unsubscribe_token: 'token-1',
+            unsubscribe_token: '00000000-0000-4000-8000-000000000001',
             last_digest_sent_at: null,
         }]);
         const originalRandomUUID = crypto.randomUUID;
         const originalNow = Date.now;
-        crypto.randomUUID = () => 'token-1';
+        crypto.randomUUID = () => '00000000-0000-4000-8000-000000000001';
         Date.now = () => 30;
 
         try {
             expect(await getOrCreatePrefs(db, 'github:123')).toEqual({
                 emailEnabled: true,
                 newsEnabled: false,
-                unsubscribeToken: 'token-1',
+                unsubscribeToken: '00000000-0000-4000-8000-000000000001',
                 lastDigestSentAt: null,
             });
         } finally {
@@ -52,7 +52,7 @@ describe('notification preferences repository', () => {
             Date.now = originalNow;
         }
         expect(calls[0]?.sql).toContain('INSERT OR IGNORE');
-        expect(calls[0]?.values).toEqual(['github:123', 'token-1', 30]);
+        expect(calls[0]?.values).toEqual(['github:123', '00000000-0000-4000-8000-000000000001', 30]);
         expect(calls[1]?.values).toEqual(['github:123']);
     });
 

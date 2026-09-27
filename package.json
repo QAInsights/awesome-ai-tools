@@ -11,6 +11,7 @@
     "css:watch": "tailwindcss -i ./src/input.css -o ./public/css/output.css --watch",
     "js:build": "bun run build.js",
     "build": "bun run astro:build",
+    "lint": "astro check",
     "dev": "bun run astro:dev",
     "dev:staging": "CLOUDFLARE_ENV=staging bun run astro:dev",
     "dev:js": "bun run build.js",

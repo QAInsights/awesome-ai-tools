@@ -7,7 +7,7 @@ const {
     buildUserZapsQuery,
     buildZapDashboard,
     zapToolId,
-} = await import(`./zap-query.ts?test=${Date.now()}`);
+} = await import(`./zap-query.ts?test=${Date.now()}`) as typeof import('./zap-query');
 afterAll(() => mock.restore());
 
 describe('zap queries', () => {
@@ -35,8 +35,8 @@ describe('zap queries', () => {
         ], tools, now);
 
         expect(dashboard.tools).toEqual([
-            { toolId: 'anysphere-cursor', ...tools[0], zappedAt: '2026-08-20T11:00:00Z' },
-            { toolId: 'anthropic-claudecode', ...tools[1], zappedAt: '2026-07-01T11:00:00Z' },
+            { toolId: 'anysphere-cursor', ...tools[0]!, zappedAt: '2026-08-20T11:00:00Z' },
+            { toolId: 'anthropic-claudecode', ...tools[1]!, zappedAt: '2026-07-01T11:00:00Z' },
         ]);
         expect(dashboard.total).toBe(2);
         expect(dashboard.last30Days).toBe(1);
@@ -83,8 +83,8 @@ describe('zap queries', () => {
         ], tools, 2);
 
         expect(trending).toEqual([
-            { toolId: 'anthropic-claudecode', ...tools[1], count: 12 },
-            { toolId: 'anysphere-cursor', ...tools[0], count: 12 },
+            { toolId: 'anthropic-claudecode', ...tools[1]!, count: 12 },
+            { toolId: 'anysphere-cursor', ...tools[0]!, count: 12 },
         ]);
     });
 

@@ -9,6 +9,7 @@ let loadFollowsCalls = 0;
 let capturedFavoriteOptions = null;
 let capturedOnStateChange = null;
 let idleBootstrapPromise = null;
+let originalEnableVoting;
 
 function flushMicrotasks(times = 5) {
     let chain = Promise.resolve();
@@ -141,6 +142,8 @@ afterAll(() => mock.restore());
 
 describe('app deferred auth bootstrap', () => {
     beforeEach(() => {
+        originalEnableVoting = process.env.ENABLE_VOTING;
+        process.env.ENABLE_VOTING = 'false';
         domReadyHandler = null;
         refreshVotingButtonsCalls = 0;
         setVotingContextCalls = 0;
@@ -187,6 +190,8 @@ describe('app deferred auth bootstrap', () => {
     });
 
     afterEach(() => {
+        if (originalEnableVoting === undefined) delete process.env.ENABLE_VOTING;
+        else process.env.ENABLE_VOTING = originalEnableVoting;
         delete global.document;
         delete global.window;
     });

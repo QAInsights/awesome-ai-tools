@@ -33,7 +33,7 @@ function escapeHtml(value: string): string {
 
 function readFrontmatter(raw: string): { metadata: string; body: string } | null {
     const match = raw.match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);
-    return match ? { metadata: match[1], body: match[2] } : null;
+    return match ? { metadata: match[1] ?? '', body: match[2] ?? '' } : null;
 }
 
 function frontmatterValue(metadata: string, key: string): string {
@@ -45,13 +45,13 @@ function sectionField(section: string, label: string): string {
     const match = section.match(new RegExp(
         `\\*\\*${label}:\\*\\*\\s*([\\s\\S]*?)(?=\\n\\s*\\*\\*(?:What happened|Why it matters):\\*\\*|\\n\\s*\\[Source:|$)`,
     ));
-    return match ? stripMarkup(match[1]) : '';
+    return match ? stripMarkup(match[1] ?? '') : '';
 }
 
 function sourceField(section: string): { sourceLabel: string; sourceUrl: string } {
     const match = section.match(/\[Source:\s*([^\]]+)\]\(\s*<?([^)>]+)>?\s*\)/);
     return match
-        ? { sourceLabel: stripMarkup(match[1]), sourceUrl: match[2].trim() }
+        ? { sourceLabel: stripMarkup(match[1] ?? ''), sourceUrl: (match[2] ?? '').trim() }
         : { sourceLabel: '', sourceUrl: '' };
 }
 
@@ -75,7 +75,7 @@ export function parseNewsPost(id: string, raw: string): NewsPost | null {
             const section = parsed.body.slice(sectionStart, sectionEnd);
             const source = sourceField(section);
             return {
-                heading: stripMarkup(heading[1]),
+                heading: stripMarkup(heading[1] ?? ''),
                 whatHappened: sectionField(section, 'What happened'),
                 whyItMatters: sectionField(section, 'Why it matters'),
                 ...source,

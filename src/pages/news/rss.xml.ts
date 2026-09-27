@@ -1,8 +1,9 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
+import type { APIRoute } from 'astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import { parseNewsPost, renderNewsPostHtml } from '../../lib/server/news-source';
 
-function parseCollectionPost(post): ReturnType<typeof parseNewsPost> {
+function parseCollectionPost(post: CollectionEntry<'blog'>): ReturnType<typeof parseNewsPost> {
     const raw = [
         '---',
         `title: ${JSON.stringify(post.data.title)}`,
@@ -14,7 +15,7 @@ function parseCollectionPost(post): ReturnType<typeof parseNewsPost> {
     return parseNewsPost(post.id, raw);
 }
 
-export async function GET(context) {
+export const GET: APIRoute = async (context) => {
     const posts = (await getCollection('blog', ({ data }) =>
         data.draft !== true && data.tags?.includes('news')
     ))
@@ -24,7 +25,7 @@ export async function GET(context) {
     return rss({
         title: 'Today in AI | ai.dosa.dev',
         description: 'A daily AI brief for builders: model releases, developer tools, funding, and policy moves that matter.',
-        site: context.site,
+        site: context.site ?? 'https://ai.dosa.dev',
         items: posts.map(post => {
             const parsed = parseCollectionPost(post);
             return {
@@ -38,4 +39,4 @@ export async function GET(context) {
         }),
         customData: '<language>en-us</language>',
     });
-}
+};

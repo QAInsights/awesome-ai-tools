@@ -4,23 +4,37 @@
  *
  * Replaces the bare external booking link with a real pitch page:
  * who the audience is, where the placement appears, and a booking CTA.
- * All stats are computed from the directory data at build time - nothing
- * is hand-written, so the page can never drift from reality.
+ * Directory stats are computed from build-time content; reach stats load
+ * live from Cloudflare Web Analytics and GitHub.
  */
+import { getCollection } from 'astro:content';
 import DashboardLayout from '../layouts/DashboardLayout.astro';
+import { getResolvedComparisons } from '../lib/compare';
 import { getAllTools, getCategoriesDetailed } from '../lib/tools';
 
 const tools = getAllTools();
 const toolCount = tools.length;
 const categoryCount = getCategoriesDetailed().length;
+const comparisonCount = getResolvedComparisons().length;
+const postCount = (await getCollection('blog', ({ data }: { data: { draft?: boolean } }) => data.draft !== true)).length;
 // The Featured slot renders inside the shared sidebar on every page:
-// directory + tool pages + category pages + utility pages.
-const pageCount = toolCount + categoryCount + 6;
+// directory + tool + category + comparison + blog + utility pages.
+const pageCount = toolCount + categoryCount + comparisonCount + postCount + 6;
 
-const stats = [
-    { value: `${toolCount}+`, label: 'Curated tools listed' },
+const directoryStats = [
+    { value: `${toolCount}+`, label: 'Curated tools' },
     { value: `${categoryCount}`, label: 'Category pages' },
+    { value: `${comparisonCount}`, label: 'Comparison pages' },
+    { value: `${postCount}`, label: 'Blog & news posts' },
     { value: `${pageCount}+`, label: 'Pages showing your placement' },
+];
+
+const reachStats = [
+    { path: 'traffic.last30.visits', label: 'Visits, last 30 days' },
+    { path: 'traffic.last30.pageViews', label: 'Page views, last 30 days' },
+    { path: 'traffic.lifetime.visits', label: 'Visits, all time*' },
+    { path: 'traffic.lifetime.pageViews', label: 'Page views, all time*' },
+    { path: 'github.stars', label: 'GitHub stars' },
 ];
 
 const faqs = [
@@ -34,7 +48,7 @@ const faqs = [
     },
     {
         q: 'Can I get traffic stats before booking?',
-        a: 'Yes. Current traffic and engagement numbers are shared on request when you book - we would rather show you real analytics than publish inflated figures here.',
+        a: 'Yes - the Reach numbers above are pulled live from Cloudflare Web Analytics and GitHub, not hand-typed. Ask when you book if you want a per-page or per-category breakdown.',
     },
     {
         q: 'What formats are supported?',
@@ -48,39 +62,57 @@ const faqs = [
     description={`Reach developers actively choosing their AI coding stack. One "Featured" placement appears across ai.dosa.dev - the directory, ${toolCount} tool pages, and ${categoryCount} category pages.`}
     canonical="https://ai.dosa.dev/advertise"
 >
-    <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-0 p-6 md:p-10">
+    <div class="max-w-[1400px] mx-auto w-full flex flex-col grow shrink-0 p-6 md:p-8">
         <div class="max-w-2xl">
-            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-3">Sponsorship</p>
-            <h1 class="text-2xl md:text-3xl font-semibold text-white mb-4 leading-tight">
+            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted mb-3">Sponsorship</p>
+            <h1 class="text-2xl md:text-3xl font-semibold text-ink mb-4 leading-tight">
                 Put your AI tool in front of developers choosing their stack.
             </h1>
-            <p class="text-[15px] text-[#a3a3a3] leading-relaxed mb-10">
+            <p class="text-[15px] text-ink-secondary leading-relaxed mb-10">
                 ai.dosa.dev is a hand-curated directory of AI coding tools. Every visitor is comparing
                 options right now - the exact moment your tool should be on the page.
             </p>
 
             <!-- Stats -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-10">
-                {stats.map(s => (
-                    <div class="border border-[#222] bg-white/[0.02] rounded-md px-5 py-4">
-                        <div class="text-2xl font-semibold text-white font-mono">{s.value}</div>
-                        <div class="text-[13px] text-[#737373] mt-1">{s.label}</div>
-                    </div>
-                ))}
+            <div class="mb-8">
+                <div class="font-mono text-[11px] uppercase text-ink-muted mb-3 tracking-widest">Directory</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {directoryStats.map(stat => (
+                        <div class="border border-border bg-white/[0.02] rounded-md px-5 py-4">
+                            <div class="text-2xl font-semibold text-ink font-mono">{stat.value}</div>
+                            <div class="text-[13px] text-ink-muted mt-1">{stat.label}</div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div data-live-stats class="mb-10">
+                <div class="font-mono text-[11px] uppercase text-ink-muted mb-3 tracking-widest">Reach</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {reachStats.map(stat => (
+                        <div class="border border-border bg-white/[0.02] rounded-md px-5 py-4">
+                            <div class="text-2xl font-semibold text-ink font-mono" data-stat={stat.path}>—</div>
+                            <div class="text-[13px] text-ink-muted mt-1">{stat.label}</div>
+                        </div>
+                    ))}
+                </div>
+                <p data-stat-note class="text-[12px] text-ink-disabled mt-2">
+                    Live from Cloudflare Web Analytics and GitHub. *All-time figures cover Cloudflare's available retention window<span data-stat="traffic.lifetime.since"></span>.
+                </p>
             </div>
 
             <!-- Placement preview -->
             <div class="mb-10">
-                <div class="font-mono text-[11px] uppercase text-[#737373] mb-3 tracking-widest">The placement</div>
-                <div class="p-4 border border-dashed border-[#222] rounded-md bg-white/[0.01] max-w-xs">
-                    <div class="font-mono text-[11px] uppercase text-[#737373] mb-1.5 tracking-wide">Featured</div>
-                    <div class="text-[13px] text-[#a3a3a3] leading-relaxed">
+                <div class="font-mono text-[11px] uppercase text-ink-muted mb-3 tracking-widest">The placement</div>
+                <div class="p-4 border border-dashed border-border rounded-md bg-white/[0.01] max-w-xs">
+                    <div class="font-mono text-[11px] uppercase text-ink-muted mb-1.5 tracking-wide">Featured</div>
+                    <div class="text-[13px] text-ink-secondary leading-relaxed">
                         Your headline and one sentence, here.
                         <br />
                         <span class="gradient-link inline-block mt-1.5 font-mono">Your link &rarr;</span>
                     </div>
                 </div>
-                <p class="text-[13px] text-[#737373] mt-3 leading-relaxed">
+                <p class="text-[13px] text-ink-muted mt-3 leading-relaxed">
                     Rendered in the sidebar of every page - directory, tool pages, and category pages.
                 </p>
             </div>
@@ -90,24 +122,25 @@ const faqs = [
                 <a href="https://book.qainsights.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center py-2.5 px-6 bg-white text-black text-sm font-semibold rounded-md transition-all duration-200 hover:bg-gray-200 hover:-translate-y-px">
                     Book this space
                 </a>
-                <a href="https://github.com/QAInsights/awesome-ai-tools" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center py-2.5 px-6 bg-white/5 text-white text-sm font-medium border border-[#222] rounded-md transition-all duration-200 hover:bg-white/10 hover:-translate-y-px">
+                <a href="https://github.com/QAInsights/awesome-ai-tools" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center py-2.5 px-6 bg-white/5 text-ink text-sm font-medium border border-border rounded-md transition-all duration-200 hover:bg-white/10 hover:-translate-y-px">
                     See the project on GitHub
                 </a>
             </div>
 
             <!-- FAQ -->
-            <div class="font-mono text-[11px] uppercase text-[#737373] mb-4 tracking-widest">Questions</div>
+            <div class="font-mono text-[11px] uppercase text-ink-muted mb-4 tracking-widest">Questions</div>
             <div class="flex flex-col gap-4">
                 {faqs.map(f => (
-                    <details class="border border-[#222] bg-white/[0.02] rounded-md group">
-                        <summary class="cursor-pointer px-5 py-4 text-[15px] font-medium text-white list-none flex items-center justify-between gap-3 hover:bg-white/[0.03] transition-colors rounded-md">
+                    <details class="border border-border bg-white/[0.02] rounded-md group">
+                        <summary class="cursor-pointer px-5 py-4 text-[15px] font-medium text-ink list-none flex items-center justify-between gap-3 hover:bg-white/[0.03] transition-colors rounded-md">
                             {f.q}
-                            <svg class="w-4 h-4 text-[#525252] shrink-0 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            <svg class="w-4 h-4 text-ink-disabled shrink-0 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                         </summary>
-                        <p class="px-5 pb-4 pt-1 text-[14px] text-[#a3a3a3] leading-relaxed">{f.a}</p>
+                        <p class="px-5 pb-4 pt-1 text-[14px] text-ink-secondary leading-relaxed">{f.a}</p>
                     </details>
                 ))}
             </div>
         </div>
     </div>
+    <script src="/dist/advertise-page.js" type="module" defer></script>
 </DashboardLayout>

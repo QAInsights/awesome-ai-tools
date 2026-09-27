@@ -1,7 +1,8 @@
 import rss from '@astrojs/rss';
+import type { APIRoute } from 'astro';
 import { getAllTools } from '../../lib/tools';
 
-export function GET(context) {
+export const GET: APIRoute = (context) => {
     const items = [...getAllTools()]
         .sort((a, b) => {
             const aParsed = a.enriched?.lastUpdated ? Date.parse(a.enriched.lastUpdated) : Number.NEGATIVE_INFINITY;
@@ -27,8 +28,8 @@ export function GET(context) {
     return rss({
         title: 'AI developer tools on ai.dosa.dev',
         description: 'Every tool in the directory, most recently updated first, with the latest enrichment summary.',
-        site: context.site,
+        site: context.site ?? 'https://ai.dosa.dev',
         items,
         customData: '<language>en-us</language>',
     });
-}
+};

@@ -1,15 +1,21 @@
 ---
-import { getCollection } from 'astro:content';
+import type { GetStaticPaths, Page } from 'astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
 import BlogCardGradient from '../../components/BlogCardGradient.astro';
 
-export async function getStaticPaths({ paginate }) {
+interface Props {
+  page: Page<CollectionEntry<'blog'>>;
+  allPosts: CollectionEntry<'blog'>[];
+}
+
+export const getStaticPaths = (async ({ paginate }) => {
   const allPosts = await getCollection('blog', ({ data }) =>
     data.draft !== true && data.tags?.includes('news')
   );
   const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
   return paginate(posts, { pageSize: 6, props: { allPosts: posts } });
-}
+}) satisfies GetStaticPaths;
 
 const { page, allPosts } = Astro.props;
 const tagCounts = new Map<string, number>();

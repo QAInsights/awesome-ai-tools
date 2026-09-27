@@ -70,5 +70,5 @@ export function getBlogTheme(slug: string, tags: string[] = []): BlogTheme {
         },
     ];
 
-    return themes[h % themes.length];
+    return themes[h % themes.length]!;
 }

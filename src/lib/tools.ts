@@ -101,8 +101,8 @@ function parseMarkdown(text: string): ToolSeed[] {
     const sections = text.split('## ');
 
     for (let i = 1; i < sections.length; i++) {
-        const lines = sections[i].split('\n');
-        const categoryLine = lines[0].trim();
+        const lines = (sections[i] ?? '').split('\n');
+        const categoryLine = (lines[0] ?? '').trim();
 
         if (categoryLine.toLowerCase().includes('table of contents')) continue;
 
@@ -121,8 +121,8 @@ function parseMarkdown(text: string): ToolSeed[] {
                     const match = toolRaw.match(/\[(.*?)\]\((.*?)\)/);
                     if (match) {
                         toolsRaw.push({
-                            name: match[1].replace(/\*\*/g, ''),
-                            url: match[2],
+                            name: (match[1] ?? '').replace(/\*\*/g, ''),
+                            url: match[2] ?? '',
                             company,
                             notes,
                             category: categoryLine,
@@ -132,7 +132,7 @@ function parseMarkdown(text: string): ToolSeed[] {
                     } else {
                         const nameMatch = toolRaw.match(/\*\*(.*?)\*\*/);
                         toolsRaw.push({
-                            name: nameMatch ? nameMatch[1] : toolRaw.replace(/\*\*/g, ''),
+                            name: nameMatch?.[1] ?? toolRaw.replace(/\*\*/g, ''),
                             url: '#',
                             company,
                             notes,
@@ -291,11 +291,11 @@ function loadCategoryDescriptions(): Map<string, string> {
         const sections = readmeMarkdown.split('\n## ');
         for (const section of sections.slice(1)) {
             const lines = section.split('\n');
-            const categoryLine = lines[0].trim();
+            const categoryLine = (lines[0] ?? '').trim();
             if (categoryLine.toLowerCase().includes('table of contents')) continue;
             // First non-empty, non-table, non-blockquote line after the heading
             for (let i = 1; i < lines.length; i++) {
-                const line = lines[i].trim();
+                const line = (lines[i] ?? '').trim();
                 if (!line || line.startsWith('|') || line.startsWith('---')) continue;
                 if (line.startsWith('>')) break;
                 map.set(stripEmoji(categoryLine), line);
@@ -323,13 +323,16 @@ export function getCategoriesDetailed(): CategoryInfo[] {
         byCategory.set(tool.categoryClean, list);
     }
 
-    _categories = [...byCategory.entries()].map(([name, catTools]) => ({
-        name,
-        short: catTools[0].categoryShort,
-        slug: getCategorySlug(catTools[0].categoryShort),
-        description: descriptions.get(name) ?? '',
-        tools: catTools,
-    }));
+    _categories = [...byCategory.entries()].map(([name, catTools]) => {
+        const short = catTools[0]?.categoryShort ?? name;
+        return {
+            name,
+            short,
+            slug: getCategorySlug(short),
+            description: descriptions.get(name) ?? '',
+            tools: catTools,
+        };
+    });
 
     return _categories;
 }

@@ -1,4 +1,4 @@
-import { Database as SqliteDatabase } from 'bun:sqlite';
+import { Database as SqliteDatabase, type SQLQueryBindings } from 'bun:sqlite';
 import { describe, expect, test } from 'bun:test';
 import { readFileSync } from 'node:fs';
 import type { Database } from './db';
@@ -31,7 +31,7 @@ function makeDatabase() {
     const db = {
         prepare(sql: string) {
             return {
-                bind(...values: unknown[]) {
+                bind(...values: SQLQueryBindings[]) {
                     return {
                         all: async <T>() => ({
                             results: sqlite.query(sql).all(...values) as T[],

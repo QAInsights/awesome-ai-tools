@@ -1,7 +1,8 @@
 import rss from '@astrojs/rss';
+import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
-export async function GET(context) {
+export const GET: APIRoute = async (context) => {
   const blog = await getCollection('blog', ({ data }) => {
     return data.draft !== true;
   });
@@ -12,7 +13,7 @@ export async function GET(context) {
   return rss({
     title: 'AI Tools Blog',
     description: 'Exploring the latest in artificial intelligence coding tools, IDEs, and autonomous agents.',
-    site: context.site,
+    site: context.site ?? 'https://ai.dosa.dev',
     items: posts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.pubDate,
@@ -21,4 +22,4 @@ export async function GET(context) {
     })),
     customData: `<language>en-us</language>`,
   });
-}
+};

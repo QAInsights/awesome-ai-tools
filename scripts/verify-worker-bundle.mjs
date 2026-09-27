@@ -1,5 +1,5 @@
 import { readdir, readFile } from 'node:fs/promises';
-import { dirname, join } from 'node:path';
+import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
@@ -33,7 +33,7 @@ try {
     const newestPost = contentFiles.at(-1);
     if (!newestPost) throw new Error('No dated Today in AI MDX posts were found');
 
-    const newestName = newestPost.split('/').at(-1);
+    const newestName = basename(newestPost);
     if (!bundleContents.some(content => content.includes(newestName))) {
         throw new Error(`Worker bundle does not contain the newest Today in AI post: ${newestName}`);
     }

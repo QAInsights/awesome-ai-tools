@@ -78,7 +78,7 @@ export function buildZapDashboard(
         const ageWeeks = Math.floor((now - timestamp) / WEEK_MS);
         const weeklyIndex = 11 - ageWeeks;
         if (toolsById.has(row.tool_id) && timestamp <= now && weeklyIndex >= 0 && weeklyIndex < weekly.length) {
-            weekly[weeklyIndex] += 1;
+            weekly[weeklyIndex] = (weekly[weeklyIndex] ?? 0) + 1;
         }
         const previous = latestByToolId.get(row.tool_id);
         if (!previous || timestamp > Date.parse(previous.timestamp)) {

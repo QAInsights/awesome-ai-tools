@@ -48,6 +48,7 @@ const result = await build({
         './js/zap-page.js',
         './js/badge-page.js',
         './js/settings-page.js',
+        './js/advertise-page.js',
         './js/compare.js',
         './js/blog.js',
         './js/site-analytics.js',
