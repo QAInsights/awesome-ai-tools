@@ -88,15 +88,22 @@ const faqs = [
 
             <div data-live-stats class="mb-10">
                 <div class="font-mono text-[11px] uppercase text-ink-muted mb-3 tracking-widest">Reach</div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                <div data-stat-grid aria-busy="true" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                     {reachStats.map(stat => (
                         <div class="border border-border bg-white/[0.02] rounded-md px-5 py-4">
-                            <div class="text-2xl font-semibold text-ink font-mono" data-stat={stat.path}>—</div>
+                            <div class="text-2xl font-semibold text-ink font-mono" data-stat={stat.path}>
+                                <span aria-hidden="true" class="block h-8 w-14 rounded-sm bg-white/10 motion-safe:animate-pulse"></span>
+                                <span class="sr-only">Loading</span>
+                            </div>
                             <div class="text-[13px] text-ink-muted mt-1">{stat.label}</div>
                         </div>
                     ))}
                 </div>
-                <p data-stat-note class="text-[12px] text-ink-disabled mt-2">
+                <p data-stat-note role="status" aria-live="polite" class="text-[12px] text-ink-disabled mt-2">
+                    <span data-stat-loading class="inline-flex items-center gap-1.5 mr-1 text-gold-soft">
+                        <span aria-hidden="true" class="inline-block h-1.5 w-1.5 rounded-full bg-gold motion-safe:animate-pulse"></span>
+                        Loading reach…
+                    </span>
                     Live from Cloudflare Web Analytics and GitHub. *All-time figures cover Cloudflare's available retention window<span data-stat="traffic.lifetime.since"></span>.
                 </p>
             </div>

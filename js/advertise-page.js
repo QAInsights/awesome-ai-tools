@@ -33,9 +33,8 @@ export function applySiteStats(root, stats) {
             continue;
         }
         const formatted = formatStat(value);
-        if (formatted === null) continue;
-        element.textContent = formatted;
-        element.title = value.toLocaleString('en');
+        element.textContent = formatted ?? '—';
+        if (formatted !== null) element.title = value.toLocaleString('en');
     }
 }
 
@@ -48,7 +47,11 @@ export async function loadAdvertiseStats(root, fetchImpl = fetch) {
         applySiteStats(root, stats);
         if (!stats.traffic) showFallback(root);
     } catch {
+        applySiteStats(root, null);
         showFallback(root);
+    } finally {
+        root.querySelector('[data-stat-loading]')?.remove();
+        root.querySelector('[data-stat-grid]')?.removeAttribute('aria-busy');
     }
 }
 

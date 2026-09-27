@@ -25,12 +25,17 @@ describe('advertise page stats helpers', () => {
     test('fills GitHub stars and shows the traffic fallback when traffic is unavailable', async () => {
         const stars = {
             getAttribute: name => name === 'data-stat' ? 'github.stars' : null,
-            textContent: '—',
+            textContent: 'Loading…',
+            title: '',
+        };
+        const visits = {
+            getAttribute: name => name === 'data-stat' ? 'traffic.last30.visits' : null,
+            textContent: 'Loading…',
             title: '',
         };
         const note = { textContent: 'Live stats' };
         const root = {
-            querySelectorAll: () => [stars],
+            querySelectorAll: () => [visits, stars],
             querySelector: selector => selector === '[data-stat-note]' ? note : null,
         };
         const fetchImpl = async () => Response.json({
@@ -42,6 +47,57 @@ describe('advertise page stats helpers', () => {
 
         expect(stars.textContent).toBe('24');
         expect(stars.title).toBe('24');
+        expect(visits.textContent).toBe('—');
         expect(note.textContent).toBe('Traffic figures are shared on request.');
+    });
+
+    test('shows loading placeholders until stats arrive, then clears the busy state', async () => {
+        const visits = {
+            getAttribute: name => name === 'data-stat' ? 'traffic.last30.visits' : null,
+            textContent: 'Loading…',
+            title: '',
+        };
+        const loading = { removed: false, remove() { this.removed = true; } };
+        const grid = { busy: true, removeAttribute(name) { if (name === 'aria-busy') this.busy = false; } };
+        const root = {
+            querySelectorAll: () => [visits],
+            querySelector: selector => ({ '[data-stat-loading]': loading, '[data-stat-grid]': grid })[selector] ?? null,
+        };
+        let resolveFetch;
+        const pending = loadAdvertiseStats(root, () => new Promise(resolve => { resolveFetch = resolve; }));
+
+        expect(visits.textContent).toBe('Loading…');
+        expect(loading.removed).toBe(false);
+        expect(grid.busy).toBe(true);
+
+        resolveFetch(Response.json({ traffic: { last30: { visits: 1_250 } }, github: null }));
+        await pending;
+
+        expect(visits.textContent).toBe('1.3K');
+        expect(visits.title).toBe('1,250');
+        expect(loading.removed).toBe(true);
+        expect(grid.busy).toBe(false);
+    });
+
+    test('clears the loading state and placeholders when the request fails', async () => {
+        const visits = {
+            getAttribute: name => name === 'data-stat' ? 'traffic.last30.visits' : null,
+            textContent: 'Loading…',
+            title: '',
+        };
+        const note = { textContent: 'Loading live reach…' };
+        const loading = { removed: false, remove() { this.removed = true; } };
+        const grid = { busy: true, removeAttribute(name) { if (name === 'aria-busy') this.busy = false; } };
+        const root = {
+            querySelectorAll: () => [visits],
+            querySelector: selector => ({ '[data-stat-note]': note, '[data-stat-loading]': loading, '[data-stat-grid]': grid })[selector] ?? null,
+        };
+
+        await loadAdvertiseStats(root, async () => Response.error());
+
+        expect(visits.textContent).toBe('—');
+        expect(note.textContent).toBe('Traffic figures are shared on request.');
+        expect(loading.removed).toBe(true);
+        expect(grid.busy).toBe(false);
     });
 });
