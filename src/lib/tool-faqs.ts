@@ -73,7 +73,7 @@ export function buildToolFaqs(tool: Tool, alternatives: Tool[]): ToolFaq[] {
             .map(t => t.enriched?.name ?? t.name);
         faqs.push({
             q: `What are the best ${name} alternatives?`,
-            a: `The closest ${name} alternatives on ai.dosa.dev are ${topNames.join(', ')} - all listed under ${tool.categoryClean} on ai.dosa.dev.`,
+            a: `The closest ${name} alternatives on ai.dosa.dev are ${topNames.join(', ')} - all listed under ${tool.categoryClean}.`,
         });
     }
 

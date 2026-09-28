@@ -77,7 +77,7 @@ describe('buildToolFaqs', () => {
         const answer = faqs.find(f => f.q === 'What are the best Widget alternatives?');
 
         expect(answer?.a).toContain('are Alt Enriched -');
-        expect(answer?.a).toContain('all listed under AI Coding on ai.dosa.dev.');
+        expect(answer?.a).toContain('all listed under AI Coding.');
 
         const noAlts = buildToolFaqs(makeTool({ pricing: 'paid' }), []);
         expect(noAlts.some(f => f.q === 'What are the best Widget alternatives?')).toBe(false);
