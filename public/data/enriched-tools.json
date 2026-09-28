@@ -8020,5 +8020,120 @@
     "verdict": "A focused cross-agent model picker and protocol gateway for developers who frequently switch providers, with overlap in configuration management with broader tools such as CC Switch.",
     "tags": ["model-routing", "coding-agents", "gateway", "open-source", "desktop", "cli"],
     "lastUpdated": "2026-09-27"
+  },
+  {
+    "slug": "juggler",
+    "name": "Juggler",
+    "company": "Julian Storer",
+    "pricing": "open-source",
+    "pricingDetail": "Juggler is free and open source: the main application is AGPL-3.0 and the extension SDK and bundled extensions are Apache-2.0. It requires no Juggler account and resells no tokens; model usage is billed by whichever provider or existing subscription you connect.",
+    "description": "Juggler is a visual workbench for AI coding agents built by Julian Storer, the developer behind JUCE, Tracktion and Cmajor. Conversations are persistent, branchable document trees navigated with Miller columns, where every tool call and recorded LLM transaction can be inspected and context can be edited, folded or moved between threads. A Go server runs where the code lives, and the native desktop app, a browser tab or a phone can attach to the same live session.",
+    "keyFeatures": [
+      "Branchable session trees with nested sub-threads for tangents and delegated work",
+      "Inspection of tool calls and raw LLM transactions, including prompts, tokens and cache use",
+      "Editable context: fold, move or copy items between branches with undo",
+      "Headless server with multiple live clients (desktop app, browser, phone)",
+      "Vendor-neutral BYOK providers: Claude Code, OpenAI Codex, GitHub Copilot, Gemini, Ollama and more",
+      "JavaScript plugin API for context items, loop strategies, slash commands and UIs"
+    ],
+    "bestFor": "Developers who want a GUI coding agent with visible, editable context and inspectable model calls, including those running agents on remote dev boxes.",
+    "notIdealFor": "Developers who prefer a terminal-only agent workflow or want a hosted service with bundled model access.",
+    "recentUpdates": "Juggler shipped v0.7.0 and v0.7.1 in late September 2026 after launching on Hacker News as a Show HN; the public repository had roughly 600 GitHub stars at review time.",
+    "verdict": "A thoughtfully designed, vendor-neutral GUI workbench for coding agents whose branching sessions and full transaction inspection stand out from chat-transcript interfaces. It is an early 0.x project from a single primary maintainer.",
+    "tags": [
+      "coding-agent",
+      "gui",
+      "desktop",
+      "open-source",
+      "byok",
+      "remote-sessions"
+    ],
+    "lastUpdated": "2026-09-28"
+  },
+  {
+    "slug": "jevgrep",
+    "name": "jevgrep",
+    "company": "David Zhang (dzhng)",
+    "pricing": "open-source",
+    "pricingDetail": "jevgrep is free and open source under the MIT license. Searches call the Jev model through a provider key you supply (Vercel AI Gateway, TypeSafe, OpenRouter or OpenCode Zen), and that provider bills inference usage.",
+    "description": "jevgrep is a research CLI that helps AI coding agents find relevant code by asking what it does. The `jg` command uses TypeSafe's Jev model to judge relevance across folders, files and declarations, then returns relevant files, reading leads and verbatim source excerpts in a single stdout response. A bundled agent skill teaches Claude Code, Codex and other agents to use it for context gathering before they implement changes.",
+    "keyFeatures": [
+      "Natural-language repository questions answered with files, leads and verbatim excerpts",
+      "Jev-based relevance judgments across folders, files and declarations",
+      "Installable agent skill (`jg skill`) for coding agents",
+      "Provider selection across Vercel AI Gateway, TypeSafe, OpenRouter and OpenCode Zen",
+      "npm-distributed CLI for macOS and Linux with no separate ripgrep, Python or Bun install"
+    ],
+    "bestFor": "Developers whose coding agents spend many tokens exploring unfamiliar repositories and who want a cheaper context-gathering step.",
+    "notIdealFor": "Cases where the exact symbol or string is already known and plain text search is faster, teams that cannot send source excerpts to a hosted model provider, or native Windows users.",
+    "recentUpdates": "The repository was created on September 26, 2026, reached more than 1,000 GitHub stars within two days, and shipped releases through v0.4.3 on September 28; the author announced it on X as a Jev-powered research agent CLI.",
+    "verdict": "A focused context-gathering tool for coding agents built on Jev. Its reported cost reduction comes from the author's own ten-task SWE-bench comparison, so results on other codebases may vary.",
+    "tags": [
+      "code-search",
+      "jev",
+      "coding-agents",
+      "cli",
+      "agent-skills",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-28"
+  },
+  {
+    "slug": "openrig",
+    "name": "OpenRig",
+    "company": "Esoteric Labs",
+    "pricing": "open-source",
+    "pricingDetail": "OpenRig is free and open source under Apache-2.0 and runs locally. The Claude Code and Codex sessions it manages require their own subscriptions or API access.",
+    "description": "OpenRig is a multi-agent harness that manages Claude Code and Codex sessions as one persistent system. Developers define an agent team in YAML — pods, communication edges and continuity policies — and boot it with one command; OpenRig runs the agents as ordinary tmux sessions and tracks them through a local daemon, SQLite state, a CLI, an MCP server and a dashboard. Rigs can be snapshotted, restored after reboots and changed while running.",
+    "keyFeatures": [
+      "YAML topologies (RigSpec) with pods, edges and continuity policies",
+      "`rig up` / `rig down` boot, snapshot and restore of whole agent teams",
+      "Mixed Claude Code and Codex seats in the same rig",
+      "Cross-agent messaging with `rig send`, `rig broadcast` and `rig chatroom`, plus a task queue",
+      "Adoption of existing tmux agent sessions into a managed rig",
+      "Local daemon, 40+ command CLI, MCP server, TUI and React dashboard"
+    ],
+    "bestFor": "Developers running several Claude Code and Codex sessions who want them organized into a persistent, recoverable team with defined roles and review paths.",
+    "notIdealFor": "Native Windows users, developers who use a single agent session, or teams that prefer a GUI agent manager over tmux-based terminals.",
+    "recentUpdates": "OpenRig released v0.5.15 through v0.5.17 between September 25 and 27, 2026, and was trending on GitHub with roughly 1,500 stars at review time.",
+    "verdict": "A flexible local control plane for multi-agent coding teams whose declarative topologies go beyond simple parallel-session runners. It writes trust settings and executable hooks during setup, so configuration should be reviewed before use.",
+    "tags": [
+      "multi-agent",
+      "orchestration",
+      "claude-code",
+      "codex",
+      "tmux",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-28"
+  },
+  {
+    "slug": "cua",
+    "name": "Cua",
+    "company": "Cua",
+    "pricing": "freemium",
+    "pricingDetail": "Cua's open-source framework (MIT) is free to self-host with your own infrastructure and models. Cua Fleets cloud desktops and hosted computer-use inference use prepaid credits on the Pro plan (from $10), with custom-priced Enterprise plans.",
+    "description": "Cua is open-source infrastructure for giving AI agents computers they can use. Cua Driver lets agents inspect and operate applications on macOS, Windows and Linux through an MCP server or CLI without moving the user's cursor, Lume creates local macOS and Linux VMs on Apple Silicon, and Cua Bench creates tasks and evaluates agents. Cua Fleets provides isolated cloud desktops for running computer-use agents at scale.",
+    "keyFeatures": [
+      "Cua Driver for window-targeted desktop automation over MCP or CLI on macOS, Windows and Linux",
+      "MCP stdio server usable from Claude Code, Codex and other clients",
+      "Lume local macOS and Linux virtual machines on Apple Silicon",
+      "Cua Bench for building tasks, evaluating agents and exporting trajectories",
+      "CUA-S1 small specialized computer-use decision models",
+      "Cua Fleets managed cloud sandboxes with Python SDK and Terraform support"
+    ],
+    "bestFor": "Developers building, testing or evaluating computer-use agents who need desktop automation drivers and isolated local or cloud environments.",
+    "notIdealFor": "Teams that only need browser or API automation, or that cannot grant accessibility and screen-recording permissions to a local driver.",
+    "recentUpdates": "Cua published cua-driver-rs v0.30.3 and nightly Lume builds on September 27-28, 2026, and was trending on GitHub with roughly 27,000 stars at review time.",
+    "verdict": "One of the most complete open-source stacks for computer-use agents, spanning drivers, VMs, benchmarks and managed cloud desktops. The breadth means individual components mature at different rates.",
+    "tags": [
+      "computer-use",
+      "desktop-automation",
+      "mcp",
+      "sandboxes",
+      "virtualization",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-28"
   }
 ]

@@ -1142,5 +1142,21 @@
   {
     "companyName": "yetone",
     "toolName": "magpie"
+  },
+  {
+    "companyName": "Julian Storer",
+    "toolName": "Juggler"
+  },
+  {
+    "companyName": "David Zhang (dzhng)",
+    "toolName": "jevgrep"
+  },
+  {
+    "companyName": "Esoteric Labs",
+    "toolName": "OpenRig"
+  },
+  {
+    "companyName": "Cua",
+    "toolName": "Cua"
   }
 ]

@@ -288,6 +288,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "juggler",
+    "name": "Juggler",
+    "company": "Julian Storer",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -1266,6 +1272,12 @@
     "category": "AI Codebase Knowledge & Generation"
   },
   {
+    "slug": "jevgrep",
+    "name": "jevgrep",
+    "company": "David Zhang (dzhng)",
+    "category": "AI Codebase Knowledge & Generation"
+  },
+  {
     "slug": "pieces-for-developers",
     "name": "Pieces for Developers",
     "company": "Pieces",
@@ -1689,6 +1701,18 @@
     "slug": "mobile-mcp",
     "name": "Mobile MCP",
     "company": "Mobile Next",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "openrig",
+    "name": "OpenRig",
+    "company": "Esoteric Labs",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "cua",
+    "name": "Cua",
+    "company": "Cua",
     "category": "Developer Productivity & Workflow"
   },
   {
