@@ -1,0 +1,243 @@
+---
+/**
+ * Pricing page - /tools/[slug]/pricing
+ *
+ * Generated only for the ~30 most-compared tools that have enriched pricing
+ * data (see getTopPricingTools) - these map to high-intent "X pricing" and
+ * "is X free" queries. Fully pre-rendered at build time so search engines
+ * and AI crawlers get the complete content in the initial HTML.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Sidebar from '../../../components/Sidebar.astro';
+import SiteHeader from '../../../components/SiteHeader.astro';
+import { formatDate, getAlternativesFor, getCategorySlug, type Tool } from '../../../lib/tools';
+import { getTopPricingTools, hasAlternativesPage, humanizePricing, truncate } from '../../../lib/compare';
+import { buildToolFaqs, isKnownFree, isOpenSource } from '../../../lib/tool-faqs';
+
+export async function getStaticPaths() {
+    return getTopPricingTools().map(tool => ({
+        params: { slug: tool.slug },
+        props: { tool },
+    }));
+}
+
+interface Props {
+    tool: Tool;
+}
+
+const { tool } = Astro.props;
+const { enriched } = tool;
+
+const displayName = enriched?.name ?? tool.name;
+const displayCompany = enriched?.company ?? tool.company;
+const pricingLabel = humanizePricing(enriched?.pricing);
+const freeTier = enriched?.pricing?.toLowerCase() === 'freemium' ? 'Free tier' : (isKnownFree(enriched?.pricing) ? 'Yes' : 'No');
+const openSource = isOpenSource(enriched) ? 'Yes' : 'No';
+const lastUpdated = enriched?.lastUpdated;
+
+const alternatives = getAlternativesFor(tool).slice(0, 8);
+const faqs = buildToolFaqs(tool, getAlternativesFor(tool));
+
+const pageUrl = `https://ai.dosa.dev/tools/${tool.slug}/pricing`;
+const toolUrl = `https://ai.dosa.dev/tools/${tool.slug}`;
+const descMeta = truncate(`${displayName} pricing (${pricingLabel}). ${enriched?.pricingDetail ?? `Is ${displayName} free? Plans, free tier, and alternatives on ai.dosa.dev.`}`, 155);
+const title = `${displayName} Pricing (2026): Is ${displayName} Free? | ai.dosa.dev`;
+
+const graph: object[] = [
+    {
+        "@type": "WebPage",
+        "@id": pageUrl,
+        "url": pageUrl,
+        "name": title,
+        "description": descMeta,
+        "inLanguage": "en",
+        ...(lastUpdated ? { "dateModified": lastUpdated } : {}),
+        "isPartOf": { "@type": "WebSite", "@id": "https://ai.dosa.dev/#website", "url": "https://ai.dosa.dev", "name": "ai.dosa.dev - Awesome AI Tools" },
+        "about": { "@id": `${toolUrl}#app` },
+    },
+    {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ai.dosa.dev" },
+            { "@type": "ListItem", "position": 2, "name": tool.categoryClean, "item": `https://ai.dosa.dev/category/${getCategorySlug(tool.categoryShort)}` },
+            { "@type": "ListItem", "position": 3, "name": displayName, "item": toolUrl },
+            { "@type": "ListItem", "position": 4, "name": "Pricing", "item": pageUrl }
+        ]
+    }
+];
+if (faqs.length >= 2) {
+    graph.push({
+        "@type": "FAQPage",
+        "mainEntity": faqs.map(f => ({
+            "@type": "Question",
+            "name": f.q,
+            "acceptedAnswer": { "@type": "Answer", "text": f.a }
+        }))
+    });
+}
+const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
+---
+
+<BaseLayout
+    title={title}
+    description={descMeta}
+    keywords={`${displayName} pricing, is ${displayName} free, ${displayName} cost, ${displayName} free tier, ${displayName} open source, ${tool.categoryClean}`}
+    canonical={pageUrl}
+    jsonLd={jsonLd}
+>
+    <slot name="head">
+        <style>
+            .td-section { padding: 20px 0; border-top: 1px solid #222; }
+            .td-card { background: #0d0d0d; border: 1px solid #222; border-radius: 10px; padding: 18px; }
+        </style>
+    </slot>
+
+    <div class="flex h-[100dvh] overflow-hidden">
+        <Sidebar variant="tool" />
+
+        <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
+            <SiteHeader variant="page" title={`${displayName} pricing`} />
+
+            <div class="max-w-[1000px] mx-auto w-full flex flex-col flex-1 p-4 md:p-8 gap-6">
+                <!-- Breadcrumb -->
+                <nav aria-label="Breadcrumb" class="font-mono text-[12px] text-[#737373] tracking-wide flex items-center gap-2 flex-wrap">
+                    <a href="/" class="hover:text-white transition-colors">Home</a>
+                    <span>/</span>
+                    <a href={`/category/${getCategorySlug(tool.categoryShort)}`} class="text-[#a3a3a3] hover:text-white transition-colors">{tool.categoryClean}</a>
+                    <span>/</span>
+                    <a href={`/tools/${tool.slug}`} class="text-[#a3a3a3] hover:text-white transition-colors">{displayName}</a>
+                    <span>/</span>
+                    <span class="text-white">Pricing</span>
+                </nav>
+
+                <!-- Header -->
+                <header class="flex flex-col gap-3 pb-4 border-b border-[#222]">
+                    <h1 class="text-[32px] md:text-[40px] font-semibold tracking-tight leading-tight bg-gradient-to-r from-white via-[#e5e5e5] to-white bg-clip-text text-transparent">
+                        {displayName} Pricing
+                    </h1>
+                    <p class="text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">
+                        {displayName} by {displayCompany} is listed as {pricingLabel} under {tool.categoryClean} on ai.dosa.dev. See the <a href={`/tools/${tool.slug}`} class="text-white underline underline-offset-4 decoration-[#444] hover:decoration-white transition-colors">{displayName} review</a> for features and verdict.
+                    </p>
+                    <div class="font-mono text-[12px] text-[#737373] tracking-wide">
+                        {lastUpdated && <>Last updated <time datetime={lastUpdated}>{formatDate(lastUpdated)}</time></>}
+                    </div>
+                </header>
+
+                <!-- Summary cards -->
+                <section aria-label="Pricing summary" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div class="td-card">
+                        <div class="font-mono text-[11px] uppercase text-[#525252] tracking-wide mb-2">Pricing model</div>
+                        <div class="text-[15px] text-white">{pricingLabel}</div>
+                    </div>
+                    <div class="td-card">
+                        <div class="font-mono text-[11px] uppercase text-[#525252] tracking-wide mb-2">Free tier?</div>
+                        <div class="text-[15px] text-white">{freeTier}</div>
+                    </div>
+                    <div class="td-card">
+                        <div class="font-mono text-[11px] uppercase text-[#525252] tracking-wide mb-2">Open source?</div>
+                        <div class="text-[15px] text-white">{openSource}</div>
+                    </div>
+                </section>
+
+                {enriched?.pricingDetail && (
+                    <section class="td-section" style="border-top: none;">
+                        <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em] mb-3">Pricing details</div>
+                        <div class="td-card">
+                            <p class="text-[15px] leading-relaxed text-[#d4d4d4]">{enriched.pricingDetail}</p>
+                            <p class="text-[13px] text-[#737373] leading-relaxed mt-3 mb-0">Pricing changes often - verify on the official site.</p>
+                        </div>
+                    </section>
+                )}
+
+                {(enriched?.bestFor || enriched?.notIdealFor) && (
+                    <section class="td-section">
+                        <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em] mb-3">Who It's For</div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="td-card">
+                                <div class="font-mono text-[11px] uppercase text-[#4ade80] tracking-wide mb-2">&#10003; Best For</div>
+                                <p class="text-[15px] leading-relaxed text-[#d4d4d4]">{enriched.bestFor ?? '-'}</p>
+                            </div>
+                            <div class="td-card">
+                                <div class="font-mono text-[11px] uppercase text-[#f87171] tracking-wide mb-2">&#10007; Not Ideal For</div>
+                                <p class="text-[15px] leading-relaxed text-[#d4d4d4]">{enriched.notIdealFor ?? '-'}</p>
+                            </div>
+                        </div>
+                    </section>
+                )}
+
+                {alternatives.length > 0 && (
+                    <section class="td-section" aria-label={`${displayName} alternatives and their pricing`}>
+                        <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em] mb-3">Alternatives and their pricing</div>
+                        <div class="flex flex-col">
+                            {alternatives.map(alt => (
+                                <div class="group flex items-center gap-3 py-3 border-b border-[#1a1a1a] md:px-2 -mx-2 rounded transition-colors hover:bg-white/[0.02]">
+                                    <a href={`/tools/${alt.slug}`} class="text-[15px] font-medium text-white no-underline group-hover:bg-gradient-to-r group-hover:from-[#a78bfa] group-hover:via-[#22d3ee] group-hover:to-[#a78bfa] group-hover:bg-clip-text group-hover:text-transparent transition-all">{alt.enriched?.name ?? alt.name}</a>
+                                    <span class="font-mono text-[12px] text-[#737373] uppercase tracking-wide">{alt.enriched?.company ?? alt.company}</span>
+                                    {alt.enriched?.pricing && (
+                                        <span class="font-mono text-[10px] uppercase tracking-wide px-2 py-0.5 border border-[#222] rounded-full text-[#737373]">{humanizePricing(alt.enriched.pricing)}</span>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                        {hasAlternativesPage(tool.slug) && (
+                            <a href={`/tools/${tool.slug}/alternatives`} class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium text-[#c9aa6e] hover:text-[#e2c48a] transition-colors">
+                                See all {displayName} alternatives
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </a>
+                        )}
+                    </section>
+                )}
+
+                {faqs.length >= 2 && (
+                    <section class="td-section" aria-label="Frequently asked questions">
+                        <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em] mb-3">FAQ</div>
+                        <div class="flex flex-col gap-3">
+                            {faqs.map(f => (
+                                <details class="td-card group" style="padding: 0;">
+                                    <summary class="cursor-pointer px-4 py-3.5 text-[15px] font-medium text-white list-none flex items-center justify-between gap-3">
+                                        {f.q}
+                                        <svg class="w-4 h-4 text-[#525252] shrink-0 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <p class="px-4 pb-4 text-[14px] text-[#a3a3a3] leading-relaxed">{f.a}</p>
+                                </details>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                <!-- Cross-links -->
+                <nav aria-label="Explore more" class="pt-4 pb-4 flex flex-col gap-4">
+                    <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em]">Explore more</div>
+                    <div class="flex flex-wrap gap-2">
+                        <a href={`/tools/${tool.slug}`} class="inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide hover:text-white hover:border-[#444] transition-colors">
+                            {displayName} review
+                        </a>
+                        <a href={`/category/${getCategorySlug(tool.categoryShort)}`} class="inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide hover:text-white hover:border-[#444] transition-colors">
+                            All {tool.categoryShort} tools
+                        </a>
+                        {hasAlternativesPage(tool.slug) && (
+                            <a href={`/tools/${tool.slug}/alternatives`} class="inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide hover:text-white hover:border-[#444] transition-colors">
+                                {displayName} alternatives
+                            </a>
+                        )}
+                    </div>
+                </nav>
+
+                <div class="td-section" style="padding-top: 0;">
+                    <div class="flex items-start gap-3 py-4 px-4 border border-[#222] rounded-lg bg-white/[0.02]">
+                        <svg class="w-5 h-5 text-[#737373] shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <p class="text-[13px] text-[#737373] leading-relaxed">
+                            Content on this page is AI-generated. Please verify details with the vendor's website for accuracy.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/dist/app.js" type="module" defer></script>
+</BaseLayout>

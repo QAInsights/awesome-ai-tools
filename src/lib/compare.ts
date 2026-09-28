@@ -82,6 +82,25 @@ export function hasAlternativesPage(slug: string): boolean {
     return getTopComparedTools().some(t => t.slug === slug);
 }
 
+let _topPricing: Tool[] | null = null;
+
+/**
+ * Most-compared tools that have enriched pricing data. With no impressions
+ * data, comparison frequency is the proxy for high-intent "X pricing"
+ * queries (same heuristic as the alternatives pages).
+ */
+export function getTopPricingTools(limit = 30): Tool[] {
+    if (!_topPricing) {
+        _topPricing = getTopComparedTools(getAllTools().length).filter(t => t.enriched?.pricing);
+    }
+    return _topPricing.slice(0, limit);
+}
+
+/** Whether /tools/{slug}/pricing is generated for this tool. */
+export function hasPricingPage(slug: string): boolean {
+    return getTopPricingTools().some(t => t.slug === slug);
+}
+
 export function humanizePricing(val?: string): string {
     if (!val) return 'Unknown';
     const map: Record<string, string> = { free: 'Free', freemium: 'Freemium', paid: 'Paid', open_source: 'Open Source', 'open-source': 'Open Source', oss: 'Open Source', enterprise: 'Enterprise' };

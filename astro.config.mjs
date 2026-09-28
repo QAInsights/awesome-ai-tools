@@ -43,6 +43,7 @@ function loadLastmodMap() {
             if (!t?.slug || !t?.lastUpdated || isNaN(Date.parse(t.lastUpdated))) continue;
             map.set(`/tools/${t.slug}`, t.lastUpdated);
             map.set(`/tools/${t.slug}/alternatives`, t.lastUpdated);
+            map.set(`/tools/${t.slug}/pricing`, t.lastUpdated);
         }
     } catch { /* enriched data optional */ }
     try {
@@ -116,6 +117,9 @@ export default defineConfig({
                 if (lastmod) item.lastmod = new Date(lastmod).toISOString();
                 if (/\/compare\/[^/]+\/$/.test(url) || /\/compare\/[^/]+$/.test(url)) {
                     item.priority = 0.8;
+                    item.changefreq = 'weekly';
+                } else if (/\/tools\/[^/]+\/pricing\/?$/.test(url)) {
+                    item.priority = 0.7;
                     item.changefreq = 'weekly';
                 } else if (/\/tools\/[^/]+\/alternatives\/?$/.test(url)) {
                     item.priority = 0.7;

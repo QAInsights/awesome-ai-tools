@@ -15,7 +15,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import { formatDate, getAlternativesFor, getAllTools, getCategorySlug, getToolBySlug, type Tool } from '../../lib/tools';
-import { getComparisonsForTool, hasAlternativesPage, humanizePricing, truncate } from '../../lib/compare';
+import { getComparisonsForTool, hasAlternativesPage, hasPricingPage, humanizePricing, truncate } from '../../lib/compare';
+import { buildToolFaqs } from '../../lib/tool-faqs';
 import { buildToolReview, buildToolSeo } from '../../lib/tool-seo';
 import { addOutboundUtmParams } from '../../lib/outbound-utm.js';
 
@@ -125,6 +126,7 @@ const jsonLdObj = {
 };
 
 const showAlternativesLink = hasAlternativesPage(tool.slug);
+const showPricingLink = hasPricingPage(tool.slug);
 
 // ── Curated comparison pages featuring this tool ────────────────────────────
 const comparisons = getComparisonsForTool(tool.slug)
@@ -137,26 +139,7 @@ const comparisons = getComparisonsForTool(tool.slug)
     .slice(0, 4);
 
 // ── FAQ block (AEO) - built from enriched data, only where data exists ──────
-const faqs: { q: string; a: string }[] = [];
-if (enriched?.pricing) {
-    const p = enriched.pricing.toLowerCase();
-    const isFree = ['free', 'open-source', 'open_source', 'oss'].includes(p);
-    faqs.push({
-        q: `Is ${displayName} free?`,
-        a: isFree
-            ? `Yes - ${displayName} is ${humanizePricing(enriched.pricing)}.${enriched.pricingDetail ? ' ' + enriched.pricingDetail : ''}`
-            : `${displayName} is ${humanizePricing(enriched.pricing)}.${enriched.pricingDetail ? ' ' + enriched.pricingDetail : ''} Check the official site for current plans.`,
-    });
-}
-if (enriched?.bestFor) {
-    faqs.push({ q: `What is ${displayName} best for?`, a: enriched.bestFor });
-}
-if (displayCompany) {
-    faqs.push({
-        q: `Who makes ${displayName}?`,
-        a: `${displayName} is developed by ${displayCompany}. It is listed in the ${tool.categoryClean} category on ai.dosa.dev.`,
-    });
-}
+const faqs = buildToolFaqs(tool, getAlternativesFor(tool));
 if (faqs.length >= 2) {
     (jsonLdObj["@graph"] as object[]).push({
         "@type": "FAQPage",
@@ -363,7 +346,7 @@ const jsonLd = JSON.stringify(jsonLdObj);
 
                     {faqs.length >= 2 && (
                         <section class="td-section" aria-label="Frequently asked questions">
-                            <div class="td-section-label">FAQ</div>
+                            <div class="td-section-label">Pricing &amp; FAQ</div>
                             <div class="flex flex-col gap-3">
                                 {faqs.map(f => (
                                     <details class="td-card group" style="padding: 0;">
@@ -407,12 +390,20 @@ const jsonLd = JSON.stringify(jsonLdObj);
                                     </a>
                                 ))}
                             </div>
-                            {showAlternativesLink && (
-                                <a href={`/tools/${tool.slug}/alternatives`} class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium text-[#c9aa6e] hover:text-[#e2c48a] transition-colors">
-                                    See all {displayName} alternatives
-                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                                </a>
-                            )}
+                            <div class="flex items-center gap-4 mt-4">
+                                {showAlternativesLink && (
+                                    <a href={`/tools/${tool.slug}/alternatives`} class="inline-flex items-center gap-2 text-[14px] font-medium text-[#c9aa6e] hover:text-[#e2c48a] transition-colors">
+                                        See all {displayName} alternatives
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                    </a>
+                                )}
+                                {showPricingLink && (
+                                    <a href={`/tools/${tool.slug}/pricing`} class="inline-flex items-center gap-2 text-[14px] font-medium text-[#c9aa6e] hover:text-[#e2c48a] transition-colors">
+                                        See {displayName} pricing details
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                    </a>
+                                )}
+                            </div>
                         </section>
                     )}
 
