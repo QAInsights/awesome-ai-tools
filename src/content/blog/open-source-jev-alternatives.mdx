@@ -1,0 +1,366 @@
+---
+title: "Open Source Jev Alternatives: Laya, Kev, SemIf, CLM-8B, and Julia 1 Tested Against the System One API"
+description: "Compare 5 open source Jev alternatives for typed AI decisions: Laya, Kev, SemIf, CLM-8B, and Julia 1. Licenses, hardware, install commands, honest limits."
+pubDate: 2026-09-28
+tags: ["ai", "open-source", "roundup", "decision-models", "system-one", "jev", "laya", "kev", "semif", "clm", "julia-1"]
+featured: true
+---
+
+In this blog post, we will see which open source Jev alternatives are worth running today, how they copy (or deliberately break from) TypeSafe's System One API, and what hardware each one really needs. Five projects appeared within 11 days of Jev's September 15 launch. Every version, licence, and star count below was checked on September 28, 2026.
+
+## Table of Contents
+
+- [The short answer](#the-short-answer)
+- [What a System One decision model is](#what-a-system-one-decision-model-is)
+- [A 20 line example of the core idea](#a-20-line-example-of-the-core-idea)
+- [Jev, the hosted baseline](#jev-the-hosted-baseline)
+- [Laya](#laya)
+- [Kev](#kev)
+- [SemIf](#semif)
+- [CLM-8B](#clm-8b)
+- [Julia 1](#julia-1)
+- [Side-by-side comparison](#side-by-side-comparison)
+- [What I skipped](#what-i-skipped)
+- [Which one should you try first?](#which-one-should-you-try-first)
+- [FAQ](#faq)
+- [How this ties to ai.dosa.dev](#how-this-ties-to-aidosadev)
+
+## The short answer
+
+The best open source Jev alternatives right now are Laya for a fast, CPU-friendly drop-in server, Kev for the closest accuracy to Jev on your own GPU, and Julia 1 for a 144M parameter model that runs on a laptop CPU. All three are Apache 2.0. SemIf and CLM-8B suit research and agent action selection.
+
+## What a System One decision model is
+
+A System One model does not write text. You send it a **state** (an email, a ticket, a JSON blob, a game screen description) and a set of **typed questions**. It sends back a probability for every allowed answer.
+
+TypeSafe's API defines three question types, and every project in this post copies them:
+
+- **`choice`**: pick one label from a list you supply, for example `refund`, `tracking`, or `other`.
+- **`score`**: place the state on an ordered scale, for example `calm` to `very angry`.
+- **`noul`**: a yes/no question that returns the probability of yes.
+
+Because the model can only pick from your labels, it cannot invent a new category. That is the whole pitch. It replaces the "ask an LLM, then parse its JSON, then retry when the JSON is broken" loop that most of us have written at least once.
+
+What surprised me was how quickly the API itself became the standard. Laya, Kev, and CLM-8B all serve `POST /v1/systemone`, so the official TypeSafe SDK talks to them by changing one base URL.
+
+## A 20 line example of the core idea
+
+The part that matters in production is not the label. It is the probability, because that is what lets you decide what to automate and what to send to a human. Here is a stdlib-only Python script that shows why calibration changes that decision:
+
+```python
+import math
+
+def softmax(logits, temperature=1.0):
+    scaled = [x / temperature for x in logits]
+    top = max(scaled)
+    exps = [math.exp(x - top) for x in scaled]
+    total = sum(exps)
+    return [e / total for e in exps]
+
+def decide(labels, logits, temperature, threshold=0.80):
+    probs = softmax(logits, temperature)
+    best = max(range(len(labels)), key=lambda i: probs[i])
+    route = "automate" if probs[best] >= threshold else "human"
+    return labels[best], round(probs[best], 3), route
+
+labels = ["refund", "tracking", "other"]
+raw_logits = [2.9, 0.4, 0.1]
+
+print(decide(labels, raw_logits, temperature=1.0))
+print(decide(labels, raw_logits, temperature=2.4))
+```
+
+When I ran it with Python 3, the output was as shown below:
+
+```text
+('refund', 0.875, 'automate')
+('refund', 0.601, 'human')
+```
+
+Same label, same raw scores, opposite routing. The temperature of 2.4 is not made up: Kev ships a fitted temperature of 2.41 with its 4B checkpoint. An uncalibrated model would have auto-refunded a ticket it was only about 60% sure of. So when you compare these tools, look at calibration numbers (Brier score, ECE) and not only accuracy.
+
+## Jev, the hosted baseline
+
+Jev is the model everything below is measured against, so it gets a short section even though it is not open source.
+
+### What it does and who it is for
+
+TypeSafe launched Jev on September 15, 2026. It takes a state plus typed questions through `POST https://api.typesafe.ai/v1/systemone` and returns choices, scores, and yes/no probabilities. It is for teams that want the typed-decision API without running a GPU. The Hacker News launch thread was reported at 1,863 points and 490 comments.
+
+### Try it
+
+The official Python client is `typesafe-sdk` (Python 3.10+):
+
+```bash
+python -m pip install typesafe-sdk
+export TYPESAFE_API_KEY="your-api-key"
+```
+
+```python
+from typesafe_sdk import Choice, Noul, TypeSafeClient
+
+with TypeSafeClient() as client:
+    response = client.system_one(
+        state={"document": "I was charged twice. Please fix this ASAP."},
+        questions={
+            "billing": Noul(instructions="Is this ticket about billing?"),
+            "tone": Choice(
+                instructions="What is the customer's tone?",
+                criteria={"calm": None, "frustrated": None, "angry": None},
+            ),
+        },
+    )
+
+print(response.nouls["billing"].noul)
+print(response.choices["tone"].choice, response.choices["tone"].probabilities)
+```
+
+### Limitation
+
+The weights, architecture, and training method are closed. TypeSafe's pricing page lists $0.042 per million input tokens with free output tokens, but access was still early access at the time of writing, so I could not run a request myself. Treat pricing as unverified until you see it in your own dashboard.
+
+## Laya
+
+### What it does
+
+Laya, from Convai Innovations, is a non-autoregressive decision engine with three checkpoints (English, multilingual, and typed-decisions) built on bidirectional encoders around 421M parameters. A `Router` detects the language of each request and picks the checkpoint for you. It reads 100+ languages, and the `laya[serve]` extra exposes a Jev-compatible `POST /v1/systemone` endpoint.
+
+### Who it is for
+
+Teams that want a self-hosted Jev replacement today, including on CPU or a single small GPU, and anyone who needs non-English routing.
+
+### Verified facts
+
+- **Latest version:** `laya` 0.3.20 on PyPI, released September 24, 2026. The package went from 0.1.0 (September 18) to 0.3.20 in six days.
+- **Licence:** Apache 2.0.
+- **Stars:** about 26,000 on `NandhaKishorM/laya`, with 2,272 forks and 206 open issues and PRs.
+- **Pricing:** free to self-host. A separate hosted API exists at laya.studio.
+
+### Try it
+
+1. Install the server extra and start it:
+
+   ```bash
+   pip install "laya[serve]"
+   LAYA_PRELOAD=1 laya-serve
+   ```
+
+2. Send a request from another terminal:
+
+   ```bash
+   curl -s localhost:8000/v1/systemone -H 'content-type: application/json' -d '{
+     "state": {"body": "billed twice, refund please or we cancel"},
+     "questions": {"dept": {"type": "choice", "instructions": "which team?",
+                   "criteria": {"billing": "refunds", "tech": "bugs"}}}
+   }'
+   ```
+
+3. Or skip the install and head to https://huggingface.co/spaces/convaiinnovations/laya-demo to try eight workflows in the browser.
+
+The API has no authentication until you set `LAYA_API_KEY`, so set a key before exposing it anywhere other than your laptop.
+
+### Limitation
+
+The headline 32.8 ms p50 latency on a Tesla T4 is Laya's own measurement, and our [September 20 news brief](/blog/today-in-ai-2026-09-20) flagged that its zero-shot accuracy trails Jev. The release cadence also cuts both ways: 30 PyPI versions in a week means you should pin the version in production.
+
+## Kev
+
+### What it does
+
+Kev, by Jared Palmer, is a family of decision models built as LoRA adapters plus a pointer head on Qwen3.5 and Qwen3.8 base models. It comes in 0.8B, 4B, 9B, and 27B sizes, ships a fitted temperature per checkpoint, and serves TypeSafe's `/v1/systemone` contract so the official SDK works against it unchanged.
+
+### Who it is for
+
+Developers with a GPU (or a 32 GB Apple Silicon Mac) who want the closest open match to Jev's accuracy and a documented path to fine-tune on their own labels.
+
+### Verified facts
+
+- **Latest release:** no tagged releases. Kev-27B was made public on September 24, 2026, and the repo was still receiving pushes this week.
+- **Licence:** Apache 2.0 for code, adapters, and heads. The Qwen base models are also Apache 2.0.
+- **Stars:** 7,056, with 415 forks and 13 open issues. The repo was created on September 17, 2026.
+- **Pricing:** free to self-host. The optional Modal deploy scales to zero, so an idle endpoint costs nothing.
+
+### Try it
+
+1. Clone and install (Python 3.12 or 3.13 plus `uv`):
+
+   ```bash
+   git clone https://github.com/jaredpalmer/kev.git && cd kev
+   uv sync --extra serve
+   uv run --extra serve python -m kev.serve --run jaredpalmer/kev-4b --port 8009
+   ```
+
+2. Point the TypeSafe SDK at it:
+
+   ```python
+   from typesafe_sdk import TypeSafeClient
+
+   client = TypeSafeClient(api_key="local", base_url="http://127.0.0.1:8009", model="kev-latest")
+   ```
+
+The first run downloads the adapter and the Qwen base model, so budget time and disk for that.
+
+### Limitation
+
+The smallest model is noticeably weaker off its training distribution. Kev's own model card puts Kev-0.8B at 0.652 out-of-domain accuracy against Jev's 0.857. Kev-27B closes most of that gap but needs an 80 GB class GPU (H100, H200, or B200). Also, Python 3.14 is not supported yet because torch has no wheels for it.
+
+## SemIf
+
+### What it does
+
+SemIf (formerly OpenJev) runs "semantic ifs" on open models such as Qwen3.5-4B. It reads the shared state once, asks many typed questions, and scores the options in a single forward pass. It has PyTorch, MLX (Apple Silicon), and llama.cpp (CPU with GGUF) backends, plus a WebGPU demo that runs entirely in your browser.
+
+### Who it is for
+
+Tinkerers and researchers who want to see exactly how the scoring works, with pinned model revisions and a `prompt_sha256` on every row so results are reproducible.
+
+### Verified facts
+
+- **Latest version:** no tagged releases. Recent commits landed on September 18 and 22, 2026.
+- **Licence:** MIT.
+- **Stars:** 4,332, with 295 forks and 32 open issues. Created September 16, 2026.
+- **Pricing:** free. It does not need a TypeSafe account.
+
+### Try it
+
+1. Head to http://openjev.com, pick a model, and click load. Qwen3.5 4B is a 3.01 GB download that stays in your browser cache, and your inputs never leave the page.
+2. For the local CUDA path:
+
+   ```bash
+   git clone https://github.com/TheoLeeCJ/SemIf.git && cd SemIf
+   python3 -m venv .venv && . .venv/bin/activate
+   pip install -e '.[test]'
+   CUDA_VISIBLE_DEVICES=0 semif-score --mode direct \
+     --model Qwen/Qwen3.5-4B \
+     --revision 851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a \
+     --input examples/decisions.jsonl --output results.jsonl
+   ```
+
+### Limitation
+
+It is a scorer, not a drop-in `/v1/systemone` server, so you cannot just swap a base URL in existing Jev code. On the project's own TypeSafe-style suite, Qwen3.5 4B scores 84.5% against published Jev at 88.3%, and the 0.6B option drops to 40.7%. I would skip the small models entirely.
+
+## CLM-8B
+
+### What it does
+
+Contrastive Language Models come from researchers at Stanford and Nvidia. CLM-8B embeds the state and each candidate action separately (on a Qwen3-8B backbone) and picks the action whose embedding matches best. Because action embeddings are computed independently, they can be cached and reused across many states. It serves a TypeSafe-compatible API.
+
+### Who it is for
+
+Agent builders picking from a large, stable set of actions: tool calls, game moves, or UI clicks, where the same candidates show up over and over.
+
+### Verified facts
+
+- **Latest version:** `contrastive-lm` 0.1.0 on PyPI. The `clm-latest` model reports a release date of September 19, 2026, and the GitHub repo was created on September 23, 2026.
+- **Licence:** Apache 2.0.
+- **Stars:** about 1,300 on `Contrastive-LM/CLM`.
+- **Pricing:** free to self-host.
+
+### Try it
+
+```bash
+pip install contrastive-lm
+# 1. encoder: Qwen3-8B embeddings on a GPU
+vllm serve Qwen/Qwen3-8B --served-model-name qwen3-8b --runner pooling --port 8090 &
+# 2. CLM API on :8700 (downloads the 75 MB reference head on first run)
+clm-serve
+```
+
+### Limitation
+
+You run two services, and the vLLM encoder wants a GPU. The speed claim is real but conditional: in the team's tests CLM-8B was up to 9x faster than Jev, yet it scored 95.2% to Jev's 99.2% on BFCL v4 tool calling and finished 26 of 30 WikiRacing tasks to Jev's 30. For one-off ticket triage, the action cache buys you little.
+
+## Julia 1
+
+### What it does
+
+Julia 1, from Supersonic Labs, is a 144.3M parameter decision model built on the mmBERT-small encoder. It takes a state, a question, and 2 to 20 answer options and scores them in order. It runs on CPU with a standard PyTorch install, and an ONNX build runs in the browser through WebGPU.
+
+### Who it is for
+
+Anyone without a GPU, and edge or offline setups where a 550.5 MiB checkpoint is the budget.
+
+### Verified facts
+
+- **Latest version:** the model and Python runtime were published on Hugging Face around September 26, 2026. No versioned package on PyPI.
+- **Licence:** Apache 2.0 for the model artifacts. The training pipeline is not included.
+- **Stars:** not applicable. It lives on Hugging Face as `SupersonicLabs/Julia-1`, not GitHub.
+- **Pricing:** free locally. Supersonic Labs has announced a hosted API at $0.025 per million input tokens and $0.00 for output, but it was not open yet.
+
+### Try it
+
+```bash
+python -m pip install huggingface_hub
+python -c "from huggingface_hub import snapshot_download; snapshot_download('SupersonicLabs/Julia-1', local_dir='Julia-1')"
+python -m pip install -e ./Julia-1
+```
+
+```python
+from julia import load_model
+
+engine = load_model("Julia-1", device="cpu", strict_encoding=True, max_length=8192, head_length=512)
+```
+
+### Limitation
+
+It only chooses among options you supply, 2 to 20 per call, and the model card says it works best when the state already contains the evidence. One thing that will bite some people: the import name `julia` is the same one PyJulia uses, so install it in its own virtual environment.
+
+## Side-by-side comparison
+
+| Tool | Licence | Latest (date) | Stars | Smallest hardware | `/v1/systemone` drop-in |
+| --- | --- | --- | --- | --- | --- |
+| Jev | Proprietary | Hosted (Sep 15, 2026 launch) | n/a | None, hosted | Yes, it defines it |
+| [Laya](https://github.com/NandhaKishorM/laya) | Apache 2.0 | 0.3.20 (Sep 24, 2026) | ~26,000 | CPU or T4 | Yes |
+| [Kev](https://github.com/jaredpalmer/kev) | Apache 2.0 | Kev-27B public (Sep 24, 2026) | 7,056 | Apple Silicon Mac (0.8B) | Yes |
+| [SemIf](https://github.com/TheoLeeCJ/SemIf) | MIT | Commits to Sep 22, 2026 | 4,332 | Browser WebGPU or CPU (GGUF) | No, scorer CLI |
+| [CLM-8B](https://github.com/Contrastive-LM/CLM) | Apache 2.0 | 0.1.0 (Sep 2026) | ~1,300 | GPU for vLLM encoder | Yes, TypeSafe-compatible |
+| [Julia 1](https://huggingface.co/SupersonicLabs/Julia-1) | Apache 2.0 | HF upload (Sep 26, 2026) | n/a (Hugging Face) | Laptop CPU | No, own Python API |
+
+## What I skipped
+
+- **Open-Jev** (Zefan-Cai): MIT code with 2B and 9B checkpoints, but the project page says new 2B training was stopped and 27B has no audited result. I could not verify its star count either.
+- **NanoJev and TinyJev**: interesting, but narrower and with less evidence of active maintenance than the five above.
+
+## Which one should you try first?
+
+1. **You already call Jev and want a local fallback:** Laya. Change the base URL and keep your code.
+2. **You want the best open accuracy and have a big GPU:** Kev-27B, or Kev-4B on a 32 GB Mac.
+3. **You have no GPU at all:** Julia 1 on CPU, or SemIf in the browser.
+4. **Your agent picks from hundreds of repeated actions:** CLM-8B.
+
+Whatever you pick, set your automation threshold from calibration data on your own labelled examples, as the 20 line example above shows.
+
+## FAQ
+
+### Is there an open source alternative to Jev?
+
+Yes. Laya, Kev, and CLM-8B are Apache 2.0 projects that serve the same `POST /v1/systemone` shape as Jev, so the TypeSafe SDK works against them with a new base URL. SemIf (MIT) and Julia 1 (Apache 2.0) use the same typed questions with their own interfaces.
+
+### Can I run a Jev-like decision model locally without a GPU?
+
+Yes. Julia 1 runs on CPU with a standard PyTorch install and a 550.5 MiB checkpoint, and Laya also runs on CPU. SemIf supports CPU through llama.cpp with a GGUF model, or you can run it in the browser with WebGPU.
+
+### What is the difference between choice, score, and noul questions?
+
+A `choice` question picks one label from options you supply, a `score` question places the state on an ordered scale, and a `noul` question returns the probability that a statement is true. All three return probabilities, so you can route low-confidence answers to a person.
+
+### Is a System One model better than asking an LLM for JSON?
+
+For closed decisions like routing, triage, and moderation, usually yes, because it cannot return a label you did not define and it gives calibrated probabilities in one forward pass. It is the wrong tool for anything open-ended, such as writing a reply or extracting a free-form value.
+
+### How accurate are open source Jev alternatives compared to Jev?
+
+Close at the top end and weaker at the bottom. On Kev's published numbers, Kev-27B reaches 0.848 out-of-domain accuracy against Jev's 0.857, while Kev-0.8B drops to 0.652. These are project-reported benchmarks, so test on your own data.
+
+## How this ties to ai.dosa.dev
+
+We covered Jev's launch in the [September 16 news brief](/blog/today-in-ai-2026-09-16) and Laya's first release in the [September 20 brief](/blog/today-in-ai-2026-09-20). This post is the hands-on follow-up.
+
+Decision models slot in underneath the agents already in the directory. [Hermes Agent](/tools/hermes-agent) and [Paperclip](/tools/paperclip) in the [Async Agents category](/category/async-agents) make many small routing calls that a local decision model could answer cheaply. If you run those agents in isolation, [SmolVM](/tools/smolvm) and [Hindsight](/tools/hindsight) in the [Productivity category](/category/productivity) cover the sandbox and memory side.
+
+Happy Testing! Which decision in your stack are you still asking an LLM to answer in JSON, and would a 144M parameter model do it just as well?
+
+---
+
+*Sources checked on September 28, 2026: TypeSafe Jev docs and `typesafe-sdk` reference; NandhaKishorM/laya README, docs site, and PyPI release history; jaredpalmer/kev README, PLAN.md, and Kev model cards on Hugging Face; TheoLeeCJ/SemIf README and openjev.com; Contrastive-LM/CLM README, `contrastive-lm` PyPI page, and VentureBeat's September 25 report; SupersonicLabs/Julia-1 model card and Supersonic Labs' launch post; Zefan-Cai Open-Jev project page.*
