@@ -25,7 +25,7 @@ const d1Promise = db.batch<{ count: number }>([
     db.prepare('SELECT COUNT(*) AS count FROM users WHERE last_seen_at >= ?').bind(activeCutoff),
 ]);
 const [{ data: funnel, error: analyticsError }, d1Results] = await Promise.all([analyticsPromise, d1Promise]);
-const { shown, started, completed, providers: providerRows, triggers: triggerRows, outbound: outboundRows } = funnel;
+const { shown, started, completed, providers: providerRows, triggers: triggerRows, outbound: outboundRows, badgeReferrals } = funnel;
 const rate = (numerator: number, denominator: number) => denominator
     ? `${((numerator / denominator) * 100).toFixed(1)}%`
     : '—';
@@ -115,6 +115,16 @@ const activeUsers = d1Results[2]?.results?.[0]?.count ?? 0;
                     <tbody>{outboundRows.map(([slug, clicks]) => <tr class="border-t border-[#1a1a1a]"><td class="px-5 py-3"><a href={`/tools/${slug}`} class="hover:underline">{slug}</a></td><td>{clicks}</td></tr>)}</tbody>
                 </table>
             ) : <p class="text-[#737373] p-5">No outbound clicks in this range.</p>}
+        </section>
+
+        <section class="border border-[#222] rounded-lg overflow-hidden mt-6">
+            <h2 class="font-semibold px-5 py-4 border-b border-[#222]">Badge referrals by tool</h2>
+            {badgeReferrals.length ? (
+                <table class="w-full text-sm">
+                    <thead class="text-[#737373] text-left"><tr><th class="px-5 py-3">Tool</th><th>Visits</th></tr></thead>
+                    <tbody>{badgeReferrals.map(([slug, visits]) => <tr class="border-t border-[#1a1a1a]"><td class="px-5 py-3">{slug === '(home)' ? slug : <a href={`/tools/${slug}`} class="hover:underline">{slug}</a>}</td><td>{visits}</td></tr>)}</tbody>
+                </table>
+            ) : <p class="text-[#737373] p-5">No badge referrals in this range.</p>}
         </section>
     </div>
 </DashboardLayout>

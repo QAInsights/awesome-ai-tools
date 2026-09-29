@@ -7,6 +7,26 @@ function currentToolSlug() {
     return match ? decodeURIComponent(match[1]) : '';
 }
 
+// Pure decision: an incoming `?ref=badge` link means a maker added the
+// Featured badge to their README - count which tool it refers to.
+export function badgeReferralEvent(pathname, search) {
+    if (new URLSearchParams(search).get('ref') !== 'badge') return null;
+    const match = pathname.match(/^\/tools\/([^/]+)\/?$/);
+    const subject = match ? decodeURIComponent(match[1]) : '';
+    return { trigger: subject ? 'tool_page' : 'home', subject };
+}
+
+if (typeof window !== 'undefined') {
+    const referral = badgeReferralEvent(window.location.pathname, window.location.search);
+    if (referral) {
+        analytics.track(EVENTS.BADGE_REFERRAL, referral);
+        // Strip ref so reloads/shares don't double-count the referral.
+        const url = new URL(window.location.href);
+        url.searchParams.delete('ref');
+        window.history.replaceState(null, '', url);
+    }
+}
+
 function placement(anchor) {
     if (anchor.closest('[data-compare-row]')) return 'tool_card';
     if (window.location.pathname.startsWith('/compare')) return 'comparison';

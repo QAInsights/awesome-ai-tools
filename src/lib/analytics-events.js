@@ -41,6 +41,7 @@ export const EVENTS = Object.freeze({
     ONBOARDING_SHOWN: 'onboarding_shown',
     ONBOARDING_DISMISSED: 'onboarding_dismissed',
     ONBOARDING_STEP_COMPLETED: 'onboarding_step_completed',
+    BADGE_REFERRAL: 'badge_referral',
 });
 
 export const EVENT_CATALOG = Object.freeze({
@@ -60,6 +61,7 @@ export const EVENT_CATALOG = Object.freeze({
     [EVENTS.ONBOARDING_SHOWN]: { client: true, triggers: ONBOARDING_TRIGGERS, subject: subjectPolicies.none },
     [EVENTS.ONBOARDING_DISMISSED]: { client: true, triggers: ONBOARDING_TRIGGERS, subject: subjectPolicies.none },
     [EVENTS.ONBOARDING_STEP_COMPLETED]: { client: true, triggers: ONBOARDING_TRIGGERS, subject: subjectPolicies.onboardingStep },
+    [EVENTS.BADGE_REFERRAL]: { client: true, triggers: ['tool_page', 'home'], subject: subjectPolicies.slug },
 });
 
 export function sanitizeAuthTrigger(value) {

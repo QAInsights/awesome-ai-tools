@@ -13,6 +13,8 @@ describe('funnel view model', () => {
             { event: 'gate_blocked', trigger: 'zap_btn', subject: 'cursor', provider: '', n: 8 },
             { event: 'outbound_click', trigger: 'tool_card', subject: 'cursor', provider: '', n: 5 },
             { event: 'outbound_click', trigger: 'tool_detail', subject: 'cursor', provider: '', n: 2 },
+            { event: 'badge_referral', trigger: 'tool_page', subject: 'cursor', provider: '', n: 3 },
+            { event: 'badge_referral', trigger: 'home', subject: '', provider: '', n: 1 },
         ]);
 
         expect(model.shown).toBe(10);
@@ -21,5 +23,6 @@ describe('funnel view model', () => {
         expect(model.providers[0]).toEqual({ provider: 'github', started: 6, completed: 4 });
         expect(model.triggers).toContainEqual({ trigger: 'zap_btn', blocked: 8, completed: 4 });
         expect(model.outbound[0]).toEqual(['cursor', 7]);
+        expect(model.badgeReferrals).toEqual([['cursor', 3], ['(home)', 1]]);
     });
 });

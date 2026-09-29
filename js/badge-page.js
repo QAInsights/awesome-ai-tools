@@ -11,6 +11,11 @@ export function buildSnippets(slug) {
     };
 }
 
+export function resolvePreselectedSlug(search, availableSlugs) {
+    const slug = new URLSearchParams(search).get('tool') ?? '';
+    return slug && availableSlugs.includes(slug) ? slug : '';
+}
+
 function initializeBadgePage() {
     const toolSelect = document.getElementById('badgeTool');
     const markdown = document.getElementById('badgeMd');
@@ -21,6 +26,12 @@ function initializeBadgePage() {
         if (markdown) markdown.textContent = snippets.markdown;
         if (html) html.textContent = snippets.html;
     };
+
+    if (toolSelect && typeof location !== 'undefined') {
+        const available = [...toolSelect.options].map(option => option.value);
+        const preselected = resolvePreselectedSlug(location.search, available);
+        if (preselected) toolSelect.value = preselected;
+    }
 
     toolSelect?.addEventListener('change', updateSnippets);
     updateSnippets();

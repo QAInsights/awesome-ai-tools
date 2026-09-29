@@ -97,3 +97,22 @@ jobs:
           commit-message: "feat(data): add ${{ steps.parse.outputs.tool_name }} to directory"
           delete-branch: true
           labels: "automated-pr,enriched"
+
+      - name: Build badge comment
+        id: badge
+        if: steps.parse.outputs.valid == 'true'
+        continue-on-error: true
+        env:
+          ISSUE_DATA: ${{ steps.parse.outputs.jsonString }}
+        run: |
+          node scripts/badge-comment.js badge-comment.md
+          if [ -f badge-comment.md ]; then
+            echo "has_comment=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Comment badge snippet on issue
+        if: steps.badge.outputs.has_comment == 'true'
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body-path: badge-comment.md

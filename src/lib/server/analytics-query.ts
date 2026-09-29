@@ -22,6 +22,7 @@ export interface FunnelViewModel {
     providers: Array<{ provider: string; started: number; completed: number }>;
     triggers: Array<{ trigger: string; blocked: number; completed: number }>;
     outbound: Array<[string, number]>;
+    badgeReferrals: Array<[string, number]>;
 }
 
 const INTERVALS: Record<FunnelRange, string> = {
@@ -57,6 +58,7 @@ export function buildFunnelViewModel(rows: FunnelEventRow[]): FunnelViewModel {
     const providers = new Map(['github', 'google', 'dev'].map(provider => [provider, { provider, started: 0, completed: 0 }]));
     const triggers = new Map<string, { trigger: string; blocked: number; completed: number }>();
     const outbound = new Map<string, number>();
+    const badgeReferrals = new Map<string, number>();
     let shown = 0;
     let started = 0;
     let completed = 0;
@@ -87,6 +89,10 @@ export function buildFunnelViewModel(rows: FunnelEventRow[]): FunnelViewModel {
         if (row.event === EVENTS.OUTBOUND_CLICK && row.subject) {
             outbound.set(row.subject, (outbound.get(row.subject) ?? 0) + count);
         }
+        if (row.event === EVENTS.BADGE_REFERRAL) {
+            const key = row.subject || '(home)';
+            badgeReferrals.set(key, (badgeReferrals.get(key) ?? 0) + count);
+        }
     }
 
     return {
@@ -96,6 +102,7 @@ export function buildFunnelViewModel(rows: FunnelEventRow[]): FunnelViewModel {
         providers: Array.from(providers.values()),
         triggers: Array.from(triggers.values()),
         outbound: Array.from(outbound).sort((a, b) => b[1] - a[1]).slice(0, 20),
+        badgeReferrals: Array.from(badgeReferrals).sort((a, b) => b[1] - a[1]).slice(0, 20),
     };
 }
 
