@@ -294,6 +294,18 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "whiteboard",
+    "name": "Whiteboard",
+    "company": "/dev/fast (YC W26)",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
+    "slug": "proliferate",
+    "name": "Proliferate",
+    "company": "Proliferate",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -1164,6 +1176,12 @@
     "category": "AI Code Review & Security"
   },
   {
+    "slug": "skillspector",
+    "name": "SkillSpector",
+    "company": "NVIDIA",
+    "category": "AI Code Review & Security"
+  },
+  {
     "slug": "gitauto",
     "name": "GitAuto",
     "company": "GitAuto",
@@ -1719,6 +1737,12 @@
     "slug": "cua",
     "name": "Cua",
     "company": "Cua",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "openshell",
+    "name": "OpenShell",
+    "company": "NVIDIA",
     "category": "Developer Productivity & Workflow"
   },
   {

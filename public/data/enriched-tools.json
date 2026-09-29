@@ -8177,5 +8177,129 @@
       "coding-agents"
     ],
     "lastUpdated": "2026-09-24"
+  },
+  {
+    "slug": "whiteboard",
+    "name": "Whiteboard",
+    "company": "/dev/fast (YC W26)",
+    "pricing": "open-source",
+    "pricingDetail": "Whiteboard is free and open source under the MIT license, with desktop downloads for macOS, Windows and Linux. It uses the coding agent you already run (Claude Code, Codex, etc.), so model usage is billed by that agent's provider; a hosted product for teams is planned, and the project states it will always remain self-hostable.",
+    "description": "Whiteboard is an open-source desktop app from YC W26 startup /dev/fast where humans and coding agents design and review software together on a shared canvas. It plugs into agents such as Claude Code and Codex and gives them an SDK to draw sequence diagrams, entity-relationship diagrams and trace quotes describing their work; clicking any element jumps to the underlying code in a vendored Code OSS editor with VS Code keybindings and LSP navigation. A Rust, AST-aware semantic diff viewer summarises large added functions as pseudocode and folds tests and documentation, and a Decision Log links agent traces to the requirements they implemented so you can see which choices the agent made autonomously.",
+    "keyFeatures": [
+      "Agent SDK for drawing sequence and ER diagrams of changes on an in-app canvas",
+      "Diagram elements link directly to the underlying code",
+      "Vendored Code OSS editor with VS Code keybindings and LSP support",
+      "Rust AST-aware semantic diff viewer with pseudocode summaries and folded tests/docs",
+      "WASM plugin system for customising diff rendering",
+      "Decision Log linking agent traces to requirements and autonomous decisions",
+      "Runs locally against your checkouts; shareable reviews; telemetry can be disabled"
+    ],
+    "bestFor": "Developers and tech leads who need to review large agent-generated changes at the architecture and spec level before reading line-by-line diffs.",
+    "notIdealFor": "Users who want to edit code inside the review tool (file editing is not yet supported) or who need multi-repository reviews and live-updating shared reviews.",
+    "recentUpdates": "Whiteboard launched on Show HN on 24 September 2026 and shipped v0.1.5 on 28 September 2026; the MIT-licensed repository passed 2,000 GitHub stars within days, with daily commits.",
+    "verdict": "A thoughtful take on agent-era code review that moves the first pass from diffs to diagrams linked to code. It is very early (v0.1.x) with known gaps, but the semantic diff and decision log address a real pain point of reviewing large agent changes.",
+    "tags": [
+      "code-review",
+      "agent-workspace",
+      "diagrams",
+      "semantic-diff",
+      "code-oss",
+      "open-source",
+      "desktop-app"
+    ],
+    "lastUpdated": "2026-09-29"
+  },
+  {
+    "slug": "proliferate",
+    "name": "Proliferate",
+    "company": "Proliferate",
+    "pricing": "freemium",
+    "pricingDetail": "Proliferate is open source under AGPL-3.0 and local use is free, including local checkouts and worktrees. Hosted cloud sandboxes (metered in compute units) and model calls routed through Proliferate's managed gateway are billed per organization seat plus usage; bringing your own agent subscription, API key or self-hosted gateway is not metered, and the whole control plane can be self-hosted.",
+    "description": "Proliferate is an open-source, self-hostable AI IDE for running Claude Code, Codex, OpenCode, Cursor, Grok and other coding agents in one workspace. Each agent runs through its native harness, and every task gets an isolated Git worktree with its own branch, terminal, conversation and review state, so several agents can work in parallel. Agents can delegate scoped work to subagents on other harnesses, share MCPs, skills and computer/browser-use integrations configured once, and be chained into reusable recurring or event-driven workflows with human approval gates. Work can run locally or in cloud sandboxes, and the control plane deploys on Docker, AWS, GCP, Azure, Kubernetes or air-gapped infrastructure.",
+    "keyFeatures": [
+      "Native harnesses for Claude Code, Codex, OpenCode, Cursor and Grok",
+      "Isolated Git worktree per task with its own terminal, conversation and review state",
+      "Parallel agents and cross-harness subagent delegation",
+      "Shared MCPs, skills, computer use and browser use configured once for every agent",
+      "Reusable scheduled and event-driven workflows with human approval gates",
+      "Local or cloud sandbox execution",
+      "Self-hostable control plane (Docker Compose, AWS CloudFormation, Kubernetes, air-gapped)"
+    ],
+    "bestFor": "Developers and teams who want a Codex-style parallel agent workspace that is not tied to one model vendor and can be self-hosted inside their own infrastructure.",
+    "notIdealFor": "Organisations that cannot adopt AGPL-licensed software, or individuals who only use a single agent and do not need worktrees, workflows or a control plane.",
+    "recentUpdates": "Proliferate was launched on Show HN as an open-source, self-hostable Codex for any coding agent, ships a macOS desktop app with daily commits through late September 2026, and published server-v0.4.29 in August 2026.",
+    "verdict": "A promising vendor-neutral agent IDE whose workflows and self-hosting story set it apart from other worktree-based agent managers; it is young, so expect some rough edges.",
+    "tags": [
+      "ai-ide",
+      "parallel-agents",
+      "git-worktrees",
+      "workflows",
+      "self-hosted",
+      "open-source",
+      "agent-workspace"
+    ],
+    "lastUpdated": "2026-09-29"
+  },
+  {
+    "slug": "skillspector",
+    "name": "SkillSpector",
+    "company": "NVIDIA",
+    "pricing": "open-source",
+    "pricingDetail": "SkillSpector is free and open source under the Apache-2.0 license. Static scans need no API key; the optional LLM semantic pass uses an OpenAI-compatible endpoint you configure (NVIDIA build.nvidia.com by default, or providers such as Anthropic), billed by that provider.",
+    "description": "SkillSpector is NVIDIA's open-source security scanner for AI agent skills used by Claude Code, Codex CLI, Gemini CLI and MCP clients. Point it at a Git repository, URL, zip file, directory or single SKILL.md and it answers whether the skill is safe to install: fast static analysis (AST checks for exec/eval/subprocess, taint tracking from secrets to network sinks, YARA signatures and live OSV.dev dependency lookups) covers 70+ vulnerability patterns across 17 categories, and an optional LLM semantic pass compares declared intent against behaviour to drop false positives and explain findings. Results include a 0-100 risk score with severity labels and recommendations, and it is the security tier of the NVIDIA Verified Skills pipeline.",
+    "keyFeatures": [
+      "Scans Git repos, URLs, zip files, directories or single SKILL.md files",
+      "70+ vulnerability patterns in 17 categories including prompt injection, exfiltration and MCP tool poisoning",
+      "Static AST, taint-tracking and YARA analysis with live OSV.dev dependency lookups",
+      "Optional LLM semantic analysis to filter false positives and explain findings",
+      "0-100 risk score with severity labels and recommendations",
+      "Terminal, JSON, Markdown and SARIF output plus baselines for CI gating",
+      "MCP server mode and Pi/OpenCode extensions for scanning inside agent sessions"
+    ],
+    "bestFor": "Developers and security teams who install third-party agent skills or MCP tools and want a pre-install or CI gate for malicious or risky behaviour.",
+    "notIdealFor": "Teams looking for general application SAST or PR review, or anyone expecting a clean scan to prove a skill is trustworthy.",
+    "recentUpdates": "SkillSpector shipped v2.12.0 on 23 September 2026 and has passed 18,000 GitHub stars; it was covered by Help Net Security in August 2026 and is recommended in OWASP's Agentic Skills Top 10 scanner integration guide.",
+    "verdict": "The most complete open-source scanner for agent skill supply-chain risk right now, with CI-friendly SARIF output. Like any heuristic scanner it reduces rather than eliminates risk, so it works best as one layer alongside sandboxing.",
+    "tags": [
+      "security",
+      "agent-skills",
+      "supply-chain",
+      "static-analysis",
+      "mcp",
+      "sarif",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-29"
+  },
+  {
+    "slug": "openshell",
+    "name": "OpenShell",
+    "company": "NVIDIA",
+    "pricing": "open-source",
+    "pricingDetail": "OpenShell is free and open source under the Apache-2.0 license and runs on your own Linux, macOS (Apple Silicon) or WSL 2 machines and Kubernetes clusters. Model usage is billed by whichever inference provider or local backend you route agents to.",
+    "description": "OpenShell is NVIDIA's open-source runtime for running autonomous AI agents, including coding agents such as Claude Code, Codex, OpenCode and GitHub Copilot CLI, in isolated sandboxes. Kernel-level controls confine which files each agent can access and which system calls it can make, every outbound network connection is checked against declarative YAML policy, and credentials are injected only at approved endpoints so agents never see real keys. A privacy router can keep inference on local or self-hosted backends, and a formal policy prover flags risky new access before a policy change is approved. A gateway control plane manages sandbox lifecycle across Docker, Podman, microVM and Kubernetes compute drivers, with CLI, TUI and Python/TypeScript/Go/Rust SDKs.",
+    "keyFeatures": [
+      "One-command sandboxes for Claude Code, Codex, OpenCode and Copilot CLI",
+      "Kernel-level filesystem, syscall and process confinement",
+      "Policy-enforced egress with declarative YAML network rules",
+      "Credential providers that work only at approved endpoints",
+      "Privacy router for local or self-hosted inference",
+      "Formal policy prover and advisor for reviewing permission changes",
+      "Docker, Podman, microVM and Kubernetes (Helm) compute drivers; Python, TypeScript, Go and Rust SDKs"
+    ],
+    "bestFor": "Developers and platform teams who want to give coding agents broad tool access while enforcing file, network and credential boundaries outside the agent.",
+    "notIdealFor": "Users who just want a quick throwaway VM for a single agent without writing policies, or Windows users outside WSL 2 (support is experimental).",
+    "recentUpdates": "NVIDIA released OpenShell 0.1.0 with a stable release cadence, new isolation primitives and APIs, described in a 28 September 2026 NVIDIA Technical Blog post; the Apache-2.0 repository has over 10,000 GitHub stars and was on GitHub's daily trending list.",
+    "verdict": "A serious, enterprise-grade sandbox for agents from a major vendor, with unusually strong policy tooling such as formal verification of permission changes. It is more infrastructure than end-user app, so expect a learning curve around gateways and policies.",
+    "tags": [
+      "sandboxes",
+      "agent-security",
+      "policy-engine",
+      "coding-agents",
+      "kubernetes",
+      "open-source",
+      "runtime"
+    ],
+    "lastUpdated": "2026-09-29"
   }
 ]
