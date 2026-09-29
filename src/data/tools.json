@@ -1178,5 +1178,9 @@
   {
     "companyName": "NVIDIA",
     "toolName": "OpenShell"
+  },
+  {
+    "companyName": "YoanWai",
+    "toolName": "agent-manager"
   }
 ]

@@ -1746,6 +1746,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "agent-manager",
+    "name": "agent-manager",
+    "company": "YoanWai",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
