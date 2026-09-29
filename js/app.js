@@ -212,7 +212,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (typeof turnstile !== 'undefined') {
             window.turnstileWidgetId = turnstile.render("#turnstile-container", {
                 sitekey: siteKey,
-                size: 'invisible',
                 callback: (token) => window.cfTokenValue = token
             });
         } else {
