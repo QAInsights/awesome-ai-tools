@@ -840,6 +840,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "molt",
+    "name": "molt",
+    "company": "Solvyx / Tyler Skelton",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",

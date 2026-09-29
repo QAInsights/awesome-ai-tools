@@ -1237,6 +1237,132 @@
     "lastUpdated": "2026-09-22"
   },
   {
+    "slug": "athas",
+    "name": "Athas",
+    "company": "Athas",
+    "pricing": "open-source",
+    "pricingDetail": "Athas is free and open source under the AGPL-3.0 license, with prebuilt macOS, Windows and Linux builds (Homebrew cask, WinGet, Scoop, .deb/.rpm and install scripts). Model and agent usage is billed by the providers you connect (Anthropic, OpenAI, Google, OpenRouter, etc.) or free with local Ollama models.",
+    "description": "Athas is a lightweight, cross-platform code editor built with Tauri (Rust backend, React frontend) that treats coding agents as first-class citizens. It runs Claude Code, Codex, Gemini CLI, GitHub Copilot CLI, OpenCode, Qwen Code and Kimi CLI as in-editor agent sessions over the Agent Client Protocol (ACP) and the Codex app-server protocol, with permission prompts, queued messages and persistent chat history, and it also offers direct model chat via Anthropic, OpenAI, Google, DeepSeek, Mistral, xAI Grok, OpenRouter and Ollama. Traditional editor features — Git, LSP, syntax highlighting, vim keybindings, integrated terminal, database viewers and collaboration — are built in.",
+    "keyFeatures": [
+      "In-editor agent sessions for Claude Code, Codex, Gemini CLI, GitHub Copilot CLI, OpenCode, Qwen Code and Kimi CLI via ACP and the Codex app-server",
+      "Multi-provider model chat (Anthropic, OpenAI, Google, DeepSeek, Mistral, Grok, OpenRouter, Ollama) with attachments and follow-up actions",
+      "Tauri (Rust + React) architecture for a small, fast native binary on macOS, Windows and Linux",
+      "Git integration, LSP support, vim keybindings and an integrated terminal",
+      "Built-in database viewers for PostgreSQL, MySQL, SQLite, DuckDB, MongoDB and Redis",
+      "Collaboration plus enterprise policy controls (managed mode and extension allowlist)",
+      "Extension system with a registry, and one-line installers for every platform"
+    ],
+    "bestFor": "Developers who want a fast, native, open-source editor that hosts the CLI coding agents they already pay for (Claude Code, Codex, Gemini CLI, Copilot) side by side, without the weight of Electron-based IDEs.",
+    "notIdealFor": "Teams that depend on the VS Code extension ecosystem or JetBrains-grade refactoring tooling, or organisations that cannot adopt AGPL-licensed software.",
+    "recentUpdates": "Athas shipped v0.14.2 in September 2026 (preview channel at v0.14.1-preview.x), with the GitHub repo passing 3,000 stars and receiving daily commits; recent work added ACP-based agent sessions, Codex app-server integration, enterprise managed mode with an extension allowlist, and Homebrew/WinGet/Scoop distribution.",
+    "verdict": "Athas is a promising, actively developed open-source alternative to Cursor- and Zed-style AI editors whose differentiator is bringing existing terminal agents into a lightweight native UI; it is young and moving fast, so expect rough edges but a very capable agent workspace.",
+    "tags": [
+      "ai-ide",
+      "code-editor",
+      "tauri",
+      "open-source",
+      "acp",
+      "agent-workspace",
+      "cross-platform"
+    ],
+    "lastUpdated": "2026-09-24"
+  },
+  {
+    "slug": "ccgui",
+    "name": "ccgui",
+    "company": "zhukunpenglinyutong",
+    "pricing": "open-source",
+    "pricingDetail": "ccgui (Desktop CC GUI) is free and open source under the MIT license, with signed macOS (Apple Silicon) builds plus Windows and Linux installers on GitHub Releases and in-app auto-update. It is a client only: model usage is billed by whichever CLI subscription or API provider channel you configure for each engine.",
+    "description": "ccgui is a multi-engine AI coding desktop client built with Tauri 2, React 18, TypeScript and Rust. Instead of watching a black terminal, you pick a project and chat with Claude Code, Codex CLI, Kimi CLI, Grok CLI, Pi, OMP, DeepSeek Harness (DSH), Antigravity, OpenCode or Qoder, each wired in through a dedicated protocol adapter in the Rust backend so streaming events, session history and provider channels are handled natively rather than scraped off a terminal screen. The chat surface renders per-token streaming with cached syntax highlighting, folding thinking traces, live tool-call rows with Git diff and Bash viewers, todo snapshots, question cards and permission prompts, and supports per-tab model and reasoning-effort overrides. Around it sit a virtualized Git-aware file tree with a CodeMirror editor, a PTY-backed xterm terminal, a Git panel, a command palette, a first-party plugin SDK, proxy settings and token-authenticated LAN web access with a QR-code entry so you can drive sessions from another device. Provider channels are written to each CLI's own native config files with presets for GLM, Kimi, DeepSeek, MiniMax, MiMo, Bailian, OpenRouter and more, and can be imported from CC Switch.",
+    "keyFeatures": [
+      "Ten engines in one GUI: Claude Code, Codex CLI, Kimi CLI, Grok CLI, Pi, OMP, DeepSeek Harness, Antigravity, OpenCode and Qoder",
+      "Native Rust protocol adapters for streaming, session history/resume, interrupts and message queues",
+      "Thinking traces, tool-call rows with Git diff and Bash viewers, todo strip and question cards",
+      "Per-tab model and reasoning-effort overrides; provider-channel presets and CC Switch import",
+      "Built-in file tree with CodeMirror editor, PTY terminal, Git panel and command palette",
+      "Plugin SDK (@ccgui/plugin-sdk) with declarative plugins and a trust boundary",
+      "LAN web access over a token-authenticated WebSocket bridge; bilingual Chinese/English UI"
+    ],
+    "bestFor": "Developers who run several CLI coding agents (especially Claude Code, Codex, Kimi, DeepSeek Harness and other Chinese-ecosystem engines) and want one desktop chat client with real session history, diffs and a terminal rather than juggling terminal tabs.",
+    "notIdealFor": "Developers who prefer a terminal-first workflow, need multi-agent team orchestration (not yet supported), or want a full IDE with language intelligence rather than an agent chat client.",
+    "recentUpdates": "ccgui shipped v1.0.8 and v1.0.9 on 23-24 September 2026 and reached GitHub's daily trending list with about 4,400 stars; recent releases added Qoder and Antigravity adapters, DeepSeek Harness support, an OMP fast-mode toggle and the plugin runtime.",
+    "verdict": "ccgui is one of the broadest multi-engine desktop front-ends available for CLI coding agents, with unusually deep per-engine adapters and a compatibility matrix that is honest about gaps; it is young and fast-moving, but already a practical alternative to running ten different CLIs in ten terminals.",
+    "tags": [
+      "desktop-app",
+      "open-source",
+      "tauri",
+      "claude-code",
+      "codex",
+      "deepseek",
+      "multi-agent",
+      "cross-platform"
+    ],
+    "lastUpdated": "2026-09-25"
+  },
+  {
+    "slug": "zeron",
+    "name": "Zeron",
+    "company": "Zeron",
+    "pricing": "open-source",
+    "pricingDetail": "Zeron is free and open source under the MIT license (github.com/zeronsh/zeron), with a one-line installer at zeron.sh/install.sh for Linux, a desktop release for macOS and a portable ZIP for Windows. Local-only mode needs no account. Optional multi-device sync uses a Zeron account; the project is sponsor-funded (GitHub Sponsors) rather than paywalled.",
+    "description": "Zeron is a native control plane for the coding agents you already use. It is not a new harness: it drives Claude Code, Codex, Cursor, Devin, Grok, Hermes, Pi and Antigravity sessions on your own machines and shows them in one fast native window, with every machine's sessions in a single list, live branch diffs as agents work, integrated terminals and per-session worktrees. Each device runs a small Rust engine daemon that stores sessions locally; a fresh install starts in local-only mode with no account or network connection. Sign in only when you want multi-device sync — then you can start an agent at your desk, follow it from your phone and approve the diff from the couch, and an always-on machine such as a VPS keeps agents working after you close your laptop. Synced devices are trusted with remote workspace read/write access (.git is always excluded), local sessions stay local when you sign in or out, and the login/logout commands refuse to touch credentials while an engine owns the data directory.",
+    "keyFeatures": [
+      "Drives Claude Code, Codex, Cursor, Devin, Grok, Hermes, Pi and Antigravity — no new harness",
+      "One native window listing every machine's agent sessions with live branch diffs",
+      "Local-only by default: per-device Rust engine daemon, no account or network required",
+      "Optional multi-device sync: start at your desk, steer from phone or another laptop",
+      "Headless engine on an always-on VPS keeps agents running after you close your laptop",
+      "Integrated terminals, worktrees and remote workspace file access for synced devices",
+      "Linux installer, macOS desktop release, Windows portable build; MIT-licensed"
+    ],
+    "bestFor": "Developers running several coding-agent sessions across machines who want one native cockpit to watch, steer and approve them from any device without giving up their existing CLI tools.",
+    "notIdealFor": "Teams looking for a hosted, multi-user agent orchestration SaaS, or users who only ever run one agent in one terminal and do not need cross-device control.",
+    "recentUpdates": "Zeron is under very active development in 2026 (rewritten natively in Rust with a gpui UI, formerly known as Comet) and was trending on GitHub in September 2026 with 2K+ stars; it recently added Devin and Antigravity to its list of supported agents and is sponsored by The Context Company.",
+    "verdict": "Zeron is a well-built local-first answer to the 'too many agent terminals' problem — one native window over the agents you already pay for, with genuinely useful phone/VPS follow-along — and its MIT license and no-account default make it low-risk to try.",
+    "tags": [
+      "agent-control-plane",
+      "multi-agent",
+      "claude-code",
+      "codex",
+      "cursor",
+      "devin",
+      "remote-control",
+      "open-source",
+      "rust",
+      "local-first"
+    ],
+    "lastUpdated": "2026-09-26"
+  },
+  {
+    "slug": "juggler",
+    "name": "Juggler",
+    "company": "Julian Storer",
+    "pricing": "open-source",
+    "pricingDetail": "Juggler is free and open source: the main application is AGPL-3.0 and the extension SDK and bundled extensions are Apache-2.0. It requires no Juggler account and resells no tokens; model usage is billed by whichever provider or existing subscription you connect.",
+    "description": "Juggler is a visual workbench for AI coding agents built by Julian Storer, the developer behind JUCE, Tracktion and Cmajor. Conversations are persistent, branchable document trees navigated with Miller columns, where every tool call and recorded LLM transaction can be inspected and context can be edited, folded or moved between threads. A Go server runs where the code lives, and the native desktop app, a browser tab or a phone can attach to the same live session.",
+    "keyFeatures": [
+      "Branchable session trees with nested sub-threads for tangents and delegated work",
+      "Inspection of tool calls and raw LLM transactions, including prompts, tokens and cache use",
+      "Editable context: fold, move or copy items between branches with undo",
+      "Headless server with multiple live clients (desktop app, browser, phone)",
+      "Vendor-neutral BYOK providers: Claude Code, OpenAI Codex, GitHub Copilot, Gemini, Ollama and more",
+      "JavaScript plugin API for context items, loop strategies, slash commands and UIs"
+    ],
+    "bestFor": "Developers who want a GUI coding agent with visible, editable context and inspectable model calls, including those running agents on remote dev boxes.",
+    "notIdealFor": "Developers who prefer a terminal-only agent workflow or want a hosted service with bundled model access.",
+    "recentUpdates": "Juggler shipped v0.7.0 and v0.7.1 in late September 2026 after launching on Hacker News as a Show HN; the public repository had roughly 600 GitHub stars at review time.",
+    "verdict": "A thoughtfully designed, vendor-neutral GUI workbench for coding agents whose branching sessions and full transaction inspection stand out from chat-transcript interfaces. It is an early 0.x project from a single primary maintainer.",
+    "tags": [
+      "coding-agent",
+      "gui",
+      "desktop",
+      "open-source",
+      "byok",
+      "remote-sessions"
+    ],
+    "lastUpdated": "2026-09-28"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -3686,6 +3812,63 @@
     "lastUpdated": "2026-09-21"
   },
   {
+    "slug": "mimo-code",
+    "name": "MiMo Code",
+    "company": "Xiaomi",
+    "pricing": "open-source",
+    "pricingDetail": "MiMoCode is open source under the MIT license and free to install (npm, curl or PowerShell installers). Model usage is billed by whichever provider you connect: Xiaomi MiMo Platform (OAuth), Codex via ChatGPT Plus/Pro OAuth, imported Claude Code credentials, or any OpenAI-compatible API key. The MiMo Desktop app is in an invite-only beta.",
+    "description": "MiMoCode is Xiaomi's terminal-native AI coding assistant. It reads and writes code, runs commands, manages Git and keeps a persistent, SQLite FTS5-backed memory of the project (MEMORY.md, checkpoints, scratch notes, per-task progress) so it can resume work across sessions, and it powers the multimodal MiMo Desktop beta as its core engine.",
+    "keyFeatures": [
+      "Three primary agents — build (full tools), plan (read-only analysis) and compose (spec/skill-driven orchestration) — plus system-spawned subagents",
+      "Persistent cross-session memory with SQLite FTS5 full-text search, automatic checkpoints and context reconstruction near the context limit",
+      "Runs against Xiaomi MiMo models, Codex OAuth, imported Claude Code auth or any OpenAI-compatible provider",
+      "`mimo serve` / `mimo attach` split the TUI from a remote server over SSH port forwarding",
+      "One-line installers for macOS, Linux and Windows plus `npm install -g @mimo-ai/cli`",
+      "Core engine of Xiaomi MiMo Desktop (smart model orchestration, browser and computer control) in beta"
+    ],
+    "bestFor": "Developers who want an open-source, provider-agnostic terminal coding agent with strong built-in project memory, and users already on Xiaomi MiMo models or with existing Codex/Claude Code subscriptions to reuse.",
+    "notIdealFor": "Teams that need a GUI-first IDE experience, macOS Terminal.app users (unsupported rendering), or organisations that require a vendor with an established enterprise support track record in Western markets.",
+    "recentUpdates": "The XiaomiMiMo/MiMo-Code repository (created June 2026) passed 13,000 GitHub stars and was trending on GitHub in September 2026; Xiaomi opened an international beta for MiMo Desktop, built on MiMoCode, with trial access to the MiMo-X-Pro-Preview and MiMo-X-Flash-Preview models.",
+    "verdict": "MiMoCode is a credible open-source entrant in the terminal-agent space whose standout is memory and context management rather than a single model lock-in; it is worth evaluating alongside OpenCode and Codex CLI, particularly if you want to mix providers or use Xiaomi's MiMo models.",
+    "tags": [
+      "terminal-agent",
+      "open-source",
+      "persistent-memory",
+      "multi-provider",
+      "xiaomi",
+      "cli"
+    ],
+    "lastUpdated": "2026-09-23"
+  },
+  {
+    "slug": "molt",
+    "name": "molt",
+    "company": "Solvyx / Tyler Skelton",
+    "pricing": "open-source",
+    "pricingDetail": "Submitted as open-source; distributed via npm as @solvyx/molt. No pricing tiers or costs were found in the search results.",
+    "description": "Molt is a coding agent (CLI/TUI plus desktop) from Solvyx that verifies completion claims against on-disk checks defined in `.molt/done.yml`, producing receipts for both accepts and refusals. It supports OpenAI-compatible or Anthropic model backends.",
+    "keyFeatures": [
+      "CLI/TUI and desktop interfaces",
+      "Verification against on-disk checks via `.molt/done.yml`",
+      "Receipts for accepts and refusals",
+      "Won't declare 'done' on a false claim",
+      "OpenAI-compatible or Anthropic model support",
+      "Installable via npm as @solvyx/molt"
+    ],
+    "bestFor": "Developers who want a coding agent that verifies its own completion claims against concrete on-disk criteria before reporting success.",
+    "notIdealFor": "Teams seeking a fully managed, hosted coding platform with published pricing or enterprise support, since search results show no such details.",
+    "recentUpdates": null,
+    "verdict": "Molt's verification-first design and refusal receipts address a real pain point in agentic coding, and its open-source npm distribution lowers adoption friction. However, independent coverage is scarce and details on pricing, roadmap, and maintenance are unverified beyond the submission.",
+    "tags": [
+      "coding-agent",
+      "cli",
+      "tui",
+      "open-source",
+      "verification"
+    ],
+    "lastUpdated": "2026-09-29"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
@@ -4379,6 +4562,38 @@
       "model-agnostic"
     ],
     "lastUpdated": "2026-09-22"
+  },
+  {
+    "slug": "paperclip",
+    "name": "Paperclip",
+    "company": "Paperclip Labs",
+    "pricing": "open-source",
+    "pricingDetail": "Paperclip is free and open source under the MIT license (MIT (c) 2026 Paperclip Labs, Inc). You self-host the Node.js server and React UI via the paperclip.ing install script, Docker or Kubernetes, and pay only for the agents and model providers you connect; cloud and sandbox agent runtimes (e2b, Cloudflare, Daytona, Modal, Novita) are billed by those providers.",
+    "description": "Paperclip is an open-source control plane for running a team of AI agents like a company: if OpenClaw is an employee, Paperclip is the company. You define a goal, hire agents into an org chart with roles, titles and reporting lines (any bot, any provider — OpenClaw, Claude Code, Codex, Cursor, bash or HTTP, anything that can receive a heartbeat), approve the strategy, set budgets and monitor from a task-manager-style dashboard or your phone. Agents wake on scheduled heartbeats, check out ticketed tasks that carry full goal ancestry, delegate up and down the org chart, and resume persistent task context across runs. Task checkout and budget enforcement are atomic so there is no double work or runaway spend; approval gates, revisioned config with rollback, full tool-call tracing and an immutable audit log provide governance; and every entity is company-scoped so one deployment can run many isolated organizations with portable, secret-scrubbed import/export templates. A Skill Studio, shared org-wide skills, evals and performance reviews round out the agent-training pillar.",
+    "keyFeatures": [
+      "Org chart for agents with roles, reporting lines, delegation and mixed human + agent governance",
+      "Bring your own agent: OpenClaw, Claude Code, Codex, Cursor, bash or HTTP adapters, plus e2b/Cloudflare/Daytona/Modal/Kubernetes sandboxes",
+      "Ticketed tasks with goal ancestry, approval gates and review from diffs, screenshots and tests",
+      "Scheduled heartbeats with persistent agent state across runs",
+      "Per-agent monthly budgets with atomic task checkout and throttling",
+      "Full tool-call tracing, immutable audit log and revisioned config with rollback",
+      "Multi-organization isolation, portable company templates and a mobile-ready UI"
+    ],
+    "bestFor": "Builders and small teams who coordinate many autonomous agents toward business goals and want budgets, governance and an audit trail instead of twenty unattended Claude Code tabs.",
+    "notIdealFor": "Individual developers who just want a single coding agent in their editor, or organisations that need a fully managed SaaS rather than a self-hosted server.",
+    "recentUpdates": "Paperclip released v2026.916.1 on 21 September 2026 and topped GitHub's daily trending list on 25 September with about 84,000 stars and 15,000 forks; several dedicated Reddit communities (r/PaperClip_AI, r/PaperclipAI, r/PaperclipUseCases) have formed around it, and the roadmap lists cloud/sandbox agents as shipped with multi-tenant cloud deployments in progress.",
+    "verdict": "Paperclip is the most complete open-source answer so far to the 'how do I run a company of agents' problem, with unusually careful orchestration primitives (atomic checkout, budgets, rollback); it is ambitious and still maturing, but its adoption and pace make it the reference point in this space.",
+    "tags": [
+      "agent-orchestration",
+      "open-source",
+      "self-hosted",
+      "multi-agent",
+      "governance",
+      "openclaw",
+      "claude-code",
+      "codex"
+    ],
+    "lastUpdated": "2026-09-25"
   },
   {
     "slug": "boltnew",
@@ -5341,6 +5556,38 @@
     "lastUpdated": "2026-09-15"
   },
   {
+    "slug": "nenva",
+    "name": "nenva",
+    "company": "Anjadhe",
+    "pricing": "freemium",
+    "pricingDetail": "nenva is source-available under the PolyForm Noncommercial 1.0.0 license — free for personal and other noncommercial use, with the source on GitHub. The default local model is a free one-time download; nenva Cloud (hosted open-weight model) includes a free monthly allowance with no account, and you can alternatively point it at your own OpenAI-compatible server or your own OpenAI/Anthropic key.",
+    "description": "nenva (from Anjadhe) is a privacy-first personal AI assistant for macOS that inverts the usual cloud-AI model: your life stays in nenva's own apps on your Mac — email, calendar, tasks, notes, journal, investments — and the AI comes to where the data is rather than your data going to a service. By default everything runs on a local open-weight model sized to your machine (nenva's own tuned small Qwen model on 8-16 GB Macs, larger models from 32 GB), so nothing leaves the device. Opening Actions gives one short finishable list for the day — tasks due, action items pulled from your Gmail (analyzed on-device), and your calendar — with Plan holding focus areas and goals behind it. The assistant reads your tasks, goals, notes, journal and calendar, answers questions, creates documents, slide decks and small interactive pages exportable to PDF, and can search the web with your own key. The built-in apps are a starter set: point any coding agent (Claude Code, Codex, ...) at ~/Anjadhe/apps/ to build your own — new apps get storage, encrypted backup, sync and the assistant's attention automatically. There is no account or nenva database; Gmail connects straight from Google to your Mac, and sync between Macs travels encrypted through your own iCloud.",
+    "keyFeatures": [
+      "Local-first AI: open-weight model downloaded once runs entirely on your Mac; nothing leaves by default",
+      "Built-in apps for email, calendar, tasks, notes, journal, investments and goals — the assistant reads across all of them",
+      "Daily Actions view: one short list combining due tasks, email action items and calendar",
+      "Gmail integration analyzed on-device; no account, no nenva database",
+      "Extensible: point a coding agent at ~/Anjadhe/apps/ to build custom apps with storage, encrypted backup and sync",
+      "Flexible brains: local model, nenva Cloud free tier, own OpenAI-compatible server, or your own OpenAI/Anthropic key — each an explicit choice",
+      "iCloud-encrypted sync between Macs; runs on any Mac with 8 GB+ memory"
+    ],
+    "bestFor": "Mac users who want a capable personal AI assistant over their email, calendar, notes and tasks without sending personal data to a cloud service — and tinkerers who like extending the app canvas with a coding agent.",
+    "notIdealFor": "Windows/Linux users (macOS only), people who want the strongest frontier models without configuring their own key or server, and teams needing shared/multi-user assistants.",
+    "recentUpdates": "nenva publishes signed releases with an auto-update feed from anjadhe.ai/download and is developed in the open at github.com/Anjadhe/Anjadhe under the PolyForm Noncommercial license.",
+    "verdict": "nenva is a thoughtfully private take on the personal-AI-assistant idea — local by default, no account, and genuinely useful built-in apps — with the coding-agent-extensible app canvas as an unusual bonus; the PolyForm license and macOS-only scope are the main constraints.",
+    "tags": [
+      "personal-assistant",
+      "privacy",
+      "local-llm",
+      "macos",
+      "source-available",
+      "open-weight",
+      "email",
+      "productivity"
+    ],
+    "lastUpdated": "2026-09-26"
+  },
+  {
     "slug": "greptile",
     "name": "Greptile",
     "company": "Greptile",
@@ -5531,6 +5778,125 @@
     "lastUpdated": "2026-09-15"
   },
   {
+    "slug": "codebase-memory-mcp",
+    "name": "codebase-memory-mcp",
+    "company": "DeusData",
+    "pricing": "open-source",
+    "pricingDetail": "Open source under the MIT license; distributed as a free single static binary for macOS, Linux and Windows (also on npm, PyPI and Go). No API keys, accounts or paid tiers are required.",
+    "description": "codebase-memory-mcp is a high-performance code intelligence MCP server that indexes a repository into a persistent knowledge graph using tree-sitter across 162 languages, with hybrid LSP type resolution for major languages. Coding agents query the graph through 17 MCP tools — search, call tracing, architecture overviews, impact analysis, dead-code detection, Cypher queries — replacing dozens of grep/read cycles with a few structural queries.",
+    "keyFeatures": [
+      "Indexes an average repo in milliseconds and the 28M-LOC Linux kernel in about three minutes with a RAM-first pipeline",
+      "162 vendored tree-sitter grammars compiled into one zero-dependency binary",
+      "Hybrid LSP semantic type resolution for Python, TypeScript/JavaScript, Go, Rust, Java, Kotlin, C/C++, C#, PHP and Perl",
+      "17 MCP tools including impact analysis, dead code detection, cross-service HTTP linking, ADR management and Cypher queries",
+      "`install` auto-configures Claude Code, Codex, Cursor, OpenCode and 40+ other client surfaces with hooks and skills",
+      "Built-in 3D graph visualisation UI served from the binary at localhost:9749",
+      "Infrastructure-as-code indexing for Dockerfiles, Kubernetes manifests and Kustomize overlays"
+    ],
+    "bestFor": "Developers running Claude Code, Codex, Cursor or other MCP-capable agents on large or polyglot codebases who want structural code understanding with far lower token usage.",
+    "notIdealFor": "Very small projects where plain file search is already cheap, or environments that forbid running third-party native binaries that modify agent configuration files.",
+    "recentUpdates": "The project surpassed 44,000 GitHub stars and trended on GitHub in September 2026; its design and benchmarks were published as an arXiv preprint (2603.27277) reporting evaluation across 31 real-world repositories, and recent releases added a shared session coordination daemon and Kubernetes/Kustomize indexing.",
+    "verdict": "A mature, well-benchmarked way to give coding agents a real map of a codebase; the single-binary install and broad client coverage make it one of the easiest code-intelligence MCP servers to adopt, with the usual caveat of trusting a tool that writes to your agent config.",
+    "tags": [
+      "mcp",
+      "code-intelligence",
+      "knowledge-graph",
+      "tree-sitter",
+      "open-source",
+      "token-optimization"
+    ],
+    "lastUpdated": "2026-09-23"
+  },
+  {
+    "slug": "gortex",
+    "name": "Gortex",
+    "company": "zzet",
+    "pricing": "open-source",
+    "pricingDetail": "Gortex is free and open source under Apache-2.0. Its core code-indexing tools run locally as a single binary; optional external model providers require their own credentials and may incur provider charges.",
+    "description": "Gortex is a local code-intelligence engine for AI coding agents. It indexes symbols, calls, dependencies and cross-repository API contracts into a persistent graph, then serves structural context and change-impact queries through a CLI, MCP server and web UI. Agents can inspect callers and blast radius before editing rather than loading entire files into context.",
+    "keyFeatures": [
+      "Persistent code graph with symbol lookup, call chains and impact analysis",
+      "Cross-repository indexing and API contract matching",
+      "MCP server and CLI integrations for coding agents",
+      "Graph-grounded pull request review and speculative edit analysis",
+      "Local single-binary distribution for macOS, Linux and Windows",
+      "Web UI for exploring the repository graph"
+    ],
+    "bestFor": "Developers using AI coding agents on large or multi-repository codebases who need structural context and cross-service impact analysis.",
+    "notIdealFor": "Small projects where ordinary file search is enough, or teams unwilling to run a local code indexer and agent integration.",
+    "recentUpdates": "Gortex's public repository was active in September 2026, with roughly 1,400 stars at review time; its code-graph tooling was also covered in a September 27 developer article.",
+    "verdict": "A capable local code map for coding agents, with multi-repository contracts and change analysis distinguishing it from simpler search tools. Performance and token-savings figures in the project documentation are first-party claims.",
+    "tags": [
+      "code-intelligence",
+      "mcp",
+      "knowledge-graph",
+      "multi-repo",
+      "open-source",
+      "cli"
+    ],
+    "lastUpdated": "2026-09-27"
+  },
+  {
+    "slug": "gitdiagram",
+    "name": "GitDiagram",
+    "company": "Ahmed Khaleel",
+    "pricing": "freemium",
+    "pricingDetail": "GitDiagram is open source under the MIT license and free to use on gitdiagram.com for public repositories; private repositories work by pasting your own GitHub token. Watching existing explainer videos is free and making new ones is in early access. Self-hosting requires Bun, Cloudflare R2, Upstash Redis and your own OpenAI or OpenRouter API key.",
+    "description": "GitDiagram turns any public or private GitHub repository into an interactive, AI-generated architecture diagram with a streamed explanation. Replace `hub` with `diagram` in any GitHub URL (or paste the repo on gitdiagram.com) and you get a Mermaid system diagram where clicking a component jumps straight to the linked file or directory; diagrams export as PNG or raw Mermaid source. A newer explainer mode renders a roughly one-minute narrated video of the codebase — what the project is for, how its main parts fit together and one decision under the hood — downloadable as MP4 in landscape or 9:16 with burned-in captions. It is built with Next.js, React, TypeScript, Tailwind and Mermaid, uses Claude or GPT for scripts and scenes and OpenRouter TTS for voice, and can be self-hosted with your own keys.",
+    "keyFeatures": [
+      "Interactive AI-generated architecture diagram for any GitHub repo",
+      "URL trick: swap `hub` for `diagram` in a GitHub URL",
+      "Click any component to jump to the linked file or directory",
+      "Private repositories via your own GitHub token",
+      "Export as PNG or copy the Mermaid source",
+      "Explainer videos: ~1-minute narrated MP4 (landscape or 9:16) per repository",
+      "Open source (MIT), self-hostable with OpenAI/OpenRouter keys"
+    ],
+    "bestFor": "Developers onboarding to an unfamiliar codebase, maintainers who want a shareable architecture overview, and educators explaining open-source projects.",
+    "notIdealFor": "Non-GitHub repositories, teams needing deep semantic code search or Q&A over a codebase, and precise, hand-maintained architecture documentation.",
+    "recentUpdates": "GitDiagram passed 17K GitHub stars and was trending in September 2026 after adding AI-narrated explainer videos (gitdiagram.com/owner/repo/video) alongside the interactive diagrams.",
+    "verdict": "GitDiagram is the quickest way to get a first mental model of a repository — one URL edit and you have a clickable architecture map — and the new narrated videos make it a handy onboarding and open-source-showcase tool, though it is an overview, not a code-intelligence engine.",
+    "tags": [
+      "architecture-diagram",
+      "codebase-understanding",
+      "mermaid",
+      "onboarding",
+      "github",
+      "open-source",
+      "video",
+      "visualization"
+    ],
+    "lastUpdated": "2026-09-26"
+  },
+  {
+    "slug": "jevgrep",
+    "name": "jevgrep",
+    "company": "David Zhang (dzhng)",
+    "pricing": "open-source",
+    "pricingDetail": "jevgrep is free and open source under the MIT license. Searches call the Jev model through a provider key you supply (Vercel AI Gateway, TypeSafe, OpenRouter or OpenCode Zen), and that provider bills inference usage.",
+    "description": "jevgrep is a research CLI that helps AI coding agents find relevant code by asking what it does. The `jg` command uses TypeSafe's Jev model to judge relevance across folders, files and declarations, then returns relevant files, reading leads and verbatim source excerpts in a single stdout response. A bundled agent skill teaches Claude Code, Codex and other agents to use it for context gathering before they implement changes.",
+    "keyFeatures": [
+      "Natural-language repository questions answered with files, leads and verbatim excerpts",
+      "Jev-based relevance judgments across folders, files and declarations",
+      "Installable agent skill (`jg skill`) for coding agents",
+      "Provider selection across Vercel AI Gateway, TypeSafe, OpenRouter and OpenCode Zen",
+      "npm-distributed CLI for macOS and Linux with no separate ripgrep, Python or Bun install"
+    ],
+    "bestFor": "Developers whose coding agents spend many tokens exploring unfamiliar repositories and who want a cheaper context-gathering step.",
+    "notIdealFor": "Cases where the exact symbol or string is already known and plain text search is faster, teams that cannot send source excerpts to a hosted model provider, or native Windows users.",
+    "recentUpdates": "The repository was created on September 26, 2026, reached more than 1,000 GitHub stars within two days, and shipped releases through v0.4.3 on September 28; the author announced it on X as a Jev-powered research agent CLI.",
+    "verdict": "A focused context-gathering tool for coding agents built on Jev. Its reported cost reduction comes from the author's own ten-task SWE-bench comparison, so results on other codebases may vary.",
+    "tags": [
+      "code-search",
+      "jev",
+      "coding-agents",
+      "cli",
+      "agent-skills",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-28"
+  },
+  {
     "slug": "pieces-for-developers",
     "name": "Pieces for Developers",
     "company": "Pieces",
@@ -5671,6 +6037,40 @@
       "local-first"
     ],
     "lastUpdated": "2026-09-22"
+  },
+  {
+    "slug": "coop",
+    "name": "coop",
+    "company": "Trail of Bits",
+    "pricing": "open-source",
+    "pricingDetail": "coop is free and open source under the Apache-2.0 license from security firm Trail of Bits. Install with the one-line script or build from source (Rust + CMake). Linux needs KVM for Firecracker; macOS needs Lima (brew install lima) and Apple Silicon. You bring your own Claude Code / Codex subscription or API keys.",
+    "description": "coop is a Rust CLI from Trail of Bits that runs Claude Code and Codex inside disposable, isolated virtual machines so the agents can have full tool access — Docker, git, compilers, package managers, passwordless sudo — without any risk to your host. On Linux it boots Firecracker microVMs on KVM; on macOS it uses Lima with Apple's Virtualization.framework, choosing the backend automatically. `coop up` creates or reuses an environment for the current project and syncs the workspace in, then `coop claude` or `coop codex` launches the agent with permission prompts disabled by default because the VM itself is the isolation boundary (pass --ask to restore prompts). coop forwards API keys, GitHub tokens and chosen env vars into the guest — or keeps model keys entirely host-side in proxy mode — injects CLAUDE.md, syncs ~/.codex config, supports plugins/marketplaces and MCP server configuration, understands devcontainer.json, and offers editor integration, multi-instance workflows and shell completion. A published trust model documents the VM boundary and how guest-authored data is treated as untrusted.",
+    "keyFeatures": [
+      "Disposable isolated VMs for Claude Code and Codex: Firecracker microVMs (Linux/KVM) or Lima + Virtualization.framework (macOS)",
+      "Agents run with bypassPermissions / full tool access — the VM is the blast radius",
+      "coop up / coop claude / coop codex with project workspace sync",
+      "API-key forwarding or proxy mode that keeps model keys off the guest",
+      "CLAUDE.md injection, ~/.codex sync, plugins, MCP server config, devcontainer.json support",
+      "Multi-instance, editor integration, shell completion and coop update",
+      "Documented trust model and security policy from Trail of Bits"
+    ],
+    "bestFor": "Security-conscious developers who want to let Claude Code or Codex run fully autonomously on real projects without exposing their host machine.",
+    "notIdealFor": "Windows users, machines without KVM or Apple Silicon virtualization, and agents other than Claude Code and Codex (no generic agent support yet).",
+    "recentUpdates": "coop was trending on GitHub in September 2026; recent releases added Codex support with a dedicated `coop codex` launcher, devcontainer.json inspection, an in-app `coop update` command and a formal trust-model document.",
+    "verdict": "coop brings Trail of Bits' security rigor to the 'run the agent in YOLO mode' problem: hardware-isolated microVMs that spin up cheaply, sync your project in and keep secrets out — a serious upgrade over Docker sandboxes for anyone letting agents run unattended.",
+    "tags": [
+      "sandbox",
+      "isolation",
+      "firecracker",
+      "microvm",
+      "claude-code",
+      "codex",
+      "security",
+      "open-source",
+      "rust",
+      "trail-of-bits"
+    ],
+    "lastUpdated": "2026-09-26"
   },
   {
     "slug": "claude-code-templates",
@@ -7191,6 +7591,371 @@
     "lastUpdated": "2026-09-23"
   },
   {
+    "slug": "claude-mem",
+    "name": "claude-mem",
+    "company": "thedotmack",
+    "pricing": "freemium",
+    "pricingDetail": "The claude-mem plugin and SDK are open source under Apache-2.0 and the local observer/provider is free to run. The installer offers an optional hosted memory service (CMEM Pro / claude-mem observer) that is free for the first 30 days after an email sign-in; it can be skipped with an explicit --provider flag or CLAUDE_MEM_ONLINE_OPTIN=false.",
+    "description": "claude-mem is a persistent-memory system for coding agents. It captures tool-usage observations during a session, compresses them with AI into semantic summaries, and injects the relevant context back into future sessions so the agent keeps continuity of project knowledge after a session ends or reconnects. Originally built for Claude Code, it now installs for OpenCode, Antigravity CLI, Cursor, OpenClaw, Grok Bot and other agents.",
+    "keyFeatures": [
+      "Automatic capture of tool-usage observations and AI-compressed session summaries",
+      "Context from previous sessions injected automatically into new sessions",
+      "One-command install (`npx claude-mem install`) or via the Claude Code plugin marketplace",
+      "Adapters for OpenCode, Antigravity CLI, Cursor, OpenClaw and Grok Bot (log-file watching where hosts have no hooks)",
+      "Search tools for querying past decisions, bugfixes and security alerts",
+      "Local observer by default with an optional hosted memory tier"
+    ],
+    "bestFor": "Claude Code and multi-agent users who lose context between sessions and want a drop-in memory layer without changing how they work.",
+    "notIdealFor": "Teams with strict data-handling rules who cannot review what a hook-based plugin captures, or users who want a git-native, human-editable memory format instead of AI-generated summaries.",
+    "recentUpdates": "The repository passed 94,000 GitHub stars and trended on GitHub in September 2026; it added installers for Grok Bot and Antigravity CLI plus an optional hosted CMEM Pro tier, and Reddit threads in r/ClaudeCode and r/ClaudeAI discuss real-world usage and a Kaspersky false-positive warning on Windows.",
+    "verdict": "One of the most widely adopted memory add-ons for Claude Code, with a low-friction install and growing multi-agent support; evaluate the optional hosted tier and hook permissions before rolling it out to a team.",
+    "tags": [
+      "agent-memory",
+      "claude-code",
+      "plugin",
+      "persistent-context",
+      "open-source",
+      "freemium"
+    ],
+    "lastUpdated": "2026-09-23"
+  },
+  {
+    "slug": "oh-my-openagent",
+    "name": "Oh My OpenAgent",
+    "company": "Sisyphus Labs (code-yeongyu)",
+    "pricing": "free",
+    "pricingDetail": "Free to install and use under the source-available SUL-1.0 license. You pay only for the model subscriptions or API keys you connect (Anthropic, OpenAI/Codex, Kimi, OpenAI-compatible gateways, etc.).",
+    "description": "Oh My OpenAgent (OmO, formerly oh-my-opencode) is a multi-agent orchestration layer for coding agents. The Ultimate edition plugs into OpenCode with 11 specialised agents, 54+ lifecycle hooks, built-in websearch, context7, grep_app and LSP MCPs, Team Mode and slash commands; the Light edition ports the portable pieces to Codex CLI; and OmO Native is a standalone `omo` command. Typing `ultrawork` (or `ulw`) with a prompt has the agents plan, execute and keep going until the task is done, across Claude, GPT, Kimi and other models.",
+    "keyFeatures": [
+      "11 specialised agents with 54+ lifecycle hooks for OpenCode (Ultimate edition)",
+      "Codex CLI plugin (Light edition) with rules, comment-checker, LSP, ultrawork loops and Team Mode",
+      "Standalone `omo` CLI (OmO Native, beta) that needs no host",
+      "`ultrawork` / `mass ulw` keywords for autonomous, multi-model task completion",
+      "Built-in websearch, context7, grep_app and LSP MCP servers",
+      "Memory system, CodeMode and Anthropic-subscription support; live workflow DAG view via omo-herdr-dag"
+    ],
+    "bestFor": "OpenCode and Codex CLI power users who want a batteries-included multi-agent setup that orchestrates several model providers instead of committing to one vendor.",
+    "notIdealFor": "Developers who want a minimal, easy-to-audit agent configuration, or organisations that require an OSI-approved open-source license.",
+    "recentUpdates": "Renamed from oh-my-opencode to oh-my-openagent as it expanded from an OpenCode plugin to Codex CLI and a standalone OmO Native beta (`bun add -g omo-ai@beta`); the repo passed 69,000 GitHub stars and was trending on GitHub in September 2026, with active discussion in r/opencodeCLI.",
+    "verdict": "OmO is the most popular community orchestration layer on top of OpenCode and now Codex, with strong adoption signals; it is opinionated and complex, so let an agent run the installer as the maintainers suggest and expect rapid change.",
+    "tags": [
+      "agent-orchestration",
+      "opencode",
+      "codex-cli",
+      "multi-agent",
+      "plugin",
+      "source-available"
+    ],
+    "lastUpdated": "2026-09-23"
+  },
+  {
+    "slug": "cli-anything",
+    "name": "CLI-Anything",
+    "company": "HKUDS",
+    "pricing": "open-source",
+    "pricingDetail": "Open source under the Apache-2.0 license from the University of Hong Kong data science group (HKUDS). The harness generator skill, generated CLIs and the CLI-Hub package manager (`pip install cli-anything-hub`) are all free; you supply the coding agent and model.",
+    "description": "CLI-Anything turns existing software into agent-native tooling. Installed as a skill or plugin for Claude Code, Codex, Pi, OpenClaw, Cursor or Qoder, its 7-phase harness generator wraps an application — Blender, GIMP, FreeCAD, Obsidian, n8n, Godot, Zotero and dozens more — in a structured-JSON command-line interface with a generated SKILL.md, and CLI-Hub is the registry where agents and humans browse, install and update those community-built CLIs.",
+    "keyFeatures": [
+      "7-phase harness generator (HARNESS.md) that produces agent-ready CLIs with tests and SKILL.md files",
+      "CLI-Hub registry and `cli-hub` package manager to list, search, install, update and launch CLIs",
+      "Community harnesses for Blender, GIMP, FreeCAD, Krita, MuseScore, Obsidian, n8n, Godot, Zoom, QGIS and more",
+      "Meta-skill that lets agents discover and install CLIs autonomously",
+      "Skills for Claude Code, Codex, Pi, OpenClaw, Cursor, Qoder and Hermes",
+      "Structured JSON output and --help self-description designed for LLM consumption"
+    ],
+    "bestFor": "Developers and researchers who want coding agents to drive desktop or server software that has no API, and contributors building reusable agent tool harnesses.",
+    "notIdealFor": "Teams that only need to expose their own web service (an MCP server or OpenAPI spec is simpler), or environments where installing many third-party generated CLIs is a security concern.",
+    "recentUpdates": "The HKUDS/CLI-Anything repository reached roughly 50,000 GitHub stars and trended on GitHub in September 2026; the maintainers reported the ecosystem surpassing one million CLI calls, and 2026 releases added CLI-Hub v0.2.0 with multi-source public CLIs, unified skills, and new harnesses such as QGIS, Obsidian, n8n and Godot.",
+    "verdict": "A fast-growing, academically backed project that gives agents deterministic control over real-world software via CLIs rather than screen-scraping; the registry model makes it practical today, though quality varies across community harnesses.",
+    "tags": [
+      "agent-tools",
+      "cli",
+      "skills",
+      "open-source",
+      "harness",
+      "registry"
+    ],
+    "lastUpdated": "2026-09-23"
+  },
+  {
+    "slug": "cc-switch",
+    "name": "CC Switch",
+    "company": "farion1231",
+    "pricing": "open-source",
+    "pricingDetail": "CC Switch is free and open source under the MIT license, with signed desktop builds for Windows, macOS and Linux (Homebrew, WinGet, Scoop, .deb/.rpm/AppImage). It manages configurations only; model usage is billed by whichever API providers or subscriptions you switch between.",
+    "description": "CC Switch is a cross-platform Tauri 2 desktop app that acts as a single control surface for AI coding tools. It centrally manages the configuration files of Claude Code, Claude Desktop, Codex, Gemini CLI, Grok Build, OpenCode, OpenClaw and Hermes Agent, letting you import providers with one click, switch between 50+ built-in provider presets (official APIs, AWS Bedrock, NVIDIA NIM, community relays), and share a universal provider across apps. It also unifies MCP server and Skills management with bidirectional sync, shows usage and balance, speed-tests endpoints, offers an optional local routing layer with format conversion, hot switching, failover and request logs, and stores everything in SQLite with atomic writes.",
+    "keyFeatures": [
+      "Manages Claude Code, Claude Desktop, Codex, Gemini CLI, Grok Build, OpenCode, OpenClaw and Hermes Agent from one app",
+      "One-click switching between 50+ API-provider presets, including Bedrock, NVIDIA NIM and community relays",
+      "Unified MCP and Skills management with bidirectional sync across tools",
+      "Usage and balance queries, endpoint speed testing and session/prompt management",
+      "Local routing with format conversion, hot switching, failover and usage analytics",
+      "System-tray quick switch and cloud sync via Dropbox, OneDrive, iCloud or WebDAV",
+      "SQLite-backed storage with atomic writes to protect configs from corruption"
+    ],
+    "bestFor": "Developers who juggle several CLI coding agents and multiple API providers or relays and want to stop hand-editing JSON/TOML/.env files every time they switch.",
+    "notIdealFor": "Developers who use a single agent with a single official subscription and never change providers, or teams that need centrally enforced enterprise configuration policy.",
+    "recentUpdates": "CC Switch shipped v3.20.4 on 22 September 2026 and has been on GitHub's weekly trending list, with the repository passing 136,000 stars; recent releases added Grok Build and Hermes Agent support, Claude Desktop third-party profiles and model mapping, and expanded local-routing and skills features.",
+    "verdict": "CC Switch has become the de facto configuration manager for the multi-agent, multi-provider coding workflow; it is mature, extremely popular and actively maintained, though its sponsor-heavy README and relay-provider presets mean you should still vet the providers you route through.",
+    "tags": [
+      "desktop-app",
+      "open-source",
+      "claude-code",
+      "codex",
+      "provider-switching",
+      "mcp",
+      "skills",
+      "tauri"
+    ],
+    "lastUpdated": "2026-09-24"
+  },
+  {
+    "slug": "magpie",
+    "name": "magpie",
+    "company": "yetone",
+    "pricing": "open-source",
+    "pricingDetail": "magpie is free and open source under the MIT license. The application and local gateway require no subscription; connected model providers may charge for inference or require an existing plan.",
+    "description": "magpie is a local model picker for AI coding agents with desktop, terminal UI and CLI interfaces. It shows the models configured for Claude Code, Codex, Gemini CLI, OpenCode and other agents, changes their native configuration, and runs a local gateway that translates OpenAI and Anthropic API protocols so developers can choose providers across agents.",
+    "keyFeatures": [
+      "One model picker across installed coding agents",
+      "Local gateway translating OpenAI Chat/Responses and Anthropic Messages requests",
+      "Surgical edits to each agent's native configuration",
+      "Provider presets and named profiles for switching several agents",
+      "Menu-bar desktop interface, TUI and CLI on macOS, Linux and Windows"
+    ],
+    "bestFor": "Developers who use several coding agents and want to change their models and providers from a single local interface.",
+    "notIdealFor": "Developers using only one provider and one agent, or teams requiring a hosted gateway with centrally managed accounts.",
+    "recentUpdates": "The repository was created in September 2026 and reached more than 1,000 GitHub stars within days; RepositoryStats tracked rapid commit and star activity that week.",
+    "verdict": "A focused cross-agent model picker and protocol gateway for developers who frequently switch providers, with overlap in configuration management with broader tools such as CC Switch.",
+    "tags": [
+      "model-routing",
+      "coding-agents",
+      "gateway",
+      "open-source",
+      "desktop",
+      "cli"
+    ],
+    "lastUpdated": "2026-09-27"
+  },
+  {
+    "slug": "hindsight",
+    "name": "Hindsight",
+    "company": "Vectorize",
+    "pricing": "open-source",
+    "pricingDetail": "Hindsight is open source under the MIT license and can be self-hosted with Docker (PostgreSQL + pgvector) or embedded in Python; you pay only for the LLM/embedding provider you configure. Vectorize also offers a managed Hindsight Cloud service.",
+    "description": "Hindsight is an agent memory system from Vectorize built around the idea that agents should learn over time, not just recall conversation history. It exposes three operations — retain, recall and reflect — over memory banks stored in PostgreSQL with pgvector, organising knowledge as world facts, experience facts, auto-consolidated observations and user-curated mental models with entity, temporal and semantic pathways. Retrieval runs semantic, BM25, graph and temporal strategies in parallel (TEMPR). Developers add it to an existing agent with a two-line LLM-client wrapper, via Python/TypeScript SDKs or plain HTTP, an MCP server, or coding-agent integrations for Claude Code and Cursor.",
+    "keyFeatures": [
+      "retain / recall / reflect API for storing, searching and reasoning over agent memory",
+      "Memory banks with world facts, experience facts, consolidated observations and mental models",
+      "Multi-strategy retrieval combining semantic, keyword (BM25), graph and temporal search",
+      "Two-line LLM wrapper that adds memory to existing agents automatically",
+      "Python and TypeScript SDKs, HTTP API, MCP server and Claude Code / Cursor integrations",
+      "Self-hosted Docker deployment on PostgreSQL + pgvector, or managed Hindsight Cloud",
+      "State-of-the-art LongMemEval results with independently reproduced benchmarks"
+    ],
+    "bestFor": "Developers building agents or coding-assistant workflows that need persistent, evolving memory across sessions and want an open-source system they can run on their own Postgres.",
+    "notIdealFor": "Simple chatbots that only need short conversation history, or teams that cannot run PostgreSQL/pgvector and an LLM provider for memory consolidation.",
+    "recentUpdates": "Hindsight released v0.10.1 on 21 September 2026 and reached GitHub's daily and weekly trending lists with over 27,000 stars; recent work added coding-agent integrations, an installable documentation skill (npx skills add), MCP support and the hosted Hindsight Cloud.",
+    "verdict": "Hindsight is one of the most credible open-source agent-memory options available, backed by published benchmarks and production use; expect more setup than a plug-in memory file, but far stronger recall and consolidation.",
+    "tags": [
+      "agent-memory",
+      "open-source",
+      "mcp",
+      "postgresql",
+      "pgvector",
+      "sdk",
+      "self-hosted"
+    ],
+    "lastUpdated": "2026-09-24"
+  },
+  {
+    "slug": "treg",
+    "name": "Treg",
+    "company": "Superdesign",
+    "pricing": "freemium",
+    "pricingDetail": "Treg is source-available under Apache-2.0 with additional terms (self-hosting for your own team is expressly permitted; offering it as a competing hosted service is restricted). The hosted registry at treg.to meters catalog calls against a prepaid team balance at per-call prices from a cent with 0% markup and gives new verified teams $1.00 free; calls through your own registered keys are never metered.",
+    "description": "Treg, built by the Superdesign team, is an 'OpenRouter for agent tools': a tool registry and proxy that gives an AI agent one base URL and one token to call roughly 2,800 catalogued API endpoints across about 60 providers — SEO and backlinks, social and trends, people and company enrichment, ads, scraping, and image/video generation — without signing up with each vendor. Agents search the catalog by task, read the price, and call the endpoint. Teams can also register their own tools — paid API accounts, OAuth connections, vendor CLIs such as stripe, gh or vercel, and SKILL.md bundles — so every teammate's agent can use them while credentials are injected server-side and never leave the registry. The proxy relays requests rather than modelling upstream APIs, so it survives provider changes.",
+    "keyFeatures": [
+      "Single base URL and token for 2,800+ catalogued endpoints across ~60 providers",
+      "Task-based tool search with per-call pricing shown before you call",
+      "Own-tool registry for API keys, OAuth connections, vendor CLIs and SKILL.md bundles",
+      "Server-side credential injection so agents never hold secrets",
+      "Relay-only proxy design that survives upstream API changes",
+      "Hosted at treg.to or fully self-hostable",
+      "Team balances, free anonymous routes and $1 starter credit"
+    ],
+    "bestFor": "Teams running coding or research agents that need occasional access to paid data and marketing APIs without buying subscriptions or managing dozens of vendor keys.",
+    "notIdealFor": "Organisations that prohibit routing API traffic through a third-party proxy, or developers who only need a handful of tools they already have direct credentials for.",
+    "recentUpdates": "Treg launched on Product Hunt in August 2026, moved to the treg.to domain, and appeared on GitHub's daily and weekly trending lists in September 2026 with about 3,000 stars while the catalog grew from ~2,600 to 2,800+ endpoints.",
+    "verdict": "Treg is an early but well-designed answer to the tool-access problem for agents; the pay-per-call catalog is compelling for bursty research and growth workloads, while the self-hostable registry for team credentials is useful even if you never touch the paid catalog.",
+    "tags": [
+      "agent-tools",
+      "api-gateway",
+      "tool-registry",
+      "pay-per-call",
+      "self-hosted",
+      "skills",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-24"
+  },
+  {
+    "slug": "impeccable",
+    "name": "Impeccable",
+    "company": "Paul Bakaus",
+    "pricing": "open-source",
+    "pricingDetail": "Impeccable is free and open source under the Apache-2.0 license. The skill, 24 commands, CLI and browser extension are all free; the deterministic detector rules run locally with no LLM or API key, and the skill itself runs inside whatever coding agent and model subscription you already use.",
+    "description": "Impeccable is design guidance for AI coding agents, created by Paul Bakaus and grown out of Anthropic's frontend-design skill. Its premise is that every model trained on the same SaaS templates produces the same tells — Inter everywhere, purple-to-blue gradients, cards nested in cards, gray text on colored backgrounds — unless it is given a design language. `npx impeccable install` detects your harness folders (~/.claude, ~/.codex, ~/.grok, ~/.hermes, .cursor and more) and installs one skill plus provider-native hook manifests; `/impeccable init` then records durable product truth in PRODUCT.md so later commands know audience, purpose, constraints and voice. Twenty-four commands give you a shared vocabulary with the agent: craft, shape, document, extract, critique, audit, polish, bolder, quieter, distill, harden, onboard, animate, colorize, typeset, layout, delight, overdrive, clarify, adapt, optimize, live and generate, plus pin for shortcuts. Sixty-one deterministic detector rules, run by the CLI or a browser extension without any LLM, catch AI-generated design anti-patterns, and live mode lets you iterate on element variants directly in the browser.",
+    "keyFeatures": [
+      "One skill, 24 slash commands and a shared design vocabulary for your coding agent",
+      "`/impeccable init` writes PRODUCT.md with durable product context; DESIGN.md captures the visual system",
+      "61 deterministic detector rules via CLI and browser extension, no LLM or API key needed",
+      "Live browser mode for visual variant iteration and `generate` for automatic variants",
+      "Explicit anti-pattern guidance (overused fonts, gray-on-color text, nested cards, bounce easing)",
+      "Installs into Claude Code, Codex, Cursor, Gemini CLI, Grok Build, Hermes Agent, Veto and GitHub Copilot with provider-native edit hooks",
+      "Git-submodule install option for teams that vendor and pin skills"
+    ],
+    "bestFor": "Developers and small teams shipping AI-built frontends who want their agent to produce distinctive, accessible, well-structured UI instead of generic template output.",
+    "notIdealFor": "Backend-only projects, or teams with a mature in-house design system and design review process that already constrains agent output.",
+    "recentUpdates": "Impeccable published engine-v0.1.6 on 25 September 2026 (skill v4.3.1 on 9 September), appears on GitHub's weekly and monthly trending lists with about 71,000 stars and 4,300 forks, and recently added the deterministic detector engine, browser extension, live/generate modes and Codex, Grok Build and Hermes hook support.",
+    "verdict": "Impeccable has become the de facto design skill for coding agents; the command vocabulary and PRODUCT.md setup are genuinely useful, and the deterministic detectors make it more than a prompt pack, though the hook installs modify harness config and deserve a review before you apply them.",
+    "tags": [
+      "agent-skill",
+      "design",
+      "frontend",
+      "open-source",
+      "claude-code",
+      "codex",
+      "cursor",
+      "cli"
+    ],
+    "lastUpdated": "2026-09-25"
+  },
+  {
+    "slug": "chrome-devtools-mcp",
+    "name": "Chrome DevTools MCP",
+    "company": "Google (Chrome DevTools)",
+    "pricing": "open-source",
+    "pricingDetail": "Chrome DevTools MCP is free and open source under the Apache-2.0 license, published to npm as chrome-devtools-mcp. It requires Node.js LTS and a current stable Chrome. Google collects anonymous usage statistics by default (opt out with --no-usage-statistics or the CHROME_DEVTOOLS_MCP_NO_USAGE_STATISTICS/CI environment variables), and performance tools may query the Google CrUX API unless --no-performance-crux is set.",
+    "description": "Chrome DevTools MCP is the Chrome team's official Model Context Protocol server that gives coding agents the full power of Chrome DevTools against a live browser. Added to any MCP client with `npx -y chrome-devtools-mcp@latest`, it lets an agent record performance traces and extract actionable DevTools insights, analyse network requests, read console messages with source-mapped stack traces, take screenshots and drive pages reliably through Puppeteer with automatic waiting for action results. A `--slim` mode exposes only basic browser tasks, `--headless` runs without a window, and advanced options cover concurrent sessions, persistent user-data directories, attaching to an already-running Chrome over WebSocket, and debugging on Android. A standalone CLI is provided for use without MCP, and the docs include client configuration guides for Antigravity, Claude Code, Cursor and VS Code plus guidance on running it as a browser subagent. It officially supports Google Chrome and Chrome for Testing, tracking the latest Extended Stable release.",
+    "keyFeatures": [
+      "Official Chrome team MCP server and CLI for coding agents",
+      "Performance tracing with DevTools-derived insights and optional CrUX field data",
+      "Network request analysis, console messages with source-mapped stack traces and screenshots",
+      "Reliable Puppeteer-based automation that waits for action results",
+      "--slim, --headless and --isolated modes; connect to a running Chrome; Android debugging",
+      "Client configuration guides for Antigravity, Claude Code, Cursor and VS Code",
+      "Design principles for use as a browser subagent inside larger harnesses"
+    ],
+    "bestFor": "Web developers who want their coding agent to verify, debug and performance-profile the actual page in Chrome rather than guessing from source code.",
+    "notIdealFor": "Teams that need cross-browser (Firefox/Safari) automation, or environments where exposing a live browser session and its data to an MCP client is unacceptable.",
+    "recentUpdates": "Chrome DevTools MCP released v1.10.0 and v1.10.1 on 23 September 2026, appears on GitHub's monthly trending list with about 52,600 stars, and is now documented at developer.chrome.com/docs/devtools/agents; community plugins and posts (for example a Jev-Reach plugin that reduces model turns per click) show active third-party use.",
+    "verdict": "Chrome DevTools MCP is the reference way to give an agent real browser observability — first-party, well maintained and far deeper than screenshot-only browser tools — with the caveat that you should review its default telemetry and the data it exposes to MCP clients.",
+    "tags": [
+      "mcp-server",
+      "browser",
+      "chrome",
+      "debugging",
+      "performance",
+      "puppeteer",
+      "open-source",
+      "google"
+    ],
+    "lastUpdated": "2026-09-25"
+  },
+  {
+    "slug": "mobile-mcp",
+    "name": "Mobile MCP",
+    "company": "Mobile Next",
+    "pricing": "open-source",
+    "pricingDetail": "Mobile MCP is free and open source under the Apache-2.0 license, published to npm as @mobilenext/mobile-mcp (run with npx). You need Xcode/simulators or Android SDK/emulators, or physical devices, on the host. Mobile Next offers documentation at mobilenext.ai; the MCP server itself has no paid tier.",
+    "description": "Mobile MCP is a Model Context Protocol server from Mobile Next that lets coding agents and LLMs drive native iOS and Android apps on simulators, emulators and real devices through one platform-agnostic interface — no XCUITest, Espresso or per-platform glue required. It is accessibility-first: agents read the native accessibility tree for fast, cheap, deterministic element access and fall back to screenshots plus coordinate taps only when needed. Tools cover taps, swipes and gestures, typing, app install/launch/terminate, deep links, orientation, hardware buttons, screen recording and structured data extraction, which makes it suitable for agent-driven UI testing, scripted flows and multi-step user journeys as well as data-entry and scraping scenarios. The docs include step-by-step install guides for Amp, Claude Code, Claude Desktop, Cline, Codex, Copilot, Cursor, Gemini CLI, Goose, Kiro, opencode, Qodo Gen, VS Code and Windsurf, and any MCP-compatible client works with the standard configuration.",
+    "keyFeatures": [
+      "One MCP API for iOS and Android — simulators, emulators and real devices",
+      "Accessibility-tree first (no vision tokens), screenshot + coordinates fallback",
+      "Taps, swipes, gestures, typing, hardware buttons, orientation and deep links",
+      "App install/launch/terminate and screen recording",
+      "Structured, deterministic UI output for data extraction and assertions",
+      "Install guides for Claude Code, Codex, Cursor, Cline, Copilot, Gemini CLI, Windsurf and more",
+      "Apache-2.0, npm package @mobilenext/mobile-mcp"
+    ],
+    "bestFor": "Mobile developers and QA engineers who want their coding agent to actually launch, exercise and verify iOS/Android builds instead of reasoning about them blind.",
+    "notIdealFor": "Web-only teams, environments without simulators/emulators or device access, and shops that need a full hosted device farm and CI reporting out of the box.",
+    "recentUpdates": "Mobile MCP passed 7K GitHub stars and was trending in September 2026; the project now documents support for 14+ MCP clients including Codex, Antigravity and Kiro and continues to ship frequent releases on npm.",
+    "verdict": "Mobile MCP is the de-facto open-source bridge between coding agents and real mobile devices — accessibility-first, cross-platform and client-agnostic — and belongs next to Chrome DevTools MCP in any agent toolbelt that touches native apps.",
+    "tags": [
+      "mcp",
+      "mobile",
+      "ios",
+      "android",
+      "automation",
+      "testing",
+      "accessibility",
+      "open-source",
+      "claude-code",
+      "codex"
+    ],
+    "lastUpdated": "2026-09-26"
+  },
+  {
+    "slug": "openrig",
+    "name": "OpenRig",
+    "company": "Esoteric Labs",
+    "pricing": "open-source",
+    "pricingDetail": "OpenRig is free and open source under Apache-2.0 and runs locally. The Claude Code and Codex sessions it manages require their own subscriptions or API access.",
+    "description": "OpenRig is a multi-agent harness that manages Claude Code and Codex sessions as one persistent system. Developers define an agent team in YAML — pods, communication edges and continuity policies — and boot it with one command; OpenRig runs the agents as ordinary tmux sessions and tracks them through a local daemon, SQLite state, a CLI, an MCP server and a dashboard. Rigs can be snapshotted, restored after reboots and changed while running.",
+    "keyFeatures": [
+      "YAML topologies (RigSpec) with pods, edges and continuity policies",
+      "`rig up` / `rig down` boot, snapshot and restore of whole agent teams",
+      "Mixed Claude Code and Codex seats in the same rig",
+      "Cross-agent messaging with `rig send`, `rig broadcast` and `rig chatroom`, plus a task queue",
+      "Adoption of existing tmux agent sessions into a managed rig",
+      "Local daemon, 40+ command CLI, MCP server, TUI and React dashboard"
+    ],
+    "bestFor": "Developers running several Claude Code and Codex sessions who want them organized into a persistent, recoverable team with defined roles and review paths.",
+    "notIdealFor": "Native Windows users, developers who use a single agent session, or teams that prefer a GUI agent manager over tmux-based terminals.",
+    "recentUpdates": "OpenRig released v0.5.15 through v0.5.17 between September 25 and 27, 2026, and was trending on GitHub with roughly 1,500 stars at review time.",
+    "verdict": "A flexible local control plane for multi-agent coding teams whose declarative topologies go beyond simple parallel-session runners. It writes trust settings and executable hooks during setup, so configuration should be reviewed before use.",
+    "tags": [
+      "multi-agent",
+      "orchestration",
+      "claude-code",
+      "codex",
+      "tmux",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-28"
+  },
+  {
+    "slug": "cua",
+    "name": "Cua",
+    "company": "Cua",
+    "pricing": "freemium",
+    "pricingDetail": "Cua's open-source framework (MIT) is free to self-host with your own infrastructure and models. Cua Fleets cloud desktops and hosted computer-use inference use prepaid credits on the Pro plan (from $10), with custom-priced Enterprise plans.",
+    "description": "Cua is open-source infrastructure for giving AI agents computers they can use. Cua Driver lets agents inspect and operate applications on macOS, Windows and Linux through an MCP server or CLI without moving the user's cursor, Lume creates local macOS and Linux VMs on Apple Silicon, and Cua Bench creates tasks and evaluates agents. Cua Fleets provides isolated cloud desktops for running computer-use agents at scale.",
+    "keyFeatures": [
+      "Cua Driver for window-targeted desktop automation over MCP or CLI on macOS, Windows and Linux",
+      "MCP stdio server usable from Claude Code, Codex and other clients",
+      "Lume local macOS and Linux virtual machines on Apple Silicon",
+      "Cua Bench for building tasks, evaluating agents and exporting trajectories",
+      "CUA-S1 small specialized computer-use decision models",
+      "Cua Fleets managed cloud sandboxes with Python SDK and Terraform support"
+    ],
+    "bestFor": "Developers building, testing or evaluating computer-use agents who need desktop automation drivers and isolated local or cloud environments.",
+    "notIdealFor": "Teams that only need browser or API automation, or that cannot grant accessibility and screen-recording permissions to a local driver.",
+    "recentUpdates": "Cua published cua-driver-rs v0.30.3 and nightly Lume builds on September 27-28, 2026, and was trending on GitHub with roughly 27,000 stars at review time.",
+    "verdict": "One of the most complete open-source stacks for computer-use agents, spanning drivers, VMs, benchmarks and managed cloud desktops. The breadth means individual components mature at different rates.",
+    "tags": [
+      "computer-use",
+      "desktop-automation",
+      "mcp",
+      "sandboxes",
+      "virtualization",
+      "open-source"
+    ],
+    "lastUpdated": "2026-09-28"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
@@ -7383,277 +8148,6 @@
     "lastUpdated": "2026-09-15"
   },
   {
-    "slug": "mimo-code",
-    "name": "MiMo Code",
-    "company": "Xiaomi",
-    "pricing": "open-source",
-    "pricingDetail": "MiMoCode is open source under the MIT license and free to install (npm, curl or PowerShell installers). Model usage is billed by whichever provider you connect: Xiaomi MiMo Platform (OAuth), Codex via ChatGPT Plus/Pro OAuth, imported Claude Code credentials, or any OpenAI-compatible API key. The MiMo Desktop app is in an invite-only beta.",
-    "description": "MiMoCode is Xiaomi's terminal-native AI coding assistant. It reads and writes code, runs commands, manages Git and keeps a persistent, SQLite FTS5-backed memory of the project (MEMORY.md, checkpoints, scratch notes, per-task progress) so it can resume work across sessions, and it powers the multimodal MiMo Desktop beta as its core engine.",
-    "keyFeatures": [
-      "Three primary agents — build (full tools), plan (read-only analysis) and compose (spec/skill-driven orchestration) — plus system-spawned subagents",
-      "Persistent cross-session memory with SQLite FTS5 full-text search, automatic checkpoints and context reconstruction near the context limit",
-      "Runs against Xiaomi MiMo models, Codex OAuth, imported Claude Code auth or any OpenAI-compatible provider",
-      "`mimo serve` / `mimo attach` split the TUI from a remote server over SSH port forwarding",
-      "One-line installers for macOS, Linux and Windows plus `npm install -g @mimo-ai/cli`",
-      "Core engine of Xiaomi MiMo Desktop (smart model orchestration, browser and computer control) in beta"
-    ],
-    "bestFor": "Developers who want an open-source, provider-agnostic terminal coding agent with strong built-in project memory, and users already on Xiaomi MiMo models or with existing Codex/Claude Code subscriptions to reuse.",
-    "notIdealFor": "Teams that need a GUI-first IDE experience, macOS Terminal.app users (unsupported rendering), or organisations that require a vendor with an established enterprise support track record in Western markets.",
-    "recentUpdates": "The XiaomiMiMo/MiMo-Code repository (created June 2026) passed 13,000 GitHub stars and was trending on GitHub in September 2026; Xiaomi opened an international beta for MiMo Desktop, built on MiMoCode, with trial access to the MiMo-X-Pro-Preview and MiMo-X-Flash-Preview models.",
-    "verdict": "MiMoCode is a credible open-source entrant in the terminal-agent space whose standout is memory and context management rather than a single model lock-in; it is worth evaluating alongside OpenCode and Codex CLI, particularly if you want to mix providers or use Xiaomi's MiMo models.",
-    "tags": [
-      "terminal-agent",
-      "open-source",
-      "persistent-memory",
-      "multi-provider",
-      "xiaomi",
-      "cli"
-    ],
-    "lastUpdated": "2026-09-23"
-  },
-  {
-    "slug": "codebase-memory-mcp",
-    "name": "codebase-memory-mcp",
-    "company": "DeusData",
-    "pricing": "open-source",
-    "pricingDetail": "Open source under the MIT license; distributed as a free single static binary for macOS, Linux and Windows (also on npm, PyPI and Go). No API keys, accounts or paid tiers are required.",
-    "description": "codebase-memory-mcp is a high-performance code intelligence MCP server that indexes a repository into a persistent knowledge graph using tree-sitter across 162 languages, with hybrid LSP type resolution for major languages. Coding agents query the graph through 17 MCP tools — search, call tracing, architecture overviews, impact analysis, dead-code detection, Cypher queries — replacing dozens of grep/read cycles with a few structural queries.",
-    "keyFeatures": [
-      "Indexes an average repo in milliseconds and the 28M-LOC Linux kernel in about three minutes with a RAM-first pipeline",
-      "162 vendored tree-sitter grammars compiled into one zero-dependency binary",
-      "Hybrid LSP semantic type resolution for Python, TypeScript/JavaScript, Go, Rust, Java, Kotlin, C/C++, C#, PHP and Perl",
-      "17 MCP tools including impact analysis, dead code detection, cross-service HTTP linking, ADR management and Cypher queries",
-      "`install` auto-configures Claude Code, Codex, Cursor, OpenCode and 40+ other client surfaces with hooks and skills",
-      "Built-in 3D graph visualisation UI served from the binary at localhost:9749",
-      "Infrastructure-as-code indexing for Dockerfiles, Kubernetes manifests and Kustomize overlays"
-    ],
-    "bestFor": "Developers running Claude Code, Codex, Cursor or other MCP-capable agents on large or polyglot codebases who want structural code understanding with far lower token usage.",
-    "notIdealFor": "Very small projects where plain file search is already cheap, or environments that forbid running third-party native binaries that modify agent configuration files.",
-    "recentUpdates": "The project surpassed 44,000 GitHub stars and trended on GitHub in September 2026; its design and benchmarks were published as an arXiv preprint (2603.27277) reporting evaluation across 31 real-world repositories, and recent releases added a shared session coordination daemon and Kubernetes/Kustomize indexing.",
-    "verdict": "A mature, well-benchmarked way to give coding agents a real map of a codebase; the single-binary install and broad client coverage make it one of the easiest code-intelligence MCP servers to adopt, with the usual caveat of trusting a tool that writes to your agent config.",
-    "tags": [
-      "mcp",
-      "code-intelligence",
-      "knowledge-graph",
-      "tree-sitter",
-      "open-source",
-      "token-optimization"
-    ],
-    "lastUpdated": "2026-09-23"
-  },
-  {
-    "slug": "claude-mem",
-    "name": "claude-mem",
-    "company": "thedotmack",
-    "pricing": "freemium",
-    "pricingDetail": "The claude-mem plugin and SDK are open source under Apache-2.0 and the local observer/provider is free to run. The installer offers an optional hosted memory service (CMEM Pro / claude-mem observer) that is free for the first 30 days after an email sign-in; it can be skipped with an explicit --provider flag or CLAUDE_MEM_ONLINE_OPTIN=false.",
-    "description": "claude-mem is a persistent-memory system for coding agents. It captures tool-usage observations during a session, compresses them with AI into semantic summaries, and injects the relevant context back into future sessions so the agent keeps continuity of project knowledge after a session ends or reconnects. Originally built for Claude Code, it now installs for OpenCode, Antigravity CLI, Cursor, OpenClaw, Grok Bot and other agents.",
-    "keyFeatures": [
-      "Automatic capture of tool-usage observations and AI-compressed session summaries",
-      "Context from previous sessions injected automatically into new sessions",
-      "One-command install (`npx claude-mem install`) or via the Claude Code plugin marketplace",
-      "Adapters for OpenCode, Antigravity CLI, Cursor, OpenClaw and Grok Bot (log-file watching where hosts have no hooks)",
-      "Search tools for querying past decisions, bugfixes and security alerts",
-      "Local observer by default with an optional hosted memory tier"
-    ],
-    "bestFor": "Claude Code and multi-agent users who lose context between sessions and want a drop-in memory layer without changing how they work.",
-    "notIdealFor": "Teams with strict data-handling rules who cannot review what a hook-based plugin captures, or users who want a git-native, human-editable memory format instead of AI-generated summaries.",
-    "recentUpdates": "The repository passed 94,000 GitHub stars and trended on GitHub in September 2026; it added installers for Grok Bot and Antigravity CLI plus an optional hosted CMEM Pro tier, and Reddit threads in r/ClaudeCode and r/ClaudeAI discuss real-world usage and a Kaspersky false-positive warning on Windows.",
-    "verdict": "One of the most widely adopted memory add-ons for Claude Code, with a low-friction install and growing multi-agent support; evaluate the optional hosted tier and hook permissions before rolling it out to a team.",
-    "tags": [
-      "agent-memory",
-      "claude-code",
-      "plugin",
-      "persistent-context",
-      "open-source",
-      "freemium"
-    ],
-    "lastUpdated": "2026-09-23"
-  },
-  {
-    "slug": "oh-my-openagent",
-    "name": "Oh My OpenAgent",
-    "company": "Sisyphus Labs (code-yeongyu)",
-    "pricing": "free",
-    "pricingDetail": "Free to install and use under the source-available SUL-1.0 license. You pay only for the model subscriptions or API keys you connect (Anthropic, OpenAI/Codex, Kimi, OpenAI-compatible gateways, etc.).",
-    "description": "Oh My OpenAgent (OmO, formerly oh-my-opencode) is a multi-agent orchestration layer for coding agents. The Ultimate edition plugs into OpenCode with 11 specialised agents, 54+ lifecycle hooks, built-in websearch, context7, grep_app and LSP MCPs, Team Mode and slash commands; the Light edition ports the portable pieces to Codex CLI; and OmO Native is a standalone `omo` command. Typing `ultrawork` (or `ulw`) with a prompt has the agents plan, execute and keep going until the task is done, across Claude, GPT, Kimi and other models.",
-    "keyFeatures": [
-      "11 specialised agents with 54+ lifecycle hooks for OpenCode (Ultimate edition)",
-      "Codex CLI plugin (Light edition) with rules, comment-checker, LSP, ultrawork loops and Team Mode",
-      "Standalone `omo` CLI (OmO Native, beta) that needs no host",
-      "`ultrawork` / `mass ulw` keywords for autonomous, multi-model task completion",
-      "Built-in websearch, context7, grep_app and LSP MCP servers",
-      "Memory system, CodeMode and Anthropic-subscription support; live workflow DAG view via omo-herdr-dag"
-    ],
-    "bestFor": "OpenCode and Codex CLI power users who want a batteries-included multi-agent setup that orchestrates several model providers instead of committing to one vendor.",
-    "notIdealFor": "Developers who want a minimal, easy-to-audit agent configuration, or organisations that require an OSI-approved open-source license.",
-    "recentUpdates": "Renamed from oh-my-opencode to oh-my-openagent as it expanded from an OpenCode plugin to Codex CLI and a standalone OmO Native beta (`bun add -g omo-ai@beta`); the repo passed 69,000 GitHub stars and was trending on GitHub in September 2026, with active discussion in r/opencodeCLI.",
-    "verdict": "OmO is the most popular community orchestration layer on top of OpenCode and now Codex, with strong adoption signals; it is opinionated and complex, so let an agent run the installer as the maintainers suggest and expect rapid change.",
-    "tags": [
-      "agent-orchestration",
-      "opencode",
-      "codex-cli",
-      "multi-agent",
-      "plugin",
-      "source-available"
-    ],
-    "lastUpdated": "2026-09-23"
-  },
-  {
-    "slug": "cli-anything",
-    "name": "CLI-Anything",
-    "company": "HKUDS",
-    "pricing": "open-source",
-    "pricingDetail": "Open source under the Apache-2.0 license from the University of Hong Kong data science group (HKUDS). The harness generator skill, generated CLIs and the CLI-Hub package manager (`pip install cli-anything-hub`) are all free; you supply the coding agent and model.",
-    "description": "CLI-Anything turns existing software into agent-native tooling. Installed as a skill or plugin for Claude Code, Codex, Pi, OpenClaw, Cursor or Qoder, its 7-phase harness generator wraps an application — Blender, GIMP, FreeCAD, Obsidian, n8n, Godot, Zotero and dozens more — in a structured-JSON command-line interface with a generated SKILL.md, and CLI-Hub is the registry where agents and humans browse, install and update those community-built CLIs.",
-    "keyFeatures": [
-      "7-phase harness generator (HARNESS.md) that produces agent-ready CLIs with tests and SKILL.md files",
-      "CLI-Hub registry and `cli-hub` package manager to list, search, install, update and launch CLIs",
-      "Community harnesses for Blender, GIMP, FreeCAD, Krita, MuseScore, Obsidian, n8n, Godot, Zoom, QGIS and more",
-      "Meta-skill that lets agents discover and install CLIs autonomously",
-      "Skills for Claude Code, Codex, Pi, OpenClaw, Cursor, Qoder and Hermes",
-      "Structured JSON output and --help self-description designed for LLM consumption"
-    ],
-    "bestFor": "Developers and researchers who want coding agents to drive desktop or server software that has no API, and contributors building reusable agent tool harnesses.",
-    "notIdealFor": "Teams that only need to expose their own web service (an MCP server or OpenAPI spec is simpler), or environments where installing many third-party generated CLIs is a security concern.",
-    "recentUpdates": "The HKUDS/CLI-Anything repository reached roughly 50,000 GitHub stars and trended on GitHub in September 2026; the maintainers reported the ecosystem surpassing one million CLI calls, and 2026 releases added CLI-Hub v0.2.0 with multi-source public CLIs, unified skills, and new harnesses such as QGIS, Obsidian, n8n and Godot.",
-    "verdict": "A fast-growing, academically backed project that gives agents deterministic control over real-world software via CLIs rather than screen-scraping; the registry model makes it practical today, though quality varies across community harnesses.",
-    "tags": [
-      "agent-tools",
-      "cli",
-      "skills",
-      "open-source",
-      "harness",
-      "registry"
-    ],
-    "lastUpdated": "2026-09-23"
-  },
-  {
-    "slug": "athas",
-    "name": "Athas",
-    "company": "Athas",
-    "pricing": "open-source",
-    "pricingDetail": "Athas is free and open source under the AGPL-3.0 license, with prebuilt macOS, Windows and Linux builds (Homebrew cask, WinGet, Scoop, .deb/.rpm and install scripts). Model and agent usage is billed by the providers you connect (Anthropic, OpenAI, Google, OpenRouter, etc.) or free with local Ollama models.",
-    "description": "Athas is a lightweight, cross-platform code editor built with Tauri (Rust backend, React frontend) that treats coding agents as first-class citizens. It runs Claude Code, Codex, Gemini CLI, GitHub Copilot CLI, OpenCode, Qwen Code and Kimi CLI as in-editor agent sessions over the Agent Client Protocol (ACP) and the Codex app-server protocol, with permission prompts, queued messages and persistent chat history, and it also offers direct model chat via Anthropic, OpenAI, Google, DeepSeek, Mistral, xAI Grok, OpenRouter and Ollama. Traditional editor features — Git, LSP, syntax highlighting, vim keybindings, integrated terminal, database viewers and collaboration — are built in.",
-    "keyFeatures": [
-      "In-editor agent sessions for Claude Code, Codex, Gemini CLI, GitHub Copilot CLI, OpenCode, Qwen Code and Kimi CLI via ACP and the Codex app-server",
-      "Multi-provider model chat (Anthropic, OpenAI, Google, DeepSeek, Mistral, Grok, OpenRouter, Ollama) with attachments and follow-up actions",
-      "Tauri (Rust + React) architecture for a small, fast native binary on macOS, Windows and Linux",
-      "Git integration, LSP support, vim keybindings and an integrated terminal",
-      "Built-in database viewers for PostgreSQL, MySQL, SQLite, DuckDB, MongoDB and Redis",
-      "Collaboration plus enterprise policy controls (managed mode and extension allowlist)",
-      "Extension system with a registry, and one-line installers for every platform"
-    ],
-    "bestFor": "Developers who want a fast, native, open-source editor that hosts the CLI coding agents they already pay for (Claude Code, Codex, Gemini CLI, Copilot) side by side, without the weight of Electron-based IDEs.",
-    "notIdealFor": "Teams that depend on the VS Code extension ecosystem or JetBrains-grade refactoring tooling, or organisations that cannot adopt AGPL-licensed software.",
-    "recentUpdates": "Athas shipped v0.14.2 in September 2026 (preview channel at v0.14.1-preview.x), with the GitHub repo passing 3,000 stars and receiving daily commits; recent work added ACP-based agent sessions, Codex app-server integration, enterprise managed mode with an extension allowlist, and Homebrew/WinGet/Scoop distribution.",
-    "verdict": "Athas is a promising, actively developed open-source alternative to Cursor- and Zed-style AI editors whose differentiator is bringing existing terminal agents into a lightweight native UI; it is young and moving fast, so expect rough edges but a very capable agent workspace.",
-    "tags": [
-      "ai-ide",
-      "code-editor",
-      "tauri",
-      "open-source",
-      "acp",
-      "agent-workspace",
-      "cross-platform"
-    ],
-    "lastUpdated": "2026-09-24"
-  },
-  {
-    "slug": "cc-switch",
-    "name": "CC Switch",
-    "company": "farion1231",
-    "pricing": "open-source",
-    "pricingDetail": "CC Switch is free and open source under the MIT license, with signed desktop builds for Windows, macOS and Linux (Homebrew, WinGet, Scoop, .deb/.rpm/AppImage). It manages configurations only; model usage is billed by whichever API providers or subscriptions you switch between.",
-    "description": "CC Switch is a cross-platform Tauri 2 desktop app that acts as a single control surface for AI coding tools. It centrally manages the configuration files of Claude Code, Claude Desktop, Codex, Gemini CLI, Grok Build, OpenCode, OpenClaw and Hermes Agent, letting you import providers with one click, switch between 50+ built-in provider presets (official APIs, AWS Bedrock, NVIDIA NIM, community relays), and share a universal provider across apps. It also unifies MCP server and Skills management with bidirectional sync, shows usage and balance, speed-tests endpoints, offers an optional local routing layer with format conversion, hot switching, failover and request logs, and stores everything in SQLite with atomic writes.",
-    "keyFeatures": [
-      "Manages Claude Code, Claude Desktop, Codex, Gemini CLI, Grok Build, OpenCode, OpenClaw and Hermes Agent from one app",
-      "One-click switching between 50+ API-provider presets, including Bedrock, NVIDIA NIM and community relays",
-      "Unified MCP and Skills management with bidirectional sync across tools",
-      "Usage and balance queries, endpoint speed testing and session/prompt management",
-      "Local routing with format conversion, hot switching, failover and usage analytics",
-      "System-tray quick switch and cloud sync via Dropbox, OneDrive, iCloud or WebDAV",
-      "SQLite-backed storage with atomic writes to protect configs from corruption"
-    ],
-    "bestFor": "Developers who juggle several CLI coding agents and multiple API providers or relays and want to stop hand-editing JSON/TOML/.env files every time they switch.",
-    "notIdealFor": "Developers who use a single agent with a single official subscription and never change providers, or teams that need centrally enforced enterprise configuration policy.",
-    "recentUpdates": "CC Switch shipped v3.20.4 on 22 September 2026 and has been on GitHub's weekly trending list, with the repository passing 136,000 stars; recent releases added Grok Build and Hermes Agent support, Claude Desktop third-party profiles and model mapping, and expanded local-routing and skills features.",
-    "verdict": "CC Switch has become the de facto configuration manager for the multi-agent, multi-provider coding workflow; it is mature, extremely popular and actively maintained, though its sponsor-heavy README and relay-provider presets mean you should still vet the providers you route through.",
-    "tags": [
-      "desktop-app",
-      "open-source",
-      "claude-code",
-      "codex",
-      "provider-switching",
-      "mcp",
-      "skills",
-      "tauri"
-    ],
-    "lastUpdated": "2026-09-24"
-  },
-  {
-    "slug": "hindsight",
-    "name": "Hindsight",
-    "company": "Vectorize",
-    "pricing": "open-source",
-    "pricingDetail": "Hindsight is open source under the MIT license and can be self-hosted with Docker (PostgreSQL + pgvector) or embedded in Python; you pay only for the LLM/embedding provider you configure. Vectorize also offers a managed Hindsight Cloud service.",
-    "description": "Hindsight is an agent memory system from Vectorize built around the idea that agents should learn over time, not just recall conversation history. It exposes three operations — retain, recall and reflect — over memory banks stored in PostgreSQL with pgvector, organising knowledge as world facts, experience facts, auto-consolidated observations and user-curated mental models with entity, temporal and semantic pathways. Retrieval runs semantic, BM25, graph and temporal strategies in parallel (TEMPR). Developers add it to an existing agent with a two-line LLM-client wrapper, via Python/TypeScript SDKs or plain HTTP, an MCP server, or coding-agent integrations for Claude Code and Cursor.",
-    "keyFeatures": [
-      "retain / recall / reflect API for storing, searching and reasoning over agent memory",
-      "Memory banks with world facts, experience facts, consolidated observations and mental models",
-      "Multi-strategy retrieval combining semantic, keyword (BM25), graph and temporal search",
-      "Two-line LLM wrapper that adds memory to existing agents automatically",
-      "Python and TypeScript SDKs, HTTP API, MCP server and Claude Code / Cursor integrations",
-      "Self-hosted Docker deployment on PostgreSQL + pgvector, or managed Hindsight Cloud",
-      "State-of-the-art LongMemEval results with independently reproduced benchmarks"
-    ],
-    "bestFor": "Developers building agents or coding-assistant workflows that need persistent, evolving memory across sessions and want an open-source system they can run on their own Postgres.",
-    "notIdealFor": "Simple chatbots that only need short conversation history, or teams that cannot run PostgreSQL/pgvector and an LLM provider for memory consolidation.",
-    "recentUpdates": "Hindsight released v0.10.1 on 21 September 2026 and reached GitHub's daily and weekly trending lists with over 27,000 stars; recent work added coding-agent integrations, an installable documentation skill (npx skills add), MCP support and the hosted Hindsight Cloud.",
-    "verdict": "Hindsight is one of the most credible open-source agent-memory options available, backed by published benchmarks and production use; expect more setup than a plug-in memory file, but far stronger recall and consolidation.",
-    "tags": [
-      "agent-memory",
-      "open-source",
-      "mcp",
-      "postgresql",
-      "pgvector",
-      "sdk",
-      "self-hosted"
-    ],
-    "lastUpdated": "2026-09-24"
-  },
-  {
-    "slug": "treg",
-    "name": "Treg",
-    "company": "Superdesign",
-    "pricing": "freemium",
-    "pricingDetail": "Treg is source-available under Apache-2.0 with additional terms (self-hosting for your own team is expressly permitted; offering it as a competing hosted service is restricted). The hosted registry at treg.to meters catalog calls against a prepaid team balance at per-call prices from a cent with 0% markup and gives new verified teams $1.00 free; calls through your own registered keys are never metered.",
-    "description": "Treg, built by the Superdesign team, is an 'OpenRouter for agent tools': a tool registry and proxy that gives an AI agent one base URL and one token to call roughly 2,800 catalogued API endpoints across about 60 providers — SEO and backlinks, social and trends, people and company enrichment, ads, scraping, and image/video generation — without signing up with each vendor. Agents search the catalog by task, read the price, and call the endpoint. Teams can also register their own tools — paid API accounts, OAuth connections, vendor CLIs such as stripe, gh or vercel, and SKILL.md bundles — so every teammate's agent can use them while credentials are injected server-side and never leave the registry. The proxy relays requests rather than modelling upstream APIs, so it survives provider changes.",
-    "keyFeatures": [
-      "Single base URL and token for 2,800+ catalogued endpoints across ~60 providers",
-      "Task-based tool search with per-call pricing shown before you call",
-      "Own-tool registry for API keys, OAuth connections, vendor CLIs and SKILL.md bundles",
-      "Server-side credential injection so agents never hold secrets",
-      "Relay-only proxy design that survives upstream API changes",
-      "Hosted at treg.to or fully self-hostable",
-      "Team balances, free anonymous routes and $1 starter credit"
-    ],
-    "bestFor": "Teams running coding or research agents that need occasional access to paid data and marketing APIs without buying subscriptions or managing dozens of vendor keys.",
-    "notIdealFor": "Organisations that prohibit routing API traffic through a third-party proxy, or developers who only need a handful of tools they already have direct credentials for.",
-    "recentUpdates": "Treg launched on Product Hunt in August 2026, moved to the treg.to domain, and appeared on GitHub's daily and weekly trending lists in September 2026 with about 3,000 stars while the catalog grew from ~2,600 to 2,800+ endpoints.",
-    "verdict": "Treg is an early but well-designed answer to the tool-access problem for agents; the pay-per-call catalog is compelling for bursty research and growth workloads, while the self-hostable registry for team credentials is useful even if you never touch the paid catalog.",
-    "tags": [
-      "agent-tools",
-      "api-gateway",
-      "tool-registry",
-      "pay-per-call",
-      "self-hosted",
-      "skills",
-      "open-source"
-    ],
-    "lastUpdated": "2026-09-24"
-  },
-  {
     "slug": "magnitude",
     "name": "Magnitude",
     "company": "Magnitude (YC)",
@@ -7683,457 +8177,5 @@
       "coding-agents"
     ],
     "lastUpdated": "2026-09-24"
-  },
-  {
-    "slug": "ccgui",
-    "name": "ccgui",
-    "company": "zhukunpenglinyutong",
-    "pricing": "open-source",
-    "pricingDetail": "ccgui (Desktop CC GUI) is free and open source under the MIT license, with signed macOS (Apple Silicon) builds plus Windows and Linux installers on GitHub Releases and in-app auto-update. It is a client only: model usage is billed by whichever CLI subscription or API provider channel you configure for each engine.",
-    "description": "ccgui is a multi-engine AI coding desktop client built with Tauri 2, React 18, TypeScript and Rust. Instead of watching a black terminal, you pick a project and chat with Claude Code, Codex CLI, Kimi CLI, Grok CLI, Pi, OMP, DeepSeek Harness (DSH), Antigravity, OpenCode or Qoder, each wired in through a dedicated protocol adapter in the Rust backend so streaming events, session history and provider channels are handled natively rather than scraped off a terminal screen. The chat surface renders per-token streaming with cached syntax highlighting, folding thinking traces, live tool-call rows with Git diff and Bash viewers, todo snapshots, question cards and permission prompts, and supports per-tab model and reasoning-effort overrides. Around it sit a virtualized Git-aware file tree with a CodeMirror editor, a PTY-backed xterm terminal, a Git panel, a command palette, a first-party plugin SDK, proxy settings and token-authenticated LAN web access with a QR-code entry so you can drive sessions from another device. Provider channels are written to each CLI's own native config files with presets for GLM, Kimi, DeepSeek, MiniMax, MiMo, Bailian, OpenRouter and more, and can be imported from CC Switch.",
-    "keyFeatures": [
-      "Ten engines in one GUI: Claude Code, Codex CLI, Kimi CLI, Grok CLI, Pi, OMP, DeepSeek Harness, Antigravity, OpenCode and Qoder",
-      "Native Rust protocol adapters for streaming, session history/resume, interrupts and message queues",
-      "Thinking traces, tool-call rows with Git diff and Bash viewers, todo strip and question cards",
-      "Per-tab model and reasoning-effort overrides; provider-channel presets and CC Switch import",
-      "Built-in file tree with CodeMirror editor, PTY terminal, Git panel and command palette",
-      "Plugin SDK (@ccgui/plugin-sdk) with declarative plugins and a trust boundary",
-      "LAN web access over a token-authenticated WebSocket bridge; bilingual Chinese/English UI"
-    ],
-    "bestFor": "Developers who run several CLI coding agents (especially Claude Code, Codex, Kimi, DeepSeek Harness and other Chinese-ecosystem engines) and want one desktop chat client with real session history, diffs and a terminal rather than juggling terminal tabs.",
-    "notIdealFor": "Developers who prefer a terminal-first workflow, need multi-agent team orchestration (not yet supported), or want a full IDE with language intelligence rather than an agent chat client.",
-    "recentUpdates": "ccgui shipped v1.0.8 and v1.0.9 on 23-24 September 2026 and reached GitHub's daily trending list with about 4,400 stars; recent releases added Qoder and Antigravity adapters, DeepSeek Harness support, an OMP fast-mode toggle and the plugin runtime.",
-    "verdict": "ccgui is one of the broadest multi-engine desktop front-ends available for CLI coding agents, with unusually deep per-engine adapters and a compatibility matrix that is honest about gaps; it is young and fast-moving, but already a practical alternative to running ten different CLIs in ten terminals.",
-    "tags": [
-      "desktop-app",
-      "open-source",
-      "tauri",
-      "claude-code",
-      "codex",
-      "deepseek",
-      "multi-agent",
-      "cross-platform"
-    ],
-    "lastUpdated": "2026-09-25"
-  },
-  {
-    "slug": "paperclip",
-    "name": "Paperclip",
-    "company": "Paperclip Labs",
-    "pricing": "open-source",
-    "pricingDetail": "Paperclip is free and open source under the MIT license (MIT (c) 2026 Paperclip Labs, Inc). You self-host the Node.js server and React UI via the paperclip.ing install script, Docker or Kubernetes, and pay only for the agents and model providers you connect; cloud and sandbox agent runtimes (e2b, Cloudflare, Daytona, Modal, Novita) are billed by those providers.",
-    "description": "Paperclip is an open-source control plane for running a team of AI agents like a company: if OpenClaw is an employee, Paperclip is the company. You define a goal, hire agents into an org chart with roles, titles and reporting lines (any bot, any provider — OpenClaw, Claude Code, Codex, Cursor, bash or HTTP, anything that can receive a heartbeat), approve the strategy, set budgets and monitor from a task-manager-style dashboard or your phone. Agents wake on scheduled heartbeats, check out ticketed tasks that carry full goal ancestry, delegate up and down the org chart, and resume persistent task context across runs. Task checkout and budget enforcement are atomic so there is no double work or runaway spend; approval gates, revisioned config with rollback, full tool-call tracing and an immutable audit log provide governance; and every entity is company-scoped so one deployment can run many isolated organizations with portable, secret-scrubbed import/export templates. A Skill Studio, shared org-wide skills, evals and performance reviews round out the agent-training pillar.",
-    "keyFeatures": [
-      "Org chart for agents with roles, reporting lines, delegation and mixed human + agent governance",
-      "Bring your own agent: OpenClaw, Claude Code, Codex, Cursor, bash or HTTP adapters, plus e2b/Cloudflare/Daytona/Modal/Kubernetes sandboxes",
-      "Ticketed tasks with goal ancestry, approval gates and review from diffs, screenshots and tests",
-      "Scheduled heartbeats with persistent agent state across runs",
-      "Per-agent monthly budgets with atomic task checkout and throttling",
-      "Full tool-call tracing, immutable audit log and revisioned config with rollback",
-      "Multi-organization isolation, portable company templates and a mobile-ready UI"
-    ],
-    "bestFor": "Builders and small teams who coordinate many autonomous agents toward business goals and want budgets, governance and an audit trail instead of twenty unattended Claude Code tabs.",
-    "notIdealFor": "Individual developers who just want a single coding agent in their editor, or organisations that need a fully managed SaaS rather than a self-hosted server.",
-    "recentUpdates": "Paperclip released v2026.916.1 on 21 September 2026 and topped GitHub's daily trending list on 25 September with about 84,000 stars and 15,000 forks; several dedicated Reddit communities (r/PaperClip_AI, r/PaperclipAI, r/PaperclipUseCases) have formed around it, and the roadmap lists cloud/sandbox agents as shipped with multi-tenant cloud deployments in progress.",
-    "verdict": "Paperclip is the most complete open-source answer so far to the 'how do I run a company of agents' problem, with unusually careful orchestration primitives (atomic checkout, budgets, rollback); it is ambitious and still maturing, but its adoption and pace make it the reference point in this space.",
-    "tags": [
-      "agent-orchestration",
-      "open-source",
-      "self-hosted",
-      "multi-agent",
-      "governance",
-      "openclaw",
-      "claude-code",
-      "codex"
-    ],
-    "lastUpdated": "2026-09-25"
-  },
-  {
-    "slug": "impeccable",
-    "name": "Impeccable",
-    "company": "Paul Bakaus",
-    "pricing": "open-source",
-    "pricingDetail": "Impeccable is free and open source under the Apache-2.0 license. The skill, 24 commands, CLI and browser extension are all free; the deterministic detector rules run locally with no LLM or API key, and the skill itself runs inside whatever coding agent and model subscription you already use.",
-    "description": "Impeccable is design guidance for AI coding agents, created by Paul Bakaus and grown out of Anthropic's frontend-design skill. Its premise is that every model trained on the same SaaS templates produces the same tells — Inter everywhere, purple-to-blue gradients, cards nested in cards, gray text on colored backgrounds — unless it is given a design language. `npx impeccable install` detects your harness folders (~/.claude, ~/.codex, ~/.grok, ~/.hermes, .cursor and more) and installs one skill plus provider-native hook manifests; `/impeccable init` then records durable product truth in PRODUCT.md so later commands know audience, purpose, constraints and voice. Twenty-four commands give you a shared vocabulary with the agent: craft, shape, document, extract, critique, audit, polish, bolder, quieter, distill, harden, onboard, animate, colorize, typeset, layout, delight, overdrive, clarify, adapt, optimize, live and generate, plus pin for shortcuts. Sixty-one deterministic detector rules, run by the CLI or a browser extension without any LLM, catch AI-generated design anti-patterns, and live mode lets you iterate on element variants directly in the browser.",
-    "keyFeatures": [
-      "One skill, 24 slash commands and a shared design vocabulary for your coding agent",
-      "`/impeccable init` writes PRODUCT.md with durable product context; DESIGN.md captures the visual system",
-      "61 deterministic detector rules via CLI and browser extension, no LLM or API key needed",
-      "Live browser mode for visual variant iteration and `generate` for automatic variants",
-      "Explicit anti-pattern guidance (overused fonts, gray-on-color text, nested cards, bounce easing)",
-      "Installs into Claude Code, Codex, Cursor, Gemini CLI, Grok Build, Hermes Agent, Veto and GitHub Copilot with provider-native edit hooks",
-      "Git-submodule install option for teams that vendor and pin skills"
-    ],
-    "bestFor": "Developers and small teams shipping AI-built frontends who want their agent to produce distinctive, accessible, well-structured UI instead of generic template output.",
-    "notIdealFor": "Backend-only projects, or teams with a mature in-house design system and design review process that already constrains agent output.",
-    "recentUpdates": "Impeccable published engine-v0.1.6 on 25 September 2026 (skill v4.3.1 on 9 September), appears on GitHub's weekly and monthly trending lists with about 71,000 stars and 4,300 forks, and recently added the deterministic detector engine, browser extension, live/generate modes and Codex, Grok Build and Hermes hook support.",
-    "verdict": "Impeccable has become the de facto design skill for coding agents; the command vocabulary and PRODUCT.md setup are genuinely useful, and the deterministic detectors make it more than a prompt pack, though the hook installs modify harness config and deserve a review before you apply them.",
-    "tags": [
-      "agent-skill",
-      "design",
-      "frontend",
-      "open-source",
-      "claude-code",
-      "codex",
-      "cursor",
-      "cli"
-    ],
-    "lastUpdated": "2026-09-25"
-  },
-  {
-    "slug": "chrome-devtools-mcp",
-    "name": "Chrome DevTools MCP",
-    "company": "Google (Chrome DevTools)",
-    "pricing": "open-source",
-    "pricingDetail": "Chrome DevTools MCP is free and open source under the Apache-2.0 license, published to npm as chrome-devtools-mcp. It requires Node.js LTS and a current stable Chrome. Google collects anonymous usage statistics by default (opt out with --no-usage-statistics or the CHROME_DEVTOOLS_MCP_NO_USAGE_STATISTICS/CI environment variables), and performance tools may query the Google CrUX API unless --no-performance-crux is set.",
-    "description": "Chrome DevTools MCP is the Chrome team's official Model Context Protocol server that gives coding agents the full power of Chrome DevTools against a live browser. Added to any MCP client with `npx -y chrome-devtools-mcp@latest`, it lets an agent record performance traces and extract actionable DevTools insights, analyse network requests, read console messages with source-mapped stack traces, take screenshots and drive pages reliably through Puppeteer with automatic waiting for action results. A `--slim` mode exposes only basic browser tasks, `--headless` runs without a window, and advanced options cover concurrent sessions, persistent user-data directories, attaching to an already-running Chrome over WebSocket, and debugging on Android. A standalone CLI is provided for use without MCP, and the docs include client configuration guides for Antigravity, Claude Code, Cursor and VS Code plus guidance on running it as a browser subagent. It officially supports Google Chrome and Chrome for Testing, tracking the latest Extended Stable release.",
-    "keyFeatures": [
-      "Official Chrome team MCP server and CLI for coding agents",
-      "Performance tracing with DevTools-derived insights and optional CrUX field data",
-      "Network request analysis, console messages with source-mapped stack traces and screenshots",
-      "Reliable Puppeteer-based automation that waits for action results",
-      "--slim, --headless and --isolated modes; connect to a running Chrome; Android debugging",
-      "Client configuration guides for Antigravity, Claude Code, Cursor and VS Code",
-      "Design principles for use as a browser subagent inside larger harnesses"
-    ],
-    "bestFor": "Web developers who want their coding agent to verify, debug and performance-profile the actual page in Chrome rather than guessing from source code.",
-    "notIdealFor": "Teams that need cross-browser (Firefox/Safari) automation, or environments where exposing a live browser session and its data to an MCP client is unacceptable.",
-    "recentUpdates": "Chrome DevTools MCP released v1.10.0 and v1.10.1 on 23 September 2026, appears on GitHub's monthly trending list with about 52,600 stars, and is now documented at developer.chrome.com/docs/devtools/agents; community plugins and posts (for example a Jev-Reach plugin that reduces model turns per click) show active third-party use.",
-    "verdict": "Chrome DevTools MCP is the reference way to give an agent real browser observability — first-party, well maintained and far deeper than screenshot-only browser tools — with the caveat that you should review its default telemetry and the data it exposes to MCP clients.",
-    "tags": [
-      "mcp-server",
-      "browser",
-      "chrome",
-      "debugging",
-      "performance",
-      "puppeteer",
-      "open-source",
-      "google"
-    ],
-    "lastUpdated": "2026-09-25"
-  },
-  {
-    "slug": "nenva",
-    "name": "nenva",
-    "company": "Anjadhe",
-    "pricing": "freemium",
-    "pricingDetail": "nenva is source-available under the PolyForm Noncommercial 1.0.0 license — free for personal and other noncommercial use, with the source on GitHub. The default local model is a free one-time download; nenva Cloud (hosted open-weight model) includes a free monthly allowance with no account, and you can alternatively point it at your own OpenAI-compatible server or your own OpenAI/Anthropic key.",
-    "description": "nenva (from Anjadhe) is a privacy-first personal AI assistant for macOS that inverts the usual cloud-AI model: your life stays in nenva's own apps on your Mac — email, calendar, tasks, notes, journal, investments — and the AI comes to where the data is rather than your data going to a service. By default everything runs on a local open-weight model sized to your machine (nenva's own tuned small Qwen model on 8-16 GB Macs, larger models from 32 GB), so nothing leaves the device. Opening Actions gives one short finishable list for the day — tasks due, action items pulled from your Gmail (analyzed on-device), and your calendar — with Plan holding focus areas and goals behind it. The assistant reads your tasks, goals, notes, journal and calendar, answers questions, creates documents, slide decks and small interactive pages exportable to PDF, and can search the web with your own key. The built-in apps are a starter set: point any coding agent (Claude Code, Codex, ...) at ~/Anjadhe/apps/ to build your own — new apps get storage, encrypted backup, sync and the assistant's attention automatically. There is no account or nenva database; Gmail connects straight from Google to your Mac, and sync between Macs travels encrypted through your own iCloud.",
-    "keyFeatures": [
-      "Local-first AI: open-weight model downloaded once runs entirely on your Mac; nothing leaves by default",
-      "Built-in apps for email, calendar, tasks, notes, journal, investments and goals — the assistant reads across all of them",
-      "Daily Actions view: one short list combining due tasks, email action items and calendar",
-      "Gmail integration analyzed on-device; no account, no nenva database",
-      "Extensible: point a coding agent at ~/Anjadhe/apps/ to build custom apps with storage, encrypted backup and sync",
-      "Flexible brains: local model, nenva Cloud free tier, own OpenAI-compatible server, or your own OpenAI/Anthropic key — each an explicit choice",
-      "iCloud-encrypted sync between Macs; runs on any Mac with 8 GB+ memory"
-    ],
-    "bestFor": "Mac users who want a capable personal AI assistant over their email, calendar, notes and tasks without sending personal data to a cloud service — and tinkerers who like extending the app canvas with a coding agent.",
-    "notIdealFor": "Windows/Linux users (macOS only), people who want the strongest frontier models without configuring their own key or server, and teams needing shared/multi-user assistants.",
-    "recentUpdates": "nenva publishes signed releases with an auto-update feed from anjadhe.ai/download and is developed in the open at github.com/Anjadhe/Anjadhe under the PolyForm Noncommercial license.",
-    "verdict": "nenva is a thoughtfully private take on the personal-AI-assistant idea — local by default, no account, and genuinely useful built-in apps — with the coding-agent-extensible app canvas as an unusual bonus; the PolyForm license and macOS-only scope are the main constraints.",
-    "tags": [
-      "personal-assistant",
-      "privacy",
-      "local-llm",
-      "macos",
-      "source-available",
-      "open-weight",
-      "email",
-      "productivity"
-    ],
-    "lastUpdated": "2026-09-26"
-  },
-  {
-    "slug": "zeron",
-    "name": "Zeron",
-    "company": "Zeron",
-    "pricing": "open-source",
-    "pricingDetail": "Zeron is free and open source under the MIT license (github.com/zeronsh/zeron), with a one-line installer at zeron.sh/install.sh for Linux, a desktop release for macOS and a portable ZIP for Windows. Local-only mode needs no account. Optional multi-device sync uses a Zeron account; the project is sponsor-funded (GitHub Sponsors) rather than paywalled.",
-    "description": "Zeron is a native control plane for the coding agents you already use. It is not a new harness: it drives Claude Code, Codex, Cursor, Devin, Grok, Hermes, Pi and Antigravity sessions on your own machines and shows them in one fast native window, with every machine's sessions in a single list, live branch diffs as agents work, integrated terminals and per-session worktrees. Each device runs a small Rust engine daemon that stores sessions locally; a fresh install starts in local-only mode with no account or network connection. Sign in only when you want multi-device sync — then you can start an agent at your desk, follow it from your phone and approve the diff from the couch, and an always-on machine such as a VPS keeps agents working after you close your laptop. Synced devices are trusted with remote workspace read/write access (.git is always excluded), local sessions stay local when you sign in or out, and the login/logout commands refuse to touch credentials while an engine owns the data directory.",
-    "keyFeatures": [
-      "Drives Claude Code, Codex, Cursor, Devin, Grok, Hermes, Pi and Antigravity — no new harness",
-      "One native window listing every machine's agent sessions with live branch diffs",
-      "Local-only by default: per-device Rust engine daemon, no account or network required",
-      "Optional multi-device sync: start at your desk, steer from phone or another laptop",
-      "Headless engine on an always-on VPS keeps agents running after you close your laptop",
-      "Integrated terminals, worktrees and remote workspace file access for synced devices",
-      "Linux installer, macOS desktop release, Windows portable build; MIT-licensed"
-    ],
-    "bestFor": "Developers running several coding-agent sessions across machines who want one native cockpit to watch, steer and approve them from any device without giving up their existing CLI tools.",
-    "notIdealFor": "Teams looking for a hosted, multi-user agent orchestration SaaS, or users who only ever run one agent in one terminal and do not need cross-device control.",
-    "recentUpdates": "Zeron is under very active development in 2026 (rewritten natively in Rust with a gpui UI, formerly known as Comet) and was trending on GitHub in September 2026 with 2K+ stars; it recently added Devin and Antigravity to its list of supported agents and is sponsored by The Context Company.",
-    "verdict": "Zeron is a well-built local-first answer to the 'too many agent terminals' problem — one native window over the agents you already pay for, with genuinely useful phone/VPS follow-along — and its MIT license and no-account default make it low-risk to try.",
-    "tags": [
-      "agent-control-plane",
-      "multi-agent",
-      "claude-code",
-      "codex",
-      "cursor",
-      "devin",
-      "remote-control",
-      "open-source",
-      "rust",
-      "local-first"
-    ],
-    "lastUpdated": "2026-09-26"
-  },
-  {
-    "slug": "gitdiagram",
-    "name": "GitDiagram",
-    "company": "Ahmed Khaleel",
-    "pricing": "freemium",
-    "pricingDetail": "GitDiagram is open source under the MIT license and free to use on gitdiagram.com for public repositories; private repositories work by pasting your own GitHub token. Watching existing explainer videos is free and making new ones is in early access. Self-hosting requires Bun, Cloudflare R2, Upstash Redis and your own OpenAI or OpenRouter API key.",
-    "description": "GitDiagram turns any public or private GitHub repository into an interactive, AI-generated architecture diagram with a streamed explanation. Replace `hub` with `diagram` in any GitHub URL (or paste the repo on gitdiagram.com) and you get a Mermaid system diagram where clicking a component jumps straight to the linked file or directory; diagrams export as PNG or raw Mermaid source. A newer explainer mode renders a roughly one-minute narrated video of the codebase — what the project is for, how its main parts fit together and one decision under the hood — downloadable as MP4 in landscape or 9:16 with burned-in captions. It is built with Next.js, React, TypeScript, Tailwind and Mermaid, uses Claude or GPT for scripts and scenes and OpenRouter TTS for voice, and can be self-hosted with your own keys.",
-    "keyFeatures": [
-      "Interactive AI-generated architecture diagram for any GitHub repo",
-      "URL trick: swap `hub` for `diagram` in a GitHub URL",
-      "Click any component to jump to the linked file or directory",
-      "Private repositories via your own GitHub token",
-      "Export as PNG or copy the Mermaid source",
-      "Explainer videos: ~1-minute narrated MP4 (landscape or 9:16) per repository",
-      "Open source (MIT), self-hostable with OpenAI/OpenRouter keys"
-    ],
-    "bestFor": "Developers onboarding to an unfamiliar codebase, maintainers who want a shareable architecture overview, and educators explaining open-source projects.",
-    "notIdealFor": "Non-GitHub repositories, teams needing deep semantic code search or Q&A over a codebase, and precise, hand-maintained architecture documentation.",
-    "recentUpdates": "GitDiagram passed 17K GitHub stars and was trending in September 2026 after adding AI-narrated explainer videos (gitdiagram.com/owner/repo/video) alongside the interactive diagrams.",
-    "verdict": "GitDiagram is the quickest way to get a first mental model of a repository — one URL edit and you have a clickable architecture map — and the new narrated videos make it a handy onboarding and open-source-showcase tool, though it is an overview, not a code-intelligence engine.",
-    "tags": [
-      "architecture-diagram",
-      "codebase-understanding",
-      "mermaid",
-      "onboarding",
-      "github",
-      "open-source",
-      "video",
-      "visualization"
-    ],
-    "lastUpdated": "2026-09-26"
-  },
-  {
-    "slug": "coop",
-    "name": "coop",
-    "company": "Trail of Bits",
-    "pricing": "open-source",
-    "pricingDetail": "coop is free and open source under the Apache-2.0 license from security firm Trail of Bits. Install with the one-line script or build from source (Rust + CMake). Linux needs KVM for Firecracker; macOS needs Lima (brew install lima) and Apple Silicon. You bring your own Claude Code / Codex subscription or API keys.",
-    "description": "coop is a Rust CLI from Trail of Bits that runs Claude Code and Codex inside disposable, isolated virtual machines so the agents can have full tool access — Docker, git, compilers, package managers, passwordless sudo — without any risk to your host. On Linux it boots Firecracker microVMs on KVM; on macOS it uses Lima with Apple's Virtualization.framework, choosing the backend automatically. `coop up` creates or reuses an environment for the current project and syncs the workspace in, then `coop claude` or `coop codex` launches the agent with permission prompts disabled by default because the VM itself is the isolation boundary (pass --ask to restore prompts). coop forwards API keys, GitHub tokens and chosen env vars into the guest — or keeps model keys entirely host-side in proxy mode — injects CLAUDE.md, syncs ~/.codex config, supports plugins/marketplaces and MCP server configuration, understands devcontainer.json, and offers editor integration, multi-instance workflows and shell completion. A published trust model documents the VM boundary and how guest-authored data is treated as untrusted.",
-    "keyFeatures": [
-      "Disposable isolated VMs for Claude Code and Codex: Firecracker microVMs (Linux/KVM) or Lima + Virtualization.framework (macOS)",
-      "Agents run with bypassPermissions / full tool access — the VM is the blast radius",
-      "coop up / coop claude / coop codex with project workspace sync",
-      "API-key forwarding or proxy mode that keeps model keys off the guest",
-      "CLAUDE.md injection, ~/.codex sync, plugins, MCP server config, devcontainer.json support",
-      "Multi-instance, editor integration, shell completion and coop update",
-      "Documented trust model and security policy from Trail of Bits"
-    ],
-    "bestFor": "Security-conscious developers who want to let Claude Code or Codex run fully autonomously on real projects without exposing their host machine.",
-    "notIdealFor": "Windows users, machines without KVM or Apple Silicon virtualization, and agents other than Claude Code and Codex (no generic agent support yet).",
-    "recentUpdates": "coop was trending on GitHub in September 2026; recent releases added Codex support with a dedicated `coop codex` launcher, devcontainer.json inspection, an in-app `coop update` command and a formal trust-model document.",
-    "verdict": "coop brings Trail of Bits' security rigor to the 'run the agent in YOLO mode' problem: hardware-isolated microVMs that spin up cheaply, sync your project in and keep secrets out — a serious upgrade over Docker sandboxes for anyone letting agents run unattended.",
-    "tags": [
-      "sandbox",
-      "isolation",
-      "firecracker",
-      "microvm",
-      "claude-code",
-      "codex",
-      "security",
-      "open-source",
-      "rust",
-      "trail-of-bits"
-    ],
-    "lastUpdated": "2026-09-26"
-  },
-  {
-    "slug": "mobile-mcp",
-    "name": "Mobile MCP",
-    "company": "Mobile Next",
-    "pricing": "open-source",
-    "pricingDetail": "Mobile MCP is free and open source under the Apache-2.0 license, published to npm as @mobilenext/mobile-mcp (run with npx). You need Xcode/simulators or Android SDK/emulators, or physical devices, on the host. Mobile Next offers documentation at mobilenext.ai; the MCP server itself has no paid tier.",
-    "description": "Mobile MCP is a Model Context Protocol server from Mobile Next that lets coding agents and LLMs drive native iOS and Android apps on simulators, emulators and real devices through one platform-agnostic interface — no XCUITest, Espresso or per-platform glue required. It is accessibility-first: agents read the native accessibility tree for fast, cheap, deterministic element access and fall back to screenshots plus coordinate taps only when needed. Tools cover taps, swipes and gestures, typing, app install/launch/terminate, deep links, orientation, hardware buttons, screen recording and structured data extraction, which makes it suitable for agent-driven UI testing, scripted flows and multi-step user journeys as well as data-entry and scraping scenarios. The docs include step-by-step install guides for Amp, Claude Code, Claude Desktop, Cline, Codex, Copilot, Cursor, Gemini CLI, Goose, Kiro, opencode, Qodo Gen, VS Code and Windsurf, and any MCP-compatible client works with the standard configuration.",
-    "keyFeatures": [
-      "One MCP API for iOS and Android — simulators, emulators and real devices",
-      "Accessibility-tree first (no vision tokens), screenshot + coordinates fallback",
-      "Taps, swipes, gestures, typing, hardware buttons, orientation and deep links",
-      "App install/launch/terminate and screen recording",
-      "Structured, deterministic UI output for data extraction and assertions",
-      "Install guides for Claude Code, Codex, Cursor, Cline, Copilot, Gemini CLI, Windsurf and more",
-      "Apache-2.0, npm package @mobilenext/mobile-mcp"
-    ],
-    "bestFor": "Mobile developers and QA engineers who want their coding agent to actually launch, exercise and verify iOS/Android builds instead of reasoning about them blind.",
-    "notIdealFor": "Web-only teams, environments without simulators/emulators or device access, and shops that need a full hosted device farm and CI reporting out of the box.",
-    "recentUpdates": "Mobile MCP passed 7K GitHub stars and was trending in September 2026; the project now documents support for 14+ MCP clients including Codex, Antigravity and Kiro and continues to ship frequent releases on npm.",
-    "verdict": "Mobile MCP is the de-facto open-source bridge between coding agents and real mobile devices — accessibility-first, cross-platform and client-agnostic — and belongs next to Chrome DevTools MCP in any agent toolbelt that touches native apps.",
-    "tags": [
-      "mcp",
-      "mobile",
-      "ios",
-      "android",
-      "automation",
-      "testing",
-      "accessibility",
-      "open-source",
-      "claude-code",
-      "codex"
-    ],
-    "lastUpdated": "2026-09-26"
-  },
-  {
-    "slug": "gortex",
-    "name": "Gortex",
-    "company": "zzet",
-    "pricing": "open-source",
-    "pricingDetail": "Gortex is free and open source under Apache-2.0. Its core code-indexing tools run locally as a single binary; optional external model providers require their own credentials and may incur provider charges.",
-    "description": "Gortex is a local code-intelligence engine for AI coding agents. It indexes symbols, calls, dependencies and cross-repository API contracts into a persistent graph, then serves structural context and change-impact queries through a CLI, MCP server and web UI. Agents can inspect callers and blast radius before editing rather than loading entire files into context.",
-    "keyFeatures": [
-      "Persistent code graph with symbol lookup, call chains and impact analysis",
-      "Cross-repository indexing and API contract matching",
-      "MCP server and CLI integrations for coding agents",
-      "Graph-grounded pull request review and speculative edit analysis",
-      "Local single-binary distribution for macOS, Linux and Windows",
-      "Web UI for exploring the repository graph"
-    ],
-    "bestFor": "Developers using AI coding agents on large or multi-repository codebases who need structural context and cross-service impact analysis.",
-    "notIdealFor": "Small projects where ordinary file search is enough, or teams unwilling to run a local code indexer and agent integration.",
-    "recentUpdates": "Gortex's public repository was active in September 2026, with roughly 1,400 stars at review time; its code-graph tooling was also covered in a September 27 developer article.",
-    "verdict": "A capable local code map for coding agents, with multi-repository contracts and change analysis distinguishing it from simpler search tools. Performance and token-savings figures in the project documentation are first-party claims.",
-    "tags": ["code-intelligence", "mcp", "knowledge-graph", "multi-repo", "open-source", "cli"],
-    "lastUpdated": "2026-09-27"
-  },
-  {
-    "slug": "magpie",
-    "name": "magpie",
-    "company": "yetone",
-    "pricing": "open-source",
-    "pricingDetail": "magpie is free and open source under the MIT license. The application and local gateway require no subscription; connected model providers may charge for inference or require an existing plan.",
-    "description": "magpie is a local model picker for AI coding agents with desktop, terminal UI and CLI interfaces. It shows the models configured for Claude Code, Codex, Gemini CLI, OpenCode and other agents, changes their native configuration, and runs a local gateway that translates OpenAI and Anthropic API protocols so developers can choose providers across agents.",
-    "keyFeatures": [
-      "One model picker across installed coding agents",
-      "Local gateway translating OpenAI Chat/Responses and Anthropic Messages requests",
-      "Surgical edits to each agent's native configuration",
-      "Provider presets and named profiles for switching several agents",
-      "Menu-bar desktop interface, TUI and CLI on macOS, Linux and Windows"
-    ],
-    "bestFor": "Developers who use several coding agents and want to change their models and providers from a single local interface.",
-    "notIdealFor": "Developers using only one provider and one agent, or teams requiring a hosted gateway with centrally managed accounts.",
-    "recentUpdates": "The repository was created in September 2026 and reached more than 1,000 GitHub stars within days; RepositoryStats tracked rapid commit and star activity that week.",
-    "verdict": "A focused cross-agent model picker and protocol gateway for developers who frequently switch providers, with overlap in configuration management with broader tools such as CC Switch.",
-    "tags": ["model-routing", "coding-agents", "gateway", "open-source", "desktop", "cli"],
-    "lastUpdated": "2026-09-27"
-  },
-  {
-    "slug": "juggler",
-    "name": "Juggler",
-    "company": "Julian Storer",
-    "pricing": "open-source",
-    "pricingDetail": "Juggler is free and open source: the main application is AGPL-3.0 and the extension SDK and bundled extensions are Apache-2.0. It requires no Juggler account and resells no tokens; model usage is billed by whichever provider or existing subscription you connect.",
-    "description": "Juggler is a visual workbench for AI coding agents built by Julian Storer, the developer behind JUCE, Tracktion and Cmajor. Conversations are persistent, branchable document trees navigated with Miller columns, where every tool call and recorded LLM transaction can be inspected and context can be edited, folded or moved between threads. A Go server runs where the code lives, and the native desktop app, a browser tab or a phone can attach to the same live session.",
-    "keyFeatures": [
-      "Branchable session trees with nested sub-threads for tangents and delegated work",
-      "Inspection of tool calls and raw LLM transactions, including prompts, tokens and cache use",
-      "Editable context: fold, move or copy items between branches with undo",
-      "Headless server with multiple live clients (desktop app, browser, phone)",
-      "Vendor-neutral BYOK providers: Claude Code, OpenAI Codex, GitHub Copilot, Gemini, Ollama and more",
-      "JavaScript plugin API for context items, loop strategies, slash commands and UIs"
-    ],
-    "bestFor": "Developers who want a GUI coding agent with visible, editable context and inspectable model calls, including those running agents on remote dev boxes.",
-    "notIdealFor": "Developers who prefer a terminal-only agent workflow or want a hosted service with bundled model access.",
-    "recentUpdates": "Juggler shipped v0.7.0 and v0.7.1 in late September 2026 after launching on Hacker News as a Show HN; the public repository had roughly 600 GitHub stars at review time.",
-    "verdict": "A thoughtfully designed, vendor-neutral GUI workbench for coding agents whose branching sessions and full transaction inspection stand out from chat-transcript interfaces. It is an early 0.x project from a single primary maintainer.",
-    "tags": [
-      "coding-agent",
-      "gui",
-      "desktop",
-      "open-source",
-      "byok",
-      "remote-sessions"
-    ],
-    "lastUpdated": "2026-09-28"
-  },
-  {
-    "slug": "jevgrep",
-    "name": "jevgrep",
-    "company": "David Zhang (dzhng)",
-    "pricing": "open-source",
-    "pricingDetail": "jevgrep is free and open source under the MIT license. Searches call the Jev model through a provider key you supply (Vercel AI Gateway, TypeSafe, OpenRouter or OpenCode Zen), and that provider bills inference usage.",
-    "description": "jevgrep is a research CLI that helps AI coding agents find relevant code by asking what it does. The `jg` command uses TypeSafe's Jev model to judge relevance across folders, files and declarations, then returns relevant files, reading leads and verbatim source excerpts in a single stdout response. A bundled agent skill teaches Claude Code, Codex and other agents to use it for context gathering before they implement changes.",
-    "keyFeatures": [
-      "Natural-language repository questions answered with files, leads and verbatim excerpts",
-      "Jev-based relevance judgments across folders, files and declarations",
-      "Installable agent skill (`jg skill`) for coding agents",
-      "Provider selection across Vercel AI Gateway, TypeSafe, OpenRouter and OpenCode Zen",
-      "npm-distributed CLI for macOS and Linux with no separate ripgrep, Python or Bun install"
-    ],
-    "bestFor": "Developers whose coding agents spend many tokens exploring unfamiliar repositories and who want a cheaper context-gathering step.",
-    "notIdealFor": "Cases where the exact symbol or string is already known and plain text search is faster, teams that cannot send source excerpts to a hosted model provider, or native Windows users.",
-    "recentUpdates": "The repository was created on September 26, 2026, reached more than 1,000 GitHub stars within two days, and shipped releases through v0.4.3 on September 28; the author announced it on X as a Jev-powered research agent CLI.",
-    "verdict": "A focused context-gathering tool for coding agents built on Jev. Its reported cost reduction comes from the author's own ten-task SWE-bench comparison, so results on other codebases may vary.",
-    "tags": [
-      "code-search",
-      "jev",
-      "coding-agents",
-      "cli",
-      "agent-skills",
-      "open-source"
-    ],
-    "lastUpdated": "2026-09-28"
-  },
-  {
-    "slug": "openrig",
-    "name": "OpenRig",
-    "company": "Esoteric Labs",
-    "pricing": "open-source",
-    "pricingDetail": "OpenRig is free and open source under Apache-2.0 and runs locally. The Claude Code and Codex sessions it manages require their own subscriptions or API access.",
-    "description": "OpenRig is a multi-agent harness that manages Claude Code and Codex sessions as one persistent system. Developers define an agent team in YAML — pods, communication edges and continuity policies — and boot it with one command; OpenRig runs the agents as ordinary tmux sessions and tracks them through a local daemon, SQLite state, a CLI, an MCP server and a dashboard. Rigs can be snapshotted, restored after reboots and changed while running.",
-    "keyFeatures": [
-      "YAML topologies (RigSpec) with pods, edges and continuity policies",
-      "`rig up` / `rig down` boot, snapshot and restore of whole agent teams",
-      "Mixed Claude Code and Codex seats in the same rig",
-      "Cross-agent messaging with `rig send`, `rig broadcast` and `rig chatroom`, plus a task queue",
-      "Adoption of existing tmux agent sessions into a managed rig",
-      "Local daemon, 40+ command CLI, MCP server, TUI and React dashboard"
-    ],
-    "bestFor": "Developers running several Claude Code and Codex sessions who want them organized into a persistent, recoverable team with defined roles and review paths.",
-    "notIdealFor": "Native Windows users, developers who use a single agent session, or teams that prefer a GUI agent manager over tmux-based terminals.",
-    "recentUpdates": "OpenRig released v0.5.15 through v0.5.17 between September 25 and 27, 2026, and was trending on GitHub with roughly 1,500 stars at review time.",
-    "verdict": "A flexible local control plane for multi-agent coding teams whose declarative topologies go beyond simple parallel-session runners. It writes trust settings and executable hooks during setup, so configuration should be reviewed before use.",
-    "tags": [
-      "multi-agent",
-      "orchestration",
-      "claude-code",
-      "codex",
-      "tmux",
-      "open-source"
-    ],
-    "lastUpdated": "2026-09-28"
-  },
-  {
-    "slug": "cua",
-    "name": "Cua",
-    "company": "Cua",
-    "pricing": "freemium",
-    "pricingDetail": "Cua's open-source framework (MIT) is free to self-host with your own infrastructure and models. Cua Fleets cloud desktops and hosted computer-use inference use prepaid credits on the Pro plan (from $10), with custom-priced Enterprise plans.",
-    "description": "Cua is open-source infrastructure for giving AI agents computers they can use. Cua Driver lets agents inspect and operate applications on macOS, Windows and Linux through an MCP server or CLI without moving the user's cursor, Lume creates local macOS and Linux VMs on Apple Silicon, and Cua Bench creates tasks and evaluates agents. Cua Fleets provides isolated cloud desktops for running computer-use agents at scale.",
-    "keyFeatures": [
-      "Cua Driver for window-targeted desktop automation over MCP or CLI on macOS, Windows and Linux",
-      "MCP stdio server usable from Claude Code, Codex and other clients",
-      "Lume local macOS and Linux virtual machines on Apple Silicon",
-      "Cua Bench for building tasks, evaluating agents and exporting trajectories",
-      "CUA-S1 small specialized computer-use decision models",
-      "Cua Fleets managed cloud sandboxes with Python SDK and Terraform support"
-    ],
-    "bestFor": "Developers building, testing or evaluating computer-use agents who need desktop automation drivers and isolated local or cloud environments.",
-    "notIdealFor": "Teams that only need browser or API automation, or that cannot grant accessibility and screen-recording permissions to a local driver.",
-    "recentUpdates": "Cua published cua-driver-rs v0.30.3 and nightly Lume builds on September 27-28, 2026, and was trending on GitHub with roughly 27,000 stars at review time.",
-    "verdict": "One of the most complete open-source stacks for computer-use agents, spanning drivers, VMs, benchmarks and managed cloud desktops. The breadth means individual components mature at different rates.",
-    "tags": [
-      "computer-use",
-      "desktop-automation",
-      "mcp",
-      "sandboxes",
-      "virtualization",
-      "open-source"
-    ],
-    "lastUpdated": "2026-09-28"
   }
 ]
