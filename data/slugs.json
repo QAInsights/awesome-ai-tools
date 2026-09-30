@@ -1302,6 +1302,24 @@
     "category": "AI Codebase Knowledge & Generation"
   },
   {
+    "slug": "codegraph",
+    "name": "CodeGraph",
+    "company": "Colby McHenry",
+    "category": "AI Codebase Knowledge & Generation"
+  },
+  {
+    "slug": "gitnexus",
+    "name": "GitNexus",
+    "company": "Abhigyan Patwari",
+    "category": "AI Codebase Knowledge & Generation"
+  },
+  {
+    "slug": "code-review-graph",
+    "name": "code-review-graph",
+    "company": "Tirth Kanani",
+    "category": "AI Codebase Knowledge & Generation"
+  },
+  {
     "slug": "pieces-for-developers",
     "name": "Pieces for Developers",
     "company": "Pieces",
@@ -1749,6 +1767,18 @@
     "slug": "agent-manager",
     "name": "agent-manager",
     "company": "YoanWai",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "buzz",
+    "name": "Buzz",
+    "company": "Block",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "beacon",
+    "name": "Beacon",
+    "company": "Asymptote Labs",
     "category": "Developer Productivity & Workflow"
   },
   {
