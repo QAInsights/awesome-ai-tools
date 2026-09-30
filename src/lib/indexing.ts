@@ -2,7 +2,7 @@
  * Indexing guardrails for generated pages.
  *
  * Every templated page (tool, compare, alternatives, pricing, category
- * "best-of") must carry data unique to it before it is offered to search
+ * "best-of", weekly trending) must carry data unique to it before it is offered to search
  * engines. A page is indexable only when:
  *   - the tools it is about have the enrichment fields the template renders,
  *   - it lists enough qualifying (enriched) tools to be a real collection,
@@ -11,12 +11,13 @@
  * (see src/lib/noindex-scan.js), so link equity still flows through them.
  */
 
-import { getAllTools, getAlternativesFor, getCategoriesDetailed, type EnrichedTool, type Tool } from './tools';
+import { getAllTools, getAlternativesFor, getCategoriesDetailed, getToolBySlug, type EnrichedTool, type Tool } from './tools';
 import { getResolvedComparisons, getTopComparedTools, getTopPricingTools } from './compare';
+import { getTrendingSnapshots } from './trending-data';
 
-export type GeneratedPageType = 'tool' | 'compare' | 'alternatives' | 'pricing' | 'category';
+export type GeneratedPageType = 'tool' | 'compare' | 'alternatives' | 'pricing' | 'category' | 'trending';
 
-export const GENERATED_PAGE_TYPES: GeneratedPageType[] = ['tool', 'compare', 'alternatives', 'pricing', 'category'];
+export const GENERATED_PAGE_TYPES: GeneratedPageType[] = ['tool', 'compare', 'alternatives', 'pricing', 'category', 'trending'];
 
 export type EnrichedField = Exclude<keyof EnrichedTool, 'slug'>;
 
@@ -53,6 +54,11 @@ export const INDEXING_RULES: Record<GeneratedPageType, IndexingRule> = {
     category: {
         subjectFields: [],
         listedFields: ['description', 'pricing', 'verdict'],
+        minQualifying: 3,
+    },
+    trending: {
+        subjectFields: [],
+        listedFields: ['description'],
         minQualifying: 3,
     },
 };
@@ -191,7 +197,15 @@ export function getGeneratedPageCandidates(): IndexCandidate[] {
         listed: category.tools,
         primaryContent: category.tools.map(t => t.slug).sort().join(' '),
     }));
-    return [...tools, ...compares, ...alternatives, ...pricing, ...categories];
+    // Oldest week first, so a later week repeating an earlier ranking is the one noindexed
+    const trending: IndexCandidate[] = [...getTrendingSnapshots()].reverse().map(snapshot => ({
+        type: 'trending',
+        path: `/trending/${snapshot.week}`,
+        subjects: [],
+        listed: snapshot.entries.map(entry => getToolBySlug(entry.slug)).filter((tool): tool is Tool => Boolean(tool)),
+        primaryContent: snapshot.entries.map(entry => `${entry.slug} ${entry.score}`).join(' '),
+    }));
+    return [...tools, ...compares, ...alternatives, ...pricing, ...categories, ...trending];
 }
 
 let _decisions: Map<string, IndexDecision> | null = null;

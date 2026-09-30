@@ -1,5 +1,8 @@
 import { getAnalyticsDataset } from './runtime-env';
 import { runAnalyticsSql } from './analytics-query';
+import { zapToolId } from '../trending';
+
+export { zapToolId };
 
 const DAY_MS = 86_400_000;
 const WEEK_MS = 7 * DAY_MS;
@@ -49,10 +52,6 @@ export interface TrendingTool {
     count: number;
 }
 
-export function zapToolId(company: string, name: string): string {
-    const normalize = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, '');
-    return `${normalize(company)}-${normalize(name)}`;
-}
 
 export function buildUserZapsQuery(
     dataset: 'aat_events' | 'aat_events_staging',

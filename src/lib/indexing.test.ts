@@ -2,6 +2,7 @@ import { describe, expect, test } from 'bun:test';
 import type { EnrichedTool, Tool } from './tools';
 import { getAllTools, getCategoriesDetailed } from './tools';
 import { getResolvedComparisons, getTopComparedTools, getTopPricingTools } from './compare';
+import { getTrendingSnapshots } from './trending-data';
 import {
     contentFingerprint,
     evaluatePages,
@@ -100,6 +101,15 @@ describe('isIndexable', () => {
         expect(decision.reasons).toEqual(['only 2 qualifying tools listed (min 3)']);
     });
 
+    test('trending weeks need at least 3 described tools and are deduped across weeks', () => {
+        const thin = isIndexable(page({ type: 'trending', subjects: [], listed: [makeTool('a'), makeTool('b', null)] }));
+        expect(thin.reasons).toEqual(['only 1 qualifying tools listed (min 3)']);
+        const week = (path: string) => page({ type: 'trending', path, subjects: [], listed: [makeTool('a'), makeTool('b'), makeTool('c')], primaryContent: 'a 12 b 9 c 3' });
+        const decisions = evaluatePages([week('/trending/2026-w39'), week('/trending/2026-w40')]);
+        expect(decisions.get('/trending/2026-w39')?.indexable).toBe(true);
+        expect(decisions.get('/trending/2026-w40')?.reasons).toEqual(['duplicate primary content of /trending/2026-w39']);
+    });
+
     test('fails a page with no primary content', () => {
         expect(isIndexable(page({ type: 'tool', primaryContent: ' -- ' })).reasons).toEqual(['no primary content']);
     });
@@ -144,6 +154,7 @@ describe('generated page catalog', () => {
             alternatives: getTopComparedTools().length,
             pricing: getTopPricingTools().length,
             category: getCategoriesDetailed().length,
+            trending: getTrendingSnapshots().length,
         });
         const paths = getGeneratedPageCandidates().map(p => p.path);
         expect(new Set(paths).size).toBe(paths.length);

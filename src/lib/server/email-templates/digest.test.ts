@@ -26,6 +26,8 @@ describe('digest email template', () => {
         expect(result.html).toContain('Ada &lt;script&gt;');
         expect(result.text).toContain('Added "agents"');
         expect(result.text).toContain('https://ai.dosa.dev/settings');
+        expect(result.html).toContain('href="https://ai.dosa.dev/trending"');
+        expect(result.text).toContain('Trending this week: https://ai.dosa.dev/trending');
         expect(result.text).toContain('https://ai.dosa.dev/tools/cursor');
         expect(result.text).toContain('https://ai.dosa.dev/unsubscribe?token=abc');
         expect(`${result.html}${result.text}`).not.toContain(String.fromCodePoint(0x2014));

@@ -1,0 +1,125 @@
+---
+/**
+ * Weekly trending leaderboard body, shared by /trending (latest week) and the
+ * permanent /trending/<week> archive pages.
+ */
+import { getToolBySlug } from '../lib/tools';
+import { TRENDING_WEIGHTS, formatWeekSpan, formatWeekTitle, type TrendingSnapshot } from '../lib/trending';
+
+interface Props {
+    snapshot: TrendingSnapshot;
+    headingLevel?: 'h1' | 'h2';
+}
+
+const { snapshot, headingLevel = 'h1' } = Astro.props;
+const Heading = headingLevel;
+const toolHref = (slug: string) => (getToolBySlug(slug) ? `/tools/${slug}` : null);
+const signed = (value: number) => (value > 0 ? `+${value}` : String(value));
+const stars = (value: number | null) => (value === null ? '-' : signed(value));
+const generated = new Date(snapshot.generatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
+---
+
+<header class="flex flex-col gap-2 pb-6 border-b border-[#222]">
+    <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] m-0">{formatWeekTitle(snapshot.week)} &middot; {formatWeekSpan(snapshot.week)}</p>
+    <Heading class="text-3xl sm:text-4xl font-semibold text-white tracking-tight m-0">Trending AI coding tools</Heading>
+    <p class="text-[#a3a3a3] text-[15px] leading-relaxed m-0 max-w-[70ch]">
+        The week's most engaged tools on ai.dosa.dev, ranked by zaps, favorites, follows, outbound clicks and GitHub star growth. Snapshot taken <time datetime={snapshot.generatedAt}>{generated}</time>.
+    </p>
+</header>
+
+<section aria-labelledby="leaderboard-heading" class="flex flex-col gap-3">
+    <h2 id="leaderboard-heading" class="text-[18px] font-semibold text-white m-0">Leaderboard</h2>
+    {snapshot.entries.length === 0 ? (
+        <p class="text-[14px] text-[#737373] m-0">No qualifying activity this week.</p>
+    ) : (
+        <div class="overflow-x-auto border border-[#222] rounded-xl">
+            <table class="w-full text-left text-[14px]">
+                <thead class="font-mono text-[11px] uppercase tracking-widest text-[#737373] border-b border-[#222]">
+                    <tr>
+                        <th scope="col" class="px-4 py-3 w-10">#</th>
+                        <th scope="col" class="px-4 py-3">Tool</th>
+                        <th scope="col" class="px-4 py-3 text-right">Score</th>
+                        <th scope="col" class="px-4 py-3 text-right hidden sm:table-cell">Zaps</th>
+                        <th scope="col" class="px-4 py-3 text-right hidden sm:table-cell">Favorites</th>
+                        <th scope="col" class="px-4 py-3 text-right hidden md:table-cell">Follows</th>
+                        <th scope="col" class="px-4 py-3 text-right hidden md:table-cell">Clicks</th>
+                        <th scope="col" class="px-4 py-3 text-right hidden md:table-cell">Stars</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {snapshot.entries.map(entry => {
+                        const href = toolHref(entry.slug);
+                        return (
+                            <tr class="border-b border-[#1a1a1a] last:border-0">
+                                <td class="px-4 py-3 font-mono text-[12px] text-[#525252]">{entry.rank}</td>
+                                <td class="px-4 py-3">
+                                    {href ? <a href={href} class="font-medium text-white hover:text-[#e2c48a] transition-colors">{entry.name}</a> : <span class="font-medium text-white">{entry.name}</span>}
+                                    <div class="font-mono text-[10px] uppercase tracking-wide text-[#737373] mt-0.5">{entry.company}</div>
+                                </td>
+                                <td class="px-4 py-3 text-right font-mono text-[#e2c48a]">{entry.score}</td>
+                                <td class="px-4 py-3 text-right font-mono text-[#a3a3a3] hidden sm:table-cell">{entry.zaps}</td>
+                                <td class="px-4 py-3 text-right font-mono text-[#a3a3a3] hidden sm:table-cell">{signed(entry.favorites)}</td>
+                                <td class="px-4 py-3 text-right font-mono text-[#a3a3a3] hidden md:table-cell">{signed(entry.follows)}</td>
+                                <td class="px-4 py-3 text-right font-mono text-[#a3a3a3] hidden md:table-cell">{entry.outboundClicks}</td>
+                                <td class="px-4 py-3 text-right font-mono text-[#a3a3a3] hidden md:table-cell">{stars(entry.starGrowth)}</td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>
+    )}
+</section>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <section aria-labelledby="rising-heading" class="border border-[#222] bg-white/[0.02] rounded-xl p-5">
+        <h2 id="rising-heading" class="text-[15px] font-semibold text-white m-0 mb-4">Rising this week</h2>
+        {snapshot.rising.length === 0 ? (
+            <p class="text-[13px] text-[#737373] m-0">No tool gained ground on last week.</p>
+        ) : (
+            <ol class="flex flex-col gap-3 m-0 p-0 list-none">
+                {snapshot.rising.map(entry => {
+                    const href = toolHref(entry.slug);
+                    return (
+                        <li class="flex items-center gap-3">
+                            <div class="min-w-0 grow">
+                                {href ? <a href={href} class="text-[14px] font-medium text-white hover:text-[#e2c48a] transition-colors">{entry.name}</a> : <span class="text-[14px] font-medium text-white">{entry.name}</span>}
+                                <div class="font-mono text-[10px] uppercase tracking-wide text-[#737373] mt-0.5">
+                                    {entry.previousRank ? `#${entry.previousRank} to #${entry.rank}` : `New on the board at #${entry.rank}`}
+                                </div>
+                            </div>
+                            <span class="font-mono text-[11px] text-[#F2C040] whitespace-nowrap">+{entry.delta} pts</span>
+                        </li>
+                    );
+                })}
+            </ol>
+        )}
+    </section>
+    <section aria-labelledby="new-heading" class="border border-[#222] bg-white/[0.02] rounded-xl p-5">
+        <h2 id="new-heading" class="text-[15px] font-semibold text-white m-0 mb-4">New this week</h2>
+        {snapshot.newTools.length === 0 ? (
+            <p class="text-[13px] text-[#737373] m-0">No tools joined the directory this week.</p>
+        ) : (
+            <ul class="flex flex-col gap-3 m-0 p-0 list-none">
+                {snapshot.newTools.map(tool => {
+                    const href = toolHref(tool.slug);
+                    return (
+                        <li>
+                            {href ? <a href={href} class="text-[14px] font-medium text-white hover:text-[#e2c48a] transition-colors">{tool.name}</a> : <span class="text-[14px] font-medium text-white">{tool.name}</span>}
+                            <div class="font-mono text-[10px] uppercase tracking-wide text-[#737373] mt-0.5">{tool.company}</div>
+                        </li>
+                    );
+                })}
+            </ul>
+        )}
+    </section>
+</div>
+
+<section aria-labelledby="method-heading" class="text-[13px] text-[#737373] leading-relaxed">
+    <h2 id="method-heading" class="text-[13px] font-mono uppercase tracking-widest text-[#a3a3a3] m-0 mb-2">How the score works</h2>
+    <p class="m-0">
+        Score = {TRENDING_WEIGHTS.zaps} &times; zaps + {TRENDING_WEIGHTS.favorites} &times; favorites + {TRENDING_WEIGHTS.follows} &times; follows + {TRENDING_WEIGHTS.outboundClicks} &times; &radic;outbound clicks + {TRENDING_WEIGHTS.starGrowth} &times; &radic;GitHub stars gained.
+        Zaps, favorites and follows only count from signed-in accounts, once per account per tool. Clicks count unique visitors. Accounts or visitors hitting an unusually large number of tools in one week are left out.
+        {(snapshot.guard.ungatedZapsDropped > 0 || snapshot.guard.burstActorsDropped > 0) && ` This week ${snapshot.guard.ungatedZapsDropped} unauthenticated zaps and ${snapshot.guard.burstActorsDropped} bulk actors were excluded.`}
+    </p>
+</section>

@@ -12,6 +12,7 @@ describe('email layout', () => {
 
         expect(html).toContain('<title>Updates &lt;today&gt;</title>');
         expect(html).toContain('href="https://ai.dosa.dev/settings"');
+        expect(html).toContain('href="https://ai.dosa.dev/trending"');
         expect(html).toContain('href="https://ai.dosa.dev/unsubscribe?token=abc"');
     });
 });
