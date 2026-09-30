@@ -1182,5 +1182,25 @@
   {
     "companyName": "YoanWai",
     "toolName": "agent-manager"
+  },
+  {
+    "companyName": "Colby McHenry",
+    "toolName": "CodeGraph"
+  },
+  {
+    "companyName": "Abhigyan Patwari",
+    "toolName": "GitNexus"
+  },
+  {
+    "companyName": "Tirth Kanani",
+    "toolName": "code-review-graph"
+  },
+  {
+    "companyName": "Block",
+    "toolName": "Buzz"
+  },
+  {
+    "companyName": "Asymptote Labs",
+    "toolName": "Beacon"
   }
 ]

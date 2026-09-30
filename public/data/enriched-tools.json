@@ -8330,5 +8330,155 @@
       "coding-agents"
     ],
     "lastUpdated": "2026-09-24"
+  },
+  {
+    "slug": "codegraph",
+    "name": "CodeGraph",
+    "company": "Colby McHenry",
+    "pricing": "open-source",
+    "pricingDetail": "Open source under the MIT license and free to use; the CLI and MCP server run 100% locally and bundle their own runtime (no Node.js install, accounts or API keys required). A separate hosted CodeGraph platform for PR impact analysis is in waitlist beta at getcodegraph.com.",
+    "description": "CodeGraph is a local-first code-intelligence tool that pre-indexes a codebase into a knowledge graph of every symbol, call edge and dependency, powered by a Rust kernel, and keeps it in sync automatically as files change. Instead of crawling files with grep and read calls, coding agents ask a single `codegraph_explore` MCP tool and get back the relevant verbatim source grouped by file, the call paths between those symbols (including dynamic-dispatch hops such as callbacks and interface-to-implementation) and a blast-radius summary of a change.",
+    "keyFeatures": [
+      "Rust-powered indexer covering 30+ languages, from TypeScript, Python, Go and Rust to Swift, Kotlin, Dart, COBOL, Solidity and Terraform",
+      "Auto-sync file watcher keeps the graph current while agents edit code, with nothing to re-run",
+      "Single `codegraph_explore` MCP tool returning source, call paths and blast radius in one call, with narrower tools available on demand",
+      "`codegraph install` auto-configures Claude Code, Cursor, Codex CLI, OpenCode, Hermes Agent, Gemini CLI, Antigravity, Kiro and GitHub Copilot",
+      "Framework-aware route extraction and mixed iOS / React Native / Expo bridging",
+      "`codegraph affected` CLI and library API for change-impact analysis",
+      "Signed, attested releases with npm provenance for Windows, macOS and Linux"
+    ],
+    "bestFor": "Developers using Claude Code, Cursor, Codex or other MCP-capable agents on medium-to-large codebases who want fewer tool calls and lower token spend on code exploration.",
+    "notIdealFor": "Tiny projects where plain file search is already cheap, or teams that do not allow third-party tools to modify agent configuration files.",
+    "recentUpdates": "Released v1.6.1 on 29 September 2026 and trended on GitHub's daily list the same week; the MIT-licensed repository has passed 72,000 stars, and the maintainer has opened a waitlist for a hosted CodeGraph platform that maps what each PR affects.",
+    "verdict": "One of the most widely adopted code-graph MCP servers, with a deliberately minimal one-tool agent interface and broad agent auto-configuration; a strong default for cutting exploration cost, with the usual caveat of trusting a tool that edits your agent config.",
+    "tags": [
+      "mcp",
+      "code-intelligence",
+      "knowledge-graph",
+      "open-source",
+      "token-optimization",
+      "coding-agents"
+    ],
+    "lastUpdated": "2026-09-30"
+  },
+  {
+    "slug": "gitnexus",
+    "name": "GitNexus",
+    "company": "Abhigyan Patwari",
+    "pricing": "free",
+    "pricingDetail": "Free to use under the PolyForm Noncommercial 1.0.0 license (source-available, not OSI open source); the license does not grant commercial use. The CLI and MCP server run locally and the Web UI runs entirely in the browser; optional LLM wiki generation uses your own model provider.",
+    "description": "GitNexus indexes a codebase into a knowledge graph — dependencies, call chains, functional clusters and execution flows — precomputing structure at index time so AI coding agents get complete architectural context in one call. Its CLI and MCP server give Cursor, Claude Code, Codex, Windsurf, OpenCode and other agents tools for hybrid search, symbol context, blast-radius impact analysis and git-diff change detection, while a zero-server Web UI lets you explore the graph and chat with any repo in the browser.",
+    "keyFeatures": [
+      "19 MCP tools including hybrid BM25 + semantic search, 360° symbol context, impact analysis, detect_changes, coordinated rename and raw Cypher queries",
+      "Repository groups with a contract registry for cross-repo links",
+      "`gitnexus analyze` installs agent skills, Claude Code hooks and AGENTS.md / CLAUDE.md context files in one command",
+      "Tree-sitter parsing for 16 languages with import, heritage, type and framework resolution",
+      "Opt-in control-flow / program-dependence graphs and taint queries for TypeScript and JavaScript",
+      "Browser Web UI with in-memory graph database, plus bridge mode to browse CLI-indexed repos",
+      "LLM-generated repository wiki from the knowledge graph"
+    ],
+    "bestFor": "Individual developers, researchers and non-commercial teams who want a deep, visual code knowledge graph wired into their coding agents.",
+    "notIdealFor": "Commercial teams that need an OSI-licensed tool without negotiating separate terms, or users who want a single static binary without a Node.js toolchain.",
+    "recentUpdates": "Ships frequent release candidates (v1.6.13-rc.57 on 29 September 2026) and is listed on Trendshift; the repository has over 47,000 GitHub stars and roughly 5,000 forks.",
+    "verdict": "A feature-rich code-intelligence engine with an unusually capable MCP surface and a handy browser explorer, held back mainly by its noncommercial license for business use.",
+    "tags": [
+      "mcp",
+      "code-intelligence",
+      "knowledge-graph",
+      "graph-rag",
+      "source-available",
+      "coding-agents"
+    ],
+    "lastUpdated": "2026-09-30"
+  },
+  {
+    "slug": "code-review-graph",
+    "name": "code-review-graph",
+    "company": "Tirth Kanani",
+    "pricing": "open-source",
+    "pricingDetail": "Open source under the MIT license and free to use; installs from PyPI and runs locally, and its GitHub Action builds and queries the graph on your own CI runner without sending source code to an external service.",
+    "description": "code-review-graph builds a local, persistent structural map of a codebase with Tree-sitter — functions, classes, imports, calls and inheritance in SQLite — and updates it incrementally by re-parsing only changed files and their dependants. AI coding tools query it over MCP so that reviews and feature work read only the code a change actually touches, with published benchmarks showing a median ~65x per-question token reduction across six repositories.",
+    "keyFeatures": [
+      "Incremental Tree-sitter graph in SQLite that re-parses only changed files and their dependants",
+      "30 MCP tools, restrictable with `--tools` or `CRG_TOOLS`",
+      "`install` auto-configures Claude Code, Codex, Cursor, Gemini CLI, Antigravity, Windsurf, Zed, Continue, OpenCode, Kiro, Copilot, Hermes and more",
+      "GitHub Action posting sticky risk-scored PR comments with affected flows, test gaps and an optional `fail-on-risk` merge gate",
+      "Custom languages via `.code-review-graph/languages.toml` without forking",
+      "Interactive D3 visualisation and exports to JSON, GraphML, SVG, Obsidian and Neo4j Cypher",
+      "Markdown wiki generation from graph communities"
+    ],
+    "bestFor": "Teams using AI assistants for code review on large repositories who want smaller, more relevant review context and a CI risk gate.",
+    "notIdealFor": "Projects that want a hosted, zero-install review service, or environments without Python 3.10+.",
+    "recentUpdates": "Released v2.3.9 on 18 September 2026; the repository has about 32,000 GitHub stars, is listed on Trendshift, and was discussed on Hacker News for cutting Claude Code token usage on reviews.",
+    "verdict": "A pragmatic, well-benchmarked review-focused code graph that doubles as a CI risk gate; a good complement to general coding agents when review cost and precision matter.",
+    "tags": [
+      "code-review",
+      "mcp",
+      "knowledge-graph",
+      "tree-sitter",
+      "open-source",
+      "token-optimization"
+    ],
+    "lastUpdated": "2026-09-30"
+  },
+  {
+    "slug": "buzz",
+    "name": "Buzz",
+    "company": "Block",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 license; self-host the relay (PostgreSQL, Redis and S3-compatible storage) or deploy one to Railway, and pay only for your own infrastructure and the model or agent subscriptions your agents use.",
+    "description": "Buzz is Block's self-hostable workspace where humans and AI agents work together in the same channels. It combines chat, threads, DMs, canvases, media, voice huddles, Git hosting and YAML workflows on top of the Nostr protocol, so every message, patch, review approval and workflow step is a signed event in one searchable log. Agents are first-class members with their own cryptographic identities, channel memberships, persistent encrypted memory and audit trail, and can run on Claude Code, Codex, goose or any ACP-compatible harness.",
+    "keyFeatures": [
+      "Channels, threads, DMs, canvases, media, search and audit log in a Rust relay",
+      "Per-agent cryptographic identities, scoped channel membership and signed audit trail",
+      "Agents powered by Claude Code, Codex, goose or any ACP harness via the agent-first `buzz-cli`",
+      "Built-in Git hosting with NIP-34 patches, repo announcements and status events",
+      "YAML workflows triggered by messages, reactions, schedules or webhooks",
+      "Tauri + React desktop app for macOS, Linux and Windows",
+      "One-click Railway relay deployment or fully self-hosted Docker setup"
+    ],
+    "bestFor": "Engineering teams that want agents to collaborate in shared rooms with humans — triaging bugs, reviewing patches and running workflows — on infrastructure they control.",
+    "notIdealFor": "Teams that need mature mobile clients, push notifications or finished approval gates today, or that want a fully managed SaaS rather than running a relay.",
+    "recentUpdates": "Launched publicly by Block in July 2026 with a Show HN post and engineering blog series; desktop v0.5.26 shipped on 29 September 2026, and the Apache-2.0 repository has over 35,000 GitHub stars.",
+    "verdict": "An ambitious, well-backed take on a shared workspace for humans and agents with a genuinely strong identity and audit model; still early in places, but one of the most complete open alternatives to bolting agents onto Slack.",
+    "tags": [
+      "collaboration",
+      "multi-agent",
+      "self-hosted",
+      "nostr",
+      "open-source",
+      "coding-agents"
+    ],
+    "lastUpdated": "2026-09-30"
+  },
+  {
+    "slug": "beacon",
+    "name": "Beacon",
+    "company": "Asymptote Labs",
+    "pricing": "freemium",
+    "pricingDetail": "The Beacon CLI and local endpoint are open source under the MIT license and free, storing data locally or forwarding it to your own data stack. An optional hosted Beacon Managed tier adds hosted ingest and storage, search and analytics, identity mapping, unlimited session retention and SSO/RBAC.",
+    "description": "Beacon is an open-source, local-first memory layer for AI coding agents. It captures full agent session history — prompts, responses, tool calls, commands, file edits, approvals, MCP activity and tokens — from Claude Code, Cursor, Codex, OpenCode, Cline and 20+ other local, CI and cloud harnesses into a common OpenTelemetry-based event model, then identifies reusable workflows, corrections and debugging patterns and turns reviewed lessons into memory and Agent Skills that future agents can retrieve over MCP.",
+    "keyFeatures": [
+      "Cross-harness session capture for Claude Code, Cursor, Codex, OpenCode, Cline, Gemini CLI, goose, Hermes and more",
+      "Local, CI and cloud-agent collection including Claude Code, Cursor and Devin cloud agents",
+      "Exact session replay of prompts, tools, commands, edits, approvals and token usage",
+      "Review-and-approve flow that distils traces into shared memory and promotes it to Agent Skills",
+      "MCP server and Claude Code plugin for recalling project lessons",
+      "Forwarding to Splunk, Datadog, Elastic, Microsoft Sentinel, CrowdStrike, S3, GCS and CloudWatch",
+      "Homebrew, .deb/.rpm and MDM/CI install paths"
+    ],
+    "bestFor": "Developers and teams who switch between several coding agents and want lessons, corrections and repo conventions to carry across tools, plus security teams that need agent telemetry.",
+    "notIdealFor": "Users of a single agent who are happy with its built-in memory, or organisations unwilling to record full agent session traces.",
+    "recentUpdates": "Shipped v1.3.29 on 28 September 2026 after a rapid release cadence; the MIT-licensed repository has about 1,700 GitHub stars and was widely shared on X as a cross-harness memory layer for coding agents.",
+    "verdict": "A thoughtful, vendor-neutral answer to agent memory that doubles as agent telemetry; the review-before-reuse design is a sensible guardrail, though the default setup nudges toward the hosted tier.",
+    "tags": [
+      "agent-memory",
+      "observability",
+      "telemetry",
+      "mcp",
+      "open-source",
+      "coding-agents"
+    ],
+    "lastUpdated": "2026-09-30"
   }
 ]
