@@ -11,6 +11,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Sidebar from '../../../components/Sidebar.astro';
 import SiteHeader from '../../../components/SiteHeader.astro';
 import { formatDate, getAlternativesFor, getCategorySlug, type Tool } from '../../../lib/tools';
+import { robotsFor } from '../../../lib/indexing';
 import { getTopPricingTools, hasAlternativesPage, humanizePricing, truncate } from '../../../lib/compare';
 import { buildToolFaqs, isKnownFree, isOpenSource } from '../../../lib/tool-faqs';
 
@@ -83,6 +84,7 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
     description={descMeta}
     keywords={`${displayName} pricing, is ${displayName} free, ${displayName} cost, ${displayName} free tier, ${displayName} open source, ${tool.categoryClean}`}
     canonical={pageUrl}
+    robots={robotsFor(`/tools/${tool.slug}/pricing`)}
     jsonLd={jsonLd}
 >
     <slot name="head">

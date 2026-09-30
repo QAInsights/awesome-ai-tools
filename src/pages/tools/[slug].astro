@@ -15,6 +15,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import { formatDate, getAlternativesFor, getAllTools, getCategorySlug, getToolBySlug, type Tool } from '../../lib/tools';
+import { robotsFor } from '../../lib/indexing';
 import { getComparisonsForTool, hasAlternativesPage, hasPricingPage, humanizePricing, truncate } from '../../lib/compare';
 import { buildToolFaqs } from '../../lib/tool-faqs';
 import { buildToolReview, buildToolSeo } from '../../lib/tool-seo';
@@ -158,6 +159,7 @@ const jsonLd = JSON.stringify(jsonLdObj);
     description={descMeta}
     keywords={keywords}
     canonical={`https://ai.dosa.dev/tools/${tool.slug}`}
+    robots={robotsFor(`/tools/${tool.slug}`)}
     ogTitle={seoTitle}
     ogDescription={descMeta}
     ogImage={`https://ai.dosa.dev/images/og/${tool.slug}.png`}

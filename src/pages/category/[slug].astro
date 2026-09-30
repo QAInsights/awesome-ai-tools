@@ -11,6 +11,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import { formatDate, getCategoriesDetailed, maxLastUpdated, type CategoryInfo, type Tool } from '../../lib/tools';
+import { robotsFor } from '../../lib/indexing';
 import { humanizePricing } from '../../lib/compare';
 
 export async function getStaticPaths() {
@@ -107,6 +108,7 @@ const jsonLd = JSON.stringify({
     description={`${category.description ? category.description + ' ' : ''}${count} curated ${category.name} tools with pricing, key features, and verdicts. Compare ${topNames.join(', ')} and more.`}
     keywords={`${category.name}, ${category.short}, best ${category.short} tools, AI coding tools, AI developer tools`}
     canonical={pageUrl}
+    robots={robotsFor(`/category/${category.slug}`)}
     jsonLd={jsonLd}
 >
     <div class="flex h-[100dvh] overflow-hidden">

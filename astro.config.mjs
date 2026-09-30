@@ -4,6 +4,8 @@ import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import { remarkReadingTime } from './remark-reading-time.mjs';
 import { readFileSync, readdirSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { collectNoindexedPaths, normalizePath } from './src/lib/noindex-scan.js';
 
 // Honest per-URL <lastmod> for the sitemap: tool pages use the enrichment
 // pipeline's lastUpdated stamp, blog posts use their pubDate. Anything else
@@ -42,7 +44,6 @@ function loadLastmodMap() {
         for (const t of enriched) {
             if (!t?.slug || !t?.lastUpdated || isNaN(Date.parse(t.lastUpdated))) continue;
             map.set(`/tools/${t.slug}`, t.lastUpdated);
-            map.set(`/tools/${t.slug}/alternatives`, t.lastUpdated);
             map.set(`/tools/${t.slug}/pricing`, t.lastUpdated);
         }
     } catch { /* enriched data optional */ }
@@ -59,6 +60,11 @@ function loadLastmodMap() {
         for (const [slug, dates] of updatesByCategory) {
             const latest = maxDate(dates);
             if (latest) map.set(`/category/${slug}`, latest);
+        }
+        // Alternatives pages list the whole category, so they change when any tool in it does
+        for (const tool of slugs) {
+            const latest = map.get(`/category/${categorySlug(tool.category)}`);
+            if (latest) map.set(`/tools/${tool.slug}/alternatives`, latest);
         }
     } catch { /* category data optional */ }
     try {
@@ -92,6 +98,21 @@ function loadLastmodMap() {
 }
 const lastmodMap = loadLastmodMap();
 
+// Filled from the built HTML just before the sitemap is written, so any page
+// rendered with a noindex robots meta (see src/lib/indexing.ts) is left out.
+const noindexedPaths = new Set();
+function noindexSitemapGuard() {
+    return {
+        name: 'noindex-sitemap-guard',
+        hooks: {
+            'astro:build:done': ({ dir, logger }) => {
+                for (const path of collectNoindexedPaths(fileURLToPath(dir))) noindexedPaths.add(path);
+                logger.info(`${noindexedPaths.size} noindexed pages excluded from the sitemap`);
+            },
+        },
+    };
+}
+
 // https://astro.build/config
 export default defineConfig({
     site: 'https://ai.dosa.dev',
@@ -107,9 +128,12 @@ export default defineConfig({
         imageService: 'compile',
     }),
     integrations: [
+        // Must run before sitemap(): it collects the noindexed paths the filter reads
+        noindexSitemapGuard(),
         sitemap({
             // User-only pages are noindexed — keep them out of the sitemap too
-            filter: (page) => !page.includes('/settings') && !page.includes('/favorites') && !page.includes('/zap') && !page.includes('/admin'),
+            filter: (page) => !page.includes('/settings') && !page.includes('/favorites') && !page.includes('/zap') && !page.includes('/admin')
+                && !noindexedPaths.has(normalizePath(new URL(page).pathname)),
             serialize(item) {
                 const url = item.url;
                 const path = new URL(url).pathname.replace(/\/$/, '');
