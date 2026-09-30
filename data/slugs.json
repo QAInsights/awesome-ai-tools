@@ -1782,6 +1782,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "hyperconsciousness",
+    "name": "Hyperconsciousness",
+    "company": "Louis Beaumont (maintainer)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
