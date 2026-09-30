@@ -12,6 +12,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Sidebar from '../../../components/Sidebar.astro';
 import SiteHeader from '../../../components/SiteHeader.astro';
 import { formatDate, getAlternativesFor, getCategorySlug, maxLastUpdated, type Tool } from '../../../lib/tools';
+import { robotsFor } from '../../../lib/indexing';
 import { getComparisonsForTool, getTopComparedTools, hasAlternativesPage, humanizePricing } from '../../../lib/compare';
 
 export async function getStaticPaths() {
@@ -129,6 +130,7 @@ const siblingAltPages = getTopComparedTools()
     description={descMeta}
     keywords={`${displayName} alternatives, ${displayName} competitors, tools like ${displayName}, ${tool.categoryClean}, best ${tool.categoryShort} tools`}
     canonical={pageUrl}
+    robots={robotsFor(`/tools/${tool.slug}/alternatives`)}
     jsonLd={jsonLd}
 >
     <div class="flex h-[100dvh] overflow-hidden">

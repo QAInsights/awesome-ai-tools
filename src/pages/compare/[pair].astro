@@ -17,6 +17,7 @@ import {
     type ResolvedComparison,
 } from '../../lib/compare';
 import { formatDate, getCategorySlug } from '../../lib/tools';
+import { robotsFor } from '../../lib/indexing';
 import { addOutboundUtmParams } from '../../lib/outbound-utm.js';
 
 export async function getStaticPaths() {
@@ -89,6 +90,7 @@ const jsonLd = JSON.stringify({
     description={`${nameA} vs ${nameB} compared: pricing, key features, who each tool is best for, recent updates, and verdicts. Updated ${lastUpdatedLabel || 'regularly'}.`}
     keywords={`${nameA} vs ${nameB}, ${nameA} alternative, ${nameB} alternative, ${comparison.group}, AI coding tools comparison`}
     canonical={pageUrl}
+    robots={robotsFor(`/compare/${comparison.slug}`)}
     jsonLd={jsonLd}
 >
     <slot name="head">
