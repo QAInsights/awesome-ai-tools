@@ -1,6 +1,7 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import EthicalAd from '../../components/EthicalAd.astro';
 import { safeJsonForScript } from '../../lib/serialize';
 import { extractNewsCitations } from '../../lib/news-citations.js';
 import { DEFAULT_AUTHOR, ORGANIZATION } from '../../lib/site';
@@ -331,6 +332,8 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
       </footer>
     </div>
   </div>
+
+  <EthicalAd id="blog-footer" type="text" placementStyle="fixedfooter" keywords={topicTags} />
 
   <!-- Full article markdown for the "Copy for LLM" action -->
   <script id="article-markdown" type="application/json" set:html={articleMarkdownJson} />

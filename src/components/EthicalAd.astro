@@ -1,0 +1,49 @@
+---
+/**
+ * EthicalAd - a single EthicalAds placement plus the client script.
+ *
+ * Renders nothing unless PUBLIC_ETHICALADS_PUBLISHER is set at build time.
+ * EthicalAds allows one ad per page: use this at most once per template.
+ *
+ * Props:
+ *   id - placement id, shown per placement in EthicalAds reporting
+ *   type - 'image' or 'text'
+ *   placementStyle - optional EthicalAds style ('stickybox' | 'fixedfooter')
+ *   horizontal - horizontal image variant
+ *   keywords - page topics, sent as data-ea-keywords for contextual targeting
+ */
+import {
+    ETHICAL_ADS_CAMPAIGN_TYPES,
+    ETHICAL_ADS_CLIENT_SRC,
+    adKeywords,
+    ethicalAdsPublisher,
+} from '../lib/ethical-ads';
+
+interface Props {
+    id: string;
+    type: 'image' | 'text';
+    placementStyle?: 'stickybox' | 'fixedfooter';
+    horizontal?: boolean;
+    keywords?: readonly (string | undefined | null)[];
+    class?: string;
+}
+
+const { id, type, placementStyle, horizontal = false, keywords = [], class: className } = Astro.props;
+const publisher = ethicalAdsPublisher(import.meta.env.PUBLIC_ETHICALADS_PUBLISHER);
+const keywordList = adKeywords(keywords);
+---
+
+{publisher && (
+    <>
+        <div
+            id={id}
+            class:list={['ea-slot', 'dark', 'flat', { horizontal }, className]}
+            data-ea-publisher={publisher}
+            data-ea-type={type}
+            data-ea-style={placementStyle}
+            data-ea-keywords={keywordList || undefined}
+            data-ea-campaign-types={ETHICAL_ADS_CAMPAIGN_TYPES}
+        ></div>
+        <script is:inline async src={ETHICAL_ADS_CLIENT_SRC}></script>
+    </>
+)}
