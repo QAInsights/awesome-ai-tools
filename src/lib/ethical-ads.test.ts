@@ -1,5 +1,11 @@
 import { describe, expect, test } from 'bun:test';
-import { MAX_AD_KEYWORDS, adKeywords, ethicalAdsPublisher } from './ethical-ads';
+import {
+    DEFAULT_ETHICAL_ADS_PUBLISHER,
+    MAX_AD_KEYWORDS,
+    adKeywords,
+    ethicalAdsPublisher,
+    resolveEthicalAdsPublisher,
+} from './ethical-ads';
 
 describe('ethicalAdsPublisher', () => {
     test('is disabled when unset or blank', () => {
@@ -17,6 +23,24 @@ describe('ethicalAdsPublisher', () => {
         expect(ethicalAdsPublisher('dosa" onload="x')).toBeNull();
         expect(ethicalAdsPublisher('dosa dev')).toBeNull();
         expect(ethicalAdsPublisher('-dosa')).toBeNull();
+    });
+});
+
+describe('resolveEthicalAdsPublisher', () => {
+    test('uses the default publisher when no override is set', () => {
+        expect(resolveEthicalAdsPublisher(undefined)).toBe(DEFAULT_ETHICAL_ADS_PUBLISHER);
+        expect(DEFAULT_ETHICAL_ADS_PUBLISHER).toBe('qainsightscom');
+    });
+
+    test('an override replaces the default', () => {
+        expect(resolveEthicalAdsPublisher(' other-pub ')).toBe('other-pub');
+    });
+
+    test('"off", blank or invalid overrides disable ads', () => {
+        expect(resolveEthicalAdsPublisher('off')).toBeNull();
+        expect(resolveEthicalAdsPublisher(' OFF ')).toBeNull();
+        expect(resolveEthicalAdsPublisher('')).toBeNull();
+        expect(resolveEthicalAdsPublisher('bad id')).toBeNull();
     });
 });
 

@@ -2,7 +2,7 @@
 /**
  * EthicalAd - a single EthicalAds placement plus the client script.
  *
- * Renders nothing unless PUBLIC_ETHICALADS_PUBLISHER is set at build time.
+ * Renders nothing when ads are disabled (PUBLIC_ETHICALADS_PUBLISHER=off).
  * EthicalAds allows one ad per page: use this at most once per template.
  *
  * Props:
@@ -16,7 +16,7 @@ import {
     ETHICAL_ADS_CAMPAIGN_TYPES,
     ETHICAL_ADS_CLIENT_SRC,
     adKeywords,
-    ethicalAdsPublisher,
+    resolveEthicalAdsPublisher,
 } from '../lib/ethical-ads';
 
 interface Props {
@@ -29,7 +29,7 @@ interface Props {
 }
 
 const { id, type, placementStyle, horizontal = false, keywords = [], class: className } = Astro.props;
-const publisher = ethicalAdsPublisher(import.meta.env.PUBLIC_ETHICALADS_PUBLISHER);
+const publisher = resolveEthicalAdsPublisher(import.meta.env.PUBLIC_ETHICALADS_PUBLISHER);
 const keywordList = adKeywords(keywords);
 ---
 
