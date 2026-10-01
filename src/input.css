@@ -865,12 +865,27 @@
     margin: 0;
 }
 
-/* Keep the onboarding card clear of floating ads instead of covering them. */
-body:has([data-ea-style="fixedfooter"]:not(:empty)) [data-onboarding-float] {
+/* Floating ads (EthicalAds adds .loaded once filled) reserve room so they
+   never cover page content or the onboarding card. */
+body:has([data-ea-style="fixedfooter"].loaded) main {
+    padding-bottom: 5rem;
+}
+body:has([data-ea-style="fixedfooter"].loaded) [data-onboarding-float] {
     bottom: 5rem;
 }
-@media (min-width: 1300px) {
-    body:has([data-ea-style="stickybox"]:not(:empty)) [data-onboarding-float] {
-        right: calc(var(--ea-image-placement-width, 180px) + 3rem);
+@media (max-width: 639px) {
+    body:has([data-ea-style="fixedfooter"].loaded) main {
+        padding-bottom: 8rem;
+    }
+    body:has([data-ea-style="fixedfooter"].loaded) [data-onboarding-float] {
+        bottom: 8rem;
+    }
+}
+@media (min-width: 1301px) {
+    body:has([data-ea-style="stickybox"].loaded) main {
+        padding-right: 220px;
+    }
+    body:has([data-ea-style="stickybox"].loaded) [data-onboarding-float] {
+        right: 220px;
     }
 }
