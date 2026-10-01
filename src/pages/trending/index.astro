@@ -8,7 +8,7 @@ import DashboardLayout from '../../layouts/DashboardLayout.astro';
 import TrendingBoard from '../../components/TrendingBoard.astro';
 import { formatWeekSpan, formatWeekTitle } from '../../lib/trending';
 import { getLatestTrendingSnapshot, getTrendingSnapshots } from '../../lib/trending-data';
-import { NOINDEX_ROBOTS } from '../../lib/indexing';
+import { NOINDEX_ROBOTS, robotsFor } from '../../lib/indexing';
 
 const latest = getLatestTrendingSnapshot();
 const archive = getTrendingSnapshots();
@@ -50,7 +50,7 @@ const jsonLd = JSON.stringify({
     description={description}
     canonical={pageUrl}
     keywords="trending AI tools, AI coding tools leaderboard, top AI coding tools this week, rising AI developer tools"
-    robots={latest ? undefined : NOINDEX_ROBOTS}
+    robots={latest ? robotsFor(`/trending/${latest.week}`) : NOINDEX_ROBOTS}
     ogImage={latest ? `https://ai.dosa.dev/images/og/trending/${latest.week}.png` : undefined}
     ogImageAlt={latest ? `Trending AI coding tools, ${formatWeekTitle(latest.week)}` : undefined}
     modifiedTime={latest?.generatedAt}
