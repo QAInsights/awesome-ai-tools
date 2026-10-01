@@ -1,9 +1,11 @@
 import { describe, expect, test } from 'bun:test';
 import {
     DEFAULT_ETHICAL_ADS_PUBLISHER,
+    FLOATING_AD_PLACEMENTS,
     MAX_AD_KEYWORDS,
     adKeywords,
     ethicalAdsPublisher,
+    pageAdTopics,
     resolveEthicalAdsPublisher,
 } from './ethical-ads';
 
@@ -63,5 +65,25 @@ describe('adKeywords', () => {
     test(`caps the list at ${MAX_AD_KEYWORDS} keywords`, () => {
         const topics = Array.from({ length: 12 }, (_, i) => `topic ${i}`);
         expect(adKeywords(topics).split('|')).toHaveLength(MAX_AD_KEYWORDS);
+    });
+});
+
+describe('FLOATING_AD_PLACEMENTS', () => {
+    test('wide screens float an image StickyBox, narrow screens a text FixedFooter', () => {
+        expect(FLOATING_AD_PLACEMENTS.wide).toEqual({ id: 'float-stickybox', type: 'image', style: 'stickybox' });
+        expect(FLOATING_AD_PLACEMENTS.narrow).toEqual({ id: 'float-footer', type: 'text', style: 'fixedfooter' });
+    });
+});
+
+describe('pageAdTopics', () => {
+    test('prefers article tags', () => {
+        expect(pageAdTopics(['mcp', 'cli'], 'AI tools, AI coding')).toEqual(['mcp', 'cli']);
+    });
+
+    test('falls back to comma-separated meta keywords', () => {
+        expect(adKeywords(pageAdTopics(undefined, 'Cursor vs Windsurf, AI coding tools comparison'))).toBe(
+            'cursor-vs-windsurf|ai-coding-tools-comparison',
+        );
+        expect(pageAdTopics([], 'a, b')).toEqual(['a', ' b']);
     });
 });
