@@ -858,6 +858,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "prime-agent",
+    "name": "Prime Agent",
+    "company": "Prime Intellect",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
@@ -1785,6 +1791,30 @@
     "slug": "hyperconsciousness",
     "name": "Hyperconsciousness",
     "company": "Louis Beaumont (maintainer)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "gstack",
+    "name": "gstack",
+    "company": "Garry Tan",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "beads",
+    "name": "Beads",
+    "company": "Steve Yegge",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "tuios",
+    "name": "TUIOS",
+    "company": "Gaurav Gosain",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "omniroute",
+    "name": "OmniRoute",
+    "company": "Diego Souza (diegosouzapw)",
     "category": "Developer Productivity & Workflow"
   },
   {

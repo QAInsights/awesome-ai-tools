@@ -8268,5 +8268,140 @@
       "Open-Source"
     ],
     "lastUpdated": "2026-10-01"
+  },
+  {
+    "slug": "prime-agent",
+    "name": "Prime Agent",
+    "company": "Prime Intellect",
+    "pricing": "open-source",
+    "pricingDetail": "Prime Agent is fully open source under the MIT License and free to install; users bring their own model access by logging in with a supported subscription or API-key provider and pay that provider for usage.",
+    "description": "Prime Agent is an open-source terminal coding and research agent from Prime Intellect built around Recursive Language Models. A persistent Python REPL is its built-in tool, so file operations, shell commands, context management and child subagents all run as code, while a daemon keeps sessions alive for long-running, autonomous work.",
+    "keyFeatures": [
+      "Persistent Python REPL as the model's programmatic tool surface",
+      "Built-in recursive subagents via rlm.spawn() with direct agent-to-agent messaging",
+      "Daemon-backed sessions that survive terminal disconnects and can be reattached",
+      "Persistent goals, heartbeats, schedules and a budgeted autonomous mode with quality gates",
+      "/refine Continual Harness that stores reviewable lessons as prompts, memories and skills"
+    ],
+    "bestFor": "Developers and researchers running long-horizon coding, evaluation or research tasks who want a scriptable, self-improving harness with background sessions and parallel subagents.",
+    "notIdealFor": "Users who need a sandboxed or IDE-integrated assistant; it executes model-generated Python and project commands with the user's own permissions and is still shipping beta builds.",
+    "recentUpdates": "Prime Agent is shipping frequent v0.9.9 beta builds through its one-command installer, alongside the Prime Agent paper (arXiv 2608.23552) describing the self-improving RLM harness.",
+    "verdict": "A distinctive, research-grade coding harness that treats everything as code and is built for work that outlives a single chat window; best suited to power users comfortable with an evolving beta.",
+    "tags": [
+      "Terminal Agent",
+      "Open Source",
+      "Subagents",
+      "Long-Running Tasks",
+      "Self-Improving"
+    ],
+    "lastUpdated": "2026-10-01"
+  },
+  {
+    "slug": "gstack",
+    "name": "gstack",
+    "company": "Garry Tan",
+    "pricing": "free",
+    "pricingDetail": "gstack is free and open source under the MIT License; users pay only for the underlying agent (such as a Claude Code plan or Codex usage) that runs the skills.",
+    "description": "gstack is Y Combinator CEO Garry Tan's open-source skill pack that turns Claude Code into a virtual engineering team. Chained slash-command roles cover product framing, architecture and design review, code review, debugging, browser-based QA, security audit, shipping and deployment, with each step passing artifacts to the next.",
+    "keyFeatures": [
+      "Role-based slash commands such as /office-hours, /plan-ceo-review, /plan-eng-review and /review",
+      "Real-browser /qa that reproduces bugs, writes regression tests and re-verifies fixes",
+      "/cso security audit plus /ship and /land-and-deploy release automation",
+      "Team mode that auto-updates gstack for every contributor in a shared repo",
+      "Multi-host install for Claude Code, Codex CLI, Cursor and OpenClaw"
+    ],
+    "bestFor": "Founders, tech leads and solo builders who want an opinionated, end-to-end plan-review-QA-ship workflow layered onto Claude Code or Codex.",
+    "notIdealFor": "Developers who prefer lightweight prompts or minimal ceremony, since the multi-role workflow adds steps and token usage to small changes.",
+    "recentUpdates": "The v1.91 release line added test-value checks across plan-eng-review, review, qa and ship, a new /test-audit skill, and functional QA and pre-publication docs checks.",
+    "verdict": "One of the most widely adopted Claude Code workflow packs, offering a complete, opinionated software-delivery loop that rewards teams willing to adopt its process.",
+    "tags": [
+      "Claude Code",
+      "Agent Skills",
+      "Code Review",
+      "QA",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-01"
+  },
+  {
+    "slug": "beads",
+    "name": "Beads",
+    "company": "Steve Yegge",
+    "pricing": "open-source",
+    "pricingDetail": "Beads is open source under the MIT License and free to use; it runs locally as the bd CLI, with optional sync through Dolt remotes.",
+    "description": "Beads (bd) is an open-source, distributed graph issue tracker that gives coding agents persistent, structured memory. It replaces markdown plans with a dependency-aware graph stored in Dolt, so agents can find ready work, claim it and close it across long-horizon tasks without losing context.",
+    "keyFeatures": [
+      "Dependency-aware task graph with bd ready for claimable work",
+      "Dolt-backed storage with version control, branching, merge and remote sync",
+      "Hash-based IDs that avoid merge collisions across agents and branches",
+      "Semantic compaction of old closed tasks to save context window",
+      "bd setup integrations for Claude Code, Codex and Factory plus an MCP server"
+    ],
+    "bestFor": "Developers running one or many coding agents on long-horizon projects who need durable, shared task tracking that agents can query and update themselves.",
+    "notIdealFor": "Teams that want a hosted, human-first project-management UI; Beads is a CLI-first tool designed primarily for agents.",
+    "recentUpdates": "Beads v1.3.1 shipped at the end of September 2026 following the v1.3.0 release, with pre-compiled binaries for Linux, macOS, Windows, Android/Termux and FreeBSD.",
+    "verdict": "A widely used memory and task layer for coding agents that brings real dependency tracking and multi-agent safety to agent workflows.",
+    "tags": [
+      "Agent Memory",
+      "Issue Tracking",
+      "CLI",
+      "Dolt",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-01"
+  },
+  {
+    "slug": "tuios",
+    "name": "TUIOS",
+    "company": "Gaurav Gosain",
+    "pricing": "free",
+    "pricingDetail": "TUIOS is free and open source under the MIT License, distributed through Homebrew, AUR, Nix, Docker, Go install and an install script.",
+    "description": "TUIOS is an open-source terminal multiplexer and tiling window manager written in Go that understands the coding agents running in its panes. It shows each agent's state, collects approvals and questions into a single Inbox across sessions and machines, and can fan one prompt out to several agents in separate git worktrees.",
+    "keyFeatures": [
+      "Per-pane agent state (working, needs_input, idle, done, errored) via installed harness hooks",
+      "Unified Inbox for approvals, questions, mail and finished turns across sessions and hosts",
+      "tuios fan to run one prompt across multiple agents in isolated git worktrees",
+      "MCP server and tmux shim so agents and tmux-only tools can drive TUIOS",
+      "Daemon-mode sessions that survive restarts, BSP tiling and kitty/sixel graphics"
+    ],
+    "bestFor": "Terminal-centric developers supervising several Claude Code, Codex, Gemini CLI or OpenCode agents at once who want one place to see what needs attention.",
+    "notIdealFor": "Users who prefer a GUI agent manager or are happy with plain tmux, since TUIOS introduces its own keybindings and workflow.",
+    "recentUpdates": "Releases v0.8.2 through v0.8.4 added a scratch terminal, picture-in-picture, pane history across daemon restarts, sixel images, image paste and tuios xpanes, followed by fixes.",
+    "verdict": "A fast-moving, agent-aware multiplexer that makes running a fleet of terminal coding agents far more manageable.",
+    "tags": [
+      "Terminal",
+      "Multiplexer",
+      "Agent Orchestration",
+      "Go",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-01"
+  },
+  {
+    "slug": "omniroute",
+    "name": "OmniRoute",
+    "company": "Diego Souza (diegosouzapw)",
+    "pricing": "free",
+    "pricingDetail": "OmniRoute is free and open source under the MIT License; users pay only for any paid provider subscriptions or API keys they connect, and can route to free-tier providers at no cost.",
+    "description": "OmniRoute is an open-source, self-hosted AI gateway that exposes one OpenAI-compatible endpoint for coding tools like Claude Code, Codex, Cursor and Cline across 350+ providers. Model combos with automatic failover keep agents running when quotas run out or providers fail.",
+    "keyFeatures": [
+      "Single local endpoint routing to 350+ providers, including 150+ with free tiers",
+      "Combos with 19 routing strategies and a zero-config auto mode with automatic failover",
+      "omniroute run launchers that pre-wire Claude Code, Codex, OpenCode, Gemini CLI and more",
+      "Per-response routing decision headers, quota telemetry and budget overrides",
+      "Runs via npm, Docker, Electron, Android Termux and a VS Code Copilot Chat extension"
+    ],
+    "bestFor": "Developers who use several coding agents and want to pool subscriptions, API keys and free tiers behind one resilient endpoint.",
+    "notIdealFor": "Organizations requiring a managed, enterprise-supported gateway with centralized billing, since OmniRoute is self-hosted and relies on users managing provider credentials and terms.",
+    "recentUpdates": "OmniRoute v3.8.51 (September 30, 2026) bundled about 2,000 changelog entries from more than 300 contributors, expanding the provider catalog and adding smarter auto-routing, quota-aware scheduling and one-command CLI setup.",
+    "verdict": "A very actively developed gateway that offers maximum provider coverage and failover for agent-heavy workflows, at the cost of self-hosting and credential management.",
+    "tags": [
+      "AI Gateway",
+      "Proxy",
+      "Model Routing",
+      "Developer Tools",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-01"
   }
 ]
