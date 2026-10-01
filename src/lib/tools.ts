@@ -8,6 +8,7 @@
 
 import readmeMarkdown from '../../README.md?raw';
 import enrichedToolsJson from '../../public/data/enriched-tools.json';
+import { stripEnrichedCitations } from './enrichment-citations.js';
 
 export interface ToolSeed {
     slug: string;
@@ -170,7 +171,7 @@ function parseMarkdown(text: string): ToolSeed[] {
 function loadEnriched(): Map<string, EnrichedTool> {
     const map = new Map<string, EnrichedTool>();
     for (const t of enrichedToolsJson as EnrichedTool[]) {
-        if (t.slug) map.set(t.slug, t);
+        if (t.slug) map.set(t.slug, stripEnrichedCitations(t));
     }
     return map;
 }

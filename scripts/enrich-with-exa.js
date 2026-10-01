@@ -30,6 +30,7 @@ import { readFileSync, writeFileSync, appendFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { slugify } from '../js/parser.js';
+import { stripEnrichedCitations } from '../src/lib/enrichment-citations.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -127,7 +128,7 @@ function coerceFields(obj) {
             obj[k] = String(obj[k] || '');
         }
     }
-    return obj;
+    return stripEnrichedCitations(obj);
 }
 
 function sleep(ms) {
@@ -186,6 +187,7 @@ Rules:
 - recentUpdates: recent launches, versions, feature drops with dates.
 - verdict: balanced strengths + weaknesses assessment.
 - tags: relevant keywords.
+- Do not add citation markers such as [1] or [2][3]; the text is shown directly to readers.
 - lastUpdated will be set automatically by the pipeline.`;
 
 function formatResults(results) {
