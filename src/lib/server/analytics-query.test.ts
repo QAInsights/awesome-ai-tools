@@ -15,14 +15,20 @@ describe('funnel view model', () => {
             { event: 'outbound_click', trigger: 'tool_detail', subject: 'cursor', provider: '', n: 2 },
             { event: 'badge_referral', trigger: 'tool_page', subject: 'cursor', provider: '', n: 3 },
             { event: 'badge_referral', trigger: 'home', subject: '', provider: '', n: 1 },
+            { event: 'ad_closed', trigger: 'stickybox', subject: '', provider: '', n: 9 },
+            { event: 'ad_closed', trigger: 'fixedfooter', subject: '', provider: '', n: 3 },
+            { event: 'ad_prompt_shown', trigger: 'fixedfooter', subject: '', provider: '', n: 7 },
+            { event: 'signin_modal_shown', trigger: 'ad_close', subject: '', provider: '', n: 2 },
+            { event: 'signin_completed', trigger: 'ad_close', subject: '', provider: 'google', n: 1 },
         ]);
 
-        expect(model.shown).toBe(10);
+        expect(model.shown).toBe(12);
         expect(model.started).toBe(6);
-        expect(model.completed).toBe(4);
+        expect(model.completed).toBe(5);
         expect(model.providers[0]).toEqual({ provider: 'github', started: 6, completed: 4 });
         expect(model.triggers).toContainEqual({ trigger: 'zap_btn', blocked: 8, completed: 4 });
         expect(model.outbound[0]).toEqual(['cursor', 7]);
         expect(model.badgeReferrals).toEqual([['cursor', 3], ['(home)', 1]]);
+        expect(model.adPrompt).toEqual({ closed: 12, shown: 7, opened: 2, completed: 1 });
     });
 });

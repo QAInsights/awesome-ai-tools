@@ -25,7 +25,7 @@ const d1Promise = db.batch<{ count: number }>([
     db.prepare('SELECT COUNT(*) AS count FROM users WHERE last_seen_at >= ?').bind(activeCutoff),
 ]);
 const [{ data: funnel, error: analyticsError }, d1Results] = await Promise.all([analyticsPromise, d1Promise]);
-const { shown, started, completed, providers: providerRows, triggers: triggerRows, outbound: outboundRows, badgeReferrals } = funnel;
+const { shown, started, completed, providers: providerRows, triggers: triggerRows, outbound: outboundRows, badgeReferrals, adPrompt } = funnel;
 const rate = (numerator: number, denominator: number) => denominator
     ? `${((numerator / denominator) * 100).toFixed(1)}%`
     : '—';
@@ -78,6 +78,24 @@ const activeUsers = d1Results[2]?.results?.[0]?.count ?? 0;
                 ['Modal shown', shown, '—'],
                 ['Sign-in started', started, rate(started, shown)],
                 ['Sign-in completed', completed, rate(completed, started)],
+            ].map(([label, value, conversion]) => (
+                <div class="border border-[#222] bg-white/[0.02] rounded-lg p-5">
+                    <p class="text-[#737373] text-xs mb-2">{label}</p>
+                    <div class="flex items-baseline justify-between gap-3">
+                        <p class="font-mono text-2xl text-white">{value}</p>
+                        <p class="font-mono text-sm text-[#c9aa6e]">{conversion}</p>
+                    </div>
+                </div>
+            ))}
+        </section>
+
+        <h2 class="font-semibold mb-3">Ad-close sign-up prompt</h2>
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+            {[
+                ['Ads closed', adPrompt.closed, '—'],
+                ['Prompt shown', adPrompt.shown, rate(adPrompt.shown, adPrompt.closed)],
+                ['Sign-in opened', adPrompt.opened, rate(adPrompt.opened, adPrompt.shown)],
+                ['Sign-in completed', adPrompt.completed, rate(adPrompt.completed, adPrompt.shown)],
             ].map(([label, value, conversion]) => (
                 <div class="border border-[#222] bg-white/[0.02] rounded-lg p-5">
                     <p class="text-[#737373] text-xs mb-2">{label}</p>

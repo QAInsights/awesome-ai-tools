@@ -23,6 +23,7 @@ export interface FunnelViewModel {
     triggers: Array<{ trigger: string; blocked: number; completed: number }>;
     outbound: Array<[string, number]>;
     badgeReferrals: Array<[string, number]>;
+    adPrompt: { closed: number; shown: number; opened: number; completed: number };
 }
 
 const INTERVALS: Record<FunnelRange, string> = {
@@ -62,6 +63,7 @@ export function buildFunnelViewModel(rows: FunnelEventRow[]): FunnelViewModel {
     let shown = 0;
     let started = 0;
     let completed = 0;
+    const adPrompt = { closed: 0, shown: 0, opened: 0, completed: 0 };
 
     for (const row of rows) {
         const count = Number(row.n) || 0;
@@ -89,6 +91,10 @@ export function buildFunnelViewModel(rows: FunnelEventRow[]): FunnelViewModel {
         if (row.event === EVENTS.OUTBOUND_CLICK && row.subject) {
             outbound.set(row.subject, (outbound.get(row.subject) ?? 0) + count);
         }
+        if (row.event === EVENTS.AD_CLOSED) adPrompt.closed += count;
+        if (row.event === EVENTS.AD_PROMPT_SHOWN) adPrompt.shown += count;
+        if (row.trigger === 'ad_close' && row.event === EVENTS.SIGNIN_MODAL_SHOWN) adPrompt.opened += count;
+        if (row.trigger === 'ad_close' && row.event === EVENTS.SIGNIN_COMPLETED) adPrompt.completed += count;
         if (row.event === EVENTS.BADGE_REFERRAL) {
             const key = row.subject || '(home)';
             badgeReferrals.set(key, (badgeReferrals.get(key) ?? 0) + count);
@@ -103,6 +109,7 @@ export function buildFunnelViewModel(rows: FunnelEventRow[]): FunnelViewModel {
         triggers: Array.from(triggers.values()),
         outbound: Array.from(outbound).sort((a, b) => b[1] - a[1]).slice(0, 20),
         badgeReferrals: Array.from(badgeReferrals).sort((a, b) => b[1] - a[1]).slice(0, 20),
+        adPrompt,
     };
 }
 
