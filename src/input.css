@@ -867,15 +867,18 @@
 
 /* Floating ads (EthicalAds adds .loaded once filled) reserve room so they
    never cover page content or the onboarding card. */
-body:has([data-ea-style="fixedfooter"].loaded) main {
-    padding-bottom: 5rem;
+body:has([data-ea-style="fixedfooter"].loaded) main::after {
+    content: '';
+    display: block;
+    flex-shrink: 0;
+    height: 5rem;
 }
 body:has([data-ea-style="fixedfooter"].loaded) [data-onboarding-float] {
     bottom: 5rem;
 }
 @media (max-width: 639px) {
-    body:has([data-ea-style="fixedfooter"].loaded) main {
-        padding-bottom: 8rem;
+    body:has([data-ea-style="fixedfooter"].loaded) main::after {
+        height: 8rem;
     }
     body:has([data-ea-style="fixedfooter"].loaded) [data-onboarding-float] {
         bottom: 8rem;
