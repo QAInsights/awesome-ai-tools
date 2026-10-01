@@ -8,7 +8,8 @@ import { fileURLToPath } from 'node:url';
 import { collectNoindexedPaths, normalizePath } from './src/lib/noindex-scan.js';
 
 // Honest per-URL <lastmod> for the sitemap: tool pages use the enrichment
-// pipeline's lastUpdated stamp, blog posts use their pubDate. Anything else
+// pipeline's lastUpdated stamp, blog posts use their pubDate, weekly trending
+// pages their snapshot time. Anything else
 // is left without lastmod rather than stamped with the build date.
 function loadLastmodMap() {
     const map = new Map();
@@ -94,6 +95,14 @@ function loadLastmodMap() {
         if (latestBlog) map.set('/blog', latestBlog);
         if (latestNews) map.set('/news', latestNews);
     } catch { /* blog optional */ }
+    try {
+        const snapshots = JSON.parse(readFileSync(new URL('./data/trending/snapshots.json', import.meta.url), 'utf8'));
+        for (const snapshot of snapshots) {
+            if (snapshot?.week && parseDate(snapshot.generatedAt)) map.set(`/trending/${snapshot.week}`, snapshot.generatedAt);
+        }
+        const latest = maxDate(snapshots.map(s => s?.generatedAt));
+        if (latest) map.set('/trending', latest);
+    } catch { /* trending optional */ }
     return map;
 }
 const lastmodMap = loadLastmodMap();
@@ -154,6 +163,12 @@ export default defineConfig({
                 } else if (url === 'https://ai.dosa.dev/') {
                     item.priority = 1.0;
                     item.changefreq = 'daily';
+                } else if (url === 'https://ai.dosa.dev/trending/' || url === 'https://ai.dosa.dev/trending') {
+                    item.priority = 0.8;
+                    item.changefreq = 'weekly';
+                } else if (/\/trending\/\d{4}-w\d{2}\/?$/.test(url)) {
+                    item.priority = 0.6;
+                    item.changefreq = 'yearly';
                 } else if (url === 'https://ai.dosa.dev/news/' || url === 'https://ai.dosa.dev/news') {
                     item.priority = 0.8;
                     item.changefreq = 'daily';
