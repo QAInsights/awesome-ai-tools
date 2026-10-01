@@ -14,7 +14,6 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
-import EthicalAd from '../../components/EthicalAd.astro';
 import { formatDate, getAlternativesFor, getAllTools, getCategorySlug, getToolBySlug, type Tool } from '../../lib/tools';
 import { robotsFor } from '../../lib/indexing';
 import { getComparisonsForTool, hasAlternativesPage, hasPricingPage, humanizePricing, truncate } from '../../lib/compare';
@@ -253,8 +252,6 @@ const jsonLd = JSON.stringify(jsonLdObj);
                     </div>
                     <p class="td-summary text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">{displayDescription}</p>
                 </header>
-
-                <EthicalAd id="tool-detail" type="image" placementStyle="stickybox" keywords={[tool.categoryClean, ...(enriched?.tags ?? [])]} />
 
                 <!-- Enriched Content Sections (build-time rendered) -->
                 <div class="flex flex-col gap-6">
