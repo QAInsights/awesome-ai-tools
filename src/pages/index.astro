@@ -14,6 +14,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Sidebar from '../components/Sidebar.astro';
 import SiteHeader from '../components/SiteHeader.astro';
+import EthicalAd from '../components/EthicalAd.astro';
 import ToolRow from '../components/ToolRow.astro';
 import { formatDate, getAllTools, getLatestUpdate } from '../lib/tools';
 import { ORGANIZATION } from '../lib/site';
@@ -118,6 +119,7 @@ const toolsJson = JSON.stringify(tools);
                         Find your <span class="text-[#e2c48a]">AI coding stack</span>
                     </p>
                     <a href="/trending" class="inline-flex items-center gap-1.5 mt-2 font-mono text-[12px] text-[#a3a3a3] hover:text-[#e2c48a] transition-colors">Trending this week &rarr;</a>
+                    <EthicalAd id="home-hero" type="image" horizontal keywords={['ai-coding', 'developer-tools']} class="mt-4" />
                 </div>
 
                 <!-- Table Header -->

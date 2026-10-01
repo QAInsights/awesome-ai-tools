@@ -1,6 +1,7 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import EthicalAd from '../../components/EthicalAd.astro';
 import { safeJsonForScript } from '../../lib/serialize';
 import { extractNewsCitations } from '../../lib/news-citations.js';
 import { DEFAULT_AUTHOR, ORGANIZATION } from '../../lib/site';
@@ -149,7 +150,7 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
   jsonLd={jsonLd}
   activeNav="blog"
 >
-  <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-full p-6 md:p-8">
+  <div class="max-w-[1400px] mx-auto w-full flex flex-col grow shrink-0 p-6 md:p-8">
     <div class="max-w-3xl mx-auto flex flex-col flex-1 w-full min-w-0">
       <div class="mb-5">
         <a href={backHref} class="text-[#737373] hover:text-white transition-colors flex items-center text-sm font-mono tracking-wide w-fit">
@@ -331,6 +332,8 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
       </footer>
     </div>
   </div>
+
+  <EthicalAd id="blog-footer" type="text" placementStyle="fixedfooter" keywords={topicTags} />
 
   <!-- Full article markdown for the "Copy for LLM" action -->
   <script id="article-markdown" type="application/json" set:html={articleMarkdownJson} />
