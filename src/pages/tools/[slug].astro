@@ -14,9 +14,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
+import PricingBreakdown from '../../components/PricingBreakdown.astro';
 import { formatDate, getAlternativesFor, getAllTools, getCategorySlug, getToolBySlug, type Tool } from '../../lib/tools';
 import { robotsFor } from '../../lib/indexing';
-import { getComparisonsForTool, hasAlternativesPage, hasPricingPage, humanizePricing, truncate } from '../../lib/compare';
+import { getComparisonsForTool, hasAlternativesPage, hasPricingPage, truncate } from '../../lib/compare';
 import { buildToolFaqs } from '../../lib/tool-faqs';
 import { buildToolReview, buildToolSeo } from '../../lib/tool-seo';
 import { addOutboundUtmParams } from '../../lib/outbound-utm.js';
@@ -315,16 +316,7 @@ const jsonLd = JSON.stringify(jsonLdObj);
                     {(enriched?.pricing || enriched?.pricingDetail) && (
                         <section class="td-section">
                             <div class="td-section-label">Pricing</div>
-                            <div class="td-card">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <span class="inline-block px-3 py-1 bg-[#a78bfa]/10 border border-[#a78bfa]/30 rounded-full font-mono text-[12px] text-[#c4b5fd] tracking-wide">
-                                        {humanizePricing(enriched.pricing)}
-                                    </span>
-                                </div>
-                                {enriched.pricingDetail && (
-                                    <p class="text-[15px] leading-relaxed text-[#d4d4d4]">{enriched.pricingDetail}</p>
-                                )}
-                            </div>
+                            <PricingBreakdown pricing={enriched.pricing} detail={enriched.pricingDetail} />
                         </section>
                     )}
 

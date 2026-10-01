@@ -1,0 +1,95 @@
+---
+import { buildPricingBreakdown } from '../lib/pricing-breakdown';
+import { humanizePricing } from '../lib/compare';
+
+interface Props {
+    pricing?: string;
+    detail?: string;
+    footnote?: string;
+}
+
+const { pricing, detail, footnote } = Astro.props;
+const breakdown = buildPricingBreakdown(pricing, detail);
+const planCols = breakdown.plans.length >= 4 ? 'grid-cols-2 lg:grid-cols-4' : breakdown.plans.length === 3 ? 'grid-cols-2 sm:grid-cols-3' : breakdown.plans.length === 2 ? 'grid-cols-2' : 'grid-cols-1';
+---
+<div class="pb-card">
+    <div class="pb-head">
+        <div>
+            <div class="pb-eyebrow">{breakdown.headlineCaption || 'Pricing'}</div>
+            <div class="pb-headline">{breakdown.headline}</div>
+        </div>
+        <span class="pb-model">{humanizePricing(pricing)}</span>
+    </div>
+
+    {breakdown.signals.length > 0 && (
+        <ul class="pb-signals" aria-label="Pricing highlights">
+            {breakdown.signals.map(signal => <li class="pb-signal">{signal}</li>)}
+        </ul>
+    )}
+
+    {breakdown.plans.length > 0 && (
+        <div class={`pb-plans grid ${planCols} gap-3`} role="list" aria-label="Plans">
+            {breakdown.plans.map(plan => (
+                <div class="pb-plan" role="listitem">
+                    <div class="pb-plan-name">{plan.name}</div>
+                    <div class="pb-plan-price">
+                        {plan.price}{plan.unit && <span class="pb-plan-unit">{plan.unit}</span>}
+                    </div>
+                    {plan.note && <div class="pb-plan-note">{plan.note}</div>}
+                </div>
+            ))}
+        </div>
+    )}
+
+    {breakdown.points.length > 0 && (
+        <ul class="pb-points">
+            {breakdown.points.map(point => (
+                <li class="pb-point">
+                    {point.map(segment => segment.price ? <strong class="pb-amount">{segment.text}</strong> : segment.text)}
+                </li>
+            ))}
+        </ul>
+    )}
+
+    {footnote && <p class="pb-footnote">{footnote}</p>}
+</div>
+
+<style>
+    .pb-card {
+        position: relative;
+        background: linear-gradient(180deg, rgba(167, 139, 250, 0.05), rgba(13, 13, 13, 0) 55%), #0d0d0d;
+        border: 1px solid #222;
+        border-radius: 12px;
+        padding: 20px;
+        overflow: hidden;
+    }
+    .pb-card::before {
+        content: '';
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(201, 170, 110, 0.55), rgba(167, 139, 250, 0.45), transparent);
+    }
+    .pb-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+    .pb-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: #737373; margin-bottom: 6px; }
+    .pb-headline { font-size: 30px; line-height: 1.1; font-weight: 600; letter-spacing: -0.02em; color: #fff; font-variant-numeric: tabular-nums; }
+    .pb-model { flex-shrink: 0; padding: 4px 12px; border-radius: 999px; border: 1px solid rgba(167, 139, 250, 0.3); background: rgba(167, 139, 250, 0.1); font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #c4b5fd; letter-spacing: 0.04em; }
+    .pb-signals { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 0; list-style: none; }
+    .pb-signal { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; border: 1px solid #2a2a2a; background: rgba(255, 255, 255, 0.03); font-size: 12px; color: #d4d4d4; }
+    .pb-signal::before { content: ''; width: 6px; height: 6px; border-radius: 999px; background: #4ade80; box-shadow: 0 0 8px rgba(74, 222, 128, 0.5); }
+    .pb-plans { margin-top: 18px; }
+    .pb-plan { border: 1px solid #262626; border-radius: 10px; padding: 14px; background: rgba(255, 255, 255, 0.02); transition: border-color 0.2s, background 0.2s; }
+    .pb-plan:hover { border-color: rgba(201, 170, 110, 0.45); background: rgba(201, 170, 110, 0.04); }
+    .pb-plan-name { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #a3a3a3; margin-bottom: 8px; }
+    .pb-plan-price { font-size: 22px; font-weight: 600; color: #e2c48a; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+    .pb-plan-unit { margin-left: 2px; font-size: 13px; font-weight: 400; color: #737373; }
+    .pb-plan-note { margin-top: 6px; font-size: 12px; line-height: 1.5; color: #8a8a8a; }
+    .pb-points { margin: 18px 0 0; padding: 16px 0 0; border-top: 1px solid #1f1f1f; list-style: none; display: grid; gap: 10px; }
+    .pb-point { position: relative; padding-left: 18px; font-size: 14.5px; line-height: 1.65; color: #d4d4d4; }
+    .pb-point::before { content: ''; position: absolute; left: 2px; top: 0.7em; width: 6px; height: 6px; border-radius: 2px; transform: rotate(45deg); background: linear-gradient(135deg, #c9aa6e, #a78bfa); }
+    .pb-amount { font-weight: 600; color: #e2c48a; font-variant-numeric: tabular-nums; }
+    .pb-footnote { margin: 14px 0 0; font-size: 13px; line-height: 1.6; color: #737373; }
+    @media (max-width: 480px) {
+        .pb-headline { font-size: 26px; }
+    }
+</style>
