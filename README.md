@@ -307,7 +307,7 @@ Not IDEs, but widely used for coding tasks via chat.
 | **[Gemini](https://gemini.google.com)** | Google | 1M token context; multimodal; strong for Google ecosystem teams |
 | **[DeepSeek](https://www.deepseek.com/)** | DeepSeek | Competitive open-weights models (V3/R1); excellent coding benchmarks |
 | **[Perplexity](https://www.perplexity.ai/)** | Perplexity | AI search engine; excellent for technical research and API discovery |
-| **[nenva](https://anjadhe.ai)** | Anjadhe | Source-available (PolyForm Noncommercial) privacy-first personal AI assistant for macOS — email, calendar, tasks, notes, journal and investments live in its own apps and the AI comes to the data; local open-weight model by default (runs on 8 GB Macs), optional nenva Cloud/own server/own API key; no account, iCloud-encrypted sync, extensible via coding agents pointed at `~/Anjadhe/apps/`; [GitHub](https://github.com/Anjadhe/Anjadhe) |
+| **[nenva](https://nenva.co)** | Anjadhe | Source-available (PolyForm Noncommercial) privacy-first personal AI assistant for macOS: email, calendar, tasks, notes, journal and investments live in its own apps and the AI comes to the data; new installs use hosted nenva cloud (zero data retention, free monthly allowance), or switch to a local open-weight model on 8 GB+ Macs, your own server or your own OpenAI/Anthropic key; free, no account; extensible via coding agents pointed at `~/nenva/apps/`; [GitHub](https://github.com/Anjadhe/Anjadhe) |
 
 ---
 
