@@ -865,8 +865,9 @@ body:has(#signInModal:not(.hidden)) .ea-slot {
     visibility: hidden;
 }
 
-/* Filled floating ads (EthicalAds adds .loaded) reserve room so they never
-   cover page content, the compare bar or the onboarding card. */
+/* Filled floating ads (EthicalAds adds .loaded): the footer ad reserves room
+   below the page; the corner StickyBox overlays content but keeps clear of
+   the compare bar and onboarding card. */
 body:has([data-ea-style="fixedfooter"].loaded) main:not(main main)::after {
     content: '';
     display: block;
@@ -880,7 +881,6 @@ body:has([data-ea-style="fixedfooter"].loaded) [data-onboarding-float] {
     bottom: calc(var(--ea-float-h, 0px) + 1rem);
 }
 @media (min-width: 1301px) {
-    body:has([data-ea-style="stickybox"].loaded) main:not(main main),
     body:has([data-ea-style="stickybox"].loaded) #compareFloatingBar {
         padding-right: 220px;
     }
