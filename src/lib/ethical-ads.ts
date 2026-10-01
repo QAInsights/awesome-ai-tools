@@ -33,6 +33,12 @@ export const FLOATING_AD_PLACEMENTS: { wide: FloatingAdPlacement; narrow: Floati
     narrow: { id: 'float-footer', type: 'text', style: 'fixedfooter' },
 };
 
+/** localStorage flag set for signed-in members, who never load the ad client. */
+export const AD_FREE_STORAGE_KEY = 'aat_ad_free';
+
+/** Window event dispatched when a visitor closes a filled floating ad. */
+export const AD_CLOSED_EVENT = 'ea:closed';
+
 const PUBLISHER_ID = /^[a-z0-9][a-z0-9_-]*$/i;
 
 export function ethicalAdsPublisher(value: string | undefined | null): string | null {

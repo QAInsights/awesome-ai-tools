@@ -18,7 +18,8 @@ const subjectPolicies = {
     },
 };
 
-export const AUTH_TRIGGERS = Object.freeze(['sidebar', 'favorite_heart', 'follow_bell', 'zap_btn']);
+export const AUTH_TRIGGERS = Object.freeze(['sidebar', 'favorite_heart', 'follow_bell', 'zap_btn', 'ad_close']);
+export const AD_STYLES = Object.freeze(['stickybox', 'fixedfooter']);
 export const OUTBOUND_TRIGGERS = Object.freeze(['tool_card', 'tool_detail', 'comparison', 'category', 'unknown']);
 export const ONBOARDING_TRIGGERS = Object.freeze(['inline', 'float', 'unknown']);
 export const ONBOARDING_STEP_SUBJECTS = Object.freeze(['favorites', 'follows', 'badge']);
@@ -42,6 +43,9 @@ export const EVENTS = Object.freeze({
     ONBOARDING_DISMISSED: 'onboarding_dismissed',
     ONBOARDING_STEP_COMPLETED: 'onboarding_step_completed',
     BADGE_REFERRAL: 'badge_referral',
+    AD_CLOSED: 'ad_closed',
+    AD_PROMPT_SHOWN: 'ad_prompt_shown',
+    AD_PROMPT_DISMISSED: 'ad_prompt_dismissed',
 });
 
 export const EVENT_CATALOG = Object.freeze({
@@ -62,6 +66,9 @@ export const EVENT_CATALOG = Object.freeze({
     [EVENTS.ONBOARDING_DISMISSED]: { client: true, triggers: ONBOARDING_TRIGGERS, subject: subjectPolicies.none },
     [EVENTS.ONBOARDING_STEP_COMPLETED]: { client: true, triggers: ONBOARDING_TRIGGERS, subject: subjectPolicies.onboardingStep },
     [EVENTS.BADGE_REFERRAL]: { client: true, triggers: ['tool_page', 'home'], subject: subjectPolicies.slug },
+    [EVENTS.AD_CLOSED]: { client: true, triggers: AD_STYLES, subject: subjectPolicies.none },
+    [EVENTS.AD_PROMPT_SHOWN]: { client: true, triggers: AD_STYLES, subject: subjectPolicies.none },
+    [EVENTS.AD_PROMPT_DISMISSED]: { client: true, triggers: AD_STYLES, subject: subjectPolicies.none },
 });
 
 export function sanitizeAuthTrigger(value) {
