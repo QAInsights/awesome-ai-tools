@@ -1,6 +1,8 @@
 ---
 import { SEO } from 'astro-seo';
 import SignInModal from '../components/SignInModal.astro';
+import EthicalAd from '../components/EthicalAd.astro';
+import { pageAdTopics } from '../lib/ethical-ads';
 
 // Base layout used by all pages
 // Props: title, description, keywords, canonical, ogImage, ogType
@@ -53,6 +55,7 @@ const {
     nextUrl,
 } = Astro.props;
 
+const showAd = !Astro.url.pathname.startsWith('/admin');
 const resolvedCanonical = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
 const resolvedOgTitle = ogTitle ?? title;
 const resolvedOgDesc = ogDescription ?? description;
@@ -158,6 +161,7 @@ if (nextUrl) extraLinks.push({ rel: 'next', href: nextUrl });
 <body class="bg-black text-white font-sans antialiased leading-relaxed">
     <slot />
 
+    {showAd && <EthicalAd keywords={pageAdTopics(tags, keywords)} />}
     <SignInModal />
     <div id="turnstile-container"></div>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>

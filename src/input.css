@@ -848,8 +848,8 @@
     }
 }
 
-/* EthicalAds placements (src/components/EthicalAd.astro). Empty slots
-   (ads disabled, blocked, or unfilled) take no space. */
+/* EthicalAds floating placement (src/components/EthicalAd.astro). Empty
+   slots (ads disabled, blocked, or unfilled) take no space. */
 .ea-slot {
     --ea-font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
     --ea-bgcolor-dark: rgba(255, 255, 255, 0.03);
@@ -861,31 +861,27 @@
     --ea-color-link-callout-dark: var(--color-ink-muted);
     --ea-color-link-callout-dark-active: var(--color-ink-secondary);
 }
-.ea-slot:empty {
-    margin: 0;
+body:has(#signInModal:not(.hidden)) .ea-slot {
+    visibility: hidden;
 }
 
-/* Floating ads (EthicalAds adds .loaded once filled) reserve room so they
-   never cover page content or the onboarding card. */
-body:has([data-ea-style="fixedfooter"].loaded) main::after {
+/* Filled floating ads (EthicalAds adds .loaded) reserve room so they never
+   cover page content, the compare bar or the onboarding card. */
+body:has([data-ea-style="fixedfooter"].loaded) main:not(main main)::after {
     content: '';
     display: block;
     flex-shrink: 0;
-    height: 5rem;
+    height: var(--ea-float-h, 0px);
+}
+body:has([data-ea-style="fixedfooter"].loaded) #compareFloatingBar {
+    bottom: var(--ea-float-h, 0px);
 }
 body:has([data-ea-style="fixedfooter"].loaded) [data-onboarding-float] {
-    bottom: 5rem;
-}
-@media (max-width: 639px) {
-    body:has([data-ea-style="fixedfooter"].loaded) main::after {
-        height: 8rem;
-    }
-    body:has([data-ea-style="fixedfooter"].loaded) [data-onboarding-float] {
-        bottom: 8rem;
-    }
+    bottom: calc(var(--ea-float-h, 0px) + 1rem);
 }
 @media (min-width: 1301px) {
-    body:has([data-ea-style="stickybox"].loaded) main {
+    body:has([data-ea-style="stickybox"].loaded) main:not(main main),
+    body:has([data-ea-style="stickybox"].loaded) #compareFloatingBar {
         padding-right: 220px;
     }
     body:has([data-ea-style="stickybox"].loaded) [data-onboarding-float] {
