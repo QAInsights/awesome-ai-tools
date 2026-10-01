@@ -10,6 +10,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Sidebar from '../../../components/Sidebar.astro';
 import SiteHeader from '../../../components/SiteHeader.astro';
+import PricingBreakdown from '../../../components/PricingBreakdown.astro';
 import { formatDate, getAlternativesFor, getCategorySlug, type Tool } from '../../../lib/tools';
 import { robotsFor } from '../../../lib/indexing';
 import { getTopPricingTools, hasAlternativesPage, humanizePricing, truncate } from '../../../lib/compare';
@@ -144,10 +145,7 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
                 {enriched?.pricingDetail && (
                     <section class="td-section" style="border-top: none;">
                         <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em] mb-3">Pricing details</div>
-                        <div class="td-card">
-                            <p class="text-[15px] leading-relaxed text-[#d4d4d4]">{enriched.pricingDetail}</p>
-                            <p class="text-[13px] text-[#737373] leading-relaxed mt-3 mb-0">Pricing changes often - verify on the official site.</p>
-                        </div>
+                        <PricingBreakdown pricing={enriched.pricing} detail={enriched.pricingDetail} footnote="Pricing changes often - verify on the official site." />
                     </section>
                 )}
 
