@@ -8263,7 +8263,7 @@
     "name": "Hyperconsciousness",
     "company": "Louis Beaumont (maintainer)",
     "pricing": "open-source",
-    "pricingDetail": "MIT-licensed developer-alpha available free from the GitHub repository; built from source with Rust (pinned 1.88.0) and installed as the `hc` binary. The npm registry package is not the source of this alpha, though npm packaging scripts are retained for compatibility and tested in CI.",
+    "pricingDetail": "MIT-licensed developer alpha, free from the GitHub repository. The official macOS/Linux installer downloads a published alpha and verifies its checksum and version. Building the hc binary from source with Rust 1.88.0 is also supported.",
     "description": "Hyperconsciousness (hc) is an encrypted, append-only knowledge store for humans and agents, built in Rust with a CLI plus MCP/HTTP server. It signs and seals records, syncs them across devices, and gives coding agents persistent context through scoped, expiring grants.",
     "keyFeatures": [
       "Encrypted, signed, append-only record store for persistent agent context",
@@ -8275,8 +8275,8 @@
       "Tag- and sensitivity-based access controls (e.g., kinds, tags, sensitivity, days)"
     ],
     "bestFor": "Developers running coding agents (e.g., via MCP clients like Claude) who want a private, local-first, cryptographically verifiable knowledge store with fine-grained, time-limited agent access.",
-    "notIdealFor": "Users wanting a polished, audited, hosted product with desktop/mobile apps or team access — it is a developer alpha with no independent security audit, no desktop/iOS/Android/mobile web apps, and APIs/commands that may change.",
-    "recentUpdates": "Developer-alpha project by Louis Beaumont (founder of screenpipe, YC S26); documentation on MCP server directories describes the Rust engine, CLI, MCP/HTTP server, agent skills, and the optional HC Atlas local dashboard. No dated release notes were found in the search results.",
+    "notIdealFor": "Users who need a polished, independently audited product or a bundled desktop/mobile client. HC is a developer alpha with changing APIs and commands. It has no independent security audit; company gateway access is documented, while hosted/team client applications are outside this repository.",
+    "recentUpdates": "The current repository documents published alpha installation, an optional local HC Atlas dashboard, and company gateway access with signed membership policies and per-request checks.",
     "verdict": "Hyperconsciousness offers a compelling privacy-first, cryptographically scoped approach to giving agents persistent memory, with a Rust engine, MCP integration, and local dashboard. However, it is an unaudited developer alpha with changing APIs and no mobile/desktop apps, so it suits early adopters rather than production or sensitive-data use.",
     "tags": [
       "MCP",
