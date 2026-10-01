@@ -7,9 +7,14 @@ export function stripCitations(value) {
     return value;
 }
 
-/** Copy of an enriched tool entry with citation markers removed from every field. */
+/**
+ * Copy of an enriched tool entry with citation markers removed from every field.
+ * @template {object} T
+ * @param {T} entry
+ * @returns {T}
+ */
 export function stripEnrichedCitations(entry) {
-    return Object.fromEntries(
+    return /** @type {T} */ (Object.fromEntries(
         Object.entries(entry).map(([key, value]) => [key, stripCitations(value)]),
-    );
+    ));
 }
