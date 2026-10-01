@@ -5541,21 +5541,25 @@
     "name": "nenva",
     "company": "Anjadhe",
     "pricing": "free",
-    "pricingDetail": "The domain nenva.com is currently associated with a personal project for intelligent genealogy entry and query, which is accessible for free.",
-    "description": "Nenva is a web-based platform focused on intelligent genealogy, providing tools for users to input and query family tree data. It operates as a personal project rather than a commercial AI software tool.",
+    "pricingDetail": "The nenva Mac app is free with no account, and every install gets every update; the one-time license planned for after the alpha was dropped in October 2026. nenva cloud lite and pro include a free monthly allowance, as does web search, though Anjadhe has said nenva cloud may later become a separate subscription and some future apps that connect to outside services may be paid. Running nenva local on your own Mac, your own model server, or your own OpenAI or Anthropic key adds no nenva charge.",
+    "description": "nenva, built by San Francisco Bay Area company Anjadhe LLC, is a privacy-first personal AI assistant for macOS that keeps your email, calendar, tasks, notes, journal and investment portfolio in its own local apps and brings the AI to that data instead of sending your life to a cloud chatbot. New installs start on nenva cloud lite, a hosted open-weight model with zero data retention, and you can switch to nenva local on any Mac with 8 GB of memory or more, point it at your own model server, or add your own OpenAI or Anthropic key. The desktop app and nenva cloud are source-available under the PolyForm Noncommercial license.",
     "keyFeatures": [
-      "Intelligent family tree data entry",
-      "Genealogy query functionality",
-      "Web-based interface"
+      "nenva local runs a downloaded open-weight model on your Mac through llama.cpp, sized from its own small model on 8 to 16 GB machines up to larger models from 32 GB",
+      "Actions view that merges due tasks, action items pulled from Gmail and Google Calendar events into one finishable daily list",
+      "Proactive assistant with meeting prep notifications, a morning briefing and follow-up email drafts that are never sent without your review",
+      "Built-in apps for email, calendar, tasks, notes, journal, documents and investment portfolio strategy, with an iPhone companion app",
+      "Extensible app canvas: point Claude Code, Codex or another coding agent at ~/nenva/apps/ and new apps inherit storage, encrypted backup and the assistant's attention"
     ],
-    "bestFor": "Individuals interested in documenting and querying family history and genealogy records.",
-    "notIdealFor": "Users seeking AI-powered coding assistants, enterprise QA testing, or professional AI productivity software.",
-    "recentUpdates": "The domain has been active with registration records updated through July 2026, though the site content remains focused on genealogy services.",
-    "verdict": "Nenva is a niche personal project for genealogy and should not be confused with AI-powered productivity or testing tools that may share similar names.",
+    "bestFor": "Mac users who want an AI assistant over their personal email, calendar, notes and finances without handing that data to a cloud chatbot, and developers who like extending their own tools by having coding agents build new apps on top.",
+    "notIdealFor": "Windows or Linux users, teams that need shared workspaces, people who run nenva across several Macs (Mac-to-Mac sync was retired in favor of one Mac plus the iPhone app), and anyone looking for an IDE coding assistant, since nenva is a personal productivity assistant rather than a code editor.",
+    "recentUpdates": "Between 30 September and 1 October 2026 the app shipped v0.1.0-alpha.98 through alpha.106: it returned to the nenva name and ~/nenva folders, renamed its hosted models to the nenva cloud lite and pro tiers, became free for good, replaced Mac-to-Mac sync with passphrase-protected backups, moved nenva local to a self-updating llama.cpp engine about 10% faster, added meeting prep, a morning notice and follow-up drafts, and taught nenva cloud lite to read images and scanned PDFs.",
+    "verdict": "nenva is one of the more thoughtful takes on personal AI because privacy is the default architecture rather than a settings toggle, and the agent-extensible apps folder makes it genuinely interesting to developers. It is still an alpha, Mac-only and source-available rather than open source, so treat it as a promising daily driver for individuals rather than a team tool.",
     "tags": [
-      "genealogy",
-      "family-tree",
-      "personal-project"
+      "Personal AI",
+      "Privacy",
+      "Local LLM",
+      "macOS",
+      "Productivity"
     ],
     "lastUpdated": "2026-10-01"
   },
