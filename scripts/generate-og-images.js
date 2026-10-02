@@ -13,11 +13,13 @@ import { join } from 'path';
 import { createHash } from 'crypto';
 import satori from 'satori';
 import sharp from 'sharp';
+import { comparisonCounts, formatRefreshMonth, rankFacetTools, refreshMonth } from '../src/lib/best-facets.js';
 
 const ROOT = process.cwd();
 const OUT_DIR = join(ROOT, 'public', 'images', 'og');
 const BLOG_OUT_DIR = join(OUT_DIR, 'blog');
 const TRENDING_OUT_DIR = join(OUT_DIR, 'trending');
+const BEST_OUT_DIR = join(OUT_DIR, 'best');
 const FONT_DIR = join(ROOT, 'assets', 'fonts');
 
 const fonts = [
@@ -189,6 +191,7 @@ async function main() {
     mkdirSync(OUT_DIR, { recursive: true });
     mkdirSync(BLOG_OUT_DIR, { recursive: true });
     mkdirSync(TRENDING_OUT_DIR, { recursive: true });
+    mkdirSync(BEST_OUT_DIR, { recursive: true });
 
     let written = 0, skipped = 0, blogWritten = 0, blogSkipped = 0;
     for (const tool of tools) {
@@ -264,7 +267,43 @@ async function main() {
         trendingWritten++;
     }
 
-    console.log(`OG images: ${written} generated, ${skipped} up-to-date (${tools.length} tools); ${blogWritten} blog posts generated, ${blogSkipped} up-to-date (${posts.length} posts total); ${trendingWritten} trending weeks generated, ${trendingSkipped} up-to-date`);
+    const facets = JSON.parse(readFileSync(join(ROOT, 'data', 'best-facets.json'), 'utf-8'));
+    const popularity = comparisonCounts(JSON.parse(readFileSync(join(ROOT, 'data', 'comparisons.json'), 'utf-8')));
+    const month = formatRefreshMonth(refreshMonth());
+    let bestWritten = 0, bestSkipped = 0;
+    for (const facet of facets) {
+        const top = rankFacetTools(facet, tools, popularity, 3).map(t => t.enriched?.name ?? t.name);
+        const contentKey = hash(JSON.stringify([facet.title, month, top]));
+        const outPath = join(BEST_OUT_DIR, `${facet.slug}.png`);
+        const hashPath = join(BEST_OUT_DIR, `${facet.slug}.hash`);
+        if (existsSync(outPath) && existsSync(hashPath) && readFileSync(hashPath, 'utf-8') === contentKey) {
+            bestSkipped++;
+            continue;
+        }
+        const png = await renderCardPng({
+            pill: 'Best of',
+            content: [
+                { type: 'div', props: { style: { fontSize: '52px', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em' }, children: truncate(facet.title, 80) } },
+                ...top.map((name, i) => ({
+                    type: 'div',
+                    props: {
+                        style: { display: 'flex', gap: '20px', fontSize: '30px', fontWeight: 600, color: '#e5e5e5' },
+                        children: [
+                            { type: 'div', props: { style: { color: '#e2c48a', width: '48px' }, children: `#${i + 1}` } },
+                            { type: 'div', props: { children: truncate(name, 40) } },
+                        ],
+                    },
+                })),
+            ],
+            footerLeft: `Ranked ${month}`,
+            footerRight: `ai.dosa.dev/best/${facet.slug}`,
+        });
+        writeFileSync(outPath, png);
+        writeFileSync(hashPath, contentKey);
+        bestWritten++;
+    }
+
+    console.log(`OG images: ${written} generated, ${skipped} up-to-date (${tools.length} tools); ${blogWritten} blog posts generated, ${blogSkipped} up-to-date (${posts.length} posts total); ${trendingWritten} trending weeks generated, ${trendingSkipped} up-to-date; ${bestWritten} best-of pages generated, ${bestSkipped} up-to-date`);
 }
 
 main().catch(err => { console.error('OG image generation failed:', err); process.exit(1); });

@@ -3,6 +3,7 @@ import type { EnrichedTool, Tool } from './tools';
 import { getAllTools, getCategoriesDetailed } from './tools';
 import { getResolvedComparisons, getTopComparedTools, getTopPricingTools } from './compare';
 import { getTrendingSnapshots } from './trending-data';
+import { getBestFacets } from './best';
 import {
     contentFingerprint,
     evaluatePages,
@@ -155,6 +156,7 @@ describe('generated page catalog', () => {
             pricing: getTopPricingTools().length,
             category: getCategoriesDetailed().length,
             trending: getTrendingSnapshots().length,
+            best: getBestFacets().length,
         });
         const paths = getGeneratedPageCandidates().map(p => p.path);
         expect(new Set(paths).size).toBe(paths.length);

@@ -1,0 +1,113 @@
+[
+  {
+    "slug": "free-ai-coding-tools",
+    "title": "Best Free AI Coding Tools",
+    "short": "Free",
+    "keyword": "free AI coding tools",
+    "intro": "You don't have to pay for a capable AI coding assistant. Every tool here is free to use or fully open source, with no paid plan needed to get started. Most still need an API key or a local model for inference, so check each tool's pricing notes for model costs.",
+    "criteria": "Tools whose reviewed pricing is free or open source. Ranked by how often developers compare them, then by how recently their review was updated.",
+    "include": { "pricing": ["free", "open-source"] }
+  },
+  {
+    "slug": "open-source-ai-coding-tools",
+    "title": "Best Open-Source AI Coding Tools",
+    "short": "Open source",
+    "keyword": "open-source AI coding tools",
+    "intro": "Open-source AI coding tools let you read the code, self-host, swap models, and fork them if the project changes direction. This list covers agents, editors, and workflow tools that publish their source under licenses like MIT, Apache 2.0, or AGPL.",
+    "criteria": "Tools priced as open source, or whose review mentions an open-source license. Tools that mention it in their name, tags, or best-for summary rank higher.",
+    "include": {
+      "pricing": ["open-source"],
+      "patterns": ["open[- ]source", "\\bApache[- ]2\\.0\\b", "\\bMIT[- ]licen[cs]ed\\b", "\\bAGPL", "\\bGPL-?[23]"]
+    }
+  },
+  {
+    "slug": "self-hosted-ai-coding-tools",
+    "title": "Best Self-Hosted & Local-Model AI Coding Tools",
+    "short": "Self-hosted & local",
+    "keyword": "self-hosted AI coding tools with local models",
+    "intro": "If your code can't leave your network, or you'd rather not pay per token, you need a tool that runs on your own hardware or talks to a local model. These tools can be self-hosted or support local inference through runtimes like Ollama, LM Studio, or llama.cpp.",
+    "criteria": "Tools whose review mentions self-hosting, on-prem or air-gapped deployment, offline use, or local model runtimes. Tools where this is central rank higher.",
+    "include": {
+      "patterns": ["self[- ]host", "\\bon[- ]prem", "air[- ]gapped", "\\boffline\\b", "\\bOllama\\b", "LM Studio", "llama\\.cpp", "\\bvLLM\\b", "local (LLM|model)s?", "local inference", "runs? (entirely |fully )?locally"]
+    }
+  },
+  {
+    "slug": "ai-coding-assistants-for-jetbrains",
+    "title": "Best AI Coding Assistants for JetBrains IDEs",
+    "short": "JetBrains",
+    "keyword": "AI coding assistant for JetBrains",
+    "intro": "IntelliJ IDEA, PyCharm, WebStorm, GoLand, and the rest of the JetBrains family have their own plugin ecosystem, and many AI assistants are built for VS Code first. These tools support JetBrains IDEs through a plugin or native integration.",
+    "criteria": "Tools whose review mentions JetBrains or a JetBrains IDE (IntelliJ IDEA, PyCharm, WebStorm, GoLand, Rider, CLion, PhpStorm, RubyMine, Android Studio).",
+    "include": {
+      "patterns": ["JetBrains", "IntelliJ", "PyCharm", "WebStorm", "GoLand", "\\bRider\\b", "CLion", "PhpStorm", "RubyMine", "Android Studio"]
+    }
+  },
+  {
+    "slug": "ai-coding-assistants-for-vs-code",
+    "title": "Best AI Coding Assistants for VS Code",
+    "short": "VS Code",
+    "keyword": "AI coding assistant for VS Code",
+    "intro": "VS Code has the biggest AI extension ecosystem, and many AI-native editors are VS Code forks that keep its extensions and keybindings. This list covers extensions, VS Code-based editors, and agents that integrate with VS Code.",
+    "criteria": "Tools whose review mentions VS Code, Visual Studio Code, or Open VSX. Extensions and VS Code-based editors that name it in their tags or summary rank higher.",
+    "include": {
+      "patterns": ["VS ?Code", "Visual Studio Code", "Open VSX"]
+    }
+  },
+  {
+    "slug": "ai-coding-agents-for-terminal",
+    "title": "Best Terminal & CLI AI Coding Agents",
+    "short": "Terminal & CLI",
+    "keyword": "AI coding agents for the terminal",
+    "intro": "Terminal-first AI coding agents run alongside your shell, git, and test runner, work over SSH, and script easily in CI. This list covers CLI agents, AI-native terminals, and other tools with a command-line interface.",
+    "criteria": "Tools in the Terminal & CLI Agents or AI-Native Terminals categories, plus tools whose review mentions a CLI, the terminal, or a TUI.",
+    "include": {
+      "categories": ["Terminal & CLI Agents", "AI-Native Terminals"],
+      "patterns": ["\\bCLI\\b", "\\bterminal\\b", "\\bTUI\\b", "command[- ]line"]
+    }
+  },
+  {
+    "slug": "enterprise-ai-coding-tools",
+    "title": "Best Enterprise AI Coding Tools (SOC 2, SSO & Private Deployment)",
+    "short": "Enterprise & SOC 2",
+    "keyword": "enterprise AI coding tools with SOC 2",
+    "intro": "Buying an AI coding tool for a company usually means a security review. You'll need compliance reports like SOC 2, single sign-on, audit logs, data-retention controls, and sometimes a private or on-prem deployment. These tools document at least one of those controls.",
+    "criteria": "Tools whose review mentions SOC 2, ISO 27001, HIPAA, SSO/SAML, audit logs, zero data retention, data residency, VPC, or on-prem deployment. Compliance named in the summary or pricing ranks higher.",
+    "include": {
+      "patterns": ["SOC ?2", "ISO ?27001", "\\bHIPAA\\b", "\\bSAML\\b", "\\bSSO\\b", "single sign-on", "audit (logs?|trails?)", "zero[- ]data[- ]retention", "data residency", "\\bVPC\\b", "\\bon[- ]prem"]
+    }
+  },
+  {
+    "slug": "ai-coding-tools-for-beginners",
+    "title": "Best AI Coding Tools for Beginners",
+    "short": "Beginners",
+    "keyword": "AI coding tools for beginners",
+    "intro": "If you're new to programming, the best AI tools hide setup and let you describe what you want in plain language. This list mixes browser-based app builders with assistants that are explicitly aimed at beginners, students, or non-technical builders.",
+    "criteria": "Tools in the Browser-Based & App Builders category, plus tools whose review mentions beginners, students, non-technical users, or no-code building.",
+    "include": {
+      "categories": ["Browser-Based & App Builders"],
+      "patterns": ["beginner", "\\bnovice", "\\bstudents?\\b", "non[- ]technical", "non[- ]developers?", "no[- ]code", "learning to code", "first[- ]time (coders|developers|programmers)"]
+    }
+  },
+  {
+    "slug": "ai-coding-tools-for-python",
+    "title": "Best AI Coding Tools for Python",
+    "short": "Python",
+    "keyword": "AI coding tools for Python",
+    "intro": "Python developers often work in notebooks, data pipelines, and backend frameworks like Django and FastAPI, where good tooling understands imports, type hints, and the environment. These tools explicitly support Python, Jupyter, or the Python ecosystem.",
+    "criteria": "Tools whose review mentions Python, Jupyter or notebooks, Django, FastAPI, or pandas. Python named in the tags or summary ranks higher.",
+    "include": {
+      "patterns": ["\\bPython\\b", "Jupyter", "\\bDjango\\b", "FastAPI", "\\bpandas\\b"]
+    }
+  },
+  {
+    "slug": "ai-coding-tools-for-typescript",
+    "title": "Best AI Coding Tools for TypeScript & JavaScript",
+    "short": "TypeScript",
+    "keyword": "AI coding tools for TypeScript",
+    "intro": "TypeScript and JavaScript work spans frontend frameworks, Node.js backends, and full-stack apps, so useful AI tools need to handle types, components, and package tooling. These tools explicitly target TypeScript, JavaScript, Node.js, or React and Next.js.",
+    "criteria": "Tools whose review mentions TypeScript, JavaScript, Node.js, React, or Next.js. TypeScript named in the tags or summary ranks higher.",
+    "include": {
+      "patterns": ["TypeScript", "JavaScript", "\\bNode\\.?js\\b", "\\bReact\\b", "Next\\.js"]
+    }
+  }
+]

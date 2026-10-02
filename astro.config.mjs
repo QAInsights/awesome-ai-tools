@@ -6,10 +6,11 @@ import { remarkReadingTime } from './remark-reading-time.mjs';
 import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { collectNoindexedPaths, normalizePath } from './src/lib/noindex-scan.js';
+import { comparisonCounts, facetLastmod, rankFacetTools } from './src/lib/best-facets.js';
 
 // Honest per-URL <lastmod> for the sitemap: tool pages use the enrichment
 // pipeline's lastUpdated stamp, blog posts use their pubDate, weekly trending
-// pages their snapshot time. Anything else
+// pages their snapshot time, best-of pages their monthly refresh. Anything else
 // is left without lastmod rather than stamped with the build date.
 function loadLastmodMap() {
     const map = new Map();
@@ -76,6 +77,18 @@ function loadLastmodMap() {
             if (latest) map.set(`/compare/${comparison.slug}`, latest);
         }
     } catch { /* comparison data optional */ }
+    try {
+        const facets = JSON.parse(readFileSync(new URL('./data/best-facets.json', import.meta.url), 'utf8'));
+        const slugs = JSON.parse(readFileSync(new URL('./data/slugs.json', import.meta.url), 'utf8'));
+        const comparisons = JSON.parse(readFileSync(new URL('./data/comparisons.json', import.meta.url), 'utf8'));
+        const enrichedBySlug = new Map(enriched.map(t => [t.slug, t]));
+        const tools = slugs.map(t => ({ ...t, enriched: enrichedBySlug.get(t.slug) ?? null }));
+        const popularity = comparisonCounts(comparisons);
+        for (const facet of facets) {
+            const ranked = rankFacetTools(facet, tools, popularity);
+            map.set(`/best/${facet.slug}`, facetLastmod(ranked.map(t => t.enriched?.lastUpdated)));
+        }
+    } catch { /* best-of data optional */ }
     try {
         const blogDir = new URL('./src/content/blog/', import.meta.url);
         const blogDates = [];
@@ -160,6 +173,9 @@ export default defineConfig({
                 } else if (/\/tools\/[^/]+\/$/.test(url) || /\/tools\/[^/]+$/.test(url)) {
                     item.priority = 0.7;
                     item.changefreq = 'weekly';
+                } else if (/\/best\/[^/]+\/?$/.test(url)) {
+                    item.priority = 0.8;
+                    item.changefreq = 'monthly';
                 } else if (url === 'https://ai.dosa.dev/') {
                     item.priority = 1.0;
                     item.changefreq = 'daily';

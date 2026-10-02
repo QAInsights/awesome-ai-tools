@@ -28,6 +28,8 @@ interface Props {
     twitterDescription?: string;
     jsonLd?: string;
     robots?: string;
+    /** Markdown mirror of the page for LLM consumers - emitted as rel=alternate type=text/markdown */
+    markdownUrl?: string;
     /** Paginated collections: rel=prev / rel=next hints */
     prevUrl?: string;
     nextUrl?: string;
@@ -53,6 +55,7 @@ const {
     robots,
     prevUrl,
     nextUrl,
+    markdownUrl,
 } = Astro.props;
 
 const showAd = !Astro.url.pathname.startsWith('/admin');
@@ -88,6 +91,7 @@ const extraLinks: { rel: string; href: string; type?: string; title?: string }[]
     { rel: 'alternate', type: 'application/rss+xml', title: 'ai.dosa.dev tools RSS', href: '/tools/rss.xml' },
     { rel: 'alternate', type: 'text/plain', title: 'llms.txt', href: '/llms.txt' },
 ];
+if (markdownUrl) extraLinks.push({ rel: 'alternate', type: 'text/markdown', title: 'Markdown', href: markdownUrl });
 if (prevUrl) extraLinks.push({ rel: 'prev', href: prevUrl });
 if (nextUrl) extraLinks.push({ rel: 'next', href: nextUrl });
 ---
