@@ -1,0 +1,245 @@
+---
+/**
+ * "Best X for Y" facet page - /best/[slug]
+ *
+ * One page per facet in data/best-facets.json. The ranked list is computed
+ * from enrichment at build time (src/lib/best.ts) and re-dated monthly.
+ * Pages listing fewer than 5 qualifying tools render noindex (see
+ * src/lib/indexing.ts).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import { formatDate, getCategorySlug, getToolBySlug } from '../../lib/tools';
+import { getBestPages, type BestPage } from '../../lib/best';
+import { robotsFor } from '../../lib/indexing';
+import { getComparisonsForTool, hasAlternativesPage, humanizePricing, truncate } from '../../lib/compare';
+
+export async function getStaticPaths() {
+    return getBestPages().map(page => ({
+        params: { slug: page.facet.slug },
+        props: { page },
+    }));
+}
+
+interface Props {
+    page: BestPage;
+}
+
+const { page } = Astro.props;
+const { facet, tools, comparisons, refreshLabel, lastmod } = page;
+const count = tools.length;
+const nameOf = (slug: string) => {
+    const t = getToolBySlug(slug);
+    return t?.enriched?.name ?? t?.name ?? slug;
+};
+const topNames = tools.slice(0, 3).map(t => t.enriched?.name ?? t.name);
+const top = tools[0];
+
+const pageUrl = `https://ai.dosa.dev/best/${facet.slug}`;
+const title = `${count} ${facet.title} (${refreshLabel}) | ai.dosa.dev`;
+const descMeta = truncate(`${facet.title}, ranked for ${refreshLabel}: ${topNames.join(', ')}${count > 3 ? ` and ${count - 3} more` : ''}. Compare pricing, best-for and verdicts side by side.`, 155);
+
+const faqs: { q: string; a: string }[] = [];
+if (top) {
+    const topName = top.enriched?.name ?? top.name;
+    faqs.push({
+        q: `What are the best ${facet.keyword} in ${refreshLabel}?`,
+        a: `${topName} ranks first for ${refreshLabel}.${top.enriched?.verdict ? ` ${top.enriched.verdict}` : ''}${topNames.length > 1 ? ` Also consider ${topNames.slice(1).join(' and ')}.` : ''}`,
+    });
+}
+faqs.push({ q: 'How are these tools ranked?', a: `${facet.criteria} The list is rebuilt from the directory's reviews every month.` });
+const freeCount = tools.filter(t => ['free', 'open-source'].includes((t.enriched?.pricing ?? '').toLowerCase())).length;
+if (freeCount > 0 && facet.slug !== 'free-ai-coding-tools') {
+    faqs.push({ q: `Are any of these ${facet.short} tools free?`, a: `${freeCount} of the ${count} tools listed are free or open source. See the comparison table for each tool's pricing model.` });
+}
+
+const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "CollectionPage",
+            "@id": `${pageUrl}#collection`,
+            "url": pageUrl,
+            "name": facet.title,
+            "description": descMeta,
+            "inLanguage": "en",
+            "dateModified": lastmod,
+            "isPartOf": { "@type": "WebSite", "@id": "https://ai.dosa.dev/#website", "url": "https://ai.dosa.dev", "name": "ai.dosa.dev - Awesome AI Tools" },
+        },
+        {
+            "@type": "ItemList",
+            "name": facet.title,
+            "itemListOrder": "https://schema.org/ItemListOrderAscending",
+            "numberOfItems": count,
+            "itemListElement": tools.map((t, i) => ({
+                "@type": "ListItem",
+                "position": i + 1,
+                "name": t.enriched?.name ?? t.name,
+                "url": `https://ai.dosa.dev/tools/${t.slug}`
+            }))
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": faqs.map(f => ({
+                "@type": "Question",
+                "name": f.q,
+                "acceptedAnswer": { "@type": "Answer", "text": f.a }
+            }))
+        },
+        {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ai.dosa.dev" },
+                { "@type": "ListItem", "position": 2, "name": "Best AI coding tools", "item": "https://ai.dosa.dev/best" },
+                { "@type": "ListItem", "position": 3, "name": facet.title, "item": pageUrl }
+            ]
+        }
+    ]
+});
+
+const otherPages = getBestPages().filter(p => p.facet.slug !== facet.slug);
+const chip = 'inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide hover:text-white hover:border-[#444] transition-colors';
+---
+
+<BaseLayout
+    title={title}
+    description={descMeta}
+    keywords={`best ${facet.keyword}, ${facet.keyword}, ${facet.keyword} ${page.refreshMonth.slice(0, 4)}, ${facet.short} AI coding tools`}
+    canonical={pageUrl}
+    robots={robotsFor(`/best/${facet.slug}`)}
+    jsonLd={jsonLd}
+>
+    <div class="flex h-[100dvh] overflow-hidden">
+        <Sidebar variant="tool" />
+
+        <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
+            <SiteHeader variant="page" title={facet.title} />
+
+            <div class="max-w-[1000px] mx-auto w-full flex flex-col flex-1 p-4 md:p-8 gap-6">
+                <nav aria-label="Breadcrumb" class="font-mono text-[12px] text-[#737373] tracking-wide flex items-center gap-2 flex-wrap">
+                    <a href="/" class="hover:text-white transition-colors">Home</a>
+                    <span>/</span>
+                    <a href="/best" class="text-[#a3a3a3] hover:text-white transition-colors">Best</a>
+                    <span>/</span>
+                    <span class="text-white">{facet.short}</span>
+                </nav>
+
+                <header class="flex flex-col gap-3 pb-4 border-b border-[#222]">
+                    <h1 class="text-[32px] md:text-[40px] font-semibold tracking-tight leading-tight bg-gradient-to-r from-white via-[#e5e5e5] to-white bg-clip-text text-transparent">
+                        {facet.title} <span class="text-[#737373]">({refreshLabel})</span>
+                    </h1>
+                    <p class="text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">{facet.intro}</p>
+                    <p class="text-[14px] leading-relaxed text-[#a3a3a3] max-w-[72ch] m-0"><span class="text-[#737373]">How we rank:</span> {facet.criteria}</p>
+                    <div class="font-mono text-[12px] text-[#737373] tracking-wide">
+                        {count} tools ranked · Refreshed {refreshLabel} · Updated <time datetime={lastmod}>{formatDate(lastmod)}</time>
+                    </div>
+                </header>
+
+                <section aria-labelledby="comparison-heading" class="flex flex-col gap-3">
+                    <h2 id="comparison-heading" class="text-[18px] font-semibold text-white m-0">At a glance</h2>
+                    <div class="overflow-x-auto border border-[#222] rounded-xl">
+                        <table class="w-full text-left text-[14px]">
+                            <thead class="font-mono text-[11px] uppercase tracking-widest text-[#737373] border-b border-[#222]">
+                                <tr>
+                                    <th scope="col" class="px-4 py-3 w-10">#</th>
+                                    <th scope="col" class="px-4 py-3">Tool</th>
+                                    <th scope="col" class="px-4 py-3">Pricing</th>
+                                    <th scope="col" class="px-4 py-3 hidden md:table-cell">Category</th>
+                                    <th scope="col" class="px-4 py-3 hidden sm:table-cell">Best for</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {tools.map((t, i) => (
+                                    <tr class="border-b border-[#1a1a1a] last:border-0 align-top">
+                                        <td class="px-4 py-3 font-mono text-[12px] text-[#525252]">{i + 1}</td>
+                                        <td class="px-4 py-3">
+                                            <a href={`/tools/${t.slug}`} class="font-medium text-white hover:text-[#e2c48a] transition-colors">{t.enriched?.name ?? t.name}</a>
+                                            <div class="font-mono text-[10px] uppercase tracking-wide text-[#737373] mt-0.5">{t.enriched?.company ?? t.company}</div>
+                                        </td>
+                                        <td class="px-4 py-3 font-mono text-[12px] text-[#a3a3a3] whitespace-nowrap">{humanizePricing(t.enriched?.pricing)}</td>
+                                        <td class="px-4 py-3 hidden md:table-cell">
+                                            <a href={`/category/${getCategorySlug(t.categoryShort)}`} class="font-mono text-[12px] text-[#a3a3a3] hover:text-white transition-colors">{t.categoryShort}</a>
+                                        </td>
+                                        <td class="px-4 py-3 text-[13px] text-[#a3a3a3] leading-relaxed hidden sm:table-cell">{truncate(t.enriched?.bestFor, 110)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section aria-labelledby="ranked-heading" class="flex flex-col">
+                    <h2 id="ranked-heading" class="text-[18px] font-semibold text-white m-0 mb-1">Ranked list</h2>
+                    {tools.map((t, i) => {
+                        const name = t.enriched?.name ?? t.name;
+                        const pairs = getComparisonsForTool(t.slug).slice(0, 2);
+                        return (
+                            <div class="group flex flex-col gap-1.5 py-4 border-b border-[#1a1a1a] transition-colors hover:bg-white/[0.02] md:px-2 -mx-2 rounded">
+                                <div class="flex items-center gap-3 flex-wrap">
+                                    <span class="font-mono text-[12px] text-[#525252]">#{i + 1}</span>
+                                    <h3 class="m-0 text-[16px] font-medium">
+                                        <a href={`/tools/${t.slug}`} class="text-white no-underline group-hover:bg-gradient-to-r group-hover:from-[#a78bfa] group-hover:via-[#22d3ee] group-hover:to-[#a78bfa] group-hover:bg-clip-text group-hover:text-transparent transition-all">{name}</a>
+                                    </h3>
+                                    <span class="font-mono text-[12px] text-[#737373] uppercase tracking-wide">{t.enriched?.company ?? t.company}</span>
+                                    {t.enriched?.pricing && (
+                                        <span class="font-mono text-[10px] uppercase tracking-wide px-2 py-0.5 border border-[#222] rounded-full text-[#737373]">{humanizePricing(t.enriched.pricing)}</span>
+                                    )}
+                                </div>
+                                <p class="text-[14px] text-[#a3a3a3] leading-relaxed m-0">{t.enriched?.verdict ?? t.enriched?.description ?? t.notes}</p>
+                                <div class="flex items-center gap-4 mt-0.5 flex-wrap">
+                                    <a href={`/tools/${t.slug}`} class="font-mono text-[12px] text-[#a3a3a3] hover:text-white tracking-wide transition-colors">{name} review &rarr;</a>
+                                    {hasAlternativesPage(t.slug) && (
+                                        <a href={`/tools/${t.slug}/alternatives`} class="font-mono text-[12px] text-[#525252] hover:text-white tracking-wide transition-colors">{name} alternatives &rarr;</a>
+                                    )}
+                                    {pairs.map(c => (
+                                        <a href={`/compare/${c.slug}`} class="font-mono text-[12px] text-[#c9aa6e] hover:text-[#e2c48a] tracking-wide transition-colors">{name} vs {nameOf(c.a === t.slug ? c.b : c.a)} &rarr;</a>
+                                    ))}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </section>
+
+                {comparisons.length > 0 && (
+                    <section aria-labelledby="head-to-head-heading" class="flex flex-col gap-3 pt-2">
+                        <h2 id="head-to-head-heading" class="text-[18px] font-semibold text-white m-0">Head-to-head comparisons</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            {comparisons.map(c => (
+                                <a href={`/compare/${c.slug}`} class="flex items-center justify-between gap-3 px-4 py-3 border border-[#222] rounded-md bg-white/[0.02] hover:border-[#444] hover:bg-white/[0.04] transition-colors text-[14px] text-[#d4d4d4] hover:text-white">
+                                    <span>{nameOf(c.a)} <span class="text-[#525252]">vs</span> {nameOf(c.b)}</span>
+                                    <span aria-hidden="true" class="text-[#525252]">&rarr;</span>
+                                </a>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                <section aria-label="Frequently asked questions" class="flex flex-col gap-4 pt-4">
+                    <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em]">FAQ</div>
+                    {faqs.map(f => (
+                        <details class="border border-[#222] bg-white/[0.02] rounded-md group">
+                            <summary class="cursor-pointer px-5 py-4 text-[15px] font-medium text-white list-none flex items-center justify-between gap-3 hover:bg-white/[0.03] transition-colors rounded-md">
+                                {f.q}
+                                <svg class="w-4 h-4 text-[#525252] shrink-0 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <p class="px-5 pb-4 pt-1 text-[14px] text-[#a3a3a3] leading-relaxed">{f.a}</p>
+                        </details>
+                    ))}
+                </section>
+
+                <nav aria-label="More best-of lists" class="pt-4 pb-8 flex flex-col gap-4">
+                    <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em]">More best-of lists</div>
+                    <div class="flex flex-wrap gap-2">
+                        {otherPages.map(p => (
+                            <a href={`/best/${p.facet.slug}`} class={chip}>{p.facet.title}</a>
+                        ))}
+                        <a href="/compare" class={chip}>All comparisons</a>
+                    </div>
+                </nav>
+            </div>
+        </main>
+    </div>
+
+    <script src="/dist/app.js" type="module" defer></script>
+</BaseLayout>

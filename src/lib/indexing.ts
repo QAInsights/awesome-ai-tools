@@ -1,8 +1,8 @@
 /**
  * Indexing guardrails for generated pages.
  *
- * Every templated page (tool, compare, alternatives, pricing, category
- * "best-of", weekly trending) must carry data unique to it before it is offered to search
+ * Every templated page (tool, compare, alternatives, pricing, category,
+ * "best X for Y" facet, weekly trending) must carry data unique to it before it is offered to search
  * engines. A page is indexable only when:
  *   - the tools it is about have the enrichment fields the template renders,
  *   - it lists enough qualifying (enriched) tools to be a real collection,
@@ -14,10 +14,11 @@
 import { getAllTools, getAlternativesFor, getCategoriesDetailed, getToolBySlug, type EnrichedTool, type Tool } from './tools';
 import { getResolvedComparisons, getTopComparedTools, getTopPricingTools } from './compare';
 import { getTrendingSnapshots } from './trending-data';
+import { getBestPages } from './best';
 
-export type GeneratedPageType = 'tool' | 'compare' | 'alternatives' | 'pricing' | 'category' | 'trending';
+export type GeneratedPageType = 'tool' | 'compare' | 'alternatives' | 'pricing' | 'category' | 'trending' | 'best';
 
-export const GENERATED_PAGE_TYPES: GeneratedPageType[] = ['tool', 'compare', 'alternatives', 'pricing', 'category', 'trending'];
+export const GENERATED_PAGE_TYPES: GeneratedPageType[] = ['tool', 'compare', 'alternatives', 'pricing', 'category', 'trending', 'best'];
 
 export type EnrichedField = Exclude<keyof EnrichedTool, 'slug'>;
 
@@ -60,6 +61,11 @@ export const INDEXING_RULES: Record<GeneratedPageType, IndexingRule> = {
         subjectFields: [],
         listedFields: ['description'],
         minQualifying: 3,
+    },
+    best: {
+        subjectFields: [],
+        listedFields: ['description', 'pricing', 'verdict'],
+        minQualifying: 5,
     },
 };
 
@@ -205,7 +211,14 @@ export function getGeneratedPageCandidates(): IndexCandidate[] {
         listed: snapshot.entries.map(entry => getToolBySlug(entry.slug)).filter((tool): tool is Tool => Boolean(tool)),
         primaryContent: snapshot.entries.map(entry => `${entry.slug} ${entry.score}`).join(' '),
     }));
-    return [...tools, ...compares, ...alternatives, ...pricing, ...categories, ...trending];
+    const best: IndexCandidate[] = getBestPages().map(page => ({
+        type: 'best',
+        path: `/best/${page.facet.slug}`,
+        subjects: [],
+        listed: page.tools,
+        primaryContent: page.tools.map(t => t.slug).join(' '),
+    }));
+    return [...tools, ...compares, ...alternatives, ...pricing, ...categories, ...trending, ...best];
 }
 
 let _decisions: Map<string, IndexDecision> | null = null;
