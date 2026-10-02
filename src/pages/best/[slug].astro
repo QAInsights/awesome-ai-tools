@@ -11,7 +11,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import { formatDate, getCategorySlug, getToolBySlug } from '../../lib/tools';
-import { getBestPages, type BestPage } from '../../lib/best';
+import { getBestFreePick, getBestPages, type BestPage } from '../../lib/best';
+import { ORGANIZATION } from '../../lib/site';
 import { robotsFor } from '../../lib/indexing';
 import { getComparisonsForTool, hasAlternativesPage, humanizePricing, truncate } from '../../lib/compare';
 
@@ -35,6 +36,8 @@ const nameOf = (slug: string) => {
 };
 const topNames = tools.slice(0, 3).map(t => t.enriched?.name ?? t.name);
 const top = tools[0];
+const freePick = getBestFreePick(page);
+const ogImage = `https://ai.dosa.dev/images/og/best/${facet.slug}.png`;
 
 const pageUrl = `https://ai.dosa.dev/best/${facet.slug}`;
 const title = `${count} ${facet.title} (${refreshLabel}) | ai.dosa.dev`;
@@ -66,17 +69,30 @@ const jsonLd = JSON.stringify({
             "inLanguage": "en",
             "dateModified": lastmod,
             "isPartOf": { "@type": "WebSite", "@id": "https://ai.dosa.dev/#website", "url": "https://ai.dosa.dev", "name": "ai.dosa.dev - Awesome AI Tools" },
+            "publisher": ORGANIZATION,
+            "author": { "@id": ORGANIZATION["@id"] },
+            "mainEntity": { "@id": `${pageUrl}#list` },
+            "primaryImageOfPage": { "@type": "ImageObject", "url": ogImage, "width": 1200, "height": 630 },
+            "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["h1", ".best-intro", ".best-answer"] },
         },
         {
             "@type": "ItemList",
+            "@id": `${pageUrl}#list`,
             "name": facet.title,
             "itemListOrder": "https://schema.org/ItemListOrderAscending",
             "numberOfItems": count,
             "itemListElement": tools.map((t, i) => ({
                 "@type": "ListItem",
                 "position": i + 1,
-                "name": t.enriched?.name ?? t.name,
-                "url": `https://ai.dosa.dev/tools/${t.slug}`
+                "item": {
+                    "@type": "SoftwareApplication",
+                    "@id": `https://ai.dosa.dev/tools/${t.slug}#app`,
+                    "name": t.enriched?.name ?? t.name,
+                    "url": `https://ai.dosa.dev/tools/${t.slug}`,
+                    "applicationCategory": "DeveloperApplication",
+                    "applicationSubCategory": t.categoryClean,
+                    ...(t.enriched?.description ? { "description": t.enriched.description } : {}),
+                }
             }))
         },
         {
@@ -109,6 +125,10 @@ const chip = 'inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] ro
     canonical={pageUrl}
     robots={robotsFor(`/best/${facet.slug}`)}
     jsonLd={jsonLd}
+    ogImage={ogImage}
+    ogType="article"
+    modifiedTime={lastmod}
+    markdownUrl={`/best/${facet.slug}.md`}
 >
     <div class="flex h-[100dvh] overflow-hidden">
         <Sidebar variant="tool" />
@@ -129,12 +149,29 @@ const chip = 'inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] ro
                     <h1 class="text-[32px] md:text-[40px] font-semibold tracking-tight leading-tight bg-gradient-to-r from-white via-[#e5e5e5] to-white bg-clip-text text-transparent">
                         {facet.title} <span class="text-[#737373]">({refreshLabel})</span>
                     </h1>
-                    <p class="text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">{facet.intro}</p>
+                    <p class="best-intro text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">{facet.intro}</p>
                     <p class="text-[14px] leading-relaxed text-[#a3a3a3] max-w-[72ch] m-0"><span class="text-[#737373]">How we rank:</span> {facet.criteria}</p>
                     <div class="font-mono text-[12px] text-[#737373] tracking-wide">
-                        {count} tools ranked · Refreshed {refreshLabel} · Updated <time datetime={lastmod}>{formatDate(lastmod)}</time>
+                        {count} tools ranked · Refreshed {refreshLabel} · Updated <time datetime={lastmod}>{formatDate(lastmod)}</time> · <a href={`/best/${facet.slug}.md`} class="hover:text-white transition-colors">Markdown</a>
                     </div>
                 </header>
+
+                {top && (
+                    <section aria-labelledby="answer-heading" class="best-answer border border-[#222] bg-white/[0.02] rounded-xl p-5 flex flex-col gap-2">
+                        <h2 id="answer-heading" class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em] m-0">Quick answer</h2>
+                        <p class="text-[15px] leading-relaxed text-[#d4d4d4] m-0">
+                            <strong class="text-white">Top pick: <a href={`/tools/${top.slug}`} class="hover:text-[#e2c48a] transition-colors">{top.enriched?.name ?? top.name}</a></strong> ({humanizePricing(top.enriched?.pricing)}). {top.enriched?.verdict}
+                        </p>
+                        {freePick && (
+                            <p class="text-[15px] leading-relaxed text-[#d4d4d4] m-0">
+                                <strong class="text-white">Best free option: <a href={`/tools/${freePick.slug}`} class="hover:text-[#e2c48a] transition-colors">{freePick.enriched?.name ?? freePick.name}</a>.</strong> {freePick.enriched?.bestFor}
+                            </p>
+                        )}
+                        {topNames.length > 1 && (
+                            <p class="text-[14px] text-[#a3a3a3] m-0">Also strong: {topNames.slice(1).join(', ')}.</p>
+                        )}
+                    </section>
+                )}
 
                 <section aria-labelledby="comparison-heading" class="flex flex-col gap-3">
                     <h2 id="comparison-heading" class="text-[18px] font-semibold text-white m-0">At a glance</h2>

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 import { comparisonCounts, facetLastmod, facetScore, formatRefreshMonth, rankFacetTools, refreshMonth, type BestFacet, type FacetTool } from './best-facets.js';
-import { buildBestPages, getBestFacets, getBestPages } from './best';
+import { bestPageMarkdown, buildBestPages, getBestFacets, getBestFreePick, getBestPages } from './best';
 import { getIndexingDecisions } from './indexing';
 import type { Tool } from './tools';
 
@@ -98,5 +98,28 @@ describe('best-of pages', () => {
             expect(page.tools.length).toBeGreaterThanOrEqual(5);
             expect(decisions.get(`/best/${page.facet.slug}`)).toEqual({ indexable: true, reasons: [] });
         }
+    });
+
+    test('free pick is the first free tool below the top pick', () => {
+        const mk = (slug: string, pricing: string): Tool => ({
+            slug, name: slug, company: 'Acme', category: 'AI-Native IDEs & Editors', categoryClean: 'AI-Native IDEs & Editors',
+            categoryShort: 'AI IDEs', notes: '', url: 'https://example.com', enriched: { slug, pricing, tags: ['JetBrains'] },
+        });
+        const paidTop = { ...mk('paid', 'paid'), enriched: { slug: 'paid', pricing: 'paid', tags: ['JetBrains'], bestFor: 'JetBrains users' } };
+        const [page] = buildBestPages([FACET], [mk('other-paid', 'paid'), mk('oss', 'open-source'), paidTop], []);
+        expect(page?.tools.map(t => t.slug)).toEqual(['paid', 'other-paid', 'oss']);
+        expect(page && getBestFreePick(page)?.slug).toBe('oss');
+        const [allFree] = buildBestPages([FACET], [mk('free', 'free')], []);
+        expect(allFree && getBestFreePick(allFree)).toBeUndefined();
+    });
+
+    test('markdown mirror carries the quick answer, table and tool links', () => {
+        const page = getBestPages()[0];
+        if (!page) throw new Error('no best-of pages');
+        const md = bestPageMarkdown(page);
+        expect(md).toStartWith(`# ${page.facet.title} (${page.refreshLabel})`);
+        expect(md).toContain('## Quick answer');
+        expect(md).toContain('| # | Tool | Company | Pricing | Best for |');
+        for (const t of page.tools) expect(md).toContain(`https://ai.dosa.dev/tools/${t.slug}`);
     });
 });
