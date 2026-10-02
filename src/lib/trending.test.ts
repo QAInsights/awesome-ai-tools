@@ -2,7 +2,9 @@ import { describe, expect, test } from 'bun:test';
 import {
     MAX_TOOLS_PER_ACTOR,
     aggregateSignals,
+    aggregateToolViews,
     buildSnapshot,
+    buildToolViewsQuery,
     buildWeeklySignalsQuery,
     computeStarGrowth,
     diffNewSlugs,
@@ -15,8 +17,11 @@ import {
     previousWeekId,
     scoreAll,
     scoreTool,
+    splitRange,
+    toolSlugFromPath,
     upsertSnapshot,
     weekRange,
+    withViews,
     type TrendingSnapshot,
 } from './trending';
 
@@ -95,8 +100,8 @@ describe('aggregateSignals', () => {
             { event: 'signin_completed', subject: 'cursor', user_id: 'github:1', anon_id: '' },
         ], tools);
 
-        expect(signals.get('cursor')).toEqual({ zaps: 2, favorites: 1, follows: 0, outboundClicks: 2 });
-        expect(signals.get('claude-code')).toEqual({ zaps: 0, favorites: 0, follows: 1, outboundClicks: 0 });
+        expect(signals.get('cursor')).toEqual({ zaps: 2, favorites: 1, follows: 0, outboundClicks: 2, views: 0 });
+        expect(signals.get('claude-code')).toEqual({ zaps: 0, favorites: 0, follows: 1, outboundClicks: 0, views: 0 });
         expect(guard).toEqual({ ungatedZapsDropped: 0, burstActorsDropped: 0 });
     });
 
@@ -150,6 +155,67 @@ describe('aggregateSignals', () => {
     });
 });
 
+describe('tool page views', () => {
+    const slugs = new Set(tools.map(tool => tool.slug));
+
+    test('maps tool, pricing and alternatives paths to their slug', () => {
+        expect(toolSlugFromPath('/tools/cursor', slugs)).toBe('cursor');
+        expect(toolSlugFromPath('/tools/cursor/', slugs)).toBe('cursor');
+        expect(toolSlugFromPath('/tools/Claude-Code/pricing', slugs)).toBe('claude-code');
+        expect(toolSlugFromPath('/tools/aider/alternatives/?ref=x', slugs)).toBe('aider');
+    });
+
+    test('ignores non-tool pages, unknown slugs and malformed paths', () => {
+        for (const path of ['/', '/compare/cursor-vs-aider', '/tools/token-counter', '/tools/cursor/reviews', '/tools/', '/xtools/cursor', 42, null]) {
+            expect(toolSlugFromPath(path, slugs)).toBeNull();
+        }
+    });
+
+    test('splits a week into windows within the dataset maxDuration', () => {
+        const { start, end } = weekRange('2026-w40');
+        const daily = splitRange(start, end, 86_400);
+        expect(daily).toHaveLength(7);
+        expect(daily[0]!.from.toISOString()).toBe('2026-09-28T00:00:00.000Z');
+        expect(daily[6]!.to.toISOString()).toBe('2026-10-05T00:00:00.000Z');
+        expect(splitRange(start, end, 31 * 86_400)).toHaveLength(1);
+        expect(splitRange(start, end, 0)).toHaveLength(1);
+    });
+
+    test('queries page views by path with an exclusive week end', () => {
+        const { start, end } = weekRange('2026-w40');
+        const query = buildToolViewsQuery('acct', 'ai.dosa.dev', splitRange(start, end, 4 * 86_400));
+        expect(query).toContain('accountTag: "acct"');
+        expect(query).toContain('w0: rumPageloadEventsAdaptiveGroups');
+        expect(query).toContain('w1: rumPageloadEventsAdaptiveGroups');
+        expect(query).toContain('requestHost: "ai.dosa.dev", datetime_geq: "2026-09-28T00:00:00Z", datetime_lt: "2026-10-02T00:00:00Z"');
+        expect(query).toContain('datetime_lt: "2026-10-05T00:00:00Z"');
+        expect(query).toContain('dimensions { requestHost requestPath }');
+    });
+
+    test('sums views per tool across paths and windows', () => {
+        const views = aggregateToolViews([
+            { count: 10, dimensions: { requestHost: 'ai.dosa.dev', requestPath: '/tools/cursor' } },
+            { count: 4, dimensions: { requestHost: 'ai.dosa.dev', requestPath: '/tools/cursor/pricing' } },
+            { count: 3, dimensions: { requestHost: 'AI.DOSA.DEV', requestPath: '/tools/cursor/' } },
+            { count: 6, dimensions: { requestHost: 'ai.dosa.dev', requestPath: '/tools/aider' } },
+            { count: 50, dimensions: { requestHost: 'preview.workers.dev', requestPath: '/tools/aider' } },
+            { count: 99, dimensions: { requestHost: 'ai.dosa.dev', requestPath: '/' } },
+            { count: 'oops', dimensions: { requestHost: 'ai.dosa.dev', requestPath: '/tools/claude-code' } },
+            { count: 5, dimensions: { requestHost: 'ai.dosa.dev', requestPath: '/tools/ghost' } },
+        ], tools, 'ai.dosa.dev');
+        expect([...views.entries()]).toEqual([['cursor', 17], ['aider', 6]]);
+    });
+
+    test('merges views into engagement signals without mutating them', () => {
+        const signals = new Map([['cursor', { zaps: 1, favorites: 0, follows: 0, outboundClicks: 0, views: 0 }]]);
+        const merged = withViews(signals, new Map([['cursor', 16], ['aider', 9]]));
+        expect(merged.get('cursor')).toEqual({ zaps: 1, favorites: 0, follows: 0, outboundClicks: 0, views: 16 });
+        expect(merged.get('aider')).toEqual({ zaps: 0, favorites: 0, follows: 0, outboundClicks: 0, views: 9 });
+        expect(signals.get('cursor')!.views).toBe(0);
+        expect(withViews(signals, new Map())).toEqual(signals);
+    });
+});
+
 describe('GitHub stars', () => {
     test('extracts repositories from github URLs only', () => {
         expect(githubRepoFromUrl('https://github.com/Aider-AI/aider')).toBe('Aider-AI/aider');
@@ -169,18 +235,19 @@ describe('GitHub stars', () => {
 
 describe('scoring', () => {
     test('weights signed-in actions linearly and damps clicks and stars', () => {
-        expect(scoreTool({ zaps: 1, favorites: 1, follows: 1, outboundClicks: 0 })).toBe(12);
-        expect(scoreTool({ zaps: 0, favorites: 0, follows: 0, outboundClicks: 100 })).toBe(20);
-        expect(scoreTool({ zaps: 0, favorites: 0, follows: 0, outboundClicks: 0 }, 400)).toBe(40);
+        expect(scoreTool({ zaps: 1, favorites: 1, follows: 1, outboundClicks: 0, views: 0 })).toBe(12);
+        expect(scoreTool({ zaps: 0, favorites: 0, follows: 0, outboundClicks: 100, views: 0 })).toBe(20);
+        expect(scoreTool({ zaps: 0, favorites: 0, follows: 0, outboundClicks: 0, views: 0 }, 400)).toBe(40);
+        expect(scoreTool({ zaps: 0, favorites: 0, follows: 0, outboundClicks: 0, views: 144 })).toBe(12);
     });
 
     test('never lets removals or star losses go below zero', () => {
-        expect(scoreTool({ zaps: 0, favorites: -3, follows: -1, outboundClicks: 0 }, -50)).toBe(0);
+        expect(scoreTool({ zaps: 0, favorites: -3, follows: -1, outboundClicks: 0, views: 0 }, -50)).toBe(0);
     });
 
     test('keeps only tools with a positive score', () => {
         const scores = scoreAll(
-            new Map([['cursor', { zaps: 1, favorites: 0, follows: 0, outboundClicks: 0 }], ['aider', { zaps: 0, favorites: -1, follows: 0, outboundClicks: 0 }]]),
+            new Map([['cursor', { zaps: 1, favorites: 0, follows: 0, outboundClicks: 0, views: 0 }], ['aider', { zaps: 0, favorites: -1, follows: 0, outboundClicks: 0, views: 0 }]]),
             new Map([['claude-code', 25], ['aider', null]]),
         );
         expect([...scores.entries()]).toEqual([['cursor', 3], ['claude-code', 10]]);
@@ -199,9 +266,9 @@ describe('buildSnapshot', () => {
         const snapshot = buildSnapshot({
             ...base,
             signals: new Map([
-                ['cursor', { zaps: 4, favorites: 0, follows: 0, outboundClicks: 0 }],
-                ['claude-code', { zaps: 2, favorites: 1, follows: 0, outboundClicks: 0 }],
-                ['aider', { zaps: 1, favorites: 0, follows: 0, outboundClicks: 0 }],
+                ['cursor', { zaps: 4, favorites: 0, follows: 0, outboundClicks: 0, views: 0 }],
+                ['claude-code', { zaps: 2, favorites: 1, follows: 0, outboundClicks: 0, views: 0 }],
+                ['aider', { zaps: 1, favorites: 0, follows: 0, outboundClicks: 0, views: 0 }],
             ]),
             starGrowth: new Map([['aider', 100]]),
             previousScores: new Map([['cursor', 12], ['aider', 1]]),
@@ -225,10 +292,24 @@ describe('buildSnapshot', () => {
         expect(snapshot.guard.ungatedZapsDropped).toBe(1);
     });
 
+    test('ranks a week from page views alone when there is no engagement', () => {
+        const snapshot = buildSnapshot({
+            ...base,
+            signals: withViews(new Map(), new Map([['cursor', 81], ['aider', 16], ['claude-code', 0]])),
+            starGrowth: new Map(),
+            previousScores: new Map(),
+            newSlugs: [],
+        });
+        expect(snapshot.entries.map(e => [e.slug, e.rank, e.score, e.views])).toEqual([
+            ['cursor', 1, 9, 81],
+            ['aider', 2, 4, 16],
+        ]);
+    });
+
     test('ignores scored slugs that are no longer in the catalog', () => {
         const snapshot = buildSnapshot({
             ...base,
-            signals: new Map([['ghost', { zaps: 9, favorites: 0, follows: 0, outboundClicks: 0 }]]),
+            signals: new Map([['ghost', { zaps: 9, favorites: 0, follows: 0, outboundClicks: 0, views: 0 }]]),
             starGrowth: new Map(),
             previousScores: new Map(),
             newSlugs: [],

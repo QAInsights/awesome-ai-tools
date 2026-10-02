@@ -2,19 +2,23 @@
  * Weekly trending snapshot.
  *
  * Scores every catalog tool for the last completed ISO week from Analytics
- * Engine engagement (zaps, favorites, follows, outbound clicks) plus GitHub
- * star growth, then appends the week to data/trending/snapshots.json. Each
- * snapshot backs a permanent /trending/<week> page.
+ * Engine engagement (zaps, favorites, follows, outbound clicks), tool page
+ * views from Cloudflare Web Analytics, and GitHub star growth, then appends
+ * the week to data/trending/snapshots.json. Each snapshot backs a permanent
+ * /trending/<week> page.
  *
  * Usage: bun scripts/generate-trending-snapshot.ts [--week 2026-w40] [--force]
- * Env:   CF_ACCOUNT_ID, CF_ANALYTICS_TOKEN, ANALYTICS_DATASET (default aat_events), GITHUB_TOKEN (optional)
+ * Env:   CF_ACCOUNT_ID, CF_ANALYTICS_TOKEN (Analytics Engine + Web Analytics read), ANALYTICS_DATASET (default aat_events), GITHUB_TOKEN (optional)
  */
 import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync } from 'node:fs';
+import { SITE_HOSTS, fetchRumLimits, queryCloudflare } from '../src/lib/site-stats';
 import { getAllTools } from '../src/lib/tools';
 import {
     aggregateSignals,
+    aggregateToolViews,
     buildSnapshot,
+    buildToolViewsQuery,
     buildWeeklySignalsQuery,
     computeStarGrowth,
     diffNewSlugs,
@@ -23,10 +27,14 @@ import {
     lastCompletedWeekId,
     previousWeekId,
     scoreAll,
+    splitRange,
     upsertSnapshot,
     weekRange,
+    withViews,
+    type PageViewGroup,
     type SignalRow,
     type TrendingSnapshot,
+    type TrendingToolRef,
 } from '../src/lib/trending';
 
 const SNAPSHOTS_PATH = 'data/trending/snapshots.json';
@@ -69,6 +77,27 @@ async function querySignals(week: string): Promise<SignalRow[]> {
     if (!response.ok) throw new Error(`Analytics Engine query for ${week} failed: ${response.status} ${await response.text()}`);
     const payload = await response.json() as { data?: SignalRow[] };
     return Array.isArray(payload.data) ? payload.data : [];
+}
+
+/** Tool page views for a week; empty (with a warning) when Web Analytics is unavailable. */
+async function queryToolViews(week: string, tools: TrendingToolRef[]): Promise<Map<string, number>> {
+    const accountId = process.env.CF_ACCOUNT_ID ?? '';
+    const token = process.env.CF_ANALYTICS_TOKEN ?? '';
+    const host = SITE_HOSTS[0]!;
+    try {
+        const { start, end } = weekRange(week);
+        const limits = await fetchRumLimits({ accountId, token });
+        if (start.getTime() < Date.now() - limits.notOlderThan * 1_000) throw new Error(`${week} is older than the Web Analytics retention window`);
+        const windows = splitRange(start, end, limits.maxDuration);
+        const payload = await queryCloudflare(fetch, token, buildToolViewsQuery(accountId, host, windows));
+        const account = payload.data?.viewer?.accounts?.[0];
+        if (!account) throw new Error('Web Analytics returned no account data');
+        const groups = windows.flatMap((_window, index) => (account[`w${index}`] as PageViewGroup[] | undefined) ?? []);
+        return aggregateToolViews(groups, tools, host);
+    } catch (error) {
+        console.warn(`[Trending] Tool page views unavailable for ${week}: ${error instanceof Error ? error.message : String(error)}`);
+        return new Map();
+    }
 }
 
 async function fetchStars(repos: Map<string, string>): Promise<Record<string, number>> {
@@ -119,9 +148,16 @@ async function main() {
     const catalog = getAllTools();
     const tools = catalog.map(tool => ({ slug: tool.slug, name: tool.name, company: tool.company }));
     const previousWeek = previousWeekId(week);
-    const [rows, previousRows] = await Promise.all([querySignals(week), querySignals(previousWeek)]);
+    const [rows, previousRows, views, previousViews] = await Promise.all([
+        querySignals(week),
+        querySignals(previousWeek),
+        queryToolViews(week, tools),
+        queryToolViews(previousWeek, tools),
+    ]);
     const current = aggregateSignals(rows, tools);
     const previous = aggregateSignals(previousRows, tools);
+    const currentSignals = withViews(current.signals, views);
+    const previousSignals = withViews(previous.signals, previousViews);
 
     const repos = new Map<string, string>();
     for (const tool of catalog) {
@@ -135,7 +171,7 @@ async function main() {
 
     const previousSnapshot = snapshots.find(s => s.week === previousWeek);
     const previousStarGrowth = new Map(previousSnapshot?.entries.map(e => [e.slug, e.starGrowth]) ?? []);
-    const previousScores = scoreAll(previous.signals, previousStarGrowth);
+    const previousScores = scoreAll(previousSignals, previousStarGrowth);
 
     const before = slugsAt(start);
     const after = slugsAt(end);
@@ -146,7 +182,7 @@ async function main() {
         week,
         generatedAt: new Date(),
         tools,
-        signals: current.signals,
+        signals: currentSignals,
         starGrowth,
         previousScores,
         newSlugs,
@@ -157,7 +193,8 @@ async function main() {
     if (!githubDown) {
         writeFileSync(STARS_PATH, `${JSON.stringify({ capturedAt: snapshot.generatedAt, stars: freshStars }, null, 2)}\n`);
     }
-    console.log(`[Trending] ${week}: ${snapshot.entries.length} ranked, ${snapshot.rising.length} rising, ${snapshot.newTools.length} new; dropped ${snapshot.guard.ungatedZapsDropped} ungated zaps and ${snapshot.guard.burstActorsDropped} burst actors`);
+    const totalViews = [...views.values()].reduce((sum, count) => sum + count, 0);
+    console.log(`[Trending] ${week}: ${totalViews} tool page views, ${snapshot.entries.length} ranked, ${snapshot.rising.length} rising, ${snapshot.newTools.length} new; dropped ${snapshot.guard.ungatedZapsDropped} ungated zaps and ${snapshot.guard.burstActorsDropped} burst actors`);
 }
 
 if (import.meta.main) {

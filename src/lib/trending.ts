@@ -16,15 +16,16 @@ export const TRENDING_EVENTS = [
 ] as const;
 
 /**
- * Score = 3·zaps + 4·favorites + 5·follows + 2·√outboundClicks + 2·√starGrowth.
- * Signed-in actions count linearly; anonymous clicks and external star counts
- * are square-root damped so no cheap signal can dominate the board.
+ * Score = 3·zaps + 4·favorites + 5·follows + 2·√outboundClicks + 1·√views + 2·√starGrowth.
+ * Signed-in actions count linearly; anonymous clicks, tool page views and
+ * external star counts are square-root damped so no cheap signal can dominate the board.
  */
 export const TRENDING_WEIGHTS = {
     zaps: 3,
     favorites: 4,
     follows: 5,
     outboundClicks: 2,
+    views: 1,
     starGrowth: 2,
 } as const;
 
@@ -129,6 +130,8 @@ export interface ToolSignals {
     favorites: number;
     follows: number;
     outboundClicks: number;
+    /** Tool page views (/tools/<slug> and its subpages) from Cloudflare Web Analytics. */
+    views: number;
 }
 
 export interface GuardStats {
@@ -147,7 +150,7 @@ export function zapToolId(company: string, name: string): string {
 const text = (value: unknown) => (typeof value === 'string' ? value.trim() : '');
 
 function emptySignals(): ToolSignals {
-    return { zaps: 0, favorites: 0, follows: 0, outboundClicks: 0 };
+    return { zaps: 0, favorites: 0, follows: 0, outboundClicks: 0, views: 0 };
 }
 
 type Signal = 'zap' | 'favorite' | 'follow' | 'outbound';
@@ -220,6 +223,68 @@ export function aggregateSignals(rows: SignalRow[], tools: TrendingToolRef[]): {
     return { signals, guard };
 }
 
+// ── Tool page views (Cloudflare Web Analytics) ─────────────────────────────
+
+export interface PageViewGroup {
+    count?: unknown;
+    dimensions?: { requestHost?: unknown; requestPath?: unknown };
+}
+
+const TOOL_PATH_PATTERN = /^\/tools\/([a-z0-9][a-z0-9-]*)(?:\/(?:pricing|alternatives))?\/?$/;
+
+/** Slug of the catalog tool a request path belongs to (/tools/<slug>, /pricing, /alternatives), else null. */
+export function toolSlugFromPath(path: unknown, slugs: Set<string>): string | null {
+    if (typeof path !== 'string') return null;
+    const match = TOOL_PATH_PATTERN.exec(path.split(/[?#]/)[0]!.toLowerCase());
+    return match && slugs.has(match[1]!) ? match[1]! : null;
+}
+
+/** Split [start, end) into windows no longer than the dataset's maxDuration. */
+export function splitRange(start: Date, end: Date, maxDurationSec: number): Array<{ from: Date; to: Date }> {
+    const step = maxDurationSec > 0 ? maxDurationSec * 1_000 : end.getTime() - start.getTime();
+    const windows: Array<{ from: Date; to: Date }> = [];
+    for (let from = start.getTime(); from < end.getTime(); from += step) {
+        windows.push({ from: new Date(from), to: new Date(Math.min(from + step, end.getTime())) });
+    }
+    return windows;
+}
+
+/**
+ * Page views per request path for one week, one aliased group per window
+ * (w0, w1, ...). datetime_lt keeps the Monday 00:00 boundary exclusive.
+ */
+export function buildToolViewsQuery(accountTag: string, host: string, windows: Array<{ from: Date; to: Date }>): string {
+    const iso = (date: Date) => date.toISOString().replace(/\.\d{3}Z$/, 'Z');
+    const fields = windows.map((window, index) => `w${index}: rumPageloadEventsAdaptiveGroups(limit: 5000, orderBy: [count_DESC], filter: { requestHost: ${JSON.stringify(host)}, datetime_geq: ${JSON.stringify(iso(window.from))}, datetime_lt: ${JSON.stringify(iso(window.to))} }) { count dimensions { requestHost requestPath } }`);
+    return `query { viewer { accounts(filter: { accountTag: ${JSON.stringify(accountTag)} }) { ${fields.join('\n')} } } }`;
+}
+
+/** Sum page views per catalog tool, ignoring other hosts, non-tool paths and unknown slugs. */
+export function aggregateToolViews(groups: PageViewGroup[], tools: TrendingToolRef[], host: string): Map<string, number> {
+    const slugs = new Set(tools.map(tool => tool.slug));
+    const views = new Map<string, number>();
+    for (const group of groups) {
+        const groupHost = typeof group?.dimensions?.requestHost === 'string' ? group.dimensions.requestHost.toLowerCase() : '';
+        if (groupHost !== host.toLowerCase()) continue;
+        const slug = toolSlugFromPath(group.dimensions?.requestPath, slugs);
+        const count = Number(group.count);
+        if (!slug || !Number.isFinite(count) || count <= 0) continue;
+        views.set(slug, (views.get(slug) ?? 0) + count);
+    }
+    return views;
+}
+
+/** Add page views onto the engagement signals; tools with only views get an entry too. */
+export function withViews(signals: Map<string, ToolSignals>, views: Map<string, number>): Map<string, ToolSignals> {
+    const merged = new Map([...signals].map(([slug, counts]) => [slug, { ...counts }]));
+    for (const [slug, count] of views) {
+        const counts = merged.get(slug) ?? emptySignals();
+        counts.views += count;
+        merged.set(slug, counts);
+    }
+    return merged;
+}
+
 // ── GitHub stars ─────────────────────────────────────────────────────────────
 
 const GITHUB_RESERVED_OWNERS = new Set([
@@ -255,6 +320,7 @@ export function scoreTool(signals: ToolSignals, starGrowth: number | null = null
         + w.favorites * Math.max(0, signals.favorites)
         + w.follows * Math.max(0, signals.follows)
         + w.outboundClicks * Math.sqrt(Math.max(0, signals.outboundClicks))
+        + w.views * Math.sqrt(Math.max(0, signals.views))
         + w.starGrowth * Math.sqrt(Math.max(0, starGrowth ?? 0));
     return Math.round(score * 10) / 10;
 }

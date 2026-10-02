@@ -115,7 +115,7 @@ export function parseGitHubRepo(payload: unknown): GitHubStats | null {
     return { stars: repo.stargazers_count, forks: repo.forks_count };
 }
 
-async function queryCloudflare(fetchImpl: Fetcher, token: string, query: string): Promise<GraphqlPayload> {
+export async function queryCloudflare(fetchImpl: Fetcher, token: string, query: string): Promise<GraphqlPayload> {
     const response = await fetchImpl(GRAPHQL_ENDPOINT, {
         method: 'POST',
         headers: {
@@ -130,14 +130,12 @@ async function queryCloudflare(fetchImpl: Fetcher, token: string, query: string)
     return payload;
 }
 
-export async function fetchTrafficStats(
+/** Query window limits (seconds) of the Web Analytics dataset for this account. */
+export async function fetchRumLimits(
     credentials: { accountId: string; token: string },
     fetchImpl: Fetcher = fetch,
-    now = new Date(),
-): Promise<TrafficStats> {
+): Promise<{ maxDuration: number; notOlderThan: number }> {
     const { accountId, token } = credentials;
-    if (!accountId || !token) throw new Error('Cloudflare Web Analytics credentials are not configured');
-
     const settingsQuery = `query { viewer { accounts(filter: { accountTag: ${JSON.stringify(accountId)} }) { settings { rumPageloadEventsAdaptiveGroups { enabled maxDuration notOlderThan } } } } }`;
     const settingsPayload = await queryCloudflare(fetchImpl, token, settingsQuery);
     const settingsAccount = settingsPayload.data?.viewer?.accounts?.[0];
@@ -147,7 +145,18 @@ export async function fetchTrafficStats(
         || typeof limits.maxDuration !== 'number' || !Number.isFinite(limits.maxDuration)) {
         throw new Error('Cloudflare Web Analytics dataset is unavailable');
     }
+    return { maxDuration: limits.maxDuration, notOlderThan: limits.notOlderThan };
+}
 
+export async function fetchTrafficStats(
+    credentials: { accountId: string; token: string },
+    fetchImpl: Fetcher = fetch,
+    now = new Date(),
+): Promise<TrafficStats> {
+    const { accountId, token } = credentials;
+    if (!accountId || !token) throw new Error('Cloudflare Web Analytics credentials are not configured');
+
+    const limits = await fetchRumLimits({ accountId, token }, fetchImpl);
     const chunks = buildRetentionChunks(now, limits.notOlderThan, limits.maxDuration);
     const dataPayload = await queryCloudflare(
         fetchImpl,
