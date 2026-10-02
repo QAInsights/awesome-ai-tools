@@ -1,0 +1,78 @@
+---
+title: "Cloudflare, AWS and Fastino Race to Ship Decision Models"
+description: "Cloudflare open-sources Clef, AWS ships Strands Decider 2B, Fastino claims the Decision Index crown, plus SoftBank's final OpenAI tranche and a Google court win."
+pubDate: 2026-10-02
+tags: ["news","today-in-ai","decision-models","cloudflare","aws","openai","funding","devtools"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-10-02 UTC.
+
+Decision models broke out of the lab today, with Cloudflare, AWS and Fastino all shipping systems that answer with typed probabilities instead of text.
+
+## Cloudflare open-sources Clef decision models and an RL tuning service
+
+**What happened:** Cloudflare released Clef and Clef-flash, two decision models hosted on Workers AI that return typed, probabilistic answers instead of text. Both are open-sourced on Hugging Face under Apache 2.0, and Cloudflare debuted an RL product for fine-tuning Clef on customer data.
+
+**Why it matters:** Teams can now run a cheap, deterministic classifier inside an agent workflow without paying for a full LLM call, and tune it on their own labels.
+
+[Source: Cloudflare](<https://blog.cloudflare.com/clef-decision-models/>)
+
+## AWS ships Strands Decider 2B as an open decision model
+
+**What happened:** AWS's Strands Labs released Strands Decider 2B, an open-source decision model that skips text generation and returns a choice with a confidence score. It is optimized for local deployment, so developers can run it on a laptop or in the cloud.
+
+**Why it matters:** A 2B decision model that runs locally gives agent builders a low-latency routing layer they can test without a hosted API bill.
+
+[Source: SiliconANGLE](<https://siliconangle.com/2026/10/01/aws-debuts-strands-decider-2b-a-first-lightweight-decision-model-for-accelerate-agentic-workflows/>)
+
+## Fastino Labs claims GLiDE tops the Decision Index by 6.9 points
+
+**What happened:** Fastino Labs released GLiDE, which it calls the first decision model with adaptive reasoning. In Fastino's own run of the Decision Index 0.2.1 scorer, GLiDE scored 64.81 against Jev's published 57.91, leading on 31 of 38 benchmarks. GLiDE is available through the Fastino API.
+
+**Why it matters:** A higher-scoring decision model gives agent builders a stronger option for tool selection and approval gating, though the numbers come from the vendor's own harness run.
+
+[Source: Fastino Labs](<https://www.prnewswire.com/news-releases/fastino-labs-releases-glide-the-first-thinking-decision-model-leading-the-decision-indexs-top-model-by-6-9-points-302896638.html>)
+
+## SoftBank closes its $30B OpenAI follow-on with a $10B tranche
+
+**What happened:** SoftBank executed the third and final $10 billion tranche of its OpenAI follow-on investment on October 1, completing the $30 billion program announced in February. SoftBank's cumulative investment in OpenAI now totals $64.6 billion, roughly 13% ownership.
+
+**Why it matters:** The funding is now fully in rather than pledged, which matters for anyone tracking how much compute OpenAI can commit to over the next few quarters.
+
+[Source: SoftBank](<https://group.softbank/en/news/press/20261001>)
+
+## Judge dismisses Chegg and Penske antitrust suits over Google AI search
+
+**What happened:** US District Judge Amit Mehta dismissed lawsuits from Chegg and Penske Media that alleged Google's AI overviews violated antitrust law by using their content and draining traffic. Mehta wrote that the plaintiffs pleaded only an expectation of traffic, not an agreement, and that an expectation is not an agreement.
+
+**Why it matters:** Publishers hoping antitrust law would force an opt-out from AI summaries lost this round, so content licensing remains a contract question rather than a courtroom one.
+
+[Source: Reuters](<https://www.reuters.com/legal/litigation/google-wins-dismissal-chegg-penske-media-lawsuits-over-ai-overviews-2026-10-01/>)
+
+## Dynatrace completes its acquisition of Arize
+
+**What happened:** Dynatrace closed its acquisition of Arize, an AI observability and evaluation platform for agents. Arize will keep supporting its open-source Phoenix platform and its enterprise AX platform, with capabilities folded into Dynatrace over time.
+
+**Why it matters:** Phoenix users get a larger parent, but the integration roadmap is the thing to watch if your eval pipeline depends on it.
+
+[Source: Dynatrace](<https://www.dynatrace.com/news/press-release/dynatrace-completes-acquisition-of-arize/>)
+
+## JetBrains opens early access for Air, its agentic IDE layer
+
+**What happened:** JetBrains launched an Early Access Program for Air, a plugin and native feature in 2026.3 EAP builds that orchestrates multiple coding agents inside the IDE. Air ships with no agents installed and is not an AI provider, acting as a conduit for agents and subscriptions developers already use.
+
+**Why it matters:** It is a bet that parallel agent orchestration belongs in the editor, so JetBrains users can try running several agents side by side without switching tools.
+
+[Source: JetBrains](<https://blog.jetbrains.com/ai/2026/10/air-in-ides-eap/>)
+
+## Sources
+
+- [Cloudflare](<https://blog.cloudflare.com/clef-decision-models/>)
+- [SiliconANGLE](<https://siliconangle.com/2026/10/01/aws-debuts-strands-decider-2b-a-first-lightweight-decision-model-for-accelerate-agentic-workflows/>)
+- [Fastino Labs](<https://www.prnewswire.com/news-releases/fastino-labs-releases-glide-the-first-thinking-decision-model-leading-the-decision-indexs-top-model-by-6-9-points-302896638.html>)
+- [SoftBank](<https://group.softbank/en/news/press/20261001>)
+- [Reuters](<https://www.reuters.com/legal/litigation/google-wins-dismissal-chegg-penske-media-lawsuits-over-ai-overviews-2026-10-01/>)
+- [Dynatrace](<https://www.dynatrace.com/news/press-release/dynatrace-completes-acquisition-of-arize/>)
+- [JetBrains](<https://blog.jetbrains.com/ai/2026/10/air-in-ides-eap/>)
