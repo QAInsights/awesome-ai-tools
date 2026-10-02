@@ -23,7 +23,7 @@ const generated = new Date(snapshot.generatedAt).toLocaleDateString('en-US', { y
     <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] m-0">{formatWeekTitle(snapshot.week)} &middot; {formatWeekSpan(snapshot.week)}</p>
     <Heading class="text-3xl sm:text-4xl font-semibold text-white tracking-tight m-0">Trending AI coding tools</Heading>
     <p class="text-[#a3a3a3] text-[15px] leading-relaxed m-0 max-w-[70ch]">
-        The week's most engaged tools on ai.dosa.dev, ranked by zaps, favorites, follows, outbound clicks and GitHub star growth. Snapshot taken <time datetime={snapshot.generatedAt}>{generated}</time>.
+        The week's most engaged tools on ai.dosa.dev, ranked by zaps, favorites, follows, outbound clicks, tool page views and GitHub star growth. Snapshot taken <time datetime={snapshot.generatedAt}>{generated}</time>.
     </p>
 </header>
 
@@ -42,6 +42,7 @@ const generated = new Date(snapshot.generatedAt).toLocaleDateString('en-US', { y
                         <th scope="col" class="px-4 py-3 text-right hidden sm:table-cell">Zaps</th>
                         <th scope="col" class="px-4 py-3 text-right hidden sm:table-cell">Favorites</th>
                         <th scope="col" class="px-4 py-3 text-right hidden md:table-cell">Follows</th>
+                        <th scope="col" class="px-4 py-3 text-right hidden sm:table-cell">Views</th>
                         <th scope="col" class="px-4 py-3 text-right hidden md:table-cell">Clicks</th>
                         <th scope="col" class="px-4 py-3 text-right hidden md:table-cell">Stars</th>
                     </tr>
@@ -60,6 +61,7 @@ const generated = new Date(snapshot.generatedAt).toLocaleDateString('en-US', { y
                                 <td class="px-4 py-3 text-right font-mono text-[#a3a3a3] hidden sm:table-cell">{entry.zaps}</td>
                                 <td class="px-4 py-3 text-right font-mono text-[#a3a3a3] hidden sm:table-cell">{signed(entry.favorites)}</td>
                                 <td class="px-4 py-3 text-right font-mono text-[#a3a3a3] hidden md:table-cell">{signed(entry.follows)}</td>
+                                <td class="px-4 py-3 text-right font-mono text-[#a3a3a3] hidden sm:table-cell">{entry.views ?? 0}</td>
                                 <td class="px-4 py-3 text-right font-mono text-[#a3a3a3] hidden md:table-cell">{entry.outboundClicks}</td>
                                 <td class="px-4 py-3 text-right font-mono text-[#a3a3a3] hidden md:table-cell">{stars(entry.starGrowth)}</td>
                             </tr>
@@ -118,8 +120,8 @@ const generated = new Date(snapshot.generatedAt).toLocaleDateString('en-US', { y
 <section aria-labelledby="method-heading" class="text-[13px] text-[#737373] leading-relaxed">
     <h2 id="method-heading" class="text-[13px] font-mono uppercase tracking-widest text-[#a3a3a3] m-0 mb-2">How the score works</h2>
     <p class="m-0">
-        Score = {TRENDING_WEIGHTS.zaps} &times; zaps + {TRENDING_WEIGHTS.favorites} &times; favorites + {TRENDING_WEIGHTS.follows} &times; follows + {TRENDING_WEIGHTS.outboundClicks} &times; &radic;outbound clicks + {TRENDING_WEIGHTS.starGrowth} &times; &radic;GitHub stars gained.
-        Zaps, favorites and follows only count from signed-in accounts, once per account per tool. Clicks count unique visitors. Accounts or visitors hitting an unusually large number of tools in one week are left out.
+        Score = {TRENDING_WEIGHTS.zaps} &times; zaps + {TRENDING_WEIGHTS.favorites} &times; favorites + {TRENDING_WEIGHTS.follows} &times; follows + {TRENDING_WEIGHTS.outboundClicks} &times; &radic;outbound clicks + {TRENDING_WEIGHTS.views} &times; &radic;page views + {TRENDING_WEIGHTS.starGrowth} &times; &radic;GitHub stars gained.
+        Zaps, favorites and follows only count from signed-in accounts, once per account per tool. Clicks count unique visitors. Page views are visits to a tool's profile, pricing and alternatives pages, measured by Cloudflare Web Analytics. Accounts or visitors hitting an unusually large number of tools in one week are left out.
         {(snapshot.guard.ungatedZapsDropped > 0 || snapshot.guard.burstActorsDropped > 0) && ` This week ${snapshot.guard.ungatedZapsDropped} unauthenticated zaps and ${snapshot.guard.burstActorsDropped} bulk actors were excluded.`}
     </p>
 </section>
