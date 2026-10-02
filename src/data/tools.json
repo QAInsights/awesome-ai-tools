@@ -1226,5 +1226,21 @@
   {
     "companyName": "Diego Souza (diegosouzapw)",
     "toolName": "OmniRoute"
+  },
+  {
+    "companyName": "Tracer",
+    "toolName": "OpenSRE"
+  },
+  {
+    "companyName": "Pydantic",
+    "toolName": "Monty"
+  },
+  {
+    "companyName": "Grafana Labs",
+    "toolName": "gcx"
+  },
+  {
+    "companyName": "Agentic AI Foundation (Linux Foundation)",
+    "toolName": "agentgateway"
   }
 ]

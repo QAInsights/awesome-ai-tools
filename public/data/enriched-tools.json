@@ -8407,5 +8407,113 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-01"
+  },
+  {
+    "slug": "opensre",
+    "name": "OpenSRE",
+    "company": "Tracer",
+    "pricing": "freemium",
+    "pricingDetail": "The OpenSRE framework and CLI are open source under the Apache 2.0 license and can be self-hosted with your own LLM provider keys; Tracer also offers a hosted OpenSRE Cloud web app for enterprise teams.",
+    "description": "OpenSRE is an open-source framework for building AI SRE agents that investigate and help resolve production incidents on your own infrastructure. Its CLI correlates logs, metrics, traces, deploys and runbooks across 60+ tools, and the project doubles as a training and evaluation environment for AI SRE agents.",
+    "keyFeatures": [
+      "Interactive opensre REPL plus a headless opensre ask mode for scripts and CI",
+      "Structured root-cause investigation across logs, metrics, traces, deploys and config",
+      "60+ integrations including Grafana, Datadog, Honeycomb, Kubernetes, AWS, PagerDuty and Slack",
+      "Runbook-aware reasoning and summaries posted back to Slack, PagerDuty or Telegram",
+      "Local and cloud-backed end-to-end incident test suites for training and evaluating AI SRE agents"
+    ],
+    "bestFor": "SRE and platform teams who want a self-hostable, extensible AI agent to triage alerts and draft root-cause analyses from their existing observability stack.",
+    "notIdealFor": "Teams needing a stable, fully supported incident platform today, since OpenSRE is a public alpha whose APIs and integrations are still evolving.",
+    "recentUpdates": "OpenSRE ships near-daily releases; v0.1.2026.10.2 landed on October 2, 2026 with gateway and scheduler fixes.",
+    "verdict": "A fast-moving, widely watched open-source foundation for AI SRE agents that is promising for experimentation but still alpha.",
+    "tags": [
+      "AI SRE",
+      "Incident Response",
+      "Observability",
+      "CLI",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-02"
+  },
+  {
+    "slug": "monty",
+    "name": "Monty",
+    "company": "Pydantic",
+    "pricing": "freemium",
+    "pricingDetail": "OSS Monty is free and open source under the MIT License as Python, JavaScript and Rust packages; Full Monty is a commercial server that runs the same sandbox behind a WebSocket with OS-level isolation and horizontal scaling.",
+    "description": "Monty is a minimal, secure Python interpreter written in Rust for running code written by AI agents. It avoids the latency and cost of container sandboxes: a new sandbox starts in under a millisecond and can only reach the host through the functions and mounts you explicitly provide.",
+    "keyFeatures": [
+      "Python 3.14 subset sandbox with no filesystem, environment or network access",
+      "Sub-millisecond sandbox startup from a pool of worker subprocesses",
+      "Host functions and inputs exposed explicitly via external_lookup and inputs",
+      "Serializable snapshots that pause at host calls and resume execution later",
+      "Packages for Python (pydantic-monty), JavaScript/TypeScript (@pydantic/monty) and Rust"
+    ],
+    "bestFor": "Agent developers implementing code mode or tool chaining who need to run LLM-generated Python safely with minimal overhead.",
+    "notIdealFor": "Workloads that need full CPython compatibility, third-party packages or arbitrary system access inside the sandbox.",
+    "recentUpdates": "Monty reached its first stable release, v1.0.0, on September 25, 2026, dropping the experimental label and adding features such as percent formatting and the format() builtin.",
+    "verdict": "A lightweight, production-ready sandbox from the Pydantic team that makes running agent-written Python cheap and safe.",
+    "tags": [
+      "Sandbox",
+      "Code Execution",
+      "Python",
+      "Rust",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-02"
+  },
+  {
+    "slug": "gcx",
+    "name": "gcx",
+    "company": "Grafana Labs",
+    "pricing": "free",
+    "pricingDetail": "gcx is free and open source under the Apache 2.0 license; it works with Grafana OSS/Enterprise 12+ and Grafana Cloud, with some product commands and Grafana Assistant features requiring a Grafana Cloud stack.",
+    "description": "gcx is Grafana's CLI for you and your AI coding agent, giving structured access to dashboards, alerts, SLOs, metrics, logs, traces and Grafana Cloud products from the terminal. It works with any agentic coding tool and ships Agent Skills so coding agents can query production and act on real telemetry.",
+    "keyFeatures": [
+      "Structured JSON/YAML output designed for agents and scripts",
+      "Works with any agentic coding tool, with an integrate-with-gcx skill for setup",
+      "Bundled Agent Skills for alert investigation, dashboard GitOps, SLO management and observability rollout",
+      "GitOps pull and push of Grafana resources with round-trip fidelity",
+      "Commands for Synthetic Monitoring, k6, IRM, Fleet Management and Grafana Assistant on Grafana Cloud"
+    ],
+    "bestFor": "Developers and SREs who want their coding agents to read production telemetry and manage Grafana resources as code from the terminal.",
+    "notIdealFor": "Teams on Grafana versions older than 12 or without a Grafana deployment, since gcx does not support them.",
+    "recentUpdates": "gcx v1.4.0 shipped on October 2, 2026 with metric and label search commands and TraceQL-filtered trace retrieval, following general availability in July 2026.",
+    "verdict": "An official, agent-first Grafana CLI that gives coding agents real production context with minimal setup.",
+    "tags": [
+      "CLI",
+      "Observability",
+      "Agent Skills",
+      "GitOps",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-02"
+  },
+  {
+    "slug": "agentgateway",
+    "name": "agentgateway",
+    "company": "Agentic AI Foundation (Linux Foundation)",
+    "pricing": "open-source",
+    "pricingDetail": "agentgateway is free and open source under the Apache 2.0 license and is hosted by the Agentic AI Foundation under the Linux Foundation.",
+    "description": "agentgateway is an open-source Rust proxy and gateway control plane built for agentic AI traffic. It provides one data plane for LLM, MCP, A2A, HTTP and gRPC traffic with built-in security, governance and observability, running standalone or on Kubernetes.",
+    "keyFeatures": [
+      "OpenAI-compatible LLM gateway with budgets, spend controls, load balancing and failover",
+      "MCP gateway with tool federation across stdio, HTTP, SSE and Streamable HTTP plus OAuth",
+      "A2A gateway for secure agent-to-agent communication",
+      "Guardrails, JWT/API-key/OAuth auth, CEL-based RBAC and rate limiting",
+      "OpenTelemetry metrics, logs and traces with standalone YAML or Kubernetes Gateway API deployment"
+    ],
+    "bestFor": "Platform teams that need to secure, govern and observe LLM, MCP and agent-to-agent traffic across many agents and tools.",
+    "notIdealFor": "Individual developers who only need a simple local model router for a single coding agent.",
+    "recentUpdates": "agentgateway v1.5.0 (August 27, 2026) added API-key-scoped LLM budgets, native Gemini inbound APIs and tool-call guardrails, and v1.6.0 release candidates followed in late September 2026.",
+    "verdict": "A foundation-hosted, enterprise-grade gateway that is becoming a standard connectivity layer for MCP and A2A workloads.",
+    "tags": [
+      "AI Gateway",
+      "MCP",
+      "A2A",
+      "Proxy",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-02"
   }
 ]

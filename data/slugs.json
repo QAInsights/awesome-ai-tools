@@ -1020,6 +1020,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "opensre",
+    "name": "OpenSRE",
+    "company": "Tracer",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1815,6 +1821,24 @@
     "slug": "omniroute",
     "name": "OmniRoute",
     "company": "Diego Souza (diegosouzapw)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "monty",
+    "name": "Monty",
+    "company": "Pydantic",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "gcx",
+    "name": "gcx",
+    "company": "Grafana Labs",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "agentgateway",
+    "name": "agentgateway",
+    "company": "Agentic AI Foundation (Linux Foundation)",
     "category": "Developer Productivity & Workflow"
   },
   {
