@@ -10,6 +10,9 @@ import Sidebar from '../../components/Sidebar.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import { getBestPages } from '../../lib/best';
 import { getIndexingDecisions } from '../../lib/indexing';
+import FolioStyles from '../../components/folio/FolioStyles.astro';
+import FolioTitle from '../../components/folio/FolioTitle.astro';
+import FolioScroll from '../../components/folio/FolioScroll.astro';
 
 const decisions = getIndexingDecisions();
 const pages = getBestPages().filter(p => decisions.get(`/best/${p.facet.slug}`)?.indexable);
@@ -63,34 +66,58 @@ const jsonLd = JSON.stringify({
         <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
             <SiteHeader variant="page" title="Best AI coding tools" />
 
-            <div class="max-w-[1000px] mx-auto w-full flex flex-col flex-1 p-4 md:p-8 gap-6">
-                <nav aria-label="Breadcrumb" class="font-mono text-[12px] text-[#737373] tracking-wide flex items-center gap-2 flex-wrap">
-                    <a href="/" class="hover:text-white transition-colors">Home</a>
-                    <span>/</span>
-                    <span class="text-white">Best</span>
-                </nav>
-
-                <header class="flex flex-col gap-3 pb-4 border-b border-[#222]">
-                    <h1 class="text-[32px] md:text-[40px] font-semibold tracking-tight leading-tight bg-gradient-to-r from-white via-[#e5e5e5] to-white bg-clip-text text-transparent">
-                        Best AI Coding Tools by Use Case
-                    </h1>
-                    <p class="text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">
-                        Ranked shortlists for the questions developers actually ask: which tools are free, which run locally, which work in JetBrains or the terminal, and which pass an enterprise security review. Each list is rebuilt from the directory's reviews every month.
-                    </p>
+            <article class="fo">
+                <header class="fo-hero">
+                    <div>
+                        <div class="fo-top fo-fade" style="--d:.1s">
+                            <nav aria-label="Breadcrumb" class="fo-crumbs">
+                                <a href="/">Home</a><span>/</span>
+                                <span class="here">Best</span>
+                            </nav>
+                            {refreshLabel && <span class="fo-status"><span>Refreshed {refreshLabel}</span></span>}
+                        </div>
+                        <div class="fo-rule"></div>
+                    </div>
+                    <div>
+                        <FolioTitle parts={[{ text: 'Best AI Coding Tools' }, { text: 'by Use Case', plain: true }]} size="md" />
+                        <div class="fo-intro">
+                            <p class="fo-lead fo-fade" style="--d:.55s">
+                                Ranked shortlists for the questions developers actually ask: which tools are free, which run locally, which work in JetBrains or the terminal, and which pass an enterprise security review. Each list is rebuilt from the directory's reviews every month.
+                            </p>
+                            <div class="fo-price fo-fade" style="--d:.7s">
+                                <small>Lists</small>
+                                <b>{pages.length}</b>
+                                <span>ranked shortlists</span>
+                            </div>
+                        </div>
+                    </div>
                 </header>
 
-                <section aria-label="Best-of lists" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-8">
-                    {pages.map(p => (
-                        <a href={`/best/${p.facet.slug}`} class="group flex flex-col gap-2 px-5 py-4 border border-[#222] rounded-md bg-white/[0.02] hover:border-[#444] hover:bg-white/[0.04] transition-colors">
-                            <span class="text-[15px] font-medium text-white">{p.facet.title}</span>
-                            <span class="text-[13px] text-[#a3a3a3] leading-relaxed">Top picks: {p.tools.slice(0, 3).map(t => t.enriched?.name ?? t.name).join(', ')}</span>
-                            <span class="font-mono text-[11px] text-[#737373] tracking-wide">{p.tools.length} tools ranked</span>
-                        </a>
-                    ))}
+                <section class="fo-sec" id="lists" aria-label="Best-of lists">
+                    <h2 class="fo-label"><em>01</em>The lists</h2>
+                    <div class="fo-body">
+                        {pages.map((p, i) => (
+                            <div class="fo-rank">
+                                <span class="no">{String(i + 1).padStart(2, '0')}</span>
+                                <div>
+                                    <h3><a href={`/best/${p.facet.slug}`}>{p.facet.title}</a></h3>
+                                    <p>Top picks: {p.tools.slice(0, 3).map(t => t.enriched?.name ?? t.name).join(', ')}</p>
+                                </div>
+                                <span class="pr">{p.tools.length} tools</span>
+                            </div>
+                        ))}
+                    </div>
                 </section>
-            </div>
+
+                <div class="fo-notes">
+                    <span>Rankings are rebuilt monthly from the directory's reviews. Verify details on each vendor's website.</span>
+                    <a class="back" href="/compare">All comparisons →</a>
+                </div>
+            </article>
         </main>
     </div>
 
+    <FolioStyles />
+    <FolioScroll />
     <script src="/dist/app.js" type="module" defer></script>
 </BaseLayout>

@@ -17,7 +17,7 @@
     @property --fo-p { syntax: '<number>'; inherits: true; initial-value: 0; }
     .fo-wrap { display: block; --W: 10em; animation: fo-p 3s linear infinite; }
     .fo-grad { background: linear-gradient(90deg, #a78bfa, #22d3ee, #a78bfa); background-size: calc(var(--W) * 2) 100%; background-position: calc(var(--fo-p) * var(--W) * 2 - var(--x, 0px)) 0; background-repeat: repeat-x; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-    .fo-word { display: inline-block; overflow: hidden; vertical-align: top; padding: .04em .02em .1em 0; margin-bottom: -.06em; }
+    .fo-word { display: inline-block; overflow: hidden; vertical-align: top; padding: .04em .02em .22em 0; margin-bottom: -.18em; }
     .fo-name .ch { display: inline-block; transform: translateY(110%); animation: fo-rise 1.25s var(--ease) both; animation-delay: calc(.12s + var(--i) * 38ms); }
     .fo-intro { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 32px; align-items: end; padding: 28px 0 44px; }
     .fo-lead { grid-column: 1 / span 6; font-size: 23px; line-height: 1.42; letter-spacing: -.012em; color: #cfcfcc; margin: 0; }
@@ -173,6 +173,7 @@
     }
 
     .fo-name .ch.plain { color: var(--mute); }
+    .fo-name .ch.fo-grad { padding-bottom: .2em; margin-bottom: -.2em; }
     .fo-crumbs .here { color: var(--ink); }
     .fo-leadbox { grid-column: 1 / span 6; }
     .fo-leadbox .fo-note { margin-top: 18px; font-size: 14px; }
