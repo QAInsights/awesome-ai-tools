@@ -5,6 +5,12 @@
   { "slug": "cursor-vs-antigravity", "a": "cursor", "b": "antigravity", "group": "AI-Native IDEs" },
   { "slug": "devin-vs-trae", "a": "devin", "b": "trae", "group": "AI-Native IDEs" },
   { "slug": "devin-vs-zed", "a": "devin", "b": "zed", "group": "AI-Native IDEs" },
+  { "slug": "athas-vs-zed", "a": "athas", "b": "zed", "group": "AI-Native IDEs", "source": "generated" },
+  { "slug": "bb-vs-openchamber", "a": "bb", "b": "openchamber", "group": "AI-Native IDEs", "source": "generated" },
+  { "slug": "ccgui-vs-openchamber", "a": "ccgui", "b": "openchamber", "group": "AI-Native IDEs", "source": "generated" },
+  { "slug": "openchamber-vs-superset", "a": "openchamber", "b": "superset", "group": "AI-Native IDEs", "source": "generated" },
+  { "slug": "waku-vs-zed", "a": "waku", "b": "zed", "group": "AI-Native IDEs", "source": "generated" },
+  { "slug": "devin-vs-factory-ai", "a": "devin", "b": "factory-ai", "group": "AI-Native IDEs", "source": "generated" },
 
   { "slug": "github-copilot-vs-cursor", "a": "github-copilot", "b": "cursor", "group": "IDE Extensions" },
   { "slug": "github-copilot-vs-cline", "a": "github-copilot", "b": "cline", "group": "IDE Extensions" },
@@ -15,6 +21,7 @@
   { "slug": "cline-vs-roo-code", "a": "cline", "b": "roo-code", "group": "IDE Extensions" },
   { "slug": "cline-vs-kilo-code", "a": "cline", "b": "kilo-code", "group": "IDE Extensions" },
   { "slug": "augment-code-vs-cody", "a": "augment-code", "b": "cody", "group": "IDE Extensions" },
+  { "slug": "kilo-code-vs-roo-code", "a": "kilo-code", "b": "roo-code", "group": "IDE Extensions", "source": "generated" },
 
   { "slug": "claude-code-vs-codex-cli", "a": "claude-code", "b": "codex-cli", "group": "Terminal & CLI Agents" },
   { "slug": "claude-code-vs-aider", "a": "claude-code", "b": "aider", "group": "Terminal & CLI Agents" },
@@ -24,6 +31,10 @@
   { "slug": "codex-cli-vs-gemini-cli", "a": "codex-cli", "b": "gemini-cli", "group": "Terminal & CLI Agents" },
   { "slug": "claude-code-vs-opencode", "a": "claude-code", "b": "opencode", "group": "Terminal & CLI Agents" },
   { "slug": "codex-cli-vs-opencode", "a": "codex-cli", "b": "opencode", "group": "Terminal & CLI Agents" },
+  { "slug": "lucinate-vs-opencode", "a": "lucinate", "b": "opencode", "group": "Terminal & CLI Agents", "source": "generated" },
+  { "slug": "crush-vs-opencode", "a": "crush", "b": "opencode", "group": "Terminal & CLI Agents", "source": "generated" },
+  { "slug": "mimo-code-vs-opencode", "a": "mimo-code", "b": "opencode", "group": "Terminal & CLI Agents", "source": "generated" },
+  { "slug": "autohand-acp-vs-pi-acp", "a": "autohand-acp", "b": "pi-acp", "group": "Terminal & CLI Agents", "source": "generated" },
 
   { "slug": "jules-vs-openhands", "a": "jules", "b": "openhands", "group": "Autonomous & Async Agents" },
   { "slug": "openhands-vs-swe-agent", "a": "openhands", "b": "swe-agent", "group": "Autonomous & Async Agents" },
@@ -32,13 +43,29 @@
   { "slug": "boltnew-vs-lovable", "a": "boltnew", "b": "lovable", "group": "Browser-Based Builders" },
   { "slug": "v0-vs-lovable", "a": "v0", "b": "lovable", "group": "Browser-Based Builders" },
   { "slug": "lovable-vs-replit", "a": "lovable", "b": "replit", "group": "Browser-Based Builders" },
+  { "slug": "floot-vs-lovable", "a": "floot", "b": "lovable", "group": "Browser-Based Builders", "source": "generated" },
+  { "slug": "emergentsh-vs-playcode", "a": "emergentsh", "b": "playcode", "group": "Browser-Based Builders", "source": "generated" },
+  { "slug": "boltnew-vs-floot", "a": "boltnew", "b": "floot", "group": "Browser-Based Builders", "source": "generated" },
+  { "slug": "emergentsh-vs-floot", "a": "emergentsh", "b": "floot", "group": "Browser-Based Builders", "source": "generated" },
 
   { "slug": "coderabbit-vs-qodo", "a": "coderabbit", "b": "qodo", "group": "Code Review & Security" },
   { "slug": "coderabbit-vs-snyk-code", "a": "coderabbit", "b": "snyk-code", "group": "Code Review & Security" },
+  { "slug": "coderabbit-vs-cubic", "a": "coderabbit", "b": "cubic", "group": "Code Review & Security", "source": "generated" },
+  { "slug": "bubo-vs-coderabbit", "a": "bubo", "b": "coderabbit", "group": "Code Review & Security", "source": "generated" },
+  { "slug": "bubo-vs-cubic", "a": "bubo", "b": "cubic", "group": "Code Review & Security", "source": "generated" },
+  { "slug": "bubo-vs-gito", "a": "bubo", "b": "gito", "group": "Code Review & Security", "source": "generated" },
+  { "slug": "coderabbit-vs-gito", "a": "coderabbit", "b": "gito", "group": "Code Review & Security", "source": "generated" },
+  { "slug": "cubic-vs-gito", "a": "cubic", "b": "gito", "group": "Code Review & Security", "source": "generated" },
 
   { "slug": "warp-vs-wave", "a": "warp", "b": "wave", "group": "AI-Native Terminals" },
 
   { "slug": "claude-vs-chatgpt", "a": "claude", "b": "chatgpt", "group": "General AI Assistants" },
   { "slug": "chatgpt-vs-gemini", "a": "chatgpt", "b": "gemini", "group": "General AI Assistants" },
-  { "slug": "claude-vs-gemini", "a": "claude", "b": "gemini", "group": "General AI Assistants" }
+  { "slug": "claude-vs-gemini", "a": "claude", "b": "gemini", "group": "General AI Assistants" },
+
+  { "slug": "gitnexus-vs-gortex", "a": "gitnexus", "b": "gortex", "group": "AI Codebase Knowledge & Generation", "source": "generated" },
+
+  { "slug": "browserskill-vs-director", "a": "browserskill", "b": "director", "group": "Developer Productivity & Workflow", "source": "generated" },
+  { "slug": "agentgateway-vs-omniroute", "a": "agentgateway", "b": "omniroute", "group": "Developer Productivity & Workflow", "source": "generated" },
+  { "slug": "antiburn-vs-coderplan", "a": "antiburn", "b": "coderplan", "group": "Developer Productivity & Workflow", "source": "generated" }
 ]

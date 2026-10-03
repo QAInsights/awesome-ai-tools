@@ -116,13 +116,14 @@ export function rankFacetTools(facet, tools, popularity = new Map(), limit = MAX
 }
 
 /**
- * Curated comparison count per tool slug.
- * @param {{ a: string, b: string }[]} comparisons
+ * Curated comparison count per tool slug (generated pairs excluded).
+ * @param {{ a: string, b: string, source?: string }[]} comparisons
  */
 export function comparisonCounts(comparisons) {
     /** @type {Map<string, number>} */
     const counts = new Map();
     for (const c of comparisons) {
+        if (c.source === 'generated') continue;
         counts.set(c.a, (counts.get(c.a) ?? 0) + 1);
         counts.set(c.b, (counts.get(c.b) ?? 0) + 1);
     }

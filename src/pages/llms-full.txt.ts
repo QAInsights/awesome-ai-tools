@@ -8,6 +8,7 @@
 import type { APIRoute } from 'astro';
 import { getAllTools } from '../lib/tools';
 import { getBestPages } from '../lib/best';
+import { comparisonQuickAnswer, getResolvedComparisons } from '../lib/compare';
 import { getIndexingDecisions } from '../lib/indexing';
 
 export const GET: APIRoute = () => {
@@ -47,6 +48,15 @@ export const GET: APIRoute = () => {
             });
             lines.push('');
         }
+    }
+
+    const comparisons = getResolvedComparisons().filter(c => decisions.get(`/compare/${c.slug}`)?.indexable);
+    if (comparisons.length) {
+        lines.push('## Comparisons', '');
+        for (const c of comparisons) {
+            lines.push(`- [${c.toolA.name} vs ${c.toolB.name}](https://ai.dosa.dev/compare/${c.slug}) (${c.group}) - ${comparisonQuickAnswer(c.toolA, c.toolB)}`);
+        }
+        lines.push('');
     }
 
     return new Response(lines.join('\n'), {

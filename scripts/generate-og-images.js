@@ -20,6 +20,7 @@ const OUT_DIR = join(ROOT, 'public', 'images', 'og');
 const BLOG_OUT_DIR = join(OUT_DIR, 'blog');
 const TRENDING_OUT_DIR = join(OUT_DIR, 'trending');
 const BEST_OUT_DIR = join(OUT_DIR, 'best');
+const COMPARE_OUT_DIR = join(OUT_DIR, 'compare');
 const FONT_DIR = join(ROOT, 'assets', 'fonts');
 
 const fonts = [
@@ -192,6 +193,7 @@ async function main() {
     mkdirSync(BLOG_OUT_DIR, { recursive: true });
     mkdirSync(TRENDING_OUT_DIR, { recursive: true });
     mkdirSync(BEST_OUT_DIR, { recursive: true });
+    mkdirSync(COMPARE_OUT_DIR, { recursive: true });
 
     let written = 0, skipped = 0, blogWritten = 0, blogSkipped = 0;
     for (const tool of tools) {
@@ -268,7 +270,8 @@ async function main() {
     }
 
     const facets = JSON.parse(readFileSync(join(ROOT, 'data', 'best-facets.json'), 'utf-8'));
-    const popularity = comparisonCounts(JSON.parse(readFileSync(join(ROOT, 'data', 'comparisons.json'), 'utf-8')));
+    const comparisons = JSON.parse(readFileSync(join(ROOT, 'data', 'comparisons.json'), 'utf-8'));
+    const popularity = comparisonCounts(comparisons);
     const month = formatRefreshMonth(refreshMonth());
     let bestWritten = 0, bestSkipped = 0;
     for (const facet of facets) {
@@ -303,7 +306,43 @@ async function main() {
         bestWritten++;
     }
 
-    console.log(`OG images: ${written} generated, ${skipped} up-to-date (${tools.length} tools); ${blogWritten} blog posts generated, ${blogSkipped} up-to-date (${posts.length} posts total); ${trendingWritten} trending weeks generated, ${trendingSkipped} up-to-date; ${bestWritten} best-of pages generated, ${bestSkipped} up-to-date`);
+    const toolBySlug = new Map(tools.map(t => [t.slug, t]));
+    let compareWritten = 0, compareSkipped = 0;
+    for (const c of comparisons) {
+        const pair = [toolBySlug.get(c.a), toolBySlug.get(c.b)];
+        if (!pair[0] || !pair[1]) continue;
+        const rows = pair.map(t => ({ name: t.name, company: t.company, pricing: t.enriched?.pricing ?? '' }));
+        const contentKey = hash(JSON.stringify([c.slug, c.group, rows]));
+        const outPath = join(COMPARE_OUT_DIR, `${c.slug}.png`);
+        const hashPath = join(COMPARE_OUT_DIR, `${c.slug}.hash`);
+        if (existsSync(outPath) && existsSync(hashPath) && readFileSync(hashPath, 'utf-8') === contentKey) {
+            compareSkipped++;
+            continue;
+        }
+        const png = await renderCardPng({
+            pill: 'Compare',
+            content: [
+                { type: 'div', props: { style: { fontSize: '56px', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em' }, children: truncate(`${rows[0].name} vs ${rows[1].name}`, 60) } },
+                ...rows.map(r => ({
+                    type: 'div',
+                    props: {
+                        style: { display: 'flex', gap: '16px', fontSize: '28px', fontWeight: 600, color: '#e5e5e5' },
+                        children: [
+                            { type: 'div', props: { children: truncate(r.name, 32) } },
+                            { type: 'div', props: { style: { color: '#737373', fontWeight: 400 }, children: truncate([r.company, r.pricing].filter(Boolean).join(' · '), 48) } },
+                        ],
+                    },
+                })),
+            ],
+            footerLeft: c.group,
+            footerRight: `ai.dosa.dev/compare/${c.slug}`,
+        });
+        writeFileSync(outPath, png);
+        writeFileSync(hashPath, contentKey);
+        compareWritten++;
+    }
+
+    console.log(`OG images: ${written} generated, ${skipped} up-to-date (${tools.length} tools); ${blogWritten} blog posts generated, ${blogSkipped} up-to-date (${posts.length} posts total); ${trendingWritten} trending weeks generated, ${trendingSkipped} up-to-date; ${bestWritten} best-of pages generated, ${bestSkipped} up-to-date; ${compareWritten} comparisons generated, ${compareSkipped} up-to-date`);
 }
 
 main().catch(err => { console.error('OG image generation failed:', err); process.exit(1); });

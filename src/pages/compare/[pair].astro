@@ -13,11 +13,13 @@ import SiteHeader from '../../components/SiteHeader.astro';
 import {
     getResolvedComparisons,
     buildComparisonFaqs,
+    comparisonQuickAnswer,
     humanizePricing,
     type ResolvedComparison,
 } from '../../lib/compare';
 import { formatDate, getCategorySlug } from '../../lib/tools';
 import { robotsFor } from '../../lib/indexing';
+import { ORGANIZATION } from '../../lib/site';
 import { addOutboundUtmParams } from '../../lib/outbound-utm.js';
 
 export async function getStaticPaths() {
@@ -38,6 +40,8 @@ const nameA = toolA.name;
 const nameB = toolB.name;
 const pageUrl = `https://ai.dosa.dev/compare/${comparison.slug}`;
 
+const ogImage = `https://ai.dosa.dev/images/og/compare/${comparison.slug}.png`;
+const quickAnswer = comparisonQuickAnswer(toolA, toolB);
 const faqs = buildComparisonFaqs(toolA, toolB);
 const lastUpdatedLabel = formatDate(comparison.lastUpdated);
 
@@ -57,6 +61,10 @@ const jsonLd = JSON.stringify({
             "inLanguage": "en",
             ...(comparison.lastUpdated ? { "dateModified": comparison.lastUpdated } : {}),
             "isPartOf": { "@type": "WebSite", "@id": "https://ai.dosa.dev/#website", "url": "https://ai.dosa.dev", "name": "ai.dosa.dev - Awesome AI Tools" },
+            "publisher": ORGANIZATION,
+            "author": { "@id": ORGANIZATION["@id"] },
+            "primaryImageOfPage": { "@type": "ImageObject", "url": ogImage, "width": 1200, "height": 630 },
+            "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["h1", ".cmp-intro", ".cmp-answer"] },
             "about": [toolA, toolB].map(t => ({
                 "@type": "SoftwareApplication",
                 "name": t.name,
@@ -92,6 +100,10 @@ const jsonLd = JSON.stringify({
     canonical={pageUrl}
     robots={robotsFor(`/compare/${comparison.slug}`)}
     jsonLd={jsonLd}
+    ogImage={ogImage}
+    ogType="article"
+    modifiedTime={comparison.lastUpdated ?? undefined}
+    markdownUrl={`/compare/${comparison.slug}.md`}
 >
     <slot name="head">
         <style>
@@ -128,13 +140,18 @@ const jsonLd = JSON.stringify({
                     <h1 class="text-[32px] md:text-[40px] font-semibold tracking-tight leading-tight bg-gradient-to-r from-white via-[#e5e5e5] to-white bg-clip-text text-transparent">
                         {nameA} vs {nameB}
                     </h1>
-                    <p class="text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">
+                    <p class="cmp-intro text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">
                         Side-by-side comparison of {nameA} ({toolA.company}) and {nameB} ({toolB.company}) - pricing, key features, ideal use cases, recent updates, and verdicts.
                     </p>
                     <div class="font-mono text-[12px] text-[#737373] tracking-wide">
                         {comparison.group}{lastUpdatedLabel && ` · Updated ${lastUpdatedLabel}`}
                     </div>
                 </header>
+
+                <section class="cmp-answer mt-6 px-5 py-4 border border-[#a78bfa]/30 rounded-lg bg-[#a78bfa]/[0.06]" aria-label="Quick answer">
+                    <div class="font-mono text-[11px] uppercase text-[#c4b5fd] tracking-wide mb-2">Quick answer</div>
+                    <p class="text-[15px] leading-relaxed text-[#e5e5e5] m-0">{quickAnswer}</p>
+                </section>
 
                 <!-- Tool summary cards -->
                 <section class="cmp-section" style="border-top: none;" aria-label="Tool summaries">
