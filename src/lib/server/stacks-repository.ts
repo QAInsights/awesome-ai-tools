@@ -501,7 +501,13 @@ export async function listPublicStackProfileUsernames(db: Database): Promise<str
         SELECT DISTINCT u.username
         FROM users u
         JOIN stacks s ON s.user_id = u.id
-        WHERE s.is_public = 1 AND u.username IS NOT NULL
+        WHERE s.is_public = 1
+            AND u.username IS NOT NULL
+            AND EXISTS (
+                SELECT 1
+                FROM stack_items i
+                WHERE i.stack_id = s.id AND i.enabled = 1
+            )
         ORDER BY u.username
     `).bind().all<{ username: string }>();
     return (result.results ?? []).map(row => row.username);

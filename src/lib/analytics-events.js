@@ -18,7 +18,7 @@ const subjectPolicies = {
     },
 };
 
-export const AUTH_TRIGGERS = Object.freeze(['sidebar', 'favorite_heart', 'follow_bell', 'zap_btn', 'ad_close']);
+export const AUTH_TRIGGERS = Object.freeze(['sidebar', 'favorite_heart', 'follow_bell', 'zap_btn', 'ad_close', 'stack_add']);
 export const AD_STYLES = Object.freeze(['stickybox', 'fixedfooter']);
 export const OUTBOUND_TRIGGERS = Object.freeze(['tool_card', 'tool_detail', 'comparison', 'category', 'unknown']);
 export const ONBOARDING_TRIGGERS = Object.freeze(['inline', 'float', 'unknown']);

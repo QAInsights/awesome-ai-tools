@@ -169,7 +169,7 @@ describe('stacks repository', () => {
         await updateStack(db, 'github:grace', graceEmptyStack.id, { isPublic: true }, 95);
 
         expect(await listPublicStacksByUser(db, 'github:ada')).toHaveLength(2);
-        expect(await listPublicStackProfileUsernames(db)).toEqual(['ada', 'grace']);
+        expect(await listPublicStackProfileUsernames(db)).toEqual(['ada']);
         expect(await listPublicStacksForSitemap(db)).toEqual([
             { username: 'ada', slug: publicStack.slug, updatedAt: 80 },
         ]);

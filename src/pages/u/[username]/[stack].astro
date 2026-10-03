@@ -8,7 +8,12 @@ import FolioScroll from '../../../components/folio/FolioScroll.astro';
 import { formatDate, getToolBySlug } from '../../../lib/tools';
 import { entryLabel } from '../../../lib/folio';
 import { hasAlternativesPage, hasPricingPage } from '../../../lib/compare';
-import { createStackPageData, getVisibleStackItems, resolveStackPage } from '../../../lib/stack-public-view';
+import {
+    createStackPageData,
+    getUsernameCaseRedirect,
+    getVisibleStackItems,
+    resolveStackPage,
+} from '../../../lib/stack-public-view';
 import { getCookieSessionUser } from '../../../lib/server/route-auth';
 import {
     getOwnedStack,
@@ -23,6 +28,9 @@ export const prerender = false;
 
 const requestedUsername = Astro.params.username ?? '';
 const requestedSlug = Astro.params.stack ?? '';
+const usernameCaseRedirect = getUsernameCaseRedirect(requestedUsername, requestedSlug);
+if (usernameCaseRedirect) return Astro.redirect(usernameCaseRedirect, 301);
+
 const db = requireDatabase();
 const account = await findUserByUsername(db, requestedUsername);
 const publicResult = account

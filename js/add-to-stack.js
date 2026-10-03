@@ -33,9 +33,12 @@ function closePopover() {
 }
 
 function renderResult(popover, message, editorUrl, isError = false) {
+    const messageClass = isError
+        ? 'stack-popover-message is-error'
+        : 'stack-popover-message is-success';
     popover.querySelector('[data-stack-result]').innerHTML = `
-        <p class="${isError ? 'text-red-200' : 'text-emerald-200'} text-[12px]">${escapeHtml(message)}</p>
-        ${editorUrl ? `<a href="${escapeHtml(editorUrl)}" class="inline-block mt-2 text-[12px] text-[#c9aa6e] hover:text-white">Edit this stack →</a>` : ''}`;
+        <p class="${messageClass}">${escapeHtml(message)}</p>
+        ${editorUrl ? `<a href="${escapeHtml(editorUrl)}" class="stack-popover-link">Edit this stack →</a>` : ''}`;
 }
 
 function stackEditorUrl(id) {
@@ -61,7 +64,7 @@ async function appendTool(popover, stack, tool, authManager, attribution) {
         }
         if (error.status === 401) {
             await authManager.signOut();
-            attribution.open('favorite_heart');
+            attribution.open('stack_add');
             closePopover();
             return;
         }
@@ -78,24 +81,23 @@ async function openPopover(button, { authManager, attribution, root }) {
 
     await authManager.initialize();
     if (!authManager.isAuthenticated()) {
-        attribution.open('favorite_heart');
+        attribution.open('stack_add');
         return;
     }
 
     const wrapper = button.closest('[data-stack-control]') || button.parentElement;
     const popover = root.createElement('div');
-    popover.className = 'absolute right-0 top-full z-50 mt-3 w-[min(22rem,calc(100vw-2rem))] rounded-xl border border-[#303030] bg-[#111] p-4 shadow-2xl';
+    popover.className = 'stack-popover';
     popover.setAttribute('role', 'dialog');
     popover.setAttribute('aria-label', 'Add this tool to a stack');
     popover.innerHTML = `
-        <div class="flex items-center justify-between gap-3 mb-3">
-            <h2 class="text-sm font-semibold text-white">Add to a stack</h2>
-            <button type="button" data-close-popover aria-label="Close" class="text-[#737373] hover:text-white">×</button>
+        <div class="stack-popover-header">
+            <h2 class="stack-popover-title">Add to a stack</h2>
+            <button type="button" data-close-popover aria-label="Close" class="stack-popover-close">×</button>
         </div>
-        <div data-stack-list class="max-h-56 overflow-y-auto -mx-1"></div>
-        <button type="button" data-new-stack class="w-full mt-3 py-2.5 border border-[#3a3225] rounded-lg text-[12px] font-semibold text-[#e2c48a] hover:bg-[#211c16]">＋ New stack</button>
-        <div data-stack-result role="status" class="mt-3"></div>`;
-    wrapper.classList.add('relative');
+        <div data-stack-list class="stack-popover-list"></div>
+        <button type="button" data-new-stack class="stack-new-button">＋ New stack</button>
+        <div data-stack-result role="status" class="stack-popover-result"></div>`;
     wrapper.append(popover);
     button.setAttribute('aria-expanded', 'true');
     activePopover = { button, popover };
@@ -104,16 +106,16 @@ async function openPopover(button, { authManager, attribution, root }) {
         category: button.dataset.toolCategory || 'AI tools',
     };
     const list = popover.querySelector('[data-stack-list]');
-    list.innerHTML = '<p class="px-2 py-3 text-[12px] text-[#737373]">Loading your stacks…</p>';
+    list.innerHTML = '<p class="stack-popover-message">Loading your stacks…</p>';
 
     try {
         const result = await requestJson('/api/stacks');
         const stacks = result.stacks || [];
         list.innerHTML = stacks.length ? stacks.map(stack => `
-            <button type="button" data-stack-id="${escapeHtml(stack.id)}" class="w-full flex items-center justify-between gap-3 rounded-lg px-2 py-2 text-left hover:bg-white/[0.05]">
-                <span class="min-w-0"><b class="block truncate text-[12px] text-white">${escapeHtml(stack.title)}</b><small class="block mt-0.5 text-[10px] text-[#737373]">${stack.itemCount} ${stack.itemCount === 1 ? 'tool' : 'tools'} · ${stack.isPublic ? 'Public' : 'Private'}</small></span>
-                <span class="text-[#737373]">→</span>
-            </button>`).join('') : '<p class="px-2 py-2 text-[12px] text-[#737373]">Create your first stack to get started.</p>';
+            <button type="button" data-stack-id="${escapeHtml(stack.id)}" class="stack-option">
+                <span class="stack-option-copy"><b class="stack-option-title">${escapeHtml(stack.title)}</b><small class="stack-option-meta">${stack.itemCount} ${stack.itemCount === 1 ? 'tool' : 'tools'} · ${stack.isPublic ? 'Public' : 'Private'}</small></span>
+                <span class="stack-option-arrow">→</span>
+            </button>`).join('') : '<p class="stack-popover-message">Create your first stack to get started.</p>';
 
         list.addEventListener('click', async event => {
             const item = event.target.closest?.('[data-stack-id]');
@@ -147,9 +149,9 @@ async function openPopover(button, { authManager, attribution, root }) {
         if (error.status === 401) {
             await authManager.signOut();
             closePopover();
-            attribution.open('favorite_heart');
+            attribution.open('stack_add');
         } else {
-            list.innerHTML = `<p class="px-2 py-3 text-[12px] text-red-200">${escapeHtml(error.message || 'Could not load your stacks.')}</p>`;
+            list.innerHTML = `<p class="stack-popover-message is-error">${escapeHtml(error.message || 'Could not load your stacks.')}</p>`;
         }
     }
 }

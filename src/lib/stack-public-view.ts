@@ -19,6 +19,13 @@ export interface StackAccount {
     redirectTo?: string;
 }
 
+export function getUsernameCaseRedirect(username: string, slug?: string): string | null {
+    const canonicalUsername = username.toLowerCase();
+    if (canonicalUsername === username) return null;
+    const path = `/u/${encodeURIComponent(canonicalUsername)}`;
+    return slug === undefined ? path : `${path}/${encodeURIComponent(slug)}`;
+}
+
 export type StackPageRoute =
     | { type: 'redirect'; url: string }
     | { type: 'not_found' }
@@ -191,6 +198,7 @@ export function createStackProfilePageData(input: {
     const { displayName, stacks, username } = input;
     const pageUrl = `https://ai.dosa.dev/u/${encodeURIComponent(username)}`;
     const title = `${displayName}'s AI tool stacks | ai.dosa.dev`;
+    const hasIndexableStack = stacks.some(stack => stack.enabledItemCount > 0);
     const description = stacks.length
         ? `${displayName}'s public collections of AI tools and notes on how they are used.`
         : `${displayName}'s public AI tool profile.`;
@@ -230,7 +238,7 @@ export function createStackProfilePageData(input: {
         pageUrl,
         title,
         description,
-        robots: stacks.length ? undefined : 'noindex, nofollow',
+        robots: hasIndexableStack ? undefined : 'noindex, nofollow',
         jsonLd,
     };
 }

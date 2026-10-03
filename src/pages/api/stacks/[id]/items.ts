@@ -87,11 +87,17 @@ export const POST: APIRoute = async ({ request, cookies, params }) => {
         if (result.status === 'not_found') return privateJsonError('Not found', 404);
         if (result.status === 'limit') return privateJsonError('item_limit', 409);
         if (result.status === 'exists') return privateJsonError('item_exists', 409);
-        const username = await getUsername(db, user.id);
+        const [stack, username] = await Promise.all([
+            getOwnedStack(db, user.id, id),
+            getUsername(db, user.id),
+        ]);
+        if (!stack) return privateJsonError('Not found', 404);
+        const stackWithUrl = withPublicUrl(stack, username);
+        const publicUrl = 'publicUrl' in stackWithUrl ? stackWithUrl.publicUrl : undefined;
         return privateJson({
             status: result.status,
             item: result.item,
-            publicUrl: username ? `/u/${encodeURIComponent(username)}/${encodeURIComponent((await getOwnedStack(db, user.id, id))?.slug ?? '')}` : undefined,
+            publicUrl,
         });
     } catch (error) {
         console.error('[Stacks] Item append failed:', error instanceof Error ? error.message : String(error));

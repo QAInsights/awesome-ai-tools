@@ -241,7 +241,7 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                     </div>
                     <div>
                         <FolioTitle parts={[{ text: displayName }]} />
-                        <div class="fo-intro">
+                        <div class="fo-intro tool-detail-intro">
                             <p class="fo-lead td-summary fo-fade" style="--d:.55s">{lead}</p>
                             <div class="fo-price fo-fade" style="--d:.7s">
                                 <small>{entry ? 'From' : 'Pricing'}</small>
@@ -257,9 +257,9 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                                         </svg>
                                         <span data-favorite-label>Favorite</span>
                                     </button>
-                                    <div class="relative" data-stack-control>
+                                    <div class="stack-control" data-stack-control>
                                         <button
-                                            class="inline-flex items-center gap-2 h-10 px-3 rounded-full border border-[#333] bg-white/[0.04] text-[#cfcfcc] text-[13px] hover:border-[#c9aa6e] hover:text-white transition-colors"
+                                            class="stack-btn detail"
                                             type="button"
                                             data-add-to-stack
                                             data-tool-slug={tool.slug}

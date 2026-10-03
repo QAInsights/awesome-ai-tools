@@ -97,7 +97,7 @@ describe('add-to-stack popover', () => {
 
         await openPopover(signedOut, initializeAddToStack);
         expect(fetchCalls).toBe(0);
-        expect(signedOut.attribution.open).toHaveBeenCalledWith('favorite_heart');
+        expect(signedOut.attribution.open).toHaveBeenCalledWith('stack_add');
 
         const failedLoad = createSurface();
         global.document = { addEventListener: () => {} };

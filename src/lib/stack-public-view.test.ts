@@ -3,6 +3,7 @@ import {
     buildStackSitemapXml,
     createStackPageData,
     createStackProfilePageData,
+    getUsernameCaseRedirect,
     getVisibleStackItems,
     resolveStackPage,
     resolveStackProfile,
@@ -194,11 +195,28 @@ describe('stack profile and redirect data', () => {
                 enabledItemCount: 1,
             }],
         });
+        const emptyVisibleProfile = createStackProfilePageData({
+            username: 'ada',
+            displayName: 'Ada Lovelace',
+            stacks: [{
+                slug: 'empty-stack',
+                title: 'Empty stack',
+                description: null,
+                enabledItemCount: 0,
+            }],
+        });
         expect(emptyProfile.robots).toBe('noindex, nofollow');
         expect(JSON.parse(emptyProfile.jsonLd)['@graph'][1].numberOfItems).toBe(0);
+        expect(emptyVisibleProfile.robots).toBe('noindex, nofollow');
         expect(profile.robots).toBeUndefined();
         expect(JSON.parse(profile.jsonLd)['@graph'][1].itemListElement[0].url)
             .toBe('https://ai.dosa.dev/u/ada/my-stack');
+    });
+
+    test('redirects mixed-case usernames to lowercase profile and stack paths', () => {
+        expect(getUsernameCaseRedirect('Some-User')).toBe('/u/some-user');
+        expect(getUsernameCaseRedirect('Some-User', 'My-Stack')).toBe('/u/some-user/My-Stack');
+        expect(getUsernameCaseRedirect('some-user', 'my-stack')).toBeNull();
     });
 
     test('builds profile and public-stack sitemap URLs with lastmod', () => {

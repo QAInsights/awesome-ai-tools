@@ -3,6 +3,9 @@
 @plugin "@tailwindcss/typography";
 @source "../index.html";
 @source "../js/**/*.js";
+@source "../js/stacks-page.js";
+@source "../js/stack-editor.js";
+@source "../js/add-to-stack.js";
 
 /* Self-hosted fonts (variable: one file covers all weights).
    latin-ext first so latin's narrower range wins the cascade for ASCII. */
@@ -304,6 +307,180 @@
 
     .follow-btn.followed .follow-icon {
         fill: currentColor;
+    }
+
+    .stack-control {
+        position: relative;
+        z-index: 2;
+        flex: 0 0 auto;
+    }
+
+    .stack-btn.detail {
+        @apply relative shrink-0 inline-flex items-center justify-center w-auto h-[42px] gap-2 px-4 rounded-full border border-[#333] bg-white/5 text-sm font-medium text-white cursor-pointer transition-all duration-200 outline-none;
+        white-space: nowrap;
+    }
+
+    .stack-btn.detail:hover,
+    .stack-btn.detail[aria-expanded="true"] {
+        @apply border-[#c9aa6e] bg-[#211c16] text-white;
+    }
+
+    .stack-btn.detail:disabled {
+        @apply opacity-60 cursor-wait;
+    }
+
+    .stack-popover {
+        position: absolute;
+        top: calc(100% + 12px);
+        right: 0;
+        z-index: 80;
+        box-sizing: border-box;
+        width: min(22rem, calc(100vw - 2rem));
+        padding: 16px;
+        border: 1px solid #303030;
+        border-radius: 12px;
+        background: #111;
+        color: #fff;
+        box-shadow: 0 24px 48px rgba(0, 0, 0, .55);
+    }
+
+    @media (max-width: 600px) {
+        .stack-popover {
+            top: auto;
+            bottom: calc(100% + 12px);
+            right: auto;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    .stack-popover-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .stack-popover-title {
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .stack-popover-close {
+        border: 0;
+        background: transparent;
+        color: #737373;
+        cursor: pointer;
+        line-height: 1;
+    }
+
+    .stack-popover-close:hover {
+        color: #fff;
+    }
+
+    .stack-popover-list {
+        max-height: 14rem;
+        margin: 0 -4px;
+        overflow-y: auto;
+    }
+
+    .stack-option {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 8px;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .stack-option:hover {
+        background: rgba(255, 255, 255, .05);
+    }
+
+    .stack-option-copy {
+        display: block;
+        min-width: 0;
+    }
+
+    .stack-option-title {
+        display: block;
+        overflow: hidden;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .stack-option-meta {
+        display: block;
+        margin-top: 2px;
+        color: #737373;
+        font-size: 10px;
+    }
+
+    .stack-option-arrow {
+        color: #737373;
+    }
+
+    .stack-popover-message {
+        padding: 12px 8px;
+        color: #737373;
+        font-size: 12px;
+    }
+
+    .stack-popover-message.is-error {
+        color: #fecaca;
+    }
+
+    .stack-popover-message.is-success {
+        padding: 0;
+        color: #a7f3d0;
+    }
+
+    .stack-new-button {
+        width: 100%;
+        margin-top: 12px;
+        padding: 10px;
+        border: 1px solid #3a3225;
+        border-radius: 8px;
+        background: transparent;
+        color: #e2c48a;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .stack-new-button:hover {
+        background: #211c16;
+    }
+
+    .stack-new-button:disabled {
+        cursor: wait;
+        opacity: .6;
+    }
+
+    .stack-popover-result {
+        margin-top: 12px;
+    }
+
+    .stack-popover-link {
+        display: inline-block;
+        margin-top: 8px;
+        color: #c9aa6e;
+        font-size: 12px;
+    }
+
+    .stack-popover-link:hover {
+        color: #fff;
     }
 
     .zap-btn {

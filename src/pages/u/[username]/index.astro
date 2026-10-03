@@ -5,7 +5,11 @@ import SiteHeader from '../../../components/SiteHeader.astro';
 import FolioStyles from '../../../components/folio/FolioStyles.astro';
 import FolioTitle from '../../../components/folio/FolioTitle.astro';
 import FolioScroll from '../../../components/folio/FolioScroll.astro';
-import { createStackProfilePageData, resolveStackProfile } from '../../../lib/stack-public-view';
+import {
+    createStackProfilePageData,
+    getUsernameCaseRedirect,
+    resolveStackProfile,
+} from '../../../lib/stack-public-view';
 import { findUserByUsername } from '../../../lib/server/username-repository';
 import { listPublicStacksByUser } from '../../../lib/server/stacks-repository';
 import { requireDatabase } from '../../../lib/server/runtime-env';
@@ -13,6 +17,9 @@ import { requireDatabase } from '../../../lib/server/runtime-env';
 export const prerender = false;
 
 const requestedUsername = Astro.params.username ?? '';
+const usernameCaseRedirect = getUsernameCaseRedirect(requestedUsername);
+if (usernameCaseRedirect) return Astro.redirect(usernameCaseRedirect, 301);
+
 const db = requireDatabase();
 const account = await findUserByUsername(db, requestedUsername);
 const route = resolveStackProfile(account);
