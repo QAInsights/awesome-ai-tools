@@ -17,7 +17,12 @@ import SiteHeader from '../../components/SiteHeader.astro';
 import { formatDate, getAlternativesFor, getAllTools, getCategorySlug, getToolBySlug, type Tool } from '../../lib/tools';
 import { robotsFor } from '../../lib/indexing';
 import { getComparisonsForTool, hasAlternativesPage, hasPricingPage, humanizePricing, truncate } from '../../lib/compare';
-import { buildPricingBreakdown, type PricingPlan } from '../../lib/pricing-breakdown';
+import { entryLabel, priceSummary } from '../../lib/folio';
+import FolioStyles from '../../components/folio/FolioStyles.astro';
+import FolioTitle from '../../components/folio/FolioTitle.astro';
+import FolioPlans from '../../components/folio/FolioPlans.astro';
+import FolioFaq from '../../components/folio/FolioFaq.astro';
+import FolioScroll from '../../components/folio/FolioScroll.astro';
 import { buildToolFaqs } from '../../lib/tool-faqs';
 import { buildToolReview, buildToolSeo } from '../../lib/tool-seo';
 import { addOutboundUtmParams } from '../../lib/outbound-utm.js';
@@ -166,41 +171,11 @@ const updated = enriched?.lastUpdated ? formatDate(enriched.lastUpdated) : null;
 const model = humanizePricing(enriched?.pricing) || 'Unlisted';
 const siteHref = hasSiteLink ? addOutboundUtmParams(tool.url) : '';
 
-const words = displayName.split(/\s+/).filter(Boolean);
-const longest = Math.max(...words.map(w => w.length), 1);
-const nameVw = Math.min(11.5, 76 / longest).toFixed(2);
-const namePx = Math.round(Math.min(184, 1280 / longest));
 const sentences = description.split(/(?<=[.!?])\s+(?=[A-Z])/);
 const lead = sentences[0] ?? '';
 const rest = sentences.slice(1).join(' ');
 
-function monthly(p: PricingPlan): number {
-    const v = Number((p.price.split(/[-\u2013]/)[0] ?? '').replace(/[$,\s]/g, ''));
-    return /\/yr/.test(p.unit) ? v / 12 : v;
-}
-function unitWords(unit: string): string {
-    const parts = unit.split('/').filter(Boolean).map(u => ({ mo: 'month', yr: 'year' } as Record<string, string>)[u] ?? u);
-    return parts.length ? `per ${parts.join(' / ')}` : 'one-time';
-}
-function entryLabel(t: Tool): string {
-    const first = buildPricingBreakdown(t.enriched?.pricing, t.enriched?.pricingDetail).plans
-        .filter(p => monthly(p) > 0).sort((a, b) => monthly(a) - monthly(b))[0];
-    if (first) return `${first.price}${first.unit}`;
-    const m = (t.enriched?.pricing ?? '').toLowerCase();
-    return m === 'free' || m === 'open-source' ? 'Free' : humanizePricing(t.enriched?.pricing) || 'Unlisted';
-}
-
-const breakdown = buildPricingBreakdown(enriched?.pricing, enriched?.pricingDetail);
-const plans = breakdown.plans.filter(p => Number.isFinite(monthly(p)));
-const paid = plans.filter(p => monthly(p) > 0).sort((a, b) => monthly(a) - monthly(b));
-const entry = paid[0] ?? null;
-const freeTier = /free|open-source|freemium/i.test(enriched?.pricing ?? '') || plans.some(p => monthly(p) === 0);
-const priceMain = entry ? entry.price : freeTier ? 'Free' : enriched?.pricing ? 'Custom' : '—';
-const priceUnit = entry ? unitWords(entry.unit) : freeTier ? (/open-source/i.test(enriched?.pricing ?? '') ? 'open source' : 'free to use') : enriched?.pricing ? 'pricing on request' : 'pricing not yet listed';
-const min = paid.length ? Math.min(...paid.map(monthly)) : 0;
-const max = paid.length ? Math.max(...paid.map(monthly)) : 0;
-const span = Math.log(max) - Math.log(min || 1);
-const scale = paid.map(p => ({ p, x: span > 0 ? (Math.log(monthly(p)) - Math.log(min)) / span : 0 }));
+const { paid, entry, freeTier, main: priceMain, unit: priceUnit } = priceSummary(enriched?.pricing, enriched?.pricingDetail);
 
 const peers = getAllTools().filter(t => t.category === tool.category && t.slug !== tool.slug);
 const facts = [
@@ -242,179 +217,6 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
     twitterDescription={descMeta}
     jsonLd={jsonLd}
 >
-    <slot name="head">
-        <style is:global>
-            .fo { --ink: #f4f4f2; --mute: #8b8b88; --dim: #2c2c2b; --rule: #1d1d1c; --gold: #c8a96a; --ease: cubic-bezier(.16, 1, .3, 1);
-                color: var(--ink); font-feature-settings: 'ss01', 'cv11', 'tnum'; max-width: 1240px; margin: 0 auto; width: 100%; padding: 0 56px 120px; }
-            .fo a { color: inherit; }
-            .fo-hero { padding: 32px 0 0; }
-            .fo-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 24px; font-size: 13px; color: var(--mute); padding-bottom: 18px; }
-            .fo-crumbs { display: flex; gap: 8px; flex-wrap: wrap; }
-            .fo-crumbs a { text-decoration: none; transition: color .3s; }
-            .fo-crumbs a:hover { color: var(--ink); }
-            .fo-status { display: flex; gap: 18px; align-items: center; }
-            .fo-off { color: #f87171; }
-            .fo-rule { height: 1px; background: var(--rule); transform-origin: left; animation: fo-draw 1.6s var(--ease) both; animation-delay: var(--d, 0s); }
-            .fo-name { font-size: var(--fs); font-weight: 600; letter-spacing: -.058em; line-height: .9; margin: clamp(28px, 5vw, 64px) 0 0; overflow-wrap: normal; }
-            @property --fo-p { syntax: '<number>'; inherits: true; initial-value: 0; }
-            .fo-wrap { display: block; --W: 10em; animation: fo-p 3s linear infinite; }
-            .fo-grad { background: linear-gradient(90deg, #a78bfa, #22d3ee, #a78bfa); background-size: calc(var(--W) * 2) 100%; background-position: calc(var(--fo-p) * var(--W) * 2 - var(--x, 0px)) 0; background-repeat: repeat-x; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-            .fo-word { display: inline-block; overflow: hidden; vertical-align: top; padding: .04em .02em .1em 0; margin-bottom: -.06em; }
-            .fo-name .ch { display: inline-block; transform: translateY(110%); animation: fo-rise 1.25s var(--ease) both; animation-delay: calc(.12s + var(--i) * 38ms); }
-            .fo-intro { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 32px; align-items: end; padding: 28px 0 44px; }
-            .fo-lead { grid-column: 1 / span 6; font-size: 23px; line-height: 1.42; letter-spacing: -.012em; color: #cfcfcc; margin: 0; }
-            .fo-price { grid-column: 7 / span 3; }
-            .fo-price small, .fo-k { display: block; font-size: 13px; color: var(--mute); margin-bottom: 10px; letter-spacing: 0; }
-            .fo-price b { display: block; font-size: 52px; font-weight: 500; letter-spacing: -.045em; line-height: 1; }
-            .fo-price span { display: block; font-size: 14px; color: var(--mute); margin-top: 10px; }
-            .fo-cta { grid-column: 10 / span 3; display: flex; flex-direction: column; gap: 14px; align-items: flex-end; }
-            .fo-save { display: flex; gap: 8px; }
-            .fo-btn { display: inline-flex; align-items: center; gap: 10px; height: 46px; padding: 0 22px; border-radius: 999px; background: var(--ink); color: #000 !important; font-size: 14px; font-weight: 500; white-space: nowrap; transition: transform .5s var(--ease), background .3s; }
-            .fo-btn:hover { transform: translateY(-2px); background: #fff; }
-            .fo-btn i { display: inline-block; transition: transform .5s var(--ease); font-style: normal; }
-            .fo-btn:hover i { transform: translateX(4px); }
-            .fo-link { font-size: 14px; color: var(--mute) !important; border-bottom: 1px solid var(--dim); padding-bottom: 2px; transition: color .3s, border-color .3s; }
-            .fo-link:hover { color: var(--ink) !important; border-color: var(--ink); }
-            .fo-facts { display: grid; grid-template-columns: repeat(4, 1fr); }
-            .fo-fact { padding: 20px 0 28px; border-top: 1px solid var(--rule); }
-            .fo-fact + .fo-fact { padding-left: 28px; }
-            .fo-fact b { font-size: 21px; font-weight: 500; letter-spacing: -.02em; }
-            .fo-fade { animation: fo-fade 1.4s var(--ease) both; animation-delay: var(--d, .6s); }
-
-            .fo-sec { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 32px; padding: 96px 0; border-top: 1px solid var(--rule); }
-            .fo-label { grid-column: 1 / span 3; align-self: start; position: sticky; top: 112px; display: flex; gap: 14px; font-size: 14px; color: var(--mute); }
-            .fo-label em { font-style: normal; color: var(--dim); }
-            .fo-body { grid-column: 4 / span 9; min-width: 0; }
-            .fo-text { font-size: 30px; line-height: 1.34; letter-spacing: -.022em; margin: 0; color: var(--ink); max-width: 30ch; }
-            .fo-text.sm { font-size: 22px; line-height: 1.5; letter-spacing: -.012em; max-width: 44ch; color: #cfcfcc; }
-
-            .fo-list { list-style: none; margin: 0; padding: 0; }
-            .fo-list li { display: grid; grid-template-columns: 56px 1fr; align-items: baseline; padding: 22px 0; border-bottom: 1px solid var(--rule); font-size: 24px; letter-spacing: -.018em; line-height: 1.3; }
-            .fo-list li:first-child { border-top: 1px solid var(--rule); }
-            .fo-list li span { font-size: 13px; color: var(--mute); letter-spacing: 0; }
-            .fo-list li p { margin: 0; transition: transform .7s var(--ease), color .4s; color: #dcdcd9; }
-            .fo-list li:hover p { transform: translateX(10px); color: #fff; }
-
-            .fo-table { width: 100%; border-collapse: collapse; }
-            .fo-table td { padding: 24px 0; border-bottom: 1px solid var(--rule); vertical-align: baseline; }
-            .fo-table tr:first-child td { border-top: 1px solid var(--rule); }
-            .fo-table .n { font-size: 24px; letter-spacing: -.018em; width: 58%; }
-            .fo-table .p { font-size: 34px; font-weight: 500; letter-spacing: -.04em; text-align: right; white-space: nowrap; }
-            .fo-table .u { font-size: 14px; color: var(--mute); text-align: left; width: 24%; padding-left: 18px; white-space: nowrap; }
-            .fo-tag { display: inline-block; margin-left: 14px; font-size: 12px; color: var(--gold); vertical-align: middle; letter-spacing: 0; }
-            .fo-scale { position: relative; height: 64px; margin: 56px 0 8px; }
-            .fo-scale::before { content: ''; position: absolute; left: 0; right: 0; top: 24px; height: 1px; background: var(--dim); }
-            .fo-tick { position: absolute; top: 18px; width: 1px; height: 13px; background: var(--ink); }
-            .fo-tick span { position: absolute; top: 22px; left: 0; transform: translateX(-50%); font-size: 12px; color: var(--mute); white-space: nowrap; }
-            .fo-tick.first { background: var(--gold); }
-            .fo-tick.first span { color: var(--gold); }
-            .fo-tick:last-child span { transform: translateX(-100%); }
-            .fo-tick:first-child span { transform: none; }
-            .fo-note { font-size: 15px; color: var(--mute); line-height: 1.6; margin: 28px 0 0; max-width: 64ch; }
-
-            .fo-fit { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
-            .fo-fit h3 { font-size: 14px; font-weight: 400; color: var(--mute); margin: 0 0 18px; }
-            .fo-fit p { font-size: 21px; line-height: 1.5; letter-spacing: -.012em; margin: 0; padding-top: 20px; border-top: 1px solid var(--rule); color: #dcdcd9; }
-
-            .fo-verdict { font-size: 42px; line-height: 1.24; letter-spacing: -.03em; font-weight: 400; margin: 0; max-width: 24ch; }
-            .fo-sign { margin-top: 40px; font-size: 14px; color: var(--mute); display: flex; gap: 12px; align-items: center; }
-            .fo-sign::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
-
-            .fo-alt { display: grid; grid-template-columns: 1fr auto auto 28px; gap: 28px; align-items: baseline; padding: 24px 0; border-bottom: 1px solid var(--rule); text-decoration: none; }
-            .fo-alt:first-child { border-top: 1px solid var(--rule); }
-            .fo-alt b { font-size: 26px; font-weight: 500; letter-spacing: -.025em; transition: transform .7s var(--ease); display: inline-block; }
-            .fo-alt small { font-size: 14px; color: var(--mute); }
-            .fo-alt .pr { font-size: 16px; color: #dcdcd9; min-width: 110px; text-align: right; }
-            .fo-alt i { font-style: normal; color: var(--mute); transition: transform .7s var(--ease), color .3s; }
-            .fo-alt:hover b { transform: translateX(10px); }
-            .fo-alt:hover i { transform: translateX(6px); color: var(--ink); }
-            .fo-more { display: flex; flex-wrap: wrap; gap: 14px 32px; margin-top: 32px; }
-            .fo-more a { font-size: 15px; color: var(--gold) !important; text-decoration: none; }
-            .fo-more a:hover { color: #e2c48a !important; }
-            .fo-faq details { border-bottom: 1px solid var(--rule); }
-            .fo-faq details:first-child { border-top: 1px solid var(--rule); }
-            .fo-faq summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr 24px; gap: 24px; align-items: baseline; padding: 24px 0; font-size: 21px; letter-spacing: -.015em; line-height: 1.35; color: #dcdcd9; transition: color .3s; }
-            .fo-faq summary::-webkit-details-marker { display: none; }
-            .fo-faq summary:hover { color: #fff; }
-            .fo-faq summary i { font-style: normal; color: var(--mute); text-align: right; transition: transform .6s var(--ease); }
-            .fo-faq details[open] summary i { transform: rotate(45deg); }
-            .fo-faq details p { margin: 0; padding: 0 48px 28px 0; font-size: 16px; line-height: 1.65; color: var(--mute); max-width: 68ch; }
-            .fo-tags { display: flex; flex-wrap: wrap; gap: 10px 28px; font-size: 16px; color: #cfcfcc; margin: 0; padding: 0; list-style: none; }
-            .fo-track { display: grid; grid-template-columns: 1fr auto; gap: 24px 48px; align-items: center; padding: 48px 0; border-top: 1px solid var(--rule); }
-            .fo-track b { display: block; font-size: 24px; font-weight: 500; letter-spacing: -.02em; margin-bottom: 8px; }
-            .fo-track p { margin: 0; font-size: 15px; color: var(--mute); line-height: 1.6; }
-            .fo-track div:last-child { display: flex; gap: 20px; align-items: center; }
-            .fo-pending { font-size: 18px; line-height: 1.6; color: var(--mute); max-width: 56ch; margin: 0; padding: 56px 0; border-top: 1px solid var(--rule); }
-            .fo-notes { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px 32px; padding-top: 32px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--mute); line-height: 1.6; }
-            .fo-notes a { color: var(--gold) !important; text-decoration: none; }
-            .fo-notes a.back { color: var(--mute) !important; }
-            .fo-notes a.back:hover { color: var(--ink) !important; }
-
-            .fo-end { padding: 120px 0 40px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; }
-            .fo-end a.big { font-size: clamp(48px, 7vw, 104px); font-weight: 600; letter-spacing: -.055em; line-height: .95; text-decoration: none; display: inline-flex; gap: .25em; align-items: baseline; }
-            .fo-end a.big i { font-style: normal; display: inline-block; transition: transform .8s var(--ease); color: var(--gold); }
-            .fo-end a.big:hover i { transform: translateX(.18em); }
-
-            @keyframes fo-rise { to { transform: translateY(0); } }
-            @keyframes fo-draw { from { transform: scaleX(0); } }
-            @keyframes fo-fade { from { opacity: 0; transform: translateY(14px); } }
-            @keyframes fo-in { from { opacity: 0; transform: translateY(36px); } }
-            @keyframes fo-word { from { color: var(--dim); } to { color: var(--ink); } }
-            @keyframes fo-grow { from { transform: scaleX(0); } }
-            @keyframes fo-hero-out { to { transform: translateY(-8vh); opacity: .25; } }
-
-            @supports (animation-timeline: view()) {
-                .fo-name { animation: fo-hero-out linear both; animation-timeline: view(); animation-range: exit 0% exit 100%; }
-                .fo-reveal { animation: fo-in linear both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
-                .fo-list li, .fo-table tr, .fo-alt { animation: fo-in linear both; animation-timeline: view(); animation-range: entry 0% entry 90%; }
-                .fo-sec { animation: none; }
-                .fo-verdict .w { animation: fo-word linear both; animation-timeline: view(); animation-range: cover 18% cover 42%; }
-                .fo-scale::before { transform-origin: left; animation: fo-grow linear both; animation-timeline: view(); animation-range: entry 40% cover 45%; }
-            }
-            @media (prefers-reduced-motion: reduce) {
-                .fo *, .fo-name, .fo-name .ch { animation: none !important; transform: none !important; }
-            }
-            @keyframes fo-p { to { --fo-p: 1; } }
-            @media (max-width: 900px) {
-                .fo { padding: 0 22px 80px; }
-                .fo-intro, .fo-sec { grid-template-columns: 1fr; gap: 28px; }
-                .fo-lead, .fo-price, .fo-cta, .fo-label, .fo-body { grid-column: 1 / -1; }
-                .fo-cta { align-items: center; flex-direction: row; flex-wrap: wrap; }
-                .fo-label { position: static; }
-                .fo-facts, .fo-fit { grid-template-columns: 1fr 1fr; }
-                .fo-text { font-size: 24px; } .fo-verdict { font-size: 30px; }
-                .fo-sec { padding: 64px 0; }
-                .fo-lead { font-size: 20px; }
-                .fo-fact + .fo-fact { padding-left: 0; }
-                .fo-fact:nth-child(even) { padding-left: 18px; }
-                .fo-intro { padding: 24px 0 36px; }
-            }
-            @media (max-width: 600px) {
-                .fo { padding: 0 18px 64px; }
-                .fo-hero { padding-top: 20px; }
-                .fo-top { font-size: 12px; gap: 16px; }
-                .fo-fact b { font-size: 18px; }
-                .fo-price b { font-size: 44px; }
-                .fo-fit { grid-template-columns: 1fr; gap: 32px; }
-                .fo-text { font-size: 21px; } .fo-text.sm, .fo-fit p { font-size: 18px; }
-                .fo-verdict { font-size: 26px; }
-                .fo-list li { grid-template-columns: 40px 1fr; font-size: 19px; padding: 18px 0; }
-                .fo-table .n { font-size: 18px; width: auto; }
-                .fo-table .p { font-size: 24px; }
-                .fo-table .u { font-size: 12px; padding-left: 10px; white-space: normal; width: 30%; }
-                .fo-tick span { font-size: 10px; }
-                .fo-tick:not(.first):not(:last-child) span { display: none; }
-                .fo-alt { grid-template-columns: 1fr auto 20px; gap: 14px; }
-                .fo-alt small { display: none; }
-                .fo-alt b { font-size: 20px; }
-                .fo-alt .pr { min-width: 0; font-size: 14px; }
-                .fo-end { flex-direction: column; align-items: flex-start; padding: 72px 0 24px; }
-                .fo-track { grid-template-columns: 1fr; }
-                .fo-faq summary { font-size: 18px; }
-                .fo-faq details p { padding-right: 0; }
-            }
-        </style>
-    </slot>
 
     <div class="flex h-[100dvh] overflow-hidden">
         <Sidebar variant="tool" />
@@ -438,10 +240,7 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                         <div class="fo-rule"></div>
                     </div>
                     <div>
-                        <h1 class="fo-name" aria-label={displayName} style={`--fs:clamp(40px, ${nameVw}vw, ${namePx}px)`}><span class="fo-wrap">{words.map((w, wi) => {
-                            const offset = words.slice(0, wi).join(' ').length + (wi ? 1 : 0);
-                            return <><span class="fo-word" aria-hidden="true">{[...w].map((c, ci) => <span class="ch fo-grad" style={`--i:${offset + ci}`}>{c}</span>)}</span>{wi < words.length - 1 && ' '}</>;
-                        })}</span></h1>
+                        <FolioTitle parts={[{ text: displayName }]} />
                         <div class="fo-intro">
                             <p class="fo-lead td-summary fo-fade" style="--d:.55s">{lead}</p>
                             <div class="fo-price fo-fade" style="--d:.7s">
@@ -504,29 +303,7 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                     <section class="fo-sec" id="pricing">
                         <div class="fo-label"><em>{num('pricing')}</em>Pricing</div>
                         <div class="fo-body">
-                            {plans.length > 0 ? (
-                                <table class="fo-table">
-                                    <tbody>
-                                        {plans.map(p => (
-                                            <tr>
-                                                <td class="n">{p.name}{p === entry && <span class="fo-tag">Entry plan</span>}</td>
-                                                <td class="p">{monthly(p) === 0 ? 'Free' : p.price}</td>
-                                                <td class="u">{monthly(p) === 0 ? '' : unitWords(p.unit)}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            ) : (
-                                <p class="fo-text">{model}</p>
-                            )}
-                            {scale.length > 1 && (
-                                <div class="fo-scale fo-reveal" aria-hidden="true">
-                                    {scale.map(({ p, x }, i) => (
-                                        <div class={`fo-tick${i === 0 ? ' first' : ''}`} style={`left:${(x * 100).toFixed(2)}%`}><span>{p.name} {p.price}</span></div>
-                                    ))}
-                                </div>
-                            )}
-                            {enriched?.pricingDetail && <p class="fo-note">{enriched.pricingDetail}</p>}
+                            <FolioPlans pricing={enriched?.pricing} detail={enriched?.pricingDetail} />
                         </div>
                     </section>
                 )}
@@ -564,14 +341,7 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                 {faqs.length >= 2 && (
                     <section class="fo-sec" id="faq" aria-label="Frequently asked questions">
                         <div class="fo-label"><em>{num('faq')}</em>Pricing &amp; FAQ</div>
-                        <div class="fo-body fo-faq">
-                            {faqs.map(f => (
-                                <details>
-                                    <summary>{f.q}<i aria-hidden="true">+</i></summary>
-                                    <p>{f.a}</p>
-                                </details>
-                            ))}
-                        </div>
+                        <FolioFaq faqs={faqs} />
                     </section>
                 )}
 
@@ -647,43 +417,8 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
         </main>
     </div>
 
-    <script>
-        const wrap = document.querySelector<HTMLElement>('.fo-wrap');
-        const measure = () => {
-            if (!wrap) return;
-            const box = wrap.getBoundingClientRect();
-            let width = 0;
-            wrap.querySelectorAll<HTMLElement>('.fo-word').forEach(w => {
-                const r = w.getBoundingClientRect();
-                width = Math.max(width, r.right - box.left);
-                w.querySelectorAll<HTMLElement>('.ch').forEach(c => c.style.setProperty("--x", `${c.getBoundingClientRect().left - box.left}px`));
-            });
-            wrap.style.setProperty('--W', `${Math.max(width, 1)}px`);
-        };
-        document.fonts.ready.then(measure);
-        addEventListener('resize', measure);
-        const main = document.querySelector('main');
-        if (main && !matchMedia('(prefers-reduced-motion: reduce)').matches && matchMedia('(pointer: fine)').matches) {
-            let target = main.scrollTop;
-            let current = target;
-            let running = false;
-            const tick = () => {
-                current += (target - current) * 0.09;
-                if (Math.abs(target - current) < 0.4) current = target;
-                main.scrollTop = current;
-                running = current !== target;
-                if (running) requestAnimationFrame(tick);
-            };
-            main.addEventListener('wheel', e => {
-                if (e.ctrlKey) return;
-                e.preventDefault();
-                const limit = main.scrollHeight - main.clientHeight;
-                target = Math.max(0, Math.min(limit, target + e.deltaY));
-                if (!running) { current = main.scrollTop; running = true; requestAnimationFrame(tick); }
-            }, { passive: false });
-            main.addEventListener('scroll', () => { if (!running) target = current = main.scrollTop; });
-        }
-    </script>
+    <FolioStyles />
+    <FolioScroll />
 
     <!-- Client scripts for auth + sidebar toggle (shared with all pages) -->
     <script src="/dist/app.js" type="module" defer></script>

@@ -1,0 +1,43 @@
+---
+import { titleFontSize, type TitleSize } from '../../lib/folio';
+
+interface Part {
+    text: string;
+    plain?: boolean;
+}
+
+interface Props {
+    parts: Part[];
+    size?: TitleSize;
+}
+
+const { parts, size = 'xl' } = Astro.props;
+const label = parts.map(p => p.text).join(' ');
+const words = parts.flatMap(p => p.text.split(/\s+/).filter(Boolean).map(w => ({ w, plain: Boolean(p.plain) })));
+let offset = 0;
+const rendered = words.map(({ w, plain }) => {
+    const start = offset;
+    offset += w.length + 1;
+    return { chars: [...w], plain, start };
+});
+---
+<h1 class="fo-name" aria-label={label} style={`--fs:${titleFontSize(label, size)}`}><span class="fo-wrap">{rendered.map((r, wi) => (
+    <><span class="fo-word" aria-hidden="true">{r.chars.map((c, ci) => <span class={r.plain ? 'ch plain' : 'ch fo-grad'} style={`--i:${r.start + ci}`}>{c}</span>)}</span>{wi < rendered.length - 1 && ' '}</>
+))}</span></h1>
+
+<script>
+    const wrap = document.querySelector<HTMLElement>('.fo-wrap');
+    const measure = () => {
+        if (!wrap) return;
+        const box = wrap.getBoundingClientRect();
+        let width = 0;
+        wrap.querySelectorAll<HTMLElement>('.fo-word').forEach(w => {
+            const r = w.getBoundingClientRect();
+            width = Math.max(width, r.right - box.left);
+            w.querySelectorAll<HTMLElement>('.ch').forEach(c => c.style.setProperty('--x', `${c.getBoundingClientRect().left - box.left}px`));
+        });
+        wrap.style.setProperty('--W', `${Math.max(width, 1)}px`);
+    };
+    document.fonts.ready.then(measure);
+    addEventListener('resize', measure);
+</script>

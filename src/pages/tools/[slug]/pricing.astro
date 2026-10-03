@@ -10,7 +10,13 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Sidebar from '../../../components/Sidebar.astro';
 import SiteHeader from '../../../components/SiteHeader.astro';
-import PricingBreakdown from '../../../components/PricingBreakdown.astro';
+import FolioStyles from '../../../components/folio/FolioStyles.astro';
+import FolioTitle from '../../../components/folio/FolioTitle.astro';
+import FolioPlans from '../../../components/folio/FolioPlans.astro';
+import FolioFaq from '../../../components/folio/FolioFaq.astro';
+import FolioScroll from '../../../components/folio/FolioScroll.astro';
+import { entryLabel, priceSummary } from '../../../lib/folio';
+import { addOutboundUtmParams } from '../../../lib/outbound-utm.js';
 import { formatDate, getAlternativesFor, getCategorySlug, type Tool } from '../../../lib/tools';
 import { robotsFor } from '../../../lib/indexing';
 import { getTopPricingTools, hasAlternativesPage, humanizePricing, truncate } from '../../../lib/compare';
@@ -78,6 +84,28 @@ if (faqs.length >= 2) {
     });
 }
 const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
+
+const price = priceSummary(enriched?.pricing, enriched?.pricingDetail);
+const hasSiteLink = typeof tool.url === 'string' && /^https?:\/\//i.test(tool.url);
+const siteHref = hasSiteLink ? addOutboundUtmParams(tool.url) : '';
+const updated = lastUpdated ? formatDate(lastUpdated) : null;
+const showAlternativesLink = hasAlternativesPage(tool.slug);
+const facts = [
+    { k: 'Pricing model', v: pricingLabel },
+    { k: 'Free tier', v: freeTier === 'No' ? 'No' : 'Yes' },
+    { k: 'Open source', v: openSource },
+    { k: 'Paid plans', v: price.paid.length ? String(price.paid.length) : 'None listed' },
+];
+const hasFit = Boolean(enriched?.bestFor || enriched?.notIdealFor);
+const sections = [
+    'plans',
+    hasFit && 'fit',
+    alternatives.length && 'alternatives',
+    faqs.length >= 2 && 'faq',
+    'more',
+].filter(Boolean) as string[];
+const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
+
 ---
 
 <BaseLayout
@@ -88,156 +116,123 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
     robots={robotsFor(`/tools/${tool.slug}/pricing`)}
     jsonLd={jsonLd}
 >
-    <slot name="head">
-        <style>
-            .td-section { padding: 20px 0; border-top: 1px solid #222; }
-            .td-card { background: #0d0d0d; border: 1px solid #222; border-radius: 10px; padding: 18px; }
-        </style>
-    </slot>
-
     <div class="flex h-[100dvh] overflow-hidden">
         <Sidebar variant="tool" />
 
         <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
             <SiteHeader variant="page" title={`${displayName} pricing`} />
 
-            <div class="max-w-[1000px] mx-auto w-full flex flex-col flex-1 p-4 md:p-8 gap-6">
-                <!-- Breadcrumb -->
-                <nav aria-label="Breadcrumb" class="font-mono text-[12px] text-[#737373] tracking-wide flex items-center gap-2 flex-wrap">
-                    <a href="/" class="hover:text-white transition-colors">Home</a>
-                    <span>/</span>
-                    <a href={`/category/${getCategorySlug(tool.categoryShort)}`} class="text-[#a3a3a3] hover:text-white transition-colors">{tool.categoryClean}</a>
-                    <span>/</span>
-                    <a href={`/tools/${tool.slug}`} class="text-[#a3a3a3] hover:text-white transition-colors">{displayName}</a>
-                    <span>/</span>
-                    <span class="text-white">Pricing</span>
-                </nav>
-
-                <!-- Header -->
-                <header class="flex flex-col gap-3 pb-4 border-b border-[#222]">
-                    <h1 class="text-[32px] md:text-[40px] font-semibold tracking-tight leading-tight bg-gradient-to-r from-white via-[#e5e5e5] to-white bg-clip-text text-transparent">
-                        {displayName} Pricing
-                    </h1>
-                    <p class="text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">
-                        {displayName} by {displayCompany} is listed as {pricingLabel} under {tool.categoryClean} on ai.dosa.dev. See the <a href={`/tools/${tool.slug}`} class="text-white underline underline-offset-4 decoration-[#444] hover:decoration-white transition-colors">{displayName} review</a> for features and verdict.
-                    </p>
-                    <div class="font-mono text-[12px] text-[#737373] tracking-wide">
-                        {lastUpdated && <>Last updated <time datetime={lastUpdated}>{formatDate(lastUpdated)}</time></>}
+            <article class="fo">
+                <header class="fo-hero">
+                    <div>
+                        <div class="fo-top fo-fade" style="--d:.1s">
+                            <nav aria-label="Breadcrumb" class="fo-crumbs">
+                                <a href="/">Home</a><span>/</span>
+                                <a href={`/category/${getCategorySlug(tool.categoryShort)}`}>{tool.categoryClean}</a><span>/</span>
+                                <a href={`/tools/${tool.slug}`}>{displayName}</a><span>/</span>
+                                <span class="here">Pricing</span>
+                            </nav>
+                            {updated && <span class="fo-status"><span>Updated <time datetime={lastUpdated}>{updated}</time></span></span>}
+                        </div>
+                        <div class="fo-rule"></div>
+                    </div>
+                    <div>
+                        <FolioTitle parts={[{ text: displayName }, { text: 'Pricing', plain: true }]} size="lg" />
+                        <div class="fo-intro">
+                            <p class="fo-lead fo-fade" style="--d:.55s">
+                                {displayName} by {displayCompany} is listed as {pricingLabel} under {tool.categoryClean} on ai.dosa.dev. See the <a class="fo-link" href={`/tools/${tool.slug}`}>{displayName} review</a> for features and verdict.
+                            </p>
+                            <div class="fo-price fo-fade" style="--d:.7s">
+                                <small>{price.entry ? 'From' : 'Pricing'}</small>
+                                <b>{price.main}</b>
+                                <span>{price.unit}{price.entry && price.freeTier ? ' · free tier available' : ''}</span>
+                            </div>
+                            <div class="fo-cta fo-fade" style="--d:.85s">
+                                {hasSiteLink && <a class="fo-btn" href={siteHref} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${displayName} website`}>Visit site <i aria-hidden="true">→</i></a>}
+                                <a class="fo-link" href={`/tools/${tool.slug}`}>Full {displayName} review</a>
+                            </div>
+                        </div>
+                        <section class="fo-facts" aria-label="Pricing summary">
+                            {facts.map((f, i) => (
+                                <div class="fo-fact fo-fade" style={`--d:${0.9 + i * 0.08}s`}>
+                                    <span class="fo-k">{f.k}</span>
+                                    <b>{f.v}</b>
+                                </div>
+                            ))}
+                        </section>
                     </div>
                 </header>
 
-                <!-- Summary cards -->
-                <section aria-label="Pricing summary" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div class="td-card">
-                        <div class="font-mono text-[11px] uppercase text-[#525252] tracking-wide mb-2">Pricing model</div>
-                        <div class="text-[15px] text-white">{pricingLabel}</div>
-                    </div>
-                    <div class="td-card">
-                        <div class="font-mono text-[11px] uppercase text-[#525252] tracking-wide mb-2">Free tier?</div>
-                        <div class="text-[15px] text-white">{freeTier}</div>
-                    </div>
-                    <div class="td-card">
-                        <div class="font-mono text-[11px] uppercase text-[#525252] tracking-wide mb-2">Open source?</div>
-                        <div class="text-[15px] text-white">{openSource}</div>
+                <section class="fo-sec" id="plans">
+                    <h2 class="fo-label"><em>{num('plans')}</em>Plans</h2>
+                    <div class="fo-body">
+                        <FolioPlans pricing={enriched?.pricing} detail={enriched?.pricingDetail} footnote="Pricing changes often - verify on the official site." />
                     </div>
                 </section>
 
-                {enriched?.pricingDetail && (
-                    <section class="td-section" style="border-top: none;">
-                        <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em] mb-3">Pricing details</div>
-                        <PricingBreakdown pricing={enriched.pricing} detail={enriched.pricingDetail} footnote="Pricing changes often - verify on the official site." />
-                    </section>
-                )}
-
-                {(enriched?.bestFor || enriched?.notIdealFor) && (
-                    <section class="td-section">
-                        <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em] mb-3">Who It's For</div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="td-card">
-                                <div class="font-mono text-[11px] uppercase text-[#4ade80] tracking-wide mb-2">&#10003; Best For</div>
-                                <p class="text-[15px] leading-relaxed text-[#d4d4d4]">{enriched.bestFor ?? '-'}</p>
-                            </div>
-                            <div class="td-card">
-                                <div class="font-mono text-[11px] uppercase text-[#f87171] tracking-wide mb-2">&#10007; Not Ideal For</div>
-                                <p class="text-[15px] leading-relaxed text-[#d4d4d4]">{enriched.notIdealFor ?? '-'}</p>
-                            </div>
+                {hasFit && (
+                    <section class="fo-sec" id="fit">
+                        <h2 class="fo-label"><em>{num('fit')}</em>Who it's for</h2>
+                        <div class="fo-body fo-fit">
+                            {enriched?.bestFor && <div class="fo-reveal"><h3>Best for</h3><p>{enriched.bestFor}</p></div>}
+                            {enriched?.notIdealFor && <div class="fo-reveal"><h3>Not ideal for</h3><p>{enriched.notIdealFor}</p></div>}
                         </div>
                     </section>
                 )}
 
                 {alternatives.length > 0 && (
-                    <section class="td-section" aria-label={`${displayName} alternatives and their pricing`}>
-                        <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em] mb-3">Alternatives and their pricing</div>
-                        <div class="flex flex-col">
+                    <section class="fo-sec" id="alternatives" aria-label={`${displayName} alternatives and their pricing`}>
+                        <h2 class="fo-label"><em>{num('alternatives')}</em>Alternatives and their pricing</h2>
+                        <div class="fo-body">
                             {alternatives.map(alt => (
-                                <div class="group flex items-center gap-3 py-3 border-b border-[#1a1a1a] md:px-2 -mx-2 rounded transition-colors hover:bg-white/[0.02]">
-                                    <a href={`/tools/${alt.slug}`} class="text-[15px] font-medium text-white no-underline group-hover:bg-gradient-to-r group-hover:from-[#a78bfa] group-hover:via-[#22d3ee] group-hover:to-[#a78bfa] group-hover:bg-clip-text group-hover:text-transparent transition-all">{alt.enriched?.name ?? alt.name}</a>
-                                    <span class="font-mono text-[12px] text-[#737373] uppercase tracking-wide">{alt.enriched?.company ?? alt.company}</span>
-                                    {alt.enriched?.pricing && (
-                                        <span class="font-mono text-[10px] uppercase tracking-wide px-2 py-0.5 border border-[#222] rounded-full text-[#737373]">{humanizePricing(alt.enriched.pricing)}</span>
-                                    )}
-                                </div>
+                                <a class="fo-alt" href={`/tools/${alt.slug}`}>
+                                    <span><b>{alt.enriched?.name ?? alt.name}</b></span>
+                                    <small>{alt.enriched?.company ?? alt.company}</small>
+                                    <span class="pr">{entryLabel(alt)}</span>
+                                    <i aria-hidden="true">→</i>
+                                </a>
                             ))}
+                            {showAlternativesLink && (
+                                <div class="fo-more"><a href={`/tools/${tool.slug}/alternatives`}>See all {displayName} alternatives →</a></div>
+                            )}
                         </div>
-                        {hasAlternativesPage(tool.slug) && (
-                            <a href={`/tools/${tool.slug}/alternatives`} class="inline-flex items-center gap-2 mt-4 text-[14px] font-medium text-[#c9aa6e] hover:text-[#e2c48a] transition-colors">
-                                See all {displayName} alternatives
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                            </a>
-                        )}
                     </section>
                 )}
 
                 {faqs.length >= 2 && (
-                    <section class="td-section" aria-label="Frequently asked questions">
-                        <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em] mb-3">FAQ</div>
-                        <div class="flex flex-col gap-3">
-                            {faqs.map(f => (
-                                <details class="td-card group" style="padding: 0;">
-                                    <summary class="cursor-pointer px-4 py-3.5 text-[15px] font-medium text-white list-none flex items-center justify-between gap-3">
-                                        {f.q}
-                                        <svg class="w-4 h-4 text-[#525252] shrink-0 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                    </summary>
-                                    <p class="px-4 pb-4 text-[14px] text-[#a3a3a3] leading-relaxed">{f.a}</p>
-                                </details>
-                            ))}
-                        </div>
+                    <section class="fo-sec" id="faq" aria-label="Frequently asked questions">
+                        <h2 class="fo-label"><em>{num('faq')}</em>FAQ</h2>
+                        <FolioFaq faqs={faqs} />
                     </section>
                 )}
 
-                <!-- Cross-links -->
-                <nav aria-label="Explore more" class="pt-4 pb-4 flex flex-col gap-4">
-                    <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em]">Explore more</div>
-                    <div class="flex flex-wrap gap-2">
-                        <a href={`/tools/${tool.slug}`} class="inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide hover:text-white hover:border-[#444] transition-colors">
-                            {displayName} review
-                        </a>
-                        <a href={`/category/${getCategorySlug(tool.categoryShort)}`} class="inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide hover:text-white hover:border-[#444] transition-colors">
-                            All {tool.categoryShort} tools
-                        </a>
-                        {hasAlternativesPage(tool.slug) && (
-                            <a href={`/tools/${tool.slug}/alternatives`} class="inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide hover:text-white hover:border-[#444] transition-colors">
-                                {displayName} alternatives
-                            </a>
-                        )}
+                <nav class="fo-sec" id="more" aria-label="Explore more">
+                    <h2 class="fo-label"><em>{num('more')}</em>Explore more</h2>
+                    <div class="fo-body">
+                        <ul class="fo-tags">
+                            <li><a href={`/tools/${tool.slug}`}>{displayName} review</a></li>
+                            <li><a href={`/category/${getCategorySlug(tool.categoryShort)}`}>All {tool.categoryShort} tools</a></li>
+                            {showAlternativesLink && <li><a href={`/tools/${tool.slug}/alternatives`}>{displayName} alternatives</a></li>}
+                        </ul>
                     </div>
                 </nav>
 
-                <div class="td-section" style="padding-top: 0;">
-                    <div class="flex items-start gap-3 py-4 px-4 border border-[#222] rounded-lg bg-white/[0.02]">
-                        <svg class="w-5 h-5 text-[#737373] shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="12" y1="8" x2="12" y2="12"></line>
-                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                        </svg>
-                        <p class="text-[13px] text-[#737373] leading-relaxed">
-                            Content on this page is AI-generated. Please verify details with the vendor's website for accuracy.
-                        </p>
-                    </div>
+                {hasSiteLink && (
+                    <footer class="fo-end">
+                        <a class="big" href={siteHref} target="_blank" rel="noopener noreferrer">Try {displayName}<i aria-hidden="true">→</i></a>
+                        <span class="fo-k" style="margin:0">{price.entry ? `From ${price.main} ${price.unit}` : price.main}</span>
+                    </footer>
+                )}
+
+                <div class="fo-notes">
+                    <span>Content on this page is AI-generated. Please verify details with the vendor's website for accuracy.</span>
+                    <a class="back" href={`/tools/${tool.slug}`}>← Back to {displayName}</a>
                 </div>
-            </div>
+            </article>
         </main>
     </div>
 
+    <FolioStyles />
+    <FolioScroll />
     <script src="/dist/app.js" type="module" defer></script>
 </BaseLayout>

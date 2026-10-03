@@ -13,7 +13,12 @@ import Sidebar from '../../../components/Sidebar.astro';
 import SiteHeader from '../../../components/SiteHeader.astro';
 import { formatDate, getAlternativesFor, getCategorySlug, maxLastUpdated, type Tool } from '../../../lib/tools';
 import { robotsFor } from '../../../lib/indexing';
-import { getComparisonsForTool, getTopComparedTools, hasAlternativesPage, humanizePricing } from '../../../lib/compare';
+import { getComparisonsForTool, getTopComparedTools, hasAlternativesPage } from '../../../lib/compare';
+import { entryLabel } from '../../../lib/folio';
+import FolioStyles from '../../../components/folio/FolioStyles.astro';
+import FolioTitle from '../../../components/folio/FolioTitle.astro';
+import FolioFaq from '../../../components/folio/FolioFaq.astro';
+import FolioScroll from '../../../components/folio/FolioScroll.astro';
 
 export async function getStaticPaths() {
     return getTopComparedTools().map(tool => ({
@@ -123,6 +128,15 @@ const jsonLd = JSON.stringify({
 const siblingAltPages = getTopComparedTools()
     .filter(t => t.slug !== tool.slug && t.category === tool.category)
     .slice(0, 6);
+
+const updated = lastUpdated ? formatDate(lastUpdated) : null;
+const facts = [
+    { k: 'Alternatives', v: String(count) },
+    { k: 'Free or open source', v: String(freeAlts.length) },
+    { k: 'Head-to-head pages', v: String(pairByOtherSlug.size) },
+    { k: 'Category', v: tool.categoryShort },
+];
+
 ---
 
 <BaseLayout
@@ -139,94 +153,96 @@ const siblingAltPages = getTopComparedTools()
         <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
             <SiteHeader variant="page" title={`${displayName} alternatives`} />
 
-            <div class="max-w-[1000px] mx-auto w-full flex flex-col flex-1 p-4 md:p-8 gap-6">
-                <!-- Breadcrumb -->
-                <nav aria-label="Breadcrumb" class="font-mono text-[12px] text-[#737373] tracking-wide flex items-center gap-2 flex-wrap">
-                    <a href="/" class="hover:text-white transition-colors">Home</a>
-                    <span>/</span>
-                    <a href={`/category/${getCategorySlug(tool.categoryShort)}`} class="text-[#a3a3a3] hover:text-white transition-colors">{tool.categoryClean}</a>
-                    <span>/</span>
-                    <a href={`/tools/${tool.slug}`} class="text-[#a3a3a3] hover:text-white transition-colors">{displayName}</a>
-                    <span>/</span>
-                    <span class="text-white">Alternatives</span>
-                </nav>
-
-                <!-- Header -->
-                <header class="flex flex-col gap-3 pb-4 border-b border-[#222]">
-                    <h1 class="text-[32px] md:text-[40px] font-semibold tracking-tight leading-tight bg-gradient-to-r from-white via-[#e5e5e5] to-white bg-clip-text text-transparent">
-                        Best {displayName} Alternatives
-                    </h1>
-                    <p class="text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">
-                        {displayName} by {displayCompany} is listed under {tool.categoryClean}. If you're weighing options, these are the {count} closest alternatives in the directory - with pricing, key features, and verdicts on each detail page.
-                    </p>
-                    <div class="font-mono text-[12px] text-[#737373] tracking-wide">
-                        {count} alternatives{freeAlts.length > 0 && ` · ${freeAlts.length} free or open source`}{lastUpdated && <> · Updated <time datetime={lastUpdated}>{formatDate(lastUpdated)}</time></>}
+            <article class="fo">
+                <header class="fo-hero">
+                    <div>
+                        <div class="fo-top fo-fade" style="--d:.1s">
+                            <nav aria-label="Breadcrumb" class="fo-crumbs">
+                                <a href="/">Home</a><span>/</span>
+                                <a href={`/category/${getCategorySlug(tool.categoryShort)}`}>{tool.categoryClean}</a><span>/</span>
+                                <a href={`/tools/${tool.slug}`}>{displayName}</a><span>/</span>
+                                <span class="here">Alternatives</span>
+                            </nav>
+                            {updated && <span class="fo-status"><span>Updated <time datetime={lastUpdated}>{updated}</time></span></span>}
+                        </div>
+                        <div class="fo-rule"></div>
+                    </div>
+                    <div>
+                        <FolioTitle parts={[{ text: 'Best', plain: true }, { text: displayName }, { text: 'Alternatives', plain: true }]} size="lg" />
+                        <div class="fo-intro">
+                            <p class="fo-lead fo-fade" style="--d:.55s">
+                                {displayName} by {displayCompany} is listed under {tool.categoryClean}. If you're weighing options, these are the {count} closest alternatives in the directory - with pricing, key features, and verdicts on each detail page.
+                            </p>
+                            <div class="fo-price fo-fade" style="--d:.7s">
+                                <small>Compared</small>
+                                <b>{count}</b>
+                                <span>alternatives{freeAlts.length > 0 && ` · ${freeAlts.length} free or open source`}</span>
+                            </div>
+                            <div class="fo-cta fo-fade" style="--d:.85s">
+                                <a class="fo-btn" href={`/tools/${tool.slug}`}>{displayName} review <i aria-hidden="true">→</i></a>
+                            </div>
+                        </div>
+                        <div class="fo-facts">
+                            {facts.map((f, i) => (
+                                <div class="fo-fact fo-fade" style={`--d:${0.9 + i * 0.08}s`}>
+                                    <span class="fo-k">{f.k}</span>
+                                    <b>{f.v}</b>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </header>
 
-                <!-- Alternatives list (pre-rendered, no JS required) -->
-                <section aria-label={`${displayName} alternatives`} class="flex flex-col">
-                    {alternatives.map(alt => {
-                        const altName = alt.enriched?.name ?? alt.name;
-                        const pairSlug = pairByOtherSlug.get(alt.slug);
-                        return (
-                            <div class="group flex flex-col gap-1.5 py-4 border-b border-[#1a1a1a] transition-colors hover:bg-white/[0.02] md:px-2 -mx-2 rounded">
-                                <div class="flex items-center gap-3 flex-wrap">
-                                    <a href={`/tools/${alt.slug}`} class="text-[16px] font-medium text-white no-underline group-hover:bg-gradient-to-r group-hover:from-[#a78bfa] group-hover:via-[#22d3ee] group-hover:to-[#a78bfa] group-hover:bg-clip-text group-hover:text-transparent transition-all">{altName}</a>
-                                    <span class="font-mono text-[12px] text-[#737373] uppercase tracking-wide">{alt.enriched?.company ?? alt.company}</span>
-                                    {alt.enriched?.pricing && (
-                                        <span class="font-mono text-[10px] uppercase tracking-wide px-2 py-0.5 border border-[#222] rounded-full text-[#737373]">{humanizePricing(alt.enriched.pricing)}</span>
-                                    )}
+                <section class="fo-sec" id="list" aria-label={`${displayName} alternatives`}>
+                    <h2 class="fo-label"><em>01</em>The alternatives</h2>
+                    <div class="fo-body">
+                        {alternatives.map((alt, i) => {
+                            const altName = alt.enriched?.name ?? alt.name;
+                            const pairSlug = pairByOtherSlug.get(alt.slug);
+                            return (
+                                <div class="fo-rank">
+                                    <span class="no">{String(i + 1).padStart(2, '0')}</span>
+                                    <div>
+                                        <h3><a href={`/tools/${alt.slug}`}>{altName}</a><span class="co">{alt.enriched?.company ?? alt.company}</span></h3>
+                                        <p>{alt.enriched?.description ?? alt.notes}</p>
+                                        <div class="links">
+                                            <a href={`/tools/${alt.slug}`}>Details →</a>
+                                            {pairSlug && <a class="g" href={`/compare/${pairSlug}`}>{displayName} vs {altName} →</a>}
+                                            {hasAlternativesPage(alt.slug) && <a href={`/tools/${alt.slug}/alternatives`}>{altName} alternatives →</a>}
+                                        </div>
+                                    </div>
+                                    <span class="pr">{entryLabel(alt)}</span>
                                 </div>
-                                <p class="text-[14px] text-[#a3a3a3] leading-relaxed line-clamp-2 m-0">{alt.enriched?.description ?? alt.notes}</p>
-                                <div class="flex items-center gap-4 mt-0.5">
-                                    <a href={`/tools/${alt.slug}`} class="font-mono text-[12px] text-[#a3a3a3] hover:text-white tracking-wide transition-colors">Details &rarr;</a>
-                                    {pairSlug && (
-                                        <a href={`/compare/${pairSlug}`} class="font-mono text-[12px] text-[#c9aa6e] hover:text-[#e2c48a] tracking-wide transition-colors">{displayName} vs {altName} &rarr;</a>
-                                    )}
-                                    {hasAlternativesPage(alt.slug) && (
-                                        <a href={`/tools/${alt.slug}/alternatives`} class="font-mono text-[12px] text-[#525252] hover:text-white tracking-wide transition-colors">{altName} alternatives &rarr;</a>
-                                    )}
-                                </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
+                    </div>
                 </section>
 
-                <!-- FAQ (AEO: mirrors FAQPage JSON-LD) -->
-                <section aria-label="Frequently asked questions" class="flex flex-col gap-4 pt-4">
-                    <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em]">FAQ</div>
-                    {faqs.map(f => (
-                        <details class="border border-[#222] bg-white/[0.02] rounded-md group">
-                            <summary class="cursor-pointer px-5 py-4 text-[15px] font-medium text-white list-none flex items-center justify-between gap-3 hover:bg-white/[0.03] transition-colors rounded-md">
-                                {f.q}
-                                <svg class="w-4 h-4 text-[#525252] shrink-0 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                            </summary>
-                            <p class="px-5 pb-4 pt-1 text-[14px] text-[#a3a3a3] leading-relaxed">{f.a}</p>
-                        </details>
-                    ))}
+                <section class="fo-sec" id="faq" aria-label="Frequently asked questions">
+                    <h2 class="fo-label"><em>02</em>FAQ</h2>
+                    <FolioFaq faqs={faqs} />
                 </section>
 
-                <!-- Cross-links: back to tool, category, sibling alternatives pages -->
-                <nav aria-label="Explore more" class="pt-4 pb-8 flex flex-col gap-4">
-                    <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em]">Explore more</div>
-                    <div class="flex flex-wrap gap-2">
-                        <a href={`/tools/${tool.slug}`} class="inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide hover:text-white hover:border-[#444] transition-colors">
-                            {displayName} review
-                        </a>
-                        <a href={`/category/${getCategorySlug(tool.categoryShort)}`} class="inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide hover:text-white hover:border-[#444] transition-colors">
-                            All {tool.categoryShort} tools
-                        </a>
-                        {siblingAltPages.map(t => (
-                            <a href={`/tools/${t.slug}/alternatives`} class="inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide hover:text-white hover:border-[#444] transition-colors">
-                                {t.enriched?.name ?? t.name} alternatives
-                            </a>
-                        ))}
+                <nav class="fo-sec" id="more" aria-label="Explore more">
+                    <h2 class="fo-label"><em>03</em>Explore more</h2>
+                    <div class="fo-body">
+                        <ul class="fo-tags">
+                            <li><a href={`/tools/${tool.slug}`}>{displayName} review</a></li>
+                            <li><a href={`/category/${getCategorySlug(tool.categoryShort)}`}>All {tool.categoryShort} tools</a></li>
+                            {siblingAltPages.map(t => <li><a href={`/tools/${t.slug}/alternatives`}>{t.enriched?.name ?? t.name} alternatives</a></li>)}
+                        </ul>
                     </div>
                 </nav>
-            </div>
+
+                <div class="fo-notes">
+                    <span>Content on this page is AI-generated. Please verify details with the vendor's website for accuracy.</span>
+                    <a class="back" href={`/tools/${tool.slug}`}>← Back to {displayName}</a>
+                </div>
+            </article>
         </main>
     </div>
 
+    <FolioStyles />
+    <FolioScroll />
     <script src="/dist/app.js" type="module" defer></script>
 </BaseLayout>

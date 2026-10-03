@@ -21,6 +21,11 @@ import { formatDate, getCategorySlug } from '../../lib/tools';
 import { robotsFor } from '../../lib/indexing';
 import { ORGANIZATION } from '../../lib/site';
 import { addOutboundUtmParams } from '../../lib/outbound-utm.js';
+import { priceSummary } from '../../lib/folio';
+import FolioStyles from '../../components/folio/FolioStyles.astro';
+import FolioTitle from '../../components/folio/FolioTitle.astro';
+import FolioFaq from '../../components/folio/FolioFaq.astro';
+import FolioScroll from '../../components/folio/FolioScroll.astro';
 
 export async function getStaticPaths() {
     return getResolvedComparisons().map(comparison => ({
@@ -91,6 +96,21 @@ const jsonLd = JSON.stringify({
     ]
 });
 
+
+const sides = [toolA, toolB].map(t => ({
+    t,
+    price: priceSummary(t.enriched?.pricing, t.enriched?.pricingDetail),
+    siteHref: /^https?:\/\//i.test(t.url ?? '') ? addOutboundUtmParams(t.url) : '',
+}));
+const facts = [
+    ...sides.map(({ t, price }) => ({ k: `${t.name} from`, v: price.entry ? `${price.entry.price}${price.entry.unit}` : price.main })),
+    { k: 'Category', v: comparison.group },
+    { k: 'Updated', v: lastUpdatedLabel || '—' },
+];
+const hasChoose = Boolean(toolA.enriched?.bestFor || toolB.enriched?.bestFor);
+const sections = ['answer', 'tools', hasChoose && 'choose', 'table', 'faq', related.length && 'more'].filter(Boolean) as string[];
+const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
+
 ---
 
 <BaseLayout
@@ -105,117 +125,97 @@ const jsonLd = JSON.stringify({
     modifiedTime={comparison.lastUpdated ?? undefined}
     markdownUrl={`/compare/${comparison.slug}.md`}
 >
-    <slot name="head">
-        <style>
-            .cmp-section { padding: 24px 0; border-top: 1px solid #222; }
-            .cmp-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #525252; margin-bottom: 14px; }
-            .cmp-card { background: #0d0d0d; border: 1px solid #222; border-radius: 10px; padding: 18px; transition: border-color 0.2s; }
-            .cmp-card:hover { border-color: #333; }
-            .cmp-table { width: 100%; border-collapse: collapse; min-width: 640px; }
-            .cmp-table th, .cmp-table td { border: 1px solid #222; padding: 14px 16px; vertical-align: top; text-align: left; }
-            .cmp-table th[scope="row"] { width: 160px; font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #737373; background: #0a0a0a; white-space: nowrap; }
-            .cmp-table thead th { font-size: 16px; font-weight: 600; color: #fff; background: #0d0d0d; }
-            .cmp-table td { font-size: 14px; line-height: 1.65; color: #d4d4d4; }
-        </style>
-    </slot>
-
     <div class="flex h-[100dvh] overflow-hidden">
         <Sidebar variant="tool" />
 
         <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
             <SiteHeader variant="page" title={`${nameA} vs ${nameB}`} />
 
-            <div class="max-w-[1000px] mx-auto w-full flex flex-col flex-1 p-4 md:p-8 gap-2">
-                <!-- Breadcrumb -->
-                <nav aria-label="Breadcrumb" class="font-mono text-[12px] text-[#737373] tracking-wide flex items-center gap-2 flex-wrap">
-                    <a href="/" class="hover:text-white transition-colors">Home</a>
-                    <span>/</span>
-                    <a href="/compare" class="hover:text-white transition-colors">Compare</a>
-                    <span>/</span>
-                    <span class="text-white">{nameA} vs {nameB}</span>
-                </nav>
-
-                <!-- Header -->
-                <header class="flex flex-col gap-3 pb-6 border-b border-[#222]">
-                    <h1 class="text-[32px] md:text-[40px] font-semibold tracking-tight leading-tight bg-gradient-to-r from-white via-[#e5e5e5] to-white bg-clip-text text-transparent">
-                        {nameA} vs {nameB}
-                    </h1>
-                    <p class="cmp-intro text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">
-                        Side-by-side comparison of {nameA} ({toolA.company}) and {nameB} ({toolB.company}) - pricing, key features, ideal use cases, recent updates, and verdicts.
-                    </p>
-                    <div class="font-mono text-[12px] text-[#737373] tracking-wide">
-                        {comparison.group}{lastUpdatedLabel && ` · Updated ${lastUpdatedLabel}`}
+            <article class="fo">
+                <header class="fo-hero">
+                    <div>
+                        <div class="fo-top fo-fade" style="--d:.1s">
+                            <nav aria-label="Breadcrumb" class="fo-crumbs">
+                                <a href="/">Home</a><span>/</span>
+                                <a href="/compare">Compare</a><span>/</span>
+                                <span class="here">{nameA} vs {nameB}</span>
+                            </nav>
+                            {lastUpdatedLabel && <span class="fo-status"><span>Updated {lastUpdatedLabel}</span></span>}
+                        </div>
+                        <div class="fo-rule"></div>
+                    </div>
+                    <div>
+                        <FolioTitle parts={[{ text: nameA }, { text: 'vs', plain: true }, { text: nameB }]} size="lg" />
+                        <div class="fo-intro">
+                            <p class="fo-lead cmp-intro fo-fade" style="--d:.55s">
+                                Side-by-side comparison of {nameA} ({toolA.company}) and {nameB} ({toolB.company}) - pricing, key features, ideal use cases, recent updates, and verdicts.
+                            </p>
+                            <div class="fo-cta fo-fade" style="--d:.85s">
+                                <a class="fo-link" href="/compare">All comparisons</a>
+                            </div>
+                        </div>
+                        <div class="fo-facts">
+                            {facts.map((f, i) => (
+                                <div class="fo-fact fo-fade" style={`--d:${0.9 + i * 0.08}s`}>
+                                    <span class="fo-k">{f.k}</span>
+                                    <b>{f.v}</b>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </header>
 
-                <section class="cmp-answer mt-6 px-5 py-4 border border-[#a78bfa]/30 rounded-lg bg-[#a78bfa]/[0.06]" aria-label="Quick answer">
-                    <div class="font-mono text-[11px] uppercase text-[#c4b5fd] tracking-wide mb-2">Quick answer</div>
-                    <p class="text-[15px] leading-relaxed text-[#e5e5e5] m-0">{quickAnswer}</p>
+                <section class="fo-sec" id="answer" aria-label="Quick answer">
+                    <h2 class="fo-label"><em>{num('answer')}</em>Quick answer</h2>
+                    <div class="fo-body">
+                        <p class="fo-text sm cmp-answer fo-reveal">{quickAnswer}</p>
+                    </div>
                 </section>
 
-                <!-- Tool summary cards -->
-                <section class="cmp-section" style="border-top: none;" aria-label="Tool summaries">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {[toolA, toolB].map(t => (
-                            <div class="cmp-card flex flex-col gap-3">
-                                <div class="flex items-start justify-between gap-3">
-                                    <div class="min-w-0">
-                                        <a href={`/tools/${t.slug}`} class="text-[20px] font-semibold text-white hover:bg-gradient-to-r hover:from-[#a78bfa] hover:via-[#22d3ee] hover:to-[#a78bfa] hover:bg-clip-text hover:text-transparent transition-all">{t.name}</a>
-                                        <div class="font-mono text-[12px] text-[#737373] uppercase tracking-wide mt-1">{t.company}</div>
-                                    </div>
-                                    {t.enriched?.pricing && (
-                                        <span class="inline-block px-3 py-1 bg-[#a78bfa]/10 border border-[#a78bfa]/30 rounded-full font-mono text-[11px] text-[#c4b5fd] tracking-wide shrink-0">{humanizePricing(t.enriched.pricing)}</span>
-                                    )}
-                                </div>
-                                <p class="text-[14px] leading-relaxed text-[#a3a3a3] m-0">{t.enriched?.description ?? t.notes}</p>
-                                <div class="flex items-center gap-2.5 mt-auto pt-1">
-                                    <a href={`/tools/${t.slug}`} class="inline-flex items-center py-2 px-4 bg-white text-black text-sm font-semibold rounded-md transition-all hover:bg-gray-200">Full review</a>
-                                    {/^https?:\/\//i.test(t.url ?? '') && (
-                                        <a href={addOutboundUtmParams(t.url)} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 py-2 px-4 bg-white/5 text-white text-sm font-medium border border-[#333] rounded-md transition-all hover:bg-white/10">
-                                            Visit site
-                                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                                        </a>
-                                    )}
+                <section class="fo-sec" id="tools" aria-label="Tool summaries">
+                    <h2 class="fo-label"><em>{num('tools')}</em>The two tools</h2>
+                    <div class="fo-body fo-duo">
+                        {sides.map(({ t, price, siteHref }) => (
+                            <div>
+                                <h3><a href={`/tools/${t.slug}`}>{t.name}</a></h3>
+                                <span class="co">{t.company}</span>
+                                <b class="big">{price.main}</b>
+                                <span class="u">{price.unit}{t.enriched?.pricing && ` · ${humanizePricing(t.enriched.pricing)}`}</span>
+                                <p>{t.enriched?.description ?? t.notes}</p>
+                                <div class="acts">
+                                    <a class="fo-btn" href={`/tools/${t.slug}`}>Full review <i aria-hidden="true">→</i></a>
+                                    {siteHref && <a class="fo-link" href={siteHref} target="_blank" rel="noopener noreferrer">Visit site ↗</a>}
                                 </div>
                             </div>
                         ))}
                     </div>
                 </section>
 
-                <!-- How to choose (derived from bestFor / notIdealFor) -->
-                {(toolA.enriched?.bestFor || toolB.enriched?.bestFor) && (
-                    <section class="cmp-section" aria-label="How to choose">
-                        <div class="cmp-label">How to choose</div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="cmp-card">
-                                <div class="font-mono text-[11px] uppercase text-[#4ade80] tracking-wide mb-2">Choose {nameA} if</div>
-                                <p class="text-[15px] leading-relaxed text-[#d4d4d4]">{toolA.enriched?.bestFor ?? '-'}</p>
-                                {toolA.enriched?.notIdealFor && (
-                                    <p class="text-[13px] leading-relaxed text-[#737373] mt-3 mb-0"><span class="text-[#f87171] font-mono text-[11px] uppercase tracking-wide">Skip if: </span>{toolA.enriched.notIdealFor}</p>
-                                )}
-                            </div>
-                            <div class="cmp-card">
-                                <div class="font-mono text-[11px] uppercase text-[#4ade80] tracking-wide mb-2">Choose {nameB} if</div>
-                                <p class="text-[15px] leading-relaxed text-[#d4d4d4]">{toolB.enriched?.bestFor ?? '-'}</p>
-                                {toolB.enriched?.notIdealFor && (
-                                    <p class="text-[13px] leading-relaxed text-[#737373] mt-3 mb-0"><span class="text-[#f87171] font-mono text-[11px] uppercase tracking-wide">Skip if: </span>{toolB.enriched.notIdealFor}</p>
-                                )}
-                            </div>
+                {hasChoose && (
+                    <section class="fo-sec" id="choose" aria-label="How to choose">
+                        <h2 class="fo-label"><em>{num('choose')}</em>How to choose</h2>
+                        <div class="fo-body fo-duo">
+                            {[toolA, toolB].map(t => (
+                                <div>
+                                    <h3>Choose {t.name} if</h3>
+                                    <p>{t.enriched?.bestFor ?? '-'}</p>
+                                    {t.enriched?.notIdealFor && <p class="skip"><b>Skip if:</b> {t.enriched.notIdealFor}</p>}
+                                </div>
+                            ))}
                         </div>
                     </section>
                 )}
 
-                <!-- Comparison table -->
-                <section class="cmp-section" aria-label="Detailed comparison">
-                    <div class="cmp-label">Detailed comparison</div>
-                    <div class="overflow-x-auto rounded-md">
-                        <table class="cmp-table">
+                <section class="fo-sec" id="table" aria-label="Detailed comparison">
+                    <h2 class="fo-label"><em>{num('table')}</em>Detailed comparison</h2>
+                    <div class="fo-body">
+                        <table class="fo-ctable">
                             <caption class="sr-only">{nameA} vs {nameB}: pricing, features, and use cases compared</caption>
                             <thead>
                                 <tr>
                                     <th scope="col"></th>
-                                    <th scope="col"><a href={`/tools/${toolA.slug}`} class="text-white hover:underline">{nameA}</a></th>
-                                    <th scope="col"><a href={`/tools/${toolB.slug}`} class="text-white hover:underline">{nameB}</a></th>
+                                    <th scope="col"><a href={`/tools/${toolA.slug}`}>{nameA}</a></th>
+                                    <th scope="col"><a href={`/tools/${toolB.slug}`}>{nameB}</a></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -226,33 +226,25 @@ const jsonLd = JSON.stringify({
                                 </tr>
                                 <tr>
                                     <th scope="row">Category</th>
-                                    <td><a href={`/category/${getCategorySlug(toolA.categoryShort)}`} class="text-[#a3a3a3] hover:text-white transition-colors">{toolA.categoryClean}</a></td>
-                                    <td><a href={`/category/${getCategorySlug(toolB.categoryShort)}`} class="text-[#a3a3a3] hover:text-white transition-colors">{toolB.categoryClean}</a></td>
+                                    <td><a href={`/category/${getCategorySlug(toolA.categoryShort)}`}>{toolA.categoryClean}</a></td>
+                                    <td><a href={`/category/${getCategorySlug(toolB.categoryShort)}`}>{toolB.categoryClean}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Pricing</th>
                                     <td>
-                                        <span class="capitalize">{humanizePricing(toolA.enriched?.pricing)}</span>
-                                        {toolA.enriched?.pricingDetail && <p class="text-[13px] text-[#737373] mt-1.5 mb-0">{toolA.enriched.pricingDetail}</p>}
+                                        {humanizePricing(toolA.enriched?.pricing)}
+                                        {toolA.enriched?.pricingDetail && <small>{toolA.enriched.pricingDetail}</small>}
                                     </td>
                                     <td>
-                                        <span class="capitalize">{humanizePricing(toolB.enriched?.pricing)}</span>
-                                        {toolB.enriched?.pricingDetail && <p class="text-[13px] text-[#737373] mt-1.5 mb-0">{toolB.enriched.pricingDetail}</p>}
+                                        {humanizePricing(toolB.enriched?.pricing)}
+                                        {toolB.enriched?.pricingDetail && <small>{toolB.enriched.pricingDetail}</small>}
                                     </td>
                                 </tr>
                                 {(toolA.enriched?.keyFeatures || toolB.enriched?.keyFeatures) && (
                                     <tr>
                                         <th scope="row">Key features</th>
-                                        <td>
-                                            {toolA.enriched?.keyFeatures
-                                                ? <ul class="list-disc pl-5 flex flex-col gap-1.5 m-0">{toolA.enriched.keyFeatures.map(f => <li>{f}</li>)}</ul>
-                                                : '-'}
-                                        </td>
-                                        <td>
-                                            {toolB.enriched?.keyFeatures
-                                                ? <ul class="list-disc pl-5 flex flex-col gap-1.5 m-0">{toolB.enriched.keyFeatures.map(f => <li>{f}</li>)}</ul>
-                                                : '-'}
-                                        </td>
+                                        <td>{toolA.enriched?.keyFeatures ? <ul>{toolA.enriched.keyFeatures.map(f => <li>{f}</li>)}</ul> : '-'}</td>
+                                        <td>{toolB.enriched?.keyFeatures ? <ul>{toolB.enriched.keyFeatures.map(f => <li>{f}</li>)}</ul> : '-'}</td>
                                     </tr>
                                 )}
                                 <tr>
@@ -284,55 +276,32 @@ const jsonLd = JSON.stringify({
                     </div>
                 </section>
 
-                <!-- FAQ (mirrors FAQPage JSON-LD) -->
-                <section class="cmp-section" aria-label="Frequently asked questions">
-                    <div class="cmp-label">FAQ</div>
-                    <div class="flex flex-col gap-3">
-                        {faqs.map(f => (
-                            <details class="cmp-card group" style="padding: 0;">
-                                <summary class="cursor-pointer px-5 py-4 text-[15px] font-medium text-white list-none flex items-center justify-between gap-3 hover:bg-white/[0.03] transition-colors rounded-md">
-                                    {f.q}
-                                    <svg class="w-4 h-4 text-[#525252] shrink-0 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                </summary>
-                                <p class="px-5 pb-4 pt-1 text-[14px] text-[#a3a3a3] leading-relaxed">{f.a}</p>
-                            </details>
-                        ))}
-                    </div>
+                <section class="fo-sec" id="faq" aria-label="Frequently asked questions">
+                    <h2 class="fo-label"><em>{num('faq')}</em>FAQ</h2>
+                    <FolioFaq faqs={faqs} />
                 </section>
 
-                <!-- Related comparisons -->
                 {related.length > 0 && (
-                    <nav class="cmp-section" aria-label="Related comparisons">
-                        <div class="cmp-label">More comparisons</div>
-                        <div class="flex flex-wrap gap-2">
-                            {related.map(c => (
-                                <a href={`/compare/${c.slug}`} class="inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide hover:text-white hover:border-[#444] transition-colors">
-                                    {c.toolA.name} vs {c.toolB.name}
-                                </a>
-                            ))}
+                    <nav class="fo-sec" id="more" aria-label="Related comparisons">
+                        <h2 class="fo-label"><em>{num('more')}</em>More comparisons</h2>
+                        <div class="fo-body">
+                            <ul class="fo-tags">
+                                {related.map(c => <li><a href={`/compare/${c.slug}`}>{c.toolA.name} vs {c.toolB.name}</a></li>)}
+                            </ul>
+                            <div class="fo-more"><a href="/compare">All comparisons →</a></div>
                         </div>
                     </nav>
                 )}
 
-                <div class="py-6 flex flex-col gap-4">
-                    <a href="/compare" class="inline-flex items-center gap-2 text-[14px] text-[#737373] hover:text-white transition-colors">
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                        All comparisons
-                    </a>
-                    <div class="flex items-start gap-3 py-4 px-4 border border-[#222] rounded-lg bg-white/[0.02]">
-                        <svg class="w-5 h-5 text-[#737373] shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="12" y1="8" x2="12" y2="12"></line>
-                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                        </svg>
-                        <p class="text-[13px] text-[#737373] leading-relaxed">
-                            Comparison content is generated from our enriched tool data. Verify pricing and features with each vendor before purchasing.
-                        </p>
-                    </div>
+                <div class="fo-notes">
+                    <span>Comparison content is generated from our enriched tool data. Verify pricing and features with each vendor before purchasing.</span>
+                    <a class="back" href="/compare">← All comparisons</a>
                 </div>
-            </div>
+            </article>
         </main>
     </div>
 
+    <FolioStyles />
+    <FolioScroll />
     <script src="/dist/app.js" type="module" defer></script>
 </BaseLayout>
