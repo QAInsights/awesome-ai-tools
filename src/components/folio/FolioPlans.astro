@@ -1,0 +1,36 @@
+---
+import { monthly, priceSummary, unitWords } from '../../lib/folio';
+
+interface Props {
+    pricing?: string;
+    detail?: string;
+    footnote?: string;
+}
+
+const { pricing, detail, footnote } = Astro.props;
+const { plans, entry, model, scale } = priceSummary(pricing, detail);
+---
+{plans.length > 0 ? (
+    <table class="fo-table">
+        <tbody>
+            {plans.map(p => (
+                <tr>
+                    <td class="n">{p.name}{p === entry && <span class="fo-tag">Entry plan</span>}</td>
+                    <td class="p">{monthly(p) === 0 ? 'Free' : p.price}</td>
+                    <td class="u">{monthly(p) === 0 ? '' : unitWords(p.unit)}</td>
+                </tr>
+            ))}
+        </tbody>
+    </table>
+) : (
+    <p class="fo-text">{model}</p>
+)}
+{scale.length > 1 && (
+    <div class="fo-scale fo-reveal" aria-hidden="true">
+        {scale.map(({ p, x }, i) => (
+            <div class={`fo-tick${i === 0 ? ' first' : ''}`} style={`left:${(x * 100).toFixed(2)}%`}><span>{`${p.name} ${p.price}`}</span></div>
+        ))}
+    </div>
+)}
+{detail && <p class="fo-note">{detail}</p>}
+{footnote && <p class="fo-note">{footnote}</p>}

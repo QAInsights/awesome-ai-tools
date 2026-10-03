@@ -1,0 +1,26 @@
+---
+/** Eased wheel scrolling for the page's <main> scroll container (fine pointers, motion allowed). */
+---
+<script>
+    const main = document.querySelector('main');
+    if (main && !matchMedia('(prefers-reduced-motion: reduce)').matches && matchMedia('(pointer: fine)').matches) {
+        let target = main.scrollTop;
+        let current = target;
+        let running = false;
+        const tick = () => {
+            current += (target - current) * 0.09;
+            if (Math.abs(target - current) < 0.4) current = target;
+            main.scrollTop = current;
+            running = current !== target;
+            if (running) requestAnimationFrame(tick);
+        };
+        main.addEventListener('wheel', e => {
+            if (e.ctrlKey) return;
+            e.preventDefault();
+            const limit = main.scrollHeight - main.clientHeight;
+            target = Math.max(0, Math.min(limit, target + e.deltaY));
+            if (!running) { current = main.scrollTop; running = true; requestAnimationFrame(tick); }
+        }, { passive: false });
+        main.addEventListener('scroll', () => { if (!running) target = current = main.scrollTop; });
+    }
+</script>
