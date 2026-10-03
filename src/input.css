@@ -847,3 +847,44 @@
         -webkit-user-select: text !important;
     }
 }
+
+/* EthicalAds floating placement (src/components/EthicalAd.astro). Empty
+   slots (ads disabled, blocked, or unfilled) take no space. */
+.ea-slot {
+    --ea-font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --ea-bgcolor-dark: rgba(255, 255, 255, 0.03);
+    --ea-stylefixed-bgcolor-dark: var(--color-panel);
+    --ea-color-link-dark: #d4d4d4;
+    --ea-color-link-dark-active: #fff;
+    --ea-color-link-bold-dark: var(--color-gold-soft);
+    --ea-color-domain-dark: var(--color-ink-muted);
+    --ea-color-link-callout-dark: var(--color-ink-muted);
+    --ea-color-link-callout-dark-active: var(--color-ink-secondary);
+}
+body:has(#signInModal:not(.hidden)) .ea-slot {
+    visibility: hidden;
+}
+
+/* Filled floating ads (EthicalAds adds .loaded): the footer ad reserves room
+   below the page; the corner StickyBox overlays content but keeps clear of
+   the compare bar and onboarding card. */
+body:has([data-ea-style="fixedfooter"].loaded) main:not(main main)::after {
+    content: '';
+    display: block;
+    flex-shrink: 0;
+    height: var(--ea-float-h, 0px);
+}
+body:has([data-ea-style="fixedfooter"].loaded) #compareFloatingBar {
+    bottom: var(--ea-float-h, 0px);
+}
+body:has([data-ea-style="fixedfooter"].loaded) [data-onboarding-float] {
+    bottom: calc(var(--ea-float-h, 0px) + 1rem);
+}
+@media (min-width: 1301px) {
+    body:has([data-ea-style="stickybox"].loaded) #compareFloatingBar {
+        padding-right: 220px;
+    }
+    body:has([data-ea-style="stickybox"].loaded) [data-onboarding-float] {
+        right: 220px;
+    }
+}

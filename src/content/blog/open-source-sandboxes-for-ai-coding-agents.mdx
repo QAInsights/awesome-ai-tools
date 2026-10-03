@@ -1,0 +1,352 @@
+---
+title: "Open Source Sandboxes for AI Coding Agents: OpenShell, OpenSandbox, smolvm, Drop, coop, and E2B"
+description: "Compare 6 open source sandboxes for AI coding agents: OpenShell, OpenSandbox, smolvm, Drop, coop, and E2B. Isolation type, licences, installs, honest limits."
+pubDate: 2026-10-01
+tags: ["ai", "coding", "open-source", "roundup", "sandbox", "security", "openshell", "opensandbox", "smolvm", "drop", "coop", "e2b"]
+featured: true
+---
+
+In this blog post, we will see which open source sandboxes for AI coding agents are worth your time, how they differ (containers, namespaces, microVMs), and which one I would set up first for Claude Code or Codex. Every version, licence, and price below was checked on October 1, 2026.
+
+## Table of Contents
+
+1. [The short answer](#the-short-answer)
+2. [Why sandboxes are trending this week](#why-sandboxes-are-trending-this-week)
+3. [What a sandbox actually blocks, in 40 lines of Python](#what-a-sandbox-actually-blocks-in-40-lines-of-python)
+4. [NVIDIA OpenShell](#nvidia-openshell)
+5. [OpenSandbox](#opensandbox)
+6. [smolvm](#smolvm)
+7. [Drop](#drop)
+8. [coop](#coop)
+9. [E2B](#e2b)
+10. [The closed source yardstick: Docker Sandboxes](#the-closed-source-yardstick-docker-sandboxes)
+11. [Side by side](#side-by-side)
+12. [Which one I would pick](#which-one-i-would-pick)
+13. [FAQ](#faq)
+14. [How this ties to ai.dosa.dev](#how-this-ties-to-aidosadev)
+
+## The short answer
+
+Use NVIDIA OpenShell if you want per-request network policy around Claude Code or Codex. Use smolvm or coop if you want a real microVM on your laptop. Use Drop for a light Linux namespace jail. Use OpenSandbox or E2B when your own app needs to spin up sandboxes through an SDK.
+
+## Why sandboxes are trending this week
+
+Three things landed inside the same seven days:
+
+- **September 25 to 28:** NVIDIA shipped OpenShell 0.1.0, then 0.1.1 and 0.1.2, its first stable line after more than 100 alpha releases. On September 28 it announced the Open Agent Safety Platform around it, which The Verge and TechCrunch both covered after a run of reports about agents escaping their test environments.
+- **September 21 to 24:** OpenSandbox shipped its first unified 1.1.0 release with a Firecracker microVM runtime, Drop showed up on Show HN, and Docker announced Cloud Sandboxes for its `sbx` CLI.
+- **September 28 to 30:** DeepSeek published a paper on DSec, its sandbox layer that runs about 3 million sandboxes a day, and Cloudflare announced faster container startup and filesystem snapshots for agent sandboxes.
+
+That is official release notes, a vendor press cycle, Hacker News, and arXiv all pointing at the same problem. Coding agents now run shell commands for hours without asking, and "just approve every command" does not scale.
+
+## What a sandbox actually blocks, in 40 lines of Python
+
+Before comparing tools, here is the core idea with nothing but the Python standard library and `unshare` from util-linux. The script starts a tiny local web server, then runs the same "agent" twice: once as a normal child process and once inside a fresh user and network namespace with a scratch home directory.
+
+```python
+import http.server
+import os
+import subprocess
+import tempfile
+import threading
+
+
+class Quiet(http.server.SimpleHTTPRequestHandler):
+    def log_message(self, *args):
+        pass
+
+
+server = http.server.HTTPServer(("127.0.0.1", 8765), Quiet)
+threading.Thread(target=server.serve_forever, daemon=True).start()
+
+AGENT = """
+import os, urllib.request
+print("HOME:", os.environ.get("HOME"))
+print("API key visible:", "FAKE_API_KEY" in os.environ)
+try:
+    urllib.request.urlopen("http://127.0.0.1:8765", timeout=2)
+    print("network: reachable")
+except OSError:
+    print("network: blocked")
+"""
+
+
+def run(label, prefix, env):
+    print(f"--- {label} ---")
+    out = subprocess.run(prefix + ["python3", "-c", AGENT], env=env, capture_output=True, text=True)
+    print(out.stdout.strip())
+
+
+run("no sandbox", [], dict(os.environ, FAKE_API_KEY="sk-not-real"))
+
+with tempfile.TemporaryDirectory() as scratch_home:
+    clean_env = {"PATH": os.environ["PATH"], "HOME": scratch_home}
+    run("sandbox", ["unshare", "--user", "--net"], clean_env)
+
+server.shutdown()
+```
+
+I ran it on Ubuntu with Python 3.12.13, and the output is as shown below:
+
+```
+--- no sandbox ---
+HOME: /home/ubuntu
+API key visible: True
+network: reachable
+--- sandbox ---
+HOME: /tmp/tmpsl2mwpdg
+API key visible: False
+network: blocked
+```
+
+Same command, same user. The second run cannot see the API key, cannot touch my real home, and cannot even reach localhost because the new network namespace has no interfaces up.
+
+What surprised me is how little that buys you on its own. The sandboxed process still shares my kernel and could still read any file my user can read by absolute path. Every tool below is some answer to "how much more isolation do you want, and how do you let the agent back out to the internet in a controlled way?"
+
+## NVIDIA OpenShell
+
+**What it does:** OpenShell runs an agent inside a sandbox managed by a local gateway. Filesystem and process rules are locked when the sandbox is created. Network access starts minimal, and every outbound connection goes through a policy proxy that can allow or deny at the HTTP method and path level, and the network part is hot-reloadable. Compute drivers include Docker, Podman, MicroVM (KVM or Hypervisor.framework), and Kubernetes.
+
+**Who it is for:** Developers who already run Claude Code, Codex, OpenCode, or Copilot CLI and want guardrails without changing the agent.
+
+**Facts:** Apache 2.0, latest stable v0.1.2 (September 28, 2026), about 8.3k GitHub stars, free.
+
+### Try it
+
+1. Install the CLI, policy prover, and local gateway:
+
+```bash
+curl -LsSf https://raw.githubusercontent.com/NVIDIA/OpenShell/main/install.sh | sh
+openshell status
+```
+
+2. Launch Claude Code inside a sandbox:
+
+```bash
+openshell sandbox create -- claude
+```
+
+3. When you want tighter rules, pass your own policy file:
+
+```bash
+openshell sandbox create --policy ./my-policy.yaml -- claude
+```
+
+### Honest limitation
+
+It needs an `ANTHROPIC_API_KEY` from the Anthropic console. The docs say a Claude subscription token does not work here, so subscription users must create a separate API key. The 0.1 line is also only days old, so expect config changes; the 0.1.0 release ships with an upgrade guide for a reason.
+
+## OpenSandbox
+
+**What it does:** OpenSandbox is a self-hosted sandbox server with SDKs. You run a lifecycle server on Docker or Kubernetes, and your code creates sandboxes from any OCI image, runs commands, and reads or writes files. Version 1.1.0 adds a Firecracker microVM runtime with pause and resume, network egress policies, and snapshot persistence on SQLite or PostgreSQL.
+
+**Who it is for:** Teams building their own agent product or eval harness who want an E2B-style API on their own machines.
+
+**Facts:** Apache 2.0, latest release 1.1.0 (`opensandbox-server` on PyPI, September 21, 2026), about 15.4k GitHub stars, free.
+
+### Try it
+
+1. Start a local server backed by Docker:
+
+```bash
+uvx opensandbox-server init-config ~/.sandbox.toml --example docker
+uvx opensandbox-server
+```
+
+2. In another terminal, install the SDK with `pip install opensandbox` and run:
+
+```python
+import asyncio
+from datetime import timedelta
+
+from opensandbox import Sandbox
+from opensandbox.config import ConnectionConfig
+
+
+async def main() -> None:
+    sandbox = await Sandbox.create(
+        "python:3.12",
+        timeout=timedelta(minutes=10),
+        connection_config=ConnectionConfig(domain="localhost:8080", use_server_proxy=True),
+    )
+    try:
+        execution = await sandbox.commands.run("python -c 'print(1 + 1)'")
+        for output in execution.logs.stdout:
+            print(output.text)
+    finally:
+        await sandbox.destroy()
+
+
+asyncio.run(main())
+```
+
+### Honest limitation
+
+With the default Docker runtime, a sandbox is a container, so it shares the host kernel. Also call `destroy()`: the docs state that closing the client does not stop the remote sandbox, which is an easy way to leak containers. Kubernetes users should read the 1.1.0 notes first, since the agent-sandbox provider now requires the `v1beta1` CRDs.
+
+## smolvm
+
+**What it does:** smolvm boots OCI images as lightweight microVMs with their own guest kernel, using hardware virtualization on macOS, Linux, and Windows. No Docker daemon is needed. Networking is off by default, and you can allow single hosts.
+
+**Who it is for:** Anyone who wants VM-level isolation for one-off agent commands on a laptop, or a portable machine image they can ship to the cloud later.
+
+**Facts:** Apache 2.0, latest release v1.12.0 (August 24, 2026), 5,882 GitHub stars, free.
+
+### Try it
+
+```bash
+curl -sSL https://smolmachines.com/install.sh | bash
+
+smolvm machine run --net --image alpine -- sh -c "echo 'Hello from a microVM' && uname -a"
+
+smolvm machine run --net --image alpine --allow-host registry.npmjs.org \
+  -- wget -q -O /dev/null https://registry.npmjs.org
+```
+
+The `--allow-host` flag is the part I like. It is the same "default deny, then open one door" model as OpenShell, but at the VM boundary.
+
+### Honest limitation
+
+smolvm boots images but does not build Dockerfiles, so you still need Docker or another builder for custom images. The README is also upfront that releases are not signed and the installer will proceed if the checksum file cannot be downloaded.
+
+## Drop
+
+**What it does:** Drop is a high-level Linux sandbox that uses user, mount, network, PID, IPC, and cgroup namespaces, so it needs no root. Unlike a container, it reuses your installed distro, keeps your username, and lets selected config files stay readable, so the agent feels at home. An optional gVisor runtime stops sandboxed programs from calling the host kernel directly.
+
+**Who it is for:** Linux users who want something between "no sandbox" and "a full VM" for day-to-day agent work.
+
+**Facts:** Apache 2.0, latest release 0.2.1 (August 24, 2026), about 300 GitHub stars, free, Show HN on September 22, 2026.
+
+### Try it
+
+```bash
+ARCH=$(uname -m | sed 's/x86_64/amd64/; s/aarch64/arm64/')
+curl -o drop -L https://github.com/wrr/drop/releases/latest/download/drop-linux-$ARCH
+install -m 755 drop ~/.local/bin/
+
+drop run --runtime gvisor ps aux
+```
+
+The gVisor runtime needs `runsc` installed first. Without it, use the default native runtime.
+
+### Honest limitation
+
+Linux only, and it is mostly one maintainer. Because it reuses your distro and home setup, the blast radius depends on which paths you leave readable, so read the default config before pointing an agent at a sensitive repo.
+
+## coop
+
+**What it does:** coop is a Rust CLI from Trail of Bits that gives Claude Code or Codex a disposable VM per project: Firecracker on Linux with KVM, Lima with Apple Virtualization.framework on macOS. The project is copied in, and `coop push` and `coop pull` move changes back.
+
+**Who it is for:** Security-minded developers who want the agent to have full root inside a throwaway OS, including Docker and compilers, without touching the host.
+
+**Facts:** Apache 2.0, newest release I could confirm is v0.5.4 (July 14, 2026), so treat that as unverified for "latest". GitHub stars unverified (the snapshot I found showed 19). Free. Commits and 30 open issues show active work, and release tarballs ship with Sigstore build-provenance attestations.
+
+### Try it
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/trailofbits/coop/main/install.sh | bash
+
+export ANTHROPIC_API_KEY=sk-ant-...
+coop setup
+cd ~/code/my-project
+coop up
+coop claude
+```
+
+### Honest limitation
+
+On Linux you need KVM, which rules out most cloud VMs without nested virtualization. The copy-in model also means you are reviewing and pulling changes back yourself, which is safer but slower than a shared folder.
+
+## E2B
+
+**What it does:** E2B runs Firecracker sandboxes in its cloud and gives you Python and JavaScript SDKs to start them, run commands, and move files. The infrastructure is open source and can be self-hosted with Terraform on GCP, with AWS in beta.
+
+**Who it is for:** Developers building an agent product who want hosted sandboxes in one API call and do not want to run servers.
+
+**Facts:** Apache 2.0 repository (the SDK packages on PyPI and npm declare MIT), Python SDK 2.52.0 on PyPI, JavaScript SDK 2.51.0 on npm (updated September 18, 2026), about 13.6k GitHub stars. Pricing: Hobby is $0 with $100 of one-time credits, 20 concurrent sandboxes, and 1 hour sessions. Pro is $150 a month plus usage. Usage is billed per second at $0.000014 per vCPU and $0.0000045 per GiB of RAM.
+
+### Try it
+
+```bash
+pip install e2b
+export E2B_API_KEY=e2b_...
+```
+
+```python
+from e2b import Sandbox
+
+with Sandbox.create() as sandbox:
+    result = sandbox.commands.run('echo "Hello from E2B!"')
+    print(result.stdout)
+```
+
+### Honest limitation
+
+The easy path sends your code to E2B's cloud. The self-host path is real but heavy: Terraform 1.5.x, a cloud account, a Postgres connection string, and a domain on Cloudflare. That is not a 15 minute job.
+
+## The closed source yardstick: Docker Sandboxes
+
+Docker's `sbx` CLI is not open source, but it is the thing most readers will compare against, so it belongs here as a baseline. The CLI is free, latest stable 0.43.0 (September 15, 2026). Cloud Sandboxes, announced September 24, need a paid Docker Agentic Platform plan.
+
+```bash
+brew trust docker/tap
+brew install docker/tap/sbx
+sbx login
+sbx --cloud run claude --name cloud-project
+```
+
+If you are already paying Docker and want local and cloud agents with one CLI, it is the shortest path. If you want to read the code that enforces your boundary, pick one of the six above.
+
+## Side by side
+
+| Tool | Isolation | Runs on | Licence | Latest | Best for |
+| --- | --- | --- | --- | --- | --- |
+| OpenShell | Container or microVM plus policy proxy | macOS, Linux, Kubernetes | Apache 2.0 | v0.1.2 (Sep 28) | Guardrails around existing agent CLIs |
+| OpenSandbox | Container or Firecracker microVM | Docker, Kubernetes | Apache 2.0 | 1.1.0 (Sep 21) | Self-hosted sandbox API |
+| smolvm | microVM per workload | macOS, Linux, Windows | Apache 2.0 | v1.12.0 (Aug 24) | One-off isolated commands |
+| Drop | Linux namespaces, optional gVisor | Linux | Apache 2.0 | 0.2.1 (Aug 24) | Daily driver light sandbox |
+| coop | Firecracker or Lima VM per project | Linux with KVM, macOS | Apache 2.0 | v0.5.4 (Jul 14, unverified as latest) | Claude Code or Codex in a throwaway OS |
+| E2B | Firecracker microVM in the cloud | Hosted, or self-host on GCP/AWS | Apache 2.0 | SDK 2.52.0 | Hosted sandboxes for agent products |
+
+## Which one I would pick
+
+1. **I just want Claude Code to stop surprising me:** OpenShell. The per-request network policy is the feature nobody else on this list matches, and it wraps the agent you already use.
+2. **I want a VM boundary on my MacBook:** smolvm for quick commands, coop when the agent needs a long-lived project VM.
+3. **I am on Linux and want low friction:** Drop. It is the only one here that keeps your normal shell setup.
+4. **I am building an agent product:** E2B if hosted is fine, OpenSandbox if the sandboxes must stay on your hardware.
+
+What I would skip for now: self-hosting E2B just to avoid the hosted bill. OpenSandbox gets you a similar SDK shape on one Docker host in a few minutes.
+
+## FAQ
+
+### What is a sandbox for an AI coding agent?
+
+It is an isolated environment where the agent can run shell commands, install packages, and edit files without reaching your real home directory, credentials, or the open internet. Depending on the tool, the boundary is Linux namespaces, a container, or a microVM with its own kernel.
+
+### Is Docker enough to sandbox Claude Code?
+
+A plain container stops the most obvious damage, but it shares your kernel and usually has open network access. Tools like OpenShell add egress policy on top of containers, while smolvm, coop, and E2B use microVMs so a kernel exploit inside the sandbox does not reach the host.
+
+### What is the difference between a container and a microVM sandbox?
+
+A container is a set of namespaces and cgroups on the host kernel, so it starts fast but shares that kernel. A microVM boots its own small kernel under hardware virtualization, which costs a little more startup time but gives a much stronger boundary.
+
+### Can I run Claude Code in a sandbox for free?
+
+Yes. OpenShell, smolvm, Drop, and coop are all free and Apache 2.0. You still pay for the model: OpenShell and coop both expect an Anthropic API key rather than a subscription login.
+
+### Which open source sandbox works on macOS?
+
+OpenShell, smolvm, and coop all run on macOS. smolvm and coop use Apple's virtualization frameworks for a real VM, and OpenShell can use Docker or its MicroVM driver. Drop is Linux only.
+
+## How this ties to ai.dosa.dev
+
+The directory already lists [OpenShell](/tools/openshell), [smolvm](/tools/smolvm), and [coop](/tools/coop) in the [Productivity category](/category/productivity), plus [AgentBox](/tools/agentbox) in [CLI Agents](/category/cli-agents) and [OneCLI](/tools/onecli), which take the harness side of the same problem. OpenSandbox, Drop, and E2B are not listed yet. Head to https://github.com/QAInsights/awesome-ai-tools/issues/new?template=submit-tool.yml to submit them through the form.
+
+Every sandbox here exists to contain the agents from our [AI coding CLIs roundup](/blog/best-ai-coding-clis), and the [Claude Code deep dive](/blog/claude-code-deep-dive) covers the permission prompts these tools let you stop clicking through. If you run fully autonomous agents, the [autonomous coding agents](/blog/autonomous-coding-agents) post explains why OpenHands and Devin already run in their own sandboxes.
+
+Happy Testing! Which agent command made you start looking for a sandbox in the first place?
+
+---
+
+*Sources checked on October 1, 2026: NVIDIA OpenShell GitHub repo, installation, quickstart, and policy docs, release tags v0.1.0 to v0.1.2, the NVIDIA Technical Blog and press release of September 28, and coverage in The Verge and TechCrunch; opensandbox-group/OpenSandbox release-1.1.0 notes, the opensandbox-server PyPI page, and open-sandbox.ai quickstart; smol-machines/smolvm README, releases, and smolmachines.com docs; wrr/drop README, releases, pkg.go.dev, and the Show HN thread; trailofbits/coop README and getting-started docs; e2b-dev/E2B releases, e2b and infra repos, the PyPI and npm package pages, and e2b.dev pricing and billing docs; Docker Sandboxes docs, release notes, and the docker/sbx-releases repo; the DeepSeek DSec arXiv paper; the Cloudflare blog post of September 30. GitHub star counts come from GitHub and RepositoryStats snapshots and are approximate. The Python example was run on Python 3.12.13. Tool install commands were copied from official docs; outbound network is locked down on my test machine, so I could not execute those installs.*

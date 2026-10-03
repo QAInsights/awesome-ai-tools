@@ -6,9 +6,11 @@ import { remarkReadingTime } from './remark-reading-time.mjs';
 import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { collectNoindexedPaths, normalizePath } from './src/lib/noindex-scan.js';
+import { comparisonCounts, facetLastmod, rankFacetTools } from './src/lib/best-facets.js';
 
 // Honest per-URL <lastmod> for the sitemap: tool pages use the enrichment
-// pipeline's lastUpdated stamp, blog posts use their pubDate. Anything else
+// pipeline's lastUpdated stamp, blog posts use their pubDate, weekly trending
+// pages their snapshot time, best-of pages their monthly refresh. Anything else
 // is left without lastmod rather than stamped with the build date.
 function loadLastmodMap() {
     const map = new Map();
@@ -76,6 +78,18 @@ function loadLastmodMap() {
         }
     } catch { /* comparison data optional */ }
     try {
+        const facets = JSON.parse(readFileSync(new URL('./data/best-facets.json', import.meta.url), 'utf8'));
+        const slugs = JSON.parse(readFileSync(new URL('./data/slugs.json', import.meta.url), 'utf8'));
+        const comparisons = JSON.parse(readFileSync(new URL('./data/comparisons.json', import.meta.url), 'utf8'));
+        const enrichedBySlug = new Map(enriched.map(t => [t.slug, t]));
+        const tools = slugs.map(t => ({ ...t, enriched: enrichedBySlug.get(t.slug) ?? null }));
+        const popularity = comparisonCounts(comparisons);
+        for (const facet of facets) {
+            const ranked = rankFacetTools(facet, tools, popularity);
+            map.set(`/best/${facet.slug}`, facetLastmod(ranked.map(t => t.enriched?.lastUpdated)));
+        }
+    } catch { /* best-of data optional */ }
+    try {
         const blogDir = new URL('./src/content/blog/', import.meta.url);
         const blogDates = [];
         const newsDates = [];
@@ -94,6 +108,14 @@ function loadLastmodMap() {
         if (latestBlog) map.set('/blog', latestBlog);
         if (latestNews) map.set('/news', latestNews);
     } catch { /* blog optional */ }
+    try {
+        const snapshots = JSON.parse(readFileSync(new URL('./data/trending/snapshots.json', import.meta.url), 'utf8'));
+        for (const snapshot of snapshots) {
+            if (snapshot?.week && parseDate(snapshot.generatedAt)) map.set(`/trending/${snapshot.week}`, snapshot.generatedAt);
+        }
+        const latest = maxDate(snapshots.map(s => s?.generatedAt));
+        if (latest) map.set('/trending', latest);
+    } catch { /* trending optional */ }
     return map;
 }
 const lastmodMap = loadLastmodMap();
@@ -151,9 +173,18 @@ export default defineConfig({
                 } else if (/\/tools\/[^/]+\/$/.test(url) || /\/tools\/[^/]+$/.test(url)) {
                     item.priority = 0.7;
                     item.changefreq = 'weekly';
+                } else if (/\/best\/[^/]+\/?$/.test(url)) {
+                    item.priority = 0.8;
+                    item.changefreq = 'monthly';
                 } else if (url === 'https://ai.dosa.dev/') {
                     item.priority = 1.0;
                     item.changefreq = 'daily';
+                } else if (url === 'https://ai.dosa.dev/trending/' || url === 'https://ai.dosa.dev/trending') {
+                    item.priority = 0.8;
+                    item.changefreq = 'weekly';
+                } else if (/\/trending\/\d{4}-w\d{2}\/?$/.test(url)) {
+                    item.priority = 0.6;
+                    item.changefreq = 'yearly';
                 } else if (url === 'https://ai.dosa.dev/news/' || url === 'https://ai.dosa.dev/news') {
                     item.priority = 0.8;
                     item.changefreq = 'daily';

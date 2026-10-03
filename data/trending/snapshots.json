@@ -1,0 +1,443 @@
+[
+  {
+    "week": "2026-w39",
+    "start": "2026-09-21T00:00:00.000Z",
+    "end": "2026-09-28T00:00:00.000Z",
+    "generatedAt": "2026-10-02T02:01:55.255Z",
+    "entries": [
+      {
+        "slug": "ax",
+        "name": "AX",
+        "company": "Google",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 3,
+        "views": 50,
+        "rank": 1,
+        "score": 10.5,
+        "starGrowth": null
+      },
+      {
+        "slug": "zed",
+        "name": "Zed",
+        "company": "Zed Industries",
+        "zaps": 1,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 3,
+        "views": 10,
+        "rank": 2,
+        "score": 9.6,
+        "starGrowth": null
+      },
+      {
+        "slug": "bb",
+        "name": "bb",
+        "company": "bb",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 3,
+        "views": 20,
+        "rank": 3,
+        "score": 7.9,
+        "starGrowth": null
+      },
+      {
+        "slug": "nenva",
+        "name": "nenva",
+        "company": "Anjadhe",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 2,
+        "views": 20,
+        "rank": 4,
+        "score": 7.3,
+        "starGrowth": null
+      },
+      {
+        "slug": "trae",
+        "name": "Trae",
+        "company": "ByteDance",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 2,
+        "views": 20,
+        "rank": 5,
+        "score": 7.3,
+        "starGrowth": null
+      },
+      {
+        "slug": "z-code",
+        "name": "Z Code",
+        "company": "Z",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 2,
+        "views": 20,
+        "rank": 6,
+        "score": 7.3,
+        "starGrowth": null
+      },
+      {
+        "slug": "pochi",
+        "name": "Pochi",
+        "company": "Pochi",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 3,
+        "views": 10,
+        "rank": 7,
+        "score": 6.6,
+        "starGrowth": null
+      },
+      {
+        "slug": "pi-acp",
+        "name": "Pi ACP",
+        "company": "svkozak",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 20,
+        "rank": 8,
+        "score": 6.5,
+        "starGrowth": null
+      },
+      {
+        "slug": "void",
+        "name": "Void",
+        "company": "Void",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 20,
+        "rank": 9,
+        "score": 6.5,
+        "starGrowth": null
+      },
+      {
+        "slug": "qoder",
+        "name": "Qoder",
+        "company": "Qoder",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 2,
+        "views": 10,
+        "rank": 10,
+        "score": 6,
+        "starGrowth": null
+      },
+      {
+        "slug": "zeron",
+        "name": "Zeron",
+        "company": "Zeron",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 2,
+        "views": 10,
+        "rank": 11,
+        "score": 6,
+        "starGrowth": null
+      },
+      {
+        "slug": "amp",
+        "name": "Amp",
+        "company": "Sourcegraph",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 10,
+        "rank": 12,
+        "score": 5.2,
+        "starGrowth": null
+      },
+      {
+        "slug": "antigravity",
+        "name": "Antigravity",
+        "company": "Google",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 10,
+        "rank": 13,
+        "score": 5.2,
+        "starGrowth": null
+      },
+      {
+        "slug": "context-mode",
+        "name": "Context Mode",
+        "company": "mksglu",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 10,
+        "rank": 14,
+        "score": 5.2,
+        "starGrowth": null
+      },
+      {
+        "slug": "deskcue",
+        "name": "DeskCue",
+        "company": "Alexander Kornev",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 10,
+        "rank": 15,
+        "score": 5.2,
+        "starGrowth": null
+      },
+      {
+        "slug": "jcode",
+        "name": "jcode",
+        "company": "Jeremy Huang",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 10,
+        "rank": 16,
+        "score": 5.2,
+        "starGrowth": null
+      },
+      {
+        "slug": "codex-cli",
+        "name": "Codex CLI",
+        "company": "OpenAI",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 20,
+        "rank": 17,
+        "score": 4.5,
+        "starGrowth": null
+      },
+      {
+        "slug": "codex-quota-overlay",
+        "name": "Codex Quota Overlay",
+        "company": "cpys (maintainer; independent community project)",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 20,
+        "rank": 18,
+        "score": 4.5,
+        "starGrowth": null
+      },
+      {
+        "slug": "cortex-code",
+        "name": "Cortex Code",
+        "company": "Snowflake",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 20,
+        "rank": 19,
+        "score": 4.5,
+        "starGrowth": null
+      },
+      {
+        "slug": "oh-my-pi",
+        "name": "Oh My Pi",
+        "company": "Can Bölük",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 20,
+        "rank": 20,
+        "score": 4.5,
+        "starGrowth": null
+      },
+      {
+        "slug": "opencode",
+        "name": "OpenCode",
+        "company": "Anomaly",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 20,
+        "rank": 21,
+        "score": 4.5,
+        "starGrowth": null
+      },
+      {
+        "slug": "swe-agent",
+        "name": "SWE-agent",
+        "company": "Princeton NLP",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 20,
+        "rank": 22,
+        "score": 4.5,
+        "starGrowth": null
+      },
+      {
+        "slug": "nimbalyst",
+        "name": "Nimbalyst",
+        "company": "Nimbalyst",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 4,
+        "views": 0,
+        "rank": 23,
+        "score": 4,
+        "starGrowth": null
+      },
+      {
+        "slug": "termy",
+        "name": "Termy",
+        "company": "Lasse",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 4,
+        "views": 0,
+        "rank": 24,
+        "score": 4,
+        "starGrowth": null
+      },
+      {
+        "slug": "toad",
+        "name": "toad",
+        "company": "Batrachian AI",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 4,
+        "views": 0,
+        "rank": 25,
+        "score": 4,
+        "starGrowth": null
+      }
+    ],
+    "rising": [
+      {
+        "slug": "ax",
+        "name": "AX",
+        "company": "Google",
+        "rank": 1,
+        "previousRank": null,
+        "score": 10.5,
+        "previousScore": 0,
+        "delta": 10.5
+      },
+      {
+        "slug": "bb",
+        "name": "bb",
+        "company": "bb",
+        "rank": 3,
+        "previousRank": null,
+        "score": 7.9,
+        "previousScore": 0,
+        "delta": 7.9
+      },
+      {
+        "slug": "nenva",
+        "name": "nenva",
+        "company": "Anjadhe",
+        "rank": 4,
+        "previousRank": null,
+        "score": 7.3,
+        "previousScore": 0,
+        "delta": 7.3
+      },
+      {
+        "slug": "pi-acp",
+        "name": "Pi ACP",
+        "company": "svkozak",
+        "rank": 8,
+        "previousRank": null,
+        "score": 6.5,
+        "previousScore": 0,
+        "delta": 6.5
+      },
+      {
+        "slug": "qoder",
+        "name": "Qoder",
+        "company": "Qoder",
+        "rank": 10,
+        "previousRank": null,
+        "score": 6,
+        "previousScore": 0,
+        "delta": 6
+      }
+    ],
+    "newTools": [
+      {
+        "slug": "supercode",
+        "name": "Supercode",
+        "company": "Yash Dewasthale"
+      },
+      {
+        "slug": "rune",
+        "name": "Rune",
+        "company": "Unstable Build"
+      },
+      {
+        "slug": "kimi-code",
+        "name": "Kimi Code",
+        "company": "Kimi"
+      },
+      {
+        "slug": "step-code",
+        "name": "Step Code",
+        "company": "stepfun-ai"
+      },
+      {
+        "slug": "athas",
+        "name": "Athas",
+        "company": "Athas"
+      },
+      {
+        "slug": "ccgui",
+        "name": "ccgui",
+        "company": "zhukunpenglinyutong"
+      },
+      {
+        "slug": "zeron",
+        "name": "Zeron",
+        "company": "Zeron"
+      },
+      {
+        "slug": "frontieragent",
+        "name": "FrontierAgent",
+        "company": "Apodex AI"
+      },
+      {
+        "slug": "pi-agent-ide",
+        "name": "pi-agent-ide",
+        "company": "Aleksandr Shpuntenko"
+      },
+      {
+        "slug": "mimo-code",
+        "name": "MiMo Code",
+        "company": "Xiaomi"
+      }
+    ],
+    "guard": {
+      "ungatedZapsDropped": 0,
+      "burstActorsDropped": 0
+    }
+  }
+]

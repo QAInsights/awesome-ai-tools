@@ -25,6 +25,8 @@ export function renderLayout({ title, content, unsubscribeUrl, siteOrigin }: Ema
         </header>
         <main style="padding:32px">${content}</main>
         <footer style="padding:24px 32px;border-top:1px solid #333;color:#999;font-size:13px">
+            <a href="${escapeHtml(siteOrigin)}/trending" style="color:#d9b878">Trending this week</a>
+            <span style="color:#555;padding:0 8px">·</span>
             <a href="${escapeHtml(siteOrigin)}/settings" style="color:#d9b878">Manage notifications</a>
             <span style="color:#555;padding:0 8px">·</span>
             <a href="${escapeHtml(unsubscribeUrl)}" style="color:#d9b878">Unsubscribe</a>

@@ -1,6 +1,8 @@
 ---
 import { SEO } from 'astro-seo';
 import SignInModal from '../components/SignInModal.astro';
+import EthicalAd from '../components/EthicalAd.astro';
+import { pageAdTopics } from '../lib/ethical-ads';
 
 // Base layout used by all pages
 // Props: title, description, keywords, canonical, ogImage, ogType
@@ -26,6 +28,8 @@ interface Props {
     twitterDescription?: string;
     jsonLd?: string;
     robots?: string;
+    /** Markdown mirror of the page for LLM consumers - emitted as rel=alternate type=text/markdown */
+    markdownUrl?: string;
     /** Paginated collections: rel=prev / rel=next hints */
     prevUrl?: string;
     nextUrl?: string;
@@ -51,8 +55,10 @@ const {
     robots,
     prevUrl,
     nextUrl,
+    markdownUrl,
 } = Astro.props;
 
+const showAd = !Astro.url.pathname.startsWith('/admin');
 const resolvedCanonical = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
 const resolvedOgTitle = ogTitle ?? title;
 const resolvedOgDesc = ogDescription ?? description;
@@ -85,6 +91,7 @@ const extraLinks: { rel: string; href: string; type?: string; title?: string }[]
     { rel: 'alternate', type: 'application/rss+xml', title: 'ai.dosa.dev tools RSS', href: '/tools/rss.xml' },
     { rel: 'alternate', type: 'text/plain', title: 'llms.txt', href: '/llms.txt' },
 ];
+if (markdownUrl) extraLinks.push({ rel: 'alternate', type: 'text/markdown', title: 'Markdown', href: markdownUrl });
 if (prevUrl) extraLinks.push({ rel: 'prev', href: prevUrl });
 if (nextUrl) extraLinks.push({ rel: 'next', href: nextUrl });
 ---
@@ -158,6 +165,7 @@ if (nextUrl) extraLinks.push({ rel: 'next', href: nextUrl });
 <body class="bg-black text-white font-sans antialiased leading-relaxed">
     <slot />
 
+    {showAd && <EthicalAd keywords={pageAdTopics(tags, keywords)} />}
     <SignInModal />
     <div id="turnstile-container"></div>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>

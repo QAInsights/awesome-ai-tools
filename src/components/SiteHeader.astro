@@ -8,12 +8,12 @@ const { variant, title = 'ai.dosa.dev' } = Astro.props;
 ---
 
 <div class="md:hidden flex items-center justify-between p-4 border-b border-border bg-panel shrink-0 z-10 sticky top-0">
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-3 min-w-0">
         <button id="openSidebarMobile" aria-label="Open sidebar menu" class="text-ink-secondary hover:text-white transition-colors p-1 rounded-md hover:bg-white/5">
             <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
-        <div class="flex items-center gap-2">
-            <img src="/images/icons/favicon-32x32.png" alt="logo" class="w-6 h-6 rounded-full" />
+        <div class="flex items-center gap-2 min-w-0">
+            <img src="/images/icons/favicon-32x32.png" alt="logo" class="w-6 h-6 rounded-full shrink-0" />
             <span class="text-[17px] font-semibold tracking-wide text-white leading-none truncate">{title}</span>
         </div>
     </div>

@@ -1,0 +1,78 @@
+---
+title: "Gemini 4 Argon enters limited release as court rules on AI training"
+description: "Google's Gemini 4 Argon goes to cyber defenders first, CoreWeave and Cloudflare retool for agents, and an appeals court rejects a fair use defense."
+pubDate: 2026-10-01
+tags: ["news","today-in-ai","google","gemini","copyright","agents","infrastructure","chips"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-10-01 UTC.
+
+Google's newest frontier model is real but gated, agent infrastructure got two rebuilds, and a federal appeals court weighed in on training data.
+
+## Google unveils Gemini 4 Argon, gated to cyber defenders first
+
+**What happened:** Google DeepMind announced Gemini 4 Argon, a frontier model rolling out to trusted cyber defenders through its Fairwind Program. It launches at an introductory $2 per million input tokens and $10 per million output tokens, with cached input at 95% off.
+
+**Why it matters:** Developers cannot call Argon yet, so plan around the price and capability gap until Google widens access beyond the Fairwind cohort.
+
+[Source: Google](<https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/>)
+
+## Third Circuit rejects fair use defense in Thomson Reuters v ROSS
+
+**What happened:** The Third Circuit affirmed that Westlaw headnotes are copyrightable and that ROSS Intelligence's use of them to train a competing legal research tool was not fair use. The precedential opinion was filed under seal, with 10 days for the parties to propose redactions.
+
+**Why it matters:** Training on a competitor's curated data to ship a rival product now carries appellate precedent, so builders should audit where training corpora come from.
+
+[Source: Courthouse News Service](<https://www.courthousenews.com/ai-training-of-copyrighted-material-not-fair-use-third-circuit/>)
+
+## CoreWeave Forge unifies the model and agent development loop
+
+**What happened:** CoreWeave launched Forge, a development layer that runs training, experiment tracking, evaluations and agent traces in one environment, combining Weights &amp; Biases Models, OpenPipe post-training work and the marimo notebook project. MasterClass and Canva are already building on it.
+
+**Why it matters:** Teams can keep traces, checkpoints and evals next to where models actually run instead of stitching together separate vendors' tools.
+
+[Source: CoreWeave](<https://www.coreweave.com/news/coreweave-forge-launches-turning-the-ai-loop-production-run-into-a-better-model-and-agent>)
+
+## Cloudflare rebuilds Containers for on-demand agent sandboxes
+
+**What happened:** Cloudflare rearchitected Containers so code picks each sandbox's image and instance type at runtime, with startup 6x faster and filesystem snapshots in public beta. In ComputeSDK's benchmark, median startup fell from just over four seconds to 648 milliseconds.
+
+**Why it matters:** Agents that spin up a fresh Linux workspace per task get sub-second cold starts, which makes per-task sandboxing practical instead of a latency tax.
+
+[Source: Cloudflare](<https://blog.cloudflare.com/faster-agent-sandboxes/>)
+
+## Synopsys and OpenAI to build GPT-Synopsys for chip design
+
+**What happened:** Synopsys said it struck a revenue-sharing deal with OpenAI to develop GPT-Synopsys, a model trained to operate Synopsys EDA tools, interpret results and iterate on chip designs. OpenAI pays a training subscription fee; the two share revenue when customers use the product.
+
+**Why it matters:** If the model learns EDA workflows directly, chip teams could compress design cycles, though Synopsys tools still verify the physics behind every result.
+
+[Source: Reuters via CNA](<https://www.channelnewsasia.com/business/synopsys-openai-strike-deal-develop-ai-model-chip-design-work-6422481>)
+
+## Ant Group's InclusionAI ships Ling-3.1-flash at 560B parameters
+
+**What happened:** InclusionAI launched Ling-3.1-flash, a model with 560 billion total parameters and about 25 billion activated per token, aimed at agent tasks, search and office software. Its two-week free trial caps context at 256, 000 tokens, with a one-million-token window and open source release planned after.
+
+**Why it matters:** A sparse 560B model with a free trial gives builders a cheap way to test agent and search workloads before committing to an open-weight deployment.
+
+[Source: TechNode](<https://technode.com/2026/09/30/ant-group-launches-ling-3-1-flash-with-560-billion-parameters/>)
+
+## ElevenLabs valuation doubles to $22B on voice agent demand
+
+**What happened:** ElevenLabs completed a $300 million employee tender offer led by Wellington and T. Rowe Price, valuing it at $22 billion, twice its February valuation. The company says its agents handle more than 15 million conversations a week, three times February's level.
+
+**Why it matters:** Voice agent adoption is translating into real enterprise volume, so teams evaluating speech vendors should expect pricing and terms to firm up.
+
+[Source: CNA](<https://www.channelnewsasia.com/business/elevenlabs-valuation-doubles-22-billion-surging-ai-voice-agent-demand-6422356>)
+
+## Sources
+
+- [Google](<https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/>)
+- [Courthouse News Service](<https://www.courthousenews.com/ai-training-of-copyrighted-material-not-fair-use-third-circuit/>)
+- [CoreWeave](<https://www.coreweave.com/news/coreweave-forge-launches-turning-the-ai-loop-production-run-into-a-better-model-and-agent>)
+- [Cloudflare](<https://blog.cloudflare.com/faster-agent-sandboxes/>)
+- [Reuters via CNA](<https://www.channelnewsasia.com/business/synopsys-openai-strike-deal-develop-ai-model-chip-design-work-6422481>)
+- [TechNode](<https://technode.com/2026/09/30/ant-group-launches-ling-3-1-flash-with-560-billion-parameters/>)
+- [CNA](<https://www.channelnewsasia.com/business/elevenlabs-valuation-doubles-22-billion-surging-ai-voice-agent-demand-6422356>)

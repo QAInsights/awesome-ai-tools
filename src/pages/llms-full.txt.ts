@@ -7,6 +7,8 @@
  */
 import type { APIRoute } from 'astro';
 import { getAllTools } from '../lib/tools';
+import { getBestPages } from '../lib/best';
+import { getIndexingDecisions } from '../lib/indexing';
 
 export const GET: APIRoute = () => {
     const tools = getAllTools();
@@ -32,6 +34,19 @@ export const GET: APIRoute = () => {
             lines.push(`- [${t.name}](${t.url}) (${t.company}) - ${desc} · details: https://ai.dosa.dev/tools/${t.slug}`);
         }
         lines.push('');
+    }
+
+    const decisions = getIndexingDecisions();
+    const bestPages = getBestPages().filter(p => decisions.get(`/best/${p.facet.slug}`)?.indexable);
+    if (bestPages.length) {
+        lines.push('## Best-of lists (ranked)', '');
+        for (const p of bestPages) {
+            lines.push(`### ${p.facet.title} (${p.refreshLabel})`, '', `${p.facet.criteria} Full list: https://ai.dosa.dev/best/${p.facet.slug}`, '');
+            p.tools.slice(0, 10).forEach((t, i) => {
+                lines.push(`${i + 1}. [${t.enriched?.name ?? t.name}](https://ai.dosa.dev/tools/${t.slug})`);
+            });
+            lines.push('');
+        }
     }
 
     return new Response(lines.join('\n'), {

@@ -21,6 +21,7 @@ describe('analytics event catalog', () => {
     test('normalizes unknown attribution to the sidebar', () => {
         expect(sanitizeAuthTrigger('favorite_heart')).toBe('favorite_heart');
         expect(sanitizeAuthTrigger('follow_bell')).toBe('follow_bell');
+        expect(sanitizeAuthTrigger('ad_close')).toBe('ad_close');
         expect(sanitizeAuthTrigger('first_run')).toBe('sidebar');
     });
 
@@ -47,5 +48,12 @@ describe('analytics event catalog', () => {
             trigger: 'unknown',
             subject: 'vote_stuffing',
         })?.subject).toBe('');
+    });
+
+    test('accepts ad-close prompt events keyed by ad style', () => {
+        expect(normalizeClientEvent({ event: EVENTS.AD_CLOSED, trigger: 'stickybox', subject: 'cursor' }))
+            .toMatchObject({ event: 'ad_closed', trigger: 'stickybox', subject: '' });
+        expect(normalizeClientEvent({ event: EVENTS.AD_PROMPT_SHOWN, trigger: 'fixedfooter' })?.trigger).toBe('fixedfooter');
+        expect(normalizeClientEvent({ event: EVENTS.AD_PROMPT_DISMISSED, trigger: 'banner' })?.trigger).toBe('');
     });
 });

@@ -1,0 +1,96 @@
+---
+/**
+ * /trending/<week> - permanent weekly leaderboard snapshot, e.g. /trending/2026-w40.
+ */
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import TrendingBoard from '../../components/TrendingBoard.astro';
+import { formatWeekTitle, type TrendingSnapshot } from '../../lib/trending';
+import { getTrendingSnapshots } from '../../lib/trending-data';
+import { robotsFor } from '../../lib/indexing';
+
+export function getStaticPaths() {
+    const snapshots = getTrendingSnapshots();
+    return snapshots.map((snapshot, i) => ({
+        params: { week: snapshot.week },
+        props: { snapshot, newer: snapshots[i - 1] ?? null, older: snapshots[i + 1] ?? null },
+    }));
+}
+
+interface Props {
+    snapshot: TrendingSnapshot;
+    newer: TrendingSnapshot | null;
+    older: TrendingSnapshot | null;
+}
+
+const { snapshot, newer, older } = Astro.props;
+const title = formatWeekTitle(snapshot.week);
+const pageUrl = `https://ai.dosa.dev/trending/${snapshot.week}`;
+const top = snapshot.entries.slice(0, 3).map(entry => entry.name);
+const description = top.length
+    ? `Trending AI coding tools for ${title}: ${top.join(', ')} lead the weekly leaderboard on ai.dosa.dev, with rising tools and new additions.`
+    : `Weekly AI coding tools leaderboard for ${title} on ai.dosa.dev.`;
+const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "CollectionPage",
+            "@id": pageUrl,
+            "url": pageUrl,
+            "name": `Trending AI coding tools, ${title}`,
+            "description": description,
+            "isPartOf": { "@id": "https://ai.dosa.dev/#website" },
+            "inLanguage": "en",
+            "datePublished": snapshot.generatedAt,
+        },
+        {
+            "@type": "ItemList",
+            "name": `Trending AI coding tools, ${title}`,
+            "itemListOrder": "https://schema.org/ItemListOrderDescending",
+            "numberOfItems": snapshot.entries.length,
+            "itemListElement": snapshot.entries.map(entry => ({
+                "@type": "ListItem",
+                "position": entry.rank,
+                "name": entry.name,
+                "url": `https://ai.dosa.dev/tools/${entry.slug}`,
+            })),
+        },
+        {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ai.dosa.dev" },
+                { "@type": "ListItem", "position": 2, "name": "Trending", "item": "https://ai.dosa.dev/trending" },
+                { "@type": "ListItem", "position": 3, "name": title, "item": pageUrl },
+            ],
+        },
+    ],
+});
+---
+
+<DashboardLayout
+    title={`Trending AI Coding Tools, ${title} | ai.dosa.dev`}
+    description={description}
+    canonical={pageUrl}
+    keywords={`trending AI tools ${title}, AI coding tools leaderboard, ${top.join(', ')}`}
+    robots={robotsFor(`/trending/${snapshot.week}`)}
+    ogImage={`https://ai.dosa.dev/images/og/trending/${snapshot.week}.png`}
+    ogImageAlt={`Trending AI coding tools, ${title}`}
+    publishedTime={snapshot.generatedAt}
+    jsonLd={jsonLd}
+    activeNav="trending"
+>
+    <div class="max-w-[1000px] mx-auto w-full flex flex-col gap-8 p-6 md:p-8">
+        <nav aria-label="Breadcrumb" class="font-mono text-[12px] text-[#737373] tracking-wide flex items-center gap-2 flex-wrap">
+            <a href="/" class="hover:text-white transition-colors">Home</a>
+            <span>/</span>
+            <a href="/trending" class="hover:text-white transition-colors">Trending</a>
+            <span>/</span>
+            <span class="text-white">{title}</span>
+        </nav>
+        <TrendingBoard snapshot={snapshot} />
+        <nav aria-label="Other weeks" class="flex items-center justify-between border-t border-[#222] pt-6">
+            {older ? <a href={`/trending/${older.week}`} class="inline-flex py-2 px-4 bg-white/5 text-white text-sm border border-[#222] rounded-md">&larr; {formatWeekTitle(older.week)}</a> : <div />}
+            <a href="/trending" class="font-mono text-[12px] text-[#737373] hover:text-white">Latest week</a>
+            {newer ? <a href={`/trending/${newer.week}`} class="inline-flex py-2 px-4 bg-white/5 text-white text-sm border border-[#222] rounded-md">{formatWeekTitle(newer.week)} &rarr;</a> : <div />}
+        </nav>
+    </div>
+</DashboardLayout>

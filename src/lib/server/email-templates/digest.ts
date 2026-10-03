@@ -50,6 +50,7 @@ export function renderDigest({ userName, tools, unsubscribeUrl, siteOrigin }: Di
             ...tool.recentUpdates.map(update => `- ${update}`),
         ]),
         '',
+        `Trending this week: ${siteOrigin}/trending`,
         `Manage notifications: ${siteOrigin}/settings`,
         `Unsubscribe: ${unsubscribeUrl}`,
     ].join('\n');

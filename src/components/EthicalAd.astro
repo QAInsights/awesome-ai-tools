@@ -1,0 +1,89 @@
+---
+/**
+ * EthicalAd - the site's single floating EthicalAds placement plus the client script.
+ *
+ * Rendered once by BaseLayout (EthicalAds allows one ad per page). The inline
+ * script picks the placement for the viewport (FLOATING_AD_PLACEMENTS), then
+ * loads the client. While a fixed footer ad is showing, its height is exposed
+ * as --ea-float-h so the page, compare bar and onboarding card can clear it.
+ * Signed-in members (AD_FREE_STORAGE_KEY) never load the client, and closing
+ * a filled ad dispatches AD_CLOSED_EVENT for js/ad-gate.js.
+ * Renders nothing when ads are disabled (PUBLIC_ETHICALADS_PUBLISHER=off).
+ *
+ * Props:
+ *   keywords - page topics, sent as data-ea-keywords for contextual targeting
+ */
+import {
+    AD_CLOSED_EVENT,
+    AD_FREE_STORAGE_KEY,
+    ETHICAL_ADS_CAMPAIGN_TYPES,
+    ETHICAL_ADS_CLIENT_SRC,
+    FLOATING_AD_PLACEMENTS,
+    FLOATING_AD_WIDE_QUERY,
+    adKeywords,
+    resolveEthicalAdsPublisher,
+} from '../lib/ethical-ads';
+
+interface Props {
+    keywords?: readonly (string | undefined | null)[];
+}
+
+const { keywords = [] } = Astro.props;
+const publisher = resolveEthicalAdsPublisher(import.meta.env.PUBLIC_ETHICALADS_PUBLISHER);
+const keywordList = adKeywords(keywords);
+---
+
+{publisher && (
+    <>
+        <div
+            class="ea-slot dark flat"
+            data-ea-publisher={publisher}
+            data-ea-keywords={keywordList || undefined}
+            data-ea-campaign-types={ETHICAL_ADS_CAMPAIGN_TYPES}
+            data-ea-placements={JSON.stringify(FLOATING_AD_PLACEMENTS)}
+            data-ea-wide-query={FLOATING_AD_WIDE_QUERY}
+            data-ea-client={ETHICAL_ADS_CLIENT_SRC}
+            data-ea-ad-free-key={AD_FREE_STORAGE_KEY}
+            data-ea-closed-event={AD_CLOSED_EVENT}
+        ></div>
+        <script is:inline>
+            (() => {
+                const slot = document.currentScript.previousElementSibling;
+                try {
+                    if (localStorage.getItem(slot.dataset.eaAdFreeKey) === '1') {
+                        slot.remove();
+                        return;
+                    }
+                } catch {}
+                const placements = JSON.parse(slot.dataset.eaPlacements);
+                const placement = window.matchMedia(slot.dataset.eaWideQuery).matches ? placements.wide : placements.narrow;
+                slot.id = placement.id;
+                slot.setAttribute('data-ea-type', placement.type);
+                slot.setAttribute('data-ea-style', placement.style);
+
+                const root = document.documentElement;
+                const sync = () => {
+                    const showing = slot.isConnected && slot.classList.contains('loaded') && placement.style === 'fixedfooter';
+                    root.style.setProperty('--ea-float-h', showing ? `${slot.offsetHeight}px` : '0px');
+                };
+                new ResizeObserver(sync).observe(slot);
+                new MutationObserver(sync).observe(slot, { attributes: true, attributeFilter: ['class'] });
+                const removal = new MutationObserver(() => {
+                    sync();
+                    if (slot.isConnected) return;
+                    removal.disconnect();
+                    if (slot.classList.contains('loaded') && !slot.dataset.eaRemoved) {
+                        window.dispatchEvent(new CustomEvent(slot.dataset.eaClosedEvent, { detail: { style: placement.style } }));
+                    }
+                });
+                removal.observe(slot.parentNode, { childList: true });
+
+                const client = document.createElement('script');
+                client.async = true;
+                client.src = slot.dataset.eaClient;
+                document.head.appendChild(client);
+            })();
+        </script>
+        <script src="/dist/ad-gate.js" type="module" defer></script>
+    </>
+)}

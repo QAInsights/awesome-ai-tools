@@ -1,0 +1,96 @@
+---
+/**
+ * Best-of hub - /best
+ *
+ * Crawlable index of the "Best X for Y" facet pages defined in
+ * data/best-facets.json.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import { getBestPages } from '../../lib/best';
+import { getIndexingDecisions } from '../../lib/indexing';
+
+const decisions = getIndexingDecisions();
+const pages = getBestPages().filter(p => decisions.get(`/best/${p.facet.slug}`)?.indexable);
+const refreshLabel = getBestPages()[0]?.refreshLabel ?? '';
+const pageUrl = 'https://ai.dosa.dev/best';
+const description = `Ranked lists of the best AI coding tools by use case: free, open source, self-hosted, JetBrains, VS Code, terminal, enterprise, beginners, Python and TypeScript. Refreshed ${refreshLabel}.`;
+
+const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "CollectionPage",
+            "@id": `${pageUrl}#collection`,
+            "url": pageUrl,
+            "name": "Best AI Coding Tools by Use Case",
+            "description": description,
+            "inLanguage": "en",
+            "isPartOf": { "@type": "WebSite", "@id": "https://ai.dosa.dev/#website", "url": "https://ai.dosa.dev", "name": "ai.dosa.dev - Awesome AI Tools" },
+        },
+        {
+            "@type": "ItemList",
+            "numberOfItems": pages.length,
+            "itemListElement": pages.map((p, i) => ({
+                "@type": "ListItem",
+                "position": i + 1,
+                "name": p.facet.title,
+                "url": `https://ai.dosa.dev/best/${p.facet.slug}`
+            }))
+        },
+        {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ai.dosa.dev" },
+                { "@type": "ListItem", "position": 2, "name": "Best AI coding tools", "item": pageUrl }
+            ]
+        }
+    ]
+});
+---
+
+<BaseLayout
+    title={`Best AI Coding Tools by Use Case (${refreshLabel}) | ai.dosa.dev`}
+    description={description}
+    keywords="best AI coding tools, best AI coding assistant, best free AI coding agent, best AI coding tools for JetBrains, best AI coding tools for VS Code"
+    canonical={pageUrl}
+    jsonLd={jsonLd}
+>
+    <div class="flex h-[100dvh] overflow-hidden">
+        <Sidebar variant="tool" />
+
+        <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
+            <SiteHeader variant="page" title="Best AI coding tools" />
+
+            <div class="max-w-[1000px] mx-auto w-full flex flex-col flex-1 p-4 md:p-8 gap-6">
+                <nav aria-label="Breadcrumb" class="font-mono text-[12px] text-[#737373] tracking-wide flex items-center gap-2 flex-wrap">
+                    <a href="/" class="hover:text-white transition-colors">Home</a>
+                    <span>/</span>
+                    <span class="text-white">Best</span>
+                </nav>
+
+                <header class="flex flex-col gap-3 pb-4 border-b border-[#222]">
+                    <h1 class="text-[32px] md:text-[40px] font-semibold tracking-tight leading-tight bg-gradient-to-r from-white via-[#e5e5e5] to-white bg-clip-text text-transparent">
+                        Best AI Coding Tools by Use Case
+                    </h1>
+                    <p class="text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">
+                        Ranked shortlists for the questions developers actually ask: which tools are free, which run locally, which work in JetBrains or the terminal, and which pass an enterprise security review. Each list is rebuilt from the directory's reviews every month.
+                    </p>
+                </header>
+
+                <section aria-label="Best-of lists" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-8">
+                    {pages.map(p => (
+                        <a href={`/best/${p.facet.slug}`} class="group flex flex-col gap-2 px-5 py-4 border border-[#222] rounded-md bg-white/[0.02] hover:border-[#444] hover:bg-white/[0.04] transition-colors">
+                            <span class="text-[15px] font-medium text-white">{p.facet.title}</span>
+                            <span class="text-[13px] text-[#a3a3a3] leading-relaxed">Top picks: {p.tools.slice(0, 3).map(t => t.enriched?.name ?? t.name).join(', ')}</span>
+                            <span class="font-mono text-[11px] text-[#737373] tracking-wide">{p.tools.length} tools ranked</span>
+                        </a>
+                    ))}
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="/dist/app.js" type="module" defer></script>
+</BaseLayout>

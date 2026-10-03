@@ -1206,5 +1206,41 @@
   {
     "companyName": "Louis Beaumont (maintainer)",
     "toolName": "Hyperconsciousness"
+  },
+  {
+    "companyName": "Prime Intellect",
+    "toolName": "Prime Agent"
+  },
+  {
+    "companyName": "Garry Tan",
+    "toolName": "gstack"
+  },
+  {
+    "companyName": "Steve Yegge",
+    "toolName": "Beads"
+  },
+  {
+    "companyName": "Gaurav Gosain",
+    "toolName": "TUIOS"
+  },
+  {
+    "companyName": "Diego Souza (diegosouzapw)",
+    "toolName": "OmniRoute"
+  },
+  {
+    "companyName": "Tracer",
+    "toolName": "OpenSRE"
+  },
+  {
+    "companyName": "Pydantic",
+    "toolName": "Monty"
+  },
+  {
+    "companyName": "Grafana Labs",
+    "toolName": "gcx"
+  },
+  {
+    "companyName": "Agentic AI Foundation (Linux Foundation)",
+    "toolName": "agentgateway"
   }
 ]

@@ -1,0 +1,88 @@
+---
+/**
+ * /trending - the latest weekly leaderboard plus the archive of permanent
+ * weekly snapshots (/trending/<week>). Snapshots are produced every Monday by
+ * .github/workflows/trending-snapshot.yml.
+ */
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import TrendingBoard from '../../components/TrendingBoard.astro';
+import { formatWeekSpan, formatWeekTitle } from '../../lib/trending';
+import { getLatestTrendingSnapshot, getTrendingSnapshots } from '../../lib/trending-data';
+import { NOINDEX_ROBOTS, robotsFor } from '../../lib/indexing';
+
+const latest = getLatestTrendingSnapshot();
+const archive = getTrendingSnapshots();
+const pageUrl = 'https://ai.dosa.dev/trending';
+const description = latest
+    ? `The most engaged AI coding tools for ${formatWeekTitle(latest.week)}: weekly leaderboard, rising tools, and new additions on ai.dosa.dev.`
+    : 'A weekly leaderboard of the most engaged AI coding tools on ai.dosa.dev, published every Monday.';
+const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "CollectionPage",
+            "@id": pageUrl,
+            "url": pageUrl,
+            "name": "Trending AI coding tools this week",
+            "description": description,
+            "isPartOf": { "@id": "https://ai.dosa.dev/#website" },
+            "inLanguage": "en",
+            ...(latest ? { "dateModified": latest.generatedAt } : {}),
+        },
+        ...(latest ? [{
+            "@type": "ItemList",
+            "name": `Trending AI coding tools, ${formatWeekTitle(latest.week)}`,
+            "itemListOrder": "https://schema.org/ItemListOrderDescending",
+            "numberOfItems": latest.entries.length,
+            "itemListElement": latest.entries.map(entry => ({
+                "@type": "ListItem",
+                "position": entry.rank,
+                "name": entry.name,
+                "url": `https://ai.dosa.dev/tools/${entry.slug}`,
+            })),
+        }] : []),
+    ],
+});
+---
+
+<DashboardLayout
+    title="Trending AI Coding Tools This Week | ai.dosa.dev"
+    description={description}
+    canonical={pageUrl}
+    keywords="trending AI tools, AI coding tools leaderboard, top AI coding tools this week, rising AI developer tools"
+    robots={latest ? robotsFor(`/trending/${latest.week}`) : NOINDEX_ROBOTS}
+    ogImage={latest ? `https://ai.dosa.dev/images/og/trending/${latest.week}.png` : undefined}
+    ogImageAlt={latest ? `Trending AI coding tools, ${formatWeekTitle(latest.week)}` : undefined}
+    modifiedTime={latest?.generatedAt}
+    jsonLd={jsonLd}
+    activeNav="trending"
+>
+    <div class="max-w-[1000px] mx-auto w-full flex flex-col gap-8 p-6 md:p-8">
+        {latest ? (
+            <>
+                <TrendingBoard snapshot={latest} />
+                <a href={`/trending/${latest.week}`} class="font-mono text-[12px] text-[#737373] hover:text-white">Permanent link to {formatWeekTitle(latest.week)} &rarr;</a>
+            </>
+        ) : (
+            <header class="flex flex-col gap-2">
+                <h1 class="text-3xl sm:text-4xl font-semibold text-white tracking-tight m-0">Trending AI coding tools</h1>
+                <p class="text-[#a3a3a3] text-[15px] leading-relaxed m-0">The first weekly leaderboard publishes on Monday. Every visit to a tool's page counts, and zaps, favorites and follows count most.</p>
+            </header>
+        )}
+        {archive.length > 1 && (
+            <section aria-labelledby="archive-heading" class="flex flex-col gap-3">
+                <h2 id="archive-heading" class="text-[18px] font-semibold text-white m-0">Past weeks</h2>
+                <ul class="flex flex-col m-0 p-0 list-none border border-[#222] rounded-xl">
+                    {archive.slice(1).map(snapshot => (
+                        <li class="border-b border-[#1a1a1a] last:border-0">
+                            <a href={`/trending/${snapshot.week}`} class="flex items-center justify-between gap-4 px-4 py-3 hover:bg-white/[0.02]">
+                                <span class="text-[14px] text-white">{formatWeekTitle(snapshot.week)}</span>
+                                <span class="font-mono text-[11px] text-[#737373]">{formatWeekSpan(snapshot.week)}{snapshot.entries[0] && ` · #1 ${snapshot.entries[0].name}`}</span>
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </section>
+        )}
+    </div>
+</DashboardLayout>

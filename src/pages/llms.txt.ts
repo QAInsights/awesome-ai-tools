@@ -9,6 +9,8 @@
 import type { APIRoute } from 'astro';
 import { getAllTools, getCategoriesDetailed, getLatestUpdate, formatDate } from '../lib/tools';
 import { getResolvedComparisons } from '../lib/compare';
+import { getBestPages } from '../lib/best';
+import { getIndexingDecisions } from '../lib/indexing';
 
 const SITE = 'https://ai.dosa.dev';
 
@@ -17,6 +19,8 @@ export const GET: APIRoute = () => {
     const categories = getCategoriesDetailed();
     const comparisons = getResolvedComparisons();
     const latest = getLatestUpdate(tools);
+    const decisions = getIndexingDecisions();
+    const bestPages = getBestPages().filter(p => decisions.get(`/best/${p.facet.slug}`)?.indexable);
     const toolCount = Math.floor(tools.length / 10) * 10;
 
     const lines: string[] = [
@@ -59,11 +63,23 @@ export const GET: APIRoute = () => {
         `- [Alternatives Pages](${SITE}/tools/cursor/alternatives) - \`/tools/<slug>/alternatives\` lists same-category alternatives for a tool`,
         `- [Compare](${SITE}/compare) - ${comparisons.length} curated side-by-side comparisons at \`/compare/<a>-vs-<b>\``,
         `- [Categories](${SITE}/category/${categories[0]?.slug ?? ''}) - \`/category/<slug>\` pages with every tool in a category`,
+        `- [Best-of lists](${SITE}/best) - ${bestPages.length} ranked "best X for Y" lists at \`/best/<slug>\`, re-ranked monthly; each has a Markdown mirror at \`/best/<slug>.md\``,
         `- [Blog](${SITE}/blog) - Deep dives, comparisons, and tutorials on AI coding tools`,
         `- [Today in AI](${SITE}/news) - Daily AI news brief for builders`,
         `- [Token Counter & Cost Estimator](${SITE}/tools/token-counter) - Client-side token counts and cost estimates for major LLMs`,
         `- [Hallucination Risk Scorer](${SITE}/tools/hallucination-scorer) - Heuristic scorer that flags prompt patterns prone to hallucination`,
         `- [Help / FAQ](${SITE}/help) - Usage guide and frequently asked questions`,
+        '',
+        '## Best-of lists',
+        '',
+    );
+
+    for (const p of bestPages) {
+        const picks = p.tools.slice(0, 3).map(t => t.enriched?.name ?? t.name).join(', ');
+        lines.push(`- [${p.facet.title} (${p.refreshLabel})](${SITE}/best/${p.facet.slug}) - ${p.tools.length} tools ranked. Top picks: ${picks}. Markdown: ${SITE}/best/${p.facet.slug}.md`);
+    }
+
+    lines.push(
         '',
         '## Popular comparisons',
         '',
