@@ -10,9 +10,9 @@ import {
     parseGscPagesCsv,
     serializeComparisons,
 } from './compare-candidates';
-import { getComparisons, getTopComparedTools } from './compare';
+import { comparisonMarkdown, comparisonQuickAnswer, getComparisons, getResolvedComparisons, getTopComparedTools } from './compare';
 import type { Comparison } from './compare';
-import type { Tool } from './tools';
+import { getToolBySlug, type Tool } from './tools';
 
 const CATEGORY = 'Terminal & CLI Agents';
 
@@ -113,5 +113,29 @@ describe('compare candidates', () => {
         const curatedOnly = getComparisons().filter(c => !c.source);
         const curatedTools = new Set(curatedOnly.flatMap(c => [c.a, c.b]));
         for (const slug of topSlugs) expect(curatedTools.has(slug)).toBe(true);
+    });
+});
+
+describe('comparison answer surfaces', () => {
+    const kilo = getToolBySlug('kilo-code')!;
+    const roo = getToolBySlug('roo-code')!;
+
+    test('quick answer names both tools with pricing and best-for', () => {
+        const answer = comparisonQuickAnswer(kilo, roo);
+        expect(answer).toStartWith(`${kilo.name} (`);
+        expect(answer).toContain(`${roo.name} (`);
+        expect(answer).toContain('is best for');
+        expect(answer).not.toContain('undefined');
+    });
+
+    test('markdown mirror carries quick answer, table, FAQ and links', () => {
+        const c = getResolvedComparisons().find(x => x.slug === 'kilo-code-vs-roo-code')!;
+        const md = comparisonMarkdown(c);
+        expect(md).toStartWith(`# ${kilo.name} vs ${roo.name}`);
+        expect(md).toContain('## Quick answer');
+        expect(md).toContain('|---|---|---|');
+        expect(md).toContain('## FAQ');
+        expect(md).toContain('https://ai.dosa.dev/tools/roo-code');
+        expect(md).not.toContain('undefined');
     });
 });

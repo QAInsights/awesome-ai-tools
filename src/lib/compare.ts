@@ -152,3 +152,61 @@ export function buildComparisonFaqs(toolA: Tool, toolB: Tool): { q: string; a: s
 
     return faqs;
 }
+
+const SITE = 'https://ai.dosa.dev';
+const oneLine = (s?: string) => (s ?? '').replace(/\s+/g, ' ').trim();
+const lowerFirst = (s: string) => (/^[A-Z][a-z]/.test(s) ? s.charAt(0).toLowerCase() + s.slice(1) : s);
+
+/** One-paragraph "which should I pick" answer built from pricing and bestFor. */
+export function comparisonQuickAnswer(toolA: Tool, toolB: Tool): string {
+    const pick = (t: Tool) => {
+        const pricing = t.enriched?.pricing ? ` (${humanizePricing(t.enriched.pricing)})` : '';
+        const bestFor = t.enriched?.bestFor ? ` is best for ${lowerFirst(truncate(t.enriched.bestFor, 200))}` : ` is listed as ${t.categoryClean}`;
+        return asSentence(`${t.name}${pricing}${bestFor}`);
+    };
+    return `${pick(toolA)} ${pick(toolB)}`;
+}
+
+/** Markdown mirror of a comparison page (/compare/<slug>.md) for LLM and answer-engine consumers. */
+export function comparisonMarkdown(c: ResolvedComparison): string {
+    const { toolA, toolB } = c;
+    const cell = (s?: string) => oneLine(s).replace(/\|/g, '\\|') || '-';
+    const row = (label: string, pick: (t: Tool) => string | undefined) => `| ${label} | ${cell(pick(toolA))} | ${cell(pick(toolB))} |`;
+    const lines = [
+        `# ${toolA.name} vs ${toolB.name}`,
+        '',
+        `> Side-by-side comparison of ${toolA.name} (${toolA.company}) and ${toolB.name} (${toolB.company}): pricing, key features, ideal use cases and verdicts.`,
+        '',
+        `Source: ${SITE}/compare/${c.slug} · ${c.group}${c.lastUpdated ? ` · Updated ${c.lastUpdated}` : ''} · Published by dosa.dev`,
+        '',
+        '## Quick answer',
+        '',
+        comparisonQuickAnswer(toolA, toolB),
+        '',
+        '## Comparison table',
+        '',
+        `| | [${cell(toolA.name)}](${SITE}/tools/${toolA.slug}) | [${cell(toolB.name)}](${SITE}/tools/${toolB.slug}) |`,
+        '|---|---|---|',
+        row('Company', t => t.company),
+        row('Category', t => t.categoryClean),
+        row('Pricing', t => humanizePricing(t.enriched?.pricing)),
+        row('Best for', t => t.enriched?.bestFor),
+        row('Not ideal for', t => t.enriched?.notIdealFor),
+        row('Verdict', t => t.enriched?.verdict),
+        '',
+        '## Key features',
+        '',
+    ];
+    for (const t of [toolA, toolB]) {
+        lines.push(`### ${t.name}`, '', ...(t.enriched?.keyFeatures ?? []).map(f => `- ${oneLine(f)}`), '');
+    }
+    lines.push('## FAQ', '');
+    for (const f of buildComparisonFaqs(toolA, toolB)) lines.push(`### ${f.q}`, '', f.a, '');
+    lines.push('## Links', '');
+    for (const t of [toolA, toolB]) {
+        lines.push(`- ${t.name} review: ${SITE}/tools/${t.slug}`);
+        if (hasAlternativesPage(t.slug)) lines.push(`- ${t.name} alternatives: ${SITE}/tools/${t.slug}/alternatives`);
+    }
+    lines.push('');
+    return lines.join('\n');
+}

@@ -17,9 +17,9 @@ const SITE = 'https://ai.dosa.dev';
 export const GET: APIRoute = () => {
     const tools = getAllTools();
     const categories = getCategoriesDetailed();
-    const comparisons = getResolvedComparisons();
     const latest = getLatestUpdate(tools);
     const decisions = getIndexingDecisions();
+    const comparisons = getResolvedComparisons().filter(c => decisions.get(`/compare/${c.slug}`)?.indexable);
     const bestPages = getBestPages().filter(p => decisions.get(`/best/${p.facet.slug}`)?.indexable);
     const toolCount = Math.floor(tools.length / 10) * 10;
 
@@ -61,7 +61,7 @@ export const GET: APIRoute = () => {
         `- [Tool Directory](${SITE}/) - Browsable catalog with sidebar navigation, search, and filtering`,
         `- [Tool Detail Pages](${SITE}/tools/cursor) - One page per tool at \`/tools/<slug>\` with pricing, key features, best-for / not-ideal-for guidance, recent updates, verdict, and FAQ`,
         `- [Alternatives Pages](${SITE}/tools/cursor/alternatives) - \`/tools/<slug>/alternatives\` lists same-category alternatives for a tool`,
-        `- [Compare](${SITE}/compare) - ${comparisons.length} curated side-by-side comparisons at \`/compare/<a>-vs-<b>\``,
+        `- [Compare](${SITE}/compare) - ${comparisons.length} side-by-side comparisons at \`/compare/<a>-vs-<b>\`; each has a Markdown mirror at \`/compare/<a>-vs-<b>.md\``,
         `- [Categories](${SITE}/category/${categories[0]?.slug ?? ''}) - \`/category/<slug>\` pages with every tool in a category`,
         `- [Best-of lists](${SITE}/best) - ${bestPages.length} ranked "best X for Y" lists at \`/best/<slug>\`, re-ranked monthly; each has a Markdown mirror at \`/best/<slug>.md\``,
         `- [Blog](${SITE}/blog) - Deep dives, comparisons, and tutorials on AI coding tools`,
@@ -81,12 +81,12 @@ export const GET: APIRoute = () => {
 
     lines.push(
         '',
-        '## Popular comparisons',
+        '## Comparisons',
         '',
     );
 
-    for (const c of comparisons.slice(0, 12)) {
-        lines.push(`- [${c.toolA.name} vs ${c.toolB.name}](${SITE}/compare/${c.slug})`);
+    for (const c of comparisons) {
+        lines.push(`- [${c.toolA.name} vs ${c.toolB.name}](${SITE}/compare/${c.slug}) - ${c.group}. Markdown: ${SITE}/compare/${c.slug}.md`);
     }
 
     lines.push(
