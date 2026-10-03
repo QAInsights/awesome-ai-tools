@@ -1,0 +1,180 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Sidebar from '../../../components/Sidebar.astro';
+import SiteHeader from '../../../components/SiteHeader.astro';
+import FolioStyles from '../../../components/folio/FolioStyles.astro';
+import FolioTitle from '../../../components/folio/FolioTitle.astro';
+import FolioScroll from '../../../components/folio/FolioScroll.astro';
+import { formatDate, getToolBySlug } from '../../../lib/tools';
+import { entryLabel } from '../../../lib/folio';
+import { hasAlternativesPage, hasPricingPage } from '../../../lib/compare';
+import { createStackPageData, getVisibleStackItems, resolveStackPage } from '../../../lib/stack-public-view';
+import { getCookieSessionUser } from '../../../lib/server/route-auth';
+import {
+    getOwnedStack,
+    getPublicStack,
+    listStacks,
+    type OwnedStack,
+} from '../../../lib/server/stacks-repository';
+import { findUserByUsername } from '../../../lib/server/username-repository';
+import { requireDatabase } from '../../../lib/server/runtime-env';
+
+export const prerender = false;
+
+const requestedUsername = Astro.params.username ?? '';
+const requestedSlug = Astro.params.stack ?? '';
+const db = requireDatabase();
+const account = await findUserByUsername(db, requestedUsername);
+const publicResult = account
+    ? await getPublicStack(db, requestedUsername, requestedSlug)
+    : { status: 'not_found' as const };
+
+const viewer = await getCookieSessionUser(Astro.cookies, db);
+let ownedStack: OwnedStack | null = null;
+if (publicResult.status === 'not_found' && account && viewer?.id === account.user.id) {
+    const ownedSummary = (await listStacks(db, account.user.id)).find(item => item.slug === requestedSlug);
+    if (ownedSummary) ownedStack = await getOwnedStack(db, account.user.id, ownedSummary.id);
+}
+
+const route = resolveStackPage({
+    publicResult,
+    account,
+    ownedStack,
+    viewerId: viewer?.id,
+    requestedSlug,
+});
+if (route.type === 'redirect') {
+    return Astro.redirect(route.url, 301);
+}
+
+const stack = route.type === 'render' ? route.stack : null;
+const isOwner = route.type === 'render' && route.isOwner;
+const isPrivate = route.type === 'render' && route.isPrivate;
+if (route.type === 'not_found') Astro.response.status = 404;
+const displayName = route.type === 'render' ? route.displayName : '';
+const username = route.type === 'render' ? route.username : requestedUsername;
+const visibleItems = getVisibleStackItems(stack?.items ?? [], getToolBySlug);
+const pageData = stack
+    ? createStackPageData({
+        stack,
+        username,
+        displayName,
+        visibleItems,
+        isPrivate,
+        formatDate,
+    })
+    : null;
+const pageUrl = pageData?.pageUrl
+    ?? `https://ai.dosa.dev/u/${encodeURIComponent(requestedUsername)}/${encodeURIComponent(requestedSlug)}`;
+const pageTitle = pageData?.pageTitle ?? 'Stack not found | ai.dosa.dev';
+const pageDescription = pageData?.pageDescription ?? 'The requested tool stack could not be found.';
+const robots = pageData?.robots ?? (!stack ? 'noindex, nofollow' : undefined);
+Astro.response.headers.set('Cache-Control', !stack || isOwner || isPrivate ? 'private, no-store' : 'public, max-age=60');
+
+const updatedIso = pageData?.updatedIso ?? '';
+const facts = pageData?.facts ?? [];
+const jsonLd = pageData?.jsonLd;
+---
+
+<BaseLayout
+    title={pageTitle}
+    description={pageDescription}
+    canonical={pageUrl}
+    robots={robots}
+    jsonLd={jsonLd}
+    ogType="article"
+    authors={stack ? [displayName] : undefined}
+>
+    <div class="flex h-[100dvh] overflow-hidden">
+        <Sidebar variant="tool" />
+        <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
+            <SiteHeader variant="page" title={stack?.title ?? 'Tool stack'} />
+            {stack ? (
+                <article class="fo">
+                    <header class="fo-hero">
+                        <div>
+                            <div class="fo-top fo-fade" style="--d:.1s">
+                                <nav aria-label="Breadcrumb" class="fo-crumbs">
+                                    <a href="/">Home</a><span>/</span><a href={`/u/${encodeURIComponent(username)}`}>{displayName}</a><span>/</span><span class="here">{stack.title}</span>
+                                </nav>
+                                <span class="fo-status"><span>Updated <time datetime={updatedIso}>{formatDate(updatedIso)}</time></span></span>
+                            </div>
+                            <div class="fo-rule"></div>
+                        </div>
+                        <div>
+                            <FolioTitle parts={[{ text: stack.title }]} size={stack.title.length > 40 ? 'sm' : 'md'} />
+                            <div class="fo-intro">
+                                <div class="fo-leadbox fo-fade" style="--d:.55s">
+                                    <p class="fo-lead">{stack.description || `${visibleItems.length} AI tools gathered into one practical stack.`}</p>
+                                    <p class="fo-note">by {displayName} · <a href={`/u/${encodeURIComponent(username)}`}>@{username}</a></p>
+                                </div>
+                                <div class="fo-price fo-fade" style="--d:.7s">
+                                    <small>Tools</small>
+                                    <b>{visibleItems.length}</b>
+                                    <span>catalog tools in this stack</span>
+                                </div>
+                                <div class="fo-cta fo-fade" style="--d:.85s">
+                                    {isOwner && <a class="fo-btn" href={`/stacks/edit?id=${encodeURIComponent(stack.id)}`}>Edit stack <i aria-hidden="true">→</i></a>}
+                                    <a class="fo-link" href="/stacks">Build your own stack</a>
+                                </div>
+                            </div>
+                            {isPrivate && <p class="fo-note border border-[#c9aa6e]/30 bg-[#c9aa6e]/[0.06] rounded-lg px-4 py-3 mb-5">Private — only you can see this</p>}
+                            <div class="fo-facts">
+                                {facts.map((fact, index) => (
+                                    <div class="fo-fact fo-fade" style={`--d:${0.9 + index * 0.08}s`}>
+                                        <span class="fo-k">{fact.key}</span>
+                                        <b>{fact.value}</b>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </header>
+
+                    <section class="fo-sec" id="the-stack" aria-labelledby="stack-heading">
+                        <h2 class="fo-label" id="stack-heading"><em>01</em>The stack</h2>
+                        <div class="fo-body">
+                            {visibleItems.length ? visibleItems.map(({ item, tool }, index) => {
+                                const name = tool.enriched?.name ?? tool.name;
+                                const company = tool.enriched?.company ?? tool.company;
+                                return (
+                                    <div class="fo-rank">
+                                        <span class="no">{String(index + 1).padStart(2, '0')}</span>
+                                        <div>
+                                            <h3><a href={`/tools/${tool.slug}`}>{name}</a><span class="co">{company}</span></h3>
+                                            <p><span class="fo-tag">{item.purpose}</span></p>
+                                            {item.usageNotes && <p class="fo-note fo-usage" style="white-space: pre-line">{item.usageNotes}</p>}
+                                            <div class="links">
+                                                <a href={`/tools/${tool.slug}`}>Details →</a>
+                                                {hasPricingPage(tool.slug) && <a href={`/tools/${tool.slug}/pricing`}>Pricing →</a>}
+                                                {hasAlternativesPage(tool.slug) && <a href={`/tools/${tool.slug}/alternatives`}>Alternatives →</a>}
+                                            </div>
+                                        </div>
+                                        <span class="pr">{entryLabel(tool)}</span>
+                                    </div>
+                                );
+                            }) : <p class="fo-note">This stack has no visible catalog tools yet.</p>}
+                        </div>
+                    </section>
+
+                    <section class="fo-sec" id="build-your-own" aria-labelledby="build-heading">
+                        <h2 class="fo-label" id="build-heading"><em>02</em>Build your own</h2>
+                        <div class="fo-body">
+                            <p class="fo-text sm">Put your own AI workflow together, explain how each tool fits, and share it when it is ready.</p>
+                            <div class="fo-more"><a href="/stacks">Create a tool stack →</a></div>
+                        </div>
+                    </section>
+                </article>
+            ) : (
+                <article class="fo">
+                    <section class="fo-sec">
+                        <h1 class="fo-text">Stack not found</h1>
+                        <div class="fo-body"><p class="fo-note">This stack may be private, removed, or no longer available.</p></div>
+                    </section>
+                </article>
+            )}
+        </main>
+    </div>
+    <FolioStyles />
+    <FolioScroll />
+    <script src="/dist/app.js" type="module" defer></script>
+</BaseLayout>

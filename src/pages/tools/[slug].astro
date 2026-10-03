@@ -257,6 +257,19 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                                         </svg>
                                         <span data-favorite-label>Favorite</span>
                                     </button>
+                                    <div class="relative" data-stack-control>
+                                        <button
+                                            class="inline-flex items-center gap-2 h-10 px-3 rounded-full border border-[#333] bg-white/[0.04] text-[#cfcfcc] text-[13px] hover:border-[#c9aa6e] hover:text-white transition-colors"
+                                            type="button"
+                                            data-add-to-stack
+                                            data-tool-slug={tool.slug}
+                                            data-tool-category={tool.categoryShort}
+                                            aria-label={`Add ${displayName} to a stack`}
+                                            aria-expanded="false"
+                                        >
+                                            <span aria-hidden="true">＋</span><span>Add to stack</span>
+                                        </button>
+                                    </div>
                                     <button class="follow-btn detail" type="button" data-tool-slug={tool.slug} data-tool-name={displayName} aria-label={`Sign in to follow ${displayName}`} aria-pressed="false" title={`Get email updates about ${displayName}`}>
                                         <svg class="follow-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                                             <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/>

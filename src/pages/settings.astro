@@ -67,6 +67,25 @@ import DashboardLayout from '../layouts/DashboardLayout.astro';
                     </button>
                 </div>
             </section>
+            <section id="publicProfileCard" class="hidden border border-[#222] bg-white/[0.02] rounded-xl p-6 mt-5">
+                <div>
+                    <h2 class="text-lg font-semibold">Public profile</h2>
+                    <p class="text-[#a3a3a3] text-[14px] mt-2">Choose the username used for your public tool stacks. Previous username links redirect to your current profile.</p>
+                </div>
+                <div id="publicProfileSignedOut" class="hidden mt-5">
+                    <p class="text-[13px] text-[#a3a3a3] mb-4">Sign in to view and change your public username.</p>
+                    <a href="/?signin=1" data-auth-trigger="favorite_heart" class="inline-flex items-center py-2 px-3 bg-white text-black text-[13px] font-semibold rounded-md hover:bg-gray-200 transition-colors">Sign in</a>
+                </div>
+                <form id="publicProfileForm" class="hidden mt-5">
+                    <label for="publicUsername" class="block text-[12px] text-[#a3a3a3] mb-2">Username</label>
+                    <div class="flex flex-wrap gap-2">
+                        <input id="publicUsername" name="username" autocomplete="username" minlength="3" maxlength="30" required class="min-w-0 flex-1 rounded-lg border border-[#303030] bg-black/30 px-3 py-2.5 text-sm text-white focus:border-[#c9aa6e] focus:outline-none" />
+                        <button id="savePublicUsername" type="submit" class="py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 disabled:opacity-50">Save username</button>
+                    </div>
+                    <p id="publicProfileStatus" role="status" class="text-[12px] text-[#a3a3a3] mt-3"></p>
+                    <a id="publicProfileLink" class="hidden inline-block mt-2 text-[13px] text-[#c9aa6e] hover:text-white" href="#">View public profile →</a>
+                </form>
+            </section>
         </div>
     </div>
     <script src="/dist/settings-page.js" type="module" defer></script>
