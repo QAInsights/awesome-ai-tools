@@ -1242,5 +1242,25 @@
   {
     "companyName": "Agentic AI Foundation (Linux Foundation)",
     "toolName": "agentgateway"
+  },
+  {
+    "companyName": "Ping.gg",
+    "toolName": "T3 Code"
+  },
+  {
+    "companyName": "SuperPlane",
+    "toolName": "SuperPlane"
+  },
+  {
+    "companyName": "Cloudflare",
+    "toolName": "Cloudflare OS"
+  },
+  {
+    "companyName": "Strix",
+    "toolName": "Strix"
+  },
+  {
+    "companyName": "Weave",
+    "toolName": "Weave Router"
   }
 ]

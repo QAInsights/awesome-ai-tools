@@ -306,6 +306,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "t3-code",
+    "name": "T3 Code",
+    "company": "Ping.gg",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -1026,6 +1032,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "superplane",
+    "name": "SuperPlane",
+    "company": "SuperPlane",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1101,6 +1113,12 @@
     "slug": "rork",
     "name": "Rork",
     "company": "Rork",
+    "category": "Browser-Based & App Builders"
+  },
+  {
+    "slug": "cloudflare-os",
+    "name": "Cloudflare OS",
+    "company": "Cloudflare",
     "category": "Browser-Based & App Builders"
   },
   {
@@ -1191,6 +1209,12 @@
     "slug": "skillspector",
     "name": "SkillSpector",
     "company": "NVIDIA",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "strix",
+    "name": "Strix",
+    "company": "Strix",
     "category": "AI Code Review & Security"
   },
   {
@@ -1839,6 +1863,12 @@
     "slug": "agentgateway",
     "name": "agentgateway",
     "company": "Agentic AI Foundation (Linux Foundation)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "weave-router",
+    "name": "Weave Router",
+    "company": "Weave",
     "category": "Developer Productivity & Workflow"
   },
   {
