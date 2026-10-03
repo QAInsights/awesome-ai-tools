@@ -3,9 +3,6 @@
 @plugin "@tailwindcss/typography";
 @source "../index.html";
 @source "../js/**/*.js";
-@source "../js/stacks-page.js";
-@source "../js/stack-editor.js";
-@source "../js/add-to-stack.js";
 
 /* Self-hosted fonts (variable: one file covers all weights).
    latin-ext first so latin's narrower range wins the cascade for ASCII. */
@@ -346,11 +343,16 @@
 
     @media (max-width: 600px) {
         .stack-popover {
+            position: fixed;
             top: auto;
-            bottom: calc(100% + 12px);
-            right: auto;
-            left: 50%;
-            transform: translateX(-50%);
+            right: 1rem;
+            bottom: 1rem;
+            left: 1rem;
+            width: auto;
+            transform: none;
+            max-height: calc(100dvh - 2rem);
+            overflow-y: auto;
+            z-index: 1000000;
         }
     }
 

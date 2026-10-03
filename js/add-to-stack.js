@@ -98,7 +98,8 @@ async function openPopover(button, { authManager, attribution, root }) {
         <div data-stack-list class="stack-popover-list"></div>
         <button type="button" data-new-stack class="stack-new-button">＋ New stack</button>
         <div data-stack-result role="status" class="stack-popover-result"></div>`;
-    wrapper.append(popover);
+    const viewportPopover = root.defaultView?.matchMedia?.('(max-width: 600px)')?.matches;
+    (viewportPopover && root.body ? root.body : wrapper).append(popover);
     button.setAttribute('aria-expanded', 'true');
     activePopover = { button, popover };
     const tool = {
@@ -166,6 +167,7 @@ export function initializeAddToStack({
     if (initializedRoots.has(root)) return;
     initializedRoots.add(root);
 
+    root.defaultView?.matchMedia?.('(max-width: 600px)')?.addEventListener('change', closePopover);
     root.addEventListener('click', event => {
         const button = event.target.closest?.('[data-add-to-stack]');
         if (button) {
