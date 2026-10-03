@@ -15,6 +15,8 @@ export interface Comparison {
     a: string;
     b: string;
     group: string;
+    /** "generated" for pairs proposed by scripts/generate-comparisons.ts; absent for hand-curated pairs. */
+    source?: 'generated';
 }
 
 export interface ResolvedComparison extends Comparison {
@@ -60,13 +62,14 @@ let _topCompared: Tool[] | null = null;
 
 /**
  * The most-compared tools - curated comparison frequency is a proxy for
- * high-intent "X alternatives" queries. Ordered by comparison count desc;
- * ties keep README order (getAllTools order - Array.sort is stable).
+ * high-intent "X alternatives" queries; generated pairs are excluded.
+ * Ordered by comparison count desc; ties keep README order (getAllTools order - Array.sort is stable).
  */
 export function getTopComparedTools(limit = 20): Tool[] {
     if (!_topCompared) {
         const counts = new Map<string, number>();
         for (const c of getComparisons()) {
+            if (c.source === 'generated') continue;
             counts.set(c.a, (counts.get(c.a) ?? 0) + 1);
             counts.set(c.b, (counts.get(c.b) ?? 0) + 1);
         }

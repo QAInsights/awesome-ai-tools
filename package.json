@@ -20,6 +20,7 @@
     "report:enrichment": "node scripts/report-enrichment-status.js --markdown",
     "validate:slugs": "node scripts/check-slugs-sync.js",
     "validate:enriched": "bun run scripts/validate-enriched.js",
+    "compare:generate": "bun scripts/generate-comparisons.ts",
     "og:homepage": "node scripts/render-homepage-og.mjs"
   },
   "devDependencies": {
