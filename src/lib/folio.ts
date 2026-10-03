@@ -50,12 +50,13 @@ export function entryLabel(t: Tool): string {
     return m === 'free' || m === 'open-source' ? 'Free' : humanizePricing(t.enriched?.pricing) || 'Unlisted';
 }
 
-export type TitleSize = 'xl' | 'lg' | 'md';
+export type TitleSize = 'xl' | 'lg' | 'md' | 'sm';
 
 const TITLE_CAPS: Record<TitleSize, { vw: number; px: number; min: number }> = {
     xl: { vw: 11.5, px: 184, min: 40 },
     lg: { vw: 8.5, px: 132, min: 36 },
     md: { vw: 6.2, px: 92, min: 32 },
+    sm: { vw: 4.4, px: 68, min: 30 },
 };
 
 /** CSS font-size for a Folio title, scaled so its longest word fits the column. */

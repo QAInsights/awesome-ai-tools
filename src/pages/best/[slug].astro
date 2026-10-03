@@ -15,6 +15,11 @@ import { getBestFreePick, getBestPages, type BestPage } from '../../lib/best';
 import { ORGANIZATION } from '../../lib/site';
 import { robotsFor } from '../../lib/indexing';
 import { getComparisonsForTool, hasAlternativesPage, humanizePricing, truncate } from '../../lib/compare';
+import { entryLabel } from '../../lib/folio';
+import FolioStyles from '../../components/folio/FolioStyles.astro';
+import FolioTitle from '../../components/folio/FolioTitle.astro';
+import FolioFaq from '../../components/folio/FolioFaq.astro';
+import FolioScroll from '../../components/folio/FolioScroll.astro';
 
 export async function getStaticPaths() {
     return getBestPages().map(page => ({
@@ -115,7 +120,17 @@ const jsonLd = JSON.stringify({
 });
 
 const otherPages = getBestPages().filter(p => p.facet.slug !== facet.slug);
-const chip = 'inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide hover:text-white hover:border-[#444] transition-colors';
+const topName = top ? top.enriched?.name ?? top.name : '';
+const facts = [
+    { k: 'Top pick', v: topName || '—' },
+    freePick
+        ? { k: 'Best free option', v: freePick.enriched?.name ?? freePick.name }
+        : { k: 'Categories', v: String(new Set(tools.map(t => t.categoryShort)).size) },
+    { k: 'Free or open source', v: String(freeCount) },
+    { k: 'Head-to-head pages', v: String(comparisons.length) },
+];
+let n = 0;
+const num = () => String(++n).padStart(2, '0');
 ---
 
 <BaseLayout
@@ -136,69 +151,86 @@ const chip = 'inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] ro
         <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
             <SiteHeader variant="page" title={facet.title} />
 
-            <div class="max-w-[1000px] mx-auto w-full flex flex-col flex-1 p-4 md:p-8 gap-6">
-                <nav aria-label="Breadcrumb" class="font-mono text-[12px] text-[#737373] tracking-wide flex items-center gap-2 flex-wrap">
-                    <a href="/" class="hover:text-white transition-colors">Home</a>
-                    <span>/</span>
-                    <a href="/best" class="text-[#a3a3a3] hover:text-white transition-colors">Best</a>
-                    <span>/</span>
-                    <span class="text-white">{facet.short}</span>
-                </nav>
-
-                <header class="flex flex-col gap-3 pb-4 border-b border-[#222]">
-                    <h1 class="text-[32px] md:text-[40px] font-semibold tracking-tight leading-tight bg-gradient-to-r from-white via-[#e5e5e5] to-white bg-clip-text text-transparent">
-                        {facet.title} <span class="text-[#737373]">({refreshLabel})</span>
-                    </h1>
-                    <p class="best-intro text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">{facet.intro}</p>
-                    <p class="text-[14px] leading-relaxed text-[#a3a3a3] max-w-[72ch] m-0"><span class="text-[#737373]">How we rank:</span> {facet.criteria}</p>
-                    <div class="font-mono text-[12px] text-[#737373] tracking-wide">
-                        {count} tools ranked · Refreshed {refreshLabel} · Updated <time datetime={lastmod}>{formatDate(lastmod)}</time> · <a href={`/best/${facet.slug}.md`} class="hover:text-white transition-colors">Markdown</a>
+            <article class="fo">
+                <header class="fo-hero">
+                    <div>
+                        <div class="fo-top fo-fade" style="--d:.1s">
+                            <nav aria-label="Breadcrumb" class="fo-crumbs">
+                                <a href="/">Home</a><span>/</span>
+                                <a href="/best">Best</a><span>/</span>
+                                <span class="here">{facet.short}</span>
+                            </nav>
+                            <span class="fo-status"><span>Updated <time datetime={lastmod}>{formatDate(lastmod)}</time></span></span>
+                        </div>
+                        <div class="fo-rule"></div>
+                    </div>
+                    <div>
+                        <FolioTitle parts={[{ text: facet.title }, { text: `(${refreshLabel})`, plain: true }]} size="sm" />
+                        <div class="fo-intro">
+                            <div class="fo-leadbox fo-fade" style="--d:.55s">
+                                <p class="fo-lead best-intro">{facet.intro}</p>
+                                <p class="fo-note">How we rank: {facet.criteria}</p>
+                            </div>
+                            <div class="fo-price fo-fade" style="--d:.7s">
+                                <small>Ranked</small>
+                                <b>{count}</b>
+                                <span>tools · refreshed {refreshLabel}</span>
+                            </div>
+                            <div class="fo-cta fo-fade" style="--d:.85s">
+                                {top && <a class="fo-btn" href={`/tools/${top.slug}`}>{topName} review <i aria-hidden="true">→</i></a>}
+                                <a class="fo-link" href={`/best/${facet.slug}.md`}>Markdown</a>
+                            </div>
+                        </div>
+                        <div class="fo-facts">
+                            {facts.map((f, i) => (
+                                <div class="fo-fact fo-fade" style={`--d:${0.9 + i * 0.08}s`}>
+                                    <span class="fo-k">{f.k}</span>
+                                    <b>{f.v}</b>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </header>
 
                 {top && (
-                    <section aria-labelledby="answer-heading" class="best-answer border border-[#222] bg-white/[0.02] rounded-xl p-5 flex flex-col gap-2">
-                        <h2 id="answer-heading" class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em] m-0">Quick answer</h2>
-                        <p class="text-[15px] leading-relaxed text-[#d4d4d4] m-0">
-                            <strong class="text-white">Top pick: <a href={`/tools/${top.slug}`} class="hover:text-[#e2c48a] transition-colors">{top.enriched?.name ?? top.name}</a></strong> ({humanizePricing(top.enriched?.pricing)}). {top.enriched?.verdict}
-                        </p>
-                        {freePick && (
-                            <p class="text-[15px] leading-relaxed text-[#d4d4d4] m-0">
-                                <strong class="text-white">Best free option: <a href={`/tools/${freePick.slug}`} class="hover:text-[#e2c48a] transition-colors">{freePick.enriched?.name ?? freePick.name}</a>.</strong> {freePick.enriched?.bestFor}
+                    <section class="fo-sec" id="answer" aria-labelledby="answer-heading">
+                        <h2 class="fo-label" id="answer-heading"><em>{num()}</em>Quick answer</h2>
+                        <div class="fo-body best-answer fo-reveal">
+                            <p class="fo-text sm">
+                                Top pick: <a href={`/tools/${top.slug}`}>{topName}</a> ({humanizePricing(top.enriched?.pricing)}). {top.enriched?.verdict}
                             </p>
-                        )}
-                        {topNames.length > 1 && (
-                            <p class="text-[14px] text-[#a3a3a3] m-0">Also strong: {topNames.slice(1).join(', ')}.</p>
-                        )}
+                            {freePick && (
+                                <p class="fo-note">Best free option: <a href={`/tools/${freePick.slug}`}>{freePick.enriched?.name ?? freePick.name}</a>. {freePick.enriched?.bestFor}</p>
+                            )}
+                            {topNames.length > 1 && <p class="fo-note">Also strong: {topNames.slice(1).join(', ')}.</p>}
+                        </div>
                     </section>
                 )}
 
-                <section aria-labelledby="comparison-heading" class="flex flex-col gap-3">
-                    <h2 id="comparison-heading" class="text-[18px] font-semibold text-white m-0">At a glance</h2>
-                    <div class="overflow-x-auto border border-[#222] rounded-xl">
-                        <table class="w-full text-left text-[14px]">
-                            <thead class="font-mono text-[11px] uppercase tracking-widest text-[#737373] border-b border-[#222]">
+                <section class="fo-sec" id="glance" aria-labelledby="comparison-heading">
+                    <h2 class="fo-label" id="comparison-heading"><em>{num()}</em>At a glance</h2>
+                    <div class="fo-body">
+                        <table class="fo-glance">
+                            <thead>
                                 <tr>
-                                    <th scope="col" class="px-4 py-3 w-10">#</th>
-                                    <th scope="col" class="px-4 py-3">Tool</th>
-                                    <th scope="col" class="px-4 py-3">Pricing</th>
-                                    <th scope="col" class="px-4 py-3 hidden md:table-cell">Category</th>
-                                    <th scope="col" class="px-4 py-3 hidden sm:table-cell">Best for</th>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Tool</th>
+                                    <th scope="col">Pricing</th>
+                                    <th scope="col" class="hm">Category</th>
+                                    <th scope="col" class="hs">Best for</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {tools.map((t, i) => (
-                                    <tr class="border-b border-[#1a1a1a] last:border-0 align-top">
-                                        <td class="px-4 py-3 font-mono text-[12px] text-[#525252]">{i + 1}</td>
-                                        <td class="px-4 py-3">
-                                            <a href={`/tools/${t.slug}`} class="font-medium text-white hover:text-[#e2c48a] transition-colors">{t.enriched?.name ?? t.name}</a>
-                                            <div class="font-mono text-[10px] uppercase tracking-wide text-[#737373] mt-0.5">{t.enriched?.company ?? t.company}</div>
+                                    <tr>
+                                        <td class="no">{String(i + 1).padStart(2, '0')}</td>
+                                        <td class="t">
+                                            <a href={`/tools/${t.slug}`}>{t.enriched?.name ?? t.name}</a>
+                                            <small>{t.enriched?.company ?? t.company}</small>
                                         </td>
-                                        <td class="px-4 py-3 font-mono text-[12px] text-[#a3a3a3] whitespace-nowrap">{humanizePricing(t.enriched?.pricing)}</td>
-                                        <td class="px-4 py-3 hidden md:table-cell">
-                                            <a href={`/category/${getCategorySlug(t.categoryShort)}`} class="font-mono text-[12px] text-[#a3a3a3] hover:text-white transition-colors">{t.categoryShort}</a>
-                                        </td>
-                                        <td class="px-4 py-3 text-[13px] text-[#a3a3a3] leading-relaxed hidden sm:table-cell">{truncate(t.enriched?.bestFor, 110)}</td>
+                                        <td class="pr">{humanizePricing(t.enriched?.pricing)}</td>
+                                        <td class="hm"><a href={`/category/${getCategorySlug(t.categoryShort)}`}>{t.categoryShort}</a></td>
+                                        <td class="hs">{truncate(t.enriched?.bestFor, 110)}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -206,77 +238,71 @@ const chip = 'inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] ro
                     </div>
                 </section>
 
-                <section aria-labelledby="ranked-heading" class="flex flex-col">
-                    <h2 id="ranked-heading" class="text-[18px] font-semibold text-white m-0 mb-1">Ranked list</h2>
-                    {tools.map((t, i) => {
-                        const name = t.enriched?.name ?? t.name;
-                        const pairs = getComparisonsForTool(t.slug).slice(0, 2);
-                        return (
-                            <div class="group flex flex-col gap-1.5 py-4 border-b border-[#1a1a1a] transition-colors hover:bg-white/[0.02] md:px-2 -mx-2 rounded">
-                                <div class="flex items-center gap-3 flex-wrap">
-                                    <span class="font-mono text-[12px] text-[#525252]">#{i + 1}</span>
-                                    <h3 class="m-0 text-[16px] font-medium">
-                                        <a href={`/tools/${t.slug}`} class="text-white no-underline group-hover:bg-gradient-to-r group-hover:from-[#a78bfa] group-hover:via-[#22d3ee] group-hover:to-[#a78bfa] group-hover:bg-clip-text group-hover:text-transparent transition-all">{name}</a>
-                                    </h3>
-                                    <span class="font-mono text-[12px] text-[#737373] uppercase tracking-wide">{t.enriched?.company ?? t.company}</span>
-                                    {t.enriched?.pricing && (
-                                        <span class="font-mono text-[10px] uppercase tracking-wide px-2 py-0.5 border border-[#222] rounded-full text-[#737373]">{humanizePricing(t.enriched.pricing)}</span>
-                                    )}
+                <section class="fo-sec" id="ranked" aria-labelledby="ranked-heading">
+                    <h2 class="fo-label" id="ranked-heading"><em>{num()}</em>Ranked list</h2>
+                    <div class="fo-body">
+                        {tools.map((t, i) => {
+                            const name = t.enriched?.name ?? t.name;
+                            const pairs = getComparisonsForTool(t.slug).slice(0, 2);
+                            return (
+                                <div class="fo-rank">
+                                    <span class="no">{String(i + 1).padStart(2, '0')}</span>
+                                    <div>
+                                        <h3><a href={`/tools/${t.slug}`}>{name}</a><span class="co">{t.enriched?.company ?? t.company}</span></h3>
+                                        <p>{t.enriched?.verdict ?? t.enriched?.description ?? t.notes}</p>
+                                        <div class="links">
+                                            <a href={`/tools/${t.slug}`}>{name} review →</a>
+                                            {hasAlternativesPage(t.slug) && <a href={`/tools/${t.slug}/alternatives`}>{name} alternatives →</a>}
+                                            {pairs.map(c => <a class="g" href={`/compare/${c.slug}`}>{name} vs {nameOf(c.a === t.slug ? c.b : c.a)} →</a>)}
+                                        </div>
+                                    </div>
+                                    <span class="pr">{entryLabel(t)}</span>
                                 </div>
-                                <p class="text-[14px] text-[#a3a3a3] leading-relaxed m-0">{t.enriched?.verdict ?? t.enriched?.description ?? t.notes}</p>
-                                <div class="flex items-center gap-4 mt-0.5 flex-wrap">
-                                    <a href={`/tools/${t.slug}`} class="font-mono text-[12px] text-[#a3a3a3] hover:text-white tracking-wide transition-colors">{name} review &rarr;</a>
-                                    {hasAlternativesPage(t.slug) && (
-                                        <a href={`/tools/${t.slug}/alternatives`} class="font-mono text-[12px] text-[#525252] hover:text-white tracking-wide transition-colors">{name} alternatives &rarr;</a>
-                                    )}
-                                    {pairs.map(c => (
-                                        <a href={`/compare/${c.slug}`} class="font-mono text-[12px] text-[#c9aa6e] hover:text-[#e2c48a] tracking-wide transition-colors">{name} vs {nameOf(c.a === t.slug ? c.b : c.a)} &rarr;</a>
-                                    ))}
-                                </div>
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
+                    </div>
                 </section>
 
                 {comparisons.length > 0 && (
-                    <section aria-labelledby="head-to-head-heading" class="flex flex-col gap-3 pt-2">
-                        <h2 id="head-to-head-heading" class="text-[18px] font-semibold text-white m-0">Head-to-head comparisons</h2>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <section class="fo-sec" id="compare" aria-labelledby="head-to-head-heading">
+                        <h2 class="fo-label" id="head-to-head-heading"><em>{num()}</em>Head-to-head</h2>
+                        <div class="fo-body">
                             {comparisons.map(c => (
-                                <a href={`/compare/${c.slug}`} class="flex items-center justify-between gap-3 px-4 py-3 border border-[#222] rounded-md bg-white/[0.02] hover:border-[#444] hover:bg-white/[0.04] transition-colors text-[14px] text-[#d4d4d4] hover:text-white">
-                                    <span>{nameOf(c.a)} <span class="text-[#525252]">vs</span> {nameOf(c.b)}</span>
-                                    <span aria-hidden="true" class="text-[#525252]">&rarr;</span>
+                                <a class="fo-alt" href={`/compare/${c.slug}`}>
+                                    <span><b>{nameOf(c.a)} vs {nameOf(c.b)}</b></span>
+                                    <small></small>
+                                    <span class="pr"></span>
+                                    <i aria-hidden="true">→</i>
                                 </a>
                             ))}
                         </div>
                     </section>
                 )}
 
-                <section aria-label="Frequently asked questions" class="flex flex-col gap-4 pt-4">
-                    <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em]">FAQ</div>
-                    {faqs.map(f => (
-                        <details class="border border-[#222] bg-white/[0.02] rounded-md group">
-                            <summary class="cursor-pointer px-5 py-4 text-[15px] font-medium text-white list-none flex items-center justify-between gap-3 hover:bg-white/[0.03] transition-colors rounded-md">
-                                {f.q}
-                                <svg class="w-4 h-4 text-[#525252] shrink-0 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                            </summary>
-                            <p class="px-5 pb-4 pt-1 text-[14px] text-[#a3a3a3] leading-relaxed">{f.a}</p>
-                        </details>
-                    ))}
+                <section class="fo-sec" id="faq" aria-label="Frequently asked questions">
+                    <h2 class="fo-label"><em>{num()}</em>FAQ</h2>
+                    <FolioFaq faqs={faqs} />
                 </section>
 
-                <nav aria-label="More best-of lists" class="pt-4 pb-8 flex flex-col gap-4">
-                    <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em]">More best-of lists</div>
-                    <div class="flex flex-wrap gap-2">
-                        {otherPages.map(p => (
-                            <a href={`/best/${p.facet.slug}`} class={chip}>{p.facet.title}</a>
-                        ))}
-                        <a href="/compare" class={chip}>All comparisons</a>
+                <nav class="fo-sec" id="more" aria-label="More best-of lists">
+                    <h2 class="fo-label"><em>{num()}</em>More lists</h2>
+                    <div class="fo-body">
+                        <ul class="fo-tags">
+                            {otherPages.map(p => <li><a href={`/best/${p.facet.slug}`}>{p.facet.title}</a></li>)}
+                            <li><a href="/compare">All comparisons</a></li>
+                        </ul>
                     </div>
                 </nav>
-            </div>
+
+                <div class="fo-notes">
+                    <span>Rankings are rebuilt monthly from the directory's reviews. Verify details on each vendor's website.</span>
+                    <a class="back" href="/best">← All best-of lists</a>
+                </div>
+            </article>
         </main>
     </div>
 
+    <FolioStyles />
+    <FolioScroll />
     <script src="/dist/app.js" type="module" defer></script>
 </BaseLayout>
