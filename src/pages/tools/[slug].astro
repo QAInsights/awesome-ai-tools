@@ -14,10 +14,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
-import PricingBreakdown from '../../components/PricingBreakdown.astro';
 import { formatDate, getAlternativesFor, getAllTools, getCategorySlug, getToolBySlug, type Tool } from '../../lib/tools';
 import { robotsFor } from '../../lib/indexing';
-import { getComparisonsForTool, hasAlternativesPage, hasPricingPage, truncate } from '../../lib/compare';
+import { getComparisonsForTool, hasAlternativesPage, hasPricingPage, humanizePricing, truncate } from '../../lib/compare';
+import { buildPricingBreakdown, type PricingPlan } from '../../lib/pricing-breakdown';
 import { buildToolFaqs } from '../../lib/tool-faqs';
 import { buildToolReview, buildToolSeo } from '../../lib/tool-seo';
 import { addOutboundUtmParams } from '../../lib/outbound-utm.js';
@@ -153,7 +153,79 @@ if (faqs.length >= 2) {
     });
 }
 const jsonLd = JSON.stringify(jsonLdObj);
+
+// ── Hero, pricing and section data ──────────────────────────────────────────
+const description = displayDescription ?? '';
+const features = enriched?.keyFeatures ?? [];
+const bestFor = enriched?.bestFor ?? '';
+const notIdealFor = enriched?.notIdealFor ?? '';
+const verdict = enriched?.verdict ?? '';
+const updates = enriched?.recentUpdates ?? '';
+const tags = enriched?.tags ?? [];
+const updated = enriched?.lastUpdated ? formatDate(enriched.lastUpdated) : null;
+const model = humanizePricing(enriched?.pricing) || 'Unlisted';
+const siteHref = hasSiteLink ? addOutboundUtmParams(tool.url) : '';
+
+const words = displayName.split(/\s+/).filter(Boolean);
+const longest = Math.max(...words.map(w => w.length), 1);
+const nameVw = Math.min(11.5, 76 / longest).toFixed(2);
+const namePx = Math.round(Math.min(184, 1280 / longest));
+const sentences = description.split(/(?<=[.!?])\s+(?=[A-Z])/);
+const lead = sentences[0] ?? '';
+const rest = sentences.slice(1).join(' ');
+
+function monthly(p: PricingPlan): number {
+    const v = Number((p.price.split(/[-\u2013]/)[0] ?? '').replace(/[$,\s]/g, ''));
+    return /\/yr/.test(p.unit) ? v / 12 : v;
+}
+function unitWords(unit: string): string {
+    const parts = unit.split('/').filter(Boolean).map(u => ({ mo: 'month', yr: 'year' } as Record<string, string>)[u] ?? u);
+    return parts.length ? `per ${parts.join(' / ')}` : 'one-time';
+}
+function entryLabel(t: Tool): string {
+    const first = buildPricingBreakdown(t.enriched?.pricing, t.enriched?.pricingDetail).plans
+        .filter(p => monthly(p) > 0).sort((a, b) => monthly(a) - monthly(b))[0];
+    if (first) return `${first.price}${first.unit}`;
+    const m = (t.enriched?.pricing ?? '').toLowerCase();
+    return m === 'free' || m === 'open-source' ? 'Free' : humanizePricing(t.enriched?.pricing) || 'Unlisted';
+}
+
+const breakdown = buildPricingBreakdown(enriched?.pricing, enriched?.pricingDetail);
+const plans = breakdown.plans.filter(p => Number.isFinite(monthly(p)));
+const paid = plans.filter(p => monthly(p) > 0).sort((a, b) => monthly(a) - monthly(b));
+const entry = paid[0] ?? null;
+const freeTier = /free|open-source|freemium/i.test(enriched?.pricing ?? '') || plans.some(p => monthly(p) === 0);
+const priceMain = entry ? entry.price : freeTier ? 'Free' : enriched?.pricing ? 'Custom' : '—';
+const priceUnit = entry ? unitWords(entry.unit) : freeTier ? (/open-source/i.test(enriched?.pricing ?? '') ? 'open source' : 'free to use') : enriched?.pricing ? 'pricing on request' : 'pricing not yet listed';
+const min = paid.length ? Math.min(...paid.map(monthly)) : 0;
+const max = paid.length ? Math.max(...paid.map(monthly)) : 0;
+const span = Math.log(max) - Math.log(min || 1);
+const scale = paid.map(p => ({ p, x: span > 0 ? (Math.log(monthly(p)) - Math.log(min)) / span : 0 }));
+
+const peers = getAllTools().filter(t => t.category === tool.category && t.slug !== tool.slug);
+const facts = [
+    { k: 'Company', v: displayCompany || '—' },
+    { k: 'Pricing model', v: model },
+    { k: 'Paid plans', v: paid.length ? String(paid.length) : 'None listed' },
+    { k: 'Category peers', v: String(peers.length) },
+];
+
+const hasPricing = Boolean(enriched?.pricing || enriched?.pricingDetail);
+const sections = [
+    rest && 'overview',
+    features.length && 'capabilities',
+    hasPricing && 'pricing',
+    (bestFor || notIdealFor) && 'fit',
+    verdict && 'verdict',
+    updates && 'latest',
+    faqs.length >= 2 && 'faq',
+    related.length && 'alternatives',
+    comparisons.length && 'compare',
+    tags.length && 'tags',
+].filter(Boolean) as string[];
+const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
 ---
+
 
 <BaseLayout
     title={seoTitle}
@@ -171,13 +243,176 @@ const jsonLd = JSON.stringify(jsonLdObj);
     jsonLd={jsonLd}
 >
     <slot name="head">
-        <style>
-            .td-section { padding: 20px 0; border-top: 1px solid #222; }
-            .td-section:first-of-type { border-top: none; }
-            .td-section-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #525252; margin-bottom: 14px; }
-            .td-card { background: #0d0d0d; border: 1px solid #222; border-radius: 10px; padding: 18px; transition: border-color 0.2s; }
-            .td-card:hover { border-color: #333; }
-            .td-verdict { border-left: 3px solid; border-image: linear-gradient(180deg, #a78bfa, #22d3ee) 1; padding: 14px 18px; background: linear-gradient(90deg, rgba(167,139,250,0.04), transparent); font-size: 16px; line-height: 1.7; color: #d4d4d4; font-style: italic; }
+        <style is:global>
+            .fo { --ink: #f4f4f2; --mute: #8b8b88; --dim: #2c2c2b; --rule: #1d1d1c; --gold: #c8a96a; --ease: cubic-bezier(.16, 1, .3, 1);
+                color: var(--ink); font-feature-settings: 'ss01', 'cv11', 'tnum'; max-width: 1240px; margin: 0 auto; width: 100%; padding: 0 56px 120px; }
+            .fo a { color: inherit; }
+            .fo-hero { padding: 32px 0 0; }
+            .fo-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 24px; font-size: 13px; color: var(--mute); padding-bottom: 18px; }
+            .fo-crumbs { display: flex; gap: 8px; flex-wrap: wrap; }
+            .fo-crumbs a { text-decoration: none; transition: color .3s; }
+            .fo-crumbs a:hover { color: var(--ink); }
+            .fo-status { display: flex; gap: 18px; align-items: center; }
+            .fo-off { color: #f87171; }
+            .fo-rule { height: 1px; background: var(--rule); transform-origin: left; animation: fo-draw 1.6s var(--ease) both; animation-delay: var(--d, 0s); }
+            .fo-name { font-size: var(--fs); font-weight: 600; letter-spacing: -.058em; line-height: .9; margin: clamp(28px, 5vw, 64px) 0 0; overflow-wrap: normal; }
+            @property --fo-p { syntax: '<number>'; inherits: true; initial-value: 0; }
+            .fo-wrap { display: block; --W: 10em; animation: fo-p 3s linear infinite; }
+            .fo-grad { background: linear-gradient(90deg, #a78bfa, #22d3ee, #a78bfa); background-size: calc(var(--W) * 2) 100%; background-position: calc(var(--fo-p) * var(--W) * 2 - var(--x, 0px)) 0; background-repeat: repeat-x; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+            .fo-word { display: inline-block; overflow: hidden; vertical-align: top; padding: .04em .02em .1em 0; margin-bottom: -.06em; }
+            .fo-name .ch { display: inline-block; transform: translateY(110%); animation: fo-rise 1.25s var(--ease) both; animation-delay: calc(.12s + var(--i) * 38ms); }
+            .fo-intro { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 32px; align-items: end; padding: 28px 0 44px; }
+            .fo-lead { grid-column: 1 / span 6; font-size: 23px; line-height: 1.42; letter-spacing: -.012em; color: #cfcfcc; margin: 0; }
+            .fo-price { grid-column: 7 / span 3; }
+            .fo-price small, .fo-k { display: block; font-size: 13px; color: var(--mute); margin-bottom: 10px; letter-spacing: 0; }
+            .fo-price b { display: block; font-size: 52px; font-weight: 500; letter-spacing: -.045em; line-height: 1; }
+            .fo-price span { display: block; font-size: 14px; color: var(--mute); margin-top: 10px; }
+            .fo-cta { grid-column: 10 / span 3; display: flex; flex-direction: column; gap: 14px; align-items: flex-end; }
+            .fo-save { display: flex; gap: 8px; }
+            .fo-btn { display: inline-flex; align-items: center; gap: 10px; height: 46px; padding: 0 22px; border-radius: 999px; background: var(--ink); color: #000 !important; font-size: 14px; font-weight: 500; white-space: nowrap; transition: transform .5s var(--ease), background .3s; }
+            .fo-btn:hover { transform: translateY(-2px); background: #fff; }
+            .fo-btn i { display: inline-block; transition: transform .5s var(--ease); font-style: normal; }
+            .fo-btn:hover i { transform: translateX(4px); }
+            .fo-link { font-size: 14px; color: var(--mute) !important; border-bottom: 1px solid var(--dim); padding-bottom: 2px; transition: color .3s, border-color .3s; }
+            .fo-link:hover { color: var(--ink) !important; border-color: var(--ink); }
+            .fo-facts { display: grid; grid-template-columns: repeat(4, 1fr); }
+            .fo-fact { padding: 20px 0 28px; border-top: 1px solid var(--rule); }
+            .fo-fact + .fo-fact { padding-left: 28px; }
+            .fo-fact b { font-size: 21px; font-weight: 500; letter-spacing: -.02em; }
+            .fo-fade { animation: fo-fade 1.4s var(--ease) both; animation-delay: var(--d, .6s); }
+
+            .fo-sec { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 32px; padding: 96px 0; border-top: 1px solid var(--rule); }
+            .fo-label { grid-column: 1 / span 3; align-self: start; position: sticky; top: 112px; display: flex; gap: 14px; font-size: 14px; color: var(--mute); }
+            .fo-label em { font-style: normal; color: var(--dim); }
+            .fo-body { grid-column: 4 / span 9; min-width: 0; }
+            .fo-text { font-size: 30px; line-height: 1.34; letter-spacing: -.022em; margin: 0; color: var(--ink); max-width: 30ch; }
+            .fo-text.sm { font-size: 22px; line-height: 1.5; letter-spacing: -.012em; max-width: 44ch; color: #cfcfcc; }
+
+            .fo-list { list-style: none; margin: 0; padding: 0; }
+            .fo-list li { display: grid; grid-template-columns: 56px 1fr; align-items: baseline; padding: 22px 0; border-bottom: 1px solid var(--rule); font-size: 24px; letter-spacing: -.018em; line-height: 1.3; }
+            .fo-list li:first-child { border-top: 1px solid var(--rule); }
+            .fo-list li span { font-size: 13px; color: var(--mute); letter-spacing: 0; }
+            .fo-list li p { margin: 0; transition: transform .7s var(--ease), color .4s; color: #dcdcd9; }
+            .fo-list li:hover p { transform: translateX(10px); color: #fff; }
+
+            .fo-table { width: 100%; border-collapse: collapse; }
+            .fo-table td { padding: 24px 0; border-bottom: 1px solid var(--rule); vertical-align: baseline; }
+            .fo-table tr:first-child td { border-top: 1px solid var(--rule); }
+            .fo-table .n { font-size: 24px; letter-spacing: -.018em; width: 58%; }
+            .fo-table .p { font-size: 34px; font-weight: 500; letter-spacing: -.04em; text-align: right; white-space: nowrap; }
+            .fo-table .u { font-size: 14px; color: var(--mute); text-align: left; width: 24%; padding-left: 18px; white-space: nowrap; }
+            .fo-tag { display: inline-block; margin-left: 14px; font-size: 12px; color: var(--gold); vertical-align: middle; letter-spacing: 0; }
+            .fo-scale { position: relative; height: 64px; margin: 56px 0 8px; }
+            .fo-scale::before { content: ''; position: absolute; left: 0; right: 0; top: 24px; height: 1px; background: var(--dim); }
+            .fo-tick { position: absolute; top: 18px; width: 1px; height: 13px; background: var(--ink); }
+            .fo-tick span { position: absolute; top: 22px; left: 0; transform: translateX(-50%); font-size: 12px; color: var(--mute); white-space: nowrap; }
+            .fo-tick.first { background: var(--gold); }
+            .fo-tick.first span { color: var(--gold); }
+            .fo-tick:last-child span { transform: translateX(-100%); }
+            .fo-tick:first-child span { transform: none; }
+            .fo-note { font-size: 15px; color: var(--mute); line-height: 1.6; margin: 28px 0 0; max-width: 64ch; }
+
+            .fo-fit { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+            .fo-fit h3 { font-size: 14px; font-weight: 400; color: var(--mute); margin: 0 0 18px; }
+            .fo-fit p { font-size: 21px; line-height: 1.5; letter-spacing: -.012em; margin: 0; padding-top: 20px; border-top: 1px solid var(--rule); color: #dcdcd9; }
+
+            .fo-verdict { font-size: 42px; line-height: 1.24; letter-spacing: -.03em; font-weight: 400; margin: 0; max-width: 24ch; }
+            .fo-sign { margin-top: 40px; font-size: 14px; color: var(--mute); display: flex; gap: 12px; align-items: center; }
+            .fo-sign::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+
+            .fo-alt { display: grid; grid-template-columns: 1fr auto auto 28px; gap: 28px; align-items: baseline; padding: 24px 0; border-bottom: 1px solid var(--rule); text-decoration: none; }
+            .fo-alt:first-child { border-top: 1px solid var(--rule); }
+            .fo-alt b { font-size: 26px; font-weight: 500; letter-spacing: -.025em; transition: transform .7s var(--ease); display: inline-block; }
+            .fo-alt small { font-size: 14px; color: var(--mute); }
+            .fo-alt .pr { font-size: 16px; color: #dcdcd9; min-width: 110px; text-align: right; }
+            .fo-alt i { font-style: normal; color: var(--mute); transition: transform .7s var(--ease), color .3s; }
+            .fo-alt:hover b { transform: translateX(10px); }
+            .fo-alt:hover i { transform: translateX(6px); color: var(--ink); }
+            .fo-more { display: flex; flex-wrap: wrap; gap: 14px 32px; margin-top: 32px; }
+            .fo-more a { font-size: 15px; color: var(--gold) !important; text-decoration: none; }
+            .fo-more a:hover { color: #e2c48a !important; }
+            .fo-faq details { border-bottom: 1px solid var(--rule); }
+            .fo-faq details:first-child { border-top: 1px solid var(--rule); }
+            .fo-faq summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr 24px; gap: 24px; align-items: baseline; padding: 24px 0; font-size: 21px; letter-spacing: -.015em; line-height: 1.35; color: #dcdcd9; transition: color .3s; }
+            .fo-faq summary::-webkit-details-marker { display: none; }
+            .fo-faq summary:hover { color: #fff; }
+            .fo-faq summary i { font-style: normal; color: var(--mute); text-align: right; transition: transform .6s var(--ease); }
+            .fo-faq details[open] summary i { transform: rotate(45deg); }
+            .fo-faq details p { margin: 0; padding: 0 48px 28px 0; font-size: 16px; line-height: 1.65; color: var(--mute); max-width: 68ch; }
+            .fo-tags { display: flex; flex-wrap: wrap; gap: 10px 28px; font-size: 16px; color: #cfcfcc; margin: 0; padding: 0; list-style: none; }
+            .fo-track { display: grid; grid-template-columns: 1fr auto; gap: 24px 48px; align-items: center; padding: 48px 0; border-top: 1px solid var(--rule); }
+            .fo-track b { display: block; font-size: 24px; font-weight: 500; letter-spacing: -.02em; margin-bottom: 8px; }
+            .fo-track p { margin: 0; font-size: 15px; color: var(--mute); line-height: 1.6; }
+            .fo-track div:last-child { display: flex; gap: 20px; align-items: center; }
+            .fo-pending { font-size: 18px; line-height: 1.6; color: var(--mute); max-width: 56ch; margin: 0; padding: 56px 0; border-top: 1px solid var(--rule); }
+            .fo-notes { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px 32px; padding-top: 32px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--mute); line-height: 1.6; }
+            .fo-notes a { color: var(--gold) !important; text-decoration: none; }
+            .fo-notes a.back { color: var(--mute) !important; }
+            .fo-notes a.back:hover { color: var(--ink) !important; }
+
+            .fo-end { padding: 120px 0 40px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; }
+            .fo-end a.big { font-size: clamp(48px, 7vw, 104px); font-weight: 600; letter-spacing: -.055em; line-height: .95; text-decoration: none; display: inline-flex; gap: .25em; align-items: baseline; }
+            .fo-end a.big i { font-style: normal; display: inline-block; transition: transform .8s var(--ease); color: var(--gold); }
+            .fo-end a.big:hover i { transform: translateX(.18em); }
+
+            @keyframes fo-rise { to { transform: translateY(0); } }
+            @keyframes fo-draw { from { transform: scaleX(0); } }
+            @keyframes fo-fade { from { opacity: 0; transform: translateY(14px); } }
+            @keyframes fo-in { from { opacity: 0; transform: translateY(36px); } }
+            @keyframes fo-word { from { color: var(--dim); } to { color: var(--ink); } }
+            @keyframes fo-grow { from { transform: scaleX(0); } }
+            @keyframes fo-hero-out { to { transform: translateY(-8vh); opacity: .25; } }
+
+            @supports (animation-timeline: view()) {
+                .fo-name { animation: fo-hero-out linear both; animation-timeline: view(); animation-range: exit 0% exit 100%; }
+                .fo-reveal { animation: fo-in linear both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
+                .fo-list li, .fo-table tr, .fo-alt { animation: fo-in linear both; animation-timeline: view(); animation-range: entry 0% entry 90%; }
+                .fo-sec { animation: none; }
+                .fo-verdict .w { animation: fo-word linear both; animation-timeline: view(); animation-range: cover 18% cover 42%; }
+                .fo-scale::before { transform-origin: left; animation: fo-grow linear both; animation-timeline: view(); animation-range: entry 40% cover 45%; }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .fo *, .fo-name, .fo-name .ch { animation: none !important; transform: none !important; }
+            }
+            @keyframes fo-p { to { --fo-p: 1; } }
+            @media (max-width: 900px) {
+                .fo { padding: 0 22px 80px; }
+                .fo-intro, .fo-sec { grid-template-columns: 1fr; gap: 28px; }
+                .fo-lead, .fo-price, .fo-cta, .fo-label, .fo-body { grid-column: 1 / -1; }
+                .fo-cta { align-items: center; flex-direction: row; flex-wrap: wrap; }
+                .fo-label { position: static; }
+                .fo-facts, .fo-fit { grid-template-columns: 1fr 1fr; }
+                .fo-text { font-size: 24px; } .fo-verdict { font-size: 30px; }
+                .fo-sec { padding: 64px 0; }
+                .fo-lead { font-size: 20px; }
+                .fo-fact + .fo-fact { padding-left: 0; }
+                .fo-fact:nth-child(even) { padding-left: 18px; }
+                .fo-intro { padding: 24px 0 36px; }
+            }
+            @media (max-width: 600px) {
+                .fo { padding: 0 18px 64px; }
+                .fo-hero { padding-top: 20px; }
+                .fo-top { font-size: 12px; gap: 16px; }
+                .fo-fact b { font-size: 18px; }
+                .fo-price b { font-size: 44px; }
+                .fo-fit { grid-template-columns: 1fr; gap: 32px; }
+                .fo-text { font-size: 21px; } .fo-text.sm, .fo-fit p { font-size: 18px; }
+                .fo-verdict { font-size: 26px; }
+                .fo-list li { grid-template-columns: 40px 1fr; font-size: 19px; padding: 18px 0; }
+                .fo-table .n { font-size: 18px; width: auto; }
+                .fo-table .p { font-size: 24px; }
+                .fo-table .u { font-size: 12px; padding-left: 10px; white-space: normal; width: 30%; }
+                .fo-tick span { font-size: 10px; }
+                .fo-tick:not(.first):not(:last-child) span { display: none; }
+                .fo-alt { grid-template-columns: 1fr auto 20px; gap: 14px; }
+                .fo-alt small { display: none; }
+                .fo-alt b { font-size: 20px; }
+                .fo-alt .pr { min-width: 0; font-size: 14px; }
+                .fo-end { flex-direction: column; align-items: flex-start; padding: 72px 0 24px; }
+                .fo-track { grid-template-columns: 1fr; }
+                .fo-faq summary { font-size: 18px; }
+                .fo-faq details p { padding-right: 0; }
+            }
         </style>
     </slot>
 
@@ -187,261 +422,268 @@ const jsonLd = JSON.stringify(jsonLdObj);
         <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
             <SiteHeader variant="page" title={displayName} />
 
-            <div class="max-w-[1000px] mx-auto w-full flex flex-col flex-1 p-4 md:p-8 gap-6">
-                <!-- Breadcrumb -->
-                <nav aria-label="Breadcrumb" class="font-mono text-[12px] text-[#737373] tracking-wide flex items-center gap-2 flex-wrap">
-                    <a href="/" class="hover:text-white transition-colors">Home</a>
-                    <span>/</span>
-                    <a href={`/category/${getCategorySlug(tool.categoryShort)}`} class="text-[#a3a3a3] hover:text-white transition-colors">{tool.categoryClean}</a>
-                    <span>/</span>
-                    <span class="text-white">{displayName}</span>
-                </nav>
-
-                <!-- Hero Header -->
-                <header class="flex flex-col gap-4 pb-4 border-b border-[#222]">
-                    <div class="flex items-start justify-between gap-4 flex-wrap">
-                        <div class="min-w-0">
-                            <h1 class="text-[32px] md:text-[40px] font-semibold tracking-tight leading-tight bg-gradient-to-r from-white via-[#e5e5e5] to-white bg-clip-text text-transparent mb-2">
-                                {displayName}
-                            </h1>
-                            <div class="flex items-center gap-3 flex-wrap">
-                                <span class="font-mono text-[14px] text-[#a3a3a3] uppercase tracking-wide">{displayCompany}</span>
-                                <span class="text-[#333]">·</span>
-                                <span class="inline-block px-3 py-1 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide">{tool.categoryClean}</span>
-                                {isDiscontinued && (
-                                    <>
-                                        <span class="text-[#333]">·</span>
-                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 border border-[#f87171]/30 rounded-full bg-[#f87171]/10 font-mono text-[12px] text-[#f87171] tracking-wide">
-                                            <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#f87171]" aria-hidden="true"></span>
-                                            Discontinued
-                                        </span>
-                                    </>
-                                )}
-                                {enriched?.lastUpdated && (
-                                    <>
-                                        <span class="text-[#333]">·</span>
-                                        <span class="inline-flex items-center gap-1.5 font-mono text-[12px] text-[#a3a3a3] tracking-wide">
-                                            <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#4ade80]" aria-hidden="true"></span>
-                                            Updated <time datetime={enriched.lastUpdated}>{formatDate(enriched.lastUpdated)}</time>
-                                        </span>
-                                    </>
-                                )}
+            <article class="fo">
+                <header class="fo-hero">
+                    <div>
+                        <div class="fo-top fo-fade" style="--d:.1s">
+                            <nav aria-label="Breadcrumb" class="fo-crumbs">
+                                <a href="/">Home</a><span>/</span>
+                                <a href={`/category/${getCategorySlug(tool.categoryShort)}`}>{tool.categoryClean}</a>
+                            </nav>
+                            <span class="fo-status">
+                                {isDiscontinued && <span class="fo-off">Discontinued</span>}
+                                {enriched?.lastUpdated && <span>Updated <time datetime={enriched.lastUpdated}>{updated}</time></span>}
+                            </span>
+                        </div>
+                        <div class="fo-rule"></div>
+                    </div>
+                    <div>
+                        <h1 class="fo-name" aria-label={displayName} style={`--fs:clamp(40px, ${nameVw}vw, ${namePx}px)`}><span class="fo-wrap">{words.map((w, wi) => {
+                            const offset = words.slice(0, wi).join(' ').length + (wi ? 1 : 0);
+                            return <><span class="fo-word" aria-hidden="true">{[...w].map((c, ci) => <span class="ch fo-grad" style={`--i:${offset + ci}`}>{c}</span>)}</span>{wi < words.length - 1 && ' '}</>;
+                        })}</span></h1>
+                        <div class="fo-intro">
+                            <p class="fo-lead td-summary fo-fade" style="--d:.55s">{lead}</p>
+                            <div class="fo-price fo-fade" style="--d:.7s">
+                                <small>{entry ? 'From' : 'Pricing'}</small>
+                                <b>{priceMain}</b>
+                                <span>{priceUnit}{entry && freeTier ? ' · free tier available' : ''}</span>
+                            </div>
+                            <div class="fo-cta fo-fade" style="--d:.85s">
+                                {hasSiteLink && <a class="fo-btn" href={siteHref} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${displayName} website`}>Visit site <i aria-hidden="true">→</i></a>}
+                                <div class="fo-save">
+                                    <button class="favorite-btn detail" type="button" data-tool-slug={tool.slug} data-tool-name={displayName} aria-label={`Sign in to save ${displayName}`} aria-pressed="false" title={`Sign in to save ${displayName}`}>
+                                        <svg class="favorite-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.75L6 21V4.75Z"/>
+                                        </svg>
+                                        <span data-favorite-label>Favorite</span>
+                                    </button>
+                                    <button class="follow-btn detail" type="button" data-tool-slug={tool.slug} data-tool-name={displayName} aria-label={`Sign in to follow ${displayName}`} aria-pressed="false" title={`Get email updates about ${displayName}`}>
+                                        <svg class="follow-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/>
+                                        </svg>
+                                        <span data-follow-label>Follow</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div class="flex items-center gap-2 shrink-0">
-                            <button class="favorite-btn detail" type="button" data-tool-slug={tool.slug} data-tool-name={displayName} aria-label={`Sign in to save ${displayName}`} aria-pressed="false" title={`Sign in to save ${displayName}`}>
-                                <svg class="favorite-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                    <path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.75L6 21V4.75Z"/>
-                                </svg>
-                                <span data-favorite-label>Favorite</span>
-                            </button>
-                            <button class="follow-btn detail" type="button" data-tool-slug={tool.slug} data-tool-name={displayName} aria-label={`Sign in to follow ${displayName}`} aria-pressed="false" title={`Get email updates about ${displayName}`}>
-                                <svg class="follow-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                    <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/>
-                                </svg>
-                                <span data-follow-label>Follow</span>
-                            </button>
-                            {hasSiteLink && (
-                                <a href={addOutboundUtmParams(tool.url)} target="_blank" rel="noopener noreferrer"
-                                    class="inline-flex items-center gap-2 py-2.5 px-5 bg-white text-black text-sm font-semibold rounded-md transition-all duration-200 hover:bg-gray-200 hover:-translate-y-px shrink-0"
-                                    aria-label={`Visit ${displayName} website`}>
-                                    Visit site
-                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                                </a>
-                            )}
+                        <div class="fo-facts">
+                            {facts.map((f, i) => (
+                                <div class="fo-fact fo-fade" style={`--d:${0.9 + i * 0.08}s`}>
+                                    <span class="fo-k">{f.k}</span>
+                                    <b>{f.v}</b>
+                                </div>
+                            ))}
                         </div>
                     </div>
-                    <p class="td-summary text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">{displayDescription}</p>
                 </header>
 
-                <!-- Enriched Content Sections (build-time rendered) -->
-                <div class="flex flex-col gap-6">
+                {!enriched && (
+                    <p class="fo-pending">Enriched details are coming soon. We're still gathering pricing, key features and reviewer notes for this tool. In the meantime, visit the official site for more.</p>
+                )}
 
-                    {enriched?.recentUpdates && (
-                        <section class="td-section">
-                            <div class="td-section-label">Recent Updates</div>
-                            <div class="td-card">
-                                <p class="text-[15px] leading-relaxed text-[#d4d4d4]">{enriched.recentUpdates}</p>
-                                {enriched.lastUpdated && (
-                                    <p class="font-mono text-[11px] text-[#525252] tracking-wide mt-3 mb-0">
-                                        As of <time datetime={enriched.lastUpdated}>{formatDate(enriched.lastUpdated)}</time>
-                                    </p>
-                                )}
-                            </div>
-                        </section>
-                    )}
+                {rest && (
+                    <section class="fo-sec" id="overview">
+                        <div class="fo-label"><em>{num('overview')}</em>Overview</div>
+                        <div class="fo-body fo-reveal"><p class="fo-text td-summary">{rest}</p></div>
+                    </section>
+                )}
 
-                    {!enriched && (
-                        <div class="td-card flex items-start gap-3 border-dashed">
-                            <svg class="w-5 h-5 text-[#737373] shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                            <div class="text-[14px] text-[#a3a3a3] leading-relaxed">
-                                <div class="text-white font-medium mb-0.5">Enriched details coming soon</div>
-                                We're still gathering pricing, key features, and reviewer notes for this tool. In the meantime, visit the official site for more.
-                            </div>
-                        </div>
-                    )}
-
-                    {enriched?.keyFeatures && enriched.keyFeatures.length > 0 && (
-                        <section class="td-section">
-                            <div class="td-section-label">Key Features</div>
-                            <ul class="flex flex-col gap-3">
-                                {enriched.keyFeatures.map(f => (
-                                    <li class="flex items-start gap-3">
-                                        <svg class="w-5 h-5 shrink-0 text-[#a78bfa] mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <polyline points="20 6 9 17 4 12"></polyline>
-                                        </svg>
-                                        <span class="text-[15px] leading-relaxed text-[#d4d4d4]">{f}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </section>
-                    )}
-
-                    {(enriched?.bestFor || enriched?.notIdealFor) && (
-                        <section class="td-section">
-                            <div class="td-section-label">Who It's For</div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="td-card">
-                                    <div class="font-mono text-[11px] uppercase text-[#4ade80] tracking-wide mb-2">&#10003; Best For</div>
-                                    <p class="text-[15px] leading-relaxed text-[#d4d4d4]">{enriched.bestFor ?? '-'}</p>
-                                </div>
-                                <div class="td-card">
-                                    <div class="font-mono text-[11px] uppercase text-[#f87171] tracking-wide mb-2">&#10007; Not Ideal For</div>
-                                    <p class="text-[15px] leading-relaxed text-[#d4d4d4]">{enriched.notIdealFor ?? '-'}</p>
-                                </div>
-                            </div>
-                        </section>
-                    )}
-
-                    {(enriched?.pricing || enriched?.pricingDetail) && (
-                        <section class="td-section">
-                            <div class="td-section-label">Pricing</div>
-                            <PricingBreakdown pricing={enriched.pricing} detail={enriched.pricingDetail} />
-                        </section>
-                    )}
-
-                    {enriched?.verdict && (
-                        <section class="td-section">
-                            <div class="td-section-label">Verdict</div>
-                            <blockquote class="td-verdict">{enriched.verdict}</blockquote>
-                        </section>
-                    )}
-
-                    {enriched?.tags && enriched.tags.length > 0 && (
-                        <section class="td-section">
-                            <div class="td-section-label">Tags</div>
-                            <div class="flex flex-wrap gap-2">
-                                {enriched.tags.map(tag => (
-                                    <span class="inline-block px-3 py-1 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide">{tag}</span>
-                                ))}
-                            </div>
-                        </section>
-                    )}
-
-                    {faqs.length >= 2 && (
-                        <section class="td-section" aria-label="Frequently asked questions">
-                            <div class="td-section-label">Pricing &amp; FAQ</div>
-                            <div class="flex flex-col gap-3">
-                                {faqs.map(f => (
-                                    <details class="td-card group" style="padding: 0;">
-                                        <summary class="cursor-pointer px-4 py-3.5 text-[15px] font-medium text-white list-none flex items-center justify-between gap-3">
-                                            {f.q}
-                                            <svg class="w-4 h-4 text-[#525252] shrink-0 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                        </summary>
-                                        <p class="px-4 pb-4 text-[14px] text-[#a3a3a3] leading-relaxed">{f.a}</p>
-                                    </details>
-                                ))}
-                            </div>
-                        </section>
-                    )}
-
-                    <p class="text-[13px] text-[#737373] leading-relaxed">
-                        Are you the maker? <a href={`/badge?tool=${tool.slug}`} class="text-[#c9aa6e] hover:text-[#e2c48a] transition-colors">Get your Featured badge</a>
-                    </p>
-
-                    <!-- Conversion CTA: sign-in nudge (tool pages are the top entry pages) -->
-                    <section class="td-section" aria-label="Track this tool" data-signed-out-only>
-                        <div class="td-card flex flex-col sm:flex-row sm:items-center gap-4" style="background: linear-gradient(90deg, rgba(167,139,250,0.06), rgba(34,211,238,0.04)); border-color: #333;">
-                            <div class="grow">
-                                <div class="text-white font-medium text-[15px] mb-1">Track {displayName} in your AI stack</div>
-                                <p class="text-[13px] text-[#a3a3a3] leading-relaxed m-0">Favorite this tool to revisit it later, or Zap it to contribute to the public vote count.</p>
-                            </div>
-                            <div class="flex items-center gap-2.5 shrink-0">
-                                <a href={`/category/${getCategorySlug(tool.categoryShort)}`} class="inline-flex items-center py-2.5 px-4 bg-white/5 text-white text-sm font-medium border border-[#333] rounded-md transition-all hover:bg-white/10 whitespace-nowrap">
-                                    Compare {tool.categoryShort}
-                                </a>
-                                <a href="/?signin=1" data-auth-trigger="favorite_heart" class="inline-flex items-center py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md transition-all hover:bg-gray-200 whitespace-nowrap">
-                                    Sign in to save
-                                </a>
-                            </div>
+                {features.length > 0 && (
+                    <section class="fo-sec" id="capabilities">
+                        <div class="fo-label"><em>{num('capabilities')}</em>Key features</div>
+                        <div class="fo-body">
+                            <ol class="fo-list">
+                                {features.map((f, i) => <li><span>{String(i + 1).padStart(2, '0')}</span><p>{f}</p></li>)}
+                            </ol>
                         </div>
                     </section>
+                )}
 
-                    {related.length > 0 && (
-                        <section class="td-section" aria-label={`More ${tool.categoryClean} tools`}>
-                            <div class="td-section-label">More in {tool.categoryClean}</div>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                {related.map(r => (
-                                    <a href={`/tools/${r.slug}`} class="td-card group block" style="padding: 14px 16px;">
-                                        <div class="text-[15px] font-medium text-white group-hover:bg-gradient-to-r group-hover:from-[#a78bfa] group-hover:via-[#22d3ee] group-hover:to-[#a78bfa] group-hover:bg-clip-text group-hover:text-transparent transition-all">{r.enriched?.name ?? r.name}</div>
-                                        <div class="text-[12px] font-mono text-[#525252] uppercase tracking-wide mt-0.5">{r.enriched?.company ?? r.company}</div>
-                                    </a>
-                                ))}
-                            </div>
-                            <div class="flex items-center gap-4 mt-4">
-                                {showAlternativesLink && (
-                                    <a href={`/tools/${tool.slug}/alternatives`} class="inline-flex items-center gap-2 text-[14px] font-medium text-[#c9aa6e] hover:text-[#e2c48a] transition-colors">
-                                        See all {displayName} alternatives
-                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                                    </a>
-                                )}
-                                {showPricingLink && (
-                                    <a href={`/tools/${tool.slug}/pricing`} class="inline-flex items-center gap-2 text-[14px] font-medium text-[#c9aa6e] hover:text-[#e2c48a] transition-colors">
-                                        See {displayName} pricing details
-                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                                    </a>
-                                )}
-                            </div>
-                        </section>
-                    )}
-
-                    {comparisons.length > 0 && (
-                        <section class="td-section" aria-label={`Compare ${displayName}`}>
-                            <div class="td-section-label">Compare {displayName}</div>
-                            <div class="flex flex-wrap gap-2">
-                                {comparisons.map(c => (
-                                    <a href={`/compare/${c.slug}`} class="inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide hover:text-white hover:border-[#444] transition-colors">
-                                        {c.label}
-                                    </a>
-                                ))}
-                            </div>
-                        </section>
-                    )}
-
-                    <div class="py-6">
-                        <a href="/" class="inline-flex items-center gap-2 text-[14px] text-[#737373] hover:text-white transition-colors">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                            Back to directory
-                        </a>
-                    </div>
-
-                    <div class="td-section" style="padding-top: 0;">
-                        <div class="flex items-start gap-3 py-4 px-4 border border-[#222] rounded-lg bg-white/[0.02]">
-                            <svg class="w-5 h-5 text-[#737373] shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="8" x2="12" y2="12"></line>
-                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                            </svg>
-                            <p class="text-[13px] text-[#737373] leading-relaxed">
-                                Content on this page is AI-generated. Please verify details with the vendor's website for accuracy.
-                            </p>
+                {hasPricing && (
+                    <section class="fo-sec" id="pricing">
+                        <div class="fo-label"><em>{num('pricing')}</em>Pricing</div>
+                        <div class="fo-body">
+                            {plans.length > 0 ? (
+                                <table class="fo-table">
+                                    <tbody>
+                                        {plans.map(p => (
+                                            <tr>
+                                                <td class="n">{p.name}{p === entry && <span class="fo-tag">Entry plan</span>}</td>
+                                                <td class="p">{monthly(p) === 0 ? 'Free' : p.price}</td>
+                                                <td class="u">{monthly(p) === 0 ? '' : unitWords(p.unit)}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            ) : (
+                                <p class="fo-text">{model}</p>
+                            )}
+                            {scale.length > 1 && (
+                                <div class="fo-scale fo-reveal" aria-hidden="true">
+                                    {scale.map(({ p, x }, i) => (
+                                        <div class={`fo-tick${i === 0 ? ' first' : ''}`} style={`left:${(x * 100).toFixed(2)}%`}><span>{p.name} {p.price}</span></div>
+                                    ))}
+                                </div>
+                            )}
+                            {enriched?.pricingDetail && <p class="fo-note">{enriched.pricingDetail}</p>}
                         </div>
-                    </div>
+                    </section>
+                )}
 
+                {(bestFor || notIdealFor) && (
+                    <section class="fo-sec" id="fit">
+                        <div class="fo-label"><em>{num('fit')}</em>Who it's for</div>
+                        <div class="fo-body fo-fit">
+                            {bestFor && <div class="fo-reveal"><h3>Best for</h3><p>{bestFor}</p></div>}
+                            {notIdealFor && <div class="fo-reveal"><h3>Not ideal for</h3><p>{notIdealFor}</p></div>}
+                        </div>
+                    </section>
+                )}
+
+                {verdict && (
+                    <section class="fo-sec" id="verdict">
+                        <div class="fo-label"><em>{num('verdict')}</em>Verdict</div>
+                        <div class="fo-body">
+                            <blockquote class="fo-verdict td-verdict">{verdict.split(/\s+/).map(w => <span class="w">{w} </span>)}</blockquote>
+                            <div class="fo-sign">ai.dosa.dev editorial{updated && ` · ${updated}`}</div>
+                        </div>
+                    </section>
+                )}
+
+                {updates && (
+                    <section class="fo-sec" id="latest">
+                        <div class="fo-label"><em>{num('latest')}</em>Recent updates</div>
+                        <div class="fo-body fo-reveal">
+                            <p class="fo-text sm">{updates}</p>
+                            {enriched?.lastUpdated && <p class="fo-note">As of <time datetime={enriched.lastUpdated}>{updated}</time></p>}
+                        </div>
+                    </section>
+                )}
+
+                {faqs.length >= 2 && (
+                    <section class="fo-sec" id="faq" aria-label="Frequently asked questions">
+                        <div class="fo-label"><em>{num('faq')}</em>Pricing &amp; FAQ</div>
+                        <div class="fo-body fo-faq">
+                            {faqs.map(f => (
+                                <details>
+                                    <summary>{f.q}<i aria-hidden="true">+</i></summary>
+                                    <p>{f.a}</p>
+                                </details>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {related.length > 0 && (
+                    <section class="fo-sec" id="alternatives" aria-label={`More ${tool.categoryClean} tools`}>
+                        <div class="fo-label"><em>{num('alternatives')}</em>More in {tool.categoryShort}</div>
+                        <div class="fo-body">
+                            {related.map(r => (
+                                <a class="fo-alt" href={`/tools/${r.slug}`}>
+                                    <span><b>{r.enriched?.name ?? r.name}</b></span>
+                                    <small>{r.enriched?.company ?? r.company}</small>
+                                    <span class="pr">{entryLabel(r)}</span>
+                                    <i aria-hidden="true">→</i>
+                                </a>
+                            ))}
+                            {(showAlternativesLink || showPricingLink) && (
+                                <div class="fo-more">
+                                    {showAlternativesLink && <a href={`/tools/${tool.slug}/alternatives`}>See all {displayName} alternatives →</a>}
+                                    {showPricingLink && <a href={`/tools/${tool.slug}/pricing`}>See {displayName} pricing details →</a>}
+                                </div>
+                            )}
+                        </div>
+                    </section>
+                )}
+
+                {comparisons.length > 0 && (
+                    <section class="fo-sec" id="compare" aria-label={`Compare ${displayName}`}>
+                        <div class="fo-label"><em>{num('compare')}</em>Compare</div>
+                        <div class="fo-body">
+                            {comparisons.map(c => (
+                                <a class="fo-alt" href={`/compare/${c.slug}`}>
+                                    <span><b>{c.label}</b></span>
+                                    <small></small>
+                                    <span class="pr"></span>
+                                    <i aria-hidden="true">→</i>
+                                </a>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
+                {tags.length > 0 && (
+                    <section class="fo-sec" id="tags">
+                        <div class="fo-label"><em>{num('tags')}</em>Tags</div>
+                        <div class="fo-body"><ul class="fo-tags">{tags.map(t => <li>{t}</li>)}</ul></div>
+                    </section>
+                )}
+
+                <section class="fo-track" aria-label="Track this tool" data-signed-out-only>
+                    <div>
+                        <b>Track {displayName} in your AI stack</b>
+                        <p>Favorite this tool to revisit it later, or Zap it to contribute to the public vote count.</p>
+                    </div>
+                    <div>
+                        <a class="fo-link" href={`/category/${getCategorySlug(tool.categoryShort)}`}>Compare {tool.categoryShort}</a>
+                        <a class="fo-btn" href="/?signin=1" data-auth-trigger="favorite_heart">Sign in to save</a>
+                    </div>
+                </section>
+
+                {hasSiteLink && (
+                    <footer class="fo-end">
+                        <a class="big" href={siteHref} target="_blank" rel="noopener noreferrer">Try {displayName}<i aria-hidden="true">→</i></a>
+                        <span class="fo-k" style="margin:0">{entry ? `From ${priceMain} ${priceUnit}` : priceMain}</span>
+                    </footer>
+                )}
+
+                <div class="fo-notes">
+                    <span>Content on this page is AI-generated. Please verify details with the vendor's website for accuracy.</span>
+                    <span>Are you the maker? <a href={`/badge?tool=${tool.slug}`}>Get your Featured badge</a></span>
+                    <a class="back" href="/">← Back to directory</a>
                 </div>
-            </div>
+            </article>
         </main>
     </div>
+
+    <script>
+        const wrap = document.querySelector<HTMLElement>('.fo-wrap');
+        const measure = () => {
+            if (!wrap) return;
+            const box = wrap.getBoundingClientRect();
+            let width = 0;
+            wrap.querySelectorAll<HTMLElement>('.fo-word').forEach(w => {
+                const r = w.getBoundingClientRect();
+                width = Math.max(width, r.right - box.left);
+                w.querySelectorAll<HTMLElement>('.ch').forEach(c => c.style.setProperty("--x", `${c.getBoundingClientRect().left - box.left}px`));
+            });
+            wrap.style.setProperty('--W', `${Math.max(width, 1)}px`);
+        };
+        document.fonts.ready.then(measure);
+        addEventListener('resize', measure);
+        const main = document.querySelector('main');
+        if (main && !matchMedia('(prefers-reduced-motion: reduce)').matches && matchMedia('(pointer: fine)').matches) {
+            let target = main.scrollTop;
+            let current = target;
+            let running = false;
+            const tick = () => {
+                current += (target - current) * 0.09;
+                if (Math.abs(target - current) < 0.4) current = target;
+                main.scrollTop = current;
+                running = current !== target;
+                if (running) requestAnimationFrame(tick);
+            };
+            main.addEventListener('wheel', e => {
+                if (e.ctrlKey) return;
+                e.preventDefault();
+                const limit = main.scrollHeight - main.clientHeight;
+                target = Math.max(0, Math.min(limit, target + e.deltaY));
+                if (!running) { current = main.scrollTop; running = true; requestAnimationFrame(tick); }
+            }, { passive: false });
+            main.addEventListener('scroll', () => { if (!running) target = current = main.scrollTop; });
+        }
+    </script>
 
     <!-- Client scripts for auth + sidebar toggle (shared with all pages) -->
     <script src="/dist/app.js" type="module" defer></script>
