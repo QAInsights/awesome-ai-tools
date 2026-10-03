@@ -8515,5 +8515,140 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-02"
+  },
+  {
+    "slug": "t3-code",
+    "name": "T3 Code",
+    "company": "Ping.gg",
+    "pricing": "open-source",
+    "pricingDetail": "T3 Code is free and open source under the MIT license; it does not resell tokens and instead uses the Codex, Claude Code, Cursor, Grok Build or OpenCode subscriptions you already have.",
+    "description": "T3 Code is an open-source \"agent harness control surface\" from Theo and Julius that controls the coding-agent CLIs on your machine from a web app, an Electron desktop app and iOS/Android mobile apps. A Node WebSocket server wraps the provider CLIs so you can run parallel agent threads across projects and worktrees with your existing subscriptions.",
+    "keyFeatures": [
+      "Drives Codex, Claude Code, Cursor, Grok Build and OpenCode with your existing subscriptions",
+      "Web, Electron desktop and iOS/Android clients with remote access from a phone",
+      "Each agent thread works on its own branch with inline diff review",
+      "One-button commit, push and PR with generated titles, bodies and changelogs",
+      "Permission modes, multiple accounts and `npx t3@latest` quick start"
+    ],
+    "bestFor": "Developers who run several coding-agent CLIs in parallel and want one open, forkable GUI to manage threads, diffs and PRs.",
+    "notIdealFor": "Teams that want a hosted agent with bundled model access, since T3 Code requires installing and authenticating provider CLIs yourself.",
+    "recentUpdates": "T3 Code shipped v0.0.44 on September 29, 2026 and v0.0.45 on October 2, 2026, with v0.0.46 preview and nightly builds following on October 2-3, 2026.",
+    "verdict": "A fast-moving, fully open alternative to Codex App, Claude Desktop and Conductor for orchestrating the agents you already pay for.",
+    "tags": [
+      "Agent Orchestration",
+      "Desktop App",
+      "Mobile",
+      "Open Source",
+      "BYO Subscription"
+    ],
+    "lastUpdated": "2026-10-03"
+  },
+  {
+    "slug": "superplane",
+    "name": "SuperPlane",
+    "company": "SuperPlane",
+    "pricing": "freemium",
+    "pricingDetail": "The SuperPlane engine is open source under Apache 2.0 and can be self-hosted; SuperPlane Cloud is free for open source projects, Business costs $199 per organization per month with $50 shared usage, and Enterprise is custom.",
+    "description": "SuperPlane is an open source software factory for one-shot engineering that turns high-confidence backlog issues into verified, review-ready pull requests. It coordinates coding agents, source control, CI, review, approvals and feedback in one workflow on top of a durable, event-driven automation engine.",
+    "keyFeatures": [
+      "Scans repos and backlogs and scores tickets by automation confidence",
+      "Dispatches your chosen coding agent and model on managed or self-hosted runners",
+      "Gates every run on CI status, repository checks and review feedback",
+      "Returns failed checks to the agent with command output attached",
+      "Git-backed workflow apps with approvals across GitHub, GitLab, CI/CD and incident tools"
+    ],
+    "bestFor": "Engineering teams that want to route routine bugs, maintenance and test fixes to coding agents under consistent guardrails.",
+    "notIdealFor": "Solo developers who just want an interactive coding agent rather than a backlog-to-PR pipeline.",
+    "recentUpdates": "SuperPlane opened its Cloud beta during a June 22, 2026 launch week, released engine v0.30.0 on July 27, 2026, and now offers the Factory with published Business pricing.",
+    "verdict": "A credible open source orchestration layer for teams moving from ad hoc agent runs to a governed backlog-to-PR factory.",
+    "tags": [
+      "Software Factory",
+      "Autonomous Agents",
+      "CI/CD",
+      "Open Source",
+      "Workflow Automation"
+    ],
+    "lastUpdated": "2026-10-03"
+  },
+  {
+    "slug": "cloudflare-os",
+    "name": "Cloudflare OS",
+    "company": "Cloudflare",
+    "pricing": "open-source",
+    "pricingDetail": "Cloudflare OS is open source under the Apache 2.0 license and can be deployed into your own Cloudflare account or on workerd; a fully managed deployment is on a waitlist and usage of underlying Cloudflare services is billed separately.",
+    "description": "Cloudflare OS is an open source agent workspace built on Cloudflare Workers and used internally across Cloudflare. It combines an agent chat UI grounded in company context, sandboxed \"Gadgets\" that agents build as personal apps, and a capability-based Gatekeeper security layer for safe access to external services.",
+    "keyFeatures": [
+      "Agent chat UI preloaded with company context and curated skills",
+      "Gadgets: agent-built personal apps, each instance sandboxed in a Dynamic Worker Facet",
+      "Gatekeepers broker OAuth access with narrow scopes, action logs and human approval",
+      "Google Workspace Gatekeeper for Gmail and Drive research and drafting",
+      "Deploy to your own Cloudflare account or self-host on workerd"
+    ],
+    "bestFor": "Organizations that want a customizable, secure internal agent workspace where non-technical staff can safely build small apps.",
+    "notIdealFor": "Individual developers looking for a local coding agent or IDE integration.",
+    "recentUpdates": "Cloudflare open sourced the new Cloudflare OS on August 5, 2026, and on October 1, 2026 opened a waitlist for fully managed deployments plus an improved Google Workspace Gatekeeper.",
+    "verdict": "An ambitious, security-first blueprint for a company-wide agent and app platform, best for teams already on Cloudflare.",
+    "tags": [
+      "Agent Workspace",
+      "Cloudflare Workers",
+      "App Builder",
+      "Security",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-03"
+  },
+  {
+    "slug": "strix",
+    "name": "Strix",
+    "company": "Strix",
+    "pricing": "freemium",
+    "pricingDetail": "The Strix CLI is free and open source under Apache 2.0 with your own LLM key; the managed platform at app.strix.ai offers a Pro plan at $29 per seat per month with pentests billed separately, and custom Enterprise pricing.",
+    "description": "Strix is an open source autonomous AI penetration testing tool whose agents run your application dynamically, find vulnerabilities and validate them with working proofs-of-concept. It targets developers and security teams who want fast pentests without the false positives of static scanners.",
+    "keyFeatures": [
+      "Multi-agent recon, exploitation and validation with real proofs-of-concept",
+      "Sandboxed toolkit with HTTP proxy, browser automation, shells and Python runtime",
+      "Auto-fix patches and compliance-ready pentest reports",
+      "GitHub Actions and CI scanning on every pull request",
+      "Agent skills for Claude Code, Cursor and Codex via `npx skills add usestrix/strix`"
+    ],
+    "bestFor": "Developers and security teams that want automated, exploit-validated pentests of web apps and APIs in local or CI workflows.",
+    "notIdealFor": "Teams that only need lightweight static linting, or cannot run Docker-based sandboxes and LLM-driven testing against their targets.",
+    "recentUpdates": "Strix released v1.6.0 through v1.6.2 between September 1 and September 5, 2026, and the repository passed 66,000 GitHub stars.",
+    "verdict": "The most popular open source AI pentesting agent, notable for validating findings with real exploits.",
+    "tags": [
+      "Security",
+      "Penetration Testing",
+      "Autonomous Agents",
+      "CI/CD",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-03"
+  },
+  {
+    "slug": "weave-router",
+    "name": "Weave Router",
+    "company": "Weave",
+    "pricing": "freemium",
+    "pricingDetail": "The Weave Router repository is licensed under Apache 2.0 and can be self-hosted with your own provider keys; the hosted router bills a unified usage-based credit balance, priced for solo developers and startups at 5% of routed costs.",
+    "description": "Weave Router is a model router for coding agents that sits in front of Anthropic, OpenAI and Gemini APIs and sends each agent request to the most cost-effective model likely to complete it. It plugs into Claude Code, Codex, Cursor, opencode or pi with one command.",
+    "keyFeatures": [
+      "Drop-in proxy for Anthropic Messages, OpenAI Chat Completions and Gemini APIs",
+      "Per-request routing via an on-box embedder and complexity classifier",
+      "Cache-aware switching that only routes down when savings beat cache rebuild cost",
+      "Escalation back to a frontier model when a cheaper model stalls or loops",
+      "`npx @weave-os/router` configures Claude Code, Codex, opencode or pi"
+    ],
+    "bestFor": "Developers and teams running heavy coding-agent workloads who want to cut model spend without changing tools.",
+    "notIdealFor": "Users who always want a single fixed model, or who cannot route agent traffic through a proxy.",
+    "recentUpdates": "Weave Router 2.0 launched on September 9, 2026 with a classifier trained on 10x more sessions, cache-aware routing, escalation and multi-subscription routing.",
+    "verdict": "A benchmark-backed router that meaningfully lowers coding-agent costs without changing the agent you use.",
+    "tags": [
+      "Model Router",
+      "AI Gateway",
+      "Cost Optimization",
+      "Claude Code",
+      "Codex"
+    ],
+    "lastUpdated": "2026-10-03"
   }
 ]
