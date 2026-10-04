@@ -141,6 +141,14 @@ describe('stack editor', () => {
         await elements.enableSharingButton.listeners.get('click')();
         expect(elements.usernamePickerStatus.textContent).toBe('username_required');
         expect(elements.enableSharingButton.disabled).toBe(false);
+
+        global.fetch = async (url, options) => {
+            if (url === '/api/account/username') return jsonResponse({ username: 'test-user' });
+            if (options?.method === 'PATCH') return jsonResponse({ error: 'rate_limited' }, 429);
+            return jsonResponse({ stack });
+        };
+        await elements.enableSharingButton.listeners.get('click')();
+        expect(elements.usernamePickerStatus.textContent).toBe('Too many changes. Wait a minute and try again.');
     });
 
     test('shows stack loading errors', async () => {

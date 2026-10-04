@@ -3,11 +3,12 @@ import { EVENTS } from '../../../lib/analytics-events.js';
 import { validateStackInput } from '../../../lib/stacks';
 import { trackRequest } from '../../../lib/server/analytics';
 import { getCookieSessionUser } from '../../../lib/server/route-auth';
-import { requireDatabase } from '../../../lib/server/runtime-env';
+import { getStackWriteLimiter, requireDatabase } from '../../../lib/server/runtime-env';
 import { createStack, listStacks, StackLimitError } from '../../../lib/server/stacks-repository';
 import { privateJson, privateJsonError, withPublicUrl } from '../../../lib/server/stack-api-response';
 import { getUsername } from '../../../lib/server/username-repository';
 import { isAllowedMutationRequest } from '../../../lib/server/request-security';
+import { enforceRateLimit } from '../../../lib/server/rate-limit';
 
 export const prerender = false;
 
@@ -40,6 +41,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         const db = requireDatabase();
         const user = await getCookieSessionUser(cookies, db);
         if (!user) return privateJsonError('Unauthorized', 401);
+        const limited = await enforceRateLimit(getStackWriteLimiter(), user.id);
+        if (limited) return limited;
 
         let body: unknown;
         try {

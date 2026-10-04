@@ -135,4 +135,28 @@ describe('add-to-stack popover', () => {
         expect(surface.result.innerHTML).toContain('Added to your stack.');
         expect(surface.result.innerHTML).toContain('/stacks/edit?id=new-stack');
     });
+
+    test('shows a friendly message when an item write is rate limited', async () => {
+        const surface = createSurface();
+        global.document = { addEventListener: () => {} };
+        global.fetch = async (url, options) => {
+            if (url === '/api/stacks') {
+                return jsonResponse({
+                    stacks: [{ id: 'stack-1', title: 'My stack', itemCount: 0, isPublic: false }],
+                });
+            }
+            if (url.endsWith('/items') && options?.method === 'POST') {
+                return jsonResponse({ error: 'rate_limited' }, 429);
+            }
+            return jsonResponse({ error: 'Unexpected request' }, 500);
+        };
+        const { initializeAddToStack } = await import(`./add-to-stack.js?test=${++moduleId}`);
+
+        await openPopover(surface, initializeAddToStack);
+        await surface.list.listeners.get('click')({
+            target: { closest: () => ({ dataset: { stackId: 'stack-1' } }) },
+        });
+
+        expect(surface.result.innerHTML).toContain('Too many changes. Wait a minute and try again.');
+    });
 });

@@ -103,10 +103,11 @@ describe('stacks page', () => {
         global.document = { addEventListener: () => {} };
         global.window = { location: { href: '' } };
         let failLoad = true;
+        let createStatus = 409;
         global.fetch = async (_url, options) => {
             if (failLoad && !options) return jsonResponse({ error: 'Load failed' }, 503);
             if (!options) return jsonResponse({ stacks: [] });
-            return jsonResponse({ error: 'stack_limit' }, 409);
+            return jsonResponse({ error: createStatus === 429 ? 'rate_limited' : 'stack_limit' }, createStatus);
         };
         const { initializeStacksPage } = await import(`./stacks-page.js?test=${++moduleId}`);
 
@@ -118,5 +119,9 @@ describe('stacks page', () => {
 
         expect(elements.newStackStatus.textContent).toBe('stack_limit');
         expect(elements.createStackButton.disabled).toBe(false);
+
+        createStatus = 429;
+        await elements.newStackForm.listeners.get('submit')({ preventDefault() {} });
+        expect(elements.newStackStatus.textContent).toBe('Too many changes. Wait a minute and try again.');
     });
 });

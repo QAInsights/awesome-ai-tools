@@ -8,8 +8,9 @@ import {
 } from '../../../lib/server/username-repository';
 import { getCookieSessionUser } from '../../../lib/server/route-auth';
 import { isAllowedMutationRequest } from '../../../lib/server/request-security';
-import { requireDatabase } from '../../../lib/server/runtime-env';
+import { getUsernameWriteLimiter, requireDatabase } from '../../../lib/server/runtime-env';
 import { privateJson, privateJsonError } from '../../../lib/server/stack-api-response';
+import { enforceRateLimit } from '../../../lib/server/rate-limit';
 
 export const prerender = false;
 
@@ -38,6 +39,8 @@ export const PUT: APIRoute = async ({ request, cookies }) => {
         const db = requireDatabase();
         const user = await getCookieSessionUser(cookies, db);
         if (!user) return privateJsonError('Unauthorized', 401);
+        const limited = await enforceRateLimit(getUsernameWriteLimiter(), user.id);
+        if (limited) return limited;
 
         let body: { username?: unknown };
         try {

@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 import { getAllTools, getToolBySlug } from '../../../../lib/tools';
 import { validateItems } from '../../../../lib/stacks';
 import { getCookieSessionUser } from '../../../../lib/server/route-auth';
-import { requireDatabase } from '../../../../lib/server/runtime-env';
+import { getStackWriteLimiter, requireDatabase } from '../../../../lib/server/runtime-env';
 import {
     appendItem,
     getOwnedStack,
@@ -11,6 +11,7 @@ import {
 import { privateJson, privateJsonError, withPublicUrl } from '../../../../lib/server/stack-api-response';
 import { getUsername } from '../../../../lib/server/username-repository';
 import { isAllowedMutationRequest } from '../../../../lib/server/request-security';
+import { enforceRateLimit } from '../../../../lib/server/rate-limit';
 
 export const prerender = false;
 
@@ -25,6 +26,8 @@ export const PUT: APIRoute = async ({ request, cookies, params }) => {
         const db = requireDatabase();
         const user = await getCookieSessionUser(cookies, db);
         if (!user) return privateJsonError('Unauthorized', 401);
+        const limited = await enforceRateLimit(getStackWriteLimiter(), user.id);
+        if (limited) return limited;
         const id = params.id ?? '';
         if (!await getOwnedStack(db, user.id, id)) return privateJsonError('Not found', 404);
 
@@ -59,6 +62,8 @@ export const POST: APIRoute = async ({ request, cookies, params }) => {
         const db = requireDatabase();
         const user = await getCookieSessionUser(cookies, db);
         if (!user) return privateJsonError('Unauthorized', 401);
+        const limited = await enforceRateLimit(getStackWriteLimiter(), user.id);
+        if (limited) return limited;
         const id = params.id ?? '';
         if (!await getOwnedStack(db, user.id, id)) return privateJsonError('Not found', 404);
 

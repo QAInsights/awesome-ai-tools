@@ -6,8 +6,18 @@ let username: string | null;
 let ownedStack: OwnedStack | null;
 let slugTaken: boolean;
 let deleteSucceeded: boolean;
+let updateStackCalls: number;
+let deleteStackCalls: number;
+let limiterAllows: boolean;
+let limiterKeys: string[];
 let events: string[];
 const db = {};
+const fakeLimiter = {
+    limit: async ({ key }: { key: string }) => {
+        limiterKeys.push(key);
+        return { success: limiterAllows };
+    },
+};
 
 const initialStack = (): OwnedStack => ({
     id: 'stack-1',
@@ -30,6 +40,8 @@ mock.module('../../../src/lib/server/route-auth', () => ({
 }));
 mock.module('../../../src/lib/server/runtime-env', () => ({
     requireDatabase: () => db,
+    getStackWriteLimiter: () => fakeLimiter,
+    getUsernameWriteLimiter: () => fakeLimiter,
 }));
 mock.module('../../../src/lib/server/username-repository', () => ({
     getUsername: async () => username,
@@ -40,12 +52,14 @@ mock.module('../../../src/lib/server/stacks-repository', () => ({
             ? structuredClone(ownedStack)
             : null,
     updateStack: async (_database: unknown, userId: string, id: string, changes: Partial<OwnedStack>) => {
+        updateStackCalls += 1;
         if (slugTaken) throw new StackSlugTakenError();
         if (!ownedStack || ownedStack.userId !== userId || ownedStack.id !== id) return false;
         ownedStack = { ...ownedStack, ...changes, updatedAt: ownedStack.updatedAt + 1 };
         return true;
     },
     deleteStack: async (_database: unknown, userId: string, id: string) => {
+        deleteStackCalls += 1;
         if (!ownedStack || ownedStack.userId !== userId || ownedStack.id !== id || !deleteSucceeded) return false;
         ownedStack = null;
         return true;
@@ -66,6 +80,10 @@ beforeEach(() => {
     ownedStack = initialStack();
     slugTaken = false;
     deleteSucceeded = true;
+    updateStackCalls = 0;
+    deleteStackCalls = 0;
+    limiterAllows = true;
+    limiterKeys = [];
     events = [];
 });
 
@@ -105,10 +123,12 @@ describe('GET /api/stacks/[id]', () => {
 
 describe('PATCH /api/stacks/[id]', () => {
     test('rejects cross-origin requests and requires an owner session', async () => {
+        limiterAllows = false;
         expect((await PATCH(context('PATCH', '{"title":"Changed"}', 'https://example.com'))).status).toBe(403);
 
         activeUser = null;
         expect((await PATCH(context('PATCH', '{"title":"Changed"}'))).status).toBe(401);
+        expect(limiterKeys).toEqual([]);
     });
 
     test('returns 404 for another owner and malformed or invalid bodies return 400', async () => {
@@ -126,6 +146,15 @@ describe('PATCH /api/stacks/[id]', () => {
         for (const body of bodies) {
             expect((await PATCH(context('PATCH', body))).status).toBe(400);
         }
+    });
+
+    test('rate limits updates before parsing or writing', async () => {
+        limiterAllows = false;
+        const response = await PATCH(context('PATCH', '{'));
+
+        expect(response.status).toBe(429);
+        expect(updateStackCalls).toBe(0);
+        expect(limiterKeys).toEqual(['github:user-1']);
     });
 
     test('requires a username before publishing', async () => {
@@ -200,5 +229,14 @@ describe('DELETE /api/stacks/[id]', () => {
         expect(response.status).toBe(200);
         expect(await response.json()).toEqual({ deleted: true });
         expect(response.headers.get('Cache-Control')).toBe('private, no-store');
+    });
+
+    test('rate limits deletion before repository writes', async () => {
+        limiterAllows = false;
+        const response = await DELETE(context('DELETE'));
+
+        expect(response.status).toBe(429);
+        expect(deleteStackCalls).toBe(0);
+        expect(limiterKeys).toEqual(['github:user-1']);
     });
 });

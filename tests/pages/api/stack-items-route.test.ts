@@ -8,7 +8,17 @@ let ownedStack: OwnedStack | null;
 let appendStatus: 'added' | 'exists' | 'limit' | 'not_found';
 let appendedItem: StackItem;
 let replacedItems: StackItem[];
+let appendItemCalls: number;
+let replaceItemsCalls: number;
+let limiterAllows: boolean;
+let limiterKeys: string[];
 const db = {};
+const fakeLimiter = {
+    limit: async ({ key }: { key: string }) => {
+        limiterKeys.push(key);
+        return { success: limiterAllows };
+    },
+};
 
 const initialStack = (): OwnedStack => ({
     id: 'stack-1',
@@ -29,6 +39,8 @@ mock.module('../../../src/lib/server/route-auth', () => ({
 }));
 mock.module('../../../src/lib/server/runtime-env', () => ({
     requireDatabase: () => db,
+    getStackWriteLimiter: () => fakeLimiter,
+    getUsernameWriteLimiter: () => fakeLimiter,
 }));
 mock.module('../../../src/lib/server/username-repository', () => ({
     getUsername: async () => username,
@@ -39,6 +51,7 @@ mock.module('../../../src/lib/server/stacks-repository', () => ({
             ? structuredClone(ownedStack)
             : null,
     replaceItems: async (_database: unknown, _userId: string, _id: string, items: StackItem[]) => {
+        replaceItemsCalls += 1;
         replacedItems = items;
         ownedStack = {
             ...initialStack(),
@@ -53,6 +66,7 @@ mock.module('../../../src/lib/server/stacks-repository', () => ({
         _id: string,
         input: { slug: string; purpose: string; usageNotes?: string | null },
     ) => {
+        appendItemCalls += 1;
         appendedItem = {
             slug: input.slug,
             position: 0,
@@ -73,6 +87,10 @@ beforeEach(() => {
     username = 'test-user';
     ownedStack = initialStack();
     appendStatus = 'added';
+    appendItemCalls = 0;
+    replaceItemsCalls = 0;
+    limiterAllows = true;
+    limiterKeys = [];
     appendedItem = {
         slug: 'cursor',
         position: 0,
@@ -98,12 +116,15 @@ function context(method: string, body?: string, origin = 'https://ai.dosa.dev', 
 
 describe('PUT /api/stacks/[id]/items', () => {
     test('rejects cross-origin requests, requires a session, and hides another owner stack', async () => {
+        limiterAllows = false;
         expect((await PUT(context('PUT', '{"items":[]}', 'https://example.com'))).status).toBe(403);
 
         activeUser = null;
         expect((await PUT(context('PUT', '{"items":[]}'))).status).toBe(401);
+        expect(limiterKeys).toEqual([]);
 
         activeUser = { id: 'github:other-user' };
+        limiterAllows = true;
         expect((await PUT(context('PUT', '{"items":[]}'))).status).toBe(404);
     });
 
@@ -144,6 +165,15 @@ describe('PUT /api/stacks/[id]/items', () => {
             },
             username: 'test-user',
         });
+    });
+
+    test('rate limits item-list replacement before repository writes', async () => {
+        limiterAllows = false;
+        const response = await PUT(context('PUT', '{"items":[]}'));
+
+        expect(response.status).toBe(429);
+        expect(replaceItemsCalls).toBe(0);
+        expect(limiterKeys).toEqual(['github:user-1']);
     });
 });
 
@@ -189,6 +219,15 @@ describe('POST /api/stacks/[id]/items', () => {
             },
             publicUrl: '/u/test-user/my-stack',
         });
+    });
+
+    test('rate limits item append before repository writes', async () => {
+        limiterAllows = false;
+        const response = await POST(context('POST', '{'));
+
+        expect(response.status).toBe(429);
+        expect(appendItemCalls).toBe(0);
+        expect(limiterKeys).toEqual(['github:user-1']);
     });
 
     test('returns a conflict when the item already exists or the stack is full', async () => {

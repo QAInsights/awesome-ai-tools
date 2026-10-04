@@ -17,7 +17,10 @@ async function requestJson(url, options) {
         data = await response.json();
     } catch {}
     if (!response.ok) {
-        const error = new Error(data.error || 'Request failed');
+        const message = response.status === 429
+            ? 'Too many changes. Wait a minute and try again.'
+            : data.error || 'Request failed';
+        const error = new Error(message);
         error.status = response.status;
         throw error;
     }

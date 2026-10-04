@@ -149,9 +149,11 @@ export async function initializeSettingsPage({
             });
             const profile = await response.json();
             if (!response.ok) {
-                const message = profile.error === 'username_change_limit'
-                    ? 'You have reached the limit of five username changes. You can still reclaim a previous username.'
-                    : profile.message || profile.error || 'Could not save your username.';
+                const message = profile.error === 'rate_limited'
+                    ? 'Too many changes. Wait a minute and try again.'
+                    : profile.error === 'username_change_limit'
+                        ? 'You have reached the limit of five username changes. You can still reclaim a previous username.'
+                        : profile.message || profile.error || 'Could not save your username.';
                 throw new Error(message);
             }
             profileInput.value = profile.username;

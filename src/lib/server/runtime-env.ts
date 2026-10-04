@@ -1,4 +1,5 @@
 import { env } from 'cloudflare:workers';
+import type { RateLimit } from '@cloudflare/workers-types';
 import type { Database } from './db';
 
 const runtimeEnv = env as typeof env & Record<string, unknown>;
@@ -61,6 +62,14 @@ export function getAdminUserIds(): Set<string> {
         .filter(Boolean));
     if (import.meta.env.DEV) ids.add('github:local-staging-tester');
     return ids;
+}
+
+export function getStackWriteLimiter(): RateLimit | undefined {
+    return runtimeEnv.STACK_WRITE_LIMITER as RateLimit | undefined;
+}
+
+export function getUsernameWriteLimiter(): RateLimit | undefined {
+    return runtimeEnv.USERNAME_WRITE_LIMITER as RateLimit | undefined;
 }
 
 export function requireDatabase(): Database {

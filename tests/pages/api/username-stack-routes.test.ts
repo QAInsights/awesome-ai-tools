@@ -4,10 +4,20 @@ let activeUser: { id: string; githubUsername: string | null; email: string | nul
 let username: string | null;
 let usernameTaken: boolean;
 let usernameChangeLimit: boolean;
+let usernameWriteCalls: number;
 let stackLimitReached: boolean;
+let limiterAllows: boolean;
+let limiterKeys: string[];
 let events: string[];
 let createdStackArgs: { userId: string; input: unknown } | null;
+let createStackCalls: number;
 const db = {};
+const fakeLimiter = {
+    limit: async ({ key }: { key: string }) => {
+        limiterKeys.push(key);
+        return { success: limiterAllows };
+    },
+};
 
 const testUser = {
     id: 'github:user-1',
@@ -37,10 +47,13 @@ mock.module('../../../src/lib/server/route-auth', () => ({
 }));
 mock.module('../../../src/lib/server/runtime-env', () => ({
     requireDatabase: () => db,
+    getStackWriteLimiter: () => fakeLimiter,
+    getUsernameWriteLimiter: () => fakeLimiter,
 }));
 mock.module('../../../src/lib/server/username-repository', () => ({
     getUsername: async () => username,
     setUsername: async (_database: unknown, _userId: string, nextUsername: string) => {
+        usernameWriteCalls += 1;
         if (usernameTaken) throw new UsernameTakenError();
         if (usernameChangeLimit) throw new UsernameChangeLimitError();
         username = nextUsername;
@@ -51,6 +64,7 @@ mock.module('../../../src/lib/server/username-repository', () => ({
 mock.module('../../../src/lib/server/stacks-repository', () => ({
     listStacks: async () => [stackSummary],
     createStack: async (_database: unknown, userId: string, input: unknown) => {
+        createStackCalls += 1;
         if (stackLimitReached) throw new StackLimitError();
         createdStackArgs = { userId, input };
         return { ...stackSummary, userId, isPublic: false };
@@ -75,8 +89,12 @@ beforeEach(() => {
     username = 'test-user';
     usernameTaken = false;
     usernameChangeLimit = false;
+    usernameWriteCalls = 0;
     stackLimitReached = false;
+    limiterAllows = true;
+    limiterKeys = [];
     createdStackArgs = null;
+    createStackCalls = 0;
     events = [];
 });
 
@@ -112,6 +130,7 @@ describe('GET/PUT /api/account/username', () => {
     });
 
     test('rejects a bad Origin before mutation', async () => {
+        limiterAllows = false;
         const response = await putUsername(context(
             'PUT',
             '/api/account/username',
@@ -121,6 +140,18 @@ describe('GET/PUT /api/account/username', () => {
 
         expect(response.status).toBe(403);
         expect(await response.json()).toEqual({ error: 'Invalid request origin' });
+        expect(limiterKeys).toEqual([]);
+        expect(usernameWriteCalls).toBe(0);
+    });
+
+    test('rate limits username changes before repository writes', async () => {
+        limiterAllows = false;
+        const response = await putUsername(context('PUT', '/api/account/username', '{"username":"new-user"}'));
+
+        expect(response.status).toBe(429);
+        expect(await response.json()).toEqual({ error: 'rate_limited' });
+        expect(usernameWriteCalls).toBe(0);
+        expect(limiterKeys).toEqual(['github:user-1']);
     });
 
     test('rejects malformed JSON, wrong types, invalid and over-length usernames', async () => {
@@ -163,10 +194,12 @@ describe('GET/PUT /api/account/username', () => {
 
 describe('GET/POST /api/stacks', () => {
     test('requires a session for both methods', async () => {
+        limiterAllows = false;
         activeUser = null;
 
         expect((await getStacks(context('GET', '/api/stacks'))).status).toBe(401);
         expect((await postStack(context('POST', '/api/stacks', '{"title":"New stack"}'))).status).toBe(401);
+        expect(limiterKeys).toEqual([]);
     });
 
     test('lists owner stacks with computed public URLs', async () => {
@@ -189,6 +222,17 @@ describe('GET/POST /api/stacks', () => {
         ));
 
         expect(response.status).toBe(403);
+    });
+
+    test('rate limits stack creation before repository writes', async () => {
+        limiterAllows = false;
+        const response = await postStack(context('POST', '/api/stacks', '{'));
+
+        expect(response.status).toBe(429);
+        expect(await response.json()).toEqual({ error: 'rate_limited' });
+        expect(createStackCalls).toBe(0);
+        expect(createdStackArgs).toBeNull();
+        expect(limiterKeys).toEqual(['github:user-1']);
     });
 
     test('rejects malformed JSON, wrong field types, and over-length input', async () => {

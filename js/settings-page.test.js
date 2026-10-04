@@ -94,7 +94,7 @@ describe('settings page bootstrap', () => {
         expect(elements.notificationNewsToggle.attributes['aria-checked']).toBe('false');
     });
 
-    test('shows a readable message when the username change limit is reached', async () => {
+    test('shows readable username-change and rate-limit messages', async () => {
         elements.publicProfileCard = makeElement(['hidden']);
         elements.publicProfileSignedOut = makeElement(['hidden']);
         elements.publicProfileForm = makeElement();
@@ -102,11 +102,12 @@ describe('settings page bootstrap', () => {
         elements.savePublicUsername = makeElement();
         elements.publicProfileStatus = makeElement();
         elements.publicProfileLink = makeElement(['hidden']);
+        let updateError = 'username_change_limit';
         global.fetch = async (_url, options = {}) => new Response(
             JSON.stringify(options.method === 'PUT'
-                ? { error: 'username_change_limit' }
+                ? { error: updateError }
                 : { username: 'test-user', suggestion: 'test-user' }),
-            { status: options.method === 'PUT' ? 409 : 200 },
+            { status: options.method === 'PUT' ? (updateError === 'rate_limited' ? 429 : 409) : 200 },
         );
         const authManager = {
             isAuthenticated: () => true,
@@ -126,5 +127,9 @@ describe('settings page bootstrap', () => {
 
         expect(elements.publicProfileStatus.textContent).toContain('limit of five username changes');
         expect(elements.publicProfileStatus.textContent).not.toContain('username_change_limit');
+
+        updateError = 'rate_limited';
+        await elements.publicProfileForm.dispatch('submit', { preventDefault() {} });
+        expect(elements.publicProfileStatus.textContent).toBe('Too many changes. Wait a minute and try again.');
     });
 });

@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { validateStackInput } from '../../../lib/stacks';
 import { getCookieSessionUser } from '../../../lib/server/route-auth';
-import { requireDatabase } from '../../../lib/server/runtime-env';
+import { getStackWriteLimiter, requireDatabase } from '../../../lib/server/runtime-env';
 import {
     deleteStack,
     getOwnedStack,
@@ -13,6 +13,7 @@ import { getUsername } from '../../../lib/server/username-repository';
 import { isAllowedMutationRequest } from '../../../lib/server/request-security';
 import { EVENTS } from '../../../lib/analytics-events.js';
 import { trackRequest } from '../../../lib/server/analytics';
+import { enforceRateLimit } from '../../../lib/server/rate-limit';
 
 export const prerender = false;
 
@@ -41,6 +42,8 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
         const db = requireDatabase();
         const user = await getCookieSessionUser(cookies, db);
         if (!user) return privateJsonError('Unauthorized', 401);
+        const limited = await enforceRateLimit(getStackWriteLimiter(), user.id);
+        if (limited) return limited;
         const id = params.id ?? '';
         const existing = await getOwnedStack(db, user.id, id);
         if (!existing) return privateJsonError('Not found', 404);
@@ -99,6 +102,8 @@ export const DELETE: APIRoute = async ({ request, cookies, params }) => {
         const db = requireDatabase();
         const user = await getCookieSessionUser(cookies, db);
         if (!user) return privateJsonError('Unauthorized', 401);
+        const limited = await enforceRateLimit(getStackWriteLimiter(), user.id);
+        if (limited) return limited;
         const deleted = await deleteStack(db, user.id, params.id ?? '');
         if (!deleted) return privateJsonError('Not found', 404);
         return privateJson({ deleted: true });
