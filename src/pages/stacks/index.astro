@@ -1,0 +1,65 @@
+---
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+---
+
+<DashboardLayout
+    title="My stacks | ai.dosa.dev"
+    description="Create and share personal collections of AI tools."
+    canonical="https://ai.dosa.dev/stacks"
+    robots="noindex, nofollow"
+    activeNav="stacks"
+>
+    <div class="max-w-[1100px] mx-auto w-full flex flex-col grow shrink-0 p-5 md:p-8">
+        <header class="mb-7">
+            <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-2">Your library</p>
+            <div class="flex items-center justify-between gap-4 flex-wrap">
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-semibold tracking-tight">My tool stacks</h1>
+                    <p class="text-[#a3a3a3] text-[15px] mt-2">Keep the tools you use together, with notes on how they fit your work.</p>
+                </div>
+                <span id="stackCount" class="hidden font-mono text-[12px] text-[#c9aa6e] border border-[#3a3225] bg-[#211c16] rounded-full px-3 py-1.5"></span>
+            </div>
+        </header>
+
+        <div id="stacksLoading" class="border border-[#222] bg-white/[0.02] rounded-xl p-6 text-[#a3a3a3]">Loading your stacks…</div>
+        <div id="stacksSignedOut" class="hidden border border-[#222] bg-white/[0.02] rounded-xl p-7">
+            <h2 class="text-lg font-semibold mb-2">Sign in to create a tool stack</h2>
+            <p class="text-[#a3a3a3] text-[14px] mb-5">Your private stacks are saved to your account and sync across your devices.</p>
+            <a href="/?signin=1" data-auth-trigger="favorite_heart" class="inline-flex items-center py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 transition-colors">Sign in</a>
+        </div>
+        <div id="stacksError" class="hidden border border-red-400/20 bg-red-400/[0.06] rounded-xl p-6 text-red-200">Your stacks could not be loaded. Please refresh and try again.</div>
+
+        <section id="stacksContent" class="hidden">
+            <form id="newStackForm" class="border border-[#222] bg-white/[0.02] rounded-xl p-5 md:p-6 mb-5">
+                <div class="flex items-start justify-between gap-4 flex-wrap mb-5">
+                    <div>
+                        <h2 class="text-lg font-semibold">New stack</h2>
+                        <p class="text-[#a3a3a3] text-[13px] mt-1">Stacks start private. You can turn on public sharing in the editor.</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label class="block">
+                        <span class="block text-[12px] text-[#a3a3a3] mb-2">Title</span>
+                        <input id="newStackTitle" name="title" required minlength="3" maxlength="80" class="w-full rounded-lg border border-[#303030] bg-black/30 px-3 py-2.5 text-sm text-white focus:border-[#c9aa6e] focus:outline-none" placeholder="My everyday AI toolkit" />
+                    </label>
+                    <label class="block">
+                        <span class="block text-[12px] text-[#a3a3a3] mb-2">Description <span class="text-[#666]">(optional)</span></span>
+                        <input id="newStackDescription" name="description" maxlength="280" class="w-full rounded-lg border border-[#303030] bg-black/30 px-3 py-2.5 text-sm text-white focus:border-[#c9aa6e] focus:outline-none" placeholder="A short introduction" />
+                    </label>
+                </div>
+                <div class="flex items-center gap-4 mt-4">
+                    <button id="createStackButton" type="submit" class="inline-flex items-center py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 transition-colors">Create stack</button>
+                    <p id="newStackStatus" role="status" class="text-[13px] text-[#a3a3a3]"></p>
+                </div>
+            </form>
+
+            <div id="stacksEmpty" class="hidden border border-[#222] bg-white/[0.02] rounded-xl p-7 mb-5">
+                <h2 class="text-lg font-semibold mb-2">No stacks yet</h2>
+                <p class="text-[#a3a3a3] text-[14px]">Start with a title above, then add tools from the catalog.</p>
+            </div>
+            <div id="stacksList" class="hidden flex flex-col gap-3"></div>
+        </section>
+    </div>
+
+    <script src="/dist/stacks-page.js" type="module" defer></script>
+</DashboardLayout>

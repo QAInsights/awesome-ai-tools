@@ -10,6 +10,7 @@ const migration5 = new URL('../../../migrations/0005_follows.sql', import.meta.u
 const migration6 = new URL('../../../migrations/0006_notification_prefs.sql', import.meta.url);
 const migration7 = new URL('../../../migrations/0007_news_prefs.sql', import.meta.url);
 const migration8 = new URL('../../../migrations/0008_onboarding.sql', import.meta.url);
+const migration9 = new URL('../../../migrations/0009_tool_stacks.sql', import.meta.url);
 
 function applyMigration(db: Database, migration: URL) {
     const statements = readFileSync(migration, 'utf8')
@@ -235,6 +236,79 @@ describe('accounts and favorites migrations', () => {
         // Rows follow account deletion
         db.run('DELETE FROM users WHERE id = ?', ['github:42']);
         expect(db.query('SELECT COUNT(*) AS count FROM user_onboarding').get()).toEqual({ count: 0 });
+        db.close();
+    });
+
+    test('adds usernames, username history, and shareable tool stacks', () => {
+        const db = new Database(':memory:');
+        applyMigration(db, migration1);
+        applyMigration(db, migration2);
+        applyMigration(db, migration3);
+        applyMigration(db, migration4);
+        applyMigration(db, migration5);
+        applyMigration(db, migration6);
+        applyMigration(db, migration7);
+        applyMigration(db, migration8);
+        applyMigration(db, migration9);
+
+        const userColumns = db.query("PRAGMA table_info('users')").all() as Array<{ name: string }>;
+        expect(userColumns.some(column => column.name === 'username')).toBe(true);
+        expect(db.query(`
+            SELECT name
+            FROM sqlite_schema
+            WHERE type = 'table' AND name IN ('username_history', 'stacks', 'stack_slug_history', 'stack_items')
+            ORDER BY name
+        `).all()).toEqual([
+            { name: 'stack_items' },
+            { name: 'stack_slug_history' },
+            { name: 'stacks' },
+            { name: 'username_history' },
+        ]);
+        expect(db.query(`
+            SELECT name
+            FROM sqlite_schema
+            WHERE type = 'index' AND name IN (
+                'users_username_idx', 'stacks_user_updated_idx',
+                'stacks_public_updated_idx', 'stack_items_tool_idx'
+            )
+            ORDER BY name
+        `).all()).toEqual([
+            { name: 'stack_items_tool_idx' },
+            { name: 'stacks_public_updated_idx' },
+            { name: 'stacks_user_updated_idx' },
+            { name: 'users_username_idx' },
+        ]);
+
+        db.run(
+            'INSERT INTO users (id, provider, provider_user_id, display_name, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)',
+            ['github:42', 'github', '42', 'Ada', 1, 1],
+        );
+        db.run('UPDATE users SET username = ? WHERE id = ?', ['ada', 'github:42']);
+        expect(() => db.run(
+            'INSERT INTO users (id, provider, provider_user_id, display_name, username, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            ['github:43', 'github', '43', 'Ada Two', 'ada', 1, 1],
+        )).toThrow();
+        db.run(
+            'INSERT INTO stacks (id, user_id, slug, title, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)',
+            ['stack-id', 'github:42', 'my-stack', 'My stack', 1, 1],
+        );
+        expect(() => db.run(
+            'INSERT INTO stacks (id, user_id, slug, title, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)',
+            ['invalid-stack', 'github:42', 'my-stack', 'Other', 1, 1],
+        )).toThrow();
+        expect(() => db.run('UPDATE stacks SET is_public = 2 WHERE id = ?', ['stack-id'])).toThrow();
+        expect(() => db.run(
+            'INSERT INTO stack_items (stack_id, tool_slug, position, purpose, enabled) VALUES (?, ?, ?, ?, ?)',
+            ['stack-id', 'cursor', 0, 'Code', 2],
+        )).toThrow();
+
+        db.run(
+            'INSERT INTO stack_items (stack_id, tool_slug, position, purpose) VALUES (?, ?, ?, ?)',
+            ['stack-id', 'cursor', 0, 'Code'],
+        );
+        db.run('DELETE FROM users WHERE id = ?', ['github:42']);
+        expect(db.query('SELECT COUNT(*) AS count FROM stacks').get()).toEqual({ count: 0 });
+        expect(db.query('SELECT COUNT(*) AS count FROM stack_items').get()).toEqual({ count: 0 });
         db.close();
     });
 });

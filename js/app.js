@@ -3,6 +3,7 @@
  * AI IDEs & Coding Assistants - Tool Registry
  */
 
+import './add-to-stack.js';
 import { initRenderer, renderTools, hydrateGrid, setFavoriteContext, setVotingContext, refreshVotingButtons } from './renderer.js';
 import { authAttribution } from './auth-attribution.js';
 import { CollapsedSidebar } from './collapsed-sidebar.js';

@@ -3,6 +3,7 @@ import { SEO } from 'astro-seo';
 import SignInModal from '../components/SignInModal.astro';
 import EthicalAd from '../components/EthicalAd.astro';
 import { pageAdTopics } from '../lib/ethical-ads';
+import { escapeHtml } from '../lib/html-escape';
 
 // Base layout used by all pages
 // Props: title, description, keywords, canonical, ogImage, ogType
@@ -59,6 +60,7 @@ const {
 } = Astro.props;
 
 const showAd = !Astro.url.pathname.startsWith('/admin');
+const seoTitle = escapeHtml(title);
 const resolvedCanonical = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
 const resolvedOgTitle = ogTitle ?? title;
 const resolvedOgDesc = ogDescription ?? description;
@@ -103,7 +105,7 @@ if (nextUrl) extraLinks.push({ rel: 'next', href: nextUrl });
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <SEO
-      title={title}
+      title={seoTitle}
       description={description}
       canonical={resolvedCanonical}
       openGraph={{
