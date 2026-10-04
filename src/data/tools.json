@@ -1262,5 +1262,13 @@
   {
     "companyName": "Weave",
     "toolName": "Weave Router"
+  },
+  {
+    "companyName": "Cloudflare",
+    "toolName": "cf"
+  },
+  {
+    "companyName": "TesterArmy",
+    "toolName": "e2e"
   }
 ]
