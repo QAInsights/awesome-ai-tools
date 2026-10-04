@@ -12,6 +12,7 @@ import { privateJson, privateJsonError, withPublicUrl } from '../../../../lib/se
 import { getUsername } from '../../../../lib/server/username-repository';
 import { isAllowedMutationRequest } from '../../../../lib/server/request-security';
 import { enforceRateLimit } from '../../../../lib/server/rate-limit';
+import { findPublicTextViolation, publicTextViolationMessage } from '../../../../lib/content-policy';
 
 export const prerender = false;
 
@@ -29,7 +30,8 @@ export const PUT: APIRoute = async ({ request, cookies, params }) => {
         const limited = await enforceRateLimit(getStackWriteLimiter(), user.id);
         if (limited) return limited;
         const id = params.id ?? '';
-        if (!await getOwnedStack(db, user.id, id)) return privateJsonError('Not found', 404);
+        const owned = await getOwnedStack(db, user.id, id);
+        if (!owned) return privateJsonError('Not found', 404);
 
         let body: { items?: unknown };
         try {
@@ -39,6 +41,10 @@ export const PUT: APIRoute = async ({ request, cookies, params }) => {
         }
         const validation = validateItems(body?.items, knownSlugs());
         if (!validation.ok) return privateJsonError(validation.error, 400);
+        if (owned.isPublic) {
+            const violation = findPublicTextViolation(null, validation.value);
+            if (violation) return privateJsonError(publicTextViolationMessage(violation), 422);
+        }
         await replaceItems(db, user.id, id, validation.value);
 
         const [stack, username] = await Promise.all([
@@ -65,7 +71,8 @@ export const POST: APIRoute = async ({ request, cookies, params }) => {
         const limited = await enforceRateLimit(getStackWriteLimiter(), user.id);
         if (limited) return limited;
         const id = params.id ?? '';
-        if (!await getOwnedStack(db, user.id, id)) return privateJsonError('Not found', 404);
+        const owned = await getOwnedStack(db, user.id, id);
+        if (!owned) return privateJsonError('Not found', 404);
 
         let body: { slug?: unknown; purpose?: unknown; usageNotes?: unknown };
         try {
@@ -83,6 +90,10 @@ export const POST: APIRoute = async ({ request, cookies, params }) => {
             usageNotes: body.usageNotes,
         }], knownSlugs());
         if (!validation.ok) return privateJsonError(validation.error, 400);
+        if (owned.isPublic) {
+            const violation = findPublicTextViolation(null, [{ ...validation.value[0]!, enabled: true }]);
+            if (violation) return privateJsonError(publicTextViolationMessage(violation), 422);
+        }
 
         const result = await appendItem(db, user.id, id, {
             slug: validation.value[0]!.slug,

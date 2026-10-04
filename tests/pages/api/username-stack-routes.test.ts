@@ -129,6 +129,14 @@ describe('GET/PUT /api/account/username', () => {
         });
     });
 
+    test('suggests an available variant of an impersonating GitHub login', async () => {
+        activeUser = { ...testUser, githubUsername: 'cursor' };
+        const response = await getUsername(context('GET', '/api/account/username'));
+
+        expect(response.status).toBe(200);
+        expect(await response.json()).toEqual({ username: 'test-user', suggestion: 'cursor-dev' });
+    });
+
     test('rejects a bad Origin before mutation', async () => {
         limiterAllows = false;
         const response = await putUsername(context(
@@ -189,6 +197,32 @@ describe('GET/PUT /api/account/username', () => {
         expect(response.status).toBe(200);
         expect(await response.json()).toEqual({ username: 'new-name' });
         expect(response.headers.get('Cache-Control')).toBe('private, no-store');
+    });
+
+    test('rejects offensive and impersonating usernames without writing', async () => {
+        for (const value of ['cursor-official', 'f-u-c-k']) {
+            const response = await putUsername(context(
+                'PUT',
+                '/api/account/username',
+                JSON.stringify({ username: value }),
+            ));
+
+            expect(response.status).toBe(422);
+            expect(await response.json()).toEqual({ error: "This username isn't available." });
+        }
+        expect(usernameWriteCalls).toBe(0);
+    });
+
+    test('allows a non-offensive username', async () => {
+        const response = await putUsername(context(
+            'PUT',
+            '/api/account/username',
+            '{"username":"ada-lovelace"}',
+        ));
+
+        expect(response.status).toBe(200);
+        expect(await response.json()).toEqual({ username: 'ada-lovelace' });
+        expect(usernameWriteCalls).toBe(1);
     });
 });
 

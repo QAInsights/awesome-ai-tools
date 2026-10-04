@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { suggestUsername, validateUsername } from '../../../lib/stacks';
+import { checkUsernamePolicy, USERNAME_UNAVAILABLE_MESSAGE } from '../../../lib/content-policy';
 import {
     getUsername,
     setUsername,
@@ -11,6 +12,7 @@ import { isAllowedMutationRequest } from '../../../lib/server/request-security';
 import { getUsernameWriteLimiter, requireDatabase } from '../../../lib/server/runtime-env';
 import { privateJson, privateJsonError } from '../../../lib/server/stack-api-response';
 import { enforceRateLimit } from '../../../lib/server/rate-limit';
+import { getCatalogBrandTokens } from '../../../lib/server/catalog-brands';
 
 export const prerender = false;
 
@@ -20,9 +22,15 @@ export const GET: APIRoute = async ({ cookies }) => {
         const user = await getCookieSessionUser(cookies, db);
         if (!user) return privateJsonError('Unauthorized', 401);
 
+        const brands = getCatalogBrandTokens();
         return privateJson({
             username: await getUsername(db, user.id),
-            suggestion: suggestUsername(user.githubUsername, user.email, user.name),
+            suggestion: suggestUsername(
+                user.githubUsername,
+                user.email,
+                user.name,
+                name => checkUsernamePolicy(name, brands).ok,
+            ),
         });
     } catch (error) {
         console.error('[Username] Read failed:', error instanceof Error ? error.message : String(error));
@@ -51,6 +59,9 @@ export const PUT: APIRoute = async ({ request, cookies }) => {
 
         const validation = validateUsername(body?.username);
         if (!validation.ok) return privateJsonError(validation.error, 400);
+        if (!checkUsernamePolicy(validation.value, getCatalogBrandTokens()).ok) {
+            return privateJsonError(USERNAME_UNAVAILABLE_MESSAGE, 422);
+        }
         await setUsername(db, user.id, validation.value);
         return privateJson({ username: validation.value });
     } catch (error) {

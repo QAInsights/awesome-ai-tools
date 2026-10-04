@@ -175,6 +175,23 @@ describe('PUT /api/stacks/[id]/items', () => {
         expect(replaceItemsCalls).toBe(0);
         expect(limiterKeys).toEqual(['github:user-1']);
     });
+
+    test('rejects offensive purposes on public stacks but permits the same private edit', async () => {
+        const body = '{"items":[{"slug":"cursor","purpose":"sh1t purpose"}]}';
+        ownedStack = { ...initialStack(), isPublic: true };
+        const publicResponse = await PUT(context('PUT', body));
+
+        expect(publicResponse.status).toBe(422);
+        expect(await publicResponse.json()).toEqual({
+            error: "The purpose for cursor isn't allowed on public stacks.",
+        });
+        expect(replaceItemsCalls).toBe(0);
+
+        ownedStack = initialStack();
+        const privateResponse = await PUT(context('PUT', body));
+        expect(privateResponse.status).toBe(200);
+        expect(replaceItemsCalls).toBe(1);
+    });
 });
 
 describe('POST /api/stacks/[id]/items', () => {
@@ -228,6 +245,20 @@ describe('POST /api/stacks/[id]/items', () => {
         expect(response.status).toBe(429);
         expect(appendItemCalls).toBe(0);
         expect(limiterKeys).toEqual(['github:user-1']);
+    });
+
+    test('rejects offensive usage notes on public stacks without appending', async () => {
+        ownedStack = { ...initialStack(), isPublic: true };
+        const response = await POST(context(
+            'POST',
+            '{"slug":"cursor","purpose":"Code editing","usageNotes":"sh1t notes"}',
+        ));
+
+        expect(response.status).toBe(422);
+        expect(await response.json()).toEqual({
+            error: "The usage notes for cursor aren't allowed on public stacks.",
+        });
+        expect(appendItemCalls).toBe(0);
     });
 
     test('returns a conflict when the item already exists or the stack is full', async () => {

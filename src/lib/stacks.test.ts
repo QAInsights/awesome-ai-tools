@@ -38,6 +38,23 @@ describe('stack validation', () => {
         expect(suggestUsername('admin', '', '')).toBe('admin-dev');
     });
 
+    test('uses an allowed dev fallback for a blocked first source', () => {
+        expect(suggestUsername('cursor', '', '', username => username !== 'cursor')).toBe('cursor-dev');
+    });
+
+    test('continues to the next source when the fallback is blocked', () => {
+        expect(suggestUsername(
+            'cursor',
+            'ada@example.com',
+            '',
+            username => username !== 'cursor' && username !== 'cursor-dev',
+        )).toBe('ada');
+    });
+
+    test('returns the final fallback when every source is blocked', () => {
+        expect(suggestUsername('cursor', 'ada@example.com', 'Grace Hopper', () => false)).toBe('user-dev');
+    });
+
     test('creates and validates stack slugs', () => {
         expect(slugifyStackName('My Useful Stack!')).toBe('my-useful-stack');
         expect(slugifyStackName('---')).toBe('stack');

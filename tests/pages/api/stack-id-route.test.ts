@@ -166,6 +166,73 @@ describe('PATCH /api/stacks/[id]', () => {
         expect(events).toHaveLength(0);
     });
 
+    test('keeps username-required precedence over public-text policy', async () => {
+        username = null;
+        const response = await PATCH(context(
+            'PATCH',
+            '{"title":"sh1t title","isPublic":true}',
+        ));
+
+        expect(response.status).toBe(409);
+        expect(await response.json()).toEqual({ error: 'username_required' });
+        expect(updateStackCalls).toBe(0);
+    });
+
+    test('rejects an offensive title when publishing without updating', async () => {
+        const response = await PATCH(context(
+            'PATCH',
+            '{"title":"sh1t title","isPublic":true}',
+        ));
+
+        expect(response.status).toBe(422);
+        expect(await response.json()).toEqual({ error: "This stack title isn't allowed on public stacks." });
+        expect(updateStackCalls).toBe(0);
+    });
+
+    test('rejects an offensive enabled item purpose when publishing', async () => {
+        ownedStack = {
+            ...initialStack(),
+            items: [{ slug: 'cursor', purpose: 'sh1t purpose', usageNotes: null, enabled: true, position: 0 }],
+            itemCount: 1,
+            enabledItemCount: 1,
+        };
+        const response = await PATCH(context('PATCH', '{"isPublic":true}'));
+
+        expect(response.status).toBe(422);
+        expect(await response.json()).toEqual({
+            error: "The purpose for cursor isn't allowed on public stacks.",
+        });
+        expect(updateStackCalls).toBe(0);
+    });
+
+    test('ignores offensive notes on disabled items when publishing', async () => {
+        ownedStack = {
+            ...initialStack(),
+            items: [{ slug: 'cursor', purpose: 'Good purpose', usageNotes: 'sh1t notes', enabled: false, position: 0 }],
+            itemCount: 1,
+        };
+        const response = await PATCH(context('PATCH', '{"isPublic":true}'));
+
+        expect(response.status).toBe(200);
+        expect(updateStackCalls).toBe(1);
+    });
+
+    test('allows offensive title edits while private', async () => {
+        const response = await PATCH(context('PATCH', '{"title":"sh1t private title"}'));
+
+        expect(response.status).toBe(200);
+        expect(updateStackCalls).toBe(1);
+    });
+
+    test('checks offensive title edits on an already-public stack', async () => {
+        ownedStack = { ...initialStack(), isPublic: true };
+        const response = await PATCH(context('PATCH', '{"title":"sh1t public title"}'));
+
+        expect(response.status).toBe(422);
+        expect(await response.json()).toEqual({ error: "This stack title isn't allowed on public stacks." });
+        expect(updateStackCalls).toBe(0);
+    });
+
     test('returns 409 for a slug conflict', async () => {
         slugTaken = true;
         const response = await PATCH(context('PATCH', '{"slug":"taken-name"}'));

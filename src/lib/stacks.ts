@@ -83,10 +83,21 @@ export function validateUsername(value: unknown): ValidationResult<string> {
     return { ok: true, value: username };
 }
 
+export function normalizeUsernameToken(value: string): string {
+    return value
+        .normalize('NFKD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9-]+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+}
+
 export function suggestUsername(
     githubUsername?: string | null,
     email?: string | null,
     displayName?: string | null,
+    isAllowed: (username: string) => boolean = () => true,
 ): string {
     const sources = [
         githubUsername,
@@ -96,20 +107,18 @@ export function suggestUsername(
 
     for (const source of sources) {
         if (typeof source !== 'string' || !source.trim()) continue;
-        let suggestion = source
-            .normalize('NFKD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .toLowerCase()
-            .replace(/[^a-z0-9-]+/g, '-')
-            .replace(/-+/g, '-')
-            .replace(/^-|-$/g, '')
+        let suggestion = normalizeUsernameToken(source)
             .slice(0, 30)
             .replace(/-+$/g, '');
 
         if (suggestion.length < 3) suggestion = suggestion.padEnd(3, '0');
         if (RESERVED_USERNAMES.has(suggestion)) suggestion += '-dev';
         const validated = validateUsername(suggestion);
-        if (validated.ok) return validated.value;
+        if (!validated.ok) continue;
+        if (isAllowed(validated.value)) return validated.value;
+
+        const fallback = validateUsername(`${validated.value.slice(0, 26).replace(/-+$/, '')}-dev`);
+        if (fallback.ok && isAllowed(fallback.value)) return fallback.value;
     }
 
     return 'user-dev';

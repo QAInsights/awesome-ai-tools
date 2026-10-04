@@ -14,6 +14,7 @@ import { isAllowedMutationRequest } from '../../../lib/server/request-security';
 import { EVENTS } from '../../../lib/analytics-events.js';
 import { trackRequest } from '../../../lib/server/analytics';
 import { enforceRateLimit } from '../../../lib/server/rate-limit';
+import { findPublicTextViolation, publicTextViolationMessage } from '../../../lib/content-policy';
 
 export const prerender = false;
 
@@ -77,6 +78,15 @@ export const PATCH: APIRoute = async ({ request, cookies, params }) => {
         };
         const username = await getUsername(db, user.id);
         if (changes.isPublic === true && !username) return privateJsonError('username_required', 409);
+
+        const willBePublic = changes.isPublic ?? existing.isPublic;
+        if (willBePublic) {
+            const violation = findPublicTextViolation({
+                title: validation.value.title,
+                description: validation.value.description,
+            }, existing.items);
+            if (violation) return privateJsonError(publicTextViolationMessage(violation), 422);
+        }
 
         await updateStack(db, user.id, id, changes);
         if (!existing.isPublic && changes.isPublic === true) {
