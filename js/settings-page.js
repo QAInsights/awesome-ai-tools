@@ -52,6 +52,13 @@ export async function initializeSettingsPage({
     const newsToggle = root.getElementById('notificationNewsToggle');
     const email = root.getElementById('notificationEmail');
     const warning = root.getElementById('notificationEmailWarning');
+    const profileCard = root.getElementById('publicProfileCard');
+    const profileSignedOut = root.getElementById('publicProfileSignedOut');
+    const profileForm = root.getElementById('publicProfileForm');
+    const profileInput = root.getElementById('publicUsername');
+    const profileSave = root.getElementById('savePublicUsername');
+    const profileStatus = root.getElementById('publicProfileStatus');
+    const profileLink = root.getElementById('publicProfileLink');
 
     function hideStates() {
         [loading, signedOut, errorState, card].forEach(element => element?.classList.add('hidden'));
@@ -96,6 +103,71 @@ export async function initializeSettingsPage({
         }
     }
 
+    async function loadPublicProfile() {
+        if (!profileCard) return;
+        profileCard.classList.remove('hidden');
+        if (!authManager.isAuthenticated()) {
+            profileSignedOut?.classList.remove('hidden');
+            profileForm?.classList.add('hidden');
+            return;
+        }
+        profileSignedOut?.classList.add('hidden');
+        try {
+            const response = await fetch('/api/account/username');
+            const profile = await response.json();
+            if (!response.ok) throw new Error(profile.message || profile.error || 'Could not load your username.');
+            profileForm?.classList.remove('hidden');
+            profileInput.value = profile.username || profile.suggestion || '';
+            profileStatus.textContent = profile.username
+                ? `Your public profile is @${profile.username}.`
+                : 'Choose a username to publish your first stack.';
+            profileStatus.classList.remove('text-red-200');
+            if (profile.username) {
+                profileLink.href = `/u/${encodeURIComponent(profile.username)}`;
+                profileLink.classList.remove('hidden');
+            } else {
+                profileLink.classList.add('hidden');
+            }
+        } catch (error) {
+            profileForm?.classList.remove('hidden');
+            profileStatus.textContent = error.message || 'Could not load your username.';
+            profileStatus.classList.add('text-red-200');
+        }
+    }
+
+    profileForm?.addEventListener('submit', async event => {
+        event.preventDefault();
+        if (!authManager.isAuthenticated() || profileSave.disabled) return;
+        profileSave.disabled = true;
+        profileStatus.textContent = 'Saving…';
+        profileStatus.classList.remove('text-red-200');
+        try {
+            const response = await fetch('/api/account/username', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: profileInput.value }),
+            });
+            const profile = await response.json();
+            if (!response.ok) {
+                const message = profile.error === 'rate_limited'
+                    ? 'Too many changes. Wait a minute and try again.'
+                    : profile.error === 'username_change_limit'
+                        ? 'You have reached the limit of five username changes. You can still reclaim a previous username.'
+                        : profile.message || profile.error || 'Could not save your username.';
+                throw new Error(message);
+            }
+            profileInput.value = profile.username;
+            profileStatus.textContent = `Username saved as @${profile.username}. Previous profile and stack links redirect here.`;
+            profileLink.href = `/u/${encodeURIComponent(profile.username)}`;
+            profileLink.classList.remove('hidden');
+        } catch (error) {
+            profileStatus.textContent = error.message || 'Could not save your username.';
+            profileStatus.classList.add('text-red-200');
+        } finally {
+            profileSave.disabled = false;
+        }
+    });
+
     toggle?.addEventListener('click', async () => {
         if (!authManager.isAuthenticated() || toggle.disabled) return;
         const nextValue = toggle.getAttribute('aria-checked') !== 'true';
@@ -126,8 +198,9 @@ export async function initializeSettingsPage({
         const session = await bindAuthSession({ authManager, root });
         session.subscribe(() => {
             void load();
+            void loadPublicProfile();
         }, { emitCurrent: false });
-        await load();
+        await Promise.all([load(), loadPublicProfile()]);
     } catch {
         showError();
     }

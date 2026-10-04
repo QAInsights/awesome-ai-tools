@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Sidebar from '../../../components/Sidebar.astro';
+import SiteHeader from '../../../components/SiteHeader.astro';
+import FolioStyles from '../../../components/folio/FolioStyles.astro';
+import FolioTitle from '../../../components/folio/FolioTitle.astro';
+import FolioScroll from '../../../components/folio/FolioScroll.astro';
+import {
+    createStackProfilePageData,
+    getUsernameCaseRedirect,
+    resolveStackProfile,
+} from '../../../lib/stack-public-view';
+import { getCookieSessionUser } from '../../../lib/server/route-auth';
+import { findUserByUsername } from '../../../lib/server/username-repository';
+import { listPublicStacksByUser } from '../../../lib/server/stacks-repository';
+import { requireDatabase } from '../../../lib/server/runtime-env';
+
+export const prerender = false;
+
+const requestedUsername = Astro.params.username ?? '';
+const usernameCaseRedirect = getUsernameCaseRedirect(requestedUsername);
+if (usernameCaseRedirect) {
+    return new Response(null, {
+        status: 301,
+        headers: { Location: usernameCaseRedirect, 'Cache-Control': 'public, max-age=300' },
+    });
+}
+
+const db = requireDatabase();
+const account = await findUserByUsername(db, requestedUsername);
+const viewer = await getCookieSessionUser(Astro.cookies, db);
+const stacks = account && !account.redirectTo
+    ? await listPublicStacksByUser(db, account.user.id)
+    : [];
+const route = resolveStackProfile(account, stacks, viewer?.id);
+if (route.type === 'redirect') {
+    return new Response(null, {
+        status: 301,
+        headers: { Location: route.url, 'Cache-Control': 'public, max-age=300' },
+    });
+}
+
+if (route.type === 'not_found') Astro.response.status = 404;
+const username = route.type === 'render' ? route.username : requestedUsername;
+const displayName = route.type === 'render' ? route.displayName : '';
+const pageData = route.type === 'render'
+    ? createStackProfilePageData({ username, displayName, stacks })
+    : null;
+const pageUrl = pageData?.pageUrl ?? `https://ai.dosa.dev/u/${encodeURIComponent(requestedUsername)}`;
+const title = pageData?.title ?? 'Profile not found | ai.dosa.dev';
+const description = pageData?.description ?? 'The requested public profile could not be found.';
+const robots = pageData?.robots ?? 'noindex, nofollow';
+Astro.response.headers.set(
+    'Cache-Control',
+    route.type === 'render' && !route.isOwner ? 'public, max-age=60' : 'private, no-store',
+);
+const jsonLd = pageData?.jsonLd;
+---
+
+<BaseLayout title={title} description={description} canonical={pageUrl} robots={robots} jsonLd={jsonLd} authors={route.type === 'render' ? [displayName] : undefined}>
+    <div class="flex h-[100dvh] overflow-hidden">
+        <Sidebar variant="tool" />
+        <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
+            <SiteHeader variant="page" title={route.type === 'render' ? `${displayName}'s tool stacks` : 'Profile not found'} />
+            {route.type === 'render' ? (
+                <article class="fo">
+                    <header class="fo-hero">
+                        <div>
+                            <div class="fo-top fo-fade" style="--d:.1s">
+                                <nav aria-label="Breadcrumb" class="fo-crumbs"><a href="/">Home</a><span>/</span><span class="here">@{username}</span></nav>
+                            </div>
+                            <div class="fo-rule"></div>
+                        </div>
+                        <div>
+                            <FolioTitle parts={[{ text: displayName }]} size={displayName.length > 40 ? 'sm' : 'md'} />
+                            <div class="fo-intro">
+                                <p class="fo-lead fo-fade" style="--d:.55s">Public AI tool stacks by {displayName} · @{username}</p>
+                                <div class="fo-price fo-fade" style="--d:.7s"><small>Stacks</small><b>{stacks.length}</b><span>public collections</span></div>
+                            </div>
+                        </div>
+                    </header>
+                    <section class="fo-sec" aria-labelledby="profile-stacks-heading">
+                        <h2 class="fo-label" id="profile-stacks-heading"><em>01</em>Public stacks</h2>
+                        <div class="fo-body">
+                            {stacks.length ? stacks.map((stack, index) => (
+                                <div class="fo-rank">
+                                    <span class="no">{String(index + 1).padStart(2, '0')}</span>
+                                    <div>
+                                        <h3><a href={`/u/${encodeURIComponent(username)}/${encodeURIComponent(stack.slug)}`}>{stack.title}</a></h3>
+                                        {stack.description && <p>{stack.description}</p>}
+                                    </div>
+                                    <span class="pr">{stack.enabledItemCount} {stack.enabledItemCount === 1 ? 'tool' : 'tools'}</span>
+                                </div>
+                            )) : <p class="fo-note">No public stacks yet.</p>}
+                        </div>
+                    </section>
+                    <section class="fo-notes">
+                        <span>Curated tools with notes on how they are used.</span>
+                        <a class="back" href="/stacks">Build your own →</a>
+                    </section>
+                </article>
+            ) : (
+                <article class="fo"><section class="fo-sec"><h1 class="fo-text">Profile not found</h1><div class="fo-body"><p class="fo-note">This public profile does not exist.</p></div></section></article>
+            )}
+        </main>
+    </div>
+    <FolioStyles />
+    <FolioScroll />
+    <script src="/dist/app.js" type="module" defer></script>
+</BaseLayout>

@@ -1,0 +1,114 @@
+---
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import { getAllTools } from '../../lib/tools';
+import { safeJsonForScript } from '../../lib/serialize';
+
+const toolsJson = safeJsonForScript(getAllTools().map(tool => ({
+    slug: tool.slug,
+    name: tool.enriched?.name ?? tool.name,
+    company: tool.enriched?.company ?? tool.company,
+    category: tool.categoryShort,
+})));
+---
+
+<DashboardLayout
+    title="Edit tool stack | ai.dosa.dev"
+    description="Edit your personal AI tool stack."
+    canonical="https://ai.dosa.dev/stacks/edit"
+    robots="noindex, nofollow"
+    activeNav="stacks"
+>
+    <div class="max-w-[1100px] mx-auto w-full flex flex-col grow shrink-0 p-5 md:p-8">
+        <div class="mb-5">
+            <a href="/stacks" class="text-[13px] text-[#a3a3a3] hover:text-white transition-colors">← My stacks</a>
+        </div>
+        <div id="editorLoading" class="border border-[#222] bg-white/[0.02] rounded-xl p-6 text-[#a3a3a3]">Loading your stack…</div>
+        <div id="editorSignedOut" class="hidden border border-[#222] bg-white/[0.02] rounded-xl p-7">
+            <h1 class="text-lg font-semibold mb-2">Sign in to edit your stacks</h1>
+            <p class="text-[#a3a3a3] text-[14px] mb-5">Your stacks are private and synced to your account.</p>
+            <a href="/?signin=1" data-auth-trigger="favorite_heart" class="inline-flex items-center py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 transition-colors">Sign in</a>
+        </div>
+        <div id="editorMissing" class="hidden border border-[#222] bg-white/[0.02] rounded-xl p-7">
+            <h1 class="text-lg font-semibold mb-2">Stack not found</h1>
+            <p class="text-[#a3a3a3] text-[14px] mb-5">Choose one of your stacks or create a new one.</p>
+            <a href="/stacks" class="inline-flex items-center py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 transition-colors">Back to My stacks</a>
+        </div>
+        <div id="editorError" class="hidden border border-red-400/20 bg-red-400/[0.06] rounded-xl p-6 text-red-200">This stack could not be loaded. Please refresh and try again.</div>
+
+        <div id="stackEditor" class="hidden">
+            <header class="mb-7">
+                <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-2">Stack editor</p>
+                <h1 id="editorHeading" class="text-2xl md:text-3xl font-semibold tracking-tight">Edit stack</h1>
+                <p class="text-[#a3a3a3] text-[15px] mt-2">Describe what each tool does for you. Disabled tools stay here but are hidden from visitors.</p>
+            </header>
+
+            <section class="border border-[#222] bg-white/[0.02] rounded-xl p-5 md:p-6 mb-5">
+                <h2 class="text-lg font-semibold mb-4">Stack details</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label class="block">
+                        <span class="block text-[12px] text-[#a3a3a3] mb-2">Title</span>
+                        <input id="stackTitle" required minlength="3" maxlength="80" class="w-full rounded-lg border border-[#303030] bg-black/30 px-3 py-2.5 text-sm text-white focus:border-[#c9aa6e] focus:outline-none" />
+                    </label>
+                    <label class="block">
+                        <span class="block text-[12px] text-[#a3a3a3] mb-2">Stack name in URL</span>
+                        <input id="stackSlug" required maxlength="60" pattern="[a-z0-9]+(-[a-z0-9]+)*" class="w-full rounded-lg border border-[#303030] bg-black/30 px-3 py-2.5 text-sm text-white focus:border-[#c9aa6e] focus:outline-none" />
+                    </label>
+                    <label class="block md:col-span-2">
+                        <span class="block text-[12px] text-[#a3a3a3] mb-2">Description <span class="text-[#666]">(optional, 280 characters max)</span></span>
+                        <textarea id="stackDescription" rows="3" maxlength="280" class="w-full rounded-lg border border-[#303030] bg-black/30 px-3 py-2.5 text-sm text-white focus:border-[#c9aa6e] focus:outline-none" placeholder="What is this stack for?"></textarea>
+                    </label>
+                </div>
+                <p id="publicUrlPreview" class="text-[12px] text-[#737373] mt-4 break-all"></p>
+            </section>
+
+            <section class="border border-[#222] bg-white/[0.02] rounded-xl p-5 md:p-6 mb-5">
+                <div class="flex items-start justify-between gap-5 flex-wrap">
+                    <div>
+                        <h2 class="text-lg font-semibold">Public sharing</h2>
+                        <p class="text-[#a3a3a3] text-[13px] mt-1">When on, anyone can view this stack and search engines can index it.</p>
+                    </div>
+                    <button id="sharingToggle" type="button" role="switch" aria-checked="false" aria-label="Public sharing" class="relative w-11 h-6 shrink-0 rounded-full bg-[#333] transition-colors focus:outline-none focus:ring-2 focus:ring-[#c9aa6e]">
+                        <span class="absolute left-1 top-1 w-4 h-4 rounded-full bg-white transition-transform"></span>
+                    </button>
+                </div>
+                <div class="flex items-center gap-3 mt-4 flex-wrap">
+                    <span id="sharingStatus" class="text-[13px] text-[#a3a3a3]">Private</span>
+                    <button id="copyStackLink" type="button" disabled class="hidden py-1.5 px-3 border border-[#333] rounded-md text-[12px] text-[#a3a3a3] hover:text-white hover:border-[#555] disabled:opacity-40">Copy public link</button>
+                </div>
+                <div id="usernamePicker" class="hidden mt-5 border border-[#3a3225] bg-[#211c16]/50 rounded-lg p-4">
+                    <h3 class="font-semibold text-sm">Choose your public username</h3>
+                    <p class="text-[12px] text-[#a3a3a3] mt-1 mb-3">Your profile and previous username links will redirect if you change it later.</p>
+                    <div class="flex gap-2 flex-wrap">
+                        <input id="usernameInput" autocomplete="username" minlength="3" maxlength="30" class="min-w-0 flex-1 rounded-lg border border-[#403725] bg-black/30 px-3 py-2 text-sm text-white focus:border-[#c9aa6e] focus:outline-none" />
+                        <button id="enableSharingButton" type="button" class="py-2 px-3 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200">Enable sharing</button>
+                        <button id="cancelUsernameButton" type="button" class="py-2 px-3 border border-[#333] rounded-md text-sm text-[#a3a3a3] hover:text-white">Cancel</button>
+                    </div>
+                    <p id="usernamePickerStatus" role="status" class="text-[12px] mt-2 text-[#a3a3a3]"></p>
+                </div>
+            </section>
+
+            <section class="border border-[#222] bg-white/[0.02] rounded-xl p-5 md:p-6 mb-5">
+                <div class="mb-4">
+                    <h2 class="text-lg font-semibold">Tools in this stack</h2>
+                    <p class="text-[#a3a3a3] text-[13px] mt-1">Search the catalog and add tools. Reorder them with the arrow buttons.</p>
+                </div>
+                <label class="block mb-4">
+                    <span class="sr-only">Search catalog tools</span>
+                    <input id="toolSearch" type="search" autocomplete="off" placeholder="Search tools by name, company, or category…" class="w-full rounded-lg border border-[#303030] bg-black/30 px-3 py-2.5 text-sm text-white focus:border-[#c9aa6e] focus:outline-none" />
+                </label>
+                <div id="toolSearchResults" class="hidden max-h-64 overflow-y-auto border border-[#252525] rounded-lg mb-5"></div>
+                <div id="stackItems" class="flex flex-col gap-3"></div>
+                <p id="stackItemsEmpty" class="hidden text-[13px] text-[#737373] py-3">No tools added yet. Search the catalog above to get started.</p>
+            </section>
+
+            <div class="flex flex-wrap items-center gap-3">
+                <button id="saveStackButton" type="button" class="inline-flex items-center py-2.5 px-5 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 disabled:opacity-50">Save changes</button>
+                <button id="deleteStackButton" type="button" class="py-2.5 px-4 border border-red-400/30 rounded-md text-sm text-red-200 hover:bg-red-400/10">Delete stack</button>
+                <p id="stackSaveStatus" role="status" class="text-[13px] text-[#a3a3a3]"></p>
+            </div>
+        </div>
+    </div>
+
+    <script id="stack-tools-data" type="application/json" set:html={toolsJson}></script>
+    <script src="/dist/stack-editor.js" type="module" defer></script>
+</DashboardLayout>

@@ -153,8 +153,9 @@ export default defineConfig({
         // Must run before sitemap(): it collects the noindexed paths the filter reads
         noindexSitemapGuard(),
         sitemap({
+            customSitemaps: ['https://ai.dosa.dev/sitemap-stacks.xml'],
             // User-only pages are noindexed — keep them out of the sitemap too
-            filter: (page) => !page.includes('/settings') && !page.includes('/favorites') && !page.includes('/zap') && !page.includes('/admin')
+            filter: (page) => !page.includes('/settings') && !page.includes('/favorites') && !page.includes('/zap') && !page.includes('/admin') && !page.includes('/stacks')
                 && !noindexedPaths.has(normalizePath(new URL(page).pathname)),
             serialize(item) {
                 const url = item.url;

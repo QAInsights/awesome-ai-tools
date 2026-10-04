@@ -21,6 +21,7 @@ describe('analytics event catalog', () => {
     test('normalizes unknown attribution to the sidebar', () => {
         expect(sanitizeAuthTrigger('favorite_heart')).toBe('favorite_heart');
         expect(sanitizeAuthTrigger('follow_bell')).toBe('follow_bell');
+        expect(sanitizeAuthTrigger('stack_add')).toBe('stack_add');
         expect(sanitizeAuthTrigger('ad_close')).toBe('ad_close');
         expect(sanitizeAuthTrigger('first_run')).toBe('sidebar');
     });

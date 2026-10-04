@@ -1,5 +1,7 @@
 import { afterEach, beforeEach, describe, expect, test } from 'bun:test';
 
+let originalFetch;
+
 function makeElement(initialClasses = []) {
     const classes = new Set(initialClasses);
     const attributes = {};
@@ -19,9 +21,11 @@ function makeElement(initialClasses = []) {
         setAttribute: (name, value) => { attributes[name] = value; },
         getAttribute: name => attributes[name],
         addEventListener: (name, listener) => { listeners[name] = listener; },
-        dispatch: async name => listeners[name]?.(),
+        dispatch: async (name, ...args) => listeners[name]?.(...args),
         querySelector: () => child,
         textContent: '',
+        value: '',
+        href: '',
         disabled: false,
         attributes,
     };
@@ -31,6 +35,7 @@ describe('settings page bootstrap', () => {
     let elements;
 
     beforeEach(() => {
+        originalFetch = global.fetch;
         elements = {
             settingsLoading: makeElement(),
             settingsSignedOut: makeElement(['hidden']),
@@ -51,6 +56,7 @@ describe('settings page bootstrap', () => {
     afterEach(() => {
         delete global.document;
         delete global.window;
+        global.fetch = originalFetch;
     });
 
     test('loads preferences for an authenticated user and updates the toggle', async () => {
@@ -86,5 +92,44 @@ describe('settings page bootstrap', () => {
         expect(elements.notificationNewsToggle.attributes['aria-checked']).toBe('true');
         await elements.notificationNewsToggle.dispatch('click');
         expect(elements.notificationNewsToggle.attributes['aria-checked']).toBe('false');
+    });
+
+    test('shows readable username-change and rate-limit messages', async () => {
+        elements.publicProfileCard = makeElement(['hidden']);
+        elements.publicProfileSignedOut = makeElement(['hidden']);
+        elements.publicProfileForm = makeElement();
+        elements.publicUsername = makeElement();
+        elements.savePublicUsername = makeElement();
+        elements.publicProfileStatus = makeElement();
+        elements.publicProfileLink = makeElement(['hidden']);
+        let updateError = 'username_change_limit';
+        global.fetch = async (_url, options = {}) => new Response(
+            JSON.stringify(options.method === 'PUT'
+                ? { error: updateError }
+                : { username: 'test-user', suggestion: 'test-user' }),
+            { status: options.method === 'PUT' ? (updateError === 'rate_limited' ? 429 : 409) : 200 },
+        );
+        const authManager = {
+            isAuthenticated: () => true,
+            initialize: async () => {},
+            getCurrentUser: () => ({ id: 'github:123' }),
+            onAuthChange: () => {},
+        };
+        const notificationsApi = {
+            getPrefs: async () => ({ emailEnabled: false, newsEnabled: false, email: '', emailVerified: false }),
+            setEmailEnabled: async () => ({}),
+            setNewsEnabled: async () => ({}),
+        };
+        const { initializeSettingsPage } = await import(`./settings-page.js?test=${Date.now()}`);
+        await initializeSettingsPage({ authManager, notificationsApi });
+
+        await elements.publicProfileForm.dispatch('submit', { preventDefault() {} });
+
+        expect(elements.publicProfileStatus.textContent).toContain('limit of five username changes');
+        expect(elements.publicProfileStatus.textContent).not.toContain('username_change_limit');
+
+        updateError = 'rate_limited';
+        await elements.publicProfileForm.dispatch('submit', { preventDefault() {} });
+        expect(elements.publicProfileStatus.textContent).toBe('Too many changes. Wait a minute and try again.');
     });
 });
