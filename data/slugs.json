@@ -1236,6 +1236,12 @@
     "category": "AI Testing & Quality Assurance"
   },
   {
+    "slug": "e2e",
+    "name": "e2e",
+    "company": "TesterArmy",
+    "category": "AI Testing & Quality Assurance"
+  },
+  {
     "slug": "claude",
     "name": "Claude",
     "company": "Anthropic",
@@ -1869,6 +1875,12 @@
     "slug": "weave-router",
     "name": "Weave Router",
     "company": "Weave",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "cf",
+    "name": "cf",
+    "company": "Cloudflare",
     "category": "Developer Productivity & Workflow"
   },
   {
