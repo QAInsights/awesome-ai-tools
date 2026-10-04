@@ -4,6 +4,7 @@ import {
     findUserByUsername,
     getUsername,
     setUsername,
+    UsernameChangeLimitError,
     UsernameTakenError,
 } from './username-repository';
 
@@ -57,6 +58,28 @@ describe('username repository', () => {
             user: { id: 'github:ada', username: 'ada' },
             redirectTo: 'ada',
         });
+        sqlite.close();
+    });
+
+    test('limits new history entries but allows reclaiming an old username at the limit', async () => {
+        const { db, sqlite } = createTestDatabase();
+        addTestUser(sqlite, 'github:ada');
+
+        await setUsername(db, 'github:ada', 'ada-0', 1);
+        for (let index = 1; index <= 5; index += 1) {
+            await setUsername(db, 'github:ada', `ada-${index}`, index + 1);
+        }
+        expect(sqlite.query('SELECT COUNT(*) AS count FROM username_history WHERE user_id = ?')
+            .get('github:ada')).toEqual({ count: 5 });
+
+        await expect(setUsername(db, 'github:ada', 'ada-6', 10))
+            .rejects.toBeInstanceOf(UsernameChangeLimitError);
+        expect(await getUsername(db, 'github:ada')).toBe('ada-5');
+
+        await setUsername(db, 'github:ada', 'ada-0', 11);
+        expect(await getUsername(db, 'github:ada')).toBe('ada-0');
+        expect(sqlite.query('SELECT COUNT(*) AS count FROM username_history WHERE user_id = ?')
+            .get('github:ada')).toEqual({ count: 5 });
         sqlite.close();
     });
 

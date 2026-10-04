@@ -3,8 +3,10 @@ import { beforeEach, describe, expect, mock, test } from 'bun:test';
 let activeUser: { id: string; githubUsername: string | null; email: string | null; name: string } | null;
 let username: string | null;
 let usernameTaken: boolean;
+let usernameChangeLimit: boolean;
 let stackLimitReached: boolean;
 let events: string[];
+let createdStackArgs: { userId: string; input: unknown } | null;
 const db = {};
 
 const testUser = {
@@ -27,6 +29,7 @@ const stackSummary = {
 };
 
 class UsernameTakenError extends Error {}
+class UsernameChangeLimitError extends Error {}
 class StackLimitError extends Error {}
 
 mock.module('../../../src/lib/server/route-auth', () => ({
@@ -39,15 +42,18 @@ mock.module('../../../src/lib/server/username-repository', () => ({
     getUsername: async () => username,
     setUsername: async (_database: unknown, _userId: string, nextUsername: string) => {
         if (usernameTaken) throw new UsernameTakenError();
+        if (usernameChangeLimit) throw new UsernameChangeLimitError();
         username = nextUsername;
     },
     UsernameTakenError,
+    UsernameChangeLimitError,
 }));
 mock.module('../../../src/lib/server/stacks-repository', () => ({
     listStacks: async () => [stackSummary],
-    createStack: async () => {
+    createStack: async (_database: unknown, userId: string, input: unknown) => {
         if (stackLimitReached) throw new StackLimitError();
-        return { ...stackSummary, isPublic: false };
+        createdStackArgs = { userId, input };
+        return { ...stackSummary, userId, isPublic: false };
     },
     StackLimitError,
 }));
@@ -68,7 +74,9 @@ beforeEach(() => {
     activeUser = testUser;
     username = 'test-user';
     usernameTaken = false;
+    usernameChangeLimit = false;
     stackLimitReached = false;
+    createdStackArgs = null;
     events = [];
 });
 
@@ -134,6 +142,14 @@ describe('GET/PUT /api/account/username', () => {
 
         expect(response.status).toBe(409);
         expect(await response.json()).toEqual({ error: 'username_taken' });
+    });
+
+    test('returns a conflict when the username change limit is reached', async () => {
+        usernameChangeLimit = true;
+        const response = await putUsername(context('PUT', '/api/account/username', '{"username":"new-user"}'));
+
+        expect(response.status).toBe(409);
+        expect(await response.json()).toEqual({ error: 'username_change_limit' });
     });
 
     test('sets the username and returns the normalized value', async () => {
@@ -210,5 +226,23 @@ describe('GET/POST /api/stacks', () => {
             username: 'test-user',
         });
         expect(events).toEqual(['stack_created']);
+    });
+
+    test('ignores mass-assignment fields when creating a stack', async () => {
+        const response = await postStack(context(
+            'POST',
+            '/api/stacks',
+            '{"title":"Assigned stack","userId":"github:other","id":"x","isPublic":true}',
+        ));
+        const body = await response.json();
+
+        expect(response.status).toBe(201);
+        expect(createdStackArgs).toEqual({
+            userId: 'github:user-1',
+            input: { title: 'Assigned stack', description: null },
+        });
+        expect(body.stack.userId).toBe('github:user-1');
+        expect(body.stack.id).not.toBe('x');
+        expect(body.stack.isPublic).toBe(false);
     });
 });

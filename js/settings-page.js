@@ -148,7 +148,12 @@ export async function initializeSettingsPage({
                 body: JSON.stringify({ username: profileInput.value }),
             });
             const profile = await response.json();
-            if (!response.ok) throw new Error(profile.message || profile.error || 'Could not save your username.');
+            if (!response.ok) {
+                const message = profile.error === 'username_change_limit'
+                    ? 'You have reached the limit of five username changes. You can still reclaim a previous username.'
+                    : profile.message || profile.error || 'Could not save your username.';
+                throw new Error(message);
+            }
             profileInput.value = profile.username;
             profileStatus.textContent = `Username saved as @${profile.username}. Previous profile and stack links redirect here.`;
             profileLink.href = `/u/${encodeURIComponent(profile.username)}`;

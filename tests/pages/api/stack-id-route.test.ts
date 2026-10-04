@@ -164,6 +164,23 @@ describe('PATCH /api/stacks/[id]', () => {
         await PATCH(context('PATCH', '{"title":"Still public"}'));
         expect(events).toEqual(['stack_published']);
     });
+
+    test('ignores mass-assignment fields when updating a stack', async () => {
+        ownedStack = { ...initialStack(), createdAt: 2 };
+        const response = await PATCH(context(
+            'PATCH',
+            '{"title":"Updated title","userId":"github:other","id":"x","createdAt":1}',
+        ));
+        const body = await response.json();
+
+        expect(response.status).toBe(200);
+        expect(body.stack).toMatchObject({
+            id: 'stack-1',
+            userId: 'github:user-1',
+            createdAt: 2,
+            title: 'Updated title',
+        });
+    });
 });
 
 describe('DELETE /api/stacks/[id]', () => {

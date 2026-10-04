@@ -1,6 +1,11 @@
 import type { APIRoute } from 'astro';
 import { suggestUsername, validateUsername } from '../../../lib/stacks';
-import { getUsername, setUsername, UsernameTakenError } from '../../../lib/server/username-repository';
+import {
+    getUsername,
+    setUsername,
+    UsernameChangeLimitError,
+    UsernameTakenError,
+} from '../../../lib/server/username-repository';
 import { getCookieSessionUser } from '../../../lib/server/route-auth';
 import { isAllowedMutationRequest } from '../../../lib/server/request-security';
 import { requireDatabase } from '../../../lib/server/runtime-env';
@@ -47,6 +52,7 @@ export const PUT: APIRoute = async ({ request, cookies }) => {
         return privateJson({ username: validation.value });
     } catch (error) {
         if (error instanceof UsernameTakenError) return privateJsonError('username_taken', 409);
+        if (error instanceof UsernameChangeLimitError) return privateJsonError('username_change_limit', 409);
         console.error('[Username] Update failed:', error instanceof Error ? error.message : String(error));
         return privateJsonError('Unable to save username', 503);
     }

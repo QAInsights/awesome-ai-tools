@@ -28,6 +28,13 @@ export class UsernameUserNotFoundError extends Error {
     }
 }
 
+export class UsernameChangeLimitError extends Error {
+    constructor() {
+        super('Username change limit reached.');
+        this.name = 'UsernameChangeLimitError';
+    }
+}
+
 function mapUser(row: UsernameRow): UsernameUser {
     return {
         id: row.id,
@@ -111,8 +118,18 @@ export async function setUsername(
     `).bind(username).first<{ user_id: string }>();
     if (historyOwner && historyOwner.user_id !== userId) throw new UsernameTakenError();
 
+    const historyCount = await db.prepare(`
+        SELECT COUNT(*) AS count
+        FROM username_history
+        WHERE user_id = ?
+    `).bind(userId).first<{ count: number }>();
+    const reclaimingOwnName = historyOwner?.user_id === userId;
+    if (currentRow.username && !reclaimingOwnName && (historyCount?.count ?? 0) >= 5) {
+        throw new UsernameChangeLimitError();
+    }
+
     const statements: BoundStatement[] = [];
-    if (historyOwner?.user_id === userId) {
+    if (reclaimingOwnName) {
         statements.push(db.prepare(`
             DELETE FROM username_history
             WHERE username = ? AND user_id = ?

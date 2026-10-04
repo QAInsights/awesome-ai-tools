@@ -4,7 +4,9 @@ export const RESERVED_USERNAMES = new Set([
     'admin', 'api', 'settings', 'stacks', 'stack', 'new', 'edit', 'help', 'login', 'signin',
     'signout', 'logout', 'me', 'u', 'user', 'users', 'root', 'support', 'about', 'www', 'ai',
     'dosa', 'null', 'undefined', 'favorites', 'zap', 'tools', 'best', 'compare', 'blog', 'news',
-    'trending',
+    'trending', 'qainsights', 'staff', 'moderator', 'mod', 'official', 'security', 'team',
+    'system', 'sitemap', 'robots', 'llms', 'owner', 'anonymous', 'devin', 'privacy', 'terms',
+    'contact',
 ]);
 
 export const MAX_STACKS_PER_USER = 20;
@@ -36,8 +38,8 @@ export interface StackItemInput {
 function stripControls(value: string, allowNewline = false): string {
     return value
         .replace(allowNewline
-            ? /[\u0000-\u0009\u000B-\u001F\u007F-\u009F]/g
-            : /[\u0000-\u001F\u007F-\u009F]/g, '')
+            ? /[\u0000-\u0009\u000B-\u001F\u007F-\u009F\u200B-\u200F\u202A-\u202E\u2060-\u2069\uFEFF]/g
+            : /[\u0000-\u001F\u007F-\u009F\u200B-\u200F\u202A-\u202E\u2060-\u2069\uFEFF]/g, '')
         .trim();
 }
 
