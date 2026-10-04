@@ -178,16 +178,24 @@ export function createStackPageData(input: {
 export type StackProfileRoute =
     | { type: 'redirect'; url: string }
     | { type: 'not_found' }
-    | { type: 'render'; username: string; displayName: string };
+    | { type: 'render'; username: string; displayName: string; isOwner: boolean };
 
-export function resolveStackProfile(account: StackAccount | null): StackProfileRoute {
+export function resolveStackProfile(
+    account: StackAccount | null,
+    stacks: Pick<StackSummary, 'enabledItemCount'>[] = [],
+    viewerId?: string | null,
+): StackProfileRoute {
     if (!account) return { type: 'not_found' };
     if (account.redirectTo) {
         return { type: 'redirect', url: `/u/${encodeURIComponent(account.redirectTo)}` };
     }
+    const isOwner = viewerId === account.user.id;
+    if (!isOwner && !stacks.some(stack => stack.enabledItemCount > 0)) {
+        return { type: 'not_found' };
+    }
     const username = account.user.username ?? '';
     const displayName = account.user.displayName || account.user.githubUsername || username;
-    return { type: 'render', username, displayName };
+    return { type: 'render', username, displayName, isOwner };
 }
 
 export function createStackProfilePageData(input: {

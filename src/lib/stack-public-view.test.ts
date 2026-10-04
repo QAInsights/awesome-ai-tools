@@ -179,6 +179,24 @@ describe('stack profile and redirect data', () => {
         expect(resolveStackProfile({ ...account, redirectTo: 'ada-new' }))
             .toEqual({ type: 'redirect', url: '/u/ada-new' });
         expect(resolveStackProfile(null)).toEqual({ type: 'not_found' });
+        expect(resolveStackProfile(account, [])).toEqual({ type: 'not_found' });
+        expect(resolveStackProfile(account, [{
+            enabledItemCount: 0,
+        }])).toEqual({ type: 'not_found' });
+        expect(resolveStackProfile(account, [], 'user-1')).toEqual({
+            type: 'render',
+            username: 'ada',
+            displayName: 'Ada Lovelace',
+            isOwner: true,
+        });
+        expect(resolveStackProfile(account, [{
+            enabledItemCount: 1,
+        }])).toEqual({
+            type: 'render',
+            username: 'ada',
+            displayName: 'Ada Lovelace',
+            isOwner: false,
+        });
 
         const emptyProfile = createStackProfilePageData({
             username: 'ada',
