@@ -1,0 +1,78 @@
+---
+title: "OpenAI Opens Agent Stack as Stripe Buys OpenRouter"
+description: "OpenAI ships Dots, Agents API and Decisions API in beta, Stripe agrees to buy OpenRouter, and Uber details 800 MCP servers running in production."
+pubDate: 2026-10-04
+tags: ["news","today-in-ai","openai","agents","mcp","open-weights","funding","policy"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-10-04 UTC.
+
+OpenAI opened a full agent stack in public beta today, while Stripe moved to own the routing layer underneath it and Uber showed what MCP looks like at Fortune 500 scale.
+
+## OpenAI opens Dots, Agents API and Decisions API in beta
+
+**What happened:** OpenAI launched Dots, always-on agents in ChatGPT powered by GPT-6 Astra with their own cloud computers and connections to over 4, 000 apps, plus the Agents API and Decisions API in public beta. The Agents API offers a Codex harness for orchestration and multi-agent work.
+
+**Why it matters:** Builders get a managed orchestration layer and a fast constrained-decision endpoint, so long-running agents no longer need hand-rolled sandboxing and routing code.
+
+[Source: TheNextGenTechInsider](<https://thenextgentechinsider.com/pulse/openai-launches-new-agentic-ecosystem-with-dots-and-specialized-apis>)
+
+## Stripe to acquire OpenRouter in $7B+ deal
+
+**What happened:** Stripe has agreed to acquire OpenRouter, the model gateway and routing startup founded in early 2023 by OpenSea co-founder Alex Atallah, in a transaction valued at over $7 billion. OpenRouter routes queries across more than 400 AI models and supports around 8 million users.
+
+**Why it matters:** If the gateway and billing rails merge, metering and paying for multi-model inference could become one integration instead of two, changing how teams price and route model calls.
+
+[Source: DailySynapse](<https://dailysynapse.com/news/stripe-acquires-openrouter-in-ai-infrastructure-deal/>)
+
+## Uber runs 800 MCP servers and 5, 000 tools in production
+
+**What happened:** Uber published an engineering blog describing more than 800 Model Context Protocol servers and 5, 000 tools in production, behind a dual-plane gateway: an MCP Registry as control plane and a Proxy Gateway translating MCP calls into HTTP, gRPC or TChannel. Tools start disabled until the owning team enables them.
+
+**Why it matters:** It is a concrete reference architecture for anyone wiring thousands of internal services into agents, especially the disabled-by-default rule that keeps discovery from becoming authorization.
+
+[Source: Forkast](<https://forkast.news/uber-ships-mcp-gateway-at-production-scale-800-servers-and-5000-tools-behind-a-single-control-surface/>)
+
+## Aleph Alpha open-sources Kolibri-1 under Apache 2.0
+
+**What happened:** Aleph Alpha released Kolibri-1, an open-weight bilingual German and English MoE with 78B total and roughly 3.46B active parameters, 262k native context validated to 1M, and reasoning effort plus tool support. Official card: LiveCodeBench v6 85.9, SWE-Bench Verified 66.4, TerminalBench 2.1 27.7.
+
+**Why it matters:** Teams that need on-prem, German-language or regulated deployments get a permissively licensed model they can self-host instead of routing data through a closed API.
+
+[Source: AICoder](<https://aicoder.com/news/news-20261004-aleph-alpha-kolibri-1-open-weight>)
+
+## Prime Intellect launches Prime Inference for open models
+
+**What happened:** Prime Intellect launched Prime Inference, a serving platform for frontier open-weight models with serverless endpoints and reserved capacity, running on NVIDIA GB200 NVL72. The stack separates prefill and decode onto dedicated GPU groups and uses NVFP4 KV compression that cuts cache rows from 576 to 352 bytes.
+
+**Why it matters:** Cheaper, faster endpoints for open weights make self-hosted or open-model agents a realistic production option rather than a benchmark exercise.
+
+[Source: TheNextGenTechInsider](<https://thenextgentechinsider.com/pulse/prime-intellect-debuts-prime-inference-platform-for-frontier-open-models>)
+
+## Microsoft ships FrogNano-4B coding agent for consumer GPUs
+
+**What happened:** Microsoft released FrogNano-4B-2609, a 4B parameter coding agent trained with reinforcement learning on roughly 1, 500 synthetic software engineering environments via a pipeline called TaskPilot. It is derived from Qwen3.5-4B, supports about 131K tokens of context, and uses the Leaf harness.
+
+**Why it matters:** Repository-level debugging and editing on consumer hardware lowers the cost of running a coding agent locally, without a cluster or a per-token bill.
+
+[Source: TheNextGenTechInsider](<https://www.thenextgentechinsider.com/pulse/microsoft-launches-frognano-4b-for-efficient-repository-level-software-engineering>)
+
+## Hawley and Murphy bill would jail executives over rogue agents
+
+**What happened:** Senators Josh Hawley and Chris Murphy introduced the bipartisan AI Agent Accountability Act on October 1, extending the Computer Fraud and Abuse Act to operators who knowingly run agents that recklessly cause hacking damage and to developers who skip reasonable safeguards. State attorneys general could also sue.
+
+**Why it matters:** Agent builders now have a concrete legal reason to log capabilities, gate tool access and document safeguards before shipping autonomous systems.
+
+[Source: Startup Fortune](<https://startupfortune.com/hawley-and-murphy-bill-would-send-ai-executives-to-prison-over-rogue-agent-hacks/>)
+
+## Sources
+
+- [TheNextGenTechInsider](<https://thenextgentechinsider.com/pulse/openai-launches-new-agentic-ecosystem-with-dots-and-specialized-apis>)
+- [DailySynapse](<https://dailysynapse.com/news/stripe-acquires-openrouter-in-ai-infrastructure-deal/>)
+- [Forkast](<https://forkast.news/uber-ships-mcp-gateway-at-production-scale-800-servers-and-5000-tools-behind-a-single-control-surface/>)
+- [AICoder](<https://aicoder.com/news/news-20261004-aleph-alpha-kolibri-1-open-weight>)
+- [TheNextGenTechInsider](<https://thenextgentechinsider.com/pulse/prime-intellect-debuts-prime-inference-platform-for-frontier-open-models>)
+- [TheNextGenTechInsider](<https://www.thenextgentechinsider.com/pulse/microsoft-launches-frognano-4b-for-efficient-repository-level-software-engineering>)
+- [Startup Fortune](<https://startupfortune.com/hawley-and-murphy-bill-would-send-ai-executives-to-prison-over-rogue-agent-hacks/>)
