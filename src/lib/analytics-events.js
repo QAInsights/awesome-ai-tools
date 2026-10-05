@@ -1,4 +1,5 @@
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const hostPattern = /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)+$/;
 
 const subjectPolicies = {
     none: () => '',
@@ -13,6 +14,10 @@ const subjectPolicies = {
             ? parts.join(',')
             : '';
     },
+    host(value) {
+        const subject = typeof value === 'string' ? value.slice(0, 128).toLowerCase() : '';
+        return hostPattern.test(subject) ? subject : '';
+    },
     onboardingStep(value) {
         return ONBOARDING_STEP_SUBJECTS.includes(value) ? value : '';
     },
@@ -23,6 +28,7 @@ export const AD_STYLES = Object.freeze(['stickybox', 'fixedfooter']);
 export const OUTBOUND_TRIGGERS = Object.freeze(['tool_card', 'tool_detail', 'comparison', 'category', 'unknown']);
 export const ONBOARDING_TRIGGERS = Object.freeze(['inline', 'float', 'unknown']);
 export const ONBOARDING_STEP_SUBJECTS = Object.freeze(['favorites', 'follows', 'badge']);
+export const REF_SOURCES = Object.freeze(['badge', 'newsletter', 'social', 'other']);
 export const ANALYTICS_PROVIDERS = Object.freeze(['github', 'google', 'dev']);
 
 export const EVENTS = Object.freeze({
@@ -48,6 +54,7 @@ export const EVENTS = Object.freeze({
     AD_CLOSED: 'ad_closed',
     AD_PROMPT_SHOWN: 'ad_prompt_shown',
     AD_PROMPT_DISMISSED: 'ad_prompt_dismissed',
+    VISIT: 'visit',
 });
 
 export const EVENT_CATALOG = Object.freeze({
@@ -73,6 +80,8 @@ export const EVENT_CATALOG = Object.freeze({
     [EVENTS.AD_CLOSED]: { client: true, triggers: AD_STYLES, subject: subjectPolicies.none },
     [EVENTS.AD_PROMPT_SHOWN]: { client: true, triggers: AD_STYLES, subject: subjectPolicies.none },
     [EVENTS.AD_PROMPT_DISMISSED]: { client: true, triggers: AD_STYLES, subject: subjectPolicies.none },
+    // One per browser session: trigger = ?ref= source, subject = external referrer host.
+    [EVENTS.VISIT]: { client: true, triggers: REF_SOURCES, subject: subjectPolicies.host },
 });
 
 export function sanitizeAuthTrigger(value) {

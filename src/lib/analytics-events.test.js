@@ -57,4 +57,12 @@ describe('analytics event catalog', () => {
         expect(normalizeClientEvent({ event: EVENTS.AD_PROMPT_SHOWN, trigger: 'fixedfooter' })?.trigger).toBe('fixedfooter');
         expect(normalizeClientEvent({ event: EVENTS.AD_PROMPT_DISMISSED, trigger: 'banner' })?.trigger).toBe('');
     });
+
+    test('accepts visit events with a referrer host and ref source', () => {
+        expect(normalizeClientEvent({ event: EVENTS.VISIT, trigger: 'badge', subject: 'GitHub.com' }))
+            .toMatchObject({ event: 'visit', trigger: 'badge', subject: 'github.com' });
+        expect(normalizeClientEvent({ event: EVENTS.VISIT, trigger: 'spam', subject: 'https://x.com/path' }))
+            .toMatchObject({ event: 'visit', trigger: '', subject: '' });
+        expect(normalizeClientEvent({ event: EVENTS.VISIT, subject: 'localhost' })?.subject).toBe('');
+    });
 });

@@ -1,4 +1,4 @@
-import { EVENTS } from '../src/lib/analytics-events.js';
+import { EVENTS, REF_SOURCES } from '../src/lib/analytics-events.js';
 import { analytics } from './analytics-client.js';
 import { authAttribution } from './auth-attribution.js';
 
@@ -16,7 +16,39 @@ export function badgeReferralEvent(pathname, search) {
     return { trigger: subject ? 'tool_page' : 'home', subject };
 }
 
+const VISIT_KEY = 'aat_visit';
+
+function bareHost(hostname) {
+    return hostname.toLowerCase().replace(/^www\./, '');
+}
+
+// Pure decision: where a new session came from. Same-site referrers count as direct.
+export function visitEvent(referrer, search, ownHostname) {
+    let subject = '';
+    try {
+        subject = referrer ? bareHost(new URL(referrer).hostname) : '';
+    } catch {}
+    if (subject === bareHost(ownHostname)) subject = '';
+    const ref = (new URLSearchParams(search).get('ref') ?? '').trim().toLowerCase();
+    const trigger = !ref ? '' : REF_SOURCES.includes(ref) ? ref : 'other';
+    return { trigger, subject };
+}
+
+function isNewSession() {
+    try {
+        if (window.sessionStorage.getItem(VISIT_KEY)) return false;
+        window.sessionStorage.setItem(VISIT_KEY, '1');
+        return true;
+    } catch {
+        return false;
+    }
+}
+
 if (typeof window !== 'undefined') {
+    if (isNewSession()) {
+        analytics.track(EVENTS.VISIT, visitEvent(document.referrer, window.location.search, window.location.hostname));
+    }
+
     const referral = badgeReferralEvent(window.location.pathname, window.location.search);
     if (referral) {
         analytics.track(EVENTS.BADGE_REFERRAL, referral);
