@@ -1270,5 +1270,25 @@
   {
     "companyName": "TesterArmy",
     "toolName": "e2e"
+  },
+  {
+    "companyName": "iFixAi",
+    "toolName": "iFixAi"
+  },
+  {
+    "companyName": "Leon Lin",
+    "toolName": "Taste Skill"
+  },
+  {
+    "companyName": "Jay.TL",
+    "toolName": "Skills Manager"
+  },
+  {
+    "companyName": "HeyGen",
+    "toolName": "HyperFrames"
+  },
+  {
+    "companyName": "earthtojake",
+    "toolName": "text-to-cad"
   }
 ]

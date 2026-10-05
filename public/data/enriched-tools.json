@@ -8704,5 +8704,140 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-04"
+  },
+  {
+    "slug": "ifixai",
+    "name": "iFixAi",
+    "company": "iFixAi",
+    "pricing": "free",
+    "pricingDetail": "iFixAi is free and open source under the Apache 2.0 license; runs use your own model provider API keys for the system under test and the judge, and a free `--dry-run` shows the cost before anything is billed.",
+    "description": "iFixAi is an open-source auditing tool that checks whether an AI agent is doing the job it is supposed to do, balancing AI red-teaming with operational assurance. A single `ifixai run` executes 32 inspections across five pillars and grades the agent with an A–F scorecard, from the CLI or from inside coding agents via a plugin or skill.",
+    "keyFeatures": [
+      "Guided `ifixai setup` wizard and zero-flag `ifixai run`, or fully scriptable flags for CI",
+      "32 inspections across five pillars with an A–F grade and scored core-pillar scorecard",
+      "Self, independent-vendor or multi-judge ensemble grading",
+      "JSON and Markdown reports plus a rich terminal scorecard",
+      "Claude Code and Codex plugins and a `uvx ifixai install` skill for Cursor, VS Code/Copilot, Windsurf, Cline, Continue, Gemini and Zed"
+    ],
+    "bestFor": "Teams shipping AI agents that want a fast, repeatable audit of agent behavior against business expectations before and after release.",
+    "notIdealFor": "Teams that only need latency, token-cost or prompt-injection benchmarks, or that cannot spend model API credits on judge-graded runs.",
+    "recentUpdates": "iFixAi shipped v4.0.0 on September 15, 2026, renamed its plugin marketplace to ifixai-community, and the repository passed 21,000 GitHub stars with commits landing in early October 2026.",
+    "verdict": "A practical, agent-native auditing harness that turns 'is my agent doing its job?' into a graded, repeatable report.",
+    "tags": [
+      "Testing",
+      "Agent Evaluation",
+      "Red Teaming",
+      "CLI",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-05"
+  },
+  {
+    "slug": "taste-skill",
+    "name": "Taste Skill",
+    "company": "Leon Lin",
+    "pricing": "free",
+    "pricingDetail": "Taste Skill is free and open source under the MIT license; it is installed with `npx skills add` and runs inside the coding agent you already use.",
+    "description": "Taste Skill is an open-source pack of portable agent skills that upgrades AI-built interfaces with stronger layout, typography, motion and spacing instead of generic boilerplate UIs. It also includes image-generation skills for web and mobile comps and brand kits that can be handed to Codex, Cursor or Claude Code for implementation.",
+    "keyFeatures": [
+      "Default `design-taste-frontend` v2 skill with VARIANCE, MOTION and DENSITY dials",
+      "Stricter `gpt-taste` variant tuned for GPT and Codex",
+      "Redesign-audit, minimalist, brutalist, high-end visual and Google Stitch-compatible skills",
+      "`full-output-enforcement` skill that stops agents from shipping placeholder code",
+      "Image-generation skills for website comps, mobile screens and brand-kit boards"
+    ],
+    "bestFor": "Developers using AI coding agents for frontend work who want more distinctive, polished interfaces without hand-writing design rules.",
+    "notIdealFor": "Projects with a strict existing design system that should not be reinterpreted by opinionated style defaults.",
+    "recentUpdates": "The default skill moved to an experimental v2 rewrite (with v1 kept as `design-taste-frontend-v1`), and the repository passed 92,000 GitHub stars and appeared on GitHub Trending in early October 2026.",
+    "verdict": "One of the most popular anti-slop design skills for coding agents, and an easy add for any AI-built frontend.",
+    "tags": [
+      "Frontend",
+      "Design",
+      "Agent Skills",
+      "Developer Tools",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-05"
+  },
+  {
+    "slug": "skills-manager",
+    "name": "Skills Manager",
+    "company": "Jay.TL",
+    "pricing": "free",
+    "pricingDetail": "Skills Manager is a free, open-source (MIT) desktop app with no paid tier.",
+    "description": "Skills Manager is a lightweight desktop app that manages, syncs and organizes AI agent skills across 50+ coding tools such as Claude Code, Codex, Cursor, Copilot and Gemini CLI. It keeps one central skill library, deploys skills per agent or per project, and lets agents themselves install and deploy skills through it.",
+    "keyFeatures": [
+      "Central skill library installed from Git repos, local folders, `.zip`/`.skill` archives or the skills.sh marketplace",
+      "Presets that activate or deactivate groups of skills per agent scope",
+      "Global and project workspaces that compare and sync skill folders in either direction",
+      "Agent-driven management so Claude Code, Codex and Cursor can install or deploy skills via the app",
+      "Backup and multi-device sync"
+    ],
+    "bestFor": "Developers who use several coding agents and want one place to install, organize and sync agent skills across tools and projects.",
+    "notIdealFor": "Developers who use a single agent with a handful of skills and are happy managing its skills folder by hand.",
+    "recentUpdates": "Skills Manager shipped v1.40.3 on October 1, 2026, with commits continuing into October and the repository appearing on GitHub Trending.",
+    "verdict": "A focused, well-maintained control panel for the growing sprawl of agent skills across coding tools.",
+    "tags": [
+      "Agent Skills",
+      "Desktop App",
+      "Productivity",
+      "Developer Tools",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-05"
+  },
+  {
+    "slug": "hyperframes",
+    "name": "HyperFrames",
+    "company": "HeyGen",
+    "pricing": "free",
+    "pricingDetail": "HyperFrames is free and open source under the Apache 2.0 license; the CLI and agent skills run locally with the coding agent and model provider you already use.",
+    "description": "HyperFrames is HeyGen's open-source framework for turning HTML, CSS, media and seekable animations into deterministic MP4 videos, built to be driven by AI coding agents. It ships a CLI, a Claude Code plugin and 21 agent skills that teach agents to plan, write, lint, preview and render videos.",
+    "keyFeatures": [
+      "Deterministic HTML-to-MP4 rendering with seekable GSAP, Lottie, Three.js, Anime.js and CSS/WAAPI animations",
+      "`hyperframes` CLI for init, lint, preview and render",
+      "Claude Code plugin plus `npx skills add heygen-com/hyperframes` for Codex, Cursor, Gemini CLI and other agents",
+      "Creation workflows for product-launch videos, PR-to-video changelogs, captions, motion graphics and slideshows",
+      "`/remotion-to-hyperframes` skill for migrating Remotion compositions"
+    ],
+    "bestFor": "Developers and teams who want coding agents to produce product, changelog and explainer videos from code they can review and version.",
+    "notIdealFor": "Editors who want a traditional timeline-based video editor or AI avatar video generation without touching HTML.",
+    "recentUpdates": "HyperFrames ships near-daily releases, with v0.8.133 published on October 5, 2026, and the repository passed 57,000 GitHub stars while trending on GitHub.",
+    "verdict": "A fast-moving, agent-first video framework that makes 'render a video from this PR' a realistic coding-agent task.",
+    "tags": [
+      "Video",
+      "Agent Skills",
+      "CLI",
+      "HTML",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-05"
+  },
+  {
+    "slug": "text-to-cad",
+    "name": "text-to-cad",
+    "company": "earthtojake",
+    "pricing": "free",
+    "pricingDetail": "text-to-cad is free and open source under the MIT license and runs locally through uv; any connected fabrication services are billed by those providers.",
+    "description": "text-to-cad is an open-source plugin and skill set that gives AI coding agents local CAD workflows. Agents can generate 3D models as STEP, GLB, STL or 3MF, run design-for-manufacturing checks, produce engineering drawings and connect to 3D-printing, sheet-metal and CNC fabrication services.",
+    "keyFeatures": [
+      "3D model generation to STEP, GLB, STL and 3MF",
+      "Design-for-manufacturing checks and engineering drawings",
+      "Bundled `cadgen mcp` server and CAD Viewer that shows models in chat or the browser",
+      "Plugins for Claude Code, Claude Desktop and Codex, plus skills for Cursor, Gemini, Grok and other agents",
+      "Connections to 3D-printing, sheet-metal and CNC fabrication services"
+    ],
+    "bestFor": "Engineers and makers who want their coding agent to design and check real, manufacturable parts from a prompt.",
+    "notIdealFor": "Teams that need full-featured parametric CAD suites such as SolidWorks or Fusion with collaborative PDM workflows.",
+    "recentUpdates": "text-to-cad shipped v0.7.14 on October 5, 2026, and the repository passed 17,000 GitHub stars while appearing on GitHub Trending.",
+    "verdict": "A capable, agent-native bridge from prompts to manufacturable CAD files that fits naturally into existing coding agents.",
+    "tags": [
+      "CAD",
+      "3D Modeling",
+      "Hardware",
+      "MCP",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-05"
   }
 ]
