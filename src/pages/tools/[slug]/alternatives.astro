@@ -2,18 +2,21 @@
 /**
  * Alternatives page - /tools/[slug]/alternatives
  *
- * Generated only for the ~20 most-compared tools (see getTopComparedTools) -
- * these map to high-intent "X alternatives" queries. Alternatives are the
- * other tools in the same category, enriched entries first. Fully
- * pre-rendered at build time so search engines and AI crawlers get the
- * complete list in the initial HTML.
+ * Generated for every tool with same-category alternatives (see
+ * getAlternativesPageTools); thin pages are noindexed by the indexing rules.
+ * Targets "best X alternative" / "X alternatives" queries. Alternatives are
+ * the other tools in the same category, those with a head-to-head compare
+ * page first, then enriched entries. Fully pre-rendered at build time so
+ * search engines and AI crawlers get the full list in the initial HTML.
  */
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Sidebar from '../../../components/Sidebar.astro';
 import SiteHeader from '../../../components/SiteHeader.astro';
-import { formatDate, getAlternativesFor, getCategorySlug, maxLastUpdated, type Tool } from '../../../lib/tools';
+import { formatDate, getAlternativesFor, getCategorySlug, getToolBySlug, maxLastUpdated, type Tool } from '../../../lib/tools';
 import { robotsFor } from '../../../lib/indexing';
-import { getComparisonsForTool, getTopComparedTools, hasAlternativesPage } from '../../../lib/compare';
+import { getAlternativesPageTools, getComparisonsForTool, hasAlternativesPage, humanizePricing } from '../../../lib/compare';
+import { blogPostsLinkingTo, buildAlternativesSeo, openSourceLabel, rankAlternatives, switchReason, whySwitch } from '../../../lib/alternatives';
 import { entryLabel } from '../../../lib/folio';
 import FolioStyles from '../../../components/folio/FolioStyles.astro';
 import FolioTitle from '../../../components/folio/FolioTitle.astro';
@@ -21,7 +24,7 @@ import FolioFaq from '../../../components/folio/FolioFaq.astro';
 import FolioScroll from '../../../components/folio/FolioScroll.astro';
 
 export async function getStaticPaths() {
-    return getTopComparedTools().map(tool => ({
+    return getAlternativesPageTools().map(tool => ({
         params: { slug: tool.slug },
         props: { tool },
     }));
@@ -36,28 +39,36 @@ const { enriched } = tool;
 
 const displayName = enriched?.name ?? tool.name;
 const displayCompany = enriched?.company ?? tool.company;
+const nameOf = (t: Tool) => t.enriched?.name ?? t.name;
 
-const alternatives = getAlternativesFor(tool);
+// Curated comparison pages featuring this tool, keyed by the other tool
+const toolComparisons = getComparisonsForTool(tool.slug);
+const pairByOtherSlug = new Map(toolComparisons.map(c => [c.a === tool.slug ? c.b : c.a, c.slug]));
+
+const alternatives = rankAlternatives(getAlternativesFor(tool), new Set(pairByOtherSlug.keys()));
 const count = alternatives.length;
-
-// Curated comparison pages between this tool and each alternative
-const pairByOtherSlug = new Map(
-    getComparisonsForTool(tool.slug).map(c => [c.a === tool.slug ? c.b : c.a, c.slug])
-);
+const topFive = alternatives.slice(0, 5);
+const reason = switchReason(tool);
 
 const KNOWN_FREE = new Set(['free', 'open-source', 'open_source', 'oss']);
 const freeAlts = alternatives.filter(t => KNOWN_FREE.has((t.enriched?.pricing ?? '').toLowerCase()));
 const enrichedAlts = alternatives.filter(t => t.enriched);
-const topNames = (enrichedAlts.length > 0 ? enrichedAlts : alternatives).slice(0, 3).map(t => t.enriched?.name ?? t.name);
+const topNames = (enrichedAlts.length > 0 ? enrichedAlts : alternatives).slice(0, 3).map(nameOf);
+const bestPick = alternatives[0]!;
 
 // Honest freshness: latest enrichment stamp across this tool + its alternatives
 const lastUpdated = maxLastUpdated([tool, ...alternatives].map(t => t.enriched?.lastUpdated));
 
 const pageUrl = `https://ai.dosa.dev/tools/${tool.slug}/alternatives`;
-const descMeta = `The best ${displayName} alternatives in 2026: ${count} ${tool.categoryShort} tools compared with pricing, key features, and verdicts - including ${topNames.join(', ')}.`;
+const { title: seoTitle, description: descMeta } = buildAlternativesSeo(tool, alternatives);
 
 // ── FAQ (AEO) - derived strictly from enriched data ─────────────────────────
+const bestPickWhy = whySwitch(bestPick, 200);
 const faqs: { q: string; a: string }[] = [
+    {
+        q: `What is the best ${displayName} alternative?`,
+        a: `${nameOf(bestPick)} is the top-ranked ${displayName} alternative on ai.dosa.dev.${bestPickWhy ? ` Best for: ${bestPickWhy}` : ''}${pairByOtherSlug.has(bestPick.slug) ? ` See the ${displayName} vs ${nameOf(bestPick)} comparison for a side-by-side breakdown.` : ''}`,
+    },
     {
         q: `What are the best alternatives to ${displayName}?`,
         a: `The closest ${displayName} alternatives on ai.dosa.dev are ${topNames.join(', ')} - all listed under ${tool.categoryClean}. Each has a detail page with pricing, key features, and a verdict.`,
@@ -66,7 +77,7 @@ const faqs: { q: string; a: string }[] = [
 if (freeAlts.length > 0) {
     faqs.push({
         q: `Is there a free alternative to ${displayName}?`,
-        a: `Yes - ${freeAlts.slice(0, 4).map(t => t.enriched?.name ?? t.name).join(', ')} ${freeAlts.length > 1 ? 'are' : 'is'} free or open source. ${freeAlts.length} of the ${count} alternatives listed here are free or open source.`,
+        a: `Yes - ${freeAlts.slice(0, 4).map(nameOf).join(', ')} ${freeAlts.length > 1 ? 'are' : 'is'} free or open source. ${freeAlts.length} of the ${count} alternatives listed here are free or open source.`,
     });
 } else {
     faqs.push({
@@ -76,7 +87,7 @@ if (freeAlts.length > 0) {
 }
 faqs.push({
     q: `How were these ${displayName} alternatives chosen?`,
-    a: `Alternatives are the other tools in the ${tool.categoryClean} category of ai.dosa.dev's manually curated directory, ordered with fully reviewed (enriched) entries first. Entries are enriched with pricing, features, and reviewer notes and updated continuously.`,
+    a: `Alternatives are the other tools in the ${tool.categoryClean} category of ai.dosa.dev's manually curated directory, ordered with head-to-head comparisons first, then fully reviewed (enriched) entries. Entries are enriched with pricing, features, and reviewer notes and updated continuously.`,
 });
 
 const jsonLd = JSON.stringify({
@@ -100,7 +111,7 @@ const jsonLd = JSON.stringify({
             "itemListElement": alternatives.map((t, i) => ({
                 "@type": "ListItem",
                 "position": i + 1,
-                "name": t.enriched?.name ?? t.name,
+                "name": nameOf(t),
                 "url": `https://ai.dosa.dev/tools/${t.slug}`
             }))
         },
@@ -124,25 +135,40 @@ const jsonLd = JSON.stringify({
     ]
 });
 
-// Sibling alternatives pages in the same category (crawl depth)
-const siblingAltPages = getTopComparedTools()
-    .filter(t => t.slug !== tool.slug && t.category === tool.category)
+// Head-to-head pages for this tool, including cross-category pairs
+const headToHead = toolComparisons
+    .map(c => {
+        const other = getToolBySlug(c.a === tool.slug ? c.b : c.a);
+        return other ? { slug: c.slug, label: `${displayName} vs ${nameOf(other)}` } : null;
+    })
+    .filter((c): c is { slug: string; label: string } => c !== null);
+
+// Sibling alternatives pages in the same category (crawl depth) - indexable ones only
+const siblingAltPages = getAlternativesPageTools()
+    .filter(t => t.slug !== tool.slug && t.category === tool.category && !robotsFor(`/tools/${t.slug}/alternatives`))
     .slice(0, 6);
+
+// Blog posts that link to this tool
+const blogPosts = await getCollection('blog', ({ data }) => data.draft !== true);
+const reading = blogPostsLinkingTo(blogPosts, tool.slug);
 
 const updated = lastUpdated ? formatDate(lastUpdated) : null;
 const facts = [
     { k: 'Alternatives', v: String(count) },
     { k: 'Free or open source', v: String(freeAlts.length) },
-    { k: 'Head-to-head pages', v: String(pairByOtherSlug.size) },
+    { k: 'Head-to-head pages', v: String(headToHead.length) },
     { k: 'Category', v: tool.categoryShort },
 ];
+const sections = ['glance', 'list', 'faq', reading.length && 'reading', 'more'].filter(Boolean) as string[];
+const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
 
 ---
 
+
 <BaseLayout
-    title={`${count} Best ${displayName} Alternatives (2026) - Compared | ai.dosa.dev`}
+    title={seoTitle}
     description={descMeta}
-    keywords={`${displayName} alternatives, ${displayName} competitors, tools like ${displayName}, ${tool.categoryClean}, best ${tool.categoryShort} tools`}
+    keywords={`${displayName} alternatives, best ${displayName} alternative, ${displayName} competitors, tools like ${displayName}, ${tool.categoryClean}, best ${tool.categoryShort} tools`}
     canonical={pageUrl}
     robots={robotsFor(`/tools/${tool.slug}/alternatives`)}
     jsonLd={jsonLd}
@@ -171,7 +197,7 @@ const facts = [
                         <FolioTitle parts={[{ text: 'Best', plain: true }, { text: displayName }, { text: 'Alternatives', plain: true }]} size="lg" />
                         <div class="fo-intro">
                             <p class="fo-lead fo-fade" style="--d:.55s">
-                                {displayName} by {displayCompany} is listed under {tool.categoryClean}. If you're weighing options, these are the {count} closest alternatives in the directory - with pricing, key features, and verdicts on each detail page.
+                                {displayName} by {displayCompany} is listed under {tool.categoryClean}. If you're weighing options, these are the {count} closest alternatives in the directory - with pricing, key features, and verdicts on each detail page.{reason && ` ${reason}`}
                             </p>
                             <div class="fo-price fo-fade" style="--d:.7s">
                                 <small>Compared</small>
@@ -193,18 +219,54 @@ const facts = [
                     </div>
                 </header>
 
+                <section class="fo-sec" id="glance" aria-labelledby="glance-heading">
+                    <h2 class="fo-label" id="glance-heading"><em>{num('glance')}</em>Top {topFive.length} at a glance</h2>
+                    <div class="fo-body">
+                        <table class="fo-glance">
+                            <caption class="sr-only">Top {topFive.length} {displayName} alternatives: pricing, open source, category, and best for</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Tool</th>
+                                    <th scope="col">Pricing</th>
+                                    <th scope="col" class="hm">Open source</th>
+                                    <th scope="col" class="hm">Category</th>
+                                    <th scope="col" class="hs">Best for</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {topFive.map((t, i) => (
+                                    <tr>
+                                        <td class="no">{String(i + 1).padStart(2, '0')}</td>
+                                        <td class="t">
+                                            <a href={`/tools/${t.slug}`}>{nameOf(t)}</a>
+                                            <small>{t.enriched?.company ?? t.company}</small>
+                                        </td>
+                                        <td class="pr">{humanizePricing(t.enriched?.pricing) || 'Unlisted'}</td>
+                                        <td class="hm">{openSourceLabel(t)}</td>
+                                        <td class="hm"><a href={`/category/${getCategorySlug(t.categoryShort)}`}>{t.categoryShort}</a></td>
+                                        <td class="hs">{whySwitch(t, 110) || '—'}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
                 <section class="fo-sec" id="list" aria-label={`${displayName} alternatives`}>
-                    <h2 class="fo-label"><em>01</em>The alternatives</h2>
+                    <h2 class="fo-label"><em>{num('list')}</em>The alternatives</h2>
                     <div class="fo-body">
                         {alternatives.map((alt, i) => {
-                            const altName = alt.enriched?.name ?? alt.name;
+                            const altName = nameOf(alt);
                             const pairSlug = pairByOtherSlug.get(alt.slug);
+                            const why = whySwitch(alt);
                             return (
                                 <div class="fo-rank">
                                     <span class="no">{String(i + 1).padStart(2, '0')}</span>
                                     <div>
                                         <h3><a href={`/tools/${alt.slug}`}>{altName}</a><span class="co">{alt.enriched?.company ?? alt.company}</span></h3>
                                         <p>{alt.enriched?.description ?? alt.notes}</p>
+                                        {why && <p class="why"><b>Why switch:</b> best for {why.charAt(0).toLowerCase() + why.slice(1)}</p>}
                                         <div class="links">
                                             <a href={`/tools/${alt.slug}`}>Details →</a>
                                             {pairSlug && <a class="g" href={`/compare/${pairSlug}`}>{displayName} vs {altName} →</a>}
@@ -219,17 +281,29 @@ const facts = [
                 </section>
 
                 <section class="fo-sec" id="faq" aria-label="Frequently asked questions">
-                    <h2 class="fo-label"><em>02</em>FAQ</h2>
+                    <h2 class="fo-label"><em>{num('faq')}</em>FAQ</h2>
                     <FolioFaq faqs={faqs} />
                 </section>
 
+                {reading.length > 0 && (
+                    <nav class="fo-sec" id="reading" aria-label="Related reading">
+                        <h2 class="fo-label"><em>{num('reading')}</em>Related reading</h2>
+                        <div class="fo-body">
+                            <ul class="fo-tags">
+                                {reading.map(p => <li><a href={`/blog/${p.id}`}>{p.data.title}</a></li>)}
+                            </ul>
+                        </div>
+                    </nav>
+                )}
+
                 <nav class="fo-sec" id="more" aria-label="Explore more">
-                    <h2 class="fo-label"><em>03</em>Explore more</h2>
+                    <h2 class="fo-label"><em>{num('more')}</em>Explore more</h2>
                     <div class="fo-body">
                         <ul class="fo-tags">
                             <li><a href={`/tools/${tool.slug}`}>{displayName} review</a></li>
                             <li><a href={`/category/${getCategorySlug(tool.categoryShort)}`}>All {tool.categoryShort} tools</a></li>
-                            {siblingAltPages.map(t => <li><a href={`/tools/${t.slug}/alternatives`}>{t.enriched?.name ?? t.name} alternatives</a></li>)}
+                            {headToHead.map(c => <li><a href={`/compare/${c.slug}`}>{c.label}</a></li>)}
+                            {siblingAltPages.map(t => <li><a href={`/tools/${t.slug}/alternatives`}>{nameOf(t)} alternatives</a></li>)}
                         </ul>
                     </div>
                 </nav>

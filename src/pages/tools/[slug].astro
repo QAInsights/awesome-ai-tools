@@ -11,6 +11,7 @@
  * All 108 tool pages are now generated from this single file via getStaticPaths().
  * Seed + enriched data are embedded at build time - no client-side fetch needed.
  */
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
@@ -25,6 +26,7 @@ import FolioFaq from '../../components/folio/FolioFaq.astro';
 import FolioScroll from '../../components/folio/FolioScroll.astro';
 import { buildToolFaqs } from '../../lib/tool-faqs';
 import { buildToolReview, buildToolSeo } from '../../lib/tool-seo';
+import { blogPostsLinkingTo } from '../../lib/alternatives';
 import { addOutboundUtmParams } from '../../lib/outbound-utm.js';
 
 export async function getStaticPaths() {
@@ -135,6 +137,10 @@ const jsonLdObj = {
 const showAlternativesLink = hasAlternativesPage(tool.slug);
 const showPricingLink = hasPricingPage(tool.slug);
 
+// Blog posts that link to this tool
+const blogPosts = await getCollection('blog', ({ data }) => data.draft !== true);
+const reading = blogPostsLinkingTo(blogPosts, tool.slug);
+
 // ── Curated comparison pages featuring this tool ────────────────────────────
 const comparisons = getComparisonsForTool(tool.slug)
     .map(c => {
@@ -196,6 +202,7 @@ const sections = [
     faqs.length >= 2 && 'faq',
     related.length && 'alternatives',
     comparisons.length && 'compare',
+    reading.length && 'reading',
     tags.length && 'tags',
 ].filter(Boolean) as string[];
 const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
@@ -230,7 +237,8 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                         <div class="fo-top fo-fade" style="--d:.1s">
                             <nav aria-label="Breadcrumb" class="fo-crumbs">
                                 <a href="/">Home</a><span>/</span>
-                                <a href={`/category/${getCategorySlug(tool.categoryShort)}`}>{tool.categoryClean}</a>
+                                <a href={`/category/${getCategorySlug(tool.categoryShort)}`}>{tool.categoryClean}</a><span>/</span>
+                                <span class="here">{displayName}</span>
                             </nav>
                             <span class="fo-status">
                                 {isDiscontinued && <span class="fo-off">Discontinued</span>}
@@ -392,8 +400,24 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                                     <i aria-hidden="true">→</i>
                                 </a>
                             ))}
+                            {showAlternativesLink && (
+                                <div class="fo-more">
+                                    <a href={`/tools/${tool.slug}/alternatives`}>Compare {displayName} with all its alternatives →</a>
+                                </div>
+                            )}
                         </div>
                     </section>
+                )}
+
+                {reading.length > 0 && (
+                    <nav class="fo-sec" id="reading" aria-label="Related reading">
+                        <div class="fo-label"><em>{num('reading')}</em>Related reading</div>
+                        <div class="fo-body">
+                            <ul class="fo-tags">
+                                {reading.map(p => <li><a href={`/blog/${p.id}`}>{p.data.title}</a></li>)}
+                            </ul>
+                        </div>
+                    </nav>
                 )}
 
                 {tags.length > 0 && (

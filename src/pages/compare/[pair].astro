@@ -13,6 +13,7 @@ import SiteHeader from '../../components/SiteHeader.astro';
 import {
     getResolvedComparisons,
     buildComparisonFaqs,
+    hasAlternativesPage,
     comparisonQuickAnswer,
     humanizePricing,
     type ResolvedComparison,
@@ -53,6 +54,7 @@ const lastUpdatedLabel = formatDate(comparison.lastUpdated);
 const related = getResolvedComparisons()
     .filter(c => c.slug !== comparison.slug && (c.a === toolA.slug || c.b === toolA.slug || c.a === toolB.slug || c.b === toolB.slug))
     .slice(0, 6);
+const alternativesLinks = [toolA, toolB].filter(t => hasAlternativesPage(t.slug));
 
 const jsonLd = JSON.stringify({
     "@context": "https://schema.org",
@@ -108,7 +110,7 @@ const facts = [
     { k: 'Updated', v: lastUpdatedLabel || '—' },
 ];
 const hasChoose = Boolean(toolA.enriched?.bestFor || toolB.enriched?.bestFor);
-const sections = ['answer', 'tools', hasChoose && 'choose', 'table', 'faq', related.length && 'more'].filter(Boolean) as string[];
+const sections = ['answer', 'tools', hasChoose && 'choose', 'table', 'faq', (related.length || alternativesLinks.length) && 'more'].filter(Boolean) as string[];
 const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
 
 ---
@@ -281,11 +283,12 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                     <FolioFaq faqs={faqs} />
                 </section>
 
-                {related.length > 0 && (
+                {(related.length > 0 || alternativesLinks.length > 0) && (
                     <nav class="fo-sec" id="more" aria-label="Related comparisons">
                         <h2 class="fo-label"><em>{num('more')}</em>More comparisons</h2>
                         <div class="fo-body">
                             <ul class="fo-tags">
+                                {alternativesLinks.map(t => <li><a href={`/tools/${t.slug}/alternatives`}>{t.name} alternatives</a></li>)}
                                 {related.map(c => <li><a href={`/compare/${c.slug}`}>{c.toolA.name} vs {c.toolB.name}</a></li>)}
                             </ul>
                             <div class="fo-more"><a href="/compare">All comparisons →</a></div>

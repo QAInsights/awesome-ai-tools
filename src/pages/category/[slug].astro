@@ -12,7 +12,7 @@ import Sidebar from '../../components/Sidebar.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import { formatDate, getCategoriesDetailed, maxLastUpdated, type CategoryInfo, type Tool } from '../../lib/tools';
 import { robotsFor } from '../../lib/indexing';
-import { humanizePricing } from '../../lib/compare';
+import { getAlternativesPageTools, humanizePricing } from '../../lib/compare';
 
 export async function getStaticPaths() {
     return getCategoriesDetailed().map(category => ({
@@ -39,6 +39,11 @@ const lastUpdated = maxLastUpdated(category.tools.map(t => t.enriched?.lastUpdat
 const KNOWN_FREE = new Set(['free', 'open-source', 'open_source', 'oss']);
 const enrichedCount = category.tools.filter(t => t.enriched).length;
 const freeCount = category.tools.filter(t => KNOWN_FREE.has((t.enriched?.pricing ?? '').toLowerCase())).length;
+
+// Alternatives guides for this category's tools - indexable pages only
+const alternativesGuides = getAlternativesPageTools()
+    .filter(t => t.category === category.tools[0]?.category && !robotsFor(`/tools/${t.slug}/alternatives`))
+    .slice(0, 12);
 
 // Top picks: enriched tools first (they have reviews/verdicts), README order preserved
 const topPicks = category.tools.filter(t => t.enriched).slice(0, 3);
@@ -167,6 +172,19 @@ const jsonLd = JSON.stringify({
                         </details>
                     ))}
                 </section>
+
+                {alternativesGuides.length > 0 && (
+                    <nav aria-label={`${category.short} alternatives guides`} class="pt-4">
+                        <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em] mb-4">Alternatives guides</div>
+                        <div class="flex flex-wrap gap-2">
+                            {alternativesGuides.map(t => (
+                                <a href={`/tools/${t.slug}/alternatives`} class="inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide hover:text-white hover:border-[#444] transition-colors">
+                                    {t.enriched?.name ?? t.name} alternatives
+                                </a>
+                            ))}
+                        </div>
+                    </nav>
+                )}
 
                 <!-- Sibling categories -->
                 <nav aria-label="Other categories" class="pt-4 pb-8">

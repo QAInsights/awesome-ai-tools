@@ -12,7 +12,7 @@
  */
 
 import { getAllTools, getAlternativesFor, getCategoriesDetailed, getToolBySlug, type EnrichedTool, type Tool } from './tools';
-import { getResolvedComparisons, getTopComparedTools, getTopPricingTools } from './compare';
+import { getAlternativesPageTools, getResolvedComparisons, getTopPricingTools } from './compare';
 import { getTrendingSnapshots } from './trending-data';
 import { getBestPages } from './best';
 
@@ -182,7 +182,7 @@ export function getGeneratedPageCandidates(): IndexCandidate[] {
         listed: [],
         primaryContent: [c.toolA.slug, c.toolB.slug].sort().join(' vs '),
     }));
-    const alternatives: IndexCandidate[] = getTopComparedTools().map(tool => ({
+    const alternatives: IndexCandidate[] = getAlternativesPageTools().map(tool => ({
         type: 'alternatives',
         path: `/tools/${tool.slug}/alternatives`,
         subjects: [tool],
