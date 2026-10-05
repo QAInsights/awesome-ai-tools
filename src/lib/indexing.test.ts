@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'bun:test';
 import type { EnrichedTool, Tool } from './tools';
 import { getAllTools, getCategoriesDetailed } from './tools';
-import { getResolvedComparisons, getTopComparedTools, getTopPricingTools } from './compare';
+import { getAlternativesPageTools, getResolvedComparisons, getTopPricingTools } from './compare';
 import { getTrendingSnapshots } from './trending-data';
 import { getBestFacets } from './best';
 import {
@@ -152,7 +152,7 @@ describe('generated page catalog', () => {
         expect(totals).toEqual({
             tool: getAllTools().length,
             compare: getResolvedComparisons().length,
-            alternatives: getTopComparedTools().length,
+            alternatives: getAlternativesPageTools().length,
             pricing: getTopPricingTools().length,
             category: getCategoriesDetailed().length,
             trending: getTrendingSnapshots().length,

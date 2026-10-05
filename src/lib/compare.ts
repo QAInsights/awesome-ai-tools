@@ -8,7 +8,7 @@
  */
 
 import comparisonsJson from '../../data/comparisons.json';
-import { getAllTools, getToolBySlug, type Tool } from './tools';
+import { getAlternativesFor, getAllTools, getToolBySlug, type Tool } from './tools';
 
 export interface Comparison {
     slug: string;
@@ -80,9 +80,28 @@ export function getTopComparedTools(limit = 20): Tool[] {
     return _topCompared.slice(0, limit);
 }
 
+let _alternativesPageTools: Tool[] | null = null;
+let _alternativesPageSlugs: Set<string> | null = null;
+
+/**
+ * Tools that get /tools/{slug}/alternatives: every tool with at least one
+ * same-category alternative, most-compared first. Thin pages are noindexed
+ * by the indexing rules rather than left ungenerated.
+ */
+export function getAlternativesPageTools(): Tool[] {
+    if (!_alternativesPageTools) {
+        const ranked = getTopComparedTools(getAllTools().length);
+        const rankedSlugs = new Set(ranked.map(t => t.slug));
+        _alternativesPageTools = [...ranked, ...getAllTools().filter(t => !rankedSlugs.has(t.slug))]
+            .filter(t => getAlternativesFor(t).length > 0);
+    }
+    return _alternativesPageTools;
+}
+
 /** Whether /tools/{slug}/alternatives is generated for this tool. */
 export function hasAlternativesPage(slug: string): boolean {
-    return getTopComparedTools().some(t => t.slug === slug);
+    _alternativesPageSlugs ??= new Set(getAlternativesPageTools().map(t => t.slug));
+    return _alternativesPageSlugs.has(slug);
 }
 
 let _topPricing: Tool[] | null = null;
