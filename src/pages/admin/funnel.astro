@@ -1,6 +1,6 @@
 ---
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
-import { loadFunnel, parseFunnelRange } from '../../lib/server/analytics-query';
+import { formatDelta, formatPointDelta, formatRate, loadFunnel, loadGrowth, parseFunnelRange, referrerGroup } from '../../lib/server/analytics-query';
 import { getAdminUserIds, requireDatabase } from '../../lib/server/runtime-env';
 import { getCookieSessionUser } from '../../lib/server/route-auth';
 
@@ -24,7 +24,7 @@ const d1Promise = db.batch<{ count: number }>([
     db.prepare('SELECT COUNT(*) AS count FROM users WHERE created_at >= ?').bind(cutoff),
     db.prepare('SELECT COUNT(*) AS count FROM users WHERE last_seen_at >= ?').bind(activeCutoff),
 ]);
-const [{ data: funnel, error: analyticsError }, d1Results] = await Promise.all([analyticsPromise, d1Promise]);
+const [{ data: funnel, error: analyticsError }, { data: growth, error: growthError }, d1Results] = await Promise.all([analyticsPromise, loadGrowth(), d1Promise]);
 const { shown, started, completed, providers: providerRows, triggers: triggerRows, outbound: outboundRows, badgeReferrals, adPrompt } = funnel;
 const rate = (numerator: number, denominator: number) => denominator
     ? `${((numerator / denominator) * 100).toFixed(1)}%`
@@ -32,6 +32,8 @@ const rate = (numerator: number, denominator: number) => denominator
 const totalUsers = d1Results[0]?.results?.[0]?.count ?? 0;
 const newUsers = d1Results[1]?.results?.[0]?.count ?? 0;
 const activeUsers = d1Results[2]?.results?.[0]?.count ?? 0;
+const groupLabels = { search: 'Search', github: 'GitHub', social: 'Social', ai: 'AI assistants', direct: 'Direct', other: 'Other' } as const;
+const deltaClass = (value: string) => value.startsWith('+') || value === 'new' ? 'text-emerald-300' : value.startsWith('-') ? 'text-rose-300' : 'text-[#737373]';
 ---
 
 <DashboardLayout
@@ -143,6 +145,104 @@ const activeUsers = d1Results[2]?.results?.[0]?.count ?? 0;
                     <tbody>{badgeReferrals.map(([slug, visits]) => <tr class="border-t border-[#1a1a1a]"><td class="px-5 py-3">{slug === '(home)' ? slug : <a href={`/tools/${slug}`} class="hover:underline">{slug}</a>}</td><td>{visits}</td></tr>)}</tbody>
                 </table>
             ) : <p class="text-[#737373] p-5">No badge referrals in this range.</p>}
+        </section>
+        <section class="mt-12" aria-labelledby="growth-heading">
+            <div class="flex flex-wrap items-end justify-between gap-3 mb-4">
+                <div>
+                    <h2 id="growth-heading" class="text-xl font-semibold">Growth baseline</h2>
+                    <p class="text-[#737373] text-xs mt-1">Fixed windows of whole UTC days, independent of the range above. Δ compares the last 7 days with the 7 before.</p>
+                </div>
+            </div>
+
+            {growthError && growthError !== analyticsError && (
+                <div class="border border-amber-400/20 bg-amber-400/[0.06] text-amber-200 rounded-lg p-4 mb-6">{growthError}</div>
+            )}
+            {growth.truncated && (
+                <div class="border border-amber-400/20 bg-amber-400/[0.06] text-amber-200 rounded-lg p-4 mb-6">Growth query hit its row limit; counts may be incomplete.</div>
+            )}
+
+            <h3 class="font-semibold mb-3">Weekly counts</h3>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8">
+                {[
+                    { label: 'Visits', current: growth.visits.last7, previous: growth.visits.prev7 },
+                    ...growth.weekly,
+                ].map(({ label, current, previous }) => {
+                    const delta = formatDelta(current, previous);
+                    return (
+                        <div class="border border-[#222] bg-white/[0.02] rounded-lg p-5">
+                            <p class="text-[#737373] text-xs mb-2">{label} (7d)</p>
+                            <div class="flex items-baseline justify-between gap-3">
+                                <p class="font-mono text-2xl text-white">{current}</p>
+                                <p class={`font-mono text-sm ${deltaClass(delta)}`}>{delta}</p>
+                            </div>
+                            <p class="text-[#737373] text-xs mt-2">prev 7d: {previous}</p>
+                        </div>
+                    );
+                })}
+                <div class="border border-[#222] bg-white/[0.02] rounded-lg p-5">
+                    <p class="text-[#737373] text-xs mb-2">Email subscribers</p>
+                    <p class="font-mono text-2xl text-[#737373]">—</p>
+                    <p class="text-[#737373] text-xs mt-2">Not tracked until the newsletter ships (#373).</p>
+                </div>
+            </div>
+
+            <h3 class="font-semibold mb-3">Returning visitors</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+                {[
+                    ['Unique visitors (7d)', String(growth.visitors.last7), formatDelta(growth.visitors.last7, growth.visitors.prev7), `prev 7d: ${growth.visitors.prev7}`],
+                    ['Came back the next week', formatRate(growth.weeklyReturn.rate), formatPointDelta(growth.weeklyReturn.rate, growth.weeklyReturn.previous), `Visitors 7-13 days ago seen again in the last 7. Prior week: ${formatRate(growth.weeklyReturn.previous)}`],
+                    ['28-day return rate', formatRate(growth.monthlyReturn.rate), formatPointDelta(growth.monthlyReturn.rate, growth.monthlyReturn.previous), `Visitors seen on 2+ days in the last 28. Prior 28d: ${formatRate(growth.monthlyReturn.previous)}`],
+                ].map(([label, value, delta, note]) => (
+                    <div class="border border-[#222] bg-white/[0.02] rounded-lg p-5">
+                        <p class="text-[#737373] text-xs mb-2">{label}</p>
+                        <div class="flex items-baseline justify-between gap-3">
+                            <p class="font-mono text-2xl text-white">{value}</p>
+                            <p class={`font-mono text-sm ${deltaClass(delta!)}`}>{delta}</p>
+                        </div>
+                        <p class="text-[#737373] text-xs mt-2">{note}</p>
+                    </div>
+                ))}
+            </div>
+            <p class="text-[#737373] text-xs -mt-5 mb-8">Based on the anonymous browser ID; visitors with Do Not Track or Global Privacy Control are counted in visits but not here.</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <section class="border border-[#222] rounded-lg overflow-hidden">
+                    <h3 class="font-semibold px-5 py-4 border-b border-[#222]">Referrers by group</h3>
+                    <table class="w-full text-sm">
+                        <thead class="text-[#737373] text-left"><tr><th class="px-5 py-3">Group</th><th>7d</th><th>Δ</th><th>28d</th></tr></thead>
+                        <tbody>{growth.referrerGroups.map(row => {
+                            const delta = formatDelta(row.last7, row.prev7);
+                            return <tr class="border-t border-[#1a1a1a]"><td class="px-5 py-3">{groupLabels[row.group]}</td><td>{row.last7}</td><td class={`font-mono ${deltaClass(delta)}`}>{delta}</td><td>{row.last28}</td></tr>;
+                        })}</tbody>
+                    </table>
+                </section>
+
+                <section class="border border-[#222] rounded-lg overflow-hidden">
+                    <h3 class="font-semibold px-5 py-4 border-b border-[#222]">Visits by ?ref=</h3>
+                    {growth.refSources.length ? (
+                        <table class="w-full text-sm">
+                            <thead class="text-[#737373] text-left"><tr><th class="px-5 py-3">Source</th><th>7d</th><th>Δ</th><th>28d</th></tr></thead>
+                            <tbody>{growth.refSources.map(row => {
+                                const delta = formatDelta(row.last7, row.prev7);
+                                return <tr class="border-t border-[#1a1a1a]"><td class="px-5 py-3 font-mono">{row.source}</td><td>{row.last7}</td><td class={`font-mono ${deltaClass(delta)}`}>{delta}</td><td>{row.last28}</td></tr>;
+                            })}</tbody>
+                        </table>
+                    ) : <p class="text-[#737373] p-5">No ?ref= visits in the last 28 days.</p>}
+                </section>
+            </div>
+
+            <section class="border border-[#222] rounded-lg overflow-hidden">
+                <h3 class="font-semibold px-5 py-4 border-b border-[#222]">Top referrer hosts</h3>
+                {growth.referrerHosts.length ? (
+                    <table class="w-full text-sm">
+                        <thead class="text-[#737373] text-left"><tr><th class="px-5 py-3">Host</th><th>Group</th><th>7d</th><th>Δ</th><th>28d</th></tr></thead>
+                        <tbody>{growth.referrerHosts.map(row => {
+                            const delta = formatDelta(row.last7, row.prev7);
+                            return <tr class="border-t border-[#1a1a1a]"><td class="px-5 py-3 font-mono">{row.host}</td><td>{groupLabels[referrerGroup(row.host)]}</td><td>{row.last7}</td><td class={`font-mono ${deltaClass(delta)}`}>{delta}</td><td>{row.last28}</td></tr>;
+                        })}</tbody>
+                    </table>
+                ) : <p class="text-[#737373] p-5">No external referrers in the last 28 days.</p>}
+            </section>
         </section>
     </div>
 </DashboardLayout>

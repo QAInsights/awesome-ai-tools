@@ -144,3 +144,224 @@ export async function loadFunnel(range: FunnelRange): Promise<{ data: FunnelView
         };
     }
 }
+
+export type ReferrerGroup = 'search' | 'github' | 'social' | 'ai' | 'direct' | 'other';
+
+export const REFERRER_GROUPS: readonly ReferrerGroup[] = ['search', 'github', 'social', 'ai', 'direct', 'other'];
+
+const AI_HOSTS = ['chatgpt.com', 'chat.openai.com', 'perplexity.ai', 'claude.ai', 'gemini.google.com', 'bard.google.com', 'copilot.microsoft.com', 'chat.deepseek.com', 'grok.com', 'meta.ai', 'phind.com', 'poe.com', 'you.com'];
+const SEARCH_HOSTS = ['bing.com', 'duckduckgo.com', 'yahoo.com', 'baidu.com', 'ecosia.org', 'search.brave.com', 'kagi.com', 'startpage.com', 'qwant.com', 'naver.com', 'com.google.android.googlequicksearchbox'];
+const SOCIAL_HOSTS = ['x.com', 't.co', 'twitter.com', 'reddit.com', 'linkedin.com', 'lnkd.in', 'facebook.com', 'news.ycombinator.com', 'youtube.com', 'bsky.app', 'threads.net', 'instagram.com', 'mastodon.social', 'producthunt.com', 'discord.com'];
+
+function matchesHost(host: string, domains: string[]): boolean {
+    return domains.some(domain => host === domain || host.endsWith(`.${domain}`));
+}
+
+export function referrerGroup(host: string): ReferrerGroup {
+    if (!host) return 'direct';
+    if (matchesHost(host, AI_HOSTS)) return 'ai';
+    if (/(^|\.)google\.[a-z.]+$/.test(host) || /(^|\.)yandex\.[a-z.]+$/.test(host) || matchesHost(host, SEARCH_HOSTS)) return 'search';
+    if (matchesHost(host, ['github.com'])) return 'github';
+    if (matchesHost(host, SOCIAL_HOSTS)) return 'social';
+    return 'other';
+}
+
+/** Daily event counts; `day` is the UTC day number (unix seconds / 86400). */
+export interface GrowthCountRow {
+    event: string;
+    trigger: string;
+    subject: string;
+    day: number;
+    n: number;
+}
+
+/** One row per anonymous visitor per UTC day with a visit. */
+export interface VisitorDayRow {
+    anonId: string;
+    day: number;
+}
+
+export interface PeriodCount {
+    last7: number;
+    prev7: number;
+    last28: number;
+}
+
+export interface ReturnRate {
+    rate: number | null;
+    previous: number | null;
+}
+
+export interface GrowthViewModel {
+    referrerGroups: Array<{ group: ReferrerGroup } & PeriodCount>;
+    referrerHosts: Array<{ host: string } & PeriodCount>;
+    refSources: Array<{ source: string } & PeriodCount>;
+    visits: PeriodCount;
+    visitors: { last7: number; prev7: number };
+    weeklyReturn: ReturnRate;
+    monthlyReturn: ReturnRate;
+    weekly: Array<{ label: string; current: number; previous: number }>;
+    truncated: boolean;
+}
+
+export const GROWTH_ROW_LIMIT = 10000;
+const GROWTH_DAYS = 56;
+const WEEKLY_EVENTS: Array<[string, string]> = [
+    [EVENTS.SIGNIN_COMPLETED, 'Sign-ins'],
+    [EVENTS.FAVORITE_ADDED, 'Favorites'],
+    [EVENTS.FOLLOW_ADDED, 'Follows'],
+];
+
+function fromDataset(dataset: 'aat_events' | 'aat_events_staging'): string {
+    return dataset === 'aat_events_staging' ? 'FROM aat_events_staging' : 'FROM aat_events';
+}
+
+export function growthCountsQuery(dataset: 'aat_events' | 'aat_events_staging'): string {
+    const events = [EVENTS.VISIT, ...WEEKLY_EVENTS.map(([event]) => event)].map(event => `blob1 = '${event}'`).join(' OR ');
+    return `
+        SELECT
+            blob1 AS event,
+            blob4 AS trigger,
+            blob5 AS subject,
+            intDiv(toUInt32(timestamp), 86400) AS day,
+            SUM(_sample_interval) AS n
+        ${fromDataset(dataset)}
+        WHERE timestamp >= NOW() - INTERVAL '${GROWTH_DAYS}' DAY AND (${events})
+        GROUP BY event, trigger, subject, day
+        LIMIT ${GROWTH_ROW_LIMIT}`;
+}
+
+export function visitorDaysQuery(dataset: 'aat_events' | 'aat_events_staging'): string {
+    return `
+        SELECT
+            blob2 AS anonId,
+            intDiv(toUInt32(timestamp), 86400) AS day
+        ${fromDataset(dataset)}
+        WHERE timestamp >= NOW() - INTERVAL '${GROWTH_DAYS}' DAY AND blob1 = '${EVENTS.VISIT}'
+        GROUP BY anonId, day
+        LIMIT ${GROWTH_ROW_LIMIT}`;
+}
+
+function emptyPeriod(): PeriodCount {
+    return { last7: 0, prev7: 0, last28: 0 };
+}
+
+function addToPeriod(period: PeriodCount, age: number, count: number): void {
+    if (age < 7) period.last7 += count;
+    else if (age < 14) period.prev7 += count;
+    if (age < 28) period.last28 += count;
+}
+
+function ratio(numerator: number, denominator: number): number | null {
+    return denominator ? numerator / denominator : null;
+}
+
+/**
+ * Folds daily rows into the growth panels. Windows are whole UTC days ending
+ * today: last7 = days 0-6 ago, prev7 = 7-13, last28 = 0-27.
+ */
+export function buildGrowthViewModel(countRows: GrowthCountRow[], visitorRows: VisitorDayRow[], today: number): GrowthViewModel {
+    const groups = new Map(REFERRER_GROUPS.map(group => [group, emptyPeriod()]));
+    const hosts = new Map<string, PeriodCount>();
+    const refs = new Map<string, PeriodCount>();
+    const visits = emptyPeriod();
+    const weekly = new Map(WEEKLY_EVENTS.map(([event, label]) => [event, { label, current: 0, previous: 0 }]));
+
+    for (const row of countRows) {
+        const age = today - Number(row.day);
+        const count = Number(row.n) || 0;
+        if (!(age >= 0 && age < GROWTH_DAYS) || !count) continue;
+        if (row.event === EVENTS.VISIT) {
+            addToPeriod(visits, age, count);
+            addToPeriod(groups.get(referrerGroup(row.subject))!, age, count);
+            if (row.subject) {
+                const host = hosts.get(row.subject) ?? emptyPeriod();
+                addToPeriod(host, age, count);
+                hosts.set(row.subject, host);
+            }
+            if (row.trigger) {
+                const ref = refs.get(row.trigger) ?? emptyPeriod();
+                addToPeriod(ref, age, count);
+                refs.set(row.trigger, ref);
+            }
+            continue;
+        }
+        const entry = weekly.get(row.event);
+        if (entry && age < 7) entry.current += count;
+        else if (entry && age < 14) entry.previous += count;
+    }
+
+    const weeks: Array<Set<string>> = [new Set(), new Set(), new Set()];
+    const days = new Map<string, Set<number>>();
+    for (const row of visitorRows) {
+        const age = today - Number(row.day);
+        if (!row.anonId || !(age >= 0 && age < GROWTH_DAYS)) continue;
+        if (age < 21) weeks[Math.floor(age / 7)]!.add(row.anonId);
+        const seen = days.get(row.anonId) ?? new Set<number>();
+        seen.add(age);
+        days.set(row.anonId, seen);
+    }
+    const returned = (earlier: Set<string>, later: Set<string>) => ratio([...earlier].filter(id => later.has(id)).length, earlier.size);
+    const monthly = (from: number) => {
+        let visitors = 0;
+        let returning = 0;
+        for (const seen of days.values()) {
+            const inWindow = [...seen].filter(age => age >= from && age < from + 28).length;
+            if (inWindow) visitors += 1;
+            if (inWindow >= 2) returning += 1;
+        }
+        return ratio(returning, visitors);
+    };
+
+    const byLast28 = <K extends string>(entries: Map<K, PeriodCount>, key: string) =>
+        Array.from(entries, ([name, period]) => ({ [key]: name, ...period }))
+            .filter(entry => entry.last28 || entry.prev7)
+            .sort((a, b) => b.last28 - a.last28 || b.last7 - a.last7);
+
+    return {
+        referrerGroups: REFERRER_GROUPS.map(group => ({ group, ...groups.get(group)! })),
+        referrerHosts: (byLast28(hosts, 'host') as GrowthViewModel['referrerHosts']).slice(0, 15),
+        refSources: byLast28(refs, 'source') as GrowthViewModel['refSources'],
+        visits,
+        visitors: { last7: weeks[0]!.size, prev7: weeks[1]!.size },
+        weeklyReturn: { rate: returned(weeks[1]!, weeks[0]!), previous: returned(weeks[2]!, weeks[1]!) },
+        monthlyReturn: { rate: monthly(0), previous: monthly(28) },
+        weekly: Array.from(weekly.values()),
+        truncated: countRows.length >= GROWTH_ROW_LIMIT || visitorRows.length >= GROWTH_ROW_LIMIT,
+    };
+}
+
+/** Week-over-week change, e.g. "+25%", "-10%", "new", or "—" when both are zero. */
+export function formatDelta(current: number, previous: number): string {
+    if (!previous) return current ? 'new' : '—';
+    const pct = Math.round(((current - previous) / previous) * 100);
+    return `${pct > 0 ? '+' : ''}${pct}%`;
+}
+
+/** Change between two rates in percentage points, e.g. "+3.1 pts". */
+export function formatPointDelta(rate: number | null, previous: number | null): string {
+    if (rate === null || previous === null) return '—';
+    const points = (rate - previous) * 100;
+    return `${points > 0 ? '+' : ''}${points.toFixed(1)} pts`;
+}
+
+export function formatRate(rate: number | null): string {
+    return rate === null ? '—' : `${(rate * 100).toFixed(1)}%`;
+}
+
+export async function loadGrowth(now = Date.now()): Promise<{ data: GrowthViewModel; error: string }> {
+    const today = Math.floor(now / 86_400_000);
+    try {
+        const dataset = getAnalyticsDataset();
+        const [counts, visitors] = await Promise.all([
+            runAnalyticsSql(growthCountsQuery(dataset)),
+            runAnalyticsSql(visitorDaysQuery(dataset)),
+        ]);
+        return { data: buildGrowthViewModel(counts as GrowthCountRow[], visitors as VisitorDayRow[], today), error: '' };
+    } catch (error) {
+        return {
+            data: buildGrowthViewModel([], [], today),
+            error: error instanceof Error ? error.message : 'Analytics unavailable',
+        };
+    }
+}
