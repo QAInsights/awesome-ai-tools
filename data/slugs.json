@@ -1242,6 +1242,12 @@
     "category": "AI Testing & Quality Assurance"
   },
   {
+    "slug": "ifixai",
+    "name": "iFixAi",
+    "company": "iFixAi",
+    "category": "AI Testing & Quality Assurance"
+  },
+  {
     "slug": "claude",
     "name": "Claude",
     "company": "Anthropic",
@@ -1884,6 +1890,24 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "taste-skill",
+    "name": "Taste Skill",
+    "company": "Leon Lin",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "skills-manager",
+    "name": "Skills Manager",
+    "company": "Jay.TL",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "hyperframes",
+    "name": "HyperFrames",
+    "company": "HeyGen",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
@@ -1929,6 +1953,12 @@
     "slug": "magnitude",
     "name": "Magnitude",
     "company": "Magnitude (YC)",
+    "category": "Hardware & Edge AI"
+  },
+  {
+    "slug": "text-to-cad",
+    "name": "text-to-cad",
+    "company": "earthtojake",
     "category": "Hardware & Edge AI"
   }
 ]
