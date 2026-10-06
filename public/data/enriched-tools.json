@@ -8947,5 +8947,34 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-06"
+  },
+  {
+    "slug": "bashcut",
+    "name": "BashCut",
+    "company": "Nolan / dongnguyenvie",
+    "pricing": "open-source",
+    "pricingDetail": "BashCut is MIT-licensed and free to download from GitHub releases. It adds no extra AI bill: it runs your existing Claude Pro/Max or ChatGPT Plus/Pro subscription via the real Claude Code and Codex CLIs, and the optional Director plugin lets you bring your own API key for other models.",
+    "description": "BashCut is a native macOS video editor built on AVFoundation with a Claude Code / Codex terminal docked beside the timeline. Everything the UI does, coding agents can do through the bashcut CLI or MCP server, using the same atomic, undoable edit operations.",
+    "keyFeatures": [
+      "Native macOS editor on AVFoundation with a layered timeline, captions, voiceover and plugins",
+      "CLI and MCP server so Claude Code and Codex can drive every UI action",
+      "Projects stored as plain JSON next to footage, editable by agents and scripts",
+      "Atomic, undoable edit operations shared by UI and agents",
+      "Single composition engine for preview and export (WYSIWYG)",
+      "Agent kit with editing skills: footage survey, beat cuts, audio mix, captions, colour grade, voiceover, effects, stock images",
+      "Works with existing Claude/ChatGPT subscriptions or any model via the Director plugin and your own API key"
+    ],
+    "bestFor": "Developers and creators on macOS who want coding agents (Claude Code, Codex) to script and automate video edits through a CLI or MCP while keeping edits visible and undoable in a real timeline.",
+    "notIdealFor": "Windows or Linux users, and anyone wanting a polished, fully finished consumer editor — BashCut is macOS-only and still under active development with some features unverified.",
+    "recentUpdates": "Under active development: the M0 foundation is accepted on real footage and most editor and agent features (M1–M3, M5) are in place, with an implementation status page tracking what is verified. Distributed via GitHub releases and a TestFlight beta.",
+    "verdict": "BashCut is a compelling, MIT-licensed option for agent-driven video editing on macOS, with a genuinely novel CLI/MCP surface and no extra AI cost if you already pay for Claude or ChatGPT. The trade-offs are its macOS-only scope and in-progress status, so expect rough edges and some unverified features.",
+    "tags": [
+      "video-editing",
+      "macos",
+      "mcp",
+      "cli",
+      "ai-agents"
+    ],
+    "lastUpdated": "2026-10-06"
   }
 ]
