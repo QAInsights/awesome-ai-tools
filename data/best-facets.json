@@ -109,5 +109,73 @@
     "include": {
       "patterns": ["TypeScript", "JavaScript", "\\bNode\\.?js\\b", "\\bReact\\b", "Next\\.js"]
     }
+  },
+  {
+    "slug": "ai-testing-tools",
+    "title": "Best AI Testing & QA Tools",
+    "short": "Testing & QA",
+    "keyword": "AI testing tools",
+    "intro": "AI testing tools write unit and end-to-end tests, run them against real browsers or apps, and flag regressions before they ship. This list covers dedicated AI QA products and coding tools with strong test-generation or test-automation features.",
+    "criteria": "Tools in the AI Testing & Quality Assurance category, plus tools whose review mentions testing, QA, test generation, unit or end-to-end tests, test automation, or browser-testing frameworks like Playwright, Selenium, and Cypress.",
+    "include": {
+      "categories": ["AI Testing & Quality Assurance"],
+      "patterns": ["\\bQA\\b", "\\btesting\\b", "\\btests?\\b", "test generation", "generates? (unit |end-to-end |e2e )?tests", "unit tests?", "end-to-end test", "\\be2e\\b", "test automation", "regression test", "\\bPlaywright\\b", "\\bSelenium\\b", "\\bCypress\\b"]
+    }
+  },
+  {
+    "slug": "ai-code-review-tools",
+    "title": "Best AI Code Review Tools",
+    "short": "Code review",
+    "keyword": "AI code review tools",
+    "intro": "AI code reviewers comment on pull requests, summarize diffs, and catch bugs and style issues before a human reviewer looks. This list covers dedicated PR-review bots and coding tools with a built-in review workflow.",
+    "criteria": "Tools whose review mentions code review, pull-request or PR review, or reviewing diffs. Tools where review is the main purpose rank higher.",
+    "include": {
+      "patterns": ["code reviews?", "reviews? (pull requests|PRs|diffs)", "\\bPR reviews?", "pull[- ]request reviews?", "review(er|ing)? (bot|agent)s?"]
+    }
+  },
+  {
+    "slug": "ai-code-security-tools",
+    "title": "Best AI Code Security & Sandboxing Tools",
+    "short": "Security",
+    "keyword": "AI code security tools",
+    "intro": "As coding agents write and run more code, teams need tools that find vulnerabilities, scan for secrets, and keep agents inside a sandbox. This list covers AI security scanners, pentest agents, and sandboxes for running agent code safely.",
+    "criteria": "Tools in the AI Code Review & Security category, plus tools whose review mentions security, vulnerabilities, SAST, secret scanning, CVEs, pentesting, prompt injection, supply-chain risk, or sandboxing.",
+    "include": {
+      "categories": ["AI Code Review & Security"],
+      "patterns": ["\\bsecurity\\b", "vulnerabilit", "\\bSAST\\b", "secrets? scann", "\\bCVEs?\\b", "pen(etration )?test", "prompt injection", "supply[- ]chain", "\\bsandbox"]
+    }
+  },
+  {
+    "slug": "mcp-servers-for-ai-coding",
+    "title": "Best MCP Servers & Tools for AI Coding Agents",
+    "short": "MCP",
+    "keyword": "MCP servers for AI coding",
+    "intro": "The Model Context Protocol (MCP) lets coding agents like Claude Code, Cursor, and Codex call external tools, from databases and browsers to docs and design files. This list covers MCP servers, gateways, and clients that developers plug into their agents.",
+    "criteria": "Tools whose review mentions MCP or the Model Context Protocol. Tools where MCP is named in the name, tags, or summary rank higher.",
+    "include": {
+      "patterns": ["\\bMCP\\b", "Model Context Protocol"]
+    }
+  },
+  {
+    "slug": "multi-agent-coding-tools",
+    "title": "Best Tools for Parallel & Multi-Agent Coding",
+    "short": "Multi-agent",
+    "keyword": "multi-agent coding tools",
+    "intro": "Running several coding agents at once, each on its own branch or task, is one of the fastest ways to scale AI-assisted development. This list covers orchestrators, agent workspaces, and IDEs that run agents in parallel, often in separate git worktrees.",
+    "criteria": "Tools whose review mentions multi-agent workflows, running agents in parallel, agent orchestration, subagents, swarms, or git worktrees.",
+    "include": {
+      "patterns": ["multi[- ]agents?", "parallel (agents|sessions|tasks|coding)", "(agents|sessions|tasks) in parallel", "orchestrat", "\\bworktrees?\\b", "\\bsub-?agents?\\b", "\\bswarms?\\b"]
+    }
+  },
+  {
+    "slug": "ai-devops-sre-tools",
+    "title": "Best AI Tools for DevOps & SRE",
+    "short": "DevOps & SRE",
+    "keyword": "AI DevOps tools",
+    "intro": "AI DevOps and SRE tools help with infrastructure as code, CI/CD pipelines, Kubernetes, and incident response, from writing Terraform to triaging alerts while on call. This list covers agents and assistants built for operations work.",
+    "criteria": "Tools whose review mentions DevOps, SRE, incident response, on-call, Kubernetes, Terraform, infrastructure as code, CI/CD, or observability.",
+    "include": {
+      "patterns": ["\\bDevOps\\b", "\\bSREs?\\b", "incident", "on[- ]call", "Kubernetes", "\\bk8s\\b", "Terraform", "infrastructure[- ]as[- ]code", "\\bIaC\\b", "\\bCI/CD\\b", "observability"]
+    }
   }
 ]
