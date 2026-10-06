@@ -1908,6 +1908,30 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "matt-pocock-skills",
+    "name": "Matt Pocock Skills",
+    "company": "Matt Pocock",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "rea",
+    "name": "REA",
+    "company": "morluto",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "diagram-design",
+    "name": "Diagram Design",
+    "company": "Cathryn Lavery (LittleMight)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "dbx",
+    "name": "DBX",
+    "company": "DBX",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",

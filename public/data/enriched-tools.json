@@ -8839,5 +8839,113 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-05"
+  },
+  {
+    "slug": "matt-pocock-skills",
+    "name": "Matt Pocock Skills",
+    "company": "Matt Pocock",
+    "pricing": "free",
+    "pricingDetail": "Matt Pocock Skills is free and open source under the MIT license; it installs as a Claude Code plugin or via `npx skills@latest add` and runs inside the coding agent you already use.",
+    "description": "Matt Pocock Skills is an open-source set of small, composable agent skills built to fix common failure modes of Claude Code, Codex and other coding agents. Instead of owning the whole process like spec frameworks, the skills cover focused steps such as grilling you about a change before work starts, writing specs, triaging issues, diagnosing bugs and reviewing code.",
+    "keyFeatures": [
+      "`/grill-me` and `/grill-with-docs` interviews that align the agent with you before a change",
+      "`/to-spec` and `/triage` skills wired to your issue tracker (GitHub, GitLab, local files) and labels",
+      "`/diagnosing-bugs`, `/code-review` and `/improve-codebase-architecture` engineering skills",
+      "Managed Claude Code plugin from the official marketplace or editable files via `npx skills@latest add mattpocock/skills`",
+      "One-time `/setup-matt-pocock-skills` per repo to configure tracker, labels and doc locations"
+    ],
+    "bestFor": "Developers who want lightweight, adaptable skills that keep coding agents aligned and disciplined without adopting a heavyweight spec-driven framework.",
+    "notIdealFor": "Teams looking for a full end-to-end agent orchestration process or a native Codex plugin, which is still on the roadmap.",
+    "recentUpdates": "v1.3.1 was released on October 4, 2026, and the repository appeared on GitHub Trending in early October 2026 with more than 270,000 stars.",
+    "verdict": "A pragmatic, widely adopted skill pack that brings solid engineering habits to everyday agent-driven development.",
+    "tags": [
+      "Agent Skills",
+      "Claude Code",
+      "Code Review",
+      "Developer Tools",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-06"
+  },
+  {
+    "slug": "rea",
+    "name": "REA",
+    "company": "morluto",
+    "pricing": "free",
+    "pricingDetail": "REA is free and open source under the MIT license and runs locally; native analysis can use an existing Ghidra install or Hopper, which has a demo mode and paid licenses from its vendor.",
+    "description": "REA (Reverse Engineer Anything) is an open-source MCP server and CLI that lets coding agents investigate applications without their source code. It inspects native binaries, JavaScript and Electron apps, .NET assemblies, Android APKs and websites, explains how a feature works with the evidence behind each conclusion, and helps the agent build a similar feature for your project.",
+    "keyFeatures": [
+      "Native Mach-O, ELF and PE analysis through Hopper or Ghidra: functions, pseudocode, strings, calls and references",
+      "Investigation workflows for app overviews, feature traces, call graphs and Swift/Objective-C discovery",
+      "Electron, JavaScript, .NET, Android APK, firmware and browser-observation tool families",
+      "Guided `npx rea-agents setup` for Claude Code, Codex, Cursor, Gemini CLI, Windsurf, Devin, OpenCode and more",
+      "Local-only analysis with results that state their evidence and limitations"
+    ],
+    "bestFor": "Developers who want their coding agent to understand how an existing app or feature works at the binary level before building their own version.",
+    "notIdealFor": "Windows-hosted analysis or users expecting recovery of original source code or automatic app cloning, which REA explicitly does not claim.",
+    "recentUpdates": "rea-agents 4.0.1 was released on October 5, 2026, and REA topped GitHub Trending's daily list in early October 2026.",
+    "verdict": "A capable, evidence-first bridge between coding agents and real reverse-engineering tooling.",
+    "tags": [
+      "Reverse Engineering",
+      "MCP",
+      "CLI",
+      "Developer Tools",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-06"
+  },
+  {
+    "slug": "diagram-design",
+    "name": "Diagram Design",
+    "company": "Cathryn Lavery (LittleMight)",
+    "pricing": "free",
+    "pricingDetail": "Diagram Design is free and open source under the MIT license; it installs as an agent skill or Claude Code plugin and runs inside your existing coding agent.",
+    "description": "Diagram Design is an open-source agent skill that produces editorial-quality diagrams as self-contained HTML and SVG instead of generic rounded-box output. It supports dozens of technical and business diagram types, matches your brand by reading your website, and works in Claude Code, Codex, GitHub Copilot, Factory Droid, Pi and other Agent Skills-compatible hosts.",
+    "keyFeatures": [
+      "50+ diagram types including architecture, sequence, ER, state machine, dependency graph, UML class and database schema",
+      "Self-contained HTML + SVG output with no build step, JavaScript or external image dependency",
+      "Brand matching that reads your website to pick colors and type",
+      "Optional accessible motion and semantic system patterns",
+      "Redraws existing Mermaid, draw.io or Excalidraw sources at a chosen format and detail level"
+    ],
+    "bestFor": "Developers and writers who want polished architecture and documentation diagrams generated directly by their coding agent.",
+    "notIdealFor": "Teams that need collaborative, interactive diagram editing or diagrams verified against source code.",
+    "recentUpdates": "Version 2.5.10 added ten more layout grammars such as Sankey, Wardley map, UML class and database schema, and the repository appeared on GitHub Trending in October 2026 with more than 43,000 stars.",
+    "verdict": "A tasteful, low-friction way to get publication-ready diagrams out of any skills-compatible coding agent.",
+    "tags": [
+      "Diagramming",
+      "Agent Skills",
+      "Documentation",
+      "Design",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-06"
+  },
+  {
+    "slug": "dbx",
+    "name": "DBX",
+    "company": "DBX",
+    "pricing": "free",
+    "pricingDetail": "DBX is free and open source under the Apache-2.0 license for desktop, Docker and web; AI features use your own Claude, OpenAI, local or OpenAI-compatible model endpoint.",
+    "description": "DBX is a lightweight, open-source database client of about 25 MB that connects to more than 100 databases, message queues and middleware from desktop, Docker or the browser. It includes an AI SQL assistant and a separate MCP server so AI coding agents can query databases through the connections already configured in DBX.",
+    "keyFeatures": [
+      "100+ databases including MySQL, PostgreSQL, SQLite, Redis, MongoDB, DuckDB, ClickHouse, SQL Server and Oracle",
+      "AI SQL assistant that generates, explains, optimizes and fixes SQL with built-in safety checks",
+      "Rust MCP server (`npx @dbx-app/mcp-server`) for Claude Code, Cursor, Windsurf and other MCP agents",
+      "Schema browser, ER diagrams, schema diff, explain plans and field lineage",
+      "Native macOS, Windows and Linux apps plus self-hosted Docker and web editions"
+    ],
+    "bestFor": "Developers who want a fast, free multi-database client and want their coding agents to query the same connections over MCP.",
+    "notIdealFor": "Teams standardized on enterprise database IDEs that need vendor-backed support contracts.",
+    "recentUpdates": "v0.6.34 was released on October 4, 2026, and DBX appeared on GitHub Trending's weekly Rust list in early October 2026 with roughly 25,000 stars.",
+    "verdict": "A remarkably capable, lightweight database client whose MCP server makes it a practical data bridge for AI coding agents.",
+    "tags": [
+      "Database",
+      "SQL",
+      "MCP",
+      "Developer Tools",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-06"
   }
 ]
