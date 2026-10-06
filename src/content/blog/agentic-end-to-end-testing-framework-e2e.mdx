@@ -1,0 +1,176 @@
+---
+title: "e2e by TesterArmy: A Practical Look at an Agentic End-to-End Testing Framework"
+description: "TesterArmy's e2e is an open source agentic end-to-end testing framework for web, iOS and Android. Setup, replay cache, a real test, and where it falls short."
+pubDate: 2026-10-05
+tags: ["testing", "e2e", "testerarmy", "playwright", "open-source", "agents"]
+---
+
+In this blog post, we will see what an agentic end-to-end testing framework actually changes in a test suite, using TesterArmy's open source [e2e](/tools/e2e) as the worked example. We will set it up, write one test, look at how its replay cache keeps model calls down, and compare it with three tools you may already use.
+
+**Short answer:** An agentic end-to-end testing framework lets an AI agent drive a real browser or mobile app toward a plain-language goal, then checks the result with normal assertions. TesterArmy's e2e does this in TypeScript, replays verified agent steps from a cache without a model call, and targets web, iOS, and Android.
+
+## Why e2e is showing up everywhere this week
+
+The repo [tester-army/e2e](https://github.com/tester-army/e2e) was created on July 22, 2026, and it hit GitHub's daily trending list on October 4 and 5. Two numbers from the last 48 hours:
+
+- Version 0.17.0 shipped on October 4, 2026, two days after 0.16.0 and four days after 0.15.0, per the [npm registry](https://www.npmjs.com/package/e2e).
+- The [gitnova tracker](https://gitnova.dev/en/r/tester-army/e2e) measured about 3,700 stars on October 5, with 663 added before 11:00 UTC that day. I could not cross-check this against the GitHub API directly, so treat the exact count as approximate.
+
+The team behind it, TesterArmy, also ran a [Launch HN](https://news.ycombinator.com/item?id=48586299) for its hosted agentic QA platform. The framework is the open part of that product, and the [launch post](https://tester.army/blog/introducing-e2e) says it will become "the open foundation" for the platform.
+
+## What e2e does
+
+e2e is a TypeScript test runner. A test can mix two kinds of steps:
+
+- **Agent steps:** `agent.act()` takes a goal like "upgrade the workspace to the Pro plan" and the model works out the clicks. `agent.assert()`, `agent.waitFor()`, and `agent.extract()` ask the model to judge or read the screen.
+- **Deterministic steps:** `screen.getByRole()`, `app.open()`, and `expect()` behave the way Playwright users expect.
+
+Here is the example from the official README, as shown below:
+
+```ts
+// tests/checkout.e2e.ts
+import { test, expect } from 'e2e';
+
+test('a member upgrades to Pro', async ({ app, agent, screen }) => {
+  await app.open('/settings/billing');
+
+  await agent.act('upgrade the workspace to the Pro plan');
+  await agent.assert('the invoice preview shows a prorated amount');
+
+  await expect(screen.getByRole('status')).toContainText('Pro');
+});
+```
+
+The part I like: the final line is a plain assertion. The agent can find its own way to the upgrade button, but the pass or fail decision on `role=status` is not left to the model.
+
+### Who it is for
+
+- Teams whose Playwright suite breaks every time a designer moves a button.
+- Apps with dynamic content (AI chat UIs, feeds) where fixed selectors are painful.
+- Teams that test web and mobile and want one API. The `@e2e-dev/web` engine runs Chromium, Firefox, and WebKit through Playwright, and `@e2e-dev/mobile` runs iOS simulators and Android emulators through agent-device.
+
+### The replay cache is the real feature
+
+Calling a model on every click on every CI run would be slow and expensive. e2e handles this with a cache, per its [docs](https://tester.army/e2e):
+
+1. An `agent.act()` step is recorded only after a later check in the same test passes.
+2. The next run replays the recorded actions with no model call, matching controls by role, name, test id, and context.
+3. If the app changed and the replay no longer fits, the agent takes over from the current screen instead of failing straight away.
+4. `agent.assert`, `agent.waitFor`, and `agent.extract` always run live. Only actions are cached, not judgments.
+
+You commit `.e2e/cache/` to the repo, so CI replays the same recordings you produced locally. The run summary reports how many steps were replayed, handed off, or missed, which gives you a number to watch for drift.
+
+## Setting it up
+
+e2e needs Node.js 22.12 or newer. I could not install it on the machine I wrote this on (its network only allows one internal host), so the commands below come straight from the official README and docs, and the test file was type-checked against the documented API rather than run.
+
+1. In your app's directory, run the wizard:
+
+   ```bash
+   npx e2e init
+   ```
+
+   It asks for Web (Playwright) or Mobile (iOS/Android) and a model provider. Picking "None" gives you tests without AI steps, which need no model at all.
+2. The wizard writes `e2e.config.ts`, an example test, the e2e agent skill, and an `e2e mcp` registration for Claude Code and Cursor. Existing files stay intact.
+3. Run the suite:
+
+   ```bash
+   npx e2e run
+   ```
+
+4. Optional, for coding agents: `npx e2e init --yes` does a non-interactive setup (web config on Vercel AI Gateway), and `npx e2e guide` prints the skill so your agent can read it.
+
+### Choosing a model
+
+Agent steps run on a model you bring. The [docs](https://tester.army/e2e) list an API key, Vercel AI Gateway, OpenRouter, a local model server, or an existing ChatGPT, GitHub Copilot, OpenCode Console, or SuperGrok subscription. The framework itself is free under Apache-2.0. Your cost is model usage, and the cache is what keeps that cost flat after the first green run.
+
+## A concrete example: a TodoMVC test
+
+The checkout example above assumes a billing page you do not have. Here is a smaller one you can point at any TodoMVC clone:
+
+```ts
+// tests/todo.e2e.ts
+import { test, expect } from 'e2e';
+
+test('a visitor adds a todo', async ({ app, agent, screen }) => {
+  await app.open('/');
+
+  await agent.act('add a todo called "Write release notes"');
+
+  await expect(screen.getByRole('list')).toContainText('Write release notes');
+  await agent.assert('the footer counter shows 1 item left');
+});
+```
+
+What happens over two runs:
+
+- **Run 1:** the model reads the page, types into the input, presses Enter. The `expect` on the list passes, so the `agent.act` step gets recorded.
+- **Run 2:** the recorded actions replay with no model call. The `agent.assert` on the counter still calls the model, because judgments always run live.
+
+That split is the whole idea in four lines. If I were trialing this, I would swap the `agent.assert` for a deterministic `expect` on the counter text too, and see if run 2 makes zero model calls.
+
+## Honest limitations
+
+- **It is pre-1.0.** The README says APIs and config can still change, and 0.17.0 already had two breaking changes: interrupted tests now get their own column instead of counting as failures, and the web engine pins its own `playwright-core` 1.63.0, per the [PromptCrates release summary](https://promptcrates.com/news/tester-army-e2e-github-trending). Pin the version.
+- **Agent judgments cost money every run.** Only `agent.act` is cached. A suite full of `agent.assert` calls will hit the model on every CI run.
+- **Model-driven steps are less predictable.** When the cache misses and the agent takes over, two runs can take different paths. The replayed, handed off, and missed counts help, but they do not make it deterministic.
+- **Mobile needs local simulators or a hosted service.** The `@e2e-dev/eas` package covers hosted iOS simulators and Android emulators. I have no data on how fast or reliable that path is.
+
+## How it compares
+
+e2e is not the only tool putting an agent in the test loop. Facts below are from each project's repo, changelog, or package registry.
+
+| Tool | Approach | Platforms | License | Latest checked |
+|------|----------|-----------|---------|----------------|
+| [e2e](https://github.com/tester-army/e2e) | Agent and exact steps in one test, cached replay | Web, iOS, Android | Apache-2.0 | 0.17.0, Oct 4, 2026 |
+| [Playwright Test Agents](https://playwright.dev/docs/test-agents) | Planner, generator, healer agents write plain Playwright tests | Web | Apache-2.0 | 1.63.0, Sep 2026 |
+| [Midscene.js](https://github.com/web-infra-dev/midscene) | Vision-driven UI automation SDK | Web, Android, iOS, desktop | MIT | v1.11 (changelog) |
+| [Stagehand](https://github.com/browserbase/stagehand) | Browser agent SDK with `act`, `extract`, `observe` | Web | MIT | 4.0.2 |
+
+### Playwright Test Agents
+
+Added in [Playwright 1.56](https://github.com/microsoft/playwright/releases/tag/v1.56.0). Run `npx playwright init-agents --loop=claude` (or `vscode`, `opencode`) and your coding agent gets planner, generator, and healer definitions. The output is ordinary Playwright code, so no model runs in CI. **Limitation:** the healer only runs when you invoke it, so broken tests still break the build until someone asks the agent to fix them.
+
+### Midscene.js
+
+ByteDance's [Midscene](https://midscenejs.com/changelog) has about 14,700 stars and covers web, Android, iOS, and desktop. **Limitation:** v1.10 retired its MCP server packages in favor of skills and CLIs, so older agent setups that relied on `@midscene/mcp` need to pin 1.9.8 or migrate.
+
+### Stagehand
+
+Browserbase's Stagehand has about 24,100 stars. v4 removed `agent()` entirely and now recommends "code mode", where a coding assistant writes a script once and you run it, per the [v3 to v4 migration guide](https://docs.stagehand.dev/v4/migrations/v3). **Limitation:** it is a browser automation SDK, not a test runner, so you bring your own runner, assertions, and reporting.
+
+### Which one I would pick
+
+- Pick **e2e** if you want agent steps inside the test file at run time and need mobile.
+- Pick **Playwright Test Agents** if you want zero model calls in CI and are fine with plain Playwright output.
+- Pick **Stagehand** if you are building an agent that browses, not a test suite.
+
+## FAQ
+
+### What is an agentic end-to-end testing framework?
+
+It is a test runner where some steps are goals for an AI agent instead of scripted clicks. The agent drives a real browser or device toward the goal, and the test then checks the outcome. Good frameworks keep the final pass or fail decision on deterministic assertions.
+
+### Is TesterArmy's e2e free to use?
+
+Yes. The framework is open source under Apache-2.0 and works without a TesterArmy account. You pay only for the model behind agent steps, and tests without agent steps need no model.
+
+### Does e2e replace Playwright?
+
+Not exactly. Its web engine runs on Playwright, and the deterministic API (`getByRole`, `expect`) will feel familiar. You would move tests to e2e to gain agent steps and mobile targets, not to escape Playwright itself.
+
+### How does e2e keep AI tests from getting slow and expensive?
+
+It caches `agent.act` steps once a later check passes and replays them on the next run without calling the model. If the UI changes, the agent takes over from the current screen. Agent assertions and extractions still run live every time.
+
+### Can e2e test iOS and Android apps?
+
+Yes. The `@e2e-dev/mobile` engine drives iOS simulators and Android emulators through agent-device, using the same test API as the web engine. Hosted simulators are available through the `@e2e-dev/eas` package.
+
+## How this ties to ai.dosa.dev
+
+e2e is listed in the [QA and Testing category](/category/qa-testing) alongside [Agent QA](/tools/agent-qa), which takes the hosted, self-improving agent route instead of a code-first runner. If you plan to let [Claude Code](/tools/claude-code) or [Cursor](/tools/cursor) write and fix these tests through the `e2e mcp` server, our guide to [open source sandboxes for AI coding agents](/blog/open-source-sandboxes-for-ai-coding-agents) covers where to run that agent safely.
+
+Happy Testing!
+
+Would you trust an agent step in a checkout test, or only behind a deterministic `expect`?
