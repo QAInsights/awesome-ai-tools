@@ -6,6 +6,9 @@
  * the shared generic card. Also regenerates only when missing or stale
  * (content hash), so rebuilds stay fast.
  *
+ * Cards are designed to stay legible when shrunk to a ~320px thumbnail
+ * (LinkedIn, Slack, iMessage): one large title, one large subtitle, no small print.
+ *
  * Usage: node scripts/generate-og-images.js
  */
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'fs';
@@ -37,33 +40,39 @@ function truncate(str, max) {
     return s.length <= max ? s : s.slice(0, max - 1).trimEnd() + '…';
 }
 
+// Bump to regenerate every card after a layout change.
+const OG_DESIGN = 2;
+
 function hash(str) {
-    return createHash('sha1').update(str).digest('hex').slice(0, 10);
+    return createHash('sha1').update(String(OG_DESIGN) + str).digest('hex').slice(0, 10);
 }
 
+
 async function renderPng(tool) {
-    const name = tool.enriched?.name ?? tool.name;
-    const company = tool.enriched?.company ?? tool.company;
-    const desc = truncate(tool.enriched?.description ?? tool.notes, 130);
     return renderCardPng({
-        pill: tool.categoryShort,
-        content: [
-            { type: 'div', props: { style: { fontSize: '64px', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em' }, children: truncate(name, 40) } },
-            { type: 'div', props: { style: { fontSize: '26px', fontWeight: 600, color: '#737373', textTransform: 'uppercase', letterSpacing: '0.08em' }, children: truncate(company, 40) } },
-            { type: 'div', props: { style: { fontSize: '24px', fontWeight: 400, color: '#a3a3a3', lineHeight: 1.5, marginTop: '8px' }, children: desc } },
-        ],
-        footerLeft: 'Curated AI coding tools — pricing, features, verdicts',
-        footerRight: `ai.dosa.dev/tools/${tool.slug}`,
+        label: tool.categoryShort,
+        title: truncate(tool.enriched?.name ?? tool.name, 40),
+        subtitle: truncate(tool.enriched?.company ?? tool.company, 40),
     });
 }
 
-function renderCard({ pill, content, footerLeft, footerRight }) {
+/** Largest title size that keeps `title` to about two lines at 1200px wide. */
+function titleSize(title) {
+    const n = title.length;
+    if (n <= 14) return 136;
+    if (n <= 22) return 116;
+    if (n <= 32) return 100;
+    if (n <= 48) return 84;
+    return 72;
+}
+
+function renderCard({ label, title, subtitle }) {
     return {
         type: 'div',
         props: {
             style: {
                 width: '1200px', height: '630px', display: 'flex', flexDirection: 'column',
-                justifyContent: 'space-between', padding: '72px',
+                justifyContent: 'space-between', padding: '64px 72px',
                 background: 'linear-gradient(135deg, #050505 0%, #0d0b14 55%, #071114 100%)',
                 fontFamily: 'Inter', color: '#fff',
             },
@@ -71,42 +80,31 @@ function renderCard({ pill, content, footerLeft, footerRight }) {
                 {
                     type: 'div',
                     props: {
-                        style: { display: 'flex', flexDirection: 'column', gap: '20px' },
+                        style: { display: 'flex', alignItems: 'center', gap: '20px' },
                         children: [
+                            { type: 'img', props: { src: logoDataUri, width: 64, height: 64, style: { borderRadius: '14px' } } },
+                            { type: 'div', props: { style: { fontSize: '40px', fontWeight: 700, color: '#e5e5e5' }, children: 'ai.dosa.dev' } },
                             {
                                 type: 'div',
                                 props: {
-                                    style: { display: 'flex', alignItems: 'center', gap: '16px' },
-                                    children: [
-                                        { type: 'img', props: { src: logoDataUri, width: 40, height: 40, style: { borderRadius: '10px' } } },
-                                        { type: 'div', props: { style: { fontSize: '22px', fontWeight: 600, color: '#a3a3a3' }, children: 'ai.dosa.dev' } },
-                                        {
-                                            type: 'div',
-                                            props: {
-                                                style: {
-                                                    marginLeft: 'auto', fontSize: '18px', fontWeight: 600, color: '#c4b5fd',
-                                                    border: '1px solid #3b3550', borderRadius: '999px', padding: '6px 18px',
-                                                },
-                                                children: pill,
-                                            },
-                                        },
-                                    ],
+                                    style: {
+                                        marginLeft: 'auto', fontSize: '36px', fontWeight: 700, color: '#c4b5fd',
+                                        border: '3px solid #4c4370', borderRadius: '999px', padding: '8px 30px',
+                                    },
+                                    children: label,
                                 },
                             },
-                            ...content,
                         ],
                     },
                 },
                 {
                     type: 'div',
                     props: {
-                        style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between' },
-                        children: [
-                            { type: 'div', props: { style: { fontSize: '20px', color: '#525252' }, children: footerLeft } },
-                            { type: 'div', props: { style: { fontSize: '20px', fontWeight: 600, color: '#67e8f9' }, children: footerRight } },
-                        ],
+                        style: { display: 'flex', fontSize: `${titleSize(title)}px`, fontWeight: 700, lineHeight: 1.05, letterSpacing: '-0.03em' },
+                        children: title,
                     },
                 },
+                { type: 'div', props: { style: { display: 'flex', fontSize: '48px', fontWeight: 600, color: '#67e8f9' }, children: subtitle } },
             ],
         },
     };
@@ -222,13 +220,9 @@ async function main() {
             continue;
         }
         const png = await renderCardPng({
-            pill: post.tags.includes('news') ? 'Today in AI' : 'Blog',
-            content: [
-                { type: 'div', props: { style: { fontSize: '52px', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em' }, children: truncate(post.title, 90) } },
-                { type: 'div', props: { style: { fontSize: '24px', fontWeight: 400, color: '#a3a3a3', lineHeight: 1.5, marginTop: '8px' }, children: truncate(post.description, 150) } },
-            ],
-            footerLeft: formatPostDate(post.pubDate),
-            footerRight: `ai.dosa.dev/blog/${post.id}`,
+            label: post.tags.includes('news') ? 'Today in AI' : 'Blog',
+            title: truncate(post.title, 70),
+            subtitle: formatPostDate(post.pubDate),
         });
         writeFileSync(outPath, png);
         writeFileSync(hashPath, contentKey);
@@ -247,22 +241,9 @@ async function main() {
             continue;
         }
         const png = await renderCardPng({
-            pill: 'Trending',
-            content: [
-                { type: 'div', props: { style: { fontSize: '52px', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em' }, children: `Trending AI coding tools, ${formatWeekTitle(snapshot.week)}` } },
-                ...(top.length ? top : [{ rank: '-', name: 'No qualifying activity this week' }]).map(entry => ({
-                    type: 'div',
-                    props: {
-                        style: { display: 'flex', gap: '20px', fontSize: '30px', fontWeight: 600, color: '#e5e5e5' },
-                        children: [
-                            { type: 'div', props: { style: { color: '#e2c48a', width: '48px' }, children: `#${entry.rank}` } },
-                            { type: 'div', props: { children: truncate(entry.name, 40) } },
-                        ],
-                    },
-                })),
-            ],
-            footerLeft: formatWeekSpan(snapshot),
-            footerRight: `ai.dosa.dev/trending/${snapshot.week}`,
+            label: 'Trending',
+            title: 'Trending AI coding tools',
+            subtitle: truncate([formatWeekTitle(snapshot.week), top[0] && `#1 ${top[0].name}`].filter(Boolean).join(' · '), 42),
         });
         writeFileSync(outPath, png);
         writeFileSync(hashPath, contentKey);
@@ -275,7 +256,7 @@ async function main() {
     const month = formatRefreshMonth(refreshMonth());
     let bestWritten = 0, bestSkipped = 0;
     for (const facet of facets) {
-        const top = rankFacetTools(facet, tools, popularity, 3).map(t => t.enriched?.name ?? t.name);
+        const top = rankFacetTools(facet, tools, popularity, 1).map(t => t.enriched?.name ?? t.name);
         const contentKey = hash(JSON.stringify([facet.title, month, top]));
         const outPath = join(BEST_OUT_DIR, `${facet.slug}.png`);
         const hashPath = join(BEST_OUT_DIR, `${facet.slug}.hash`);
@@ -284,22 +265,9 @@ async function main() {
             continue;
         }
         const png = await renderCardPng({
-            pill: 'Best of',
-            content: [
-                { type: 'div', props: { style: { fontSize: '52px', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em' }, children: truncate(facet.title, 80) } },
-                ...top.map((name, i) => ({
-                    type: 'div',
-                    props: {
-                        style: { display: 'flex', gap: '20px', fontSize: '30px', fontWeight: 600, color: '#e5e5e5' },
-                        children: [
-                            { type: 'div', props: { style: { color: '#e2c48a', width: '48px' }, children: `#${i + 1}` } },
-                            { type: 'div', props: { children: truncate(name, 40) } },
-                        ],
-                    },
-                })),
-            ],
-            footerLeft: `Ranked ${month}`,
-            footerRight: `ai.dosa.dev/best/${facet.slug}`,
+            label: 'Best of',
+            title: truncate(facet.title.replace(/\s*\(.*\)\s*$/, ''), 60),
+            subtitle: truncate([top[0] && `#1 ${top[0]}`, month].filter(Boolean).join(' · '), 42),
         });
         writeFileSync(outPath, png);
         writeFileSync(hashPath, contentKey);
@@ -320,22 +288,9 @@ async function main() {
             continue;
         }
         const png = await renderCardPng({
-            pill: 'Compare',
-            content: [
-                { type: 'div', props: { style: { fontSize: '56px', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em' }, children: truncate(`${rows[0].name} vs ${rows[1].name}`, 60) } },
-                ...rows.map(r => ({
-                    type: 'div',
-                    props: {
-                        style: { display: 'flex', gap: '16px', fontSize: '28px', fontWeight: 600, color: '#e5e5e5' },
-                        children: [
-                            { type: 'div', props: { children: truncate(r.name, 32) } },
-                            { type: 'div', props: { style: { color: '#737373', fontWeight: 400 }, children: truncate([r.company, r.pricing].filter(Boolean).join(' · '), 48) } },
-                        ],
-                    },
-                })),
-            ],
-            footerLeft: c.group,
-            footerRight: `ai.dosa.dev/compare/${c.slug}`,
+            label: 'Compare',
+            title: truncate(`${rows[0].name} vs ${rows[1].name}`, 48),
+            subtitle: truncate(c.group, 42),
         });
         writeFileSync(outPath, png);
         writeFileSync(hashPath, contentKey);
