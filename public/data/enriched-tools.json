@@ -1380,6 +1380,33 @@
     "lastUpdated": "2026-10-01"
   },
   {
+    "slug": "t3-code",
+    "name": "T3 Code",
+    "company": "Ping.gg",
+    "pricing": "open-source",
+    "pricingDetail": "T3 Code is free and open source under the MIT license; it does not resell tokens and instead uses the Codex, Claude Code, Cursor, Grok Build or OpenCode subscriptions you already have.",
+    "description": "T3 Code is an open-source \"agent harness control surface\" from Theo and Julius that controls the coding-agent CLIs on your machine from a web app, an Electron desktop app and iOS/Android mobile apps. A Node WebSocket server wraps the provider CLIs so you can run parallel agent threads across projects and worktrees with your existing subscriptions.",
+    "keyFeatures": [
+      "Drives Codex, Claude Code, Cursor, Grok Build and OpenCode with your existing subscriptions",
+      "Web, Electron desktop and iOS/Android clients with remote access from a phone",
+      "Each agent thread works on its own branch with inline diff review",
+      "One-button commit, push and PR with generated titles, bodies and changelogs",
+      "Permission modes, multiple accounts and `npx t3@latest` quick start"
+    ],
+    "bestFor": "Developers who run several coding-agent CLIs in parallel and want one open, forkable GUI to manage threads, diffs and PRs.",
+    "notIdealFor": "Teams that want a hosted agent with bundled model access, since T3 Code requires installing and authenticating provider CLIs yourself.",
+    "recentUpdates": "T3 Code shipped v0.0.44 on September 29, 2026 and v0.0.45 on October 2, 2026, with v0.0.46 preview and nightly builds following on October 2-3, 2026.",
+    "verdict": "A fast-moving, fully open alternative to Codex App, Claude Desktop and Conductor for orchestrating the agents you already pay for.",
+    "tags": [
+      "Agent Orchestration",
+      "Desktop App",
+      "Mobile",
+      "Open Source",
+      "BYO Subscription"
+    ],
+    "lastUpdated": "2026-10-03"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -3862,6 +3889,33 @@
     "lastUpdated": "2026-10-01"
   },
   {
+    "slug": "prime-agent",
+    "name": "Prime Agent",
+    "company": "Prime Intellect",
+    "pricing": "open-source",
+    "pricingDetail": "Prime Agent is fully open source under the MIT License and free to install; users bring their own model access by logging in with a supported subscription or API-key provider and pay that provider for usage.",
+    "description": "Prime Agent is an open-source terminal coding and research agent from Prime Intellect built around Recursive Language Models. A persistent Python REPL is its built-in tool, so file operations, shell commands, context management and child subagents all run as code, while a daemon keeps sessions alive for long-running, autonomous work.",
+    "keyFeatures": [
+      "Persistent Python REPL as the model's programmatic tool surface",
+      "Built-in recursive subagents via rlm.spawn() with direct agent-to-agent messaging",
+      "Daemon-backed sessions that survive terminal disconnects and can be reattached",
+      "Persistent goals, heartbeats, schedules and a budgeted autonomous mode with quality gates",
+      "/refine Continual Harness that stores reviewable lessons as prompts, memories and skills"
+    ],
+    "bestFor": "Developers and researchers running long-horizon coding, evaluation or research tasks who want a scriptable, self-improving harness with background sessions and parallel subagents.",
+    "notIdealFor": "Users who need a sandboxed or IDE-integrated assistant; it executes model-generated Python and project commands with the user's own permissions and is still shipping beta builds.",
+    "recentUpdates": "Prime Agent is shipping frequent v0.9.9 beta builds through its one-command installer, alongside the Prime Agent paper (arXiv 2608.23552) describing the self-improving RLM harness.",
+    "verdict": "A distinctive, research-grade coding harness that treats everything as code and is built for work that outlives a single chat window; best suited to power users comfortable with an evolving beta.",
+    "tags": [
+      "Terminal Agent",
+      "Open Source",
+      "Subagents",
+      "Long-Running Tasks",
+      "Self-Improving"
+    ],
+    "lastUpdated": "2026-10-01"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
@@ -4565,6 +4619,60 @@
     "lastUpdated": "2026-10-01"
   },
   {
+    "slug": "opensre",
+    "name": "OpenSRE",
+    "company": "Tracer",
+    "pricing": "freemium",
+    "pricingDetail": "The OpenSRE framework and CLI are open source under the Apache 2.0 license and can be self-hosted with your own LLM provider keys; Tracer also offers a hosted OpenSRE Cloud web app for enterprise teams.",
+    "description": "OpenSRE is an open-source framework for building AI SRE agents that investigate and help resolve production incidents on your own infrastructure. Its CLI correlates logs, metrics, traces, deploys and runbooks across 60+ tools, and the project doubles as a training and evaluation environment for AI SRE agents.",
+    "keyFeatures": [
+      "Interactive opensre REPL plus a headless opensre ask mode for scripts and CI",
+      "Structured root-cause investigation across logs, metrics, traces, deploys and config",
+      "60+ integrations including Grafana, Datadog, Honeycomb, Kubernetes, AWS, PagerDuty and Slack",
+      "Runbook-aware reasoning and summaries posted back to Slack, PagerDuty or Telegram",
+      "Local and cloud-backed end-to-end incident test suites for training and evaluating AI SRE agents"
+    ],
+    "bestFor": "SRE and platform teams who want a self-hostable, extensible AI agent to triage alerts and draft root-cause analyses from their existing observability stack.",
+    "notIdealFor": "Teams needing a stable, fully supported incident platform today, since OpenSRE is a public alpha whose APIs and integrations are still evolving.",
+    "recentUpdates": "OpenSRE ships near-daily releases; v0.1.2026.10.2 landed on October 2, 2026 with gateway and scheduler fixes.",
+    "verdict": "A fast-moving, widely watched open-source foundation for AI SRE agents that is promising for experimentation but still alpha.",
+    "tags": [
+      "AI SRE",
+      "Incident Response",
+      "Observability",
+      "CLI",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-02"
+  },
+  {
+    "slug": "superplane",
+    "name": "SuperPlane",
+    "company": "SuperPlane",
+    "pricing": "freemium",
+    "pricingDetail": "The SuperPlane engine is open source under Apache 2.0 and can be self-hosted; SuperPlane Cloud is free for open source projects, Business costs $199 per organization per month with $50 shared usage, and Enterprise is custom.",
+    "description": "SuperPlane is an open source software factory for one-shot engineering that turns high-confidence backlog issues into verified, review-ready pull requests. It coordinates coding agents, source control, CI, review, approvals and feedback in one workflow on top of a durable, event-driven automation engine.",
+    "keyFeatures": [
+      "Scans repos and backlogs and scores tickets by automation confidence",
+      "Dispatches your chosen coding agent and model on managed or self-hosted runners",
+      "Gates every run on CI status, repository checks and review feedback",
+      "Returns failed checks to the agent with command output attached",
+      "Git-backed workflow apps with approvals across GitHub, GitLab, CI/CD and incident tools"
+    ],
+    "bestFor": "Engineering teams that want to route routine bugs, maintenance and test fixes to coding agents under consistent guardrails.",
+    "notIdealFor": "Solo developers who just want an interactive coding agent rather than a backlog-to-PR pipeline.",
+    "recentUpdates": "SuperPlane opened its Cloud beta during a June 22, 2026 launch week, released engine v0.30.0 on July 27, 2026, and now offers the Factory with published Business pricing.",
+    "verdict": "A credible open source orchestration layer for teams moving from ad hoc agent runs to a governed backlog-to-PR factory.",
+    "tags": [
+      "Software Factory",
+      "Autonomous Agents",
+      "CI/CD",
+      "Open Source",
+      "Workflow Automation"
+    ],
+    "lastUpdated": "2026-10-03"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -4914,6 +5022,33 @@
       "SwiftUI"
     ],
     "lastUpdated": "2026-10-01"
+  },
+  {
+    "slug": "cloudflare-os",
+    "name": "Cloudflare OS",
+    "company": "Cloudflare",
+    "pricing": "open-source",
+    "pricingDetail": "Cloudflare OS is open source under the Apache 2.0 license and can be deployed into your own Cloudflare account or on workerd; a fully managed deployment is on a waitlist and usage of underlying Cloudflare services is billed separately.",
+    "description": "Cloudflare OS is an open source agent workspace built on Cloudflare Workers and used internally across Cloudflare. It combines an agent chat UI grounded in company context, sandboxed \"Gadgets\" that agents build as personal apps, and a capability-based Gatekeeper security layer for safe access to external services.",
+    "keyFeatures": [
+      "Agent chat UI preloaded with company context and curated skills",
+      "Gadgets: agent-built personal apps, each instance sandboxed in a Dynamic Worker Facet",
+      "Gatekeepers broker OAuth access with narrow scopes, action logs and human approval",
+      "Google Workspace Gatekeeper for Gmail and Drive research and drafting",
+      "Deploy to your own Cloudflare account or self-host on workerd"
+    ],
+    "bestFor": "Organizations that want a customizable, secure internal agent workspace where non-technical staff can safely build small apps.",
+    "notIdealFor": "Individual developers looking for a local coding agent or IDE integration.",
+    "recentUpdates": "Cloudflare open sourced the new Cloudflare OS on August 5, 2026, and on October 1, 2026 opened a waitlist for fully managed deployments plus an improved Google Workspace Gatekeeper.",
+    "verdict": "An ambitious, security-first blueprint for a company-wide agent and app platform, best for teams already on Cloudflare.",
+    "tags": [
+      "Agent Workspace",
+      "Cloudflare Workers",
+      "App Builder",
+      "Security",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-03"
   },
   {
     "slug": "coderabbit",
@@ -5321,6 +5456,33 @@
     "lastUpdated": "2026-10-01"
   },
   {
+    "slug": "strix",
+    "name": "Strix",
+    "company": "Strix",
+    "pricing": "freemium",
+    "pricingDetail": "The Strix CLI is free and open source under Apache 2.0 with your own LLM key; the managed platform at app.strix.ai offers a Pro plan at $29 per seat per month with pentests billed separately, and custom Enterprise pricing.",
+    "description": "Strix is an open source autonomous AI penetration testing tool whose agents run your application dynamically, find vulnerabilities and validate them with working proofs-of-concept. It targets developers and security teams who want fast pentests without the false positives of static scanners.",
+    "keyFeatures": [
+      "Multi-agent recon, exploitation and validation with real proofs-of-concept",
+      "Sandboxed toolkit with HTTP proxy, browser automation, shells and Python runtime",
+      "Auto-fix patches and compliance-ready pentest reports",
+      "GitHub Actions and CI scanning on every pull request",
+      "Agent skills for Claude Code, Cursor and Codex via `npx skills add usestrix/strix`"
+    ],
+    "bestFor": "Developers and security teams that want automated, exploit-validated pentests of web apps and APIs in local or CI workflows.",
+    "notIdealFor": "Teams that only need lightweight static linting, or cannot run Docker-based sandboxes and LLM-driven testing against their targets.",
+    "recentUpdates": "Strix released v1.6.0 through v1.6.2 between September 1 and September 5, 2026, and the repository passed 66,000 GitHub stars.",
+    "verdict": "The most popular open source AI pentesting agent, notable for validating findings with real exploits.",
+    "tags": [
+      "Security",
+      "Penetration Testing",
+      "Autonomous Agents",
+      "CI/CD",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-03"
+  },
+  {
     "slug": "gitauto",
     "name": "GitAuto",
     "company": "GitAuto",
@@ -5400,6 +5562,60 @@
       "open-source"
     ],
     "lastUpdated": "2026-10-01"
+  },
+  {
+    "slug": "e2e",
+    "name": "e2e",
+    "company": "TesterArmy",
+    "pricing": "free",
+    "pricingDetail": "e2e is free and open source under the Apache 2.0 license; agent steps use your own model provider, API key, local model or existing ChatGPT, GitHub Copilot or SuperGrok subscription, and tests without agent steps need no model.",
+    "description": "e2e is TesterArmy's open-source agentic end-to-end testing framework for web, iOS and Android apps. Tests are written in TypeScript and mix natural-language goals that an agent drives with deterministic locators and assertions, and verified agent steps are replayed without model calls until the app changes.",
+    "keyFeatures": [
+      "Natural-language agent steps (`agent.act`, `agent.assert`) alongside deterministic locators and assertions",
+      "Record-and-replay of verified agent actions with no model calls until the app changes",
+      "Web engine on Chromium, Firefox and WebKit via Playwright; mobile engine on iOS simulators and Android emulators",
+      "`e2e mcp` server so coding agents like Claude Code and Cursor can drive a real browser or simulator",
+      "GitHub reporter that posts results as a pull request comment"
+    ],
+    "bestFor": "Teams that want AI-driven end-to-end tests for web and mobile apps without giving up deterministic assertions or paying for model calls on every run.",
+    "notIdealFor": "Teams that need a stable API today, since e2e is pre-1.0 and APIs and config can still change between minor releases.",
+    "recentUpdates": "TesterArmy open-sourced e2e in early October 2026 and shipped e2e 0.15.2, @e2e-dev/web 0.12.0 and @e2e-dev/mobile 0.9.2 on October 4, 2026.",
+    "verdict": "A promising open-source testing framework that blends agentic flexibility with classic e2e determinism across web and mobile.",
+    "tags": [
+      "Testing",
+      "E2E",
+      "Agentic",
+      "MCP",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-04"
+  },
+  {
+    "slug": "ifixai",
+    "name": "iFixAi",
+    "company": "iFixAi",
+    "pricing": "free",
+    "pricingDetail": "iFixAi is free and open source under the Apache 2.0 license; runs use your own model provider API keys for the system under test and the judge, and a free `--dry-run` shows the cost before anything is billed.",
+    "description": "iFixAi is an open-source auditing tool that checks whether an AI agent is doing the job it is supposed to do, balancing AI red-teaming with operational assurance. A single `ifixai run` executes 32 inspections across five pillars and grades the agent with an A–F scorecard, from the CLI or from inside coding agents via a plugin or skill.",
+    "keyFeatures": [
+      "Guided `ifixai setup` wizard and zero-flag `ifixai run`, or fully scriptable flags for CI",
+      "32 inspections across five pillars with an A–F grade and scored core-pillar scorecard",
+      "Self, independent-vendor or multi-judge ensemble grading",
+      "JSON and Markdown reports plus a rich terminal scorecard",
+      "Claude Code and Codex plugins and a `uvx ifixai install` skill for Cursor, VS Code/Copilot, Windsurf, Cline, Continue, Gemini and Zed"
+    ],
+    "bestFor": "Teams shipping AI agents that want a fast, repeatable audit of agent behavior against business expectations before and after release.",
+    "notIdealFor": "Teams that only need latency, token-cost or prompt-injection benchmarks, or that cannot spend model API credits on judge-graded runs.",
+    "recentUpdates": "iFixAi shipped v4.0.0 on September 15, 2026, renamed its plugin marketplace to ifixai-community, and the repository passed 21,000 GitHub stars with commits landing in early October 2026.",
+    "verdict": "A practical, agent-native auditing harness that turns 'is my agent doing its job?' into a graded, repeatable report.",
+    "tags": [
+      "Testing",
+      "Agent Evaluation",
+      "Red Teaming",
+      "CLI",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-05"
   },
   {
     "slug": "claude",
@@ -8057,6 +8273,359 @@
     "lastUpdated": "2026-10-01"
   },
   {
+    "slug": "gstack",
+    "name": "gstack",
+    "company": "Garry Tan",
+    "pricing": "free",
+    "pricingDetail": "gstack is free and open source under the MIT License; users pay only for the underlying agent (such as a Claude Code plan or Codex usage) that runs the skills.",
+    "description": "gstack is Y Combinator CEO Garry Tan's open-source skill pack that turns Claude Code into a virtual engineering team. Chained slash-command roles cover product framing, architecture and design review, code review, debugging, browser-based QA, security audit, shipping and deployment, with each step passing artifacts to the next.",
+    "keyFeatures": [
+      "Role-based slash commands such as /office-hours, /plan-ceo-review, /plan-eng-review and /review",
+      "Real-browser /qa that reproduces bugs, writes regression tests and re-verifies fixes",
+      "/cso security audit plus /ship and /land-and-deploy release automation",
+      "Team mode that auto-updates gstack for every contributor in a shared repo",
+      "Multi-host install for Claude Code, Codex CLI, Cursor and OpenClaw"
+    ],
+    "bestFor": "Founders, tech leads and solo builders who want an opinionated, end-to-end plan-review-QA-ship workflow layered onto Claude Code or Codex.",
+    "notIdealFor": "Developers who prefer lightweight prompts or minimal ceremony, since the multi-role workflow adds steps and token usage to small changes.",
+    "recentUpdates": "The v1.91 release line added test-value checks across plan-eng-review, review, qa and ship, a new /test-audit skill, and functional QA and pre-publication docs checks.",
+    "verdict": "One of the most widely adopted Claude Code workflow packs, offering a complete, opinionated software-delivery loop that rewards teams willing to adopt its process.",
+    "tags": [
+      "Claude Code",
+      "Agent Skills",
+      "Code Review",
+      "QA",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-01"
+  },
+  {
+    "slug": "beads",
+    "name": "Beads",
+    "company": "Steve Yegge",
+    "pricing": "open-source",
+    "pricingDetail": "Beads is open source under the MIT License and free to use; it runs locally as the bd CLI, with optional sync through Dolt remotes.",
+    "description": "Beads (bd) is an open-source, distributed graph issue tracker that gives coding agents persistent, structured memory. It replaces markdown plans with a dependency-aware graph stored in Dolt, so agents can find ready work, claim it and close it across long-horizon tasks without losing context.",
+    "keyFeatures": [
+      "Dependency-aware task graph with bd ready for claimable work",
+      "Dolt-backed storage with version control, branching, merge and remote sync",
+      "Hash-based IDs that avoid merge collisions across agents and branches",
+      "Semantic compaction of old closed tasks to save context window",
+      "bd setup integrations for Claude Code, Codex and Factory plus an MCP server"
+    ],
+    "bestFor": "Developers running one or many coding agents on long-horizon projects who need durable, shared task tracking that agents can query and update themselves.",
+    "notIdealFor": "Teams that want a hosted, human-first project-management UI; Beads is a CLI-first tool designed primarily for agents.",
+    "recentUpdates": "Beads v1.3.1 shipped at the end of September 2026 following the v1.3.0 release, with pre-compiled binaries for Linux, macOS, Windows, Android/Termux and FreeBSD.",
+    "verdict": "A widely used memory and task layer for coding agents that brings real dependency tracking and multi-agent safety to agent workflows.",
+    "tags": [
+      "Agent Memory",
+      "Issue Tracking",
+      "CLI",
+      "Dolt",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-01"
+  },
+  {
+    "slug": "tuios",
+    "name": "TUIOS",
+    "company": "Gaurav Gosain",
+    "pricing": "free",
+    "pricingDetail": "TUIOS is free and open source under the MIT License, distributed through Homebrew, AUR, Nix, Docker, Go install and an install script.",
+    "description": "TUIOS is an open-source terminal multiplexer and tiling window manager written in Go that understands the coding agents running in its panes. It shows each agent's state, collects approvals and questions into a single Inbox across sessions and machines, and can fan one prompt out to several agents in separate git worktrees.",
+    "keyFeatures": [
+      "Per-pane agent state (working, needs_input, idle, done, errored) via installed harness hooks",
+      "Unified Inbox for approvals, questions, mail and finished turns across sessions and hosts",
+      "tuios fan to run one prompt across multiple agents in isolated git worktrees",
+      "MCP server and tmux shim so agents and tmux-only tools can drive TUIOS",
+      "Daemon-mode sessions that survive restarts, BSP tiling and kitty/sixel graphics"
+    ],
+    "bestFor": "Terminal-centric developers supervising several Claude Code, Codex, Gemini CLI or OpenCode agents at once who want one place to see what needs attention.",
+    "notIdealFor": "Users who prefer a GUI agent manager or are happy with plain tmux, since TUIOS introduces its own keybindings and workflow.",
+    "recentUpdates": "Releases v0.8.2 through v0.8.4 added a scratch terminal, picture-in-picture, pane history across daemon restarts, sixel images, image paste and tuios xpanes, followed by fixes.",
+    "verdict": "A fast-moving, agent-aware multiplexer that makes running a fleet of terminal coding agents far more manageable.",
+    "tags": [
+      "Terminal",
+      "Multiplexer",
+      "Agent Orchestration",
+      "Go",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-01"
+  },
+  {
+    "slug": "omniroute",
+    "name": "OmniRoute",
+    "company": "Diego Souza (diegosouzapw)",
+    "pricing": "free",
+    "pricingDetail": "OmniRoute is free and open source under the MIT License; users pay only for any paid provider subscriptions or API keys they connect, and can route to free-tier providers at no cost.",
+    "description": "OmniRoute is an open-source, self-hosted AI gateway that exposes one OpenAI-compatible endpoint for coding tools like Claude Code, Codex, Cursor and Cline across 350+ providers. Model combos with automatic failover keep agents running when quotas run out or providers fail.",
+    "keyFeatures": [
+      "Single local endpoint routing to 350+ providers, including 150+ with free tiers",
+      "Combos with 19 routing strategies and a zero-config auto mode with automatic failover",
+      "omniroute run launchers that pre-wire Claude Code, Codex, OpenCode, Gemini CLI and more",
+      "Per-response routing decision headers, quota telemetry and budget overrides",
+      "Runs via npm, Docker, Electron, Android Termux and a VS Code Copilot Chat extension"
+    ],
+    "bestFor": "Developers who use several coding agents and want to pool subscriptions, API keys and free tiers behind one resilient endpoint.",
+    "notIdealFor": "Organizations requiring a managed, enterprise-supported gateway with centralized billing, since OmniRoute is self-hosted and relies on users managing provider credentials and terms.",
+    "recentUpdates": "OmniRoute v3.8.51 (September 30, 2026) bundled about 2,000 changelog entries from more than 300 contributors, expanding the provider catalog and adding smarter auto-routing, quota-aware scheduling and one-command CLI setup.",
+    "verdict": "A very actively developed gateway that offers maximum provider coverage and failover for agent-heavy workflows, at the cost of self-hosting and credential management.",
+    "tags": [
+      "AI Gateway",
+      "Proxy",
+      "Model Routing",
+      "Developer Tools",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-01"
+  },
+  {
+    "slug": "monty",
+    "name": "Monty",
+    "company": "Pydantic",
+    "pricing": "freemium",
+    "pricingDetail": "OSS Monty is free and open source under the MIT License as Python, JavaScript and Rust packages; Full Monty is a commercial server that runs the same sandbox behind a WebSocket with OS-level isolation and horizontal scaling.",
+    "description": "Monty is a minimal, secure Python interpreter written in Rust for running code written by AI agents. It avoids the latency and cost of container sandboxes: a new sandbox starts in under a millisecond and can only reach the host through the functions and mounts you explicitly provide.",
+    "keyFeatures": [
+      "Python 3.14 subset sandbox with no filesystem, environment or network access",
+      "Sub-millisecond sandbox startup from a pool of worker subprocesses",
+      "Host functions and inputs exposed explicitly via external_lookup and inputs",
+      "Serializable snapshots that pause at host calls and resume execution later",
+      "Packages for Python (pydantic-monty), JavaScript/TypeScript (@pydantic/monty) and Rust"
+    ],
+    "bestFor": "Agent developers implementing code mode or tool chaining who need to run LLM-generated Python safely with minimal overhead.",
+    "notIdealFor": "Workloads that need full CPython compatibility, third-party packages or arbitrary system access inside the sandbox.",
+    "recentUpdates": "Monty reached its first stable release, v1.0.0, on September 25, 2026, dropping the experimental label and adding features such as percent formatting and the format() builtin.",
+    "verdict": "A lightweight, production-ready sandbox from the Pydantic team that makes running agent-written Python cheap and safe.",
+    "tags": [
+      "Sandbox",
+      "Code Execution",
+      "Python",
+      "Rust",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-02"
+  },
+  {
+    "slug": "gcx",
+    "name": "gcx",
+    "company": "Grafana Labs",
+    "pricing": "free",
+    "pricingDetail": "gcx is free and open source under the Apache 2.0 license; it works with Grafana OSS/Enterprise 12+ and Grafana Cloud, with some product commands and Grafana Assistant features requiring a Grafana Cloud stack.",
+    "description": "gcx is Grafana's CLI for you and your AI coding agent, giving structured access to dashboards, alerts, SLOs, metrics, logs, traces and Grafana Cloud products from the terminal. It works with any agentic coding tool and ships Agent Skills so coding agents can query production and act on real telemetry.",
+    "keyFeatures": [
+      "Structured JSON/YAML output designed for agents and scripts",
+      "Works with any agentic coding tool, with an integrate-with-gcx skill for setup",
+      "Bundled Agent Skills for alert investigation, dashboard GitOps, SLO management and observability rollout",
+      "GitOps pull and push of Grafana resources with round-trip fidelity",
+      "Commands for Synthetic Monitoring, k6, IRM, Fleet Management and Grafana Assistant on Grafana Cloud"
+    ],
+    "bestFor": "Developers and SREs who want their coding agents to read production telemetry and manage Grafana resources as code from the terminal.",
+    "notIdealFor": "Teams on Grafana versions older than 12 or without a Grafana deployment, since gcx does not support them.",
+    "recentUpdates": "gcx v1.4.0 shipped on October 2, 2026 with metric and label search commands and TraceQL-filtered trace retrieval, following general availability in July 2026.",
+    "verdict": "An official, agent-first Grafana CLI that gives coding agents real production context with minimal setup.",
+    "tags": [
+      "CLI",
+      "Observability",
+      "Agent Skills",
+      "GitOps",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-02"
+  },
+  {
+    "slug": "agentgateway",
+    "name": "agentgateway",
+    "company": "Agentic AI Foundation (Linux Foundation)",
+    "pricing": "open-source",
+    "pricingDetail": "agentgateway is free and open source under the Apache 2.0 license and is hosted by the Agentic AI Foundation under the Linux Foundation.",
+    "description": "agentgateway is an open-source Rust proxy and gateway control plane built for agentic AI traffic. It provides one data plane for LLM, MCP, A2A, HTTP and gRPC traffic with built-in security, governance and observability, running standalone or on Kubernetes.",
+    "keyFeatures": [
+      "OpenAI-compatible LLM gateway with budgets, spend controls, load balancing and failover",
+      "MCP gateway with tool federation across stdio, HTTP, SSE and Streamable HTTP plus OAuth",
+      "A2A gateway for secure agent-to-agent communication",
+      "Guardrails, JWT/API-key/OAuth auth, CEL-based RBAC and rate limiting",
+      "OpenTelemetry metrics, logs and traces with standalone YAML or Kubernetes Gateway API deployment"
+    ],
+    "bestFor": "Platform teams that need to secure, govern and observe LLM, MCP and agent-to-agent traffic across many agents and tools.",
+    "notIdealFor": "Individual developers who only need a simple local model router for a single coding agent.",
+    "recentUpdates": "agentgateway v1.5.0 (August 27, 2026) added API-key-scoped LLM budgets, native Gemini inbound APIs and tool-call guardrails, and v1.6.0 release candidates followed in late September 2026.",
+    "verdict": "A foundation-hosted, enterprise-grade gateway that is becoming a standard connectivity layer for MCP and A2A workloads.",
+    "tags": [
+      "AI Gateway",
+      "MCP",
+      "A2A",
+      "Proxy",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-02"
+  },
+  {
+    "slug": "weave-router",
+    "name": "Weave Router",
+    "company": "Weave",
+    "pricing": "freemium",
+    "pricingDetail": "The Weave Router repository is licensed under Apache 2.0 and can be self-hosted with your own provider keys; the hosted router bills a unified usage-based credit balance, priced for solo developers and startups at 5% of routed costs.",
+    "description": "Weave Router is a model router for coding agents that sits in front of Anthropic, OpenAI and Gemini APIs and sends each agent request to the most cost-effective model likely to complete it. It plugs into Claude Code, Codex, Cursor, opencode or pi with one command.",
+    "keyFeatures": [
+      "Drop-in proxy for Anthropic Messages, OpenAI Chat Completions and Gemini APIs",
+      "Per-request routing via an on-box embedder and complexity classifier",
+      "Cache-aware switching that only routes down when savings beat cache rebuild cost",
+      "Escalation back to a frontier model when a cheaper model stalls or loops",
+      "`npx @weave-os/router` configures Claude Code, Codex, opencode or pi"
+    ],
+    "bestFor": "Developers and teams running heavy coding-agent workloads who want to cut model spend without changing tools.",
+    "notIdealFor": "Users who always want a single fixed model, or who cannot route agent traffic through a proxy.",
+    "recentUpdates": "Weave Router 2.0 launched on September 9, 2026 with a classifier trained on 10x more sessions, cache-aware routing, escalation and multi-subscription routing.",
+    "verdict": "A benchmark-backed router that meaningfully lowers coding-agent costs without changing the agent you use.",
+    "tags": [
+      "Model Router",
+      "AI Gateway",
+      "Cost Optimization",
+      "Claude Code",
+      "Codex"
+    ],
+    "lastUpdated": "2026-10-03"
+  },
+  {
+    "slug": "cf",
+    "name": "cf",
+    "company": "Cloudflare",
+    "pricing": "free",
+    "pricingDetail": "cf is free and open source under the Apache 2.0 license; the Cloudflare products it manages are billed under your Cloudflare account's normal plans.",
+    "description": "cf is Cloudflare's agentic CLI for the entire Cloudflare API, built so coding agents can discover and run the command they need. It mirrors the full API, defaults to JSON output condensed for agents, and introduces a TypeScript cloudflare.config.ts configuration format starting with Workers.",
+    "keyFeatures": [
+      "Command surface that mirrors the entire Cloudflare API, generated by the open-sourced Forge SDK generator",
+      "Bespoke command search and steering so agents can find the right command",
+      "JSON output by default, pretty-printed for humans and condensed for agents to save context",
+      "TypeScript `cloudflare.config.ts` configuration with language server support, starting with Workers",
+      "Vite as the default local development server with a plugin suite for frameworks"
+    ],
+    "bestFor": "Developers and coding agents who want to manage Workers and other Cloudflare resources from one API-complete, agent-friendly CLI.",
+    "notIdealFor": "Teams that need a stable 1.0 interface today or are happy with Wrangler for Workers-only workflows, since cf is still in open beta.",
+    "recentUpdates": "Cloudflare announced cf in open beta in late September 2026 alongside open-sourcing Forge, and has shipped near-daily releases since, including cf@1.0.0-beta.12 on October 2, 2026.",
+    "verdict": "An official, agent-first Cloudflare CLI that gives coding agents API-complete access with context-efficient output.",
+    "tags": [
+      "CLI",
+      "Cloudflare",
+      "Agent-Friendly",
+      "Infrastructure as Code",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-04"
+  },
+  {
+    "slug": "taste-skill",
+    "name": "Taste Skill",
+    "company": "Leon Lin",
+    "pricing": "free",
+    "pricingDetail": "Taste Skill is free and open source under the MIT license; it is installed with `npx skills add` and runs inside the coding agent you already use.",
+    "description": "Taste Skill is an open-source pack of portable agent skills that upgrades AI-built interfaces with stronger layout, typography, motion and spacing instead of generic boilerplate UIs. It also includes image-generation skills for web and mobile comps and brand kits that can be handed to Codex, Cursor or Claude Code for implementation.",
+    "keyFeatures": [
+      "Default `design-taste-frontend` v2 skill with VARIANCE, MOTION and DENSITY dials",
+      "Stricter `gpt-taste` variant tuned for GPT and Codex",
+      "Redesign-audit, minimalist, brutalist, high-end visual and Google Stitch-compatible skills",
+      "`full-output-enforcement` skill that stops agents from shipping placeholder code",
+      "Image-generation skills for website comps, mobile screens and brand-kit boards"
+    ],
+    "bestFor": "Developers using AI coding agents for frontend work who want more distinctive, polished interfaces without hand-writing design rules.",
+    "notIdealFor": "Projects with a strict existing design system that should not be reinterpreted by opinionated style defaults.",
+    "recentUpdates": "The default skill moved to an experimental v2 rewrite (with v1 kept as `design-taste-frontend-v1`), and the repository passed 92,000 GitHub stars and appeared on GitHub Trending in early October 2026.",
+    "verdict": "One of the most popular anti-slop design skills for coding agents, and an easy add for any AI-built frontend.",
+    "tags": [
+      "Frontend",
+      "Design",
+      "Agent Skills",
+      "Developer Tools",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-05"
+  },
+  {
+    "slug": "skills-manager",
+    "name": "Skills Manager",
+    "company": "Jay.TL",
+    "pricing": "free",
+    "pricingDetail": "Skills Manager is a free, open-source (MIT) desktop app with no paid tier.",
+    "description": "Skills Manager is a lightweight desktop app that manages, syncs and organizes AI agent skills across 50+ coding tools such as Claude Code, Codex, Cursor, Copilot and Gemini CLI. It keeps one central skill library, deploys skills per agent or per project, and lets agents themselves install and deploy skills through it.",
+    "keyFeatures": [
+      "Central skill library installed from Git repos, local folders, `.zip`/`.skill` archives or the skills.sh marketplace",
+      "Presets that activate or deactivate groups of skills per agent scope",
+      "Global and project workspaces that compare and sync skill folders in either direction",
+      "Agent-driven management so Claude Code, Codex and Cursor can install or deploy skills via the app",
+      "Backup and multi-device sync"
+    ],
+    "bestFor": "Developers who use several coding agents and want one place to install, organize and sync agent skills across tools and projects.",
+    "notIdealFor": "Developers who use a single agent with a handful of skills and are happy managing its skills folder by hand.",
+    "recentUpdates": "Skills Manager shipped v1.40.3 on October 1, 2026, with commits continuing into October and the repository appearing on GitHub Trending.",
+    "verdict": "A focused, well-maintained control panel for the growing sprawl of agent skills across coding tools.",
+    "tags": [
+      "Agent Skills",
+      "Desktop App",
+      "Productivity",
+      "Developer Tools",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-05"
+  },
+  {
+    "slug": "hyperframes",
+    "name": "HyperFrames",
+    "company": "HeyGen",
+    "pricing": "free",
+    "pricingDetail": "HyperFrames is free and open source under the Apache 2.0 license; the CLI and agent skills run locally with the coding agent and model provider you already use.",
+    "description": "HyperFrames is HeyGen's open-source framework for turning HTML, CSS, media and seekable animations into deterministic MP4 videos, built to be driven by AI coding agents. It ships a CLI, a Claude Code plugin and 21 agent skills that teach agents to plan, write, lint, preview and render videos.",
+    "keyFeatures": [
+      "Deterministic HTML-to-MP4 rendering with seekable GSAP, Lottie, Three.js, Anime.js and CSS/WAAPI animations",
+      "`hyperframes` CLI for init, lint, preview and render",
+      "Claude Code plugin plus `npx skills add heygen-com/hyperframes` for Codex, Cursor, Gemini CLI and other agents",
+      "Creation workflows for product-launch videos, PR-to-video changelogs, captions, motion graphics and slideshows",
+      "`/remotion-to-hyperframes` skill for migrating Remotion compositions"
+    ],
+    "bestFor": "Developers and teams who want coding agents to produce product, changelog and explainer videos from code they can review and version.",
+    "notIdealFor": "Editors who want a traditional timeline-based video editor or AI avatar video generation without touching HTML.",
+    "recentUpdates": "HyperFrames ships near-daily releases, with v0.8.133 published on October 5, 2026, and the repository passed 57,000 GitHub stars while trending on GitHub.",
+    "verdict": "A fast-moving, agent-first video framework that makes 'render a video from this PR' a realistic coding-agent task.",
+    "tags": [
+      "Video",
+      "Agent Skills",
+      "CLI",
+      "HTML",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-05"
+  },
+  {
+    "slug": "bashcut",
+    "name": "BashCut",
+    "company": "Nolan / dongnguyenvie",
+    "pricing": "open-source",
+    "pricingDetail": "BashCut is MIT-licensed and free to download from GitHub releases. It adds no extra AI bill: it runs your existing Claude Pro/Max or ChatGPT Plus/Pro subscription via the real Claude Code and Codex CLIs, and the optional Director plugin lets you bring your own API key for other models.",
+    "description": "BashCut is a native macOS video editor built on AVFoundation with a Claude Code / Codex terminal docked beside the timeline. Everything the UI does, coding agents can do through the bashcut CLI or MCP server, using the same atomic, undoable edit operations.",
+    "keyFeatures": [
+      "Native macOS editor on AVFoundation with a layered timeline, captions, voiceover and plugins",
+      "CLI and MCP server so Claude Code and Codex can drive every UI action",
+      "Projects stored as plain JSON next to footage, editable by agents and scripts",
+      "Atomic, undoable edit operations shared by UI and agents",
+      "Single composition engine for preview and export (WYSIWYG)",
+      "Agent kit with editing skills: footage survey, beat cuts, audio mix, captions, colour grade, voiceover, effects, stock images",
+      "Works with existing Claude/ChatGPT subscriptions or any model via the Director plugin and your own API key"
+    ],
+    "bestFor": "Developers and creators on macOS who want coding agents (Claude Code, Codex) to script and automate video edits through a CLI or MCP while keeping edits visible and undoable in a real timeline.",
+    "notIdealFor": "Windows or Linux users, and anyone wanting a polished, fully finished consumer editor — BashCut is macOS-only and still under active development with some features unverified.",
+    "recentUpdates": "Under active development: the M0 foundation is accepted on real footage and most editor and agent features (M1–M3, M5) are in place, with an implementation status page tracking what is verified. Distributed via GitHub releases and a TestFlight beta.",
+    "verdict": "BashCut is a compelling, MIT-licensed option for agent-driven video editing on macOS, with a genuinely novel CLI/MCP surface and no extra AI cost if you already pay for Claude or ChatGPT. The trade-offs are its macOS-only scope and in-progress status, so expect rough edges and some unverified features.",
+    "tags": [
+      "video-editing",
+      "macos",
+      "mcp",
+      "cli",
+      "ai-agents"
+    ],
+    "lastUpdated": "2026-10-06"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
@@ -8272,546 +8841,6 @@
       "Open-Source"
     ],
     "lastUpdated": "2026-10-01"
-  },
-  {
-    "slug": "prime-agent",
-    "name": "Prime Agent",
-    "company": "Prime Intellect",
-    "pricing": "open-source",
-    "pricingDetail": "Prime Agent is fully open source under the MIT License and free to install; users bring their own model access by logging in with a supported subscription or API-key provider and pay that provider for usage.",
-    "description": "Prime Agent is an open-source terminal coding and research agent from Prime Intellect built around Recursive Language Models. A persistent Python REPL is its built-in tool, so file operations, shell commands, context management and child subagents all run as code, while a daemon keeps sessions alive for long-running, autonomous work.",
-    "keyFeatures": [
-      "Persistent Python REPL as the model's programmatic tool surface",
-      "Built-in recursive subagents via rlm.spawn() with direct agent-to-agent messaging",
-      "Daemon-backed sessions that survive terminal disconnects and can be reattached",
-      "Persistent goals, heartbeats, schedules and a budgeted autonomous mode with quality gates",
-      "/refine Continual Harness that stores reviewable lessons as prompts, memories and skills"
-    ],
-    "bestFor": "Developers and researchers running long-horizon coding, evaluation or research tasks who want a scriptable, self-improving harness with background sessions and parallel subagents.",
-    "notIdealFor": "Users who need a sandboxed or IDE-integrated assistant; it executes model-generated Python and project commands with the user's own permissions and is still shipping beta builds.",
-    "recentUpdates": "Prime Agent is shipping frequent v0.9.9 beta builds through its one-command installer, alongside the Prime Agent paper (arXiv 2608.23552) describing the self-improving RLM harness.",
-    "verdict": "A distinctive, research-grade coding harness that treats everything as code and is built for work that outlives a single chat window; best suited to power users comfortable with an evolving beta.",
-    "tags": [
-      "Terminal Agent",
-      "Open Source",
-      "Subagents",
-      "Long-Running Tasks",
-      "Self-Improving"
-    ],
-    "lastUpdated": "2026-10-01"
-  },
-  {
-    "slug": "gstack",
-    "name": "gstack",
-    "company": "Garry Tan",
-    "pricing": "free",
-    "pricingDetail": "gstack is free and open source under the MIT License; users pay only for the underlying agent (such as a Claude Code plan or Codex usage) that runs the skills.",
-    "description": "gstack is Y Combinator CEO Garry Tan's open-source skill pack that turns Claude Code into a virtual engineering team. Chained slash-command roles cover product framing, architecture and design review, code review, debugging, browser-based QA, security audit, shipping and deployment, with each step passing artifacts to the next.",
-    "keyFeatures": [
-      "Role-based slash commands such as /office-hours, /plan-ceo-review, /plan-eng-review and /review",
-      "Real-browser /qa that reproduces bugs, writes regression tests and re-verifies fixes",
-      "/cso security audit plus /ship and /land-and-deploy release automation",
-      "Team mode that auto-updates gstack for every contributor in a shared repo",
-      "Multi-host install for Claude Code, Codex CLI, Cursor and OpenClaw"
-    ],
-    "bestFor": "Founders, tech leads and solo builders who want an opinionated, end-to-end plan-review-QA-ship workflow layered onto Claude Code or Codex.",
-    "notIdealFor": "Developers who prefer lightweight prompts or minimal ceremony, since the multi-role workflow adds steps and token usage to small changes.",
-    "recentUpdates": "The v1.91 release line added test-value checks across plan-eng-review, review, qa and ship, a new /test-audit skill, and functional QA and pre-publication docs checks.",
-    "verdict": "One of the most widely adopted Claude Code workflow packs, offering a complete, opinionated software-delivery loop that rewards teams willing to adopt its process.",
-    "tags": [
-      "Claude Code",
-      "Agent Skills",
-      "Code Review",
-      "QA",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-01"
-  },
-  {
-    "slug": "beads",
-    "name": "Beads",
-    "company": "Steve Yegge",
-    "pricing": "open-source",
-    "pricingDetail": "Beads is open source under the MIT License and free to use; it runs locally as the bd CLI, with optional sync through Dolt remotes.",
-    "description": "Beads (bd) is an open-source, distributed graph issue tracker that gives coding agents persistent, structured memory. It replaces markdown plans with a dependency-aware graph stored in Dolt, so agents can find ready work, claim it and close it across long-horizon tasks without losing context.",
-    "keyFeatures": [
-      "Dependency-aware task graph with bd ready for claimable work",
-      "Dolt-backed storage with version control, branching, merge and remote sync",
-      "Hash-based IDs that avoid merge collisions across agents and branches",
-      "Semantic compaction of old closed tasks to save context window",
-      "bd setup integrations for Claude Code, Codex and Factory plus an MCP server"
-    ],
-    "bestFor": "Developers running one or many coding agents on long-horizon projects who need durable, shared task tracking that agents can query and update themselves.",
-    "notIdealFor": "Teams that want a hosted, human-first project-management UI; Beads is a CLI-first tool designed primarily for agents.",
-    "recentUpdates": "Beads v1.3.1 shipped at the end of September 2026 following the v1.3.0 release, with pre-compiled binaries for Linux, macOS, Windows, Android/Termux and FreeBSD.",
-    "verdict": "A widely used memory and task layer for coding agents that brings real dependency tracking and multi-agent safety to agent workflows.",
-    "tags": [
-      "Agent Memory",
-      "Issue Tracking",
-      "CLI",
-      "Dolt",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-01"
-  },
-  {
-    "slug": "tuios",
-    "name": "TUIOS",
-    "company": "Gaurav Gosain",
-    "pricing": "free",
-    "pricingDetail": "TUIOS is free and open source under the MIT License, distributed through Homebrew, AUR, Nix, Docker, Go install and an install script.",
-    "description": "TUIOS is an open-source terminal multiplexer and tiling window manager written in Go that understands the coding agents running in its panes. It shows each agent's state, collects approvals and questions into a single Inbox across sessions and machines, and can fan one prompt out to several agents in separate git worktrees.",
-    "keyFeatures": [
-      "Per-pane agent state (working, needs_input, idle, done, errored) via installed harness hooks",
-      "Unified Inbox for approvals, questions, mail and finished turns across sessions and hosts",
-      "tuios fan to run one prompt across multiple agents in isolated git worktrees",
-      "MCP server and tmux shim so agents and tmux-only tools can drive TUIOS",
-      "Daemon-mode sessions that survive restarts, BSP tiling and kitty/sixel graphics"
-    ],
-    "bestFor": "Terminal-centric developers supervising several Claude Code, Codex, Gemini CLI or OpenCode agents at once who want one place to see what needs attention.",
-    "notIdealFor": "Users who prefer a GUI agent manager or are happy with plain tmux, since TUIOS introduces its own keybindings and workflow.",
-    "recentUpdates": "Releases v0.8.2 through v0.8.4 added a scratch terminal, picture-in-picture, pane history across daemon restarts, sixel images, image paste and tuios xpanes, followed by fixes.",
-    "verdict": "A fast-moving, agent-aware multiplexer that makes running a fleet of terminal coding agents far more manageable.",
-    "tags": [
-      "Terminal",
-      "Multiplexer",
-      "Agent Orchestration",
-      "Go",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-01"
-  },
-  {
-    "slug": "omniroute",
-    "name": "OmniRoute",
-    "company": "Diego Souza (diegosouzapw)",
-    "pricing": "free",
-    "pricingDetail": "OmniRoute is free and open source under the MIT License; users pay only for any paid provider subscriptions or API keys they connect, and can route to free-tier providers at no cost.",
-    "description": "OmniRoute is an open-source, self-hosted AI gateway that exposes one OpenAI-compatible endpoint for coding tools like Claude Code, Codex, Cursor and Cline across 350+ providers. Model combos with automatic failover keep agents running when quotas run out or providers fail.",
-    "keyFeatures": [
-      "Single local endpoint routing to 350+ providers, including 150+ with free tiers",
-      "Combos with 19 routing strategies and a zero-config auto mode with automatic failover",
-      "omniroute run launchers that pre-wire Claude Code, Codex, OpenCode, Gemini CLI and more",
-      "Per-response routing decision headers, quota telemetry and budget overrides",
-      "Runs via npm, Docker, Electron, Android Termux and a VS Code Copilot Chat extension"
-    ],
-    "bestFor": "Developers who use several coding agents and want to pool subscriptions, API keys and free tiers behind one resilient endpoint.",
-    "notIdealFor": "Organizations requiring a managed, enterprise-supported gateway with centralized billing, since OmniRoute is self-hosted and relies on users managing provider credentials and terms.",
-    "recentUpdates": "OmniRoute v3.8.51 (September 30, 2026) bundled about 2,000 changelog entries from more than 300 contributors, expanding the provider catalog and adding smarter auto-routing, quota-aware scheduling and one-command CLI setup.",
-    "verdict": "A very actively developed gateway that offers maximum provider coverage and failover for agent-heavy workflows, at the cost of self-hosting and credential management.",
-    "tags": [
-      "AI Gateway",
-      "Proxy",
-      "Model Routing",
-      "Developer Tools",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-01"
-  },
-  {
-    "slug": "opensre",
-    "name": "OpenSRE",
-    "company": "Tracer",
-    "pricing": "freemium",
-    "pricingDetail": "The OpenSRE framework and CLI are open source under the Apache 2.0 license and can be self-hosted with your own LLM provider keys; Tracer also offers a hosted OpenSRE Cloud web app for enterprise teams.",
-    "description": "OpenSRE is an open-source framework for building AI SRE agents that investigate and help resolve production incidents on your own infrastructure. Its CLI correlates logs, metrics, traces, deploys and runbooks across 60+ tools, and the project doubles as a training and evaluation environment for AI SRE agents.",
-    "keyFeatures": [
-      "Interactive opensre REPL plus a headless opensre ask mode for scripts and CI",
-      "Structured root-cause investigation across logs, metrics, traces, deploys and config",
-      "60+ integrations including Grafana, Datadog, Honeycomb, Kubernetes, AWS, PagerDuty and Slack",
-      "Runbook-aware reasoning and summaries posted back to Slack, PagerDuty or Telegram",
-      "Local and cloud-backed end-to-end incident test suites for training and evaluating AI SRE agents"
-    ],
-    "bestFor": "SRE and platform teams who want a self-hostable, extensible AI agent to triage alerts and draft root-cause analyses from their existing observability stack.",
-    "notIdealFor": "Teams needing a stable, fully supported incident platform today, since OpenSRE is a public alpha whose APIs and integrations are still evolving.",
-    "recentUpdates": "OpenSRE ships near-daily releases; v0.1.2026.10.2 landed on October 2, 2026 with gateway and scheduler fixes.",
-    "verdict": "A fast-moving, widely watched open-source foundation for AI SRE agents that is promising for experimentation but still alpha.",
-    "tags": [
-      "AI SRE",
-      "Incident Response",
-      "Observability",
-      "CLI",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-02"
-  },
-  {
-    "slug": "monty",
-    "name": "Monty",
-    "company": "Pydantic",
-    "pricing": "freemium",
-    "pricingDetail": "OSS Monty is free and open source under the MIT License as Python, JavaScript and Rust packages; Full Monty is a commercial server that runs the same sandbox behind a WebSocket with OS-level isolation and horizontal scaling.",
-    "description": "Monty is a minimal, secure Python interpreter written in Rust for running code written by AI agents. It avoids the latency and cost of container sandboxes: a new sandbox starts in under a millisecond and can only reach the host through the functions and mounts you explicitly provide.",
-    "keyFeatures": [
-      "Python 3.14 subset sandbox with no filesystem, environment or network access",
-      "Sub-millisecond sandbox startup from a pool of worker subprocesses",
-      "Host functions and inputs exposed explicitly via external_lookup and inputs",
-      "Serializable snapshots that pause at host calls and resume execution later",
-      "Packages for Python (pydantic-monty), JavaScript/TypeScript (@pydantic/monty) and Rust"
-    ],
-    "bestFor": "Agent developers implementing code mode or tool chaining who need to run LLM-generated Python safely with minimal overhead.",
-    "notIdealFor": "Workloads that need full CPython compatibility, third-party packages or arbitrary system access inside the sandbox.",
-    "recentUpdates": "Monty reached its first stable release, v1.0.0, on September 25, 2026, dropping the experimental label and adding features such as percent formatting and the format() builtin.",
-    "verdict": "A lightweight, production-ready sandbox from the Pydantic team that makes running agent-written Python cheap and safe.",
-    "tags": [
-      "Sandbox",
-      "Code Execution",
-      "Python",
-      "Rust",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-02"
-  },
-  {
-    "slug": "gcx",
-    "name": "gcx",
-    "company": "Grafana Labs",
-    "pricing": "free",
-    "pricingDetail": "gcx is free and open source under the Apache 2.0 license; it works with Grafana OSS/Enterprise 12+ and Grafana Cloud, with some product commands and Grafana Assistant features requiring a Grafana Cloud stack.",
-    "description": "gcx is Grafana's CLI for you and your AI coding agent, giving structured access to dashboards, alerts, SLOs, metrics, logs, traces and Grafana Cloud products from the terminal. It works with any agentic coding tool and ships Agent Skills so coding agents can query production and act on real telemetry.",
-    "keyFeatures": [
-      "Structured JSON/YAML output designed for agents and scripts",
-      "Works with any agentic coding tool, with an integrate-with-gcx skill for setup",
-      "Bundled Agent Skills for alert investigation, dashboard GitOps, SLO management and observability rollout",
-      "GitOps pull and push of Grafana resources with round-trip fidelity",
-      "Commands for Synthetic Monitoring, k6, IRM, Fleet Management and Grafana Assistant on Grafana Cloud"
-    ],
-    "bestFor": "Developers and SREs who want their coding agents to read production telemetry and manage Grafana resources as code from the terminal.",
-    "notIdealFor": "Teams on Grafana versions older than 12 or without a Grafana deployment, since gcx does not support them.",
-    "recentUpdates": "gcx v1.4.0 shipped on October 2, 2026 with metric and label search commands and TraceQL-filtered trace retrieval, following general availability in July 2026.",
-    "verdict": "An official, agent-first Grafana CLI that gives coding agents real production context with minimal setup.",
-    "tags": [
-      "CLI",
-      "Observability",
-      "Agent Skills",
-      "GitOps",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-02"
-  },
-  {
-    "slug": "agentgateway",
-    "name": "agentgateway",
-    "company": "Agentic AI Foundation (Linux Foundation)",
-    "pricing": "open-source",
-    "pricingDetail": "agentgateway is free and open source under the Apache 2.0 license and is hosted by the Agentic AI Foundation under the Linux Foundation.",
-    "description": "agentgateway is an open-source Rust proxy and gateway control plane built for agentic AI traffic. It provides one data plane for LLM, MCP, A2A, HTTP and gRPC traffic with built-in security, governance and observability, running standalone or on Kubernetes.",
-    "keyFeatures": [
-      "OpenAI-compatible LLM gateway with budgets, spend controls, load balancing and failover",
-      "MCP gateway with tool federation across stdio, HTTP, SSE and Streamable HTTP plus OAuth",
-      "A2A gateway for secure agent-to-agent communication",
-      "Guardrails, JWT/API-key/OAuth auth, CEL-based RBAC and rate limiting",
-      "OpenTelemetry metrics, logs and traces with standalone YAML or Kubernetes Gateway API deployment"
-    ],
-    "bestFor": "Platform teams that need to secure, govern and observe LLM, MCP and agent-to-agent traffic across many agents and tools.",
-    "notIdealFor": "Individual developers who only need a simple local model router for a single coding agent.",
-    "recentUpdates": "agentgateway v1.5.0 (August 27, 2026) added API-key-scoped LLM budgets, native Gemini inbound APIs and tool-call guardrails, and v1.6.0 release candidates followed in late September 2026.",
-    "verdict": "A foundation-hosted, enterprise-grade gateway that is becoming a standard connectivity layer for MCP and A2A workloads.",
-    "tags": [
-      "AI Gateway",
-      "MCP",
-      "A2A",
-      "Proxy",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-02"
-  },
-  {
-    "slug": "t3-code",
-    "name": "T3 Code",
-    "company": "Ping.gg",
-    "pricing": "open-source",
-    "pricingDetail": "T3 Code is free and open source under the MIT license; it does not resell tokens and instead uses the Codex, Claude Code, Cursor, Grok Build or OpenCode subscriptions you already have.",
-    "description": "T3 Code is an open-source \"agent harness control surface\" from Theo and Julius that controls the coding-agent CLIs on your machine from a web app, an Electron desktop app and iOS/Android mobile apps. A Node WebSocket server wraps the provider CLIs so you can run parallel agent threads across projects and worktrees with your existing subscriptions.",
-    "keyFeatures": [
-      "Drives Codex, Claude Code, Cursor, Grok Build and OpenCode with your existing subscriptions",
-      "Web, Electron desktop and iOS/Android clients with remote access from a phone",
-      "Each agent thread works on its own branch with inline diff review",
-      "One-button commit, push and PR with generated titles, bodies and changelogs",
-      "Permission modes, multiple accounts and `npx t3@latest` quick start"
-    ],
-    "bestFor": "Developers who run several coding-agent CLIs in parallel and want one open, forkable GUI to manage threads, diffs and PRs.",
-    "notIdealFor": "Teams that want a hosted agent with bundled model access, since T3 Code requires installing and authenticating provider CLIs yourself.",
-    "recentUpdates": "T3 Code shipped v0.0.44 on September 29, 2026 and v0.0.45 on October 2, 2026, with v0.0.46 preview and nightly builds following on October 2-3, 2026.",
-    "verdict": "A fast-moving, fully open alternative to Codex App, Claude Desktop and Conductor for orchestrating the agents you already pay for.",
-    "tags": [
-      "Agent Orchestration",
-      "Desktop App",
-      "Mobile",
-      "Open Source",
-      "BYO Subscription"
-    ],
-    "lastUpdated": "2026-10-03"
-  },
-  {
-    "slug": "superplane",
-    "name": "SuperPlane",
-    "company": "SuperPlane",
-    "pricing": "freemium",
-    "pricingDetail": "The SuperPlane engine is open source under Apache 2.0 and can be self-hosted; SuperPlane Cloud is free for open source projects, Business costs $199 per organization per month with $50 shared usage, and Enterprise is custom.",
-    "description": "SuperPlane is an open source software factory for one-shot engineering that turns high-confidence backlog issues into verified, review-ready pull requests. It coordinates coding agents, source control, CI, review, approvals and feedback in one workflow on top of a durable, event-driven automation engine.",
-    "keyFeatures": [
-      "Scans repos and backlogs and scores tickets by automation confidence",
-      "Dispatches your chosen coding agent and model on managed or self-hosted runners",
-      "Gates every run on CI status, repository checks and review feedback",
-      "Returns failed checks to the agent with command output attached",
-      "Git-backed workflow apps with approvals across GitHub, GitLab, CI/CD and incident tools"
-    ],
-    "bestFor": "Engineering teams that want to route routine bugs, maintenance and test fixes to coding agents under consistent guardrails.",
-    "notIdealFor": "Solo developers who just want an interactive coding agent rather than a backlog-to-PR pipeline.",
-    "recentUpdates": "SuperPlane opened its Cloud beta during a June 22, 2026 launch week, released engine v0.30.0 on July 27, 2026, and now offers the Factory with published Business pricing.",
-    "verdict": "A credible open source orchestration layer for teams moving from ad hoc agent runs to a governed backlog-to-PR factory.",
-    "tags": [
-      "Software Factory",
-      "Autonomous Agents",
-      "CI/CD",
-      "Open Source",
-      "Workflow Automation"
-    ],
-    "lastUpdated": "2026-10-03"
-  },
-  {
-    "slug": "cloudflare-os",
-    "name": "Cloudflare OS",
-    "company": "Cloudflare",
-    "pricing": "open-source",
-    "pricingDetail": "Cloudflare OS is open source under the Apache 2.0 license and can be deployed into your own Cloudflare account or on workerd; a fully managed deployment is on a waitlist and usage of underlying Cloudflare services is billed separately.",
-    "description": "Cloudflare OS is an open source agent workspace built on Cloudflare Workers and used internally across Cloudflare. It combines an agent chat UI grounded in company context, sandboxed \"Gadgets\" that agents build as personal apps, and a capability-based Gatekeeper security layer for safe access to external services.",
-    "keyFeatures": [
-      "Agent chat UI preloaded with company context and curated skills",
-      "Gadgets: agent-built personal apps, each instance sandboxed in a Dynamic Worker Facet",
-      "Gatekeepers broker OAuth access with narrow scopes, action logs and human approval",
-      "Google Workspace Gatekeeper for Gmail and Drive research and drafting",
-      "Deploy to your own Cloudflare account or self-host on workerd"
-    ],
-    "bestFor": "Organizations that want a customizable, secure internal agent workspace where non-technical staff can safely build small apps.",
-    "notIdealFor": "Individual developers looking for a local coding agent or IDE integration.",
-    "recentUpdates": "Cloudflare open sourced the new Cloudflare OS on August 5, 2026, and on October 1, 2026 opened a waitlist for fully managed deployments plus an improved Google Workspace Gatekeeper.",
-    "verdict": "An ambitious, security-first blueprint for a company-wide agent and app platform, best for teams already on Cloudflare.",
-    "tags": [
-      "Agent Workspace",
-      "Cloudflare Workers",
-      "App Builder",
-      "Security",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-03"
-  },
-  {
-    "slug": "strix",
-    "name": "Strix",
-    "company": "Strix",
-    "pricing": "freemium",
-    "pricingDetail": "The Strix CLI is free and open source under Apache 2.0 with your own LLM key; the managed platform at app.strix.ai offers a Pro plan at $29 per seat per month with pentests billed separately, and custom Enterprise pricing.",
-    "description": "Strix is an open source autonomous AI penetration testing tool whose agents run your application dynamically, find vulnerabilities and validate them with working proofs-of-concept. It targets developers and security teams who want fast pentests without the false positives of static scanners.",
-    "keyFeatures": [
-      "Multi-agent recon, exploitation and validation with real proofs-of-concept",
-      "Sandboxed toolkit with HTTP proxy, browser automation, shells and Python runtime",
-      "Auto-fix patches and compliance-ready pentest reports",
-      "GitHub Actions and CI scanning on every pull request",
-      "Agent skills for Claude Code, Cursor and Codex via `npx skills add usestrix/strix`"
-    ],
-    "bestFor": "Developers and security teams that want automated, exploit-validated pentests of web apps and APIs in local or CI workflows.",
-    "notIdealFor": "Teams that only need lightweight static linting, or cannot run Docker-based sandboxes and LLM-driven testing against their targets.",
-    "recentUpdates": "Strix released v1.6.0 through v1.6.2 between September 1 and September 5, 2026, and the repository passed 66,000 GitHub stars.",
-    "verdict": "The most popular open source AI pentesting agent, notable for validating findings with real exploits.",
-    "tags": [
-      "Security",
-      "Penetration Testing",
-      "Autonomous Agents",
-      "CI/CD",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-03"
-  },
-  {
-    "slug": "weave-router",
-    "name": "Weave Router",
-    "company": "Weave",
-    "pricing": "freemium",
-    "pricingDetail": "The Weave Router repository is licensed under Apache 2.0 and can be self-hosted with your own provider keys; the hosted router bills a unified usage-based credit balance, priced for solo developers and startups at 5% of routed costs.",
-    "description": "Weave Router is a model router for coding agents that sits in front of Anthropic, OpenAI and Gemini APIs and sends each agent request to the most cost-effective model likely to complete it. It plugs into Claude Code, Codex, Cursor, opencode or pi with one command.",
-    "keyFeatures": [
-      "Drop-in proxy for Anthropic Messages, OpenAI Chat Completions and Gemini APIs",
-      "Per-request routing via an on-box embedder and complexity classifier",
-      "Cache-aware switching that only routes down when savings beat cache rebuild cost",
-      "Escalation back to a frontier model when a cheaper model stalls or loops",
-      "`npx @weave-os/router` configures Claude Code, Codex, opencode or pi"
-    ],
-    "bestFor": "Developers and teams running heavy coding-agent workloads who want to cut model spend without changing tools.",
-    "notIdealFor": "Users who always want a single fixed model, or who cannot route agent traffic through a proxy.",
-    "recentUpdates": "Weave Router 2.0 launched on September 9, 2026 with a classifier trained on 10x more sessions, cache-aware routing, escalation and multi-subscription routing.",
-    "verdict": "A benchmark-backed router that meaningfully lowers coding-agent costs without changing the agent you use.",
-    "tags": [
-      "Model Router",
-      "AI Gateway",
-      "Cost Optimization",
-      "Claude Code",
-      "Codex"
-    ],
-    "lastUpdated": "2026-10-03"
-  },
-  {
-    "slug": "cf",
-    "name": "cf",
-    "company": "Cloudflare",
-    "pricing": "free",
-    "pricingDetail": "cf is free and open source under the Apache 2.0 license; the Cloudflare products it manages are billed under your Cloudflare account's normal plans.",
-    "description": "cf is Cloudflare's agentic CLI for the entire Cloudflare API, built so coding agents can discover and run the command they need. It mirrors the full API, defaults to JSON output condensed for agents, and introduces a TypeScript cloudflare.config.ts configuration format starting with Workers.",
-    "keyFeatures": [
-      "Command surface that mirrors the entire Cloudflare API, generated by the open-sourced Forge SDK generator",
-      "Bespoke command search and steering so agents can find the right command",
-      "JSON output by default, pretty-printed for humans and condensed for agents to save context",
-      "TypeScript `cloudflare.config.ts` configuration with language server support, starting with Workers",
-      "Vite as the default local development server with a plugin suite for frameworks"
-    ],
-    "bestFor": "Developers and coding agents who want to manage Workers and other Cloudflare resources from one API-complete, agent-friendly CLI.",
-    "notIdealFor": "Teams that need a stable 1.0 interface today or are happy with Wrangler for Workers-only workflows, since cf is still in open beta.",
-    "recentUpdates": "Cloudflare announced cf in open beta in late September 2026 alongside open-sourcing Forge, and has shipped near-daily releases since, including cf@1.0.0-beta.12 on October 2, 2026.",
-    "verdict": "An official, agent-first Cloudflare CLI that gives coding agents API-complete access with context-efficient output.",
-    "tags": [
-      "CLI",
-      "Cloudflare",
-      "Agent-Friendly",
-      "Infrastructure as Code",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-04"
-  },
-  {
-    "slug": "e2e",
-    "name": "e2e",
-    "company": "TesterArmy",
-    "pricing": "free",
-    "pricingDetail": "e2e is free and open source under the Apache 2.0 license; agent steps use your own model provider, API key, local model or existing ChatGPT, GitHub Copilot or SuperGrok subscription, and tests without agent steps need no model.",
-    "description": "e2e is TesterArmy's open-source agentic end-to-end testing framework for web, iOS and Android apps. Tests are written in TypeScript and mix natural-language goals that an agent drives with deterministic locators and assertions, and verified agent steps are replayed without model calls until the app changes.",
-    "keyFeatures": [
-      "Natural-language agent steps (`agent.act`, `agent.assert`) alongside deterministic locators and assertions",
-      "Record-and-replay of verified agent actions with no model calls until the app changes",
-      "Web engine on Chromium, Firefox and WebKit via Playwright; mobile engine on iOS simulators and Android emulators",
-      "`e2e mcp` server so coding agents like Claude Code and Cursor can drive a real browser or simulator",
-      "GitHub reporter that posts results as a pull request comment"
-    ],
-    "bestFor": "Teams that want AI-driven end-to-end tests for web and mobile apps without giving up deterministic assertions or paying for model calls on every run.",
-    "notIdealFor": "Teams that need a stable API today, since e2e is pre-1.0 and APIs and config can still change between minor releases.",
-    "recentUpdates": "TesterArmy open-sourced e2e in early October 2026 and shipped e2e 0.15.2, @e2e-dev/web 0.12.0 and @e2e-dev/mobile 0.9.2 on October 4, 2026.",
-    "verdict": "A promising open-source testing framework that blends agentic flexibility with classic e2e determinism across web and mobile.",
-    "tags": [
-      "Testing",
-      "E2E",
-      "Agentic",
-      "MCP",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-04"
-  },
-  {
-    "slug": "ifixai",
-    "name": "iFixAi",
-    "company": "iFixAi",
-    "pricing": "free",
-    "pricingDetail": "iFixAi is free and open source under the Apache 2.0 license; runs use your own model provider API keys for the system under test and the judge, and a free `--dry-run` shows the cost before anything is billed.",
-    "description": "iFixAi is an open-source auditing tool that checks whether an AI agent is doing the job it is supposed to do, balancing AI red-teaming with operational assurance. A single `ifixai run` executes 32 inspections across five pillars and grades the agent with an A–F scorecard, from the CLI or from inside coding agents via a plugin or skill.",
-    "keyFeatures": [
-      "Guided `ifixai setup` wizard and zero-flag `ifixai run`, or fully scriptable flags for CI",
-      "32 inspections across five pillars with an A–F grade and scored core-pillar scorecard",
-      "Self, independent-vendor or multi-judge ensemble grading",
-      "JSON and Markdown reports plus a rich terminal scorecard",
-      "Claude Code and Codex plugins and a `uvx ifixai install` skill for Cursor, VS Code/Copilot, Windsurf, Cline, Continue, Gemini and Zed"
-    ],
-    "bestFor": "Teams shipping AI agents that want a fast, repeatable audit of agent behavior against business expectations before and after release.",
-    "notIdealFor": "Teams that only need latency, token-cost or prompt-injection benchmarks, or that cannot spend model API credits on judge-graded runs.",
-    "recentUpdates": "iFixAi shipped v4.0.0 on September 15, 2026, renamed its plugin marketplace to ifixai-community, and the repository passed 21,000 GitHub stars with commits landing in early October 2026.",
-    "verdict": "A practical, agent-native auditing harness that turns 'is my agent doing its job?' into a graded, repeatable report.",
-    "tags": [
-      "Testing",
-      "Agent Evaluation",
-      "Red Teaming",
-      "CLI",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-05"
-  },
-  {
-    "slug": "taste-skill",
-    "name": "Taste Skill",
-    "company": "Leon Lin",
-    "pricing": "free",
-    "pricingDetail": "Taste Skill is free and open source under the MIT license; it is installed with `npx skills add` and runs inside the coding agent you already use.",
-    "description": "Taste Skill is an open-source pack of portable agent skills that upgrades AI-built interfaces with stronger layout, typography, motion and spacing instead of generic boilerplate UIs. It also includes image-generation skills for web and mobile comps and brand kits that can be handed to Codex, Cursor or Claude Code for implementation.",
-    "keyFeatures": [
-      "Default `design-taste-frontend` v2 skill with VARIANCE, MOTION and DENSITY dials",
-      "Stricter `gpt-taste` variant tuned for GPT and Codex",
-      "Redesign-audit, minimalist, brutalist, high-end visual and Google Stitch-compatible skills",
-      "`full-output-enforcement` skill that stops agents from shipping placeholder code",
-      "Image-generation skills for website comps, mobile screens and brand-kit boards"
-    ],
-    "bestFor": "Developers using AI coding agents for frontend work who want more distinctive, polished interfaces without hand-writing design rules.",
-    "notIdealFor": "Projects with a strict existing design system that should not be reinterpreted by opinionated style defaults.",
-    "recentUpdates": "The default skill moved to an experimental v2 rewrite (with v1 kept as `design-taste-frontend-v1`), and the repository passed 92,000 GitHub stars and appeared on GitHub Trending in early October 2026.",
-    "verdict": "One of the most popular anti-slop design skills for coding agents, and an easy add for any AI-built frontend.",
-    "tags": [
-      "Frontend",
-      "Design",
-      "Agent Skills",
-      "Developer Tools",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-05"
-  },
-  {
-    "slug": "skills-manager",
-    "name": "Skills Manager",
-    "company": "Jay.TL",
-    "pricing": "free",
-    "pricingDetail": "Skills Manager is a free, open-source (MIT) desktop app with no paid tier.",
-    "description": "Skills Manager is a lightweight desktop app that manages, syncs and organizes AI agent skills across 50+ coding tools such as Claude Code, Codex, Cursor, Copilot and Gemini CLI. It keeps one central skill library, deploys skills per agent or per project, and lets agents themselves install and deploy skills through it.",
-    "keyFeatures": [
-      "Central skill library installed from Git repos, local folders, `.zip`/`.skill` archives or the skills.sh marketplace",
-      "Presets that activate or deactivate groups of skills per agent scope",
-      "Global and project workspaces that compare and sync skill folders in either direction",
-      "Agent-driven management so Claude Code, Codex and Cursor can install or deploy skills via the app",
-      "Backup and multi-device sync"
-    ],
-    "bestFor": "Developers who use several coding agents and want one place to install, organize and sync agent skills across tools and projects.",
-    "notIdealFor": "Developers who use a single agent with a handful of skills and are happy managing its skills folder by hand.",
-    "recentUpdates": "Skills Manager shipped v1.40.3 on October 1, 2026, with commits continuing into October and the repository appearing on GitHub Trending.",
-    "verdict": "A focused, well-maintained control panel for the growing sprawl of agent skills across coding tools.",
-    "tags": [
-      "Agent Skills",
-      "Desktop App",
-      "Productivity",
-      "Developer Tools",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-05"
-  },
-  {
-    "slug": "hyperframes",
-    "name": "HyperFrames",
-    "company": "HeyGen",
-    "pricing": "free",
-    "pricingDetail": "HyperFrames is free and open source under the Apache 2.0 license; the CLI and agent skills run locally with the coding agent and model provider you already use.",
-    "description": "HyperFrames is HeyGen's open-source framework for turning HTML, CSS, media and seekable animations into deterministic MP4 videos, built to be driven by AI coding agents. It ships a CLI, a Claude Code plugin and 21 agent skills that teach agents to plan, write, lint, preview and render videos.",
-    "keyFeatures": [
-      "Deterministic HTML-to-MP4 rendering with seekable GSAP, Lottie, Three.js, Anime.js and CSS/WAAPI animations",
-      "`hyperframes` CLI for init, lint, preview and render",
-      "Claude Code plugin plus `npx skills add heygen-com/hyperframes` for Codex, Cursor, Gemini CLI and other agents",
-      "Creation workflows for product-launch videos, PR-to-video changelogs, captions, motion graphics and slideshows",
-      "`/remotion-to-hyperframes` skill for migrating Remotion compositions"
-    ],
-    "bestFor": "Developers and teams who want coding agents to produce product, changelog and explainer videos from code they can review and version.",
-    "notIdealFor": "Editors who want a traditional timeline-based video editor or AI avatar video generation without touching HTML.",
-    "recentUpdates": "HyperFrames ships near-daily releases, with v0.8.133 published on October 5, 2026, and the repository passed 57,000 GitHub stars while trending on GitHub.",
-    "verdict": "A fast-moving, agent-first video framework that makes 'render a video from this PR' a realistic coding-agent task.",
-    "tags": [
-      "Video",
-      "Agent Skills",
-      "CLI",
-      "HTML",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-05"
   },
   {
     "slug": "text-to-cad",
