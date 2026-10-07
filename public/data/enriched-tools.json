@@ -8976,5 +8976,119 @@
       "ai-agents"
     ],
     "lastUpdated": "2026-10-06"
+  },
+  {
+    "slug": "codeaf",
+    "name": "CodeAF",
+    "company": "AgentField",
+    "pricing": "open-source",
+    "pricingDetail": "CodeAF is Apache-2.0 and free to install as a single Go binary. You pay only for model usage through your own providers (OpenRouter, DeepSeek, GLM, Kimi, MiniMax, Qwen or any OpenAI-compatible endpoint), can sign in Codex with a ChatGPT plan, or run local models via Ollama at no API cost. Per-task spend limits default to $5 with an optional daily cap.",
+    "description": "CodeAF is an open-source terminal coding harness from AgentField built to get frontier-grade results from open-weight models. It works as a \"software factory\" on your machine: one window for every project, requests split into parallel tasks on their own branches, and finished work merged only after it passes a check.",
+    "keyFeatures": [
+      "Single Go binary installed with one curl script; no other services to run",
+      "One window listing every project and conversation, with per-conversation approval rules, models and spend limits",
+      "Turns natural-language requests into parallel tasks, each in its own repository copy and branch",
+      "Auto-selected model crew per task (worker, planner, checker) with /crew pinning and open-weight-only mode",
+      "Work that passes its check lands on your branch automatically, never on main or release branches",
+      "Subharnesses: specialist workflows such as /senior-dev, plus custom ones you can design and save",
+      "Built-in providers: OpenRouter, DeepSeek, GLM, Kimi, MiniMax, Qwen, Codex via ChatGPT plan, Ollama and OpenAI-compatible endpoints"
+    ],
+    "bestFor": "Developers who want to run several coding tasks across multiple repositories from one terminal window while keeping costs low with open-weight models.",
+    "notIdealFor": "Teams that need a mature, stable tool today: CodeAF is an early preview with expected rough edges, and its anonymous model-pool telemetry is on by default (it can be turned off).",
+    "recentUpdates": "Early preview under rapid development, with v0.7.x releases and daily dev builds in October 2026. Its /senior-dev subharness is reported first of ten harnesses on a DeepSWE run using DeepSeek V4 Flash; a native PR-AF code-review subharness is listed as coming soon.",
+    "verdict": "CodeAF is an ambitious, Apache-2.0 alternative to running one terminal per agent, with automatic task splitting, checking and model selection aimed at cheap open models. It is promising for cost-conscious multi-project work, but still early, so expect change and verify its benchmark claims for your own repos.",
+    "tags": [
+      "terminal",
+      "open-source",
+      "coding-agent",
+      "open-models",
+      "multi-agent"
+    ],
+    "lastUpdated": "2026-10-07"
+  },
+  {
+    "slug": "adr",
+    "name": "ADR",
+    "company": "Uber",
+    "pricing": "open-source",
+    "pricingDetail": "ADR is released by Uber under the Apache-2.0 license and is free to self-host. Running the default ADR detector calls Anthropic and OpenAI models with your own API keys; a keyless LlamaFirewall baseline is available for smoke tests. The ADR Prevention component is not part of the open-source release.",
+    "description": "ADR (Agentic AI Detection and Response) is Uber's open-source security system for enterprise AI agents, including employee-facing coding agents such as Cursor, Claude Code, Codex and GitHub Copilot CLI. It discovers AI tools on endpoints, collects agent telemetry, and detects risky agent behavior, and is described in an MLSys 2026 paper.",
+    "keyFeatures": [
+      "ADR Discovery inventories AI apps, CLI agents, IDE extensions, local model runtimes and MCP servers on endpoints and flags unknown surfaces",
+      "ADR Sensor collects and normalizes session telemetry from Claude Code, Cursor, Codex, GitHub Copilot CLI, Gemini CLI, opencode, Claude Desktop and more",
+      "Cross-platform sensor for macOS, Linux and Windows",
+      "Two-tier detector combining high-recall triage with deeper agentic reasoning on suspicious sessions",
+      "ADR-Bench with 300+ tasks, 134 MCP servers and coverage of 17 agent attack techniques",
+      "Reproducibility guide for benchmark runs and paper figures"
+    ],
+    "bestFor": "Security and platform teams that need visibility into which AI coding agents and MCP servers employees run, and want to detect unsafe agent behavior across a fleet.",
+    "notIdealFor": "Individual developers looking for a drop-in guardrail: ADR is an enterprise research-grade system, and its prevention (blocking) component is not included in the open-source release.",
+    "recentUpdates": "Open-sourced by Uber with the ADR Discovery, Sensor, ADR-Bench and Detector components; sensor-v1.0.0 was released in July 2026 and commits continued into October 2026, including Gemini CLI session capture.",
+    "verdict": "ADR is a credible, production-proven foundation for governing AI coding agents in an enterprise, backed by Uber's deployment and a peer-reviewed paper. It is strongest for discovery, observability and detection research; teams wanting enforcement will need to add their own prevention layer.",
+    "tags": [
+      "security",
+      "ai-agents",
+      "observability",
+      "mcp",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-07"
+  },
+  {
+    "slug": "obsidian-mind",
+    "name": "Obsidian Mind",
+    "company": "Brenno Ferrari (breferrari)",
+    "pricing": "open-source",
+    "pricingDetail": "Obsidian Mind is an MIT-licensed vault template, free to clone or install with ShardMind. It requires Obsidian 1.12+ (free for personal use) and a coding agent you already use, such as Claude Code, Codex CLI or Gemini CLI, which bring their own subscription or API costs.",
+    "description": "Obsidian Mind is an Obsidian vault template that gives AI coding agents persistent memory across sessions. Built for Claude Code with working hooks for Codex CLI and Gemini CLI, it lets the agent maintain linked notes, decision records, people and project indexes as you talk about your work.",
+    "keyFeatures": [
+      "Ready-made Obsidian vault structure with a North Star, active projects, decisions and people notes",
+      "Slash commands such as /om-standup, /om-dump and /om-incident-capture for daily workflows",
+      "Hooks for Claude Code (full support), Codex CLI and Gemini CLI sharing the same vault",
+      "Agent maintains links, indexes and a brag document automatically at wrap-up",
+      "Optional QMD semantic search, with grep and Obsidian CLI fallback",
+      "Install via ShardMind wizard with three-way-merge upgrades, or clone as a GitHub template"
+    ],
+    "bestFor": "Developers who use Claude Code, Codex or Gemini CLI daily and want a local, human-readable Markdown memory of projects, decisions and meetings that compounds across sessions.",
+    "notIdealFor": "Users who don't use Obsidian or want a hosted, team-wide memory service; it is a personal vault template rather than a shared server.",
+    "recentUpdates": "Actively maintained with frequent releases (v8.3.x in early October 2026) and trending on GitHub, now installable through the ShardMind package manager for Obsidian vault templates.",
+    "verdict": "Obsidian Mind is a practical, MIT-licensed way to give coding agents durable memory using plain Markdown you own and can browse in Obsidian. It is best for individual workflows; teams wanting shared or hosted memory should look at dedicated memory services.",
+    "tags": [
+      "memory",
+      "obsidian",
+      "claude-code",
+      "productivity",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-07"
+  },
+  {
+    "slug": "gbrain",
+    "name": "GBrain",
+    "company": "Garry Tan",
+    "pricing": "open-source",
+    "pricingDetail": "GBrain is MIT-licensed and free to install with Bun. It starts with keyless memory and keyword retrieval; optional semantic search, synthesis and background enrichment use embedding and LLM providers you configure (including local options such as llama.cpp and LM Studio), which may incur their own costs.",
+    "description": "GBrain is an open-source agent memory layer from Y Combinator CEO Garry Tan that gives the agents you already use a memory you control. It stores explicit facts with sources, supports corrections and withdrawal, and shares the same memory across Claude Code, Codex, OpenClaw, Hermes and other harnesses.",
+    "keyFeatures": [
+      "Explicit fact storage with provenance, corrections and withdrawal",
+      "Keyword retrieval out of the box, with optional semantic search across many embedding providers",
+      "Synthesis layer that returns cited answers and notes knowledge gaps",
+      "Typed knowledge graph with automatic reference extraction",
+      "MCP server exposure over Tailscale (gbrain mcp expose) for local and cloud agents",
+      "Skill packs and a native router for coding-agent installs such as Claude Code and Codex",
+      "Shared company-brain mode with source and operation grants"
+    ],
+    "bestFor": "Developers and power users running several AI agents who want one durable, cited memory shared across harnesses and machines.",
+    "notIdealFor": "Users wanting a simple zero-config plugin: setup has many options and trust boundaries to understand, and the npm package named gbrain is unrelated, so installation must follow the documented Bun path.",
+    "recentUpdates": "Very actively developed with near-daily releases (v0.60.x in October 2026) and trending on GitHub, with guides for Codex, Claude Code, Grok and Muse harnesses and hosted MCP access.",
+    "verdict": "GBrain is a powerful, MIT-licensed memory layer proven in its author's own large OpenClaw and Hermes deployments, and increasingly usable from coding agents. It rewards users willing to invest in setup; those wanting lightweight session memory for a single coding agent may prefer simpler plugins.",
+    "tags": [
+      "memory",
+      "mcp",
+      "ai-agents",
+      "knowledge-graph",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-07"
   }
 ]

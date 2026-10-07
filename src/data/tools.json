@@ -1212,6 +1212,10 @@
     "toolName": "Prime Agent"
   },
   {
+    "companyName": "AgentField",
+    "toolName": "CodeAF"
+  },
+  {
     "companyName": "Garry Tan",
     "toolName": "gstack"
   },
@@ -1258,6 +1262,10 @@
   {
     "companyName": "Strix",
     "toolName": "Strix"
+  },
+  {
+    "companyName": "Uber",
+    "toolName": "ADR"
   },
   {
     "companyName": "Weave",
@@ -1310,5 +1318,13 @@
   {
     "companyName": "DBX",
     "toolName": "DBX"
+  },
+  {
+    "companyName": "Brenno Ferrari (breferrari)",
+    "toolName": "Obsidian Mind"
+  },
+  {
+    "companyName": "Garry Tan",
+    "toolName": "GBrain"
   }
 ]

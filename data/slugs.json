@@ -870,6 +870,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "codeaf",
+    "name": "CodeAF",
+    "company": "AgentField",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
@@ -1215,6 +1221,12 @@
     "slug": "strix",
     "name": "Strix",
     "company": "Strix",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "adr",
+    "name": "ADR",
+    "company": "Uber",
     "category": "AI Code Review & Security"
   },
   {
@@ -1935,6 +1947,18 @@
     "slug": "dbx",
     "name": "DBX",
     "company": "DBX",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "obsidian-mind",
+    "name": "Obsidian Mind",
+    "company": "Brenno Ferrari (breferrari)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "gbrain",
+    "name": "GBrain",
+    "company": "Garry Tan",
     "category": "Developer Productivity & Workflow"
   },
   {
