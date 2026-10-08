@@ -1044,6 +1044,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "docker-agent",
+    "name": "Docker Agent",
+    "company": "Docker",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1227,6 +1233,18 @@
     "slug": "adr",
     "name": "ADR",
     "company": "Uber",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "codex-security",
+    "name": "Codex Security",
+    "company": "OpenAI",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "plannotator",
+    "name": "Plannotator",
+    "company": "backnotprop",
     "category": "AI Code Review & Security"
   },
   {
@@ -1959,6 +1977,18 @@
     "slug": "gbrain",
     "name": "GBrain",
     "company": "Garry Tan",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "agent-browser",
+    "name": "agent-browser",
+    "company": "Vercel Labs",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "bmad-method",
+    "name": "BMAD Method",
+    "company": "BMad Code",
     "category": "Developer Productivity & Workflow"
   },
   {

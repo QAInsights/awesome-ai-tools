@@ -1256,6 +1256,10 @@
     "toolName": "SuperPlane"
   },
   {
+    "companyName": "Docker",
+    "toolName": "Docker Agent"
+  },
+  {
     "companyName": "Cloudflare",
     "toolName": "Cloudflare OS"
   },
@@ -1266,6 +1270,14 @@
   {
     "companyName": "Uber",
     "toolName": "ADR"
+  },
+  {
+    "companyName": "OpenAI",
+    "toolName": "Codex Security"
+  },
+  {
+    "companyName": "backnotprop",
+    "toolName": "Plannotator"
   },
   {
     "companyName": "Weave",
@@ -1326,5 +1338,13 @@
   {
     "companyName": "Garry Tan",
     "toolName": "GBrain"
+  },
+  {
+    "companyName": "Vercel Labs",
+    "toolName": "agent-browser"
+  },
+  {
+    "companyName": "BMad Code",
+    "toolName": "BMAD Method"
   }
 ]
