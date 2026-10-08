@@ -9090,5 +9090,140 @@
       "open-source"
     ],
     "lastUpdated": "2026-10-07"
+  },
+  {
+    "slug": "docker-agent",
+    "name": "Docker Agent",
+    "company": "Docker",
+    "pricing": "open-source",
+    "pricingDetail": "Docker Agent is free and open source under the Apache 2.0 license and ships pre-installed in Docker Desktop 4.63+; you pay only for the model provider you configure, or run local models through Docker Model Runner.",
+    "description": "Docker Agent is Docker Engineering's agent builder and runtime: you declare single agents or multi-agent teams in YAML, give them built-in and MCP tools, and run them from the `docker agent` CLI plugin or its TUI. Agents can be packaged and shared as OCI artifacts through any container registry.",
+    "keyFeatures": [
+      "Declarative YAML agent and multi-agent team definitions with automatic delegation",
+      "Built-in think, todo and memory tools plus any local, remote or Docker MCP server",
+      "Pluggable RAG with BM25, embeddings, hybrid search and reranking",
+      "Push and pull agents as OCI artifacts via any registry",
+      "Provider-agnostic: OpenAI, Anthropic, Gemini, Bedrock, Mistral, xAI and Docker Model Runner"
+    ],
+    "bestFor": "Developers and platform teams already using Docker who want versionable, shareable agent definitions they can run locally or in CI without writing framework code.",
+    "notIdealFor": "Teams wanting a finished coding agent or IDE assistant out of the box, or those who prefer building agents directly in a Python or TypeScript SDK.",
+    "recentUpdates": "Docker Agent v1.147.0 through v1.149.0 shipped between October 5 and October 7, 2026, adding skill loading from public GitHub repositories, an evaluator judge backend, bounded tool output handling and TUI stability fixes.",
+    "verdict": "A pragmatic, YAML-first way to build and share agents that fits naturally into existing Docker tooling.",
+    "tags": [
+      "AI Agents",
+      "Multi-Agent",
+      "Docker",
+      "MCP",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-08"
+  },
+  {
+    "slug": "codex-security",
+    "name": "Codex Security",
+    "company": "OpenAI",
+    "pricing": "open-source",
+    "pricingDetail": "The Codex Security CLI and TypeScript SDK are open source under the Apache 2.0 license; scans consume model usage through a ChatGPT login, an OpenAI API key, or Amazon Bedrock, OpenRouter or Fireworks AI credentials, and some cybersecurity requests require Trusted Access for Cyber approval.",
+    "description": "Codex Security is OpenAI's CLI and TypeScript SDK for finding, validating and fixing security vulnerabilities in a codebase. It scans repositories, selected paths or Git diffs, confirms candidate findings, proposes and verifies patches, and keeps threat models and findings for later triage.",
+    "keyFeatures": [
+      "Standard, deep (parallel discovery workers) and diff scans of repos or selected paths",
+      "Finding validation, patch generation and fix verification",
+      "Saved threat models and drafted SECURITY.md policies",
+      "Offline exposed-credential checks across source, tests and unused code",
+      "GitHub code scanning import, SARIF/JSON/CSV export and Linear publishing for CI workflows"
+    ],
+    "bestFor": "Engineering and security teams that want an agentic vulnerability scanner they can run locally, in CI or from their own TypeScript tooling.",
+    "notIdealFor": "Teams needing a fully offline scanner or a deterministic rules-only SAST tool, since scans rely on hosted model providers.",
+    "recentUpdates": "Codex Security 0.2.0, released October 6, 2026, saves threat models with Standard, Deep and Diff scan results, adds offline exposed-credential checks, and lets --model and --effort be set for patching and validation.",
+    "verdict": "OpenAI's first-party, scriptable security scanner that goes beyond flagging issues to validating and patching them.",
+    "tags": [
+      "Security",
+      "Code Review",
+      "CLI",
+      "SDK",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-08"
+  },
+  {
+    "slug": "plannotator",
+    "name": "Plannotator",
+    "company": "backnotprop",
+    "pricing": "open-source",
+    "pricingDetail": "Plannotator is free and open source, dual-licensed under Apache 2.0 or MIT; Workspaces is a separate hosted product.",
+    "description": "Plannotator is a local, browser-based review surface for AI coding agents. When an agent proposes a plan, writes HTML or finishes code, the work opens in your browser so you can annotate it, comment on diffs and send structured feedback straight back to the agent.",
+    "keyFeatures": [
+      "Plan, spec, Markdown and HTML annotation with one-click feedback to the agent",
+      "Diff and PR review across Git, GitButler, Jujutsu, Perforce, GitHub and GitLab",
+      "Ask AI and AI review comments posted directly on the diff",
+      "Hooks, skills and slash commands for Claude Code, Codex, Copilot CLI, Gemini CLI, OpenCode, Kiro, Droid, Amp and Pi",
+      "Encrypted share links, a standalone TUI and the Herdr terminal plugin"
+    ],
+    "bestFor": "Developers who review coding-agent plans and diffs closely and want a visual way to steer agents before and after implementation.",
+    "notIdealFor": "Teams that only need automated PR bots without human-in-the-loop review, or users who never use plan modes in their agents.",
+    "recentUpdates": "Plannotator shipped v0.28.4 through v0.28.8 in early October 2026, adding multi-file reviews, persistent comments after agent edits, the plannotator tool for Pi and OpenCode 2, and Ask AI line references.",
+    "verdict": "A fast-moving, agent-agnostic review layer that makes human feedback on AI plans and code far more precise.",
+    "tags": [
+      "Code Review",
+      "Plan Review",
+      "Human-in-the-Loop",
+      "Claude Code",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-08"
+  },
+  {
+    "slug": "agent-browser",
+    "name": "agent-browser",
+    "company": "Vercel Labs",
+    "pricing": "open-source",
+    "pricingDetail": "agent-browser is free and open source under the Apache 2.0 license; optional cloud browser providers such as Browserbase, Browser Use or Kernel bill separately.",
+    "description": "agent-browser is a fast native Rust command-line tool that lets AI agents drive a real Chrome browser. Agents take accessibility-tree snapshots with element refs, then click, fill, read text and capture screenshots through simple shell commands.",
+    "keyFeatures": [
+      "Accessibility-tree snapshots with stable @e element refs for reliable actions",
+      "Native Rust daemon with no Playwright or Node.js runtime requirement",
+      "Auth vault logins, WebMCP tools and a chat mode",
+      "Cloud browser support for Browserbase, Browser Use, Kernel and AgentCore",
+      "Install via npm, Homebrew or Cargo plus a ready-made agent skill"
+    ],
+    "bestFor": "Developers giving Claude Code, Codex, Cursor or custom agents a token-efficient way to test and automate web apps from the terminal.",
+    "notIdealFor": "Teams that need a full test framework with assertions and reporting, or prefer GUI-based browser automation.",
+    "recentUpdates": "agent-browser v0.38.2, released October 1, 2026, fixed auth vault field selection, allowed WebMCP and skills commands in chat mode, and corrected Kernel profile handling.",
+    "verdict": "One of the most widely adopted browser tools for coding agents, prized for its simple CLI and compact snapshots.",
+    "tags": [
+      "Browser Automation",
+      "CLI",
+      "AI Agents",
+      "Rust",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-08"
+  },
+  {
+    "slug": "bmad-method",
+    "name": "BMAD Method",
+    "company": "BMad Code",
+    "pricing": "open-source",
+    "pricingDetail": "BMAD Method is free and open source under the MIT license with no paywalled workflows; you supply your own AI coding tool.",
+    "description": "BMAD Method (Breakthrough Method for Agile AI-Driven Development) is a set of agent skills and workflows that guide AI coding tools from idea to working software. It keeps briefs, PRDs, architecture and stories explicit as context and scales the amount of process to the size of each change.",
+    "keyFeatures": [
+      "Agent workflows for briefs, PRDs, architecture, epics and stories",
+      "bmad-build that sizes ceremony to each change after investigating it",
+      "Review triage that logs a verdict and evidence for every finding",
+      "Works in new or existing codebases with any skills-capable coding tool",
+      "Install via npx skills or the Claude Code and Codex plugin marketplaces"
+    ],
+    "bestFor": "Developers and teams who want a structured, spec-driven process around Claude Code, Codex or other agents for larger features and projects.",
+    "notIdealFor": "Quick one-off edits or developers who prefer unstructured prompting without planning artifacts.",
+    "recentUpdates": "BMAD Method v6.12.0 (September 4, 2026) made bmad-build size process after investigation and added review triage verdicts, and v6.12.1 (October 4, 2026) unified config resolution across all skills.",
+    "verdict": "The most widely adopted open-source methodology for spec-driven, agent-assisted software delivery.",
+    "tags": [
+      "Spec-Driven Development",
+      "Agent Skills",
+      "Workflow",
+      "Agile",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-08"
   }
 ]
