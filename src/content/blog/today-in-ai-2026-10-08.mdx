@@ -1,0 +1,78 @@
+---
+title: "Liquid AI ships edge decision models, Nous hits $1.5B"
+description: "Liquid AI releases open d1 decision models for edge devices, Nous Research confirms a $1.5B valuation, and Microsoft and NVIDIA push agents onto Windows PCs."
+pubDate: 2026-10-08
+tags: ["news","today-in-ai","edge-ai","agents","funding","windows","copyright","robotics"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-10-08 UTC.
+
+Edge decision models, a $1.5B valuation for an open-source agent shop, and Windows turning into an agent platform lead today's brief.
+
+## Liquid AI ships open d1 decision models for edge devices
+
+**What happened:** Liquid AI released d1-3B and d1-omni-600M, two open decision models that answer in a single forward pass instead of generating tokens. d1-3B scores 48.57 on the Decision Index 0.2.1, ahead of Decider 35B-A3B at 47.11, and answers in 16 ms on an NVIDIA Jetson AGX Thor.
+
+**Why it matters:** Sub-50 ms classification and routing on Jetson hardware means builders can run intent detection, toxicity checks and multimodal gating locally without a round trip to a cloud model.
+
+[Source: Liquid AI](<https://huggingface.co/blog/LiquidAI/open-d1>)
+
+## Nous Research confirms $1.5B valuation and enterprise agents
+
+**What happened:** Nous Research raised a $90 million Series B at a $1.5 billion valuation led by Robot Ventures, with Nvidia, Union Square Ventures, Menlo Ventures, Samsung and 1789 Capital participating. The company says its open-source Hermes agent has been cloned more than 24 million times and will fund Hermes for Businesses.
+
+**Why it matters:** The company behind a widely cloned open agent is now selling private, multi-step deployments to enterprises, so teams weighing self-hosted agents get a supported commercial option.
+
+[Source: TechCrunch](<https://techcrunch.com/2026/10/07/nous-research-confirms-it-hit-1-5b-valuation-launches-ai-agents-for-business-users/>)
+
+## Microsoft and NVIDIA put AI agents on Windows PCs
+
+**What happened:** At a Microsoft event in San Francisco, Jensen Huang and Satya Nadella detailed co-engineered hardware and software for running agents on Windows. Microsoft announced general availability of Microsoft Execution Containers, and NVIDIA opened RTX Spark preorders alongside a preview of DGX Station for Windows.
+
+**Why it matters:** Containment plus local silicon gives developers a sanctioned way to run agentic coding sessions on the desktop instead of routing every action through cloud infrastructure.
+
+[Source: NVIDIA](<https://blogs.nvidia.com/blog/local-ai-rtx-spark-microsoft-windows-event/>)
+
+## GitHub Copilot to route between local and cloud models
+
+**What happened:** Microsoft said GitHub Copilot will decide per task whether to use on-device intelligence or cloud-scale models, coming by the end of the month. On NVIDIA RTX Spark Windows PCs like Surface Laptop Ultra, Copilot will run local inference models.
+
+**Why it matters:** Automatic local-versus-cloud routing removes an infrastructure decision from developers and can cut latency and token spend on coding tasks that never needed a frontier model.
+
+[Source: Microsoft](<https://commandline.microsoft.com/local-models-sandboxed-tools-github-windows/>)
+
+## LlamaIndex launches OpenDocRouter for document parsing
+
+**What happened:** LlamaIndex launched OpenDocRouter, a hosted API that turns PDFs and images into markdown using five frontier and five open-source models, each run under a versioned parsing recipe and benchmarked on ParseBench. Pages run as individual model calls with their own markdown, status and charge.
+
+**Why it matters:** Per-page billing and retries let RAG pipelines swap parsers and re-run only failed pages, instead of reprocessing whole documents when one model stumbles.
+
+[Source: Unite.AI](<https://www.unite.ai/llamaindex-launches-opendocrouter-a-unified-api-for-document-parsing/>)
+
+## Mecka raises $60M to record human motion for robots
+
+**What happened:** Mecka AI raised a $60 million Series B led by Sequoia Capital, with NVIDIA, M12, Qualcomm Ventures and Samsung joining. The company pays people to record everyday tasks while wearing body sensors and using smartphones, then analyzes that motion data to train humanoid and other robots.
+
+**Why it matters:** Robot training data is being assembled the way LLM labeling was, so teams building manipulation policies may soon buy motion datasets instead of collecting their own.
+
+[Source: Mecka](<https://www.mecka.ai/news/series-b>)
+
+## ByteDance must face YouTubers' DMCA suit over AI training
+
+**What happened:** Judge Jacqueline Scott Corley of the Northern District of California denied ByteDance's motion to dismiss in Ted Entertainment, Inc. et al. v. ByteDance Inc. holding that creators plausibly alleged ByteDance circumvented YouTube's technical protection measures to harvest videos for AI training.
+
+**Why it matters:** Scraping pipelines that bypass platform access controls now carry litigation risk independent of fair use, which changes how teams should document where training data came from.
+
+[Source: Slop TV News](<https://sloptvnews.com/bytedance-denied-dismissal-youtube-dmca-ruling/>)
+
+## Sources
+
+- [Liquid AI](<https://huggingface.co/blog/LiquidAI/open-d1>)
+- [TechCrunch](<https://techcrunch.com/2026/10/07/nous-research-confirms-it-hit-1-5b-valuation-launches-ai-agents-for-business-users/>)
+- [NVIDIA](<https://blogs.nvidia.com/blog/local-ai-rtx-spark-microsoft-windows-event/>)
+- [Microsoft](<https://commandline.microsoft.com/local-models-sandboxed-tools-github-windows/>)
+- [Unite.AI](<https://www.unite.ai/llamaindex-launches-opendocrouter-a-unified-api-for-document-parsing/>)
+- [Mecka](<https://www.mecka.ai/news/series-b>)
+- [Slop TV News](<https://sloptvnews.com/bytedance-denied-dismissal-youtube-dmca-ruling/>)
