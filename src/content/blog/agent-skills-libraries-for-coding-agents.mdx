@@ -1,0 +1,253 @@
+---
+title: "Agent Skills Libraries for Coding Agents: 5 Worth Installing in October 2026"
+description: "Compare five agent skills libraries for coding agents: Matt Pocock Skills, Superpowers, Agent Skills, Taste Skill and Anthropic Skills, installs and limits."
+pubDate: 2026-10-08
+tags: ["agent-skills", "claude-code", "codex", "skills", "open-source", "agents"]
+---
+
+In this blog post, we will see which agent skills libraries for coding agents are worth installing right now, how a `SKILL.md` file actually gets picked up by Claude Code and Codex, and a small script I wrote to catch the skills that will never fire.
+
+## Table of Contents
+
+1. [The short answer](#the-short-answer)
+2. [Why skills are trending this week](#why-skills-are-trending-this-week)
+3. [How a skill loads, in one example](#how-a-skill-loads-in-one-example)
+4. [Matt Pocock Skills](#matt-pocock-skills)
+5. [Superpowers](#superpowers)
+6. [Agent Skills by Addy Osmani](#agent-skills-by-addy-osmani)
+7. [Taste Skill](#taste-skill)
+8. [Anthropic Skills](#anthropic-skills)
+9. [Comparison table](#comparison-table)
+10. [Which one should you install first](#which-one-should-you-install-first)
+11. [FAQ](#faq)
+12. [How this ties to ai.dosa.dev](#how-this-ties-to-aidosadev)
+
+## The short answer
+
+Agent skills libraries are folders of `SKILL.md` files that teach a coding agent a repeatable workflow, such as TDD, planning or code review. Start with Superpowers if you want a full methodology, Matt Pocock Skills if you want small focused commands, and Anthropic Skills if you want official reference examples to copy.
+
+## Why skills are trending this week
+
+Skills are not new, but the last 14 days pushed them to the top of GitHub again:
+
+- A GitHub star tracker snapshot for October 1 to 8, 2026 lists [mattpocock/skills](https://github.com/mattpocock/skills) at roughly +6,600 stars, [obra/superpowers](https://github.com/obra/superpowers) at +2,900 and [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) at +2,600 in that single week.
+- Matt Pocock shipped [v1.3.0 and v1.3.1](https://github.com/mattpocock/skills/releases) on October 4, 2026.
+- Claude Code [v2.1.292](https://code.claude.com/docs/en/plugins/install), released October 6, 2026, added a `claude plugin install --marketplace` flow that adds the marketplace and installs the plugin in one step. Most skill libraries ship as plugins.
+- A [DEV Community post](https://dev.to/max_quimby/write-skills-that-load-five-rules-from-500k-stars-4go7) published October 8, 2026 calls skills the fastest-growing category on GitHub this year.
+- Our own [October 3 brief](/blog/today-in-ai-2026-10-03) covered Google Cloud and AMD both shipping agent skills bundles for Claude Code and Codex.
+
+That is four independent signals in one week, with repos and docs behind every one of them.
+
+## How a skill loads, in one example
+
+The [Agent Skills specification](https://agentskills.io/specification) says a skill is a directory with a `SKILL.md` file. The file needs YAML frontmatter with two required fields:
+
+- `name`: max 64 characters, lowercase letters, numbers and hyphens only
+- `description`: max 1024 characters, says what the skill does and when to use it
+
+Here is the part that surprised me. The agent does not read the body at startup. [OpenAI's Codex docs](https://developers.openai.com/codex/skills) say Codex starts with only each skill's name, description and file path, and loads the full `SKILL.md` when it decides to use the skill. Claude Code works the same way. So the description is the trigger. If it is vague, the skill sits on disk and never runs.
+
+A working skill looks like this:
+
+```markdown
+---
+name: release-notes
+description: Draft release notes from merged PRs since the last git tag. Use when the user asks for a changelog, release notes, or "what shipped". Do not use for commit messages.
+---
+
+1. Run `git describe --tags --abbrev=0` to find the last tag.
+2. Run `git log <tag>..HEAD --merges --oneline` to list merged PRs.
+3. Group entries under Added, Fixed, and Changed. Keep one line per PR.
+```
+
+Save it as `.claude/skills/release-notes/SKILL.md` for Claude Code, or in your Codex skills folder, and ask "what shipped since the last release?".
+
+### A 30 line check for skills that will never fire
+
+Before installing a library with dozens of skills, I wanted a quick way to lint them. This Python script checks the two required fields against the spec and flags descriptions that never say when to use the skill:
+
+```python
+import re
+import sys
+from pathlib import Path
+
+NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
+
+
+def frontmatter(text):
+    match = re.match(r"^---\n(.*?)\n---\n", text, re.S)
+    if not match:
+        return None
+    fields = {}
+    for line in match.group(1).splitlines():
+        key, _, value = line.partition(":")
+        fields[key.strip()] = value.strip()
+    return fields
+
+
+def check(skill_md):
+    problems = []
+    fields = frontmatter(skill_md.read_text())
+    if fields is None:
+        return ["missing YAML frontmatter"]
+    name = fields.get("name", "")
+    desc = fields.get("description", "")
+    if not NAME_RE.match(name) or len(name) > 64:
+        problems.append(f"name '{name}' must be lowercase letters, digits, hyphens (max 64)")
+    if name != skill_md.parent.name:
+        problems.append(f"name '{name}' should match folder '{skill_md.parent.name}'")
+    if not desc or len(desc) > 1024:
+        problems.append("description must be 1 to 1024 characters")
+    elif not re.search(r"\b(use when|when the user)\b", desc, re.I):
+        problems.append("description never says when to use it, so it may never trigger")
+    return problems
+
+
+root = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
+for skill_md in sorted(root.rglob("SKILL.md")):
+    problems = check(skill_md)
+    print(f"{'OK  ' if not problems else 'FAIL'} {skill_md.parent.name}")
+    for p in problems:
+        print(f"     - {p}")
+```
+
+I ran it on Python 3.12 against the `release-notes` skill above and a deliberately bad one named `Bad_Skill` with the description "Helps with stuff.", as shown below:
+
+```text
+$ python3 check_skills.py skills
+FAIL Bad_Skill
+     - name 'Bad_Skill' must be lowercase letters, digits, hyphens (max 64)
+     - description never says when to use it, so it may never trigger
+OK   release-notes
+```
+
+The parser is deliberately simple. It reads single-line `key: value` pairs only, so multi-line YAML descriptions need a real YAML parser. The "use when" check is my own heuristic, not part of the spec.
+
+## Matt Pocock Skills
+
+**What it does:** A set of small engineering skills (planning, implementing a spec, PR prep and more) from TypeScript educator Matt Pocock, grouped into buckets and routed by a setup skill.
+
+**Who it is for:** Developers who want a few sharp, opinionated commands rather than a full process.
+
+**Facts checked October 8, 2026:** latest release v1.3.1 (October 4, 2026), MIT license, over 250,000 GitHub stars per the DEV Community count above. Free.
+
+Install it in Claude Code as a managed plugin, or copy editable files into your project with the `skills` CLI:
+
+```bash
+claude plugins install mattpocock-skills
+# or, editable copies in your repo
+npx skills@latest add mattpocock/skills
+```
+
+**Limitation:** The repo changes fast. v1.3.0 removed the `resolving-merge-conflicts` skill outright, so if you depend on a specific skill, pin the version or use the editable copy.
+
+## Superpowers
+
+**What it does:** Jesse Vincent's agentic skills framework. It bundles skills for brainstorming, writing plans, TDD, systematic debugging, subagent-driven development and code review into one methodology.
+
+**Who it is for:** Teams that want the agent to follow the same process every time, across Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot CLI, OpenCode and more.
+
+**Facts checked October 8, 2026:** latest release v6.4.2 (September 25, 2026), MIT license, about 296,000 GitHub stars. Free.
+
+```bash
+claude plugin marketplace add obra/superpowers
+claude plugin install superpowers@superpowers-dev --scope project
+```
+
+v6.4.1 also added a `diagnosing-superpowers` skill that looks at a session and figures out what went wrong. That one is useful when the agent ignored a skill you expected it to use.
+
+**Limitation:** It is a methodology, not a toolbox. On a five minute bug fix, the brainstorm and plan steps feel heavy. I would skip it for one-off scripts.
+
+## Agent Skills by Addy Osmani
+
+**What it does:** Production engineering skills mapped to the delivery lifecycle: `/spec`, `/plan`, `/build`, `/test`, `/review`, `/code-simplify` and `/ship`.
+
+**Who it is for:** Engineers who think in phases and want a slash command per phase.
+
+**Facts checked October 8, 2026:** latest release 0.6.7 (August 28, 2026), MIT license. The release notes list a Codex hook fix and CI guards. Exact star count unverified today. Free.
+
+```bash
+npx skills@latest add addyosmani/agent-skills
+```
+
+**Limitation:** It is the slowest moving of the five. The last tagged release is about six weeks old, so check the commit history before you build on it.
+
+## Taste Skill
+
+**What it does:** Frontend skills that push agent-built UIs away from generic layouts. It sets rules for layout, typography, spacing and motion, and runs a pre-flight checklist.
+
+**Who it is for:** Anyone whose agent keeps producing the same centered hero section and purple gradient.
+
+**Facts checked October 8, 2026:** v2 (experimental) is the default install, MIT license, about 74,500 GitHub stars. Free.
+
+```bash
+npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"
+```
+
+The `--skill` value is the `name` field from the frontmatter, not the folder name. That tripped me up at first.
+
+**Limitation:** The maintainers say v2 is a pre-release and section numbering and rule wording may change before v2.0.0 stable. Expect output to shift between installs.
+
+## Anthropic Skills
+
+**What it does:** Anthropic's public repository of example skills, such as `frontend-design` and `claude-api`. It is the closest thing to a reference implementation.
+
+**Who it is for:** People writing their own skills who want to see how the format is meant to look.
+
+**Facts checked October 8, 2026:** about 173,000 GitHub stars. Licensing is per skill. The `frontend-design` and `claude-api` folders each ship an Apache 2.0 `LICENSE.txt`, so check each folder before reusing it. Free.
+
+```bash
+npx skills@latest add anthropics/skills --list
+```
+
+**Limitation:** These are examples, not a workflow. You get building blocks, and you still decide how they fit together.
+
+## Comparison table
+
+| Library | Style | Latest release | License | Best first use |
+| --- | --- | --- | --- | --- |
+| [Matt Pocock Skills](/tools/matt-pocock-skills) | Small focused commands | v1.3.1, Oct 4 2026 | MIT | Spec to PR flow |
+| [Superpowers](/tools/superpowers) | Full methodology | v6.4.2, Sep 25 2026 | MIT | TDD and debugging |
+| [Agent Skills](/tools/agent-skills) | Lifecycle slash commands | 0.6.7, Aug 28 2026 | MIT | `/spec` then `/plan` |
+| [Taste Skill](/tools/taste-skill) | Frontend design rules | v2 experimental | MIT | Redesigning a UI |
+| Anthropic Skills | Reference examples | No tagged release | Per skill | Learning the format |
+
+## Which one should you install first
+
+1. Write one skill of your own, like the `release-notes` example, and confirm your agent triggers it.
+2. Add Superpowers or Matt Pocock Skills, not both. Two workflow libraries give the agent conflicting instructions for the same request.
+3. Add Taste Skill only to frontend repos.
+4. Run the checker script over the installed folder and read any skill that fails.
+5. Scan third-party skills before trusting them. Skills can include scripts, and [SkillSpector](/tools/skillspector) on ai.dosa.dev exists for exactly that check.
+
+## FAQ
+
+### What is an agent skill?
+
+An agent skill is a folder with a `SKILL.md` file that holds a name, a description and step-by-step instructions, plus optional scripts and references. The agent reads the name and description up front and loads the full instructions only when a task matches.
+
+### Do agent skills work in Codex as well as Claude Code?
+
+Yes. OpenAI's Codex docs say skills work in the Codex CLI, IDE extension and Codex app, and that you can invoke one with `/skills` or by typing `$`. Superpowers and Agent Skills also document support for other agents, including Cursor and Gemini CLI.
+
+### Why is my skill not loading?
+
+The most common cause is a vague description, because the description is the only text the agent matches against your prompt. Make it say what the skill does and when to use it, check that `name` is lowercase with hyphens, and keep it under the spec limits.
+
+### Are agent skills safe to install?
+
+Treat them like any third-party code. A skill can tell the agent to run shell commands and can bundle scripts, so read the `SKILL.md` and any `scripts/` folder before installing, and prefer project scope over global scope.
+
+### What is the difference between a skill and an MCP server?
+
+A skill is instructions and optional scripts the agent reads from disk. An MCP server is a running process that exposes tools over a protocol. Skills teach the agent how to do something, and MCP servers give it new things it can call.
+
+## How this ties to ai.dosa.dev
+
+ai.dosa.dev already lists the main skills projects in the Developer Productivity & Workflow category: [Matt Pocock Skills](/tools/matt-pocock-skills), [Superpowers](/tools/superpowers), [Agent Skills](/tools/agent-skills), [Taste Skill](/tools/taste-skill), [Skills Manager](/tools/skills-manager) and [Claude Code Templates](/tools/claude-code-templates). The agents that run them are [Claude Code](/tools/claude-code) and [Codex CLI](/tools/codex-cli), and [SkillSpector](/tools/skillspector) covers the security side.
+
+If you are still choosing the agent itself, start with our [best AI coding CLIs](/blog/best-ai-coding-clis) roundup and the [Claude Code deep dive](/blog/claude-code-deep-dive).
+
+Happy Testing!
+
+Which skill have you written that your agent actually triggers every time?
