@@ -3836,30 +3836,30 @@
   },
   {
     "slug": "molt",
-    "name": "Molt",
-    "company": "Solvyx / MoltX Team",
-    "pricing": "paid",
-    "pricingDetail": "Pricing varies by implementation; Solvyx AI voice services range from $500 to $3,500/month, while agent-based research services via Molt utilize micro-transactions (e.g., $0.05 to $1.00 per query) settled via x402/USDC.",
-    "description": "Molt is an autonomous AI agent and part of a multi-agent ecosystem (including Scout, Strategist, and Executor) designed for research, infrastructure deployment, and business automation. It operates within the Moltbook agent social network and is associated with Solvyx Digital, a firm specializing in AI-driven business automation and custom software development.",
+    "name": "molt",
+    "company": "Solvyx / Tyler Skelton",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source (Apache-2.0). You bring your own model: an API key for an OpenAI-compatible endpoint or Anthropic's API, a local model, or an existing Grok plan.",
+    "description": "molt (desktop app branded Maat Agent) is an open-source coding agent with a terminal CLI/TUI and an Electron desktop app. When the model says a task is done, molt runs the project's done.yml checks against the real files on disk and refuses the claim if any check fails, sending the failure back to the model.",
     "keyFeatures": [
-      "Autonomous research and competitive analysis",
-      "Agent-to-agent transaction capabilities via x402/USDC",
-      "Infrastructure deployment and server management",
-      "Multi-platform integration (WhatsApp, Telegram, Discord)",
-      "Persistent memory and autonomous posting"
+      "Completion checks (tests, type checks, builds) defined in done.yml and run against the real disk",
+      "A receipt for every attempt, including refused ones",
+      "Before and after hashes on every file write, in a hash-chained journal that `molt verify` recomputes",
+      "Works with OpenAI-compatible endpoints (OpenAI, OpenRouter, Groq, Mistral, Ollama, llama.cpp, vLLM) and Anthropic's API",
+      "Terminal UI, headless mode for CI, and a desktop app for macOS, Windows and Linux"
     ],
-    "bestFor": "Autonomous systems developers, AI researchers, and businesses requiring 24/7 automated operations or infrastructure management.",
-    "notIdealFor": "Users seeking a traditional, human-centric SaaS interface or those uncomfortable with decentralized, agent-to-agent financial transactions.",
-    "recentUpdates": "The ecosystem recently introduced escrow-protected transactions for agents via moltlist.com and expanded capabilities for autonomous infrastructure deployment through the Grolt framework.",
-    "verdict": "Molt represents a cutting-edge experiment in the emerging agent economy, effectively bridging the gap between autonomous research, infrastructure management, and cross-chain financial settlement.",
+    "bestFor": "Developers who want a coding agent whose \"done\" is checked against their own tests and builds rather than taken on the model's word.",
+    "notIdealFor": "Users who want a hosted service with no API key or local model to set up, or projects without automated checks to verify against.",
+    "recentUpdates": "Version 0.2.2 ships the desktop app and CLI from one engine; builds are on the GitHub releases page.",
+    "verdict": "A young open-source project focused on one thing: not accepting a coding agent's completion claim until project checks pass on disk.",
     "tags": [
-      "AI Agents",
-      "Automation",
-      "Web3",
-      "Infrastructure",
-      "Research"
+      "AI Coding Agent",
+      "Open Source",
+      "CLI",
+      "Desktop",
+      "Developer Tools"
     ],
-    "lastUpdated": "2026-10-01"
+    "lastUpdated": "2026-10-07"
   },
   {
     "slug": "warp",
