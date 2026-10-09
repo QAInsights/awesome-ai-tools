@@ -9340,5 +9340,118 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-05"
+  },
+  {
+    "slug": "openhuman",
+    "name": "OpenHuman",
+    "company": "Tiny Humans",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under GPL-3.0 as a desktop app, terminal app, headless server or Rust library. You bring your own model keys (or run local models via Ollama, LM Studio or MLX) and pay those providers directly; no paid tier is listed in the repository.",
+    "description": "OpenHuman is an open-source agent harness compiled into a single Rust process, available as a desktop app for macOS, Windows and Linux, a terminal app, a headless server and an embeddable Rust library. It provides the familiar coding-agent loop with shell and coder tools, MCP servers, skills and memory, and is designed to stay light enough to run large fleets of agents on a small server.",
+    "keyFeatures": [
+      "Desktop (.dmg/.msi/.deb/.AppImage), terminal, headless server and Rust library from one core",
+      "Native shell and coder tools, MCP servers, skill bundles and built-in file memory",
+      "Approval gate, sandboxed execution (OS jail or Docker), Privacy Mode and secrets in the OS keyring",
+      "BYOK cloud models or local models via Ollama, LM Studio and MLX",
+      "Per-call cost and token tracking with replayable run journals",
+      "Published SWE-bench-based benchmarks of speed, tokens and memory against other harnesses"
+    ],
+    "bestFor": "Developers who want a lightweight, self-hosted agent harness they can run locally, embed in Rust code, or scale to many concurrent agents on cheap infrastructure.",
+    "notIdealFor": "Teams needing a mature, stable product (the project describes itself as early beta) or a permissively licensed library, since the code is GPL-3.0.",
+    "recentUpdates": "Very rapid release cadence: v0.64.15 shipped on 2026-10-09 with a hotfix for module admission in installed builds that unblocks the search and memory modules.",
+    "verdict": "A fast-moving, unusually efficient open-source harness with strong adoption signals; promising for local and fleet-scale agent work, but still early beta with frequent releases and rough edges.",
+    "tags": [
+      "agent-harness",
+      "rust",
+      "open-source",
+      "desktop-app",
+      "mcp"
+    ],
+    "lastUpdated": "2026-10-09"
+  },
+  {
+    "slug": "pentagi",
+    "name": "PentAGI",
+    "company": "VXControl",
+    "pricing": "open-source",
+    "pricingDetail": "The self-hosted platform is open source under the MIT license; you pay for your own LLM provider usage and infrastructure. An Enterprise Edition license is available via console.pentagi.com, where new users get one free license; Enterprise pricing is not published in the repository.",
+    "description": "PentAGI is a self-hosted, fully autonomous AI penetration-testing platform from security engineering company VXControl. A team of specialist agents plans and executes tests inside an isolated Docker sandbox using professional security tools, stores findings in long-term memory, and generates detailed vulnerability reports.",
+    "keyFeatures": [
+      "Autonomous multi-agent delegation for research, development and infrastructure tasks",
+      "Isolated Docker sandbox with 20+ tools including nmap, Metasploit and sqlmap",
+      "Long-term memory in PostgreSQL/pgvector plus optional Graphiti/Neo4j knowledge graph",
+      "Unified web search and built-in scraper browser for gathering current information",
+      "Web UI with REST and GraphQL APIs secured by Bearer tokens",
+      "Supports OpenAI, Anthropic, Gemini, AWS Bedrock, Ollama, DeepSeek and other OpenAI-compatible LLMs",
+      "Grafana/Prometheus monitoring and Docker Compose deployment"
+    ],
+    "bestFor": "Security engineers and AppSec teams who want a self-hosted, autonomous pentesting agent they can run against their own systems with their choice of LLM.",
+    "notIdealFor": "Teams looking for lightweight static code review or CI linting, or for breach-and-attack-simulation campaigns, which the project states it does not provide today.",
+    "recentUpdates": "PentAGI 2.2 (v2.2.0, 2026-10-05) added tested configurations for current LLM generations, rebuilt sandbox isolation to close CVE-2026-14784, replaced seven search tools with one intent-driven web_search, and enabled multi-instance deployments sharing backing services.",
+    "verdict": "One of the most complete open-source autonomous pentesting stacks, with a real tool suite, memory and monitoring; best suited to security teams comfortable operating a multi-service self-hosted deployment.",
+    "tags": [
+      "security",
+      "penetration-testing",
+      "autonomous-agents",
+      "self-hosted",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-09"
+  },
+  {
+    "slug": "headroom",
+    "name": "Headroom",
+    "company": "Headroom Labs",
+    "pricing": "open-source",
+    "pricingDetail": "Headroom OSS is free and open source under Apache-2.0 and runs locally. Headroom Enterprise adds managed or in-VPC rollout, SSO, central config and dedicated support at custom pricing; companies signing a 12-month Enterprise plan get the first 3 months free.",
+    "description": "Headroom is an open-source context-compression layer for AI agents that shrinks tool outputs, logs, JSON, files, RAG chunks and conversation history before they reach the LLM, running entirely on your machine. It can be used as a Python or TypeScript library, a zero-code proxy, an MCP server, or by wrapping existing coding agents such as Claude Code, Codex, Cursor and Aider with one command.",
+    "keyFeatures": [
+      "`headroom wrap <agent>` routes Claude Code, Codex, Copilot, Cursor, Aider, Cline, Goose and others through Headroom",
+      "Zero-code proxy (`headroom proxy`) for any language plus Python/TypeScript `compress()` library",
+      "Content-aware compressors for JSON (SmartCrusher), code (AST-based) and text",
+      "Reversible compression: originals cached locally and retrievable on demand",
+      "MCP server with headroom_compress, headroom_retrieve and headroom_stats tools",
+      "Cross-agent memory and `headroom learn`, which writes corrections into CLAUDE.md or AGENTS.md"
+    ],
+    "bestFor": "Developers and teams running coding agents on large logs, JSON or codebases who want to cut token spend and context pressure without changing their agent or code.",
+    "notIdealFor": "Workflows that need exact verbatim prompts to the model at all times, or teams unwilling to run a local proxy in front of their LLM provider.",
+    "recentUpdates": "v0.40.0 (2026-10-06) made proxy usage reporting opt-in and added HEADROOM_LICENSE support, per-message compression diagnostics, a lossless live-agent densify mode, Antigravity CLI as a learn backend and a per-request keep-last-turns header.",
+    "verdict": "A widely adopted, actively maintained way to make coding agents cheaper and less context-starved, with unusually broad agent integrations and a local-first design.",
+    "tags": [
+      "token-optimization",
+      "context-compression",
+      "coding-agents",
+      "mcp-server",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-09"
+  },
+  {
+    "slug": "cubesandbox",
+    "name": "CubeSandbox",
+    "company": "Tencent Cloud",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under Apache-2.0 (with third-party components under their own licenses). You self-host it on your own x86_64 Linux servers with KVM, so costs are your infrastructure; no paid tier is listed in the repository.",
+    "description": "CubeSandbox is Tencent Cloud's open-source, self-hosted sandbox service for AI agents, built on RustVMM and KVM. Each sandbox is a hardware-isolated microVM with its own kernel that starts in tens of milliseconds, and the service is compatible with the E2B SDK so agent code can switch from E2B Cloud by changing one environment variable.",
+    "keyFeatures": [
+      "~60 ms average cold start and under 5 MB memory overhead per sandbox",
+      "Dedicated kernel per sandbox in its own microVM for hardware-level isolation",
+      "Drop-in E2B SDK compatibility, including an E2B-compatible volume framework",
+      "Copy-on-write snapshots, instant clone, rollback and cross-node pause/resume",
+      "eBPF egress filtering and an L7 security proxy that injects credentials so keys never enter the sandbox",
+      "Single-node, multi-node, Terraform, Kubernetes and native ARM64 deployments"
+    ],
+    "bestFor": "Platform and agent-infrastructure teams who want to self-host high-density, secure code-execution sandboxes for coding agents or RL workloads instead of relying on a hosted sandbox API.",
+    "notIdealFor": "Individual developers without access to KVM-capable Linux servers, or teams that prefer a fully managed sandbox service over operating their own cluster.",
+    "recentUpdates": "v0.7.2 (2026-09-24) sped up cross-node restore from S3 with a local whole-object cache and coalesced reads, and added a JuiceFS volume plugin; v0.7 introduced cross-node pause/resume and moved node management into CubeOps.",
+    "verdict": "A serious, fast-moving open-source alternative to hosted agent sandboxes, notable for E2B compatibility and microVM isolation at container-like density; best for teams ready to run their own infrastructure.",
+    "tags": [
+      "sandboxing",
+      "microvm",
+      "ai-agents",
+      "e2b-compatible",
+      "self-hosted"
+    ],
+    "lastUpdated": "2026-10-09"
   }
 ]

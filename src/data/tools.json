@@ -1355,11 +1355,28 @@
     "companyName": "Voidleap",
     "toolName": "Voidleap Code"
   },
+  {
     "companyName": "orbi-build (Lawrence Liu)",
     "toolName": "Orbi"
   },
   {
     "companyName": "MiCCA OÜ",
     "toolName": "Screen Browser"
+  },
+  {
+    "companyName": "Tiny Humans",
+    "toolName": "OpenHuman"
+  },
+  {
+    "companyName": "VXControl",
+    "toolName": "PentAGI"
+  },
+  {
+    "companyName": "Headroom Labs",
+    "toolName": "Headroom"
+  },
+  {
+    "companyName": "Tencent Cloud",
+    "toolName": "CubeSandbox"
   }
 ]
