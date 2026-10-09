@@ -1407,6 +1407,34 @@
     "lastUpdated": "2026-10-03"
   },
   {
+    "slug": "voidleap-code",
+    "name": "Voidleap Code",
+    "company": "Voidleap",
+    "pricing": "freemium",
+    "pricingDetail": "Free plan includes 3 workspaces with 5 projects each, 1 credential profile, and 7-day dashboard history. Pro is listed at €20/seat/month, Team at €50/seat/month (up to 50 seats), and Enterprise is custom, though Pro, Team, and Enterprise are listed as in development and not yet purchasable. You bring your own model keys, so no plan meters inference.",
+    "description": "Voidleap Code is a local-first desktop agentic IDE for building software with AI agents, running on your machine and routing requests directly to your chosen provider or local model. It acts as a harness around models rather than a wrapper, giving full visibility into prompts, tool calls, and file changes.",
+    "keyFeatures": [
+      "Multi-provider support (Anthropic, OpenAI, Google Gemini, GitHub Copilot, AWS Bedrock, Azure AI Foundry, xAI, OpenRouter, Ollama, and more) with mid-thread model switching",
+      "Full observability: live Control Center, real-time LLM call feed, and 30+ statistics charts for cost, tokens, latency, and cache efficiency",
+      "Deep customization layer for agents, skills, hooks, MCP servers, slash commands, and security rules with three-scope inheritance (global/workspace/project)",
+      "Multi-agent orchestration with parallel threads, each carrying its own model, agent, mode, worktree, and browser session",
+      "Local-first architecture storing all data in ~/.voidleap/ with local SQLite code index and optional macOS Seatbelt sandbox",
+      "Four execution modes (Default, Read-only, Careful, Yolo) with AST-aware bash/PowerShell command parsing and sensitive-path defaults"
+    ],
+    "bestFor": "Professional developers and AI engineers who want deep control, observability, and configurability over coding agents rather than a black-box assistant.",
+    "notIdealFor": "Developers seeking a conventional editor with occasional AI help, or teams needing currently available paid/team plans, since Pro, Team, and Enterprise are still in development.",
+    "recentUpdates": "Voidleap Code 1.0 launched August 16, 2026, free for everyone (announced via Indie Hackers on August 20, 2026 and LinkedIn on August 17, 2026). Pro, Team, and Enterprise tiers are listed as in development; server installs on VPS and mobile app are marked 'coming soon'.",
+    "verdict": "Voidleap Code stands out for its transparency, provider flexibility, and unusually deep customization, making it a strong fit for engineers who want to inspect and shape agent behavior. However, it is closed source, lacks Claude subscription support, is limited to macOS and Windows, and its paid tiers are not yet purchasable, so the free plan is the practical starting point today.",
+    "tags": [
+      "agentic-ide",
+      "ai-coding",
+      "local-first",
+      "multi-provider",
+      "developer-tools"
+    ],
+    "lastUpdated": "2026-10-09"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
