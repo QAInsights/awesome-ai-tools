@@ -312,6 +312,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "voidleap-code",
+    "name": "Voidleap Code",
+    "company": "Voidleap",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
