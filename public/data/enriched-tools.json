@@ -9041,6 +9041,35 @@
     "lastUpdated": "2026-10-08"
   },
   {
+    "slug": "screen-browser",
+    "name": "Screen Browser",
+    "company": "MiCCA OÜ",
+    "pricing": "paid",
+    "pricingDetail": "No free plan. Starter is $49/mo (~20 min of finished video) and Pro is $149/mo (~70 min), with yearly plans costing ten months for twelve. Team starts at $399/mo (~200 min, 10 seats); a 7-day trial costs $3.99 and includes about 5 minutes of video, failed runs are not charged, and guide checks are free.",
+    "description": "Screen Browser turns a plain-language guide into a narrated demo or tutorial video of a deployed web app: a real browser signs in with a demo account, follows the guide, records the screen, adds narration and effects, and returns an MP4 with GIF, subtitles, chapters and a thumbnail. It is also a remote MCP server with a companion skill so coding agents like Claude Code, Codex or Cursor can write the guide from source and trigger the recording.",
+    "keyFeatures": [
+      "Remote MCP server (mcp.screenbrowser.com) plus companion skill for Claude Code, Codex, Cursor and any MCP client",
+      "Agent writes the guide from source code, validates it, starts the run and returns the MP4",
+      "Free 'check' walks the guide in the real app with a screenshot per step before recording",
+      "Login runs in a separate, unrecorded browser so credentials never appear in the video",
+      "Outputs MP4, GIF, subtitles (SRT/VTT), chapters and thumbnail; 1080p standard, 4K available",
+      "18 languages, Standard/Studio voices or your own ElevenLabs voice; mobile-web recording",
+      "Rerun the guide when the app changes; failed, cancelled or stopped runs are not charged"
+    ],
+    "bestFor": "Product, developer and DevRel teams with a deployed web app who want repeatable narrated demo or tutorial videos, especially those already using an MCP-capable coding agent to generate guides from source.",
+    "notIdealFor": "Apps that need OAuth, two-factor or captcha logins, localhost or VPN-only deployments, native iOS/Android apps, or videos longer than five minutes; teams wanting a free tier or automatic change detection should look elsewhere.",
+    "recentUpdates": "Terms of Service and DPA updated 2026-09-21 (v1.2), Privacy Policy updated 2026-10-01 (v1.2), Accessibility Statement updated 2026-09-12 (v1.1); the MCP server and skill plugin (MIT-licensed skill/plugin repository) are the current agent-facing offering.",
+    "verdict": "Screen Browser is a polished, agent-first way to produce narrated web app walkthroughs, with a genuinely useful free check step, no charge for failed runs, and clean credential handling. The trade-offs are real: no free plan, minutes-based pricing that shrinks with richer settings, a five-minute video cap, and strict login and reachability requirements that rule out many internal or OAuth-protected apps.",
+    "tags": [
+      "demo-video",
+      "mcp-server",
+      "coding-agents",
+      "screen-recording",
+      "developer-tools"
+    ],
+    "lastUpdated": "2026-10-09"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
