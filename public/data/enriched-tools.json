@@ -9482,5 +9482,33 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-05"
+  },
+  {
+    "slug": "odysseus",
+    "name": "Odysseus",
+    "company": "odysseus-dev",
+    "pricing": "open-source",
+    "pricingDetail": "Odysseus is free and open source under AGPL-3.0-or-later and is self-hosted; costs come only from your own hardware and any third-party model APIs you connect.",
+    "description": "Odysseus is a self-hosted AI workspace that combines chat and agents with research, documents, email, notes and calendar. Agents can use local or API models with tools, MCP servers, files, a shell, skills and memory, and the whole stack runs from Docker Compose with an official multi-arch image.",
+    "keyFeatures": [
+      "Chat and agents over local or API models with tools, MCP, files, shell, skills and memory",
+      "Deep Research mode for multi-step web research with source reading and generated reports",
+      "Blind side-by-side model comparison and a hardware-aware Cookbook for downloading and serving models",
+      "Writing-first document editor with AI edits and suggestions for Markdown, HTML and CSV",
+      "IMAP/SMTP email triage, notes, tasks and CalDAV calendar with scheduled agent tasks"
+    ],
+    "bestFor": "Developers and homelab users who want one private, self-hosted workspace for agents, local models and everyday knowledge work.",
+    "notIdealFor": "Teams that want a managed SaaS assistant or an IDE-embedded coding agent without running their own server.",
+    "recentUpdates": "The odysseus-dev/odysseus repository passed 92,000 GitHub stars and was still receiving commits on its dev branch in early October 2026; images are published to ghcr.io/odysseus-dev/odysseus on every push to main and dev.",
+    "verdict": "A feature-rich, open-source alternative to hosted AI assistants for people who want agents and local models on their own hardware.",
+    "tags": [
+      "Self-Hosted",
+      "AI Workspace",
+      "Agents",
+      "MCP",
+      "Local Models",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-09"
   }
 ]

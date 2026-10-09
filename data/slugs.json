@@ -1344,6 +1344,12 @@
     "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
   },
   {
+    "slug": "odysseus",
+    "name": "Odysseus",
+    "company": "odysseus-dev",
+    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+  },
+  {
     "slug": "greptile",
     "name": "Greptile",
     "company": "Greptile",
