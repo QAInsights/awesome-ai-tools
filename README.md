@@ -325,6 +325,7 @@ Not IDEs, but widely used for coding tasks via chat.
 | **[DeepSeek](https://www.deepseek.com/)** | DeepSeek | Competitive open-weights models (V3/R1); excellent coding benchmarks |
 | **[Perplexity](https://www.perplexity.ai/)** | Perplexity | AI search engine; excellent for technical research and API discovery |
 | **[nenva](https://nenva.co)** | Anjadhe | Source-available (PolyForm Noncommercial) privacy-first personal AI assistant for macOS: email, calendar, tasks, notes, journal and investments live in its own apps and the AI comes to the data; new installs use hosted nenva cloud (zero data retention, free monthly allowance), or switch to a local open-weight model on 8 GB+ Macs, your own server or your own OpenAI/Anthropic key; free, no account; extensible via coding agents pointed at `~/nenva/apps/`; [GitHub](https://github.com/Anjadhe/Anjadhe) |
+| **[Odysseus](https://odysseusai.dev/)** | odysseus-dev | Open-source (AGPL-3.0) self-hosted AI workspace (Docker Compose) for chat and agents with local or API models, tools, MCP, files, shell, skills and memory, plus deep research, blind side-by-side model comparison, a hardware-aware model "Cookbook", an AI document editor, email triage, notes, tasks and CalDAV calendar with scheduled agent tasks; [GitHub](https://github.com/odysseus-dev/odysseus) |
 
 ---
 
