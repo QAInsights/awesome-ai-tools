@@ -1050,6 +1050,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "orbi",
+    "name": "Orbi",
+    "company": "orbi-build (Lawrence Liu)",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",

@@ -4729,6 +4729,35 @@
     "lastUpdated": "2026-10-08"
   },
   {
+    "slug": "orbi",
+    "name": "Orbi",
+    "company": "orbi-build (Lawrence Liu)",
+    "pricing": "open-source",
+    "pricingDetail": "Self-hosting is free under AGPL-3.0 (or the Sustainable Use License), with users paying their own model provider costs. Orbi Cloud offers the first 3 merged deliveries free (no credit card), then Solo at US$29/month with 400M tokens and Pro at US$79/month with 1.2B tokens; when quota runs out, deliveries pause with no overage billing.",
+    "description": "Orbi is an open-source AI coding agent that turns a labeled GitHub Issue into a reviewed, merged PR and a tagged release. One AI session writes the change, a separate session reviews it against the issue's acceptance criteria and can repair it, then only the approved commit merges and the release is tagged.",
+    "keyFeatures": [
+      "Issue-to-release automation: label an Issue 'ai-ready' and Orbi implements, reviews, merges, and tags a release",
+      "Two independent model sessions — a separate reviewer reads the frozen diff, can repair the branch, and re-verifies (bounded at five rounds)",
+      "Merge gate re-checks CI green, unchanged head, and current base at the moment of merge",
+      "Deterministic release state machine: freezes base, waits for green CI, bumps version, tags, and publishes",
+      "Self-hosted runner (Python 3.14) with any OpenAI-compatible API or a ChatGPT/Codex subscription login",
+      "Orbi Cloud hosted option with included model tokens and per-repo Unix user isolation",
+      "Public delivery evidence: 618+ PRs merged and 89 releases shipped on its own repository"
+    ],
+    "bestFor": "Teams and solo developers who want unattended, GitHub-native automation from issue to tagged release and are comfortable self-hosting or paying a flat monthly Cloud fee.",
+    "notIdealFor": "Those wanting a fully managed, zero-setup tool with no GitHub dependency, or users who need Claude Code support (Orbi's engine does not support it).",
+    "recentUpdates": "Orbi relicensed to AGPL-3.0 (or SUL) as of v0.5.44 on September 24, 2026, after briefly using the Sustainable Use License from Sep 4. Cost transparency data published Oct 5, 2026 (169 merged deliveries, median $0.082 off-peak). Blog posts through Oct 6, 2026 cover the Pi agent harness and DeepSeek cost analysis.",
+    "verdict": "Orbi offers a genuinely autonomous, GitHub-native path from issue to tagged release with a credible independent-review and merge-gate design, backed by transparent, measured cost data and a free self-hosted option. The trade-offs are a non-trivial self-hosting setup (Python 3.14, systemd/launchd, model provider config), no Claude Code support, and Cloud pricing that, while flat, still requires trusting its token allowances.",
+    "tags": [
+      "autonomous-agents",
+      "github-issues",
+      "open-source",
+      "self-hosted",
+      "ai-coding-agent"
+    ],
+    "lastUpdated": "2026-10-09"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
