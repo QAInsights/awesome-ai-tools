@@ -1062,6 +1062,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "openhuman",
+    "name": "OpenHuman",
+    "company": "Tiny Humans",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1257,6 +1263,12 @@
     "slug": "plannotator",
     "name": "Plannotator",
     "company": "backnotprop",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "pentagi",
+    "name": "PentAGI",
+    "company": "VXControl",
     "category": "AI Code Review & Security"
   },
   {
@@ -2013,6 +2025,18 @@
     "slug": "screen-browser",
     "name": "Screen Browser",
     "company": "MiCCA OÜ",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "headroom",
+    "name": "Headroom",
+    "company": "Headroom Labs",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "cubesandbox",
+    "name": "CubeSandbox",
+    "company": "Tencent Cloud",
     "category": "Developer Productivity & Workflow"
   },
   {
