@@ -6061,6 +6061,34 @@
     "lastUpdated": "2026-10-01"
   },
   {
+    "slug": "odysseus",
+    "name": "Odysseus",
+    "company": "odysseus-dev",
+    "pricing": "open-source",
+    "pricingDetail": "Odysseus is free and open source under AGPL-3.0-or-later and is self-hosted; costs come only from your own hardware and any third-party model APIs you connect.",
+    "description": "Odysseus is a self-hosted AI workspace that combines chat and agents with research, documents, email, notes and calendar. Agents can use local or API models with tools, MCP servers, files, a shell, skills and memory, and the whole stack runs from Docker Compose with an official multi-arch image.",
+    "keyFeatures": [
+      "Chat and agents over local or API models with tools, MCP, files, shell, skills and memory",
+      "Deep Research mode for multi-step web research with source reading and generated reports",
+      "Blind side-by-side model comparison and a hardware-aware Cookbook for downloading and serving models",
+      "Writing-first document editor with AI edits and suggestions for Markdown, HTML and CSV",
+      "IMAP/SMTP email triage, notes, tasks and CalDAV calendar with scheduled agent tasks"
+    ],
+    "bestFor": "Developers and homelab users who want one private, self-hosted workspace for agents, local models and everyday knowledge work.",
+    "notIdealFor": "Teams that want a managed SaaS assistant or an IDE-embedded coding agent without running their own server.",
+    "recentUpdates": "The odysseus-dev/odysseus repository passed 92,000 GitHub stars and was still receiving commits on its dev branch in early October 2026; images are published to ghcr.io/odysseus-dev/odysseus on every push to main and dev.",
+    "verdict": "A feature-rich, open-source alternative to hosted AI assistants for people who want agents and local models on their own hardware.",
+    "tags": [
+      "Self-Hosted",
+      "AI Workspace",
+      "Agents",
+      "MCP",
+      "Local Models",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-09"
+  },
+  {
     "slug": "greptile",
     "name": "Greptile",
     "company": "Greptile",
@@ -9240,6 +9268,35 @@
     "lastUpdated": "2026-10-09"
   },
   {
+    "slug": "reqode",
+    "name": "Reqode",
+    "company": "Almware Ltd.",
+    "pricing": "freemium",
+    "pricingDetail": "Free Startup plan supports up to 3 users and 3 projects with AI credits sold separately. Cloud Starter is $9/user/month ($90/user/year) and Cloud Pro is $19/user/month ($190/user/year) with up to 1,000 included AI credits per licensed user monthly; self-hosted starts at $3,000/instance/year.",
+    "description": "Reqode is a requirements management platform that connects requirements, data models, UI and API specifications, architecture guidance, code, and tests into a branch-aware product model. It gives AI coding and QA agents focused context via MCP and verifies implementation against specifications.",
+    "keyFeatures": [
+      "Branch-aware requirements, data models, UI and API specifications with traceability",
+      "Scoped Change Requests that package context for AI coding agents",
+      "AI assistants: AI Analyst, AI Architect, AI Test Designer, and AI Product Expert",
+      "MCP for coding agents to read specs, architecture guidance, and create/resolve Findings",
+      "MCP for QA agents with prepared test runs, cases, and result recording",
+      "Architecture governance via subsystem Code Manifests, Unit Types, and software units",
+      "Verification workflows that detect architectural drift and record findings"
+    ],
+    "bestFor": "Software teams using AI coding agents like Codex, Cursor, and Claude Code on complex products where features span connected data, APIs, interfaces, and business rules.",
+    "notIdealFor": "Solo developers or very small teams wanting a free all-in-one AI coding tool, since AI credits are sold separately on lower tiers and self-hosting is expensive.",
+    "recentUpdates": "Listed on AZN8 on 2026-10-07; GetApp data last updated September 2026; AISO Tools pricing guide updated October 3, 2026. AI Subsystem Architect is marked BETA.",
+    "verdict": "Reqode offers a structured, traceable way to keep AI coding agents aligned with product intent and architecture, with transparent credit-based AI pricing and self-hosting options. However, AI credits cost extra on most plans, self-hosting is pricey, and there are no user reviews yet to validate real-world value.",
+    "tags": [
+      "requirements management",
+      "AI coding agents",
+      "MCP",
+      "architecture governance",
+      "developer productivity"
+    ],
+    "lastUpdated": "2026-10-10"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
@@ -9482,33 +9539,5 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-05"
-  },
-  {
-    "slug": "odysseus",
-    "name": "Odysseus",
-    "company": "odysseus-dev",
-    "pricing": "open-source",
-    "pricingDetail": "Odysseus is free and open source under AGPL-3.0-or-later and is self-hosted; costs come only from your own hardware and any third-party model APIs you connect.",
-    "description": "Odysseus is a self-hosted AI workspace that combines chat and agents with research, documents, email, notes and calendar. Agents can use local or API models with tools, MCP servers, files, a shell, skills and memory, and the whole stack runs from Docker Compose with an official multi-arch image.",
-    "keyFeatures": [
-      "Chat and agents over local or API models with tools, MCP, files, shell, skills and memory",
-      "Deep Research mode for multi-step web research with source reading and generated reports",
-      "Blind side-by-side model comparison and a hardware-aware Cookbook for downloading and serving models",
-      "Writing-first document editor with AI edits and suggestions for Markdown, HTML and CSV",
-      "IMAP/SMTP email triage, notes, tasks and CalDAV calendar with scheduled agent tasks"
-    ],
-    "bestFor": "Developers and homelab users who want one private, self-hosted workspace for agents, local models and everyday knowledge work.",
-    "notIdealFor": "Teams that want a managed SaaS assistant or an IDE-embedded coding agent without running their own server.",
-    "recentUpdates": "The odysseus-dev/odysseus repository passed 92,000 GitHub stars and was still receiving commits on its dev branch in early October 2026; images are published to ghcr.io/odysseus-dev/odysseus on every push to main and dev.",
-    "verdict": "A feature-rich, open-source alternative to hosted AI assistants for people who want agents and local models on their own hardware.",
-    "tags": [
-      "Self-Hosted",
-      "AI Workspace",
-      "Agents",
-      "MCP",
-      "Local Models",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-09"
   }
 ]
