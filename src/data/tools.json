@@ -1390,5 +1390,17 @@
   {
     "companyName": "Almware Ltd.",
     "toolName": "Reqode"
+  },
+  {
+    "companyName": "Repowise",
+    "toolName": "Repowise"
+  },
+  {
+    "companyName": "Microsoft",
+    "toolName": "MXC"
+  },
+  {
+    "companyName": "Lexmount",
+    "toolName": "Moli"
   }
 ]
