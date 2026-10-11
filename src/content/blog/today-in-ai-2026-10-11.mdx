@@ -1,0 +1,78 @@
+---
+title: "OpenAI Opens Agents API as Gemini 3 Pro Hits 1501 Elo"
+description: "OpenAI opens its Agents API in public beta, Google ships Gemini 3 Pro and 3.5 Flash, and Cloudflare buys Deno to reshape Workers."
+pubDate: 2026-10-11
+tags: ["news","today-in-ai","openai","google","agents","cloudflare","nvidia","developer-tools"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-10-11 UTC.
+
+OpenAI put its Codex harness behind a public API, Google reset the frontier with Gemini 3, and Cloudflare bought the runtime behind Deno.
+
+## OpenAI opens Agents API in public beta with nine sandboxes
+
+**What happened:** OpenAI opened its Agents API to all developers in public beta, exposing the Codex harness as a managed endpoint with no platform fees, priced per token and tool use. Sandbox partners include Cloudflare, Modal, Vercel, DigitalOcean, Oracle, E2B, Daytona, Blaxel and Runloop, and the harness codebase is public.
+
+**Why it matters:** You can now point an agent at a task, a model, tools and a sandbox and let OpenAI run orchestration and context management, or host the compute yourself.
+
+[Source: DiffVibe](<https://diffvibe.com/articles/openai-opens-agents-api-public-beta-codex-harness-as-a-service-1c2b0156>)
+
+## Gemini 3 Pro posts record 1501 Elo and lands in Search
+
+**What happened:** Google rolled out Gemini 3 Pro across the Gemini app, AI Mode in Search and developer tooling, posting 1501 Elo on LMArena, 76.2% on SWE-bench Verified and 54.2% on Terminal-Bench 2.0. Deep Think mode reached 45.1% on ARC-AGI-2 with code execution, and Google launched Antigravity, an agent-first dev platform.
+
+**Why it matters:** A frontier model shipping into Search on day one and into an agent-first IDE means coding agents get a stronger default model without a separate procurement step.
+
+[Source: DiffVibe](<https://diffvibe.com/articles/gemini-3-pro-lands-at-1501-elo-ships-alongside-antigravity-dev-platform-1078e5b9>)
+
+## Cloudflare acquires Deno to reshape the Workers model
+
+**What happened:** Cloudflare announced it is acquiring Deno, the startup behind the Deno runtime, to improve its Workers programming model. Cloudflare's Kenton Varda pointed to Deno's celld, an open source implementation of Workers, and Deno co-founder Ryan Dahl said his team is joining Cloudflare. Terms were not disclosed.
+
+**Why it matters:** Deno's runtime and celld work now sit inside Cloudflare, which is a signal about where the Workers execution model and its escape hatches are heading.
+
+[Source: TechCrunch](<https://techcrunch.com/2026/10/10/cloudflare-acquires-deno-to-improve-its-workers-programming-model/>)
+
+## Gemini 3.5 Flash ships as the new default in Search
+
+**What happened:** Google made Gemini 3.5 Flash generally available in the Gemini app, AI Mode in Search, Antigravity, the Gemini API and Gemini Enterprise, with 76.2% on Terminal-Bench 2.1 and 1656 Elo on GDPval-AA. Google says output runs roughly 4x faster than rival frontier models at often under half the cost.
+
+**Why it matters:** A cheaper, faster default model across Google surfaces changes the cost math for anyone routing high-volume agent or coding traffic through the Gemini API.
+
+[Source: DiffVibe](<https://diffvibe.com/articles/google-ships-gemini-3-5-flash-claims-4x-frontier-speed-1b8699c1>)
+
+## NVIDIA in talks to acquire open-model startup Reflection AI
+
+**What happened:** NVIDIA is in talks to acquire or deepen its investment in Reflection AI, a US developer of open-weight models, according to people with direct knowledge of the matter.
+
+**Why it matters:** If it closes, a major chip vendor would own an open-weight model shop, which affects where builders can expect open model releases to come from.
+
+[Source: Financial Times](<https://www.ft.com/content/052610c5-22b4-4dd4-932e-b7f9f0628b6a>)
+
+## Microsoft Agent Framework hits public preview on Azure
+
+**What happened:** Microsoft put its Agent Framework into public preview, an open source SDK and runtime for multi-agent orchestration that merges AutoGen with Semantic Kernel. It supports OpenAPI connections, Agent2Agent collaboration, Model Context Protocol tool linking, and local experimentation before deploying to Azure AI Foundry.
+
+**Why it matters:** Teams already on Azure get a supported path to wire agents into Foundry, Microsoft 365 Copilot and other frameworks instead of stitching runtimes together themselves.
+
+[Source: Microsoft](<https://qureshi.me/introducing-microsoft-agent-framework/>)
+
+## Prime Intellect rewrote its coding agent with 2, 209 agents
+
+**What happened:** Prime Intellect shipped a Rust rewrite of Prime Agent, its open source coding agent harness, using a root orchestrator that ran 2, 209 sub-agents across 10, 000+ Prime Sandboxes and about 228.7B GLM-5.3 tokens over two weeks. Cold time-to-type fell from 737.8ms to 55.8ms and memory from 607MB to 106MB.
+
+**Why it matters:** The harness stays open source and gets a large startup latency and memory cut, which matters if you run long coding agent sessions locally.
+
+[Source: AICoder](<https://aicoder.com/news/news-20261010-prime-agent-rust-rewrite-2000-agent-swarm>)
+
+## Sources
+
+- [DiffVibe](<https://diffvibe.com/articles/openai-opens-agents-api-public-beta-codex-harness-as-a-service-1c2b0156>)
+- [DiffVibe](<https://diffvibe.com/articles/gemini-3-pro-lands-at-1501-elo-ships-alongside-antigravity-dev-platform-1078e5b9>)
+- [TechCrunch](<https://techcrunch.com/2026/10/10/cloudflare-acquires-deno-to-improve-its-workers-programming-model/>)
+- [DiffVibe](<https://diffvibe.com/articles/google-ships-gemini-3-5-flash-claims-4x-frontier-speed-1b8699c1>)
+- [Financial Times](<https://www.ft.com/content/052610c5-22b4-4dd4-932e-b7f9f0628b6a>)
+- [Microsoft](<https://qureshi.me/introducing-microsoft-agent-framework/>)
+- [AICoder](<https://aicoder.com/news/news-20261010-prime-agent-rust-rewrite-2000-agent-swarm>)
