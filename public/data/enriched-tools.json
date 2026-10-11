@@ -9539,5 +9539,87 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-05"
+  },
+  {
+    "slug": "repowise",
+    "name": "Repowise",
+    "company": "Repowise",
+    "pricing": "open-source",
+    "pricingDetail": "Repowise is free and self-hosted under AGPL-3.0, with a commercial license and enterprise offering available; the graph, health, test and dead-code analysis make no LLM calls, so optional model-written docs are the only token cost.",
+    "description": "Repowise is a local codebase intelligence engine for developers and their coding agents. It indexes a repository's call graph, git history, tests, docs and design decisions once, keeps the index current on every commit, and exposes it through a dashboard and an MCP server so agents can ask questions instead of re-reading files.",
+    "keyFeatures": [
+      "Call graph across 26 parsed languages with per-edge resolution confidence",
+      "MCP server for Claude Code, Codex, Cursor and other agents (get_overview, get_context, change risk)",
+      "Symbol-level blast radius, co-change history and test selection for a diff",
+      "Code health scores, dead-code detection, ownership and bus-factor analysis",
+      "Auto-generated module and file docs plus doc-drift checks against the code",
+      "Architectural decisions mined from ADRs, WHY comments, commits and PRs"
+    ],
+    "bestFor": "Developers and teams who run coding agents on medium-to-large repositories and want them to understand dependencies, change risk and history without burning tokens on repeated file searches.",
+    "notIdealFor": "Teams that cannot use AGPL-licensed software without buying a commercial license, or small scripts and repos where a coding agent's built-in search is already sufficient.",
+    "recentUpdates": "v0.55.0 (2026-10-04) shared get_context's budget across targets, kept knowledge-graph layer names unique and added owner line-share and merge-count views in the UI; the team also shipped Lens, a live map for Claude Code showing every file an edit touches.",
+    "verdict": "One of the most complete open-source codebase indexes for coding agents, combining a compiler-checked call graph with git, test and health analysis behind a single MCP server.",
+    "tags": [
+      "Codebase Intelligence",
+      "MCP",
+      "Code Health",
+      "Static Analysis",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-11"
+  },
+  {
+    "slug": "mxc",
+    "name": "MXC",
+    "company": "Microsoft",
+    "pricing": "open-source",
+    "pricingDetail": "MXC is free and open source under the MIT license; SDKs are published on crates.io, NuGet and npm. Official Microsoft builds can send optional diagnostic telemetry, which is off unless a run opts in.",
+    "description": "MXC (Microsoft eXecution Container) is a policy-driven sandbox SDK for running untrusted code such as model output, agent tools and plugins on Windows, Linux and macOS. Applications describe the container type, containment rules and workload in a JSON request, and MXC selects a platform backend from OS-native process sandboxes up to microVMs.",
+    "keyFeatures": [
+      "Filesystem, network-egress and UI/clipboard policies in versioned JSON requests",
+      "Backends including ProcessContainer, Bubblewrap, Seatbelt, LXC, WSLC, Windows Sandbox and microVMs",
+      "Stable v1 SDKs for Rust, .NET and Node.js with a shared operation model",
+      "Run-to-completion, piped and PTY execution plus persistent container lifecycles",
+      "Audit and debug modes to diagnose access-denied failures and author policies"
+    ],
+    "bestFor": "Developers building AI agents, coding assistants or plugin hosts who need to embed cross-platform, policy-controlled isolation for code their app did not write.",
+    "notIdealFor": "Users looking for a ready-made agent sandbox CLI or hosted sandbox service; MXC is an SDK you build into your own application, and several Windows backends are still experimental.",
+    "recentUpdates": "MXC SDK v1.0.0 (2026-10-07) is the first stable release, introducing explicit v1 entrypoints for Rust, .NET and Node.js and direct execution with captured output, live pipes or PTYs; Microsoft announced it on the Windows Developer Blog as policy-driven containment for AI agents.",
+    "verdict": "A credible, cross-platform foundation from Microsoft for sandboxing agent-generated code, best suited to teams embedding containment into their own agent tooling.",
+    "tags": [
+      "Sandbox",
+      "Security",
+      "AI Agents",
+      "Microsoft",
+      "SDK"
+    ],
+    "lastUpdated": "2026-10-11"
+  },
+  {
+    "slug": "moli",
+    "name": "Moli",
+    "company": "Lexmount",
+    "pricing": "open-source",
+    "pricingDetail": "Moli is free and open source under Apache-2.0 and MIT licenses, with prebuilt binaries for Linux, macOS and Windows on GitHub Releases.",
+    "description": "Moli is a Rust headless browser built for AI agents. It runs a full browser runtime with JavaScript, DOM, CSS, networking and storage, but generates layout and pixels only when an operation needs them, so agents can fetch, extract and automate web pages with a small resource footprint.",
+    "keyFeatures": [
+      "moli fetch outputs HTML, Markdown, JSON or a compact semantic tree for LLMs",
+      "On-demand layout for screenshots, full-page captures and PDFs",
+      "One endpoint serving CDP, WebDriver Classic and WebDriver BiDi, so Playwright and Puppeteer connect directly",
+      "Bundled agent skills that install Moli and run moli-webfetch for coding agents",
+      "Network tracing, selector and response waits, profiles, proxies and resource policies"
+    ],
+    "bestFor": "Developers giving coding agents or scraping pipelines a lightweight, protocol-compatible browser for page fetching, extraction and DOM-first automation.",
+    "notIdealFor": "Workflows that need pixel-perfect Chrome compatibility on every site; community benchmarks show Moli does not yet complete every task a full Chromium browser can.",
+    "recentUpdates": "Moli v1.1.16 (2026-10-11) added curl-compatible HTTP failure flags and explicit interaction before page dumps in moli fetch, plus XHR and cookie fixes; releases have shipped roughly daily through October 2026.",
+    "verdict": "A fast-moving, agent-first headless browser that trades full rendering for speed and low memory, worth trying when Chrome is too heavy for agent web access.",
+    "tags": [
+      "Headless Browser",
+      "Browser Automation",
+      "AI Agents",
+      "Rust",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-11"
   }
 ]
