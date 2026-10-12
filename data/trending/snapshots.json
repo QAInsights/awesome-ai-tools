@@ -1,5 +1,446 @@
 [
   {
+    "week": "2026-w41",
+    "start": "2026-10-05T00:00:00.000Z",
+    "end": "2026-10-12T00:00:00.000Z",
+    "generatedAt": "2026-10-12T06:01:27.947Z",
+    "entries": [
+      {
+        "slug": "magpie",
+        "name": "magpie",
+        "company": "yetone",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 1,
+        "score": 138.6,
+        "starGrowth": 4805
+      },
+      {
+        "slug": "deepseek-harness",
+        "name": "DeepSeek Harness",
+        "company": "DeepSeek",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 2,
+        "score": 133,
+        "starGrowth": 4213
+      },
+      {
+        "slug": "security-audit",
+        "name": "security-audit",
+        "company": "Cloudflare",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 3,
+        "score": 126.4,
+        "starGrowth": 3997
+      },
+      {
+        "slug": "i-have-adhd",
+        "name": "i-have-adhd",
+        "company": "ayghri",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 4,
+        "score": 110,
+        "starGrowth": 2854
+      },
+      {
+        "slug": "superpowers",
+        "name": "Superpowers",
+        "company": "obra",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 5,
+        "score": 99.9,
+        "starGrowth": 2494
+      },
+      {
+        "slug": "hermes-agent",
+        "name": "Hermes Agent",
+        "company": "Nous Research",
+        "zaps": 0,
+        "favorites": 1,
+        "follows": 1,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 6,
+        "score": 89.1,
+        "starGrowth": 1604
+      },
+      {
+        "slug": "paseo",
+        "name": "Paseo",
+        "company": "getpaseo",
+        "zaps": 0,
+        "favorites": 1,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 30,
+        "rank": 7,
+        "score": 75.6,
+        "starGrowth": 1027
+      },
+      {
+        "slug": "caveman-code",
+        "name": "Caveman Code",
+        "company": "Julius Brussee",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 8,
+        "score": 73.7,
+        "starGrowth": 1245
+      },
+      {
+        "slug": "context-mode",
+        "name": "Context Mode",
+        "company": "mksglu",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 9,
+        "score": 72.1,
+        "starGrowth": 1300
+      },
+      {
+        "slug": "oh-my-pi",
+        "name": "Oh My Pi",
+        "company": "Can Bölük",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 10,
+        "score": 59.7,
+        "starGrowth": 798
+      },
+      {
+        "slug": "codex-cli",
+        "name": "Codex CLI",
+        "company": "OpenAI",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 11,
+        "score": 57.9,
+        "starGrowth": 839
+      },
+      {
+        "slug": "gstack",
+        "name": "gstack",
+        "company": "Garry Tan",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 12,
+        "score": 57.8,
+        "starGrowth": 836
+      },
+      {
+        "slug": "openhands",
+        "name": "OpenHands",
+        "company": "All Hands",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 13,
+        "score": 53.4,
+        "starGrowth": 632
+      },
+      {
+        "slug": "browserskill",
+        "name": "BrowserSkill",
+        "company": "Tencent",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 10,
+        "rank": 14,
+        "score": 51,
+        "starGrowth": 525
+      },
+      {
+        "slug": "unsloth",
+        "name": "unsloth",
+        "company": "unsloth",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 15,
+        "score": 49.6,
+        "starGrowth": 615
+      },
+      {
+        "slug": "ruflo",
+        "name": "Ruflo",
+        "company": "ruvnet",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 10,
+        "rank": 16,
+        "score": 49.4,
+        "starGrowth": 490
+      },
+      {
+        "slug": "monocode",
+        "name": "MonoCode",
+        "company": "Nick",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 10,
+        "rank": 17,
+        "score": 44.3,
+        "starGrowth": 383
+      },
+      {
+        "slug": "ax",
+        "name": "AX",
+        "company": "Google",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 18,
+        "score": 42.2,
+        "starGrowth": 381
+      },
+      {
+        "slug": "prime-agent",
+        "name": "Prime Agent",
+        "company": "Prime Intellect",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 19,
+        "score": 42,
+        "starGrowth": 378
+      },
+      {
+        "slug": "jevgrep",
+        "name": "jevgrep",
+        "company": "David Zhang (dzhng)",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 20,
+        "score": 37.2,
+        "starGrowth": 346
+      },
+      {
+        "slug": "cline",
+        "name": "Cline",
+        "company": "Cline",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 21,
+        "score": 36.1,
+        "starGrowth": 326
+      },
+      {
+        "slug": "ai-memory",
+        "name": "AI-MEMORY",
+        "company": "AkitaOnRails",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 22,
+        "score": 35.9,
+        "starGrowth": 323
+      },
+      {
+        "slug": "pi-desktop",
+        "name": "PI-Desktop",
+        "company": "vastsa",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 23,
+        "score": 35.6,
+        "starGrowth": 317
+      },
+      {
+        "slug": "firstmate",
+        "name": "firstmate",
+        "company": "kunchenguid",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 24,
+        "score": 34.4,
+        "starGrowth": 296
+      },
+      {
+        "slug": "jcode",
+        "name": "jcode",
+        "company": "Jeremy Huang",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 20,
+        "rank": 25,
+        "score": 33.3,
+        "starGrowth": 208
+      }
+    ],
+    "rising": [
+      {
+        "slug": "magpie",
+        "name": "magpie",
+        "company": "yetone",
+        "rank": 1,
+        "previousRank": 5,
+        "score": 138.6,
+        "previousScore": 57.1,
+        "delta": 81.5
+      },
+      {
+        "slug": "security-audit",
+        "name": "security-audit",
+        "company": "Cloudflare",
+        "rank": 3,
+        "previousRank": 6,
+        "score": 126.4,
+        "previousScore": 55.3,
+        "delta": 71.1
+      },
+      {
+        "slug": "i-have-adhd",
+        "name": "i-have-adhd",
+        "company": "ayghri",
+        "rank": 4,
+        "previousRank": 4,
+        "score": 110,
+        "previousScore": 61.6,
+        "delta": 48.4
+      },
+      {
+        "slug": "deepseek-harness",
+        "name": "DeepSeek Harness",
+        "company": "DeepSeek",
+        "rank": 2,
+        "previousRank": 1,
+        "score": 133,
+        "previousScore": 85.6,
+        "delta": 47.4
+      },
+      {
+        "slug": "prime-agent",
+        "name": "Prime Agent",
+        "company": "Prime Intellect",
+        "rank": 19,
+        "previousRank": null,
+        "score": 42,
+        "previousScore": 0,
+        "delta": 42
+      }
+    ],
+    "newTools": [
+      {
+        "slug": "voidleap-code",
+        "name": "Voidleap Code",
+        "company": "Voidleap"
+      },
+      {
+        "slug": "helicon",
+        "name": "Helicon",
+        "company": "Harjot Singh Rana"
+      },
+      {
+        "slug": "codeaf",
+        "name": "CodeAF",
+        "company": "AgentField"
+      },
+      {
+        "slug": "docker-agent",
+        "name": "Docker Agent",
+        "company": "Docker"
+      },
+      {
+        "slug": "orbi",
+        "name": "Orbi",
+        "company": "orbi-build (Lawrence Liu)"
+      },
+      {
+        "slug": "openhuman",
+        "name": "OpenHuman",
+        "company": "Tiny Humans"
+      },
+      {
+        "slug": "adr",
+        "name": "ADR",
+        "company": "Uber"
+      },
+      {
+        "slug": "codex-security",
+        "name": "Codex Security",
+        "company": "OpenAI"
+      },
+      {
+        "slug": "plannotator",
+        "name": "Plannotator",
+        "company": "backnotprop"
+      },
+      {
+        "slug": "pentagi",
+        "name": "PentAGI",
+        "company": "VXControl"
+      }
+    ],
+    "guard": {
+      "ungatedZapsDropped": 0,
+      "burstActorsDropped": 1
+    }
+  },
+  {
     "week": "2026-w40",
     "start": "2026-09-28T00:00:00.000Z",
     "end": "2026-10-05T00:00:00.000Z",
