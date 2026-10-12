@@ -9489,6 +9489,35 @@
     "lastUpdated": "2026-10-12"
   },
   {
+    "slug": "aident-loadout",
+    "name": "Aident Loadout",
+    "company": "Aident AI",
+    "pricing": "freemium",
+    "pricingDetail": "Aident Loadout uses a credit-based model: one Aident balance funds 50+ built-in services instead of separate subscriptions, with premium built-in tools available at discounted rates. A free tier exists (many apps listed as Free, and some Actions preflight at 0 credits), while paid plans provide recurring credits or one-time credit boosts; BYOK lets a user-owned credential reduce the Aident credit deduction to zero for supported Actions, though the external provider may still bill you.",
+    "description": "Aident Loadout is a unified capability layer that connects AI agents and MCP clients (Codex, Claude Code, Cursor, ChatGPT, and others) to 1,000+ apps, 27,000+ actions, and 400+ expert-built Skills through one reusable setup. It handles discovery, delegated credentials via Aident Vault, execution, and audit logging so agents can take real actions in external services.",
+    "keyFeatures": [
+      "Connects any MCP-compatible agent to 1,000+ apps and 27,000+ actions via one setup",
+      "400+ expert-built Skills for research, outreach, content, and ops workflows",
+      "Aident Vault keeps raw credentials hidden and manages OAuth/delegated credentials",
+      "Audit records every action call with status, source, and credits used",
+      "Single Aident balance replaces dozens of separate subscriptions and API keys",
+      "Preflight validates exact inputs and estimates cost before execution",
+      "Setup once and reuse the same apps and Skills across Codex, Claude Code, Cursor, ChatGPT, and more"
+    ],
+    "bestFor": "Developers and teams using MCP-compatible coding or chat agents who want broad, governed access to external apps and prebuilt workflows without managing separate credentials and subscriptions per tool.",
+    "notIdealFor": "Users who need fully offline operation, don't use MCP-compatible agents, or want to avoid credit-based billing and third-party API rate limits and availability dependencies.",
+    "recentUpdates": "Loadout launch announced on aident.ai; setup guides published for Codex, Claude Code, Cursor, ChatGPT, and other clients; blog posts on how to use Loadout (Aug 5, 2026) and how credits, BYOK, and action pricing work (Aug 12, 2026).",
+    "verdict": "Aident Loadout offers a compelling single integration layer with strong credential isolation, audit trails, and cross-client reuse, making agent tooling far easier to manage at scale. The tradeoffs are dependence on external API availability and rate limits, plus a credit-based cost model that requires inspecting each Action's price and approval thresholds.",
+    "tags": [
+      "MCP gateway",
+      "AI agents",
+      "integrations",
+      "credential vault",
+      "audit logging"
+    ],
+    "lastUpdated": "2026-10-12"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",

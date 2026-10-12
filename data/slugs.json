@@ -2100,6 +2100,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "aident-loadout",
+    "name": "Aident Loadout",
+    "company": "Aident AI",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
