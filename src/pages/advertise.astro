@@ -12,7 +12,10 @@ import { getCollection } from 'astro:content';
 import DashboardLayout from '../layouts/DashboardLayout.astro';
 import { getResolvedComparisons } from '../lib/compare';
 import { getAllTools, getCategoriesDetailed } from '../lib/tools';
-import siteStats from '../../public/data/site-stats.json';
+import siteStatsJson from '../../public/data/site-stats.json';
+import type { SiteStats } from '../lib/site-stats';
+
+const siteStats = siteStatsJson as SiteStats;
 
 const tools = getAllTools();
 const toolCount = tools.length;
@@ -51,6 +54,32 @@ const sinceDate = siteStats.traffic ? new Date(siteStats.traffic.lifetime.since)
 const reachNote = siteStats.traffic
     ? `Cloudflare Web Analytics and GitHub, updated ${fullDate(siteStats.generatedAt)}. *All-time figures cover Cloudflare's available retention window (since ${sinceDate}).`
     : 'Traffic figures are shared on request.';
+
+const dashboardData = {
+    coverage: siteStats.detail?.coverage ?? null,
+    daily: siteStats.detail?.daily ?? [],
+    breakdowns: siteStats.detail?.breakdowns ?? {},
+    history: siteStats.history ?? [],
+};
+const hasTrafficDetail = dashboardData.coverage !== null || dashboardData.daily.length > 0;
+const hasStarHistory = dashboardData.history.length > 1;
+const dashboardJson = JSON.stringify(dashboardData).replace(/</g, '\\u003c');
+const rangeOptions = [
+    { value: '7', label: '7d' },
+    { value: '30', label: '30d' },
+    { value: '90', label: '90d' },
+];
+const metricOptions = [
+    { value: 'visits', label: 'Visits' },
+    { value: 'pageViews', label: 'Page views' },
+];
+const breakdownOptions = [
+    { value: 'pages', label: 'Top pages' },
+    { value: 'referrers', label: 'Referrers' },
+    { value: 'countries', label: 'Countries' },
+    { value: 'devices', label: 'Devices' },
+];
+const toggleClass = 'px-3 py-1.5 font-mono text-[12px] text-ink-muted transition-colors hover:text-ink aria-pressed:bg-white/10 aria-pressed:text-ink';
 
 const pricingTiers = [
     {
@@ -153,6 +182,91 @@ const faqs = [
                     {reachNote}
                 </p>
             </div>
+
+            {(hasTrafficDetail || hasStarHistory) && (
+                <section id="reach-dashboard" class="mb-10" aria-labelledby="reach-dashboard-title">
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+                        <h2 id="reach-dashboard-title" class="font-mono text-[11px] uppercase text-ink-muted tracking-widest">Reach dashboard</h2>
+                        <div class="flex flex-wrap gap-2">
+                            <div role="group" aria-label="Date range" class="inline-flex divide-x divide-border border border-border rounded-md overflow-hidden">
+                                {rangeOptions.map(option => (
+                                    <button type="button" data-range={option.value} aria-pressed={option.value === '30' ? 'true' : 'false'} class={toggleClass}>{option.label}</button>
+                                ))}
+                            </div>
+                            {hasTrafficDetail && (
+                                <div role="group" aria-label="Metric" class="inline-flex divide-x divide-border border border-border rounded-md overflow-hidden">
+                                    {metricOptions.map(option => (
+                                        <button type="button" data-metric={option.value} aria-pressed={option.value === 'visits' ? 'true' : 'false'} class={toggleClass}>{option.label}</button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {hasTrafficDetail && (
+                        <>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+                                <div class="border border-border bg-white/[0.02] rounded-md px-5 py-4">
+                                    <div class="text-2xl font-semibold text-ink font-mono" data-kpi-total>—</div>
+                                    <div class="text-[13px] text-ink-muted mt-1" data-kpi-total-label>Visits, last 30 days</div>
+                                </div>
+                                <div class="border border-border bg-white/[0.02] rounded-md px-5 py-4">
+                                    <div class="text-2xl font-semibold text-ink font-mono" data-kpi-average>—</div>
+                                    <div class="text-[13px] text-ink-muted mt-1">Daily average</div>
+                                </div>
+                                <div class="border border-border bg-white/[0.02] rounded-md px-5 py-4">
+                                    <div class="text-2xl font-semibold text-ink font-mono" data-kpi-change>—</div>
+                                    <div class="text-[13px] text-ink-muted mt-1" data-kpi-change-label>vs previous 30 days</div>
+                                </div>
+                            </div>
+
+                            <div class="border border-border bg-white/[0.02] rounded-md px-4 pt-3 pb-2 mb-3">
+                                <div class="font-mono text-[11px] text-ink-disabled mb-2" data-chart-range></div>
+                                <div class="relative">
+                                    <svg data-traffic-chart viewBox="0 0 640 180" preserveAspectRatio="none" class="block w-full h-44 touch-none" role="img" aria-label="Daily traffic trend">
+                                        <path data-area fill="var(--color-gold)" fill-opacity="0.12" />
+                                        <path data-line fill="none" stroke="var(--color-gold)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round" />
+                                        <circle data-marker r="4" fill="var(--color-gold)" visibility="hidden" />
+                                    </svg>
+                                    <div data-traffic-tooltip hidden class="pointer-events-none absolute -top-1 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-sm border border-border bg-panel px-2 py-1 font-mono text-[11px] text-ink"></div>
+                                </div>
+                            </div>
+
+                            <div class="border border-border bg-white/[0.02] rounded-md px-2 py-3 mb-3">
+                                <div role="group" aria-label="Breakdown" class="flex flex-wrap gap-1 px-1 mb-2">
+                                    {breakdownOptions.map(option => (
+                                        <button type="button" data-breakdown={option.value} aria-pressed={option.value === 'pages' ? 'true' : 'false'} class={`${toggleClass} rounded-md`}>{option.label}</button>
+                                    ))}
+                                </div>
+                                <ol data-breakdown-list class="flex flex-col gap-1"></ol>
+                            </div>
+                        </>
+                    )}
+
+                    {hasStarHistory && (
+                        <div class="border border-border bg-white/[0.02] rounded-md px-4 pt-3 pb-2">
+                            <div class="flex items-baseline justify-between gap-3 mb-2">
+                                <div class="text-[13px] text-ink-muted">GitHub stars <span class="font-mono text-ink" data-stars-total>—</span></div>
+                                <div class="font-mono text-[11px] text-ink-disabled" data-stars-delta></div>
+                            </div>
+                            <div class="relative">
+                                <svg data-stars-chart viewBox="0 0 640 180" preserveAspectRatio="none" class="block w-full h-24 touch-none" role="img" aria-label="GitHub stars trend">
+                                    <path data-area fill="var(--color-ink)" fill-opacity="0.06" />
+                                    <path data-line fill="none" stroke="var(--color-ink-secondary)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round" />
+                                    <circle data-marker r="4" fill="var(--color-ink)" visibility="hidden" />
+                                </svg>
+                                <div data-stars-tooltip hidden class="pointer-events-none absolute -top-1 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-sm border border-border bg-panel px-2 py-1 font-mono text-[11px] text-ink"></div>
+                            </div>
+                        </div>
+                    )}
+
+                    <p class="text-[12px] text-ink-disabled mt-2">
+                        Daily figures are complete UTC days from Cloudflare Web Analytics; GitHub stars are a daily snapshot.
+                    </p>
+                    <script id="reach-dashboard-data" type="application/json" set:html={dashboardJson}></script>
+                    <script src="/dist/advertise-dashboard.js" type="module" defer></script>
+                </section>
+            )}
 
             <!-- Placement preview -->
             <div class="mb-10">

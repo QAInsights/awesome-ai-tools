@@ -16,10 +16,45 @@ export interface GitHubStats {
     forks: number;
 }
 
+export interface DailyTraffic extends TrafficWindow {
+    date: string;
+}
+
+export interface BreakdownRow extends TrafficWindow {
+    label: string;
+}
+
+export const BREAKDOWN_DIMENSIONS = {
+    pages: 'requestPath',
+    referrers: 'refererHost',
+    countries: 'countryName',
+    devices: 'deviceType',
+} as const;
+
+export type BreakdownKey = keyof typeof BREAKDOWN_DIMENSIONS;
+export type TrafficBreakdowns = Record<BreakdownKey, BreakdownRow[]>;
+
+export const DETAIL_RANGES = [7, 30, 90] as const;
+
+export interface TrafficDetail {
+    /** First and last complete UTC day queried (inclusive); days inside it without rows had no traffic. */
+    coverage: { from: string; to: string };
+    /** Complete UTC days with traffic, oldest first, spanning two of the longest range for period-over-period deltas. */
+    daily: DailyTraffic[];
+    /** Top rows by page views and by visits per dimension, keyed by range length in days. */
+    breakdowns: Record<string, TrafficBreakdowns>;
+}
+
+export interface GitHubHistoryPoint extends GitHubStats {
+    date: string;
+}
+
 export interface SiteStats {
     generatedAt: string;
     traffic: TrafficStats | null;
     github: GitHubStats | null;
+    detail?: TrafficDetail | null;
+    history?: GitHubHistoryPoint[];
 }
 
 interface RumGroup {
@@ -43,6 +78,7 @@ const GRAPHQL_ENDPOINT = 'https://api.cloudflare.com/client/v4/graphql';
 const SECOND = 1_000;
 const DAY = 86_400_000;
 const MAX_CHUNKS = 24;
+const BREAKDOWN_TOP = 10;
 
 function isoSeconds(value: Date): string {
     return value.toISOString().replace(/\.\d{3}Z$/, 'Z');
@@ -179,6 +215,121 @@ export async function fetchTrafficStats(
     };
 }
 
+interface DimensionGroup {
+    count: number;
+    sum: { visits: number };
+    dimensions: Record<string, unknown>;
+}
+
+function rumAlias(alias: string, host: string, chunk: { from: string; to: string }, dimension: string, limit: number): string {
+    return `${alias}: rumPageloadEventsAdaptiveGroups(limit: ${limit}, orderBy: [count_DESC], filter: { requestHost: ${JSON.stringify(host)}, datetime_geq: ${JSON.stringify(chunk.from)}, datetime_lt: ${JSON.stringify(chunk.to)} }) { count sum { visits } dimensions { ${dimension} } }`;
+}
+
+function accountQuery(accountTag: string, fields: string[]): string {
+    return `query { viewer { accounts(filter: { accountTag: ${JSON.stringify(accountTag)} }) { ${fields.join('\n')} } } }`;
+}
+
+/** Sums grouped rows by a dimension value across every chunk alias of one query. */
+export function mergeDimensionGroups(
+    chunks: Array<DimensionGroup[] | undefined>,
+    dimension: string,
+    emptyLabel = '',
+): Map<string, TrafficWindow> {
+    const totals = new Map<string, TrafficWindow>();
+    for (const groups of chunks) {
+        for (const group of groups ?? []) {
+            const raw = group?.dimensions?.[dimension];
+            const label = typeof raw === 'string' && raw.trim() ? raw.trim() : emptyLabel;
+            if (!label) continue;
+            const total = totals.get(label) ?? { pageViews: 0, visits: 0 };
+            total.pageViews += finiteNumber(group.count);
+            total.visits += finiteNumber(group.sum?.visits);
+            totals.set(label, total);
+        }
+    }
+    return totals;
+}
+
+/** Union of the top rows by page views and by visits, so the client can rank by either metric. */
+export function topBreakdownRows(totals: Map<string, TrafficWindow>, limit = BREAKDOWN_TOP): BreakdownRow[] {
+    const rows = [...totals.entries()].map(([label, window]) => ({ label, ...window }));
+    const top = (metric: keyof TrafficWindow) => [...rows]
+        .sort((a, b) => b[metric] - a[metric] || a.label.localeCompare(b.label))
+        .slice(0, limit);
+    const kept = new Set([...top('pageViews'), ...top('visits')]);
+    return rows
+        .filter(row => kept.has(row))
+        .sort((a, b) => b.pageViews - a.pageViews || b.visits - a.visits || a.label.localeCompare(b.label));
+}
+
+function startOfUtcDay(value: Date): Date {
+    return new Date(Date.UTC(value.getUTCFullYear(), value.getUTCMonth(), value.getUTCDate()));
+}
+
+function isoDate(value: Date): string {
+    return value.toISOString().slice(0, 10);
+}
+
+/** Daily series and per-range breakdowns for the dashboard on /advertise. */
+export async function fetchTrafficDetail(
+    credentials: { accountId: string; token: string },
+    fetchImpl: Fetcher = fetch,
+    now = new Date(),
+): Promise<TrafficDetail> {
+    const { accountId, token } = credentials;
+    if (!accountId || !token) throw new Error('Cloudflare Web Analytics credentials are not configured');
+    const host = SITE_HOSTS[0]!;
+    const limits = await fetchRumLimits({ accountId, token }, fetchImpl);
+    const longest = DETAIL_RANGES[DETAIL_RANGES.length - 1]!;
+    // Stop at midnight UTC so the series only contains complete days.
+    const today = startOfUtcDay(now);
+    const dailySec = Math.min(2 * longest * DAY / SECOND, limits.notOlderThan);
+    const dailyChunks = buildRetentionChunks(today, dailySec, limits.maxDuration);
+    const firstChunkStart = new Date(dailyChunks[0]!.from);
+    const firstFullDay = startOfUtcDay(firstChunkStart).getTime() === firstChunkStart.getTime()
+        ? firstChunkStart
+        : new Date(startOfUtcDay(firstChunkStart).getTime() + DAY);
+    const coverage = { from: isoDate(firstFullDay), to: isoDate(new Date(today.getTime() - DAY)) };
+
+    const queryAccount = async (fields: string[]) => {
+        const payload = await queryCloudflare(fetchImpl, token, accountQuery(accountId, fields));
+        const account = payload.data?.viewer?.accounts?.[0];
+        if (!account) throw new Error('Cloudflare Web Analytics returned no account data');
+        return account;
+    };
+
+    const dailyAccount = await queryAccount(dailyChunks.map((chunk, index) => rumAlias(`d${index}`, host, chunk, 'date', 1000)));
+    const dailyTotals = mergeDimensionGroups(dailyChunks.map((_chunk, index) => dailyAccount[`d${index}`] as DimensionGroup[] | undefined), 'date');
+    const daily = [...dailyTotals.entries()]
+        .filter(([date]) => /^\d{4}-\d{2}-\d{2}$/.test(date) && date >= coverage.from && date <= coverage.to)
+        .map(([date, window]) => ({ date, ...window }))
+        .sort((a, b) => a.date.localeCompare(b.date));
+
+    const rangeChunks = DETAIL_RANGES.map(days => ({
+        days,
+        chunks: buildRetentionChunks(today, Math.min(days * DAY / SECOND, limits.notOlderThan), limits.maxDuration),
+    }));
+    const breakdowns: Record<string, TrafficBreakdowns> = Object.fromEntries(
+        DETAIL_RANGES.map(days => [String(days), { pages: [], referrers: [], countries: [], devices: [] }]),
+    );
+    // One query per dimension, so an unsupported field only empties its own tab.
+    for (const key of Object.keys(BREAKDOWN_DIMENSIONS) as BreakdownKey[]) {
+        const dimension = BREAKDOWN_DIMENSIONS[key];
+        try {
+            const account = await queryAccount(rangeChunks.flatMap(({ days, chunks }) =>
+                chunks.map((chunk, index) => rumAlias(`r${days}_${index}`, host, chunk, dimension, 100))));
+            for (const { days, chunks } of rangeChunks) {
+                const groups = chunks.map((_chunk, index) => account[`r${days}_${index}`] as DimensionGroup[] | undefined);
+                const emptyLabel = key === 'referrers' ? 'Direct / none' : '';
+                breakdowns[String(days)]![key] = topBreakdownRows(mergeDimensionGroups(groups, dimension, emptyLabel));
+            }
+        } catch (error) {
+            console.error(`[Site Stats] ${key} breakdown unavailable:`, error instanceof Error ? error.message : String(error));
+        }
+    }
+    return { coverage, daily, breakdowns };
+}
+
 export async function fetchGitHubStats(fetchImpl: Fetcher = fetch, token = ''): Promise<GitHubStats> {
     const headers: Record<string, string> = {
         Accept: 'application/vnd.github+json',
@@ -196,9 +347,11 @@ export async function loadSiteStats(
     options: { accountId: string; token: string; githubToken?: string },
     fetchImpl: Fetcher = fetch,
 ): Promise<SiteStats> {
-    const [trafficResult, githubResult] = await Promise.allSettled([
-        fetchTrafficStats({ accountId: options.accountId, token: options.token }, fetchImpl),
+    const credentials = { accountId: options.accountId, token: options.token };
+    const [trafficResult, githubResult, detailResult] = await Promise.allSettled([
+        fetchTrafficStats(credentials, fetchImpl),
         fetchGitHubStats(fetchImpl, options.githubToken ?? ''),
+        fetchTrafficDetail(credentials, fetchImpl),
     ]);
     if (trafficResult.status === 'rejected') {
         console.error('[Site Stats] Traffic unavailable:', trafficResult.reason instanceof Error ? trafficResult.reason.message : String(trafficResult.reason));
@@ -206,9 +359,13 @@ export async function loadSiteStats(
     if (githubResult.status === 'rejected') {
         console.error('[Site Stats] GitHub unavailable:', githubResult.reason instanceof Error ? githubResult.reason.message : String(githubResult.reason));
     }
+    if (detailResult.status === 'rejected') {
+        console.error('[Site Stats] Traffic detail unavailable:', detailResult.reason instanceof Error ? detailResult.reason.message : String(detailResult.reason));
+    }
     return {
         generatedAt: new Date().toISOString(),
         traffic: trafficResult.status === 'fulfilled' ? trafficResult.value : null,
         github: githubResult.status === 'fulfilled' ? githubResult.value : null,
+        detail: detailResult.status === 'fulfilled' ? detailResult.value : null,
     };
 }
