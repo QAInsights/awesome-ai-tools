@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import PrompticonFeature from './PrompticonFeature.astro';
+import HouseAdFeature from './HouseAdFeature.astro';
 
 /**
  * Static Astro sidebar shared by the directory and dashboard layouts.
@@ -117,7 +117,7 @@ const latestNewsDate = latestNews
         </nav>
 
         {isIndex && latestNews && (
-            <div class="mx-4 mt-3 p-3 border border-border rounded-md bg-white/[0.01] shrink-0">
+            <div class="sidebar-latest-news mx-4 mt-3 p-3 border border-border rounded-md bg-white/[0.01] shrink-0">
                 <div class="flex items-center justify-between mb-1.5">
                     <div class="font-mono text-[11px] uppercase text-ink-muted tracking-widest">Today in AI</div>
                     <span class="font-mono text-[11px] text-ink-disabled">{latestNewsDate}</span>
@@ -129,7 +129,7 @@ const latestNewsDate = latestNews
             </div>
         )}
 
-        {isIndex && <PrompticonFeature />}
+        {isIndex && <HouseAdFeature />}
 
         <!-- Featured -->
         <div class="mx-4 mt-2 mb-3 p-3 border border-dashed border-border rounded-md bg-white/[0.01] shrink-0">
@@ -157,3 +157,11 @@ const latestNewsDate = latestNews
     <!-- Collapsed Icon Sidebar -->
     <div id="iconSidebar"></div>
 </aside>
+
+<style>
+    @media (min-width: 768px) and (max-height: 767px) {
+        .sidebar-latest-news {
+            display: none;
+        }
+    }
+</style>
