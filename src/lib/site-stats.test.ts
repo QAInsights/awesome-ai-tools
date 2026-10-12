@@ -5,7 +5,10 @@ import {
     buildRetentionChunks,
     buildRumQuery,
     fetchGitHubStats,
+    fetchTrafficDetail,
     fetchTrafficStats,
+    mergeDimensionGroups,
+    topBreakdownRows,
     parseGitHubRepo,
     summarizeRumGroups,
 } from './site-stats';
@@ -182,5 +185,86 @@ describe('fetchGitHubStats', () => {
             Accept: 'application/vnd.github+json',
             'User-Agent': 'ai.dosa.dev-stats',
         });
+    });
+});
+
+describe('traffic detail', () => {
+    test('merges grouped rows across chunks and labels empty values', () => {
+        const totals = mergeDimensionGroups([
+            [
+                { count: 4, sum: { visits: 2 }, dimensions: { refererHost: 'google.com' } },
+                { count: 3, sum: { visits: 3 }, dimensions: { refererHost: '' } },
+            ],
+            [{ count: 6, sum: { visits: 1 }, dimensions: { refererHost: 'google.com' } }],
+            undefined,
+        ], 'refererHost', 'Direct / none');
+
+        expect(Object.fromEntries(totals)).toEqual({
+            'google.com': { pageViews: 10, visits: 3 },
+            'Direct / none': { pageViews: 3, visits: 3 },
+        });
+        expect(mergeDimensionGroups([[{ count: 1, sum: { visits: 1 }, dimensions: { requestPath: '' } }]], 'requestPath').size).toBe(0);
+    });
+
+    test('sorts breakdown rows by page views and caps the list', () => {
+        const totals = new Map([
+            ['/b', { pageViews: 5, visits: 1 }],
+            ['/a', { pageViews: 9, visits: 4 }],
+            ['/c', { pageViews: 5, visits: 3 }],
+        ]);
+        expect(topBreakdownRows(totals, 2)).toEqual([
+            { label: '/a', pageViews: 9, visits: 4 },
+            { label: '/c', pageViews: 5, visits: 3 },
+        ]);
+    });
+
+    test('builds complete-day series and per-range breakdowns', async () => {
+        const bodies: string[] = [];
+        const settings = Response.json({
+            data: { viewer: { accounts: [{ settings: { rumPageloadEventsAdaptiveGroups: { enabled: true, maxDuration: 400 * 86_400, notOlderThan: 400 * 86_400 } } }] } },
+        });
+        const fetchImpl = async (_input: RequestInfo | URL, init?: RequestInit) => {
+            bodies.push(String(init?.body));
+            if (bodies.length === 1) return settings;
+            if (bodies.length === 2) {
+                return Response.json({
+                    data: { viewer: { accounts: [{ d0: [
+                        { count: 8, sum: { visits: 5 }, dimensions: { date: '2026-09-25' } },
+                        { count: 2, sum: { visits: 1 }, dimensions: { date: '2026-09-24' } },
+                        { count: 1, sum: { visits: 1 }, dimensions: { date: '2026-09-26' } },
+                    ] }] } },
+                });
+            }
+            return Response.json({
+                data: { viewer: { accounts: [{
+                    pages0: [{ count: 7, sum: { visits: 3 }, dimensions: { requestPath: '/advertise' } }],
+                    referrers0: [{ count: 2, sum: { visits: 2 }, dimensions: { refererHost: '' } }],
+                    countries0: [{ count: 4, sum: { visits: 2 }, dimensions: { countryName: 'IN' } }],
+                    devices0: [{ count: 5, sum: { visits: 2 }, dimensions: { deviceType: 'desktop' } }],
+                }] } },
+            });
+        };
+
+        const detail = await fetchTrafficDetail(credentials, fetchImpl, now);
+
+        expect(detail.daily).toEqual([
+            { date: '2026-09-24', pageViews: 2, visits: 1 },
+            { date: '2026-09-25', pageViews: 8, visits: 5 },
+        ]);
+        expect(Object.keys(detail.breakdowns)).toEqual(['7', '30', '90']);
+        expect(detail.breakdowns['30']).toEqual({
+            pages: [{ label: '/advertise', pageViews: 7, visits: 3 }],
+            referrers: [{ label: 'Direct / none', pageViews: 2, visits: 2 }],
+            countries: [{ label: 'IN', pageViews: 4, visits: 2 }],
+            devices: [{ label: 'desktop', pageViews: 5, visits: 2 }],
+        });
+        expect(bodies).toHaveLength(5);
+        const dailyQuery = JSON.parse(bodies[1]!).query as string;
+        expect(dailyQuery).toContain('dimensions { date }');
+        expect(dailyQuery).toContain('datetime_leq: "2026-09-26T00:00:00Z"');
+        const breakdownQuery = JSON.parse(bodies[2]!).query as string;
+        for (const dimension of ['requestPath', 'refererHost', 'countryName', 'deviceType']) {
+            expect(breakdownQuery).toContain(`dimensions { ${dimension} }`);
+        }
     });
 });

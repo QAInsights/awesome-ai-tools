@@ -16,10 +16,43 @@ export interface GitHubStats {
     forks: number;
 }
 
+export interface DailyTraffic extends TrafficWindow {
+    date: string;
+}
+
+export interface BreakdownRow extends TrafficWindow {
+    label: string;
+}
+
+export const BREAKDOWN_DIMENSIONS = {
+    pages: 'requestPath',
+    referrers: 'refererHost',
+    countries: 'countryName',
+    devices: 'deviceType',
+} as const;
+
+export type BreakdownKey = keyof typeof BREAKDOWN_DIMENSIONS;
+export type TrafficBreakdowns = Record<BreakdownKey, BreakdownRow[]>;
+
+export const DETAIL_RANGES = [7, 30, 90] as const;
+
+export interface TrafficDetail {
+    /** Complete UTC days, oldest first, covering two of the longest range for period-over-period deltas. */
+    daily: DailyTraffic[];
+    /** Top rows per dimension, keyed by range length in days. */
+    breakdowns: Record<string, TrafficBreakdowns>;
+}
+
+export interface GitHubHistoryPoint extends GitHubStats {
+    date: string;
+}
+
 export interface SiteStats {
     generatedAt: string;
     traffic: TrafficStats | null;
     github: GitHubStats | null;
+    detail?: TrafficDetail | null;
+    history?: GitHubHistoryPoint[];
 }
 
 interface RumGroup {
@@ -43,6 +76,7 @@ const GRAPHQL_ENDPOINT = 'https://api.cloudflare.com/client/v4/graphql';
 const SECOND = 1_000;
 const DAY = 86_400_000;
 const MAX_CHUNKS = 24;
+const BREAKDOWN_TOP = 10;
 
 function isoSeconds(value: Date): string {
     return value.toISOString().replace(/\.\d{3}Z$/, 'Z');
@@ -179,6 +213,97 @@ export async function fetchTrafficStats(
     };
 }
 
+interface DimensionGroup {
+    count: number;
+    sum: { visits: number };
+    dimensions: Record<string, unknown>;
+}
+
+function rumAlias(alias: string, host: string, chunk: { from: string; to: string }, dimension: string, limit: number): string {
+    return `${alias}: rumPageloadEventsAdaptiveGroups(limit: ${limit}, orderBy: [count_DESC], filter: { requestHost: ${JSON.stringify(host)}, datetime_geq: ${JSON.stringify(chunk.from)}, datetime_leq: ${JSON.stringify(chunk.to)} }) { count sum { visits } dimensions { ${dimension} } }`;
+}
+
+function accountQuery(accountTag: string, fields: string[]): string {
+    return `query { viewer { accounts(filter: { accountTag: ${JSON.stringify(accountTag)} }) { ${fields.join('\n')} } } }`;
+}
+
+/** Sums grouped rows by a dimension value across every chunk alias of one query. */
+export function mergeDimensionGroups(
+    chunks: Array<DimensionGroup[] | undefined>,
+    dimension: string,
+    emptyLabel = '',
+): Map<string, TrafficWindow> {
+    const totals = new Map<string, TrafficWindow>();
+    for (const groups of chunks) {
+        for (const group of groups ?? []) {
+            const raw = group?.dimensions?.[dimension];
+            const label = typeof raw === 'string' && raw.trim() ? raw.trim() : emptyLabel;
+            if (!label) continue;
+            const total = totals.get(label) ?? { pageViews: 0, visits: 0 };
+            total.pageViews += finiteNumber(group.count);
+            total.visits += finiteNumber(group.sum?.visits);
+            totals.set(label, total);
+        }
+    }
+    return totals;
+}
+
+export function topBreakdownRows(totals: Map<string, TrafficWindow>, limit = BREAKDOWN_TOP): BreakdownRow[] {
+    return [...totals.entries()]
+        .map(([label, window]) => ({ label, ...window }))
+        .sort((a, b) => b.pageViews - a.pageViews || b.visits - a.visits || a.label.localeCompare(b.label))
+        .slice(0, limit);
+}
+
+function startOfUtcDay(value: Date): Date {
+    return new Date(Date.UTC(value.getUTCFullYear(), value.getUTCMonth(), value.getUTCDate()));
+}
+
+/** Daily series and per-range breakdowns for the dashboard on /advertise. */
+export async function fetchTrafficDetail(
+    credentials: { accountId: string; token: string },
+    fetchImpl: Fetcher = fetch,
+    now = new Date(),
+): Promise<TrafficDetail> {
+    const { accountId, token } = credentials;
+    if (!accountId || !token) throw new Error('Cloudflare Web Analytics credentials are not configured');
+    const host = SITE_HOSTS[0]!;
+    const limits = await fetchRumLimits({ accountId, token }, fetchImpl);
+    const longest = DETAIL_RANGES[DETAIL_RANGES.length - 1]!;
+    // Stop at midnight UTC so the series only contains complete days.
+    const today = startOfUtcDay(now);
+    const dailySec = Math.min(2 * longest * DAY / SECOND, limits.notOlderThan);
+    const dailyChunks = buildRetentionChunks(today, dailySec, limits.maxDuration);
+
+    const queryAccount = async (fields: string[]) => {
+        const payload = await queryCloudflare(fetchImpl, token, accountQuery(accountId, fields));
+        const account = payload.data?.viewer?.accounts?.[0];
+        if (!account) throw new Error('Cloudflare Web Analytics returned no account data');
+        return account;
+    };
+
+    const dailyAccount = await queryAccount(dailyChunks.map((chunk, index) => rumAlias(`d${index}`, host, chunk, 'date', 1000)));
+    const dailyTotals = mergeDimensionGroups(dailyChunks.map((_chunk, index) => dailyAccount[`d${index}`] as DimensionGroup[] | undefined), 'date');
+    const daily = [...dailyTotals.entries()]
+        .filter(([date]) => /^\d{4}-\d{2}-\d{2}$/.test(date) && date < isoSeconds(today).slice(0, 10))
+        .map(([date, window]) => ({ date, ...window }))
+        .sort((a, b) => a.date.localeCompare(b.date));
+
+    const breakdowns: Record<string, TrafficBreakdowns> = {};
+    for (const days of DETAIL_RANGES) {
+        const chunks = buildRetentionChunks(today, Math.min(days * DAY / SECOND, limits.notOlderThan), limits.maxDuration);
+        const keys = Object.keys(BREAKDOWN_DIMENSIONS) as BreakdownKey[];
+        const account = await queryAccount(keys.flatMap(key => chunks.map((chunk, index) =>
+            rumAlias(`${key}${index}`, host, chunk, BREAKDOWN_DIMENSIONS[key], 100))));
+        breakdowns[String(days)] = Object.fromEntries(keys.map(key => {
+            const groups = chunks.map((_chunk, index) => account[`${key}${index}`] as DimensionGroup[] | undefined);
+            const emptyLabel = key === 'referrers' ? 'Direct / none' : '';
+            return [key, topBreakdownRows(mergeDimensionGroups(groups, BREAKDOWN_DIMENSIONS[key], emptyLabel))];
+        })) as TrafficBreakdowns;
+    }
+    return { daily, breakdowns };
+}
+
 export async function fetchGitHubStats(fetchImpl: Fetcher = fetch, token = ''): Promise<GitHubStats> {
     const headers: Record<string, string> = {
         Accept: 'application/vnd.github+json',
@@ -196,9 +321,11 @@ export async function loadSiteStats(
     options: { accountId: string; token: string; githubToken?: string },
     fetchImpl: Fetcher = fetch,
 ): Promise<SiteStats> {
-    const [trafficResult, githubResult] = await Promise.allSettled([
-        fetchTrafficStats({ accountId: options.accountId, token: options.token }, fetchImpl),
+    const credentials = { accountId: options.accountId, token: options.token };
+    const [trafficResult, githubResult, detailResult] = await Promise.allSettled([
+        fetchTrafficStats(credentials, fetchImpl),
         fetchGitHubStats(fetchImpl, options.githubToken ?? ''),
+        fetchTrafficDetail(credentials, fetchImpl),
     ]);
     if (trafficResult.status === 'rejected') {
         console.error('[Site Stats] Traffic unavailable:', trafficResult.reason instanceof Error ? trafficResult.reason.message : String(trafficResult.reason));
@@ -206,9 +333,13 @@ export async function loadSiteStats(
     if (githubResult.status === 'rejected') {
         console.error('[Site Stats] GitHub unavailable:', githubResult.reason instanceof Error ? githubResult.reason.message : String(githubResult.reason));
     }
+    if (detailResult.status === 'rejected') {
+        console.error('[Site Stats] Traffic detail unavailable:', detailResult.reason instanceof Error ? detailResult.reason.message : String(detailResult.reason));
+    }
     return {
         generatedAt: new Date().toISOString(),
         traffic: trafficResult.status === 'fulfilled' ? trafficResult.value : null,
         github: githubResult.status === 'fulfilled' ? githubResult.value : null,
+        detail: detailResult.status === 'fulfilled' ? detailResult.value : null,
     };
 }
