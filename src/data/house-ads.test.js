@@ -34,4 +34,8 @@ describe('house ads', () => {
             expect(ad.tagline).not.toContain('\u2014');
         }
     });
+
+    test('taglines are at most 64 characters', () => {
+        for (const ad of houseAds) expect(ad.tagline.length).toBeLessThanOrEqual(64);
+    });
 });

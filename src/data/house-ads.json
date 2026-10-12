@@ -3,7 +3,7 @@
     "id": "prompticon",
     "label": "Chrome extension",
     "name": "Prompticon",
-    "tagline": "One-click replies and reusable prompt templates for ChatGPT, Claude and other AI chats.",
+    "tagline": "Quick replies and prompt templates for ChatGPT and Claude.",
     "cta": "Add to Chrome",
     "url": "https://chromewebstore.google.com/detail/prompticon/niofgdlmoogjllonnpdhmajdginmcnke",
     "icon": "/images/prompticon.svg"
@@ -12,7 +12,7 @@
     "id": "quick-links",
     "label": "Chrome extension",
     "name": "Quick Links",
-    "tagline": "A local-first new tab board for bookmarks and to-dos, with optional Google Drive sync.",
+    "tagline": "A local-first new tab board for bookmarks and to-dos.",
     "cta": "Add to Chrome",
     "url": "https://chromewebstore.google.com/detail/quick-links/jcpngbilapanldphljagkbkjkmkmeiii",
     "icon": "/images/house-ads/quick-links.png"
@@ -21,7 +21,7 @@
     "id": "dashbuster",
     "label": "Chrome extension",
     "name": "DashBuster",
-    "tagline": "Swap em dashes on any site for the character you prefer, and see which domains overuse them.",
+    "tagline": "Swap em dashes on any site for a character you prefer.",
     "cta": "Add to Chrome",
     "url": "https://chromewebstore.google.com/detail/dashbuster/pnfhimkhinoecknjhlggdbgoajcogfll",
     "icon": "/images/house-ads/dashbuster.png"
@@ -30,7 +30,7 @@
     "id": "metahide",
     "label": "Chrome extension",
     "name": "MetaHide",
-    "tagline": "Hide sidebar clutter on meta.ai for a focused, distraction-free chat.",
+    "tagline": "Hide sidebar clutter on meta.ai for a focused chat.",
     "cta": "Add to Chrome",
     "url": "https://chromewebstore.google.com/detail/metahide/hodomjpjmaifjigbaobgabhpgkhifpib",
     "icon": "/images/house-ads/metahide.png"
@@ -39,7 +39,7 @@
     "id": "confetti-celebrations",
     "label": "Chrome extension",
     "name": "Confetti Celebrations",
-    "tagline": "Fire confetti, emoji showers and sound effects on any page to celebrate a shipped build.",
+    "tagline": "Confetti and emoji showers on any page to celebrate a win.",
     "cta": "Add to Chrome",
     "url": "https://chromewebstore.google.com/detail/confetti-celebrations/jlnaaichmlfhooionenmhdnimhdmoijb",
     "icon": "/images/house-ads/confetti-celebrations.png"
@@ -48,7 +48,7 @@
     "id": "salesforce-turbo-link",
     "label": "Chrome extension",
     "name": "Salesforce Turbo Link",
-    "tagline": "Jump to your saved Salesforce pages and Setup menus straight from the toolbar.",
+    "tagline": "Jump to saved Salesforce pages and Setup from the toolbar.",
     "cta": "Add to Chrome",
     "url": "https://chromewebstore.google.com/detail/salesforce-turbo-link/nfdefnkljkgcafhicidcdhdkffblpiml",
     "icon": "/images/house-ads/salesforce-turbo-link.png"
@@ -57,7 +57,7 @@
     "id": "clip-it",
     "label": "Chrome extension",
     "name": "Clip It!",
-    "tagline": "Clip every Kroger family digital coupon in one click instead of one by one.",
+    "tagline": "Clip every Kroger family digital coupon in one click.",
     "cta": "Add to Chrome",
     "url": "https://chromewebstore.google.com/detail/clip-it/dmacanhpegjjgmicfbinaafcnjaigecf",
     "icon": "/images/house-ads/clip-it.png"
@@ -66,7 +66,7 @@
     "id": "iamspeed",
     "label": "LLM benchmark",
     "name": "I am speed",
-    "tagline": "A fast.com-style speed test for LLM APIs. Race OpenAI, Anthropic, Groq and more side by side.",
+    "tagline": "A fast.com-style speed test for LLM APIs, raced side by side.",
     "cta": "Run a benchmark",
     "url": "https://iamspeed.dev",
     "icon": "/images/house-ads/iamspeed.png"
@@ -75,7 +75,7 @@
     "id": "achu",
     "label": "Desktop app",
     "name": "achu",
-    "tagline": "Free, open-source screenshot beautifier for Windows, macOS and Linux.",
+    "tagline": "Open-source screenshot beautifier for Windows, macOS and Linux.",
     "cta": "Get achu",
     "url": "https://achu.app",
     "icon": "/images/house-ads/achu.png"
@@ -84,7 +84,7 @@
     "id": "guessthespeed",
     "label": "Family game",
     "name": "Guess the Speed",
-    "tagline": "Everyone guesses the Wi-Fi speed, then a real speed test reveals who came closest.",
+    "tagline": "Guess the Wi-Fi speed, then a real test crowns the winner.",
     "cta": "Play free",
     "url": "https://guessthespeed.com",
     "icon": "/images/house-ads/guessthespeed.png"
@@ -93,7 +93,7 @@
     "id": "qainsights",
     "label": "Blog",
     "name": "QAInsights",
-    "tagline": "Hands-on guides on performance engineering, JMeter and AI developer tooling.",
+    "tagline": "Hands-on guides on performance engineering, JMeter and AI.",
     "cta": "Read the blog",
     "url": "https://qainsights.com",
     "icon": "/images/house-ads/qainsights.png"
