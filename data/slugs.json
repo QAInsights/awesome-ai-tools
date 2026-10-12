@@ -906,6 +906,12 @@
     "category": "AI-Native Terminals"
   },
   {
+    "slug": "uniterm",
+    "name": "uniTerm",
+    "company": "ys-ll",
+    "category": "AI-Native Terminals"
+  },
+  {
     "slug": "jules",
     "name": "Jules",
     "company": "Google",
@@ -1437,6 +1443,12 @@
     "slug": "repowise",
     "name": "Repowise",
     "company": "Repowise",
+    "category": "AI Codebase Knowledge & Generation"
+  },
+  {
+    "slug": "xerj",
+    "name": "XERJ",
+    "company": "XERJ",
     "category": "AI Codebase Knowledge & Generation"
   },
   {
@@ -2073,6 +2085,12 @@
     "slug": "moli",
     "name": "Moli",
     "company": "Lexmount",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "free-claude-code",
+    "name": "Free Claude Code",
+    "company": "Ali Khokhar (Alishahryar1)",
     "category": "Developer Productivity & Workflow"
   },
   {
