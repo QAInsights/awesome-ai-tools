@@ -22,11 +22,10 @@ function addDays(isoDate, days) {
     return new Date(Date.parse(`${isoDate}T00:00:00Z`) + days * DAY_MS).toISOString().slice(0, 10);
 }
 
-/** Returns `days` consecutive points ending at `endDate`, zero-filling days missing inside the data's coverage. */
-export function seriesWindow(daily, days, endDate = daily.at(-1)?.date) {
-    if (!endDate || !daily.length) return [];
+/** Up to `days` consecutive points ending at `endDate`, zero-filling days from `firstDate` on that have no rows. */
+export function seriesWindow(daily, days, endDate = daily.at(-1)?.date, firstDate = daily[0]?.date) {
+    if (!endDate || !firstDate) return [];
     const byDate = new Map(daily.map(point => [point.date, point]));
-    const firstDate = daily[0].date;
     const points = [];
     for (let offset = days - 1; offset >= 0; offset--) {
         const date = addDays(endDate, -offset);
@@ -42,14 +41,18 @@ export function percentChange(current, previous) {
     return ((current - previous) / previous) * 100;
 }
 
-/** Totals for the latest `days` and the period before it; `change` is null without a full previous period. */
-export function summarizeRange(daily, days, metric) {
-    const current = seriesWindow(daily, days);
+/**
+ * Totals for the latest `days` and the period before it; `change` is null without a full previous period.
+ * `coverage` is the collector's queried day span; without it the data's own first/last dates are used.
+ */
+export function summarizeRange(daily, days, metric, coverage) {
+    const endDate = coverage?.to ?? daily.at(-1)?.date;
+    const firstDate = coverage?.from ?? daily[0]?.date;
+    const current = seriesWindow(daily, days, endDate, firstDate);
     const sum = points => points.reduce((total, point) => total + (point[metric] ?? 0), 0);
     const total = sum(current);
-    const endDate = daily.at(-1)?.date;
     const previousEnd = endDate ? addDays(endDate, -days) : undefined;
-    const previous = previousEnd ? seriesWindow(daily, days, previousEnd) : [];
+    const previous = previousEnd ? seriesWindow(daily, days, previousEnd, firstDate) : [];
     const hasPrevious = previous.length === days;
     return {
         total,
@@ -64,6 +67,13 @@ export function summarizeRange(daily, days, metric) {
  * SVG path data for a line and its filled area, scaled into a width x height box.
  * `zeroBaseline: false` fits the y-axis to the data, so slow-moving counts stay readable.
  */
+/** Rows ranked by the selected metric, capped at `limit`. */
+export function rankRows(rows, metric, limit = 10) {
+    return [...(rows ?? [])]
+        .sort((a, b) => (b[metric] ?? 0) - (a[metric] ?? 0) || String(a.label).localeCompare(String(b.label)))
+        .slice(0, limit);
+}
+
 export function linePaths(values, width, height, { padding = 4, zeroBaseline = true } = {}) {
     if (!values.length) return { line: '', area: '', coords: [] };
     const max = Math.max(...values, ...(zeroBaseline ? [0] : []));
@@ -123,7 +133,8 @@ function renderChart(svg, tooltip, points, valueOf, labelOf, options) {
     };
 }
 
-function renderBreakdown(list, rows, metric) {
+function renderBreakdown(list, allRows, metric) {
+    const rows = rankRows(allRows, metric);
     list.replaceChildren();
     if (!rows?.length) {
         const empty = document.createElement('li');
@@ -164,6 +175,7 @@ export function initReachDashboard(root, data) {
     const daily = Array.isArray(data?.daily) ? data.daily : [];
     const history = Array.isArray(data?.history) ? data.history : [];
     const breakdowns = data?.breakdowns ?? {};
+    const coverage = data?.coverage ?? undefined;
     const rangeButtons = root.querySelectorAll('[data-range]');
     const metricButtons = root.querySelectorAll('[data-metric]');
     const breakdownButtons = root.querySelectorAll('[data-breakdown]');
@@ -179,8 +191,8 @@ export function initReachDashboard(root, data) {
         setPressed(metricButtons, 'metric', state.metric);
         setPressed(breakdownButtons, 'breakdown', state.breakdown);
 
-        if (daily.length) {
-            const summary = summarizeRange(daily, days, state.metric);
+        if (daily.length || coverage) {
+            const summary = summarizeRange(daily, days, state.metric, coverage);
             text('[data-kpi-total-label]', `${metricLabel}, last ${days} days`);
             text('[data-kpi-total]', formatCompact(summary.total));
             text('[data-kpi-average]', formatCompact(Math.round(summary.average)));

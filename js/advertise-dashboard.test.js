@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 
-import { historyWindow, linePaths, percentChange, seriesWindow, summarizeRange } from './advertise-dashboard.js';
+import { historyWindow, linePaths, percentChange, rankRows, seriesWindow, summarizeRange } from './advertise-dashboard.js';
 
 const day = (date, visits, pageViews = visits * 2) => ({ date, visits, pageViews });
 
@@ -37,6 +37,38 @@ describe('summarizeRange', () => {
         expect(summary.total).toBe(18);
         expect(summary.previous).toBeNull();
         expect(summary.change).toBeNull();
+    });
+});
+
+describe('coverage-anchored ranges', () => {
+    const coverage = { from: '2026-10-01', to: '2026-10-10' };
+
+    test('ends at the last covered day even when it had no traffic', () => {
+        const summary = summarizeRange([day('2026-10-08', 4)], 3, 'visits', coverage);
+        expect(summary.points.map(point => point.date)).toEqual(['2026-10-08', '2026-10-09', '2026-10-10']);
+        expect(summary.total).toBe(4);
+    });
+
+    test('counts covered days before the first visit in the average', () => {
+        const summary = summarizeRange([day('2026-10-09', 10)], 7, 'visits', coverage);
+        expect(summary.points).toHaveLength(7);
+        expect(summary.average).toBeCloseTo(10 / 7, 5);
+        expect(summary.change).toBeNull();
+    });
+
+    test('compares with a fully covered previous period', () => {
+        const summary = summarizeRange([day('2026-10-02', 2), day('2026-10-09', 6)], 5, 'visits', coverage);
+        expect(summary.previous).toBe(2);
+        expect(summary.change).toBe(200);
+    });
+});
+
+describe('rankRows', () => {
+    test('ranks by the selected metric', () => {
+        const rows = [{ label: '/a', visits: 1, pageViews: 9 }, { label: '/b', visits: 5, pageViews: 2 }];
+        expect(rankRows(rows, 'visits').map(row => row.label)).toEqual(['/b', '/a']);
+        expect(rankRows(rows, 'pageViews', 1).map(row => row.label)).toEqual(['/a']);
+        expect(rankRows(undefined, 'visits')).toEqual([]);
     });
 });
 

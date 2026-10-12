@@ -53,7 +53,7 @@ describe('mergeSiteStats', () => {
 });
 
 describe('detail and history', () => {
-    const detail = { daily: [{ date: '2026-09-25', pageViews: 4, visits: 2 }], breakdowns: {} };
+    const detail = { coverage: { from: '2026-09-25', to: '2026-09-25' }, daily: [{ date: '2026-09-25', pageViews: 4, visits: 2 }], breakdowns: {} };
 
     test('keeps previous detail and history when the fresh fetch has none', () => {
         const history = [{ date: '2026-09-26', stars: 10, forks: 2 }];

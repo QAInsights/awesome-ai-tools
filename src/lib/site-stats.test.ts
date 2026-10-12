@@ -206,47 +206,46 @@ describe('traffic detail', () => {
         expect(mergeDimensionGroups([[{ count: 1, sum: { visits: 1 }, dimensions: { requestPath: '' } }]], 'requestPath').size).toBe(0);
     });
 
-    test('sorts breakdown rows by page views and caps the list', () => {
+    test('keeps the top rows by either metric, sorted by page views', () => {
         const totals = new Map([
             ['/b', { pageViews: 5, visits: 1 }],
             ['/a', { pageViews: 9, visits: 4 }],
             ['/c', { pageViews: 5, visits: 3 }],
+            ['/d', { pageViews: 2, visits: 8 }],
         ]);
-        expect(topBreakdownRows(totals, 2)).toEqual([
+        expect(topBreakdownRows(totals, 1)).toEqual([
             { label: '/a', pageViews: 9, visits: 4 },
-            { label: '/c', pageViews: 5, visits: 3 },
+            { label: '/d', pageViews: 2, visits: 8 },
         ]);
     });
 
-    test('builds complete-day series and per-range breakdowns', async () => {
-        const bodies: string[] = [];
-        const settings = Response.json({
-            data: { viewer: { accounts: [{ settings: { rumPageloadEventsAdaptiveGroups: { enabled: true, maxDuration: 400 * 86_400, notOlderThan: 400 * 86_400 } } }] } },
-        });
+    test('builds complete-day series and per-dimension breakdowns', async () => {
+        const queries: string[] = [];
+        const settings = { settings: { rumPageloadEventsAdaptiveGroups: { enabled: true, maxDuration: 400 * 86_400, notOlderThan: 400 * 86_400 } } };
+        const rows: Record<string, Array<{ count: number; sum: { visits: number }; dimensions: Record<string, string> }>> = {
+            date: [
+                { count: 8, sum: { visits: 5 }, dimensions: { date: '2026-09-25' } },
+                { count: 2, sum: { visits: 1 }, dimensions: { date: '2026-09-24' } },
+                { count: 1, sum: { visits: 1 }, dimensions: { date: '2026-09-26' } },
+                { count: 1, sum: { visits: 1 }, dimensions: { date: '2026-03-30' } },
+            ],
+            requestPath: [{ count: 7, sum: { visits: 3 }, dimensions: { requestPath: '/advertise' } }],
+            refererHost: [{ count: 2, sum: { visits: 2 }, dimensions: { refererHost: '' } }],
+            deviceType: [{ count: 5, sum: { visits: 2 }, dimensions: { deviceType: 'desktop' } }],
+        };
         const fetchImpl = async (_input: RequestInfo | URL, init?: RequestInit) => {
-            bodies.push(String(init?.body));
-            if (bodies.length === 1) return settings;
-            if (bodies.length === 2) {
-                return Response.json({
-                    data: { viewer: { accounts: [{ d0: [
-                        { count: 8, sum: { visits: 5 }, dimensions: { date: '2026-09-25' } },
-                        { count: 2, sum: { visits: 1 }, dimensions: { date: '2026-09-24' } },
-                        { count: 1, sum: { visits: 1 }, dimensions: { date: '2026-09-26' } },
-                    ] }] } },
-                });
-            }
-            return Response.json({
-                data: { viewer: { accounts: [{
-                    pages0: [{ count: 7, sum: { visits: 3 }, dimensions: { requestPath: '/advertise' } }],
-                    referrers0: [{ count: 2, sum: { visits: 2 }, dimensions: { refererHost: '' } }],
-                    countries0: [{ count: 4, sum: { visits: 2 }, dimensions: { countryName: 'IN' } }],
-                    devices0: [{ count: 5, sum: { visits: 2 }, dimensions: { deviceType: 'desktop' } }],
-                }] } },
-            });
+            const query = JSON.parse(String(init?.body)).query as string;
+            queries.push(query);
+            if (query.includes('settings {')) return Response.json({ data: { viewer: { accounts: [settings] } } });
+            const dimension = query.match(/dimensions \{ (\w+) \}/)?.[1] ?? '';
+            if (dimension === 'countryName') return Response.json({ errors: [{ message: 'unknown field countryName' }] });
+            const aliases = [...query.matchAll(/(\w+): rumPageloadEventsAdaptiveGroups/g)].map(match => match[1]!);
+            return Response.json({ data: { viewer: { accounts: [Object.fromEntries(aliases.map(alias => [alias, rows[dimension]]))] } } });
         };
 
         const detail = await fetchTrafficDetail(credentials, fetchImpl, now);
 
+        expect(detail.coverage).toEqual({ from: '2026-03-31', to: '2026-09-25' });
         expect(detail.daily).toEqual([
             { date: '2026-09-24', pageViews: 2, visits: 1 },
             { date: '2026-09-25', pageViews: 8, visits: 5 },
@@ -255,16 +254,14 @@ describe('traffic detail', () => {
         expect(detail.breakdowns['30']).toEqual({
             pages: [{ label: '/advertise', pageViews: 7, visits: 3 }],
             referrers: [{ label: 'Direct / none', pageViews: 2, visits: 2 }],
-            countries: [{ label: 'IN', pageViews: 4, visits: 2 }],
+            countries: [],
             devices: [{ label: 'desktop', pageViews: 5, visits: 2 }],
         });
-        expect(bodies).toHaveLength(5);
-        const dailyQuery = JSON.parse(bodies[1]!).query as string;
-        expect(dailyQuery).toContain('dimensions { date }');
-        expect(dailyQuery).toContain('datetime_leq: "2026-09-26T00:00:00Z"');
-        const breakdownQuery = JSON.parse(bodies[2]!).query as string;
-        for (const dimension of ['requestPath', 'refererHost', 'countryName', 'deviceType']) {
-            expect(breakdownQuery).toContain(`dimensions { ${dimension} }`);
-        }
+        expect(queries).toHaveLength(6);
+        expect(queries[1]).toContain('dimensions { date }');
+        expect(queries[1]).toContain('datetime_lt: "2026-09-26T00:00:00Z"');
+        expect(queries[1]).not.toContain('datetime_leq');
+        expect(queries[2]).toContain('r7_0: rumPageloadEventsAdaptiveGroups');
+        expect(queries[2]).toContain('r90_0: rumPageloadEventsAdaptiveGroups');
     });
 });

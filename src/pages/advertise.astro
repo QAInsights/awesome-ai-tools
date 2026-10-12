@@ -56,11 +56,12 @@ const reachNote = siteStats.traffic
     : 'Traffic figures are shared on request.';
 
 const dashboardData = {
+    coverage: siteStats.detail?.coverage ?? null,
     daily: siteStats.detail?.daily ?? [],
     breakdowns: siteStats.detail?.breakdowns ?? {},
     history: siteStats.history ?? [],
 };
-const hasTrafficDetail = dashboardData.daily.length > 0;
+const hasTrafficDetail = dashboardData.coverage !== null || dashboardData.daily.length > 0;
 const hasStarHistory = dashboardData.history.length > 1;
 const dashboardJson = JSON.stringify(dashboardData).replace(/</g, '\\u003c');
 const rangeOptions = [
