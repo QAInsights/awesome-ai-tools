@@ -1,0 +1,310 @@
+---
+title: "Context Compression Tools for AI Coding Agents: Context Mode, RTK, Headroom, Caveman and Claude-Mem"
+description: "Compare 5 context compression tools for AI coding agents: Context Mode, RTK, Headroom, Caveman and Claude-Mem. Installs, licences, real limits, Oct 2026."
+pubDate: 2026-10-12
+tags: ["context", "tokens", "claude-code", "codex", "mcp", "open-source", "roundup", "context-mode", "rtk", "headroom", "caveman", "claude-mem"]
+---
+
+In this blog post, we will see which context compression tools for AI coding agents are worth installing this week, where each one sits between your agent and the model, and a 20 line Python script that shows the whole idea on a noisy test log.
+
+## Table of Contents
+
+1. [The short answer](#the-short-answer)
+2. [Why context compression is trending this week](#why-context-compression-is-trending-this-week)
+3. [How context compression works, in one example](#how-context-compression-works-in-one-example)
+4. [Context Mode](#context-mode)
+5. [RTK (Rust Token Killer)](#rtk-rust-token-killer)
+6. [Headroom](#headroom)
+7. [Caveman](#caveman)
+8. [Claude-Mem](#claude-mem)
+9. [Comparison table](#comparison-table)
+10. [Which one should you install first](#which-one-should-you-install-first)
+11. [FAQ](#faq)
+12. [How this ties to ai.dosa.dev](#how-this-ties-to-aidosadev)
+
+## The short answer
+
+Context compression tools for AI coding agents shrink what the agent reads before it reaches the model. Start with RTK if your agent burns tokens on shell output, Context Mode if you want sandboxed tool calls plus session search, and Headroom if you want a proxy that compresses every request. Add Claude-Mem for memory across sessions.
+
+## Why context compression is trending this week
+
+Facts checked October 12, 2026. Four signals pushed this to the top of my list:
+
+- **GitHub stars.** In the ai.dosa.dev weekly snapshot for October 5 to 12, [Context Mode](/tools/context-mode) gained 1,300 stars and [Caveman Code](/tools/caveman-code) gained 1,245. Context Mode was also #5 on GitHub Trending for all languages on October 10.
+- **Releases.** Headroom shipped v0.40.0 on October 6, Caveman shipped v3.2.0 on October 8, Claude-Mem shipped v13.35.0 on October 9, and RTK pushed nine dev builds between October 7 and October 12.
+- **Hacker News.** On October 12, a post titled "Local Indexing to reduce tool calling and token usage" introduced Pensieve, a macOS index of code and past agent sessions that agents query over MCP instead of grepping again and again.
+- **Research.** A September 17 arXiv study on coding agent harnesses ([2609.20804](https://arxiv.org/abs/2609.20804)) tested 176 settings on SWE-Bench Verified and Terminal-Bench 2.1. Context management mattered more as the window got tighter, and cheap rule-based trimming before LLM summaries was the most efficient strategy.
+
+The common thread: people are not short of model quality, they are short of context window and plan quota.
+
+## How context compression works, in one example
+
+Here is the problem in its smallest form. Your agent runs the test suite, 400 tests pass, 2 fail, and the agent reads all 410 lines just to find the 2 that matter.
+
+Every tool below does some version of this script. It keeps the lines that carry signal, drops the rest, and saves the raw output to disk so the agent can still fetch it later.
+
+```python
+import re
+import sys
+from pathlib import Path
+
+KEEP = re.compile(r"(FAIL|ERROR|Error|Traceback|assert|^E |passed|failed)")
+
+
+def squeeze(text: str, raw_path: Path) -> str:
+    raw_path.write_text(text)
+    lines = text.splitlines()
+    kept = [line for line in lines if KEEP.search(line)]
+    kept.append(f"[{len(lines) - len(kept)} lines dropped, full log at {raw_path}]")
+    return "\n".join(kept)
+
+
+def tokens(s: str) -> int:
+    return len(s.encode()) // 4
+
+
+if __name__ == "__main__":
+    raw = sys.stdin.read()
+    small = squeeze(raw, Path("/tmp/last-test-run.log"))
+    print(small)
+    print(f"\nraw ~{tokens(raw)} tokens -> squeezed ~{tokens(small)} tokens", file=sys.stderr)
+```
+
+I fed it a 410 line pytest style log with 400 passes and 2 failures. The output is shown below:
+
+```text
+tests/test_api.py::test_refund_rounding FAILED [ 99%]
+tests/test_api.py::test_refund_currency FAILED [100%]
+=================================== FAILURES ===================================
+>       assert refund(10.005) == 10.01
+E       AssertionError: assert 10.0 == 10.01
+FAILED tests/test_api.py::test_refund_rounding - AssertionError: assert 10.0 == 10.01
+FAILED tests/test_api.py::test_refund_currency - KeyError: 'EUR'
+======================== 2 failed, 400 passed in 3.41s =========================
+[402 lines dropped, full log at /tmp/last-test-run.log]
+
+raw ~4854 tokens -> squeezed ~140 tokens
+```
+
+That is about 97% fewer estimated tokens, and the agent still has everything it needs to fix the bug. The token count uses bytes divided by 4, the same rough estimate RTK documents, so treat it as a ratio, not an invoice.
+
+Two things this toy version gets wrong, and the real tools handle better:
+
+1. The regex dropped `def test_refund_rounding():`, the line that names the function. Real filters are written per command, so `pytest` output keeps its context lines.
+2. If the agent needs a dropped line, it has to know the raw log exists. Context Mode and Headroom both give the model a tool to retrieve the original. One surprise from the arXiv study above: models rarely used that recovery path, and it gave no accuracy gain. So the quality of the filter matters more than the escape hatch.
+
+## Context Mode
+
+### What it does
+
+[Context Mode](https://github.com/mksglu/context-mode) is an MCP server plus a set of hooks that routes tool output through a sandbox. Only the summary or stdout enters the context window, and the raw data goes into a local SQLite FTS5 index the agent can search with BM25 ranking. It exposes 11 MCP tools, including `ctx_execute`, `ctx_batch_execute`, `ctx_index` and `ctx_search`.
+
+### Who it is for
+
+Claude Code, Codex and Copilot CLI users who run long sessions with lots of file reads, web fetches and command output. The README lists support for 17 platforms.
+
+### Facts
+
+- Stars: 26,727 (ai.dosa.dev snapshot, October 12, 2026)
+- Latest npm version I could verify: 1.0.169
+- Licence: Elastic License 2.0 on npm. That is source available, not OSI open source.
+- Price: free to self-host. The `ctx_insight` command opens a hosted dashboard at context-mode.com.
+- Vendor claim: `ctx_execute` turns 56 KB of output into 299 bytes in the README example.
+
+### Try it
+
+Inside Claude Code:
+
+```bash
+/plugin marketplace add mksglu/context-mode
+/plugin install context-mode@context-mode
+```
+
+For other agents, install the global binary first with `npm install -g context-mode`, then follow the per platform block in the README. Restart the agent fully, then run `/context-mode:ctx-stats` to see the per tool savings.
+
+### Honest limitation
+
+It only saves context when the model actually calls the `ctx_` tools instead of the built in ones. The hooks push it that way, but if you see raw `Read` output in your transcript, routing is not working. The release notes also show a lot of churn: the May releases alone fixed a Codex boot timeout, a Codex regex matcher and a security module that silently failed open on marketplace installs. Run `/context-mode:ctx-doctor` after every upgrade.
+
+## RTK (Rust Token Killer)
+
+### What it does
+
+[RTK](https://github.com/rtk-ai/rtk) is a single Rust binary that sits in front of shell commands. A hook rewrites `git status` into `rtk git status`, and the agent sees a short summary instead of 40 lines. It ships filters for 100+ commands across Git, Cargo, npm, Python, Go, Docker and more, with under 10 ms of overhead according to the README.
+
+### Who it is for
+
+Anyone whose agent lives in Bash: test runs, `git log`, `ls -R`, `docker ps`. It is the least invasive tool in this list.
+
+### Facts
+
+- Stars: 74,178 on GitHub when I checked
+- Latest stable: v0.51.0 (October 2, 2026, also in Homebrew core). Dev build `dev-0.52.0-rc.525` shipped October 12.
+- Licence: Apache 2.0
+- Price: free
+
+### Try it
+
+```bash
+brew install rtk
+rtk gain
+```
+
+`rtk gain` must show the savings dashboard. The docs warn that two unrelated projects share the name, and `cargo install rtk` can pull Rust Type Kit instead. If you build from source, use `cargo install --git https://github.com/rtk-ai/rtk`.
+
+### Honest limitation
+
+The hook only sees Bash tool calls. Claude Code's built in `Read`, `Grep` and `Glob` tools bypass it completely, so a session that mostly reads files will barely move. The README is also upfront that it measures bash output bytes with a bytes divided by 4 estimate, so "up to 90%" is not 90% off your bill.
+
+## Headroom
+
+### What it does
+
+[Headroom](https://github.com/headroomlabs-ai/headroom) compresses everything going to the model: tool outputs, logs, files, RAG chunks and history. You can run it as a Python or TypeScript library, a local proxy, a CLI wrapper around your agent, or an MCP server. When it drops content, it keeps a way for the model to retrieve the original.
+
+### Who it is for
+
+Developers who want one layer that works across Claude Code, Codex and their own LLM apps, and teams building agents on top of the Anthropic or OpenAI APIs.
+
+### Facts
+
+- Stars: 74,801 on GitHub when I checked
+- Latest release: v0.40.0 (October 6, 2026), marked with breaking changes
+- Licence: Apache 2.0
+- Price: open source for one developer on one laptop. A paid Enterprise tier adds model routing, prompt injection stripping and SSO.
+- Telemetry and usage reporting are off by default.
+- Vendor claim: about 20% fewer tokens for coding agents and 60% to 95% on JSON heavy workloads.
+
+### Try it
+
+```bash
+uv tool install --python 3.13 "headroom-ai[all]"
+headroom proxy --port 8787
+ANTHROPIC_BASE_URL=http://localhost:8787 claude
+```
+
+Or skip the environment variable and run `headroom wrap claude`. Undo it with `headroom unwrap`.
+
+### Honest limitation
+
+The headline 60% to 95% number is for JSON heavy traffic. For normal coding sessions the project itself quotes about 20%, which is still useful but much less dramatic. It is also a Python package with a Rust extension and 14 MB wheels, so it is heavier than a single binary. Check the v0.40.0 breaking changes before upgrading a working setup.
+
+## Caveman
+
+### What it does
+
+[Caveman](https://github.com/JuliusBrussee/caveman) started as a skill that makes the agent answer in short "caveman" sentences while keeping code, commands and errors exact. Version 2 added a local proxy that compresses what the agent reads. The two halves are independent, so you can use one without the other.
+
+### Who it is for
+
+People who want quick output savings with zero infrastructure (the skill), and people who want a local report on where their input tokens go (the proxy).
+
+### Facts
+
+- Stars: 111,098 (ai.dosa.dev snapshot, October 12, 2026)
+- Latest release: v3.2.0 (October 8, 2026)
+- Licence: the skill and the `@caveman-ai/cli` launcher are MIT. The repo licence shows as "Other", so read the LICENSE file before shipping the proxy at work.
+- Price: free, local, bring your own key
+- Vendor claim: 33.2% fewer provider reported input tokens in a pinned Claude Code benchmark.
+
+### Try it
+
+The skill:
+
+```bash
+npx skills add JuliusBrussee/caveman
+```
+
+The proxy:
+
+```bash
+npm i -g @caveman-ai/cli
+caveman setup --install
+caveman claude
+```
+
+The same `caveman <agent>` shortcut works for `codex`, `gemini`, `aider`, `opencode` and five other profiles.
+
+### Honest limitation
+
+Naming is a trap. The bare `caveman` package on npm is an unrelated templating library, so install `@caveman-ai/cli`. On npm 12, bare `npx -y github:JuliusBrussee/caveman` installs fail with `EALLOWGIT` unless you add `--allow-git=root`. Also, `caveman start` defaults to record mode, which forwards bytes unchanged. Only `wrap` defaults to compress.
+
+## Claude-Mem
+
+### What it does
+
+[Claude-Mem](https://github.com/thedotmack/claude-mem) captures what your agent does during a session, compresses it into memories with a model, and injects the relevant ones into future sessions. v13.35.0 replaced raw JSON tool replies with a single progressive `mem_search` tool and added `save_memory` for explicit notes.
+
+### Who it is for
+
+Anyone tired of re-explaining the project at the start of every session. It is a different problem from the four tools above: they shrink the current session, this one shrinks the next one.
+
+### Facts
+
+- Stars: 93,009 on GitHub when I checked
+- Latest release: v13.35.0 (October 9, 2026). v13.34.0 on October 6 added Pi and DeepSeek Harness integrations.
+- Licence: Apache 2.0
+- Price: free with your own OpenRouter or Gemini key, or your Anthropic plan. The hosted "observer" is free for 30 days, then paid. I could not verify the price from the docs.
+
+### Try it
+
+```bash
+npx claude-mem install
+```
+
+Use `npx claude-mem install --ide opencode` for OpenCode. Do not use `npm install -g claude-mem`, which installs only the SDK and no hooks.
+
+### Honest limitation
+
+The installer asks you to sign in through the browser by default. If you want a fully local setup, pass an explicit `--provider` flag or set `CLAUDE_MEM_ONLINE_OPTIN=false`. Memory compression also costs model calls of its own, so on a tight plan it can eat some of what it saves.
+
+## Comparison table
+
+| Tool | Where it sits | Shrinks | Licence | Install |
+| --- | --- | --- | --- | --- |
+| Context Mode | MCP server + hooks | Tool output, fetched pages | Elastic 2.0 | Claude Code plugin or npm |
+| RTK | Bash hook | Shell command output | Apache 2.0 | `brew install rtk` |
+| Headroom | Proxy, SDK, wrapper or MCP | Every request | Apache 2.0 | `uv tool install` |
+| Caveman | Skill + local proxy | Agent replies, then input | MIT CLI, repo "Other" | `npx skills add` or npm |
+| Claude-Mem | Hooks + worker | Context across sessions | Apache 2.0 | `npx claude-mem install` |
+
+## Which one should you install first
+
+1. Run your agent for a day and look at the transcript. If most of the bulk is shell output, install RTK. It is one binary and easy to remove.
+2. If the bulk is file reads, web fetches and big JSON, try Context Mode or Headroom. I would not run both at once, because you lose track of which layer changed what the model sees.
+3. If the problem is repeating yourself every morning, add Claude-Mem. It stacks with any of the others.
+4. Caveman's skill is the quickest win for output. Install it last, and only if you are fine with terse replies.
+
+What I would skip: stacking three compression layers to chase a bigger number. Each layer can drop a line the model needed, and debugging that is not fun.
+
+## FAQ
+
+### What is context compression for AI coding agents?
+
+It is a layer that filters or summarises tool output, files and history before they enter the model's context window. The goal is to keep the lines that matter, like failing tests and errors, and drop noise like progress bars and passing tests. Good tools keep the raw data so the agent can fetch it if needed.
+
+### Does compressing tool output hurt answer quality?
+
+It can, if the filter drops a line the model needed. That is why Context Mode and Headroom keep the original and give the model a retrieval tool. Start with one layer and check a few transcripts before trusting it.
+
+### Can I use RTK and Context Mode together?
+
+Yes, they hook different things. RTK rewrites Bash commands, while Context Mode routes tool calls through its own MCP tools. Add one at a time so you can tell which one is doing the work.
+
+### Do these tools reduce my Claude Code bill?
+
+They reduce tokens sent, which lowers API cost and stretches plan limits, but not by the headline percentage. RTK says plainly that cutting 90% of bash output is not cutting your bill by 90%. Headroom quotes about 20% for typical coding sessions.
+
+### Do context compression tools send my code anywhere?
+
+RTK, Context Mode and the Headroom proxy run locally, and Headroom keeps usage reporting off unless you set it. Caveman's proxy is local and bring your own key. Claude-Mem's hosted observer does use a cloud service, so pick a local provider if that matters to you.
+
+## How this ties to ai.dosa.dev
+
+ai.dosa.dev already lists four of these in the Developer Productivity & Workflow and Terminal & CLI Agents categories: [Context Mode](/tools/context-mode), [RTK](/tools/rtk), [Headroom](/tools/headroom) and [Caveman Code](/tools/caveman-code). [Claude-Mem](/tools/claude-mem) sits next to other memory tools like [AI-MEMORY](/tools/ai-memory) and [Codebase Memory MCP](/tools/codebase-memory-mcp). The agents they plug into are [Claude Code](/tools/claude-code) and [Codex CLI](/tools/codex-cli).
+
+To check your own numbers, paste a transcript into the [token counter](/tools/token-counter). If you want to go one step further and give the agent a map of the code instead of compressed reads, see our post on [code knowledge graph tools for AI coding agents](/blog/code-knowledge-graph-tools-ai-coding-agents).
+
+Happy Testing!
+
+Which layer eats most of your agent's context today: shell output, file reads, or the same project briefing every morning?
