@@ -1,0 +1,78 @@
+---
+title: "Reflection's Beam Opens the Western Open-Weight Fight"
+description: "Reflection launches Beam, a 501B open-weight model, Amazon circles Decart at $7B, and two Flash-class models land from AutoClaw and DeepSeek."
+pubDate: 2026-10-12
+tags: ["news","today-in-ai","open-weights","funding","inference","chips","regulation","serving"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-10-12 UTC.
+
+Two Flash-class models shipped, a Brooklyn lab opened its weights, and Amazon is reportedly lining up a $7 billion AI infrastructure buy.
+
+## Reflection unveils Beam, a 501B open-weight reasoning model
+
+**What happened:** Reflection AI launched Beam, a text-only mixture-of-experts model with 501 billion total parameters and 23 billion active, pre-trained on 23.8 trillion tokens with a 1 million token context window. The company says it matches Z.ai's GLM-5.2 on advanced reasoning benchmarks while using 3 to 4 times less inference compute, claims that have not been independently verified.
+
+**Why it matters:** A permissively licensed frontier-class model at lower token cost gives teams a self-hostable alternative to closed APIs for reasoning, coding and agent workloads.
+
+[Source: Jingletree](<https://www.jingletree.com/reflection-debuts-beam-an-open-weight-ai-model-to-rival-chinese-models-at-lower-compute-cost-282530.html>)
+
+## Amazon in talks to buy Decart for about $7 billion
+
+**What happened:** Amazon is negotiating to acquire Israeli-founded AI startup Decart for roughly $7 billion, according to The Wall Street Journal, and the deal could be signed soon. Anthropic had been the preferred bidder in August but walked away in September after due diligence, and AWS is already a Decart customer that gave the startup early access to Trainium3 chips.
+
+**Why it matters:** Decart's software moves models between chip vendors and squeezes more compute from existing hardware, so a deal would put that portability layer inside AWS.
+
+[Source: CTech](<https://www.calcalistech.com/ctechnews/article/ec25jzet0>)
+
+## GLM-5.3-Flash cuts attention compute 3x with 18B active params
+
+**What happened:** AutoClaw released GLM-5.3-Flash, a natively multimodal model with 320 billion total parameters and 18 billion active, down from 32 billion active and 92 layers in the GLM-4.5 series to 45 layers. It combines linear and sparse attention and reports roughly a 3.0x reduction in attention compute and a 4.4x smaller KV cache versus GLM-5.3, with IndexPool compressing four cached key vectors into one at contexts up to one million tokens.
+
+**Why it matters:** Cheaper attention and a smaller KV cache mean longer contexts and more concurrent agent sessions on the same GPU budget.
+
+[Source: AutoClaw](<https://autoclaw.z.ai/blog/model/glm-5.3-flash/>)
+
+## DeepSeek V4.1 Flash splits prefill and decode activation
+
+**What happened:** DeepSeek launched V4.1 Flash, a multimodal mixture-of-experts model with a 552 billion parameter backbone built on a 40-layer Causal-Encoder-Decoder architecture, 20 encoder layers and 20 decoder layers. It activates 8 billion parameters during prefill and 16 billion during decode, and uses Compressed Sparse Attention 2 with FP4 KV caching to cut the global KV cache to 890 bytes per token.
+
+**Why it matters:** Asymmetric activation lets serving stacks spend less memory per token, which raises batch sizes for high-throughput multimodal inference.
+
+[Source: TheNextGenTechInsider](<https://thenextgentechinsider.com/pulse/deepseek-launches-v41-flash-multimodal-moe-model-with-asymmetric-architecture>)
+
+## Appeals court rules Westlaw headnotes beat fair use defense
+
+**What happened:** The Third Circuit on Oct. 7 upheld a lower court finding that Thomson Reuters' Westlaw headnotes carry enough original content to be copyrighted and that Ross Intelligence's use of them to train a competing legal research tool was not fair use. The panel said it was not ruling on the future of AI legal technology, and Ross's lawyer told Courthouse News they intend to seek Supreme Court review.
+
+**Why it matters:** It is the first federal appellate word on fair use in an AI training dispute, so anyone training on scraped third-party content should read the opinion before assuming a fair use defense.
+
+[Source: Coral Wire](<https://coralwire.ai/wire/2026-10-11/appeals-court-rules-thomson-reuters-headnotes-beat-fair-use-defense>)
+
+## D.C. Circuit upholds Anthropic supply-chain risk designation
+
+**What happened:** In a divided Sept. 25 decision, the D.C. Circuit rejected Anthropic's challenge to its designation as a supply-chain risk under 41 U.S.C. 4713 of the Federal Acquisition Supply Chain Security Act, holding that deployment restrictions can count as a supply-chain risk even without hostile intent. The separate designation under 10 U.S.C. 3252 was enjoined by a California federal court, leaving a split posture.
+
+**Why it matters:** Government contractors should keep treating the FASCSA order as an active compliance requirement, with certifications, reporting and removal directives still applying to covered procurements.
+
+[Source: National Law Review](<https://natlawreview.com/article/dc-circuit-upholds-anthropic-fascsa-designation-and-endorses-broad-interpretation>)
+
+## Tsinghua open-sources TokenRouter for token-level LLM routing
+
+**What happened:** Tsinghua University's NICS Lab released TokenRouter, a serving system for token-level routing that sends easy tokens to small models and switches to frontier models for critical reasoning tokens. Accepted at NeurIPS 2026 with code on GitHub, it reports 2.01x to 64.15x higher decoding throughput than existing serving platforms, a 43.6% cut in P99 inter-token latency, and 50% to 70% lower cloud GPU costs.
+
+**Why it matters:** Token-level routing is now something you can run on your own serving stack instead of hand-rolling orchestration across vLLM and TGI.
+
+[Source: AICoder](<https://aicoder.com/news/news-20261012-tokenrouter-efficient-serving-system-for-token-level-llm-routing>)
+
+## Sources
+
+- [Jingletree](<https://www.jingletree.com/reflection-debuts-beam-an-open-weight-ai-model-to-rival-chinese-models-at-lower-compute-cost-282530.html>)
+- [CTech](<https://www.calcalistech.com/ctechnews/article/ec25jzet0>)
+- [AutoClaw](<https://autoclaw.z.ai/blog/model/glm-5.3-flash/>)
+- [TheNextGenTechInsider](<https://thenextgentechinsider.com/pulse/deepseek-launches-v41-flash-multimodal-moe-model-with-asymmetric-architecture>)
+- [Coral Wire](<https://coralwire.ai/wire/2026-10-11/appeals-court-rules-thomson-reuters-headnotes-beat-fair-use-defense>)
+- [National Law Review](<https://natlawreview.com/article/dc-circuit-upholds-anthropic-fascsa-designation-and-endorses-broad-interpretation>)
+- [AICoder](<https://aicoder.com/news/news-20261012-tokenrouter-efficient-serving-system-for-token-level-llm-routing>)
