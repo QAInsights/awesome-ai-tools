@@ -1,0 +1,43 @@
+---
+import houseAds from '../data/house-ads.json';
+---
+
+<div data-house-ads>
+    {houseAds.map((ad, index) => (
+        <section
+            aria-labelledby={`house-ad-${ad.id}-title`}
+            data-house-ad={ad.id}
+            hidden={index !== 0}
+            class="mx-4 mt-2 shrink-0 rounded-md border border-[#222] bg-white/[0.01] p-3"
+        >
+            <div class="mb-2 font-mono text-[11px] uppercase tracking-wide text-[#737373]">{ad.label}</div>
+            <div class="flex items-center gap-2.5">
+                <img src={ad.icon} alt="" width="34" height="34" loading="lazy" decoding="async" class="h-[34px] w-[34px] shrink-0 rounded-lg" />
+                <div class="min-w-0">
+                    <h2 id={`house-ad-${ad.id}-title`} class="m-0 text-[14px] font-semibold leading-tight text-white">{ad.name}</h2>
+                    <p class="m-0 mt-0.5 md:line-clamp-2 text-[12px] leading-[1.4] text-[#a3a3a3]">{ad.tagline}</p>
+                </div>
+            </div>
+            <a href={ad.url} target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 font-mono text-[11px] text-[#a8e86f] no-underline transition-colors hover:text-[#c2ff8d] hover:underline focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#a8e86f]">
+                {ad.cta}
+                <span aria-hidden="true">&rarr;</span>
+            </a>
+        </section>
+    ))}
+</div>
+
+<script is:inline>
+    (() => {
+        const wrapper = document.currentScript?.previousElementSibling;
+        if (!wrapper) return;
+
+        const houseAds = wrapper.querySelectorAll('[data-house-ad]');
+        if (houseAds.length === 0) return;
+
+        const selectedIndex = Math.floor(Math.random() * houseAds.length);
+        houseAds.forEach((houseAd, index) => {
+            if (index === selectedIndex) houseAd.removeAttribute('hidden');
+            else houseAd.setAttribute('hidden', '');
+        });
+    })();
+</script>
