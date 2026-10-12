@@ -4083,6 +4083,33 @@
     "lastUpdated": "2026-10-01"
   },
   {
+    "slug": "uniterm",
+    "name": "uniTerm",
+    "company": "ys-ll",
+    "pricing": "open-source",
+    "pricingDetail": "uniTerm is free and open source under the Apache-2.0 license, with prebuilt binaries for Windows, macOS, Linux and Android on GitHub and Gitee Releases; the AI agent uses your own Anthropic- or OpenAI-compatible API key.",
+    "description": "uniTerm is an all-in-one desktop terminal that combines SSH and local shells, file transfer, remote desktop, database clients, Kubernetes and container management in one app, with a built-in AI agent that plans and executes multi-turn shell commands directly in the active terminal tab.",
+    "keyFeatures": [
+      "Autonomous AI agent that runs and iterates on shell commands, with bypass, dangerous-only, dangerous + write and confirm-all approval modes",
+      "30+ protocols including SSH, Mosh, serial, SFTP, SMB, S3, RDP, VNC, MySQL, PostgreSQL, Redis, MongoDB and Kubernetes",
+      "Built-in MCP server so Claude Code, Codex and Gemini CLI can run commands and transfer files on saved connections without seeing credentials",
+      "Natural-language database queries, reusable skills and prompt-template commands",
+      "Split-pane workspaces, custom keybindings and cloud sync via a private Git repository or WebDAV"
+    ],
+    "bestFor": "Developers and ops engineers who manage many servers, databases and clusters and want an AI agent working inside the same terminal that holds their connections.",
+    "notIdealFor": "Users who only need a minimal local shell, or teams that require signed binaries; the project notes that its unsigned Windows executables can trigger antivirus false positives.",
+    "recentUpdates": "uniTerm v1.10.0 was released on 2026-10-04, and commits continued through 2026-10-10; the repository was on GitHub's weekly Go trending list in October 2026.",
+    "verdict": "A broad, actively developed terminal-plus-ops workbench whose AI agent and MCP bridge make it a practical choice for agent-assisted remote administration.",
+    "tags": [
+      "Terminal",
+      "SSH",
+      "AI Agent",
+      "MCP",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-12"
+  },
+  {
     "slug": "jules",
     "name": "Jules",
     "company": "Google",
@@ -6466,6 +6493,61 @@
       "Developer Tools"
     ],
     "lastUpdated": "2026-10-01"
+  },
+  {
+    "slug": "repowise",
+    "name": "Repowise",
+    "company": "Repowise",
+    "pricing": "open-source",
+    "pricingDetail": "Repowise is free and self-hosted under AGPL-3.0, with a commercial license and enterprise offering available; the graph, health, test and dead-code analysis make no LLM calls, so optional model-written docs are the only token cost.",
+    "description": "Repowise is a local codebase intelligence engine for developers and their coding agents. It indexes a repository's call graph, git history, tests, docs and design decisions once, keeps the index current on every commit, and exposes it through a dashboard and an MCP server so agents can ask questions instead of re-reading files.",
+    "keyFeatures": [
+      "Call graph across 26 parsed languages with per-edge resolution confidence",
+      "MCP server for Claude Code, Codex, Cursor and other agents (get_overview, get_context, change risk)",
+      "Symbol-level blast radius, co-change history and test selection for a diff",
+      "Code health scores, dead-code detection, ownership and bus-factor analysis",
+      "Auto-generated module and file docs plus doc-drift checks against the code",
+      "Architectural decisions mined from ADRs, WHY comments, commits and PRs"
+    ],
+    "bestFor": "Developers and teams who run coding agents on medium-to-large repositories and want them to understand dependencies, change risk and history without burning tokens on repeated file searches.",
+    "notIdealFor": "Teams that cannot use AGPL-licensed software without buying a commercial license, or small scripts and repos where a coding agent's built-in search is already sufficient.",
+    "recentUpdates": "v0.55.0 (2026-10-04) shared get_context's budget across targets, kept knowledge-graph layer names unique and added owner line-share and merge-count views in the UI; the team also shipped Lens, a live map for Claude Code showing every file an edit touches.",
+    "verdict": "One of the most complete open-source codebase indexes for coding agents, combining a compiler-checked call graph with git, test and health analysis behind a single MCP server.",
+    "tags": [
+      "Codebase Intelligence",
+      "MCP",
+      "Code Health",
+      "Static Analysis",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-11"
+  },
+  {
+    "slug": "xerj",
+    "name": "XERJ",
+    "company": "XERJ",
+    "pricing": "open-source",
+    "pricingDetail": "XERJ is a free Apache-2.0 binary; the project asks users to contribute a short field report in return but charges nothing.",
+    "description": "XERJ is a local Rust search engine that automatically indexes folders of code, docs, logs and data so coding agents can retrieve ranked passages with file and line references instead of reading files one by one. Its main use case, reference coding, has the agent clone and index the open-source repositories closest to a task and reuse how they solved the problem.",
+    "keyFeatures": [
+      "xerj autoindex indexes code, docs, logs, PDFs, SQLite and CSVs with no schema or pipeline",
+      "xerj search returns ranked passages with file:line, and xerj def provides go-to-definition with signatures",
+      "xerj init wires XERJ into Claude Code and Cursor as an MCP server plus skill",
+      "Reference coding workflow that indexes related open-source repos before the agent writes code",
+      "xerj gain reports measured token savings"
+    ],
+    "bestFor": "Coding agents working on private, internal, niche or post-cutoff code where grep-driven exploration burns large amounts of context.",
+    "notIdealFor": "Work on popular public libraries the model already knows, which the project's own case study says is neutral to harmful, or multi-user setups that cannot run it behind TLS and API-key auth.",
+    "recentUpdates": "Release candidate v1.0.0-rc.95 shipped on 2026-10-12 with near-daily releases and commits through October 2026, and the repository was on GitHub's weekly Rust trending list.",
+    "verdict": "A promising local retrieval layer for agents with unusually transparent benchmarks and limits, though it is still pre-1.0 and its insecure single-user mode needs care.",
+    "tags": [
+      "Code Search",
+      "AI Agents",
+      "MCP",
+      "Rust",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-12"
   },
   {
     "slug": "pieces-for-developers",
@@ -9297,6 +9379,116 @@
     "lastUpdated": "2026-10-10"
   },
   {
+    "slug": "mxc",
+    "name": "MXC",
+    "company": "Microsoft",
+    "pricing": "open-source",
+    "pricingDetail": "MXC is free and open source under the MIT license; SDKs are published on crates.io, NuGet and npm. Official Microsoft builds can send optional diagnostic telemetry, which is off unless a run opts in.",
+    "description": "MXC (Microsoft eXecution Container) is a policy-driven sandbox SDK for running untrusted code such as model output, agent tools and plugins on Windows, Linux and macOS. Applications describe the container type, containment rules and workload in a JSON request, and MXC selects a platform backend from OS-native process sandboxes up to microVMs.",
+    "keyFeatures": [
+      "Filesystem, network-egress and UI/clipboard policies in versioned JSON requests",
+      "Backends including ProcessContainer, Bubblewrap, Seatbelt, LXC, WSLC, Windows Sandbox and microVMs",
+      "Stable v1 SDKs for Rust, .NET and Node.js with a shared operation model",
+      "Run-to-completion, piped and PTY execution plus persistent container lifecycles",
+      "Audit and debug modes to diagnose access-denied failures and author policies"
+    ],
+    "bestFor": "Developers building AI agents, coding assistants or plugin hosts who need to embed cross-platform, policy-controlled isolation for code their app did not write.",
+    "notIdealFor": "Users looking for a ready-made agent sandbox CLI or hosted sandbox service; MXC is an SDK you build into your own application, and several Windows backends are still experimental.",
+    "recentUpdates": "MXC SDK v1.0.0 (2026-10-07) is the first stable release, introducing explicit v1 entrypoints for Rust, .NET and Node.js and direct execution with captured output, live pipes or PTYs; Microsoft announced it on the Windows Developer Blog as policy-driven containment for AI agents.",
+    "verdict": "A credible, cross-platform foundation from Microsoft for sandboxing agent-generated code, best suited to teams embedding containment into their own agent tooling.",
+    "tags": [
+      "Sandbox",
+      "Security",
+      "AI Agents",
+      "Microsoft",
+      "SDK"
+    ],
+    "lastUpdated": "2026-10-11"
+  },
+  {
+    "slug": "moli",
+    "name": "Moli",
+    "company": "Lexmount",
+    "pricing": "open-source",
+    "pricingDetail": "Moli is free and open source under Apache-2.0 and MIT licenses, with prebuilt binaries for Linux, macOS and Windows on GitHub Releases.",
+    "description": "Moli is a Rust headless browser built for AI agents. It runs a full browser runtime with JavaScript, DOM, CSS, networking and storage, but generates layout and pixels only when an operation needs them, so agents can fetch, extract and automate web pages with a small resource footprint.",
+    "keyFeatures": [
+      "moli fetch outputs HTML, Markdown, JSON or a compact semantic tree for LLMs",
+      "On-demand layout for screenshots, full-page captures and PDFs",
+      "One endpoint serving CDP, WebDriver Classic and WebDriver BiDi, so Playwright and Puppeteer connect directly",
+      "Bundled agent skills that install Moli and run moli-webfetch for coding agents",
+      "Network tracing, selector and response waits, profiles, proxies and resource policies"
+    ],
+    "bestFor": "Developers giving coding agents or scraping pipelines a lightweight, protocol-compatible browser for page fetching, extraction and DOM-first automation.",
+    "notIdealFor": "Workflows that need pixel-perfect Chrome compatibility on every site; community benchmarks show Moli does not yet complete every task a full Chromium browser can.",
+    "recentUpdates": "Moli v1.1.16 (2026-10-11) added curl-compatible HTTP failure flags and explicit interaction before page dumps in moli fetch, plus XHR and cookie fixes; releases have shipped roughly daily through October 2026.",
+    "verdict": "A fast-moving, agent-first headless browser that trades full rendering for speed and low memory, worth trying when Chrome is too heavy for agent web access.",
+    "tags": [
+      "Headless Browser",
+      "Browser Automation",
+      "AI Agents",
+      "Rust",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-11"
+  },
+  {
+    "slug": "free-claude-code",
+    "name": "Free Claude Code",
+    "company": "Ali Khokhar (Alishahryar1)",
+    "pricing": "open-source",
+    "pricingDetail": "Free Claude Code is free and open source under AGPL-3.0. Costs depend on the providers you connect; free-tier availability and limits are controlled by each provider and may change.",
+    "description": "Free Claude Code (FCC) is a local proxy, Admin UI and set of launchers that lets Claude Code, Codex, Pi, OpenCode, Cline, Aider and other coding agents run on models from many free, paid, subscription and local providers through one model catalog. It is an independent project and is not affiliated with Anthropic.",
+    "keyFeatures": [
+      "Launchers such as fcc-claude, fcc-codex, fcc-pi, fcc-opencode, fcc-cline and fcc-aider for 11 coding agents",
+      "60+ providers including NVIDIA NIM, OAuth subscription providers, local models and custom OpenAI-compatible endpoints",
+      "Ordered fallback models that retry the next configured model during provider outages",
+      "Independent routing of Opus, Sonnet and Haiku tiers, plus optional RTK and Headroom token reduction",
+      "Browser UI for native Codex sessions, VS Code, JetBrains, Discord and Telegram clients, and voice input via local Whisper"
+    ],
+    "bestFor": "Developers who want to run their preferred coding agent against free-tier, local or alternative models from a single self-hosted proxy.",
+    "notIdealFor": "Teams that need vendor-supported model access with guaranteed quotas, since free-tier limits change and fallback requests can consume usage on more than one provider.",
+    "recentUpdates": "Releases ship frequently; v6.15.0 was published on 2026-10-12, and the repository was on GitHub's daily trending list in October 2026.",
+    "verdict": "A popular, fast-moving model gateway for coding agents that is most useful for experimenting with cheaper or local models, as long as you track each provider's terms and limits.",
+    "tags": [
+      "Proxy",
+      "Coding Agents",
+      "Model Routing",
+      "Open Source",
+      "Developer Tools"
+    ],
+    "lastUpdated": "2026-10-12"
+  },
+  {
+    "slug": "pairfob",
+    "name": "Pairfob",
+    "company": "arronKler",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under Apache-2.0; no account, subscription, or paid tier. The official hosted instance at pairfob.com is free to use, and the code is available on GitHub (arronKler/pairfob).",
+    "description": "Pairfob is a browser-based phone companion for live Herdr coding-agent sessions, letting you check progress, reply to Claude Code, Codex, or Grok, handle confirmation prompts, and review git diffs from a mobile browser while agents keep running on your macOS or Linux computer.",
+    "keyFeatures": [
+      "Runs in any browser with no app install and no account",
+      "End-to-end encrypted, outbound-only connection with no inbound ports or Tailscale required",
+      "Attaches to the same live Herdr session on the computer rather than a copy or remote desktop",
+      "Reply, confirm prompts, review git diffs, and open worktrees from the phone",
+      "Pairing via QR code or manual code with credential stored in the browser",
+      "Supports multiple paired devices (phone, tablet, another computer) sharing one session",
+      "CLI commands for status, pairing, doctor checks, and updates"
+    ],
+    "bestFor": "Developers who already run Herdr with Codex, Claude, or Grok on macOS or Linux and want to monitor, reply to, and confirm agent prompts from a phone without exposing ports or running a VPN.",
+    "notIdealFor": "Windows users (pairfob cannot host on Windows yet), anyone not already using Herdr, or users wanting a full remote desktop or general-purpose mobile development environment.",
+    "recentUpdates": "GitHub repository shows 137 stars, 12 forks, 8 open issues, and 18 days on trending with a best rank of #145; last push recorded 2026-10-12. Herdr 0.8+ required, with Herdr 0.9.0+ needed to close a workspace from the phone.",
+    "verdict": "Pairfob offers a focused, secure, and genuinely useful way to keep tabs on local coding agents from a phone without port forwarding or a VPN, and its open-source Apache-2.0 license is a plus. However, it is tightly coupled to Herdr, requires the host machine to stay awake and online, and does not support Windows as a host.",
+    "tags": [
+      "developer-productivity",
+      "mobile",
+      "coding-agents",
+      "herdr",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-12"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
@@ -9539,168 +9731,5 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-05"
-  },
-  {
-    "slug": "repowise",
-    "name": "Repowise",
-    "company": "Repowise",
-    "pricing": "open-source",
-    "pricingDetail": "Repowise is free and self-hosted under AGPL-3.0, with a commercial license and enterprise offering available; the graph, health, test and dead-code analysis make no LLM calls, so optional model-written docs are the only token cost.",
-    "description": "Repowise is a local codebase intelligence engine for developers and their coding agents. It indexes a repository's call graph, git history, tests, docs and design decisions once, keeps the index current on every commit, and exposes it through a dashboard and an MCP server so agents can ask questions instead of re-reading files.",
-    "keyFeatures": [
-      "Call graph across 26 parsed languages with per-edge resolution confidence",
-      "MCP server for Claude Code, Codex, Cursor and other agents (get_overview, get_context, change risk)",
-      "Symbol-level blast radius, co-change history and test selection for a diff",
-      "Code health scores, dead-code detection, ownership and bus-factor analysis",
-      "Auto-generated module and file docs plus doc-drift checks against the code",
-      "Architectural decisions mined from ADRs, WHY comments, commits and PRs"
-    ],
-    "bestFor": "Developers and teams who run coding agents on medium-to-large repositories and want them to understand dependencies, change risk and history without burning tokens on repeated file searches.",
-    "notIdealFor": "Teams that cannot use AGPL-licensed software without buying a commercial license, or small scripts and repos where a coding agent's built-in search is already sufficient.",
-    "recentUpdates": "v0.55.0 (2026-10-04) shared get_context's budget across targets, kept knowledge-graph layer names unique and added owner line-share and merge-count views in the UI; the team also shipped Lens, a live map for Claude Code showing every file an edit touches.",
-    "verdict": "One of the most complete open-source codebase indexes for coding agents, combining a compiler-checked call graph with git, test and health analysis behind a single MCP server.",
-    "tags": [
-      "Codebase Intelligence",
-      "MCP",
-      "Code Health",
-      "Static Analysis",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-11"
-  },
-  {
-    "slug": "mxc",
-    "name": "MXC",
-    "company": "Microsoft",
-    "pricing": "open-source",
-    "pricingDetail": "MXC is free and open source under the MIT license; SDKs are published on crates.io, NuGet and npm. Official Microsoft builds can send optional diagnostic telemetry, which is off unless a run opts in.",
-    "description": "MXC (Microsoft eXecution Container) is a policy-driven sandbox SDK for running untrusted code such as model output, agent tools and plugins on Windows, Linux and macOS. Applications describe the container type, containment rules and workload in a JSON request, and MXC selects a platform backend from OS-native process sandboxes up to microVMs.",
-    "keyFeatures": [
-      "Filesystem, network-egress and UI/clipboard policies in versioned JSON requests",
-      "Backends including ProcessContainer, Bubblewrap, Seatbelt, LXC, WSLC, Windows Sandbox and microVMs",
-      "Stable v1 SDKs for Rust, .NET and Node.js with a shared operation model",
-      "Run-to-completion, piped and PTY execution plus persistent container lifecycles",
-      "Audit and debug modes to diagnose access-denied failures and author policies"
-    ],
-    "bestFor": "Developers building AI agents, coding assistants or plugin hosts who need to embed cross-platform, policy-controlled isolation for code their app did not write.",
-    "notIdealFor": "Users looking for a ready-made agent sandbox CLI or hosted sandbox service; MXC is an SDK you build into your own application, and several Windows backends are still experimental.",
-    "recentUpdates": "MXC SDK v1.0.0 (2026-10-07) is the first stable release, introducing explicit v1 entrypoints for Rust, .NET and Node.js and direct execution with captured output, live pipes or PTYs; Microsoft announced it on the Windows Developer Blog as policy-driven containment for AI agents.",
-    "verdict": "A credible, cross-platform foundation from Microsoft for sandboxing agent-generated code, best suited to teams embedding containment into their own agent tooling.",
-    "tags": [
-      "Sandbox",
-      "Security",
-      "AI Agents",
-      "Microsoft",
-      "SDK"
-    ],
-    "lastUpdated": "2026-10-11"
-  },
-  {
-    "slug": "moli",
-    "name": "Moli",
-    "company": "Lexmount",
-    "pricing": "open-source",
-    "pricingDetail": "Moli is free and open source under Apache-2.0 and MIT licenses, with prebuilt binaries for Linux, macOS and Windows on GitHub Releases.",
-    "description": "Moli is a Rust headless browser built for AI agents. It runs a full browser runtime with JavaScript, DOM, CSS, networking and storage, but generates layout and pixels only when an operation needs them, so agents can fetch, extract and automate web pages with a small resource footprint.",
-    "keyFeatures": [
-      "moli fetch outputs HTML, Markdown, JSON or a compact semantic tree for LLMs",
-      "On-demand layout for screenshots, full-page captures and PDFs",
-      "One endpoint serving CDP, WebDriver Classic and WebDriver BiDi, so Playwright and Puppeteer connect directly",
-      "Bundled agent skills that install Moli and run moli-webfetch for coding agents",
-      "Network tracing, selector and response waits, profiles, proxies and resource policies"
-    ],
-    "bestFor": "Developers giving coding agents or scraping pipelines a lightweight, protocol-compatible browser for page fetching, extraction and DOM-first automation.",
-    "notIdealFor": "Workflows that need pixel-perfect Chrome compatibility on every site; community benchmarks show Moli does not yet complete every task a full Chromium browser can.",
-    "recentUpdates": "Moli v1.1.16 (2026-10-11) added curl-compatible HTTP failure flags and explicit interaction before page dumps in moli fetch, plus XHR and cookie fixes; releases have shipped roughly daily through October 2026.",
-    "verdict": "A fast-moving, agent-first headless browser that trades full rendering for speed and low memory, worth trying when Chrome is too heavy for agent web access.",
-    "tags": [
-      "Headless Browser",
-      "Browser Automation",
-      "AI Agents",
-      "Rust",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-11"
-  },
-  {
-    "slug": "uniterm",
-    "name": "uniTerm",
-    "company": "ys-ll",
-    "pricing": "open-source",
-    "pricingDetail": "uniTerm is free and open source under the Apache-2.0 license, with prebuilt binaries for Windows, macOS, Linux and Android on GitHub and Gitee Releases; the AI agent uses your own Anthropic- or OpenAI-compatible API key.",
-    "description": "uniTerm is an all-in-one desktop terminal that combines SSH and local shells, file transfer, remote desktop, database clients, Kubernetes and container management in one app, with a built-in AI agent that plans and executes multi-turn shell commands directly in the active terminal tab.",
-    "keyFeatures": [
-      "Autonomous AI agent that runs and iterates on shell commands, with bypass, dangerous-only, dangerous + write and confirm-all approval modes",
-      "30+ protocols including SSH, Mosh, serial, SFTP, SMB, S3, RDP, VNC, MySQL, PostgreSQL, Redis, MongoDB and Kubernetes",
-      "Built-in MCP server so Claude Code, Codex and Gemini CLI can run commands and transfer files on saved connections without seeing credentials",
-      "Natural-language database queries, reusable skills and prompt-template commands",
-      "Split-pane workspaces, custom keybindings and cloud sync via a private Git repository or WebDAV"
-    ],
-    "bestFor": "Developers and ops engineers who manage many servers, databases and clusters and want an AI agent working inside the same terminal that holds their connections.",
-    "notIdealFor": "Users who only need a minimal local shell, or teams that require signed binaries; the project notes that its unsigned Windows executables can trigger antivirus false positives.",
-    "recentUpdates": "uniTerm v1.10.0 was released on 2026-10-04, and commits continued through 2026-10-10; the repository was on GitHub's weekly Go trending list in October 2026.",
-    "verdict": "A broad, actively developed terminal-plus-ops workbench whose AI agent and MCP bridge make it a practical choice for agent-assisted remote administration.",
-    "tags": [
-      "Terminal",
-      "SSH",
-      "AI Agent",
-      "MCP",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-12"
-  },
-  {
-    "slug": "xerj",
-    "name": "XERJ",
-    "company": "XERJ",
-    "pricing": "open-source",
-    "pricingDetail": "XERJ is a free Apache-2.0 binary; the project asks users to contribute a short field report in return but charges nothing.",
-    "description": "XERJ is a local Rust search engine that automatically indexes folders of code, docs, logs and data so coding agents can retrieve ranked passages with file and line references instead of reading files one by one. Its main use case, reference coding, has the agent clone and index the open-source repositories closest to a task and reuse how they solved the problem.",
-    "keyFeatures": [
-      "xerj autoindex indexes code, docs, logs, PDFs, SQLite and CSVs with no schema or pipeline",
-      "xerj search returns ranked passages with file:line, and xerj def provides go-to-definition with signatures",
-      "xerj init wires XERJ into Claude Code and Cursor as an MCP server plus skill",
-      "Reference coding workflow that indexes related open-source repos before the agent writes code",
-      "xerj gain reports measured token savings"
-    ],
-    "bestFor": "Coding agents working on private, internal, niche or post-cutoff code where grep-driven exploration burns large amounts of context.",
-    "notIdealFor": "Work on popular public libraries the model already knows, which the project's own case study says is neutral to harmful, or multi-user setups that cannot run it behind TLS and API-key auth.",
-    "recentUpdates": "Release candidate v1.0.0-rc.95 shipped on 2026-10-12 with near-daily releases and commits through October 2026, and the repository was on GitHub's weekly Rust trending list.",
-    "verdict": "A promising local retrieval layer for agents with unusually transparent benchmarks and limits, though it is still pre-1.0 and its insecure single-user mode needs care.",
-    "tags": [
-      "Code Search",
-      "AI Agents",
-      "MCP",
-      "Rust",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-12"
-  },
-  {
-    "slug": "free-claude-code",
-    "name": "Free Claude Code",
-    "company": "Ali Khokhar (Alishahryar1)",
-    "pricing": "open-source",
-    "pricingDetail": "Free Claude Code is free and open source under AGPL-3.0. Costs depend on the providers you connect; free-tier availability and limits are controlled by each provider and may change.",
-    "description": "Free Claude Code (FCC) is a local proxy, Admin UI and set of launchers that lets Claude Code, Codex, Pi, OpenCode, Cline, Aider and other coding agents run on models from many free, paid, subscription and local providers through one model catalog. It is an independent project and is not affiliated with Anthropic.",
-    "keyFeatures": [
-      "Launchers such as fcc-claude, fcc-codex, fcc-pi, fcc-opencode, fcc-cline and fcc-aider for 11 coding agents",
-      "60+ providers including NVIDIA NIM, OAuth subscription providers, local models and custom OpenAI-compatible endpoints",
-      "Ordered fallback models that retry the next configured model during provider outages",
-      "Independent routing of Opus, Sonnet and Haiku tiers, plus optional RTK and Headroom token reduction",
-      "Browser UI for native Codex sessions, VS Code, JetBrains, Discord and Telegram clients, and voice input via local Whisper"
-    ],
-    "bestFor": "Developers who want to run their preferred coding agent against free-tier, local or alternative models from a single self-hosted proxy.",
-    "notIdealFor": "Teams that need vendor-supported model access with guaranteed quotas, since free-tier limits change and fallback requests can consume usage on more than one provider.",
-    "recentUpdates": "Releases ship frequently; v6.15.0 was published on 2026-10-12, and the repository was on GitHub's daily trending list in October 2026.",
-    "verdict": "A popular, fast-moving model gateway for coding agents that is most useful for experimenting with cheaper or local models, as long as you track each provider's terms and limits.",
-    "tags": [
-      "Proxy",
-      "Coding Agents",
-      "Model Routing",
-      "Open Source",
-      "Developer Tools"
-    ],
-    "lastUpdated": "2026-10-12"
   }
 ]
