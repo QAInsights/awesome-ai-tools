@@ -24,7 +24,11 @@ export const getStaticPaths = (async ({ paginate }) => {
 
 const { page, allPosts } = Astro.props;
 
-const featuredPosts = allPosts.filter((post) => post.data.featured);
+// Feature only the newest article; daily news briefs have their own /news page.
+const featuredPost =
+  allPosts.find((post) => !post.data.tags?.includes('news')) ?? allPosts[0];
+const featuredPosts = featuredPost ? [featuredPost] : [];
+const isFeatured = (post: CollectionEntry<'blog'>) => post.id === featuredPost?.id;
 
 // Popular tags by usage count
 const tagCounts = new Map<string, number>();
@@ -49,7 +53,7 @@ const searchIndex = allPosts.map((post) => ({
     day: 'numeric',
   }),
   tags: post.data.tags ?? [],
-  featured: post.data.featured,
+  featured: isFeatured(post),
 }));
 const postsJson = safeJsonForScript(searchIndex);
 
@@ -94,7 +98,7 @@ const jsonLd = JSON.stringify({
 // On page 1, featured posts are shown in their own section — don't repeat
 // them in the regular list.
 const listPosts =
-  page.currentPage === 1 ? page.data.filter((post) => !post.data.featured) : page.data;
+  page.currentPage === 1 ? page.data.filter((post) => !isFeatured(post)) : page.data;
 ---
 
 <DashboardLayout
@@ -245,7 +249,7 @@ const listPosts =
                 <div class="flex-1 p-6 flex flex-col justify-between">
                   <div>
                     <div class="flex items-center space-x-2 text-xs text-[#737373] mb-3 font-mono">
-                      {post.data.featured && (
+                      {isFeatured(post) && (
                         <>
                           <span class="inline-flex items-center gap-1 text-[#f0d08f]">
                             <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" stroke="none">
