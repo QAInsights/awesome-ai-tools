@@ -912,6 +912,12 @@
     "category": "AI-Native Terminals"
   },
   {
+    "slug": "cmux",
+    "name": "cmux",
+    "company": "Manaflow",
+    "category": "AI-Native Terminals"
+  },
+  {
     "slug": "jules",
     "name": "Jules",
     "company": "Google",
@@ -2109,6 +2115,18 @@
     "slug": "aident-loadout",
     "name": "Aident Loadout",
     "company": "Aident AI",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "agentmemory",
+    "name": "agentmemory",
+    "company": "rohitg00",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "teamai",
+    "name": "TeamAI",
+    "company": "Tencent",
     "category": "Developer Productivity & Workflow"
   },
   {

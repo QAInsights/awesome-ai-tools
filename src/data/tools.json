@@ -1426,5 +1426,17 @@
   {
     "companyName": "ETOILEE PTE. LTD. (submitted by HeyDeer's maintainer)",
     "toolName": "HeyDeer"
+  },
+  {
+    "companyName": "Manaflow",
+    "toolName": "cmux"
+  },
+  {
+    "companyName": "rohitg00",
+    "toolName": "agentmemory"
+  },
+  {
+    "companyName": "Tencent",
+    "toolName": "TeamAI"
   }
 ]
