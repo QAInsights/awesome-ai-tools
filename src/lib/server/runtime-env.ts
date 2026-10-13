@@ -39,6 +39,10 @@ export function getResendApiKey(): string {
     return configuredValue(runtimeEnv.RESEND_API_KEY, import.meta.env.RESEND_API_KEY, process.env.RESEND_API_KEY);
 }
 
+export function getTurnstileSecret(): string {
+    return configuredValue(runtimeEnv.TURNSTILE_SECRET, import.meta.env.TURNSTILE_SECRET, process.env.TURNSTILE_SECRET);
+}
+
 export function isEmailDryRun(): boolean {
     return ['1', 'true', 'yes'].includes(
         configuredValue(runtimeEnv.EMAIL_DRY_RUN, import.meta.env.EMAIL_DRY_RUN, process.env.EMAIL_DRY_RUN).toLowerCase(),
@@ -70,6 +74,10 @@ export function getStackWriteLimiter(): RateLimit | undefined {
 
 export function getUsernameWriteLimiter(): RateLimit | undefined {
     return runtimeEnv.USERNAME_WRITE_LIMITER as RateLimit | undefined;
+}
+
+export function getZapWriteLimiter(): RateLimit | undefined {
+    return runtimeEnv.ZAP_WRITE_LIMITER as RateLimit | undefined;
 }
 
 export function requireDatabase(): Database {

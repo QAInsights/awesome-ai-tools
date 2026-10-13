@@ -24,7 +24,6 @@ loadEnvLocal();
 // Read from the active environment or fallback for local
 const enableVoting = process.env.ENABLE_VOTING || 'true';
 const cfSiteKey = process.env.CF_SITEKEY || '1x00000000000000000000AA';
-const apiBaseUrl = process.env.API_BASE_URL || 'http://localhost:8080';
 // NOTE: Only the client_id is injected — client_secret stays in Worker secrets
 const githubClientId = process.env.GITHUB_CLIENT_ID || '';
 
@@ -67,7 +66,6 @@ const result = await build({
     define: {
         'process.env.ENABLE_VOTING': JSON.stringify(enableVoting),
         'process.env.CF_SITEKEY': JSON.stringify(cfSiteKey),
-        'process.env.API_BASE_URL': JSON.stringify(apiBaseUrl),
         'process.env.GITHUB_CLIENT_ID': JSON.stringify(githubClientId),
     }
 });

@@ -12,6 +12,7 @@ const migrations = [
     new URL('../../../migrations/0007_news_prefs.sql', import.meta.url),
     new URL('../../../migrations/0008_onboarding.sql', import.meta.url),
     new URL('../../../migrations/0009_tool_stacks.sql', import.meta.url),
+    new URL('../../../migrations/0010_zaps.sql', import.meta.url),
 ];
 
 export function createTestDatabase() {

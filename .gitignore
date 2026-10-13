@@ -42,3 +42,6 @@ TODO.md
 .env*.local
 .agentrules
 .commandcode
+# Zap import artifacts (scripts/migrate-upstash-zaps.ts output)
+zaps-import*.sql
+zaps-import-report.json
