@@ -3,25 +3,7 @@ import { analytics } from './analytics-client.js';
 import { authAttribution } from './auth-attribution.js';
 import { auth } from './auth.js';
 
-const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:8080';
 let zapCounts = {};
-let isVoting = false;
-
-/**
- * Legacy vote keys for renamed/merged tools. Counts under these keys are
- * folded into the canonical tool ID at load time; new votes are always cast
- * under the canonical ID.
- *
- * KNOWN LIMITATION (temporary): this is a client-only display merge. The
- * backend still dedupes per legacy tool_id, so a user who zapped a legacy
- * id can zap the canonical id once more until the backend migrates the
- * Redis keys (and any per-voter records) and/or normalizes tool_id on
- * /api/v1/vote. Remove an entry once its backend keys are migrated.
- */
-const TOOL_ID_ALIASES = {
-    'cognition-windsurf': 'cognition-devin',   // Windsurf renamed to Devin
-    'cognitionai-devin': 'cognition-devin',    // duplicate Devin entry removed
-};
 
 export function getVoteCount(toolId) {
     return zapCounts[toolId] || 0;
@@ -32,14 +14,14 @@ export function getVoteCount(toolId) {
  */
 export async function initVoting() {
     try {
-        console.log('Initializing voting from:', API_BASE_URL);
+        console.log('Initializing voting');
         // Abort the request if the backend is unresponsive so a dead/cold API
         // doesn't leave the voting UI in limbo for minutes.
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 5000);
         let response;
         try {
-            response = await fetch(`${API_BASE_URL}/api/v1/count`, { signal: controller.signal });
+            response = await fetch('/api/v1/count', { signal: controller.signal });
         } finally {
             clearTimeout(timeoutId);
         }
@@ -48,10 +30,9 @@ export async function initVoting() {
         }
         const data = await response.json();
         for (const [key, val] of Object.entries(data)) {
-            // Remove "votes:" prefix from the Spring Boot Redis key
+            // Remove "votes:" prefix from the response key
             const id = key.replace('votes:', '');
-            const canonical = TOOL_ID_ALIASES[id] ?? id;
-            zapCounts[canonical] = (zapCounts[canonical] || 0) + (Number(val) || 0);
+            zapCounts[id] = (zapCounts[id] || 0) + (Number(val) || 0);
         }
         console.log('Votes loaded:', Object.keys(zapCounts).length, 'tools have votes');
     } catch (error) {
@@ -100,11 +81,8 @@ export async function initVoting() {
             return;
         }
 
-        const user = auth.getCurrentUser();
-        const voterId = user.id;
-
         // Once confirmed not clicked, cast the vote securely
-        castVote(toolId, toolName, voterId, btn);
+        castVote(toolId, toolName, btn);
 
         if (!zapCounts[toolId]) {
             zapCounts[toolId] = parseInt(btn.querySelector('.zap-count').textContent.replace(/,/g, '')) || 0;
@@ -144,17 +122,16 @@ async function waitForTurnstileToken(timeoutMs = 3000) {
     });
 }
 
-async function castVote(toolId, toolName, voterId, btn) {
+async function castVote(toolId, toolName, btn) {
     const cfToken = await waitForTurnstileToken();
 
     const payload = {
         tool_id: toolId,
         tool_name: toolName,
-        visitor_id: voterId,
         cf_token: cfToken
     };
 
-    const response = await fetch(`${API_BASE_URL}/api/v1/vote`, {
+    const response = await fetch('/api/v1/vote', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -212,6 +189,26 @@ async function castVote(toolId, toolName, voterId, btn) {
                     btn.dataset.tip = originalTip;
                 }, 3000);
             }
+        } else if (response.status === 401) {
+            // Session expired mid-vote: roll back and prompt sign-in
+            if (btn) {
+                btn.classList.remove('zapped');
+                zapCounts[toolId]--;
+
+                const countEl = btn.querySelector('.zap-count');
+                const originalTip = btn.dataset.tip;
+
+                btn.dataset.tip = "Sign in to vote!";
+                countEl.textContent = "Login";
+                countEl.style.color = "#a78bfa";
+
+                setTimeout(() => {
+                    countEl.textContent = zapCounts[toolId].toLocaleString();
+                    countEl.style.color = "";
+                    btn.dataset.tip = originalTip;
+                }, 3000);
+            }
+            authAttribution.open('zap_btn');
         } else {
             // Rollback for general server errors
             if (btn) {

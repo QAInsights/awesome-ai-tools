@@ -161,13 +161,13 @@ describe('voting', () => {
             expect(getVoteCount('my-tool')).toBe(42);
         });
 
-        test('should fold legacy alias keys into the canonical tool id', async () => {
+        test('should load counts under their server-side canonical ids', async () => {
+            // Legacy tool_id aliases are folded by the server during import;
+            // the client stores each returned key as-is.
             mockFetchResponse = {
                 ok: true,
                 json: () => Promise.resolve({
-                    'votes:cognition-windsurf': 21,
-                    'votes:cognitionai-devin': 2,
-                    'votes:cognition-devin': 1
+                    'votes:cognition-devin': 24
                 })
             };
 
@@ -178,8 +178,6 @@ describe('voting', () => {
             }
 
             expect(getVoteCount('cognition-devin')).toBe(24);
-            expect(getVoteCount('cognition-windsurf')).toBe(0);
-            expect(getVoteCount('cognitionai-devin')).toBe(0);
         });
     });
 
