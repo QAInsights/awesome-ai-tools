@@ -9790,5 +9790,86 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-05"
+  },
+  {
+    "slug": "cmux",
+    "name": "cmux",
+    "company": "Manaflow",
+    "pricing": "free",
+    "pricingDetail": "cmux is free and open source under GPL-3.0-or-later; its hosted server components use the Business Source License 1.1, with commercial terms available for organizations that cannot comply with the GPL.",
+    "description": "cmux is a native macOS terminal built on libghostty for developers who run several AI coding agents in parallel. Vertical tabs show each workspace's git branch, linked pull request, working directory, ports and latest notification, and panes light up when an agent needs attention.",
+    "keyFeatures": [
+      "Notification rings and a notification panel that flag when Claude Code, Codex or OpenCode needs input",
+      "Vertical and horizontal tabs with git branch, PR status, working directory and listening ports",
+      "Scriptable in-app browser split with an automation API ported from agent-browser",
+      "`cmux ssh` remote workspaces and `cmux claude-teams` for Claude Code teammate mode as native splits",
+      "Session restore, custom commands and a CLI/socket API for programmatic control"
+    ],
+    "bestFor": "macOS developers juggling several terminal coding agents at once who want to see at a glance which one needs attention.",
+    "notIdealFor": "Windows or Linux users, and developers who prefer a plain tmux-based workflow without a GUI terminal.",
+    "recentUpdates": "cmux shipped v0.65.1 on October 12, 2026, publishes nightly builds, and was on GitHub Trending with more than 28,000 stars.",
+    "verdict": "A purpose-built, fast-moving terminal that makes multi-agent coding on macOS much easier to manage.",
+    "tags": [
+      "Terminal",
+      "macOS",
+      "Multi-Agent",
+      "Ghostty",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-13"
+  },
+  {
+    "slug": "agentmemory",
+    "name": "agentmemory",
+    "company": "rohitg00",
+    "pricing": "free",
+    "pricingDetail": "agentmemory is free and open source under Apache-2.0 and runs locally; optional LLM compression is billed by whichever model provider you configure, and local embeddings cost nothing.",
+    "description": "agentmemory is a persistent memory server for AI coding agents. It captures observations from sessions, organizes them into a knowledge graph with confidence scoring and decay, and serves them back through hybrid search so agents stop needing project context re-explained.",
+    "keyFeatures": [
+      "One-command install (`npx @agentmemory/agentmemory`) with interactive setup for Claude Code, Cursor, Codex CLI, Gemini CLI, Copilot CLI, OpenCode and more",
+      "Knowledge graph with confidence scoring, lifecycle decay and consolidation",
+      "Hybrid BM25, vector and graph retrieval with optional local embeddings",
+      "MCP server, REST API and a real-time web viewer",
+      "Published LongMemEval-S retrieval benchmarks and token-cost comparisons"
+    ],
+    "bestFor": "Developers who switch between several coding agents and want shared, durable project memory across sessions.",
+    "notIdealFor": "Teams that need a managed, hosted memory service with enterprise support and SLAs.",
+    "recentUpdates": "agentmemory released v0.9.30 on October 6, 2026, continues to receive commits, and was on GitHub Trending with more than 29,000 stars.",
+    "verdict": "A well-documented, benchmark-backed memory layer that plugs into almost every popular coding agent.",
+    "tags": [
+      "Memory",
+      "MCP",
+      "Coding Agents",
+      "Knowledge Graph",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-13"
+  },
+  {
+    "slug": "teamai",
+    "name": "TeamAI",
+    "company": "Tencent",
+    "pricing": "free",
+    "pricingDetail": "TeamAI is free and open source under the MIT license; it uses your own Git host and the AI tools your team already pays for.",
+    "description": "TeamAI is a CLI and agent skill from Tencent that stores a team's AI assets in a shared Git repository. Skills, rules, agents, hooks, MCP servers, models and learnings are synced automatically into each teammate's coding agents after a one-time init.",
+    "keyFeatures": [
+      "Shared Git repo for skills, rules, agents, hooks, MCP servers, env and model settings",
+      "Automatic sync into Claude Code, Codex, Cursor, GitHub Copilot CLI, OpenCode, Kiro, Trae, Qoder and other agents",
+      "Project-scope or user-scope installs with protected-branch publishing",
+      "Team context (beta): learnings, codebase graph and team wiki",
+      "Usage and session insights (beta) plus a dashboard"
+    ],
+    "bestFor": "Engineering teams that want every developer's coding agents to share the same skills, rules and MCP setup.",
+    "notIdealFor": "Solo developers using a single agent who have no shared configuration to distribute.",
+    "recentUpdates": "TeamAI released v0.27.0 on October 9, 2026 and v0.28.0 betas on October 12-13, 2026, and was on GitHub Trending with more than 5,000 stars.",
+    "verdict": "A practical, Git-native way to standardize AI agent configuration across a team and across many agent tools.",
+    "tags": [
+      "Team Collaboration",
+      "Agent Skills",
+      "MCP",
+      "Configuration",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-13"
   }
 ]
