@@ -14,7 +14,6 @@ export function getVoteCount(toolId) {
  */
 export async function initVoting() {
     try {
-        console.log('Initializing voting');
         // Abort the request if the backend is unresponsive so a dead/cold API
         // doesn't leave the voting UI in limbo for minutes.
         const controller = new AbortController();
@@ -30,9 +29,7 @@ export async function initVoting() {
         }
         const data = await response.json();
         for (const [key, val] of Object.entries(data)) {
-            // Remove "votes:" prefix from the response key
-            const id = key.replace('votes:', '');
-            zapCounts[id] = (zapCounts[id] || 0) + (Number(val) || 0);
+            zapCounts[key.replace('votes:', '')] = Number(val) || 0;
         }
         console.log('Votes loaded:', Object.keys(zapCounts).length, 'tools have votes');
     } catch (error) {
@@ -59,7 +56,6 @@ export async function initVoting() {
         e.stopPropagation();
 
         const toolId = btn.dataset.toolId;
-        const toolName = btn.dataset.toolName;
         
         // Prevent multiple rapid api calls
         if (btn.classList.contains('zapped')) return;
@@ -82,7 +78,7 @@ export async function initVoting() {
         }
 
         // Once confirmed not clicked, cast the vote securely
-        castVote(toolId, toolName, btn);
+        castVote(toolId, btn);
 
         if (!zapCounts[toolId]) {
             zapCounts[toolId] = parseInt(btn.querySelector('.zap-count').textContent.replace(/,/g, '')) || 0;
@@ -122,12 +118,37 @@ async function waitForTurnstileToken(timeoutMs = 3000) {
     });
 }
 
-async function castVote(toolId, toolName, btn) {
+const ZAP_ERROR_MESSAGES = {
+    400: { tip: "You have already zapped this tool!", label: "Zap'd", color: "#a3a3a3" },
+    401: { tip: "Sign in to vote!", label: "Login", color: "#a78bfa" },
+    429: { tip: "You are voting too fast! Please slow down.", label: "Wait", color: "#ef4444" },
+};
+const ZAP_ERROR_DEFAULT = { tip: "Security check failed. Please refresh and try again.", label: "Failed", color: "#ef4444" };
+
+function rollbackZap(btn, toolId, { tip, label, color }) {
+    if (!btn) return;
+    btn.classList.remove('zapped');
+    zapCounts[toolId]--;
+
+    const countEl = btn.querySelector('.zap-count');
+    const originalTip = btn.dataset.tip;
+
+    btn.dataset.tip = tip;
+    countEl.textContent = label;
+    countEl.style.color = color;
+
+    setTimeout(() => {
+        countEl.textContent = zapCounts[toolId].toLocaleString();
+        countEl.style.color = "";
+        btn.dataset.tip = originalTip;
+    }, 3000);
+}
+
+async function castVote(toolId, btn) {
     const cfToken = await waitForTurnstileToken();
 
     const payload = {
         tool_id: toolId,
-        tool_name: toolName,
         cf_token: cfToken
     };
 
@@ -149,86 +170,8 @@ async function castVote(toolId, toolName, btn) {
     }
 
     if (!response.ok) {
-        if (response.status === 429) {
-            // Rollback optimistic UI changes smoothly
-            if (btn) {
-                btn.classList.remove('zapped');
-                zapCounts[toolId]--;
-                
-                const countEl = btn.querySelector('.zap-count');
-                const originalTip = btn.dataset.tip;
-                
-                // Show user-friendly error directly on the button
-                btn.dataset.tip = "You are voting too fast! Please slow down.";
-                countEl.textContent = "Wait";
-                countEl.style.color = "#ef4444"; // Tailwind's red-500
-                
-                // Revert to normal state after 3 seconds
-                setTimeout(() => {
-                    countEl.textContent = zapCounts[toolId].toLocaleString();
-                    countEl.style.color = "";
-                    btn.dataset.tip = originalTip;
-                }, 3000);
-            }
-        } else if (response.status === 400) {
-            // Rollback for duplicate votes
-            if (btn) {
-                btn.classList.remove('zapped');
-                zapCounts[toolId]--;
-                
-                const countEl = btn.querySelector('.zap-count');
-                const originalTip = btn.dataset.tip;
-                
-                btn.dataset.tip = "You have already zapped this tool!";
-                countEl.textContent = "Zap'd";
-                countEl.style.color = "#a3a3a3"; // A softer grey for already clicked
-                
-                setTimeout(() => {
-                    countEl.textContent = zapCounts[toolId].toLocaleString();
-                    countEl.style.color = "";
-                    btn.dataset.tip = originalTip;
-                }, 3000);
-            }
-        } else if (response.status === 401) {
-            // Session expired mid-vote: roll back and prompt sign-in
-            if (btn) {
-                btn.classList.remove('zapped');
-                zapCounts[toolId]--;
-
-                const countEl = btn.querySelector('.zap-count');
-                const originalTip = btn.dataset.tip;
-
-                btn.dataset.tip = "Sign in to vote!";
-                countEl.textContent = "Login";
-                countEl.style.color = "#a78bfa";
-
-                setTimeout(() => {
-                    countEl.textContent = zapCounts[toolId].toLocaleString();
-                    countEl.style.color = "";
-                    btn.dataset.tip = originalTip;
-                }, 3000);
-            }
-            authAttribution.open('zap_btn');
-        } else {
-            // Rollback for general server errors
-            if (btn) {
-                btn.classList.remove('zapped');
-                zapCounts[toolId]--;
-                
-                const countEl = btn.querySelector('.zap-count');
-                const originalTip = btn.dataset.tip;
-                
-                btn.dataset.tip = "Security check failed. Please refresh and try again.";
-                countEl.textContent = "Failed";
-                countEl.style.color = "#ef4444";
-                
-                setTimeout(() => {
-                    countEl.textContent = zapCounts[toolId].toLocaleString();
-                    countEl.style.color = "";
-                    btn.dataset.tip = originalTip;
-                }, 3000);
-            }
-        }
+        rollbackZap(btn, toolId, ZAP_ERROR_MESSAGES[response.status] ?? ZAP_ERROR_DEFAULT);
+        if (response.status === 401) authAttribution.open('zap_btn');
         console.error('Failed to cast vote', response.status);
         return;
     }

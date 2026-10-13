@@ -7,12 +7,16 @@
 
 import { describe, test, expect, beforeEach, afterEach } from 'bun:test';
 import { getVoteCount, initVoting } from './voting.js';
+import { auth } from './auth.js';
+import { authAttribution } from './auth-attribution.js';
 
 // Mock fetch globally
 let mockFetchResponse = null;
 const originalFetch = global.fetch;
 
+const fetchCalls = [];
 const createMockFetch = () => (url, options) => {
+    fetchCalls.push({ url, options });
     if (mockFetchResponse) {
         return Promise.resolve(mockFetchResponse);
     }
@@ -37,17 +41,24 @@ global.localStorage = localStorageMock;
 // Mock document for DOM operations
 const mockElement = {
     textContent: '0',
+    dataset: {},
     classList: { add: () => {}, remove: () => {}, contains: () => false },
     querySelector: () => ({ textContent: '0' }),
     click: () => {},
     closest: () => null
 };
+const clickHandlers = [];
 global.document = {
     querySelectorAll: () => [mockElement],
-    addEventListener: () => {},
+    querySelector: () => null,
+    addEventListener: (event, handler) => {
+        if (event === 'click') clickHandlers.push(handler);
+    },
     body: { innerHTML: '' },
     createElement: () => mockElement
 };
+global.window = {};
+global.location = { href: '', protocol: 'https:' };
 
 describe('voting', () => {
     beforeEach(() => {
@@ -161,9 +172,7 @@ describe('voting', () => {
             expect(getVoteCount('my-tool')).toBe(42);
         });
 
-        test('should load counts under their server-side canonical ids', async () => {
-            // Legacy tool_id aliases are folded by the server during import;
-            // the client stores each returned key as-is.
+        test('should store each returned key without client-side aliasing', async () => {
             mockFetchResponse = {
                 ok: true,
                 json: () => Promise.resolve({
@@ -202,6 +211,99 @@ describe('voting', () => {
         test('should prevent double-voting (integration test)', async () => {
             // Note: Testing double-vote prevention requires integration tests
             // with actual DOM interaction and auth state
+        });
+    });
+
+    describe('castVote click flow', () => {
+        const makeBtn = (toolId) => {
+            const countEl = { textContent: '5', style: {} };
+            const classes = new Set();
+            return {
+                dataset: { toolId, tip: 'Zap!' },
+                classList: {
+                    add: (c) => classes.add(c),
+                    remove: (c) => classes.delete(c),
+                    contains: (c) => classes.has(c),
+                },
+                querySelector: () => countEl,
+                countEl,
+                classes,
+            };
+        };
+
+        const click = (btn) => {
+            const handler = clickHandlers[clickHandlers.length - 1];
+            handler({
+                target: { closest: () => btn },
+                preventDefault: () => {},
+                stopPropagation: () => {},
+            });
+        };
+
+        const flush = () => new Promise(resolve => setTimeout(resolve, 20));
+
+        const authOpenCalls = [];
+        const originalAuthOpen = authAttribution.open;
+
+        beforeEach(async () => {
+            fetchCalls.length = 0;
+            authOpenCalls.length = 0;
+            authAttribution.open = (trigger) => { authOpenCalls.push(trigger); };
+            auth.user = { id: 'github:test-user' };
+            window.cfTokenValue = 'test-cf-token';
+            mockFetchResponse = { ok: true, json: () => Promise.resolve({ 'votes:cursor': 5 }) };
+            await initVoting();
+            mockFetchResponse = null;
+        });
+
+        afterEach(() => {
+            authAttribution.open = originalAuthOpen;
+            auth.user = null;
+            window.cfTokenValue = '';
+        });
+
+        test('posts { tool_id, cf_token } to the same-origin vote endpoint', async () => {
+            const btn = makeBtn('cursor');
+            mockFetchResponse = { ok: true, status: 200 };
+
+            click(btn);
+            await flush();
+
+            const voteCall = fetchCalls.find(call => call.url === '/api/v1/vote');
+            expect(voteCall.options.method).toBe('POST');
+            expect(JSON.parse(voteCall.options.body)).toEqual({ tool_id: 'cursor', cf_token: 'test-cf-token' });
+            expect(btn.classes.has('zapped')).toBe(true);
+            expect(getVoteCount('cursor')).toBe(6);
+        });
+
+        test.each([
+            [429, 'Wait'],
+            [400, "Zap'd"],
+            [500, 'Failed'],
+        ])('rolls back the optimistic count and shows %s error state', async (status, label) => {
+            const btn = makeBtn('cursor');
+            mockFetchResponse = { ok: false, status };
+
+            click(btn);
+            await flush();
+
+            expect(getVoteCount('cursor')).toBe(5);
+            expect(btn.classes.has('zapped')).toBe(false);
+            expect(btn.countEl.textContent).toBe(label);
+            expect(authOpenCalls).toEqual([]);
+        });
+
+        test('401 rolls back the count and prompts sign-in', async () => {
+            const btn = makeBtn('cursor');
+            mockFetchResponse = { ok: false, status: 401 };
+
+            click(btn);
+            await flush();
+
+            expect(getVoteCount('cursor')).toBe(5);
+            expect(btn.classes.has('zapped')).toBe(false);
+            expect(btn.countEl.textContent).toBe('Login');
+            expect(authOpenCalls).toEqual(['zap_btn']);
         });
     });
 

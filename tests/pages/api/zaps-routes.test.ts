@@ -114,6 +114,16 @@ describe('POST /api/v1/vote', () => {
         expect(castCalls).toEqual([]);
     });
 
+    test('returns 503 when TURNSTILE_SECRET is not configured outside dev', async () => {
+        turnstileSecret = '';
+        const response = await POST(postContext('{"tool_id":"cursor","cf_token":"t"}'));
+
+        // import.meta.env.DEV is false under `bun test` (production branch)
+        expect(response.status).toBe(503);
+        expect(turnstileCalls).toEqual([]);
+        expect(castCalls).toEqual([]);
+    });
+
     test('rejects when turnstile verification fails', async () => {
         turnstileResult = false;
         const response = await POST(postContext('{"tool_id":"cursor","cf_token":"bad"}'));
