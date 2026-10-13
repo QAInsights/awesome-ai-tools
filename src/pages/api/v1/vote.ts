@@ -48,7 +48,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
             }
         } else {
             const verified = await verifyTurnstile(cfToken, secret, request.headers.get('CF-Connecting-IP'));
-            if (!verified) return jsonNoStore({ error: 'turnstile_failed' }, 400);
+            if (!verified) return jsonNoStore({ error: 'turnstile_failed' }, 403);
         }
 
         const result = await castZap(db, toolId, user.id);

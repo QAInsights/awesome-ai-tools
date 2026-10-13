@@ -101,7 +101,7 @@ export function buildImport(
         const values = voterRows.slice(i, i + ROWS_PER_STATEMENT)
             .map(([id, voter]) => `(${sqlString(id)}, ${sqlString(voter)}, ${importedAt}, 'redis')`)
             .join(',\n    ');
-        statements.push(`INSERT OR IGNORE INTO zap_votes (tool_id, voter_id, created_at, source) VALUES\n    ${values};`);
+        statements.push(`INSERT INTO zap_votes (tool_id, voter_id, created_at, source) VALUES\n    ${values}\nON CONFLICT(tool_id, voter_id) DO UPDATE SET source = 'redis';`);
     }
 
     const toolIds = new Set([...mergedCounts.keys(), ...mergedVoters.keys()]);

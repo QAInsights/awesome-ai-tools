@@ -128,7 +128,7 @@ describe('POST /api/v1/vote', () => {
         turnstileResult = false;
         const response = await POST(postContext('{"tool_id":"cursor","cf_token":"bad"}'));
 
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(403);
         expect(await response.json()).toEqual({ error: 'turnstile_failed' });
         expect(castCalls).toEqual([]);
     });
