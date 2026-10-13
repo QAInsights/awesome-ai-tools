@@ -1284,6 +1284,12 @@
     "category": "AI Code Review & Security"
   },
   {
+    "slug": "heydeer",
+    "name": "HeyDeer",
+    "company": "ETOILEE PTE. LTD. (submitted by HeyDeer's maintainer)",
+    "category": "AI Code Review & Security"
+  },
+  {
     "slug": "gitauto",
     "name": "GitAuto",
     "company": "GitAuto",

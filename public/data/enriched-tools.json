@@ -5791,6 +5791,36 @@
     "lastUpdated": "2026-10-09"
   },
   {
+    "slug": "heydeer",
+    "name": "HeyDeer",
+    "company": "ETOILEE PTE. LTD. (submitted by HeyDeer's maintainer)",
+    "pricing": "freemium",
+    "pricingDetail": "Credits-based pricing where 1 credit equals 1 US cent; new workspaces get a 14-day free trial with 1,000 credits and a free first review, with no credit card required. Paid plans start at $12/month, and public open-source repositories are reviewed free within fair-use limits.",
+    "description": "HeyDeer is an AI code review service for GitHub pull requests that verifies findings before posting them and can turn selected findings into separate fix PRs. It reviews changes against the whole repository, PR discussion, and team-defined checks.",
+    "keyFeatures": [
+      "AI review of GitHub pull requests with findings posted as inline review comments and a HeyDeer Review check",
+      "Verified and deduplicated findings from independent reviewers before publication",
+      "Fix with HeyDeer turns selected findings into a separate fix PR against the original PR branch",
+      "Custom repository checks and AGENTS.md conventions, plus workspace/repository review instructions",
+      "Standard and Deep review depths, with Deep using more reasoning effort for sensitive code",
+      "Automatic reviews on PR creation or push, with configurable review rules and automatic approval options",
+      "Credits-based usage with no seats; workspace shares one balance, with auto-reload and usage limits"
+    ],
+    "bestFor": "Engineering teams using GitHub that want lower-noise AI code review with verified findings and an option to generate fix PRs from selected issues.",
+    "notIdealFor": "Teams not on GitHub, or those wanting a fully free unlimited private-repo review tool, since private-repo usage beyond the trial consumes paid credits.",
+    "recentUpdates": "October 10, 2026: free reviews for open source public repositories and parallel reviews applied per repository. October 7, 2026: commands accepted anywhere in PR comments and persistent Review activity panel. October 6, 2026: Fix findings with HeyDeer and live reviewer progress. October 5, 2026: human approval for major changes, automatic approval with Low issues, and review timing in the check. October 4, 2026: automatic reviews start immediately and one-step review start. October 3, 2026: review comments lead with outcome and approval based on verified behavior.",
+    "verdict": "HeyDeer offers a thoughtful, verification-first approach to AI code review with strong GitHub integration, custom checks, and fix PRs, plus a generous trial and free open-source reviews. However, it is GitHub-only, credit-based costs can scale with review complexity, and its accuracy ultimately depends on model versions, setup, and codebase.",
+    "tags": [
+      "AI code review",
+      "GitHub pull requests",
+      "security",
+      "code quality",
+      "fix PRs",
+      "credits-based pricing"
+    ],
+    "lastUpdated": "2026-10-13"
+  },
+  {
     "slug": "gitauto",
     "name": "GitAuto",
     "company": "GitAuto",
