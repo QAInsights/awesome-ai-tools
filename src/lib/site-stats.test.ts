@@ -7,6 +7,7 @@ import {
     fetchGitHubStats,
     fetchTrafficDetail,
     fetchTrafficStats,
+    loadSiteStats,
     mergeDimensionGroups,
     mergeDailyHistory,
     topBreakdownRows,
@@ -258,8 +259,8 @@ describe('traffic detail', () => {
 
         expect(detail.coverage).toEqual({ from: '2026-03-31', to: '2026-09-25' });
         expect(detail.daily).toEqual([
-            { date: '2026-09-22', pageViews: 0, visits: 0, sampleInterval: 100 },
-            { date: '2026-09-23', pageViews: 0, visits: 0, sampleInterval: 100 },
+            { date: '2026-09-22', pageViews: 0, visits: 0 },
+            { date: '2026-09-23', pageViews: 0, visits: 0 },
             { date: '2026-09-24', pageViews: 2, visits: 1, sampleInterval: 100 },
             { date: '2026-09-25', pageViews: 8, visits: 5, sampleInterval: 50 },
         ]);
@@ -283,7 +284,7 @@ describe('traffic detail', () => {
         expect(queries).toHaveLength(31);
     });
 
-    test('zero-fills days only for non-empty windows with the maximum sampling interval', async () => {
+    test('zero-fills days without sampling intervals and lets observed rows replace inferred zeros', async () => {
         const settings = { settings: { rumPageloadEventsAdaptiveGroups: { enabled: true, maxDuration: 400 * 86_400, notOlderThan: 15 * 86_400 } } };
         const dailyQueries: string[] = [];
         const fetchImpl = async (_input: RequestInfo | URL, init?: RequestInit) => {
@@ -294,7 +295,7 @@ describe('traffic detail', () => {
                 const from = query.match(/datetime_geq: "([^"]+)"/)?.[1] ?? '';
                 const dates = from.startsWith('2026-09-12')
                     ? [
-                        { date: '2026-09-13', count: 8, sum: { visits: 5 }, avg: { sampleInterval: 100 } },
+                        { date: '2026-09-14', count: 8, sum: { visits: 5 }, avg: { sampleInterval: 100 } },
                         { date: '2026-09-18', count: 2, sum: { visits: 1 }, avg: { sampleInterval: 1_000 } },
                     ]
                     : [];
@@ -309,9 +310,18 @@ describe('traffic detail', () => {
         expect(dailyQueries).toHaveLength(2);
         expect(detail.daily).toHaveLength(7);
         expect(detail.daily.filter(point => point.pageViews === 0)).toHaveLength(5);
-        expect(detail.daily.filter(point => point.pageViews === 0).every(point => point.sampleInterval === 1_000)).toBe(true);
-        expect(detail.daily.find(point => point.date === '2026-09-13')).toMatchObject({ pageViews: 8, visits: 5, sampleInterval: 100 });
+        expect(detail.daily.filter(point => point.pageViews === 0).every(point => point.sampleInterval === undefined)).toBe(true);
+        expect(detail.daily.find(point => point.date === '2026-09-14')).toMatchObject({ pageViews: 8, visits: 5, sampleInterval: 100 });
         expect(detail.daily.find(point => point.date === '2026-09-18')).toMatchObject({ pageViews: 2, visits: 1 });
+
+        const inferredTuesday = detail.daily.find(point => point.date === '2026-09-15')!;
+        expect(inferredTuesday).toEqual({ date: '2026-09-15', pageViews: 0, visits: 0 });
+        expect(mergeDailyHistory(
+            [inferredTuesday],
+            [{ date: '2026-09-15', pageViews: 100, visits: 100, sampleInterval: 1_000 }],
+            400,
+            '2026-09-25',
+        )).toEqual([{ date: '2026-09-15', pageViews: 100, visits: 100, sampleInterval: 1_000 }]);
     });
 
     test('retries windows without sampleInterval and does not zero-fill fallback data', async () => {
@@ -337,9 +347,32 @@ describe('traffic detail', () => {
 
         const detail = await fetchTrafficDetail(credentials, fetchImpl, now);
 
-        expect(dailyQueries.filter(query => query.includes('avg { sampleInterval }'))).toHaveLength(2);
+        expect(dailyQueries.filter(query => query.includes('avg { sampleInterval }'))).toHaveLength(1);
         expect(dailyQueries.filter(query => !query.includes('avg { sampleInterval }'))).toHaveLength(2);
         expect(detail.daily).toEqual([{ date: '2026-09-13', pageViews: 8, visits: 5 }]);
+    });
+
+    test('rejects a failed daily window and reports unavailable detail from loadSiteStats', async () => {
+        const settings = { settings: { rumPageloadEventsAdaptiveGroups: { enabled: true, maxDuration: 400 * 86_400, notOlderThan: 15 * 86_400 } } };
+        const fetchImpl = async (input: RequestInfo | URL, init?: RequestInit) => {
+            if (String(input).includes('api.github.com')) {
+                return Response.json({ stargazers_count: 1, forks_count: 2 });
+            }
+            const query = JSON.parse(String(init?.body)).query as string;
+            if (query.includes('settings {')) return Response.json({ data: { viewer: { accounts: [settings] } } });
+            if (query.includes('dimensions { date }')) {
+                const message = query.includes('avg { sampleInterval }')
+                    ? 'unknown field "sampleInterval"'
+                    : 'temporary daily window failure';
+                return Response.json({ errors: [{ message }] });
+            }
+            const aliases = [...query.matchAll(/(\w+): rumPageloadEventsAdaptiveGroups/g)].map(match => match[1]!);
+            return Response.json({ data: { viewer: { accounts: [Object.fromEntries(aliases.map(alias => [alias, []]))] } } });
+        };
+
+        await expect(fetchTrafficDetail(credentials, fetchImpl, now)).rejects.toThrow('temporary daily window failure');
+        await expect(loadSiteStats({ accountId: credentials.accountId, token: credentials.token }, fetchImpl))
+            .resolves.toMatchObject({ detail: null });
     });
 });
 

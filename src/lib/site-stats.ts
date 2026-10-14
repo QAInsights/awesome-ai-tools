@@ -374,25 +374,21 @@ export async function fetchTrafficDetail(
     };
 
     const dailyByDate = new Map<string, DailyTraffic>();
+    let includeSampleInterval = true;
     for (const chunk of dailyChunks) {
         let groups: DimensionGroup[] | undefined;
-        let sampleIntervalSupported = true;
+        let windowHasSampleInterval = includeSampleInterval;
         try {
-            const account = await queryAccount([dailyAlias(host, chunk, true)]);
+            const account = await queryAccount([dailyAlias(host, chunk, includeSampleInterval)]);
             groups = account.daily as DimensionGroup[] | undefined;
         } catch (error) {
-            if (error instanceof Error && error.message.includes('sampleInterval')) {
-                sampleIntervalSupported = false;
-                try {
-                    const account = await queryAccount([dailyAlias(host, chunk, false)]);
-                    groups = account.daily as DimensionGroup[] | undefined;
-                } catch (fallbackError) {
-                    console.error('[Site Stats] Daily window unavailable:', fallbackError instanceof Error ? fallbackError.message : String(fallbackError));
-                    continue;
-                }
+            if (includeSampleInterval && error instanceof Error && error.message.includes('sampleInterval')) {
+                includeSampleInterval = false;
+                windowHasSampleInterval = false;
+                const account = await queryAccount([dailyAlias(host, chunk, false)]);
+                groups = account.daily as DimensionGroup[] | undefined;
             } else {
-                console.error('[Site Stats] Daily window unavailable:', error instanceof Error ? error.message : String(error));
-                continue;
+                throw error;
             }
         }
         const rows = (groups ?? []).filter(group => {
@@ -400,13 +396,9 @@ export async function fetchTrafficDetail(
             return typeof date === 'string' && validIsoDate(date) && date >= coverage.from && date <= coverage.to;
         });
         if (!rows.length) continue;
-        let windowMaxInterval: number | undefined;
         for (const group of rows) {
             const date = group.dimensions.date as string;
             const sampleInterval = sampleIntervalOf(group.avg?.sampleInterval);
-            if (sampleInterval !== undefined) {
-                windowMaxInterval = Math.max(windowMaxInterval ?? sampleInterval, sampleInterval);
-            }
             const existing = dailyByDate.get(date);
             const entry: DailyTraffic = existing ?? { date, pageViews: 0, visits: 0 };
             entry.pageViews += finiteNumber(group.count);
@@ -416,7 +408,7 @@ export async function fetchTrafficDetail(
             }
             dailyByDate.set(date, entry);
         }
-        if (!sampleIntervalSupported) continue;
+        if (!windowHasSampleInterval) continue;
         const firstWindowDay = startOfUtcDay(new Date(chunk.from));
         for (let day = firstWindowDay.getTime(); day < new Date(chunk.to).getTime(); day += DAY) {
             const date = isoDate(new Date(day));
@@ -425,7 +417,6 @@ export async function fetchTrafficDetail(
                 date,
                 pageViews: 0,
                 visits: 0,
-                ...(windowMaxInterval === undefined ? {} : { sampleInterval: windowMaxInterval }),
             });
         }
     }
