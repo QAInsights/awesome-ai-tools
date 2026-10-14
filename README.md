@@ -273,6 +273,7 @@ AI tools that generate full apps or UIs from natural language, no local setup re
 | **[Ploy](https://ploy.ai/r/1YGBA1JY)** | Ploy | AI marketing platform that builds and hosts on-brand websites as production-grade Astro code with GitHub sync, then runs "Ploybook" agents that continuously fix technical SEO, write content, identify visitors, and run ads experiments; free tier with 800 credits/day |
 | **[Rork](https://rork.com/)** | Rork | Prompt-to-mobile-app builder for iOS, Android, and web with live simulation and App Store/TestFlight publishing |
 | **[Cloudflare OS](https://os.cloudflare.app)** | Cloudflare | Open-source (Apache-2.0) agent workspace built on Cloudflare Workers that Cloudflare runs internally: an agent chat UI grounded in company context and skills, sandboxed "Gadgets" (personal apps agents build, each instance in its own Dynamic Worker Facet) that can be shared and modified, and capability-based "Gatekeepers" that broker OAuth access to services like Google Workspace with logging and human-in-the-loop approval; deploy to your own Cloudflare account or `workerd`, managed deployments on waitlist.; [GitHub](https://github.com/cloudflare/cloudflare-os) |
+| **[Modaal](https://modaal.dev/)** | Modaal | Mac app that builds native iOS and Android apps in SwiftUI and Jetpack Compose with the AI coding agent you already pay for, from a spec you approve before code is written. |
 
 ---
 
