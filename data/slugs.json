@@ -2130,6 +2130,18 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "agent-toolkit-for-aws",
+    "name": "Agent Toolkit for AWS",
+    "company": "AWS",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "bifrost",
+    "name": "Bifrost",
+    "company": "Maxim AI",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
