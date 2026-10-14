@@ -8,6 +8,7 @@ import {
     fetchTrafficDetail,
     fetchTrafficStats,
     mergeDimensionGroups,
+    mergeDailyHistory,
     topBreakdownRows,
     parseGitHubRepo,
     summarizeRumGroups,
@@ -233,10 +234,20 @@ describe('traffic detail', () => {
             refererHost: [{ count: 2, sum: { visits: 2 }, dimensions: { refererHost: '' } }],
             deviceType: [{ count: 5, sum: { visits: 2 }, dimensions: { deviceType: 'desktop' } }],
         };
+        const dailyQueries: string[] = [];
         const fetchImpl = async (_input: RequestInfo | URL, init?: RequestInit) => {
             const query = JSON.parse(String(init?.body)).query as string;
             queries.push(query);
             if (query.includes('settings {')) return Response.json({ data: { viewer: { accounts: [settings] } } });
+            if (query.includes('avg { sampleInterval }')) {
+                dailyQueries.push(query);
+                const from = query.match(/datetime_geq: "([^"]+)"/)?.[1]?.slice(0, 10) ?? '';
+                const to = query.match(/datetime_lt: "([^"]+)"/)?.[1]?.slice(0, 10) ?? '';
+                const dailyRows = rows.date!
+                    .filter(row => (row.dimensions.date ?? '') >= from && (row.dimensions.date ?? '') < to)
+                    .map(row => ({ ...row, avg: { sampleInterval: row.dimensions.date === '2026-09-24' ? 100 : 50 } }));
+                return Response.json({ data: { viewer: { accounts: [{ daily: dailyRows }] } } });
+            }
             const dimension = query.match(/dimensions \{ (\w+) \}/)?.[1] ?? '';
             if (dimension === 'countryName') return Response.json({ errors: [{ message: 'unknown field countryName' }] });
             const aliases = [...query.matchAll(/(\w+): rumPageloadEventsAdaptiveGroups/g)].map(match => match[1]!);
@@ -247,8 +258,10 @@ describe('traffic detail', () => {
 
         expect(detail.coverage).toEqual({ from: '2026-03-31', to: '2026-09-25' });
         expect(detail.daily).toEqual([
-            { date: '2026-09-24', pageViews: 2, visits: 1 },
-            { date: '2026-09-25', pageViews: 8, visits: 5 },
+            { date: '2026-09-22', pageViews: 0, visits: 0, sampleInterval: 100 },
+            { date: '2026-09-23', pageViews: 0, visits: 0, sampleInterval: 100 },
+            { date: '2026-09-24', pageViews: 2, visits: 1, sampleInterval: 100 },
+            { date: '2026-09-25', pageViews: 8, visits: 5, sampleInterval: 50 },
         ]);
         expect(Object.keys(detail.breakdowns)).toEqual(['7', '30', '90']);
         expect(detail.breakdowns['30']).toEqual({
@@ -257,11 +270,122 @@ describe('traffic detail', () => {
             countries: [],
             devices: [{ label: 'desktop', pageViews: 5, visits: 2 }],
         });
-        expect(queries).toHaveLength(6);
-        expect(queries[1]).toContain('dimensions { date }');
-        expect(queries[1]).toContain('datetime_lt: "2026-09-26T00:00:00Z"');
-        expect(queries[1]).not.toContain('datetime_leq');
-        expect(queries[2]).toContain('r7_0: rumPageloadEventsAdaptiveGroups');
-        expect(queries[2]).toContain('r90_0: rumPageloadEventsAdaptiveGroups');
+        expect(dailyQueries).toHaveLength(26);
+        for (const query of dailyQueries) {
+            expect([...query.matchAll(/\w+: rumPageloadEventsAdaptiveGroups/g)]).toHaveLength(1);
+            expect(query).toContain('avg { sampleInterval }');
+            expect(query).toContain('datetime_lt:');
+            expect(query).not.toContain('datetime_leq');
+            const from = query.match(/datetime_geq: "([^"]+)"/)?.[1];
+            const to = query.match(/datetime_lt: "([^"]+)"/)?.[1];
+            expect((new Date(to!).getTime() - new Date(from!).getTime()) / 86_400_000).toBeLessThanOrEqual(7);
+        }
+        expect(queries).toHaveLength(31);
+    });
+
+    test('zero-fills days only for non-empty windows with the maximum sampling interval', async () => {
+        const settings = { settings: { rumPageloadEventsAdaptiveGroups: { enabled: true, maxDuration: 400 * 86_400, notOlderThan: 15 * 86_400 } } };
+        const dailyQueries: string[] = [];
+        const fetchImpl = async (_input: RequestInfo | URL, init?: RequestInit) => {
+            const query = JSON.parse(String(init?.body)).query as string;
+            if (query.includes('settings {')) return Response.json({ data: { viewer: { accounts: [settings] } } });
+            if (query.includes('avg { sampleInterval }')) {
+                dailyQueries.push(query);
+                const from = query.match(/datetime_geq: "([^"]+)"/)?.[1] ?? '';
+                const dates = from.startsWith('2026-09-12')
+                    ? [
+                        { date: '2026-09-13', count: 8, sum: { visits: 5 }, avg: { sampleInterval: 100 } },
+                        { date: '2026-09-18', count: 2, sum: { visits: 1 }, avg: { sampleInterval: 1_000 } },
+                    ]
+                    : [];
+                return Response.json({ data: { viewer: { accounts: [{ daily: dates.map(row => ({ ...row, dimensions: { date: row.date } })) }] } } });
+            }
+            const aliases = [...query.matchAll(/(\w+): rumPageloadEventsAdaptiveGroups/g)].map(match => match[1]!);
+            return Response.json({ data: { viewer: { accounts: [Object.fromEntries(aliases.map(alias => [alias, []]))] } } });
+        };
+
+        const detail = await fetchTrafficDetail(credentials, fetchImpl, now);
+
+        expect(dailyQueries).toHaveLength(2);
+        expect(detail.daily).toHaveLength(7);
+        expect(detail.daily.filter(point => point.pageViews === 0)).toHaveLength(5);
+        expect(detail.daily.filter(point => point.pageViews === 0).every(point => point.sampleInterval === 1_000)).toBe(true);
+        expect(detail.daily.find(point => point.date === '2026-09-13')).toMatchObject({ pageViews: 8, visits: 5, sampleInterval: 100 });
+        expect(detail.daily.find(point => point.date === '2026-09-18')).toMatchObject({ pageViews: 2, visits: 1 });
+    });
+
+    test('retries windows without sampleInterval and does not zero-fill fallback data', async () => {
+        const settings = { settings: { rumPageloadEventsAdaptiveGroups: { enabled: true, maxDuration: 400 * 86_400, notOlderThan: 15 * 86_400 } } };
+        const dailyQueries: string[] = [];
+        const fetchImpl = async (_input: RequestInfo | URL, init?: RequestInit) => {
+            const query = JSON.parse(String(init?.body)).query as string;
+            if (query.includes('settings {')) return Response.json({ data: { viewer: { accounts: [settings] } } });
+            if (query.includes('dimensions { date }')) {
+                dailyQueries.push(query);
+                if (query.includes('avg { sampleInterval }')) {
+                    return Response.json({ errors: [{ message: 'unknown field "sampleInterval"' }] });
+                }
+                const from = query.match(/datetime_geq: "([^"]+)"/)?.[1] ?? '';
+                const daily = from.startsWith('2026-09-12')
+                    ? [{ count: 8, sum: { visits: 5 }, dimensions: { date: '2026-09-13' } }]
+                    : [];
+                return Response.json({ data: { viewer: { accounts: [{ daily }] } } });
+            }
+            const aliases = [...query.matchAll(/(\w+): rumPageloadEventsAdaptiveGroups/g)].map(match => match[1]!);
+            return Response.json({ data: { viewer: { accounts: [Object.fromEntries(aliases.map(alias => [alias, []]))] } } });
+        };
+
+        const detail = await fetchTrafficDetail(credentials, fetchImpl, now);
+
+        expect(dailyQueries.filter(query => query.includes('avg { sampleInterval }'))).toHaveLength(2);
+        expect(dailyQueries.filter(query => !query.includes('avg { sampleInterval }'))).toHaveLength(2);
+        expect(detail.daily).toEqual([{ date: '2026-09-13', pageViews: 8, visits: 5 }]);
+    });
+});
+
+describe('mergeDailyHistory', () => {
+    test('keeps finer samples and replaces entries without prior sampling metadata', () => {
+        const previous = [
+            { date: '2026-09-24', pageViews: 400, visits: 300, sampleInterval: 100 },
+            { date: '2026-09-25', pageViews: 0, visits: 0, sampleInterval: 1_000 },
+            { date: '2026-09-26', pageViews: 10, visits: 5 },
+        ];
+        const fresh = [
+            { date: '2026-09-24', pageViews: 0, visits: 0, sampleInterval: 1_000 },
+            { date: '2026-09-25', pageViews: 100, visits: 50, sampleInterval: 100 },
+            { date: '2026-09-26', pageViews: 12, visits: 6, sampleInterval: 100 },
+        ];
+
+        expect(mergeDailyHistory(previous, fresh, 400, '2026-09-26')).toEqual([
+            previous[0]!,
+            fresh[1]!,
+            fresh[2]!,
+        ]);
+    });
+
+    test('does not replace sampled entries with unknown intervals but fills new dates', () => {
+        const previous = [{ date: '2026-09-24', pageViews: 400, visits: 300, sampleInterval: 100 }];
+        const fresh = [
+            { date: '2026-09-24', pageViews: 0, visits: 0 },
+            { date: '2026-09-25', pageViews: 8, visits: 5 },
+        ];
+
+        expect(mergeDailyHistory(previous, fresh, 400, '2026-09-25')).toEqual([
+            previous[0]!,
+            fresh[1]!,
+        ]);
+    });
+
+    test('filters invalid and future dates, sorts, and keeps only the last maxDays', () => {
+        const history = [
+            { date: '2026-09-26', pageViews: 3, visits: 2 },
+            { date: '2026-09-24', pageViews: 1, visits: 1 },
+            { date: '2026-02-30', pageViews: 1, visits: 1 },
+            { date: '2026-10-01', pageViews: 1, visits: 1 },
+        ];
+        const fresh = [{ date: '2026-09-25', pageViews: 2, visits: 1 }];
+
+        expect(mergeDailyHistory(history, fresh, 2, '2026-09-30').map(point => point.date))
+            .toEqual(['2026-09-25', '2026-09-26']);
     });
 });

@@ -18,6 +18,7 @@ export interface GitHubStats {
 
 export interface DailyTraffic extends TrafficWindow {
     date: string;
+    sampleInterval?: number;
 }
 
 export interface BreakdownRow extends TrafficWindow {
@@ -39,7 +40,7 @@ export const DETAIL_RANGES = [7, 30, 90] as const;
 export interface TrafficDetail {
     /** First and last complete UTC day queried (inclusive); days inside it without rows had no traffic. */
     coverage: { from: string; to: string };
-    /** Complete UTC days with traffic, oldest first, spanning two of the longest range for period-over-period deltas. */
+    /** Persisted complete UTC days, including explicit zero-traffic days, oldest first. */
     daily: DailyTraffic[];
     /** Top rows by page views and by visits per dimension, keyed by range length in days. */
     breakdowns: Record<string, TrafficBreakdowns>;
@@ -218,6 +219,7 @@ export async function fetchTrafficStats(
 interface DimensionGroup {
     count: number;
     sum: { visits: number };
+    avg?: { sampleInterval?: unknown };
     dimensions: Record<string, unknown>;
 }
 
@@ -270,6 +272,82 @@ function isoDate(value: Date): string {
     return value.toISOString().slice(0, 10);
 }
 
+function validIsoDate(value: string): boolean {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+    const date = new Date(`${value}T00:00:00Z`);
+    return Number.isFinite(date.getTime()) && isoDate(date) === value;
+}
+
+function sampleIntervalOf(value: unknown): number | undefined {
+    return typeof value === 'number' && Number.isFinite(value) && value >= 1 ? value : undefined;
+}
+
+function dailyWindows(
+    today: Date,
+    notOlderThanSec: number,
+    maxDurationSec: number,
+): Array<{ from: string; to: string }> {
+    const endMs = today.getTime();
+    const requestedStartMs = Math.min(
+        endMs,
+        endMs - Math.max(0, finiteNumber(notOlderThanSec)) * SECOND + 120 * SECOND,
+    );
+    const requestedStart = new Date(requestedStartMs);
+    const startDay = startOfUtcDay(requestedStart);
+    const startMs = startDay.getTime() === requestedStartMs ? requestedStartMs : startDay.getTime() + DAY;
+    const maxDurationMs = finiteNumber(maxDurationSec) * SECOND;
+    const windowMs = maxDurationMs > 0 && maxDurationMs < 7 * DAY ? maxDurationMs : 7 * DAY;
+    const windows: Array<{ from: string; to: string }> = [];
+    for (let fromMs = startMs; fromMs < endMs; fromMs += windowMs) {
+        windows.push({
+            from: isoSeconds(new Date(fromMs)),
+            to: isoSeconds(new Date(Math.min(fromMs + windowMs, endMs))),
+        });
+    }
+    return windows;
+}
+
+function dailyAlias(
+    host: string,
+    chunk: { from: string; to: string },
+    includeSampleInterval: boolean,
+): string {
+    const avg = includeSampleInterval ? ' avg { sampleInterval }' : '';
+    return `daily: rumPageloadEventsAdaptiveGroups(limit: 10, orderBy: [date_ASC], filter: { requestHost: ${JSON.stringify(host)}, datetime_geq: ${JSON.stringify(chunk.from)}, datetime_lt: ${JSON.stringify(chunk.to)} }) { count sum { visits }${avg} dimensions { date } }`;
+}
+
+/** Preserves the finest sampled value for each date while retaining older history. */
+export function mergeDailyHistory(
+    previous: DailyTraffic[] | undefined,
+    fresh: DailyTraffic[],
+    maxDays = 400,
+    today = isoDate(new Date()),
+): DailyTraffic[] {
+    const byDate = new Map<string, DailyTraffic>();
+    const canKeep = (entry: DailyTraffic) => validIsoDate(entry.date) && entry.date <= today;
+    for (const entry of previous ?? []) {
+        if (canKeep(entry)) byDate.set(entry.date, entry);
+    }
+    for (const entry of fresh) {
+        if (!canKeep(entry)) continue;
+        const existing = byDate.get(entry.date);
+        if (!existing) {
+            byDate.set(entry.date, entry);
+            continue;
+        }
+        const previousInterval = sampleIntervalOf(existing.sampleInterval);
+        const freshInterval = sampleIntervalOf(entry.sampleInterval);
+        if (previousInterval === undefined ? freshInterval !== undefined : freshInterval !== undefined && freshInterval <= previousInterval) {
+            byDate.set(entry.date, entry);
+        }
+    }
+    const days = Number.isFinite(maxDays) ? Math.max(0, Math.floor(maxDays)) : 400;
+    if (days === 0) return [];
+    return [...byDate.values()]
+        .sort((a, b) => a.date.localeCompare(b.date))
+        .slice(-days);
+}
+
 /** Daily series and per-range breakdowns for the dashboard on /advertise. */
 export async function fetchTrafficDetail(
     credentials: { accountId: string; token: string },
@@ -284,11 +362,8 @@ export async function fetchTrafficDetail(
     // Stop at midnight UTC so the series only contains complete days.
     const today = startOfUtcDay(now);
     const dailySec = Math.min(2 * longest * DAY / SECOND, limits.notOlderThan);
-    const dailyChunks = buildRetentionChunks(today, dailySec, limits.maxDuration);
-    const firstChunkStart = new Date(dailyChunks[0]!.from);
-    const firstFullDay = startOfUtcDay(firstChunkStart).getTime() === firstChunkStart.getTime()
-        ? firstChunkStart
-        : new Date(startOfUtcDay(firstChunkStart).getTime() + DAY);
+    const dailyChunks = dailyWindows(today, dailySec, limits.maxDuration);
+    const firstFullDay = new Date(dailyChunks[0]?.from ?? today.toISOString());
     const coverage = { from: isoDate(firstFullDay), to: isoDate(new Date(today.getTime() - DAY)) };
 
     const queryAccount = async (fields: string[]) => {
@@ -298,12 +373,63 @@ export async function fetchTrafficDetail(
         return account;
     };
 
-    const dailyAccount = await queryAccount(dailyChunks.map((chunk, index) => rumAlias(`d${index}`, host, chunk, 'date', 1000)));
-    const dailyTotals = mergeDimensionGroups(dailyChunks.map((_chunk, index) => dailyAccount[`d${index}`] as DimensionGroup[] | undefined), 'date');
-    const daily = [...dailyTotals.entries()]
-        .filter(([date]) => /^\d{4}-\d{2}-\d{2}$/.test(date) && date >= coverage.from && date <= coverage.to)
-        .map(([date, window]) => ({ date, ...window }))
-        .sort((a, b) => a.date.localeCompare(b.date));
+    const dailyByDate = new Map<string, DailyTraffic>();
+    for (const chunk of dailyChunks) {
+        let groups: DimensionGroup[] | undefined;
+        let sampleIntervalSupported = true;
+        try {
+            const account = await queryAccount([dailyAlias(host, chunk, true)]);
+            groups = account.daily as DimensionGroup[] | undefined;
+        } catch (error) {
+            if (error instanceof Error && error.message.includes('sampleInterval')) {
+                sampleIntervalSupported = false;
+                try {
+                    const account = await queryAccount([dailyAlias(host, chunk, false)]);
+                    groups = account.daily as DimensionGroup[] | undefined;
+                } catch (fallbackError) {
+                    console.error('[Site Stats] Daily window unavailable:', fallbackError instanceof Error ? fallbackError.message : String(fallbackError));
+                    continue;
+                }
+            } else {
+                console.error('[Site Stats] Daily window unavailable:', error instanceof Error ? error.message : String(error));
+                continue;
+            }
+        }
+        const rows = (groups ?? []).filter(group => {
+            const date = group?.dimensions?.date;
+            return typeof date === 'string' && validIsoDate(date) && date >= coverage.from && date <= coverage.to;
+        });
+        if (!rows.length) continue;
+        let windowMaxInterval: number | undefined;
+        for (const group of rows) {
+            const date = group.dimensions.date as string;
+            const sampleInterval = sampleIntervalOf(group.avg?.sampleInterval);
+            if (sampleInterval !== undefined) {
+                windowMaxInterval = Math.max(windowMaxInterval ?? sampleInterval, sampleInterval);
+            }
+            const existing = dailyByDate.get(date);
+            const entry: DailyTraffic = existing ?? { date, pageViews: 0, visits: 0 };
+            entry.pageViews += finiteNumber(group.count);
+            entry.visits += finiteNumber(group.sum?.visits);
+            if (sampleInterval !== undefined) {
+                entry.sampleInterval = Math.max(entry.sampleInterval ?? sampleInterval, sampleInterval);
+            }
+            dailyByDate.set(date, entry);
+        }
+        if (!sampleIntervalSupported) continue;
+        const firstWindowDay = startOfUtcDay(new Date(chunk.from));
+        for (let day = firstWindowDay.getTime(); day < new Date(chunk.to).getTime(); day += DAY) {
+            const date = isoDate(new Date(day));
+            if (date < coverage.from || date > coverage.to || dailyByDate.has(date)) continue;
+            dailyByDate.set(date, {
+                date,
+                pageViews: 0,
+                visits: 0,
+                ...(windowMaxInterval === undefined ? {} : { sampleInterval: windowMaxInterval }),
+            });
+        }
+    }
+    const daily = [...dailyByDate.values()].sort((a, b) => a.date.localeCompare(b.date));
 
     const rangeChunks = DETAIL_RANGES.map(days => ({
         days,

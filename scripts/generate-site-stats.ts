@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { writeFile } from 'fs/promises';
-import { loadSiteStats } from '../src/lib/site-stats';
+import { loadSiteStats, mergeDailyHistory } from '../src/lib/site-stats';
 import type { GitHubHistoryPoint, GitHubStats, SiteStats } from '../src/lib/site-stats';
 
 const OUTPUT_PATH = 'public/data/site-stats.json';
@@ -14,7 +14,19 @@ export function mergeSiteStats(previous: SiteStats | null, fresh: SiteStats): Si
         traffic: fresh.traffic ?? previous?.traffic ?? null,
         github: fresh.github ?? previous?.github ?? null,
     };
-    const detail = fresh.detail ?? previous?.detail;
+    let detail = fresh.detail ?? previous?.detail;
+    if (previous?.detail && fresh.detail) {
+        const daily = mergeDailyHistory(previous.detail.daily, fresh.detail.daily);
+        const minCoverageFrom = previous.detail.coverage.from < fresh.detail.coverage.from
+            ? previous.detail.coverage.from
+            : fresh.detail.coverage.from;
+        const from = daily.length ? (daily[0]!.date > minCoverageFrom ? daily[0]!.date : minCoverageFrom) : minCoverageFrom;
+        detail = {
+            coverage: { from, to: fresh.detail.coverage.to },
+            daily,
+            breakdowns: fresh.detail.breakdowns,
+        };
+    }
     if (detail) merged.detail = detail;
     const history = fresh.history ?? previous?.history;
     if (history) merged.history = history;
@@ -61,7 +73,10 @@ async function main() {
     await writeFile(OUTPUT_PATH, `${JSON.stringify(merged, null, 2)}\n`);
     const traffic = merged.traffic ? `traffic ${merged.traffic.last30.pageViews} pv/30d` : 'traffic unavailable';
     const github = merged.github ? `github ${merged.github.stars} stars` : 'github unavailable';
-    console.log(`[Site Stats] Wrote ${OUTPUT_PATH}: ${traffic}, ${github}`);
+    const daily = merged.detail?.daily ?? [];
+    const intervals = daily.map(point => point.sampleInterval).filter((interval): interval is number => typeof interval === 'number' && Number.isFinite(interval) && interval >= 1);
+    const maxSampleInterval = intervals.length ? Math.max(...intervals) : 'unknown';
+    console.log(`[Site Stats] Wrote ${OUTPUT_PATH}: ${traffic}, ${github}, daily ${daily.length} days, max sampleInterval ${maxSampleInterval}`);
 }
 
 if (import.meta.main) {

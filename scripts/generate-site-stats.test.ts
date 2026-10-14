@@ -62,6 +62,36 @@ describe('detail and history', () => {
         expect(merged.history).toEqual(history);
     });
 
+    test('preserves finer previous daily samples while merging detail coverage', () => {
+        const previousDetail = {
+            coverage: { from: '2026-09-01', to: '2026-09-25' },
+            daily: [
+                { date: '2026-09-24', pageViews: 400, visits: 300, sampleInterval: 100 },
+                { date: '2026-09-25', pageViews: 300, visits: 200, sampleInterval: 100 },
+            ],
+            breakdowns: { '30': { pages: [], referrers: [], countries: [], devices: [] } },
+        };
+        const freshDetail = {
+            coverage: { from: '2026-09-20', to: '2026-09-26' },
+            daily: [
+                { date: '2026-09-24', pageViews: 0, visits: 0, sampleInterval: 1_000 },
+                { date: '2026-09-25', pageViews: 1_000, visits: 500, sampleInterval: 1_000 },
+            ],
+            breakdowns: { '30': { pages: [], referrers: [], countries: [], devices: [] } },
+        };
+
+        const merged = mergeSiteStats(
+            { ...previous, detail: previousDetail },
+            { ...previous, generatedAt: '2026-09-27T00:00:00.000Z', detail: freshDetail },
+        );
+
+        expect(merged.detail).toEqual({
+            coverage: { from: '2026-09-24', to: '2026-09-26' },
+            daily: previousDetail.daily,
+            breakdowns: freshDetail.breakdowns,
+        });
+    });
+
     test('appends one GitHub snapshot per day', () => {
         const history = [{ date: '2026-09-26', stars: 10, forks: 2 }, { date: '2026-09-27', stars: 11, forks: 2 }];
         expect(appendGitHubHistory(history, '2026-09-27T09:00:00.000Z', { stars: 12, forks: 3 })).toEqual([
