@@ -1464,6 +1464,36 @@
     "lastUpdated": "2026-10-09"
   },
   {
+    "slug": "maki",
+    "name": "maki",
+    "company": "Tony Solomonik",
+    "pricing": "open-source",
+    "pricingDetail": "Maki is MIT-licensed and free to install, but it is bring-your-own-key: you pay the model provider's API costs for whatever provider you connect (Anthropic, OpenAI, xAI, Google, Ollama, etc.).",
+    "description": "Maki is a Rust-native terminal coding agent (TUI) that reads, searches, edits, and runs code in your repo while aggressively minimizing context token usage. It is extendable through Neovim-style Lua plugins and supports many model providers.",
+    "keyFeatures": [
+      "index tool: tree-sitter skeletons of files (imports, types, signatures with line ranges) instead of full reads",
+      "code_execution: sandboxed Python interpreter where tools are async functions, so only printed output enters context",
+      "task tool with weak/medium/strong model tiers for subagents, each with its own chat window",
+      "tool_search defers large MCP tool sets behind a single search tool",
+      "Neovim-like Lua plugin API (maki.fs, maki.keymap, maki.treesitter) for custom tools, commands, keymaps, and providers",
+      "Native Rust TUI on ratatui: fast startup, 60 FPS, low memory, no JavaScript runtime",
+      "Tree-sitter-parsed bash permission system, plan mode, memory tool, headless --print mode, and ACP editor integration"
+    ],
+    "bestFor": "Developers who want a fast, keyboard-driven terminal coding agent with fine-grained control over token spend, model choice, and extensibility via Lua plugins.",
+    "notIdealFor": "Users who want a fully managed, zero-setup subscription product or a GUI/IDE-first experience, since Maki requires bringing your own API keys and configuring providers.",
+    "recentUpdates": "v0.6.0 (Oct 3, 2026) turned providers into Lua plugins with built-in credential/token handling; v0.5.7 (Sep 28, 2026) added MCP HTTP custom CA support, new model integrations, plugin hooks, and project-scoped input history; v0.5.6 (Sep 22, 2026) added improved provider thinking controls, reasoning summaries, a bash tail parameter, flat memory view, and Clojure indexing; v0.5.5 (Sep 16, 2026) introduced breaking changes to the tool-result instructions mechanism for plugin authors. The latest GitHub release listed is v0.6.3.",
+    "verdict": "Maki's token-economy design (index skeletons, sandboxed code execution, deferred MCP tools, tiered subagents) is a genuinely differentiated approach, and the developer's published FrontierHarness figures claim a 70% pass rate at $2.06 per pass versus Codex and Claude Code. The trade-offs are a young project (first release March 2026) with 125 open issues, and the fact that you supply and pay for your own model API keys.",
+    "tags": [
+      "coding-agent",
+      "terminal",
+      "rust",
+      "open-source",
+      "token-efficiency",
+      "lua-plugins"
+    ],
+    "lastUpdated": "2026-10-14"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -4108,6 +4138,33 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-12"
+  },
+  {
+    "slug": "cmux",
+    "name": "cmux",
+    "company": "Manaflow",
+    "pricing": "free",
+    "pricingDetail": "cmux is free and open source under GPL-3.0-or-later; its hosted server components use the Business Source License 1.1, with commercial terms available for organizations that cannot comply with the GPL.",
+    "description": "cmux is a native macOS terminal built on libghostty for developers who run several AI coding agents in parallel. Vertical tabs show each workspace's git branch, linked pull request, working directory, ports and latest notification, and panes light up when an agent needs attention.",
+    "keyFeatures": [
+      "Notification rings and a notification panel that flag when Claude Code, Codex or OpenCode needs input",
+      "Vertical and horizontal tabs with git branch, PR status, working directory and listening ports",
+      "Scriptable in-app browser split with an automation API ported from agent-browser",
+      "`cmux ssh` remote workspaces and `cmux claude-teams` for Claude Code teammate mode as native splits",
+      "Session restore, custom commands and a CLI/socket API for programmatic control"
+    ],
+    "bestFor": "macOS developers juggling several terminal coding agents at once who want to see at a glance which one needs attention.",
+    "notIdealFor": "Windows or Linux users, and developers who prefer a plain tmux-based workflow without a GUI terminal.",
+    "recentUpdates": "cmux shipped v0.65.1 on October 12, 2026, publishes nightly builds, and was on GitHub Trending with more than 28,000 stars.",
+    "verdict": "A purpose-built, fast-moving terminal that makes multi-agent coding on macOS much easier to manage.",
+    "tags": [
+      "Terminal",
+      "macOS",
+      "Multi-Agent",
+      "Ghostty",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-13"
   },
   {
     "slug": "jules",
@@ -9548,6 +9605,114 @@
     "lastUpdated": "2026-10-12"
   },
   {
+    "slug": "agentmemory",
+    "name": "agentmemory",
+    "company": "rohitg00",
+    "pricing": "free",
+    "pricingDetail": "agentmemory is free and open source under Apache-2.0 and runs locally; optional LLM compression is billed by whichever model provider you configure, and local embeddings cost nothing.",
+    "description": "agentmemory is a persistent memory server for AI coding agents. It captures observations from sessions, organizes them into a knowledge graph with confidence scoring and decay, and serves them back through hybrid search so agents stop needing project context re-explained.",
+    "keyFeatures": [
+      "One-command install (`npx @agentmemory/agentmemory`) with interactive setup for Claude Code, Cursor, Codex CLI, Gemini CLI, Copilot CLI, OpenCode and more",
+      "Knowledge graph with confidence scoring, lifecycle decay and consolidation",
+      "Hybrid BM25, vector and graph retrieval with optional local embeddings",
+      "MCP server, REST API and a real-time web viewer",
+      "Published LongMemEval-S retrieval benchmarks and token-cost comparisons"
+    ],
+    "bestFor": "Developers who switch between several coding agents and want shared, durable project memory across sessions.",
+    "notIdealFor": "Teams that need a managed, hosted memory service with enterprise support and SLAs.",
+    "recentUpdates": "agentmemory released v0.9.30 on October 6, 2026, continues to receive commits, and was on GitHub Trending with more than 29,000 stars.",
+    "verdict": "A well-documented, benchmark-backed memory layer that plugs into almost every popular coding agent.",
+    "tags": [
+      "Memory",
+      "MCP",
+      "Coding Agents",
+      "Knowledge Graph",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-13"
+  },
+  {
+    "slug": "teamai",
+    "name": "TeamAI",
+    "company": "Tencent",
+    "pricing": "free",
+    "pricingDetail": "TeamAI is free and open source under the MIT license; it uses your own Git host and the AI tools your team already pays for.",
+    "description": "TeamAI is a CLI and agent skill from Tencent that stores a team's AI assets in a shared Git repository. Skills, rules, agents, hooks, MCP servers, models and learnings are synced automatically into each teammate's coding agents after a one-time init.",
+    "keyFeatures": [
+      "Shared Git repo for skills, rules, agents, hooks, MCP servers, env and model settings",
+      "Automatic sync into Claude Code, Codex, Cursor, GitHub Copilot CLI, OpenCode, Kiro, Trae, Qoder and other agents",
+      "Project-scope or user-scope installs with protected-branch publishing",
+      "Team context (beta): learnings, codebase graph and team wiki",
+      "Usage and session insights (beta) plus a dashboard"
+    ],
+    "bestFor": "Engineering teams that want every developer's coding agents to share the same skills, rules and MCP setup.",
+    "notIdealFor": "Solo developers using a single agent who have no shared configuration to distribute.",
+    "recentUpdates": "TeamAI released v0.27.0 on October 9, 2026 and v0.28.0 betas on October 12-13, 2026, and was on GitHub Trending with more than 5,000 stars.",
+    "verdict": "A practical, Git-native way to standardize AI agent configuration across a team and across many agent tools.",
+    "tags": [
+      "Team Collaboration",
+      "Agent Skills",
+      "MCP",
+      "Configuration",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-13"
+  },
+  {
+    "slug": "agent-toolkit-for-aws",
+    "name": "Agent Toolkit for AWS",
+    "company": "AWS",
+    "pricing": "free",
+    "pricingDetail": "The Agent Toolkit for AWS is free and open source under the Apache-2.0 license; you pay only for the AWS resources your agents create or use.",
+    "description": "Agent Toolkit for AWS is AWS's official kit for helping AI coding agents build, deploy and manage applications on AWS. It packages the managed AWS MCP Server, evaluated agent skills and rules files into plugins for Claude Code, Codex and Cursor, and also works with Kiro, fx and other MCP clients.",
+    "keyFeatures": [
+      "Plugins for Claude Code, Codex and Cursor: aws-core, aws-agents, aws-data-analytics, aws-agents-for-devsecops and aws-startup-advisor",
+      "Managed AWS MCP Server with access to 300+ AWS services through one authenticated endpoint",
+      "Sandboxed Python script execution and real-time AWS documentation search",
+      "IAM condition keys that separate agent actions from human actions, with CloudWatch metrics and CloudTrail audit logging",
+      "Evaluated agent skills installable with npx skills add aws/agent-toolkit-for-aws/skills, plus project rules files"
+    ],
+    "bestFor": "Developers and platform teams who want coding agents to build and operate AWS infrastructure with official skills and auditable guardrails.",
+    "notIdealFor": "Teams that do not deploy to AWS or that want a cloud-agnostic agent toolkit.",
+    "recentUpdates": "The repository received commits on October 14, 2026 and was on GitHub Trending (Python) with about 2,900 stars; AWS positions it as the successor to the AWS Labs MCP servers, skills and plugins.",
+    "verdict": "The official, best-supported way to give Claude Code, Codex or Cursor working knowledge of AWS with enterprise-grade guardrails.",
+    "tags": [
+      "AWS",
+      "MCP",
+      "Agent Skills",
+      "Plugins",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-14"
+  },
+  {
+    "slug": "bifrost",
+    "name": "Bifrost",
+    "company": "Maxim AI",
+    "pricing": "freemium",
+    "pricingDetail": "Bifrost is free and open source under the Apache 2.0 license; Maxim offers paid enterprise deployments with clustering, adaptive load balancing, guardrails and SSO.",
+    "description": "Bifrost is a high-performance open-source AI gateway written in Go that unifies 23+ model providers behind one OpenAI-compatible API. It adds failover, load balancing, semantic caching, an MCP gateway and governance, and has documented setups for routing Claude Code, Codex CLI, Cursor, Gemini CLI, GitHub Copilot and OpenCode through it.",
+    "keyFeatures": [
+      "One OpenAI-compatible API for OpenAI, Anthropic, AWS Bedrock, Google Vertex, Azure, Ollama, Groq and more",
+      "Automatic provider and model failover with load balancing across keys",
+      "Semantic caching, MCP gateway and custom plugin middleware",
+      "Virtual keys with budgets, rate limits and access control, plus a web UI for configuration",
+      "Prometheus metrics, tracing and request logging with published benchmarks of about 11 µs overhead at 5,000 RPS"
+    ],
+    "bestFor": "Teams that route coding agents and AI apps across many model providers and need governance, budgets and observability in one gateway.",
+    "notIdealFor": "Individual developers using a single provider directly who do not need a self-hosted gateway.",
+    "recentUpdates": "Bifrost HTTP v2.3.0 was released on October 13, 2026, the project was posted as a Show HN the same day, and it was on GitHub Trending (Go) with about 8,800 stars.",
+    "verdict": "A fast, mature open-source gateway for putting coding agents and AI apps behind one governed, multi-provider endpoint.",
+    "tags": [
+      "AI Gateway",
+      "LLM Routing",
+      "MCP",
+      "Observability",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-14"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
@@ -9790,140 +9955,5 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-05"
-  },
-  {
-    "slug": "cmux",
-    "name": "cmux",
-    "company": "Manaflow",
-    "pricing": "free",
-    "pricingDetail": "cmux is free and open source under GPL-3.0-or-later; its hosted server components use the Business Source License 1.1, with commercial terms available for organizations that cannot comply with the GPL.",
-    "description": "cmux is a native macOS terminal built on libghostty for developers who run several AI coding agents in parallel. Vertical tabs show each workspace's git branch, linked pull request, working directory, ports and latest notification, and panes light up when an agent needs attention.",
-    "keyFeatures": [
-      "Notification rings and a notification panel that flag when Claude Code, Codex or OpenCode needs input",
-      "Vertical and horizontal tabs with git branch, PR status, working directory and listening ports",
-      "Scriptable in-app browser split with an automation API ported from agent-browser",
-      "`cmux ssh` remote workspaces and `cmux claude-teams` for Claude Code teammate mode as native splits",
-      "Session restore, custom commands and a CLI/socket API for programmatic control"
-    ],
-    "bestFor": "macOS developers juggling several terminal coding agents at once who want to see at a glance which one needs attention.",
-    "notIdealFor": "Windows or Linux users, and developers who prefer a plain tmux-based workflow without a GUI terminal.",
-    "recentUpdates": "cmux shipped v0.65.1 on October 12, 2026, publishes nightly builds, and was on GitHub Trending with more than 28,000 stars.",
-    "verdict": "A purpose-built, fast-moving terminal that makes multi-agent coding on macOS much easier to manage.",
-    "tags": [
-      "Terminal",
-      "macOS",
-      "Multi-Agent",
-      "Ghostty",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-13"
-  },
-  {
-    "slug": "agentmemory",
-    "name": "agentmemory",
-    "company": "rohitg00",
-    "pricing": "free",
-    "pricingDetail": "agentmemory is free and open source under Apache-2.0 and runs locally; optional LLM compression is billed by whichever model provider you configure, and local embeddings cost nothing.",
-    "description": "agentmemory is a persistent memory server for AI coding agents. It captures observations from sessions, organizes them into a knowledge graph with confidence scoring and decay, and serves them back through hybrid search so agents stop needing project context re-explained.",
-    "keyFeatures": [
-      "One-command install (`npx @agentmemory/agentmemory`) with interactive setup for Claude Code, Cursor, Codex CLI, Gemini CLI, Copilot CLI, OpenCode and more",
-      "Knowledge graph with confidence scoring, lifecycle decay and consolidation",
-      "Hybrid BM25, vector and graph retrieval with optional local embeddings",
-      "MCP server, REST API and a real-time web viewer",
-      "Published LongMemEval-S retrieval benchmarks and token-cost comparisons"
-    ],
-    "bestFor": "Developers who switch between several coding agents and want shared, durable project memory across sessions.",
-    "notIdealFor": "Teams that need a managed, hosted memory service with enterprise support and SLAs.",
-    "recentUpdates": "agentmemory released v0.9.30 on October 6, 2026, continues to receive commits, and was on GitHub Trending with more than 29,000 stars.",
-    "verdict": "A well-documented, benchmark-backed memory layer that plugs into almost every popular coding agent.",
-    "tags": [
-      "Memory",
-      "MCP",
-      "Coding Agents",
-      "Knowledge Graph",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-13"
-  },
-  {
-    "slug": "teamai",
-    "name": "TeamAI",
-    "company": "Tencent",
-    "pricing": "free",
-    "pricingDetail": "TeamAI is free and open source under the MIT license; it uses your own Git host and the AI tools your team already pays for.",
-    "description": "TeamAI is a CLI and agent skill from Tencent that stores a team's AI assets in a shared Git repository. Skills, rules, agents, hooks, MCP servers, models and learnings are synced automatically into each teammate's coding agents after a one-time init.",
-    "keyFeatures": [
-      "Shared Git repo for skills, rules, agents, hooks, MCP servers, env and model settings",
-      "Automatic sync into Claude Code, Codex, Cursor, GitHub Copilot CLI, OpenCode, Kiro, Trae, Qoder and other agents",
-      "Project-scope or user-scope installs with protected-branch publishing",
-      "Team context (beta): learnings, codebase graph and team wiki",
-      "Usage and session insights (beta) plus a dashboard"
-    ],
-    "bestFor": "Engineering teams that want every developer's coding agents to share the same skills, rules and MCP setup.",
-    "notIdealFor": "Solo developers using a single agent who have no shared configuration to distribute.",
-    "recentUpdates": "TeamAI released v0.27.0 on October 9, 2026 and v0.28.0 betas on October 12-13, 2026, and was on GitHub Trending with more than 5,000 stars.",
-    "verdict": "A practical, Git-native way to standardize AI agent configuration across a team and across many agent tools.",
-    "tags": [
-      "Team Collaboration",
-      "Agent Skills",
-      "MCP",
-      "Configuration",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-13"
-  },
-  {
-    "slug": "agent-toolkit-for-aws",
-    "name": "Agent Toolkit for AWS",
-    "company": "AWS",
-    "pricing": "free",
-    "pricingDetail": "The Agent Toolkit for AWS is free and open source under the Apache-2.0 license; you pay only for the AWS resources your agents create or use.",
-    "description": "Agent Toolkit for AWS is AWS's official kit for helping AI coding agents build, deploy and manage applications on AWS. It packages the managed AWS MCP Server, evaluated agent skills and rules files into plugins for Claude Code, Codex and Cursor, and also works with Kiro, fx and other MCP clients.",
-    "keyFeatures": [
-      "Plugins for Claude Code, Codex and Cursor: aws-core, aws-agents, aws-data-analytics, aws-agents-for-devsecops and aws-startup-advisor",
-      "Managed AWS MCP Server with access to 300+ AWS services through one authenticated endpoint",
-      "Sandboxed Python script execution and real-time AWS documentation search",
-      "IAM condition keys that separate agent actions from human actions, with CloudWatch metrics and CloudTrail audit logging",
-      "Evaluated agent skills installable with npx skills add aws/agent-toolkit-for-aws/skills, plus project rules files"
-    ],
-    "bestFor": "Developers and platform teams who want coding agents to build and operate AWS infrastructure with official skills and auditable guardrails.",
-    "notIdealFor": "Teams that do not deploy to AWS or that want a cloud-agnostic agent toolkit.",
-    "recentUpdates": "The repository received commits on October 14, 2026 and was on GitHub Trending (Python) with about 2,900 stars; AWS positions it as the successor to the AWS Labs MCP servers, skills and plugins.",
-    "verdict": "The official, best-supported way to give Claude Code, Codex or Cursor working knowledge of AWS with enterprise-grade guardrails.",
-    "tags": [
-      "AWS",
-      "MCP",
-      "Agent Skills",
-      "Plugins",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-14"
-  },
-  {
-    "slug": "bifrost",
-    "name": "Bifrost",
-    "company": "Maxim AI",
-    "pricing": "freemium",
-    "pricingDetail": "Bifrost is free and open source under the Apache 2.0 license; Maxim offers paid enterprise deployments with clustering, adaptive load balancing, guardrails and SSO.",
-    "description": "Bifrost is a high-performance open-source AI gateway written in Go that unifies 23+ model providers behind one OpenAI-compatible API. It adds failover, load balancing, semantic caching, an MCP gateway and governance, and has documented setups for routing Claude Code, Codex CLI, Cursor, Gemini CLI, GitHub Copilot and OpenCode through it.",
-    "keyFeatures": [
-      "One OpenAI-compatible API for OpenAI, Anthropic, AWS Bedrock, Google Vertex, Azure, Ollama, Groq and more",
-      "Automatic provider and model failover with load balancing across keys",
-      "Semantic caching, MCP gateway and custom plugin middleware",
-      "Virtual keys with budgets, rate limits and access control, plus a web UI for configuration",
-      "Prometheus metrics, tracing and request logging with published benchmarks of about 11 µs overhead at 5,000 RPS"
-    ],
-    "bestFor": "Teams that route coding agents and AI apps across many model providers and need governance, budgets and observability in one gateway.",
-    "notIdealFor": "Individual developers using a single provider directly who do not need a self-hosted gateway.",
-    "recentUpdates": "Bifrost HTTP v2.3.0 was released on October 13, 2026, the project was posted as a Show HN the same day, and it was on GitHub Trending (Go) with about 8,800 stars.",
-    "verdict": "A fast, mature open-source gateway for putting coding agents and AI apps behind one governed, multi-provider endpoint.",
-    "tags": [
-      "AI Gateway",
-      "LLM Routing",
-      "MCP",
-      "Observability",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-14"
   }
 ]
