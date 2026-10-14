@@ -5305,6 +5305,37 @@
     "lastUpdated": "2026-10-03"
   },
   {
+    "slug": "modaal",
+    "name": "Modaal",
+    "company": "Modaal",
+    "pricing": "freemium",
+    "pricingDetail": "Free plan with no expiry and no card required (1 active project, one platform, unlimited prompts, no store distribution). Pro is €9/user/month billed annually (€15 monthly), unlocking unlimited projects, iOS+Android together, TestFlight/App Store distribution, Git collaboration and priority support. Optional human-support add-ons cost €199 (Human in the Loop) and from €2,500 (Team in the Loop); students get Pro free. No credit or per-token system — you pay separately for your own coding agent subscription.",
+    "description": "Modaal is a macOS app that orchestrates the AI coding agent you already subscribe to (Claude Code, Codex, Cursor, Gemini, Copilot and others) to build truly native iOS and Android apps in Swift/SwiftUI and Kotlin/Jetpack Compose. It turns your request into an approved spec before code is written, then runs a build-and-fix loop through Xcode or Gradle, producing an ordinary Xcode/Gradle project in a Git repo on your own Mac.",
+    "keyFeatures": [
+      "Spec-first workflow: agent writes PRD.md and a feature spec you approve before any code is written",
+      "Bring your own agent — 13 supported coding agents (Claude Code, Codex CLI, Cursor, Gemini CLI, GitHub Copilot CLI, Cline, Goose and more), no per-token markup",
+      "Truly native output: Swift/SwiftUI for iPhone, iPad and Apple Watch; Kotlin/Jetpack Compose for Android — no web view or hybrid runtime",
+      "Duet cross-platform mode: shared pure logic as reducers with native UI on each side, parity gated by byte-equality fixtures",
+      "Plan toggle to switch between spec-writing and direct build/debug/iterate modes",
+      "Project templates: production app, quick prototype, 2D game, with optional Apple Watch companion",
+      "Local builds on Apple Silicon Macs with export to Xcode and Git collaboration on Pro"
+    ],
+    "bestFor": "Mac owners who already pay for a Claude, ChatGPT or Cursor subscription and want to ship a real native iPhone (and increasingly Android) app they fully own, without hiring a mobile team.",
+    "notIdealFor": "Windows or Intel Mac users, non-developers needing heavy Firebase/backend hand-holding, and anyone wanting a fully managed no-code service — Android is still an open beta and the public changelog lags the app.",
+    "recentUpdates": "Android support launched on Product Hunt on September 17, 2026 (\"Modaal for Android — Ship on both stores from one project using Swift + Kotlin\"); the original business-grade iOS launch was February 5, 2026. MakerStack's review (October 4, 2026) notes Android is still an open beta and the public changelog is behind the app.",
+    "verdict": "Modaal is a cheap, well-documented way to keep a coding agent inside a tested native architecture, with a mature iPhone path, spec-first workflow and no token markups. Weaknesses: it requires a Mac (Apple Silicon), a separate paid coding agent, Android is still beta, and reviewers report rough edges like Firebase false errors and expiring agent logins.",
+    "tags": [
+      "native mobile",
+      "iOS",
+      "Android",
+      "AI coding agent",
+      "SwiftUI",
+      "Jetpack Compose",
+      "Mac app"
+    ],
+    "lastUpdated": "2026-10-14"
+  },
+  {
     "slug": "coderabbit",
     "name": "CodeRabbit",
     "company": "CodeRabbit",
