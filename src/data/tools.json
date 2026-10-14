@@ -1438,5 +1438,13 @@
   {
     "companyName": "Tencent",
     "toolName": "TeamAI"
+  },
+  {
+    "companyName": "AWS",
+    "toolName": "Agent Toolkit for AWS"
+  },
+  {
+    "companyName": "Maxim AI",
+    "toolName": "Bifrost"
   }
 ]
