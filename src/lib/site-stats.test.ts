@@ -363,7 +363,7 @@ describe('mergeDailyHistory', () => {
         ]);
     });
 
-    test('does not replace sampled entries with unknown intervals but fills new dates', () => {
+    test('replaces unsampled history but does not replace sampled entries with unknown intervals', () => {
         const previous = [{ date: '2026-09-24', pageViews: 400, visits: 300, sampleInterval: 100 }];
         const fresh = [
             { date: '2026-09-24', pageViews: 0, visits: 0 },
@@ -374,6 +374,10 @@ describe('mergeDailyHistory', () => {
             previous[0]!,
             fresh[1]!,
         ]);
+
+        const previousWithoutInterval = [{ date: '2026-09-24', pageViews: 400, visits: 300 }];
+        expect(mergeDailyHistory(previousWithoutInterval, [fresh[0]!], 400, '2026-09-25'))
+            .toEqual([fresh[0]!]);
     });
 
     test('filters invalid and future dates, sorts, and keeps only the last maxDays', () => {

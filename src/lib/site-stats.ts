@@ -337,7 +337,7 @@ export function mergeDailyHistory(
         }
         const previousInterval = sampleIntervalOf(existing.sampleInterval);
         const freshInterval = sampleIntervalOf(entry.sampleInterval);
-        if (previousInterval === undefined ? freshInterval !== undefined : freshInterval !== undefined && freshInterval <= previousInterval) {
+        if (previousInterval === undefined || (freshInterval !== undefined && freshInterval <= previousInterval)) {
             byDate.set(entry.date, entry);
         }
     }
