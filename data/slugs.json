@@ -1092,6 +1092,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "reason",
+    "name": "Reason",
+    "company": "Reason Machines",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",

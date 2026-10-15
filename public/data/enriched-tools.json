@@ -9926,5 +9926,36 @@
       "Generative Design"
     ],
     "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "reason",
+    "name": "Reason",
+    "company": "Reason Machines",
+    "pricing": "freemium",
+    "pricingDetail": "Developer plan is free with $10 in welcome compute credits, unlimited Bring Your Own Key (BYOK) support and one active cloud session at a time, no card required. Team Platform covers up to 15 members with zero per-seat fees, monthly platform credits and parallel background runners (price not published, 30-day money-back guarantee, no annual lock-in). Enterprise is custom with dedicated VPC/on-prem runners, SSO/SAML and custom SLAs. YC companies get $1,000 in credits.",
+    "description": "Reason is an autonomous software engineer for GitHub from Reason Machines. Connect a repository, assign issues, and its cloud agents open evidence-backed pull requests with screen recordings, logs and review-ready diffs. People drive it from the web app, a macOS desktop app (Reason for macOS runs cloud sessions against local files, tools and ports), and a CLI; programmatic access runs through an authenticated HTTP API and a Streamable HTTP MCP server with OAuth or API-key auth.",
+    "keyFeatures": [
+      "Issue-to-PR autonomous agents: assign GitHub issues and Reason's cloud sessions produce review-ready pull requests with screen recordings, logs and diffs as evidence",
+      "Reason Agent 1.1 harness claims a Coding Agent Index of 65.1 on GPT-6 Astra, beating Codex (62.5) at up to 22% lower cost per solved task, using parallel tool execution via a codemode tool and a fully cache-eligible prompt",
+      "Backlog chore daemon: Team Platform connects Linear and GitHub and runs parallel background agents on routine fixes and maintenance PRs",
+      "Multiple surfaces: web app, macOS desktop app, CLI, plus reason-plugins for Claude Code and Codex and a plugin marketplace",
+      "Full HTTP API (v3) with per-user API keys, idempotent session creation and a Reason MCP server (OAuth or Bearer key) for agent clients",
+      "Bring Your Own Key: plug in your own Anthropic, OpenAI or OpenRouter keys on the free Developer tier"
+    ],
+    "bestFor": "Indie developers and engineering teams who want an async agent to clear GitHub/Linear backlog chores autonomously, with verifiable PR evidence, and prefer BYOK pricing or predictable platform credits over per-seat fees.",
+    "notIdealFor": "Teams needing non-GitHub providers (GitLab/Bitbucket are not listed), anyone wanting fully on-prem code execution on the free tier (cloud sessions run on Reason's infrastructure; dedicated VPC/on-prem is Enterprise-only), or buyers who need a published Team Platform price before talking to sales.",
+    "recentUpdates": "Reason Agent 1.1 (October 10, 2026) claims to beat Codex on the Coding Agent Index, 65.1 vs 62.5 on GPT-6 Astra, at 22% lower cost per solved task; Reason for macOS brings cloud sessions to local files and ports; Agent 1.0 had earlier reported up to 39% lower median solving time on DeepSWE v1.1. Reason also launched a Reason for Startups deal giving current and alumni YC companies $1,000 in credits via Bookface.",
+    "verdict": "Reason pairs a credibly benchmarked agent harness (its own public Harbor jobs back the Codex-beating claims) with the surfaces teams actually need: web, desktop, CLI, API and MCP. The free BYOK Developer tier is genuinely usable for evaluation; the gaps are GitHub-only repo support, unpublished Team Platform pricing, and benchmark numbers that are self-reported rather than third-party-verified.",
+    "tags": [
+      "autonomous agent",
+      "async PRs",
+      "GitHub",
+      "Linear",
+      "BYOK",
+      "MCP",
+      "cloud agents",
+      "backlog automation"
+    ],
+    "lastUpdated": "2026-10-15"
   }
 ]
