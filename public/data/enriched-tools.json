@@ -9957,5 +9957,119 @@
       "backlog automation"
     ],
     "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "graphify",
+    "name": "Graphify",
+    "company": "Graphify Labs",
+    "pricing": "freemium",
+    "pricingDetail": "The Graphify skill and CLI are free and open source under Apache-2.0; code mapping runs fully locally with no LLM, while the optional semantic pass over docs, PDFs, images and video uses your assistant's model or your own API key. Graphify Cloud, an always-on hosted graph with cross-repo support, formal verification and code review, is a paid service with a free 14-day trial (pricing on graphify.com).",
+    "description": "Graphify turns a codebase, along with its docs, SQL schemas, configs, PDFs, images and video, into a queryable knowledge graph that AI coding assistants traverse instead of grepping through files. Typing `/graphify` in Claude Code, Cursor, Codex, Gemini CLI, GitHub Copilot or 20+ other assistants builds the graph locally with tree-sitter AST parsing and writes an interactive graph.html, a GRAPH_REPORT.md summary and a reusable graph.json.",
+    "keyFeatures": [
+      "Deterministic, fully local code mapping with tree-sitter AST parsing; no embeddings or vector store",
+      "Every edge tagged EXTRACTED (explicit in source) or INFERRED so agents can tell read facts from resolved ones",
+      "Multimodal ingestion of docs, SQL schemas, configs, PDFs, images and video into the same graph",
+      "One-command install (`uv tool install graphifyy`, `graphify install`) that registers the skill for Claude Code, Cursor, Codex, Gemini CLI, GitHub Copilot and 20+ assistants on macOS, Linux and Windows",
+      "Outputs graph.html, GRAPH_REPORT.md and versioned graph.json, plus an MCP server for querying the graph",
+      "Optional Graphify Cloud for live cross-repo graphs, code review and Sentry/Jira connectors"
+    ],
+    "bestFor": "Developers using AI coding assistants on large or unfamiliar codebases who want to cut token spend and give agents an explainable structural map rather than repeated file searches.",
+    "notIdealFor": "Teams that need an always-on, shared graph without paying for Graphify Cloud, or environments without Python 3.10+ and uv/pipx; the non-code semantic pass also sends content to your assistant's model or configured API.",
+    "recentUpdates": "Ships near-daily releases; v0.9.91 (October 14, 2026) merged eight community fixes, including a Windows MCP stdio hang fix, Rust/JS/TS call-resolution and id-collision fixes, an Ollama context-size fix and a bumped AST cache schema.",
+    "verdict": "One of the most widely adopted code-knowledge-graph skills for coding agents, with a fully local, deterministic core and transparent edge provenance; the open-source CLI covers most individual needs, while Cloud is the upsell for teams wanting a live cross-repo graph.",
+    "tags": [
+      "AI",
+      "Code Intelligence",
+      "Knowledge Graph",
+      "Agent Skills",
+      "MCP",
+      "Developer Tools"
+    ],
+    "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "neckbeard",
+    "name": "neckbeard",
+    "company": "bealesh",
+    "pricing": "free",
+    "pricingDetail": "Free and open source under Apache-2.0 with no account. You pay only for your coding agent's model usage and for the cloud resources you choose to deploy; optional helpers such as Infracost, OpenTofu and Checkov are separate tools.",
+    "description": "neckbeard is a DevOps/platform plugin for coding agents that turns an application repository into reviewable cloud infrastructure with a cost estimate attached. The agent analyzes the repo and asks the questions code can't answer, then a deterministic Go CLI maps the answers onto a human-maintained, CI-tested catalog of OpenTofu modules, so the agent never invents infrastructure.",
+    "keyFeatures": [
+      "`/neckbeard:analyze` builds an app profile where every fact cites a file and line, inferences carry confidence and open assumptions block planning",
+      "`/neckbeard:estimate` prices the plan against the catalog with Infracost before anything is created",
+      "`/neckbeard:sync` scaffolds OpenTofu, CI pipelines and Kubernetes manifests, validates them and reports what was and wasn't proven",
+      "Hash-verified blueprint.yaml and a pure-function renderer that refuses to overwrite hand-edited files",
+      "Covers AWS, GCP and Azure as serverless containers (Cloud Run, ECS Fargate, Container Apps) or Kubernetes (EKS, GKE, AKS) with GitHub Actions or GitLab CI",
+      "Installs as a Claude Code plugin marketplace entry; SKILL.md install for Codex, Cursor and other hosts; budget alerts and cost ceilings per environment"
+    ],
+    "bestFor": "Teams using Claude Code, Codex or Cursor who want agent-assisted infrastructure that stays within a vetted module catalog, with a reviewable diff and a monthly cost estimate before deploying.",
+    "notIdealFor": "Apps needing services outside the catalog's single workload shape (for example Redis today), or teams wanting a fully managed PaaS rather than reviewing generated OpenTofu and pipelines.",
+    "recentUpdates": "v0.3.0 (October 15, 2026) added real per-environment budget alerts with a refusing cost ceiling, mapped Docker Compose images to datastore capabilities and documented running alongside ponytail; it was discussed on Hacker News on October 14, 2026.",
+    "verdict": "A thoughtful guardrail-first take on agent-driven infrastructure: deterministic rendering from a tested catalog plus upfront cost estimates addresses the main failure modes of letting agents write IaC, though catalog coverage is still narrow.",
+    "tags": [
+      "AI",
+      "DevOps",
+      "Infrastructure as Code",
+      "OpenTofu",
+      "Agent Plugins",
+      "FinOps"
+    ],
+    "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "billion-context",
+    "name": "billion-context",
+    "company": "ranxianglei",
+    "pricing": "free",
+    "pricingDetail": "Free and open source under the MIT License with an added attribution term for products that incorporate it. You keep paying your own model provider; the proxy aims to reduce token usage rather than add fees.",
+    "description": "billion-context is a context-compression proxy and plugin for AI coding agents that sits between the agent and its Anthropic- or OpenAI-compatible model API. It injects context-management tools so the model itself decides when and what to fold into layered, reversible summaries, keeping long sessions inside a small context window while preserving the prompt-cache prefix.",
+    "keyFeatures": [
+      "Model-driven incremental compression via injected compress, decompress, search_context and acp_status tools",
+      "Reversible, prefix-cache-friendly summaries targeting ~5x fewer tokens and month-long single sessions within a 100K window",
+      "Launchers and native plugins via the `bili` CLI (`bili claude`, `bili codex`, `bili opencode`, `bili pi`, `bili plugin install <host>`)",
+      "Broad host support: Claude Code, Codex, OpenCode, pi, Gemini CLI, Qwen Code, Kimi, Hermes, Aider, GitHub Copilot CLI, Amp and more",
+      "Built on the open acp-kernel compression engine with an accompanying open preprint and cache-health diagnostics (`/acp`, `/acp-cache`)"
+    ],
+    "bestFor": "Developers running very long coding-agent sessions who hit context-window limits or high token bills and want compression that the model controls and can undo.",
+    "notIdealFor": "Users who cannot route agent traffic through a local proxy or certificate MITM for closed-binary hosts, or teams whose products cannot meet the license's visible-attribution requirement.",
+    "recentUpdates": "Ships frequent releases (v0.1.197 on October 14, 2026) and trended on GitHub's weekly chart in mid-October 2026; recent work expanded native plugins for hosts such as Kimi Code, Hermes and zcode.",
+    "verdict": "An ambitious, actively maintained context-compression layer with unusually broad agent coverage and a published methodology; worth trying for marathon sessions, with the caveats of proxy setup and an attribution-bearing license.",
+    "tags": [
+      "AI",
+      "Context Compression",
+      "LLM Optimization",
+      "Coding Agents",
+      "Developer Productivity"
+    ],
+    "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "coucou",
+    "name": "Coucou",
+    "company": "Louis Raillé (Louis-CFM)",
+    "pricing": "free",
+    "pricingDetail": "Free and open source; the code is MIT-licensed while the Coucou name, the Mochi character and sounds remain © Louis Raillé. The iPhone app is a free TestFlight beta and the Android app is a free APK. Built-in chat uses your own provider API keys or local models.",
+    "description": "Coucou is an open-source notch companion that keeps an eye on AI coding agent sessions from the Mac's notch, or the top of the screen on Windows and Linux, with companion iPhone and Android apps. It shows what Claude Code, Codex, Cursor, Gemini CLI and other agents are reading, editing and running, and lets you approve permission requests or answer agent questions without switching windows.",
+    "keyFeatures": [
+      "Live view of Claude Code, Codex, Cursor, Gemini CLI, Antigravity, Copilot CLI, OpenCode, Amp, Hermes and other agent sessions",
+      "Allow/Deny/Always permission approvals and AskUserQuestion answers from the notch, Lock Screen or Dynamic Island",
+      "iPhone (Live Activities, widgets, Siri, Shortcuts) and Android (fingerprint approvals, widgets) companions",
+      "Claude and Codex plan-usage pills",
+      "Multi-provider chat with Claude, Gemini, OpenAI, DeepSeek, Qwen, Moonshot or local Ollama/LM Studio",
+      "Offline hold-to-talk dictation and call notes in 0.4"
+    ],
+    "bestFor": "Developers running several coding agents in parallel who want to see status and handle approvals at a glance, including from their phone when away from the desk.",
+    "notIdealFor": "Users who want a pure productivity tool without a playful mascot, or those needing App Store distribution today (Mac and iPhone App Store builds are still pending).",
+    "recentUpdates": "Coucou 0.4.0 (October 15, 2026) turned the Mac build into a full Dock app with offline Parakeet dictation and call notetaking; Windows and Linux builds plus an Android app (October 11–13, 2026) followed the late-September first release.",
+    "verdict": "A fast-moving, genuinely cross-platform agent monitor that makes approvals and session status ambient; its feature scope is expanding beyond agents, but agent supervision remains the core reason to install it.",
+    "tags": [
+      "AI",
+      "Coding Agents",
+      "Agent Monitoring",
+      "macOS",
+      "Mobile",
+      "Developer Productivity"
+    ],
+    "lastUpdated": "2026-10-15"
   }
 ]
