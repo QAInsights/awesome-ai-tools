@@ -1,0 +1,315 @@
+---
+title: "Reverse Engineering MCP Servers for AI Coding Agents: REA, IDA MCP, GhidraMCP, Binary Ninja and r2mcp"
+description: "Compare 5 reverse engineering MCP servers for AI coding agents: REA, Hex-Rays IDA MCP, GhidraMCP 2.0, Binary Ninja and r2mcp. Engines, costs, installs, limits."
+pubDate: 2026-10-15
+tags: ["reverse-engineering", "mcp", "claude-code", "codex", "security", "roundup", "rea", "ida-mcp", "ghidramcp", "binary-ninja", "radare2"]
+---
+
+In this blog post, we will see which reverse engineering MCP servers for AI coding agents are worth setting up this week, what each one actually connects your agent to, what it costs, and a tiny compiled program that shows why an agent needs a decompiler and not just `strings`. Every version, licence, price and star count below was checked on October 15, 2026.
+
+## Table of Contents
+
+1. [The short answer](#the-short-answer)
+2. [Why agentic reverse engineering is trending this week](#why-agentic-reverse-engineering-is-trending-this-week)
+3. [What the agent sees without a decompiler, in one example](#what-the-agent-sees-without-a-decompiler-in-one-example)
+4. [REA (Reverse Engineer Anything)](#rea-reverse-engineer-anything)
+5. [Hex-Rays IDA MCP](#hex-rays-ida-mcp)
+6. [GhidraMCP](#ghidramcp)
+7. [Binary Ninja MCP server](#binary-ninja-mcp-server)
+8. [radare2 MCP (r2mcp)](#radare2-mcp-r2mcp)
+9. [Comparison table](#comparison-table)
+10. [Which one should you set up first](#which-one-should-you-set-up-first)
+11. [FAQ](#faq)
+12. [How this ties to ai.dosa.dev](#how-this-ties-to-aidosadev)
+
+## The short answer
+
+Reverse engineering MCP servers for AI coding agents let Claude Code, Codex or Cursor drive a disassembler or decompiler through tool calls. Pick REA for mixed targets like Electron, .NET and APKs, GhidraMCP if you want free native analysis, the official IDA MCP if you already pay for IDA 9.4+, and r2mcp for a small terminal-first setup.
+
+## Why agentic reverse engineering is trending this week
+
+Facts checked October 15, 2026. This one was hard to miss:
+
+- **GitHub Trending.** [morluto/rea](https://github.com/morluto/rea) was #1 on the GitHub weekly trending snapshot for October 15 with about 214,800 stars gained in the week. NSA's Ghidra also showed up on the same weekly list.
+- **Hacker News.** Two separate REA threads hit the front page between October 10 and October 13. The comments were a mix of "this is how I fixed a Hyper-V window bug" and a long argument about clean-room reimplementation and EU decompilation law.
+- **Vendor releases.** Hex-Rays shipped its official IDA MCP server on September 25 and a new release on October 8. LaurieWired shipped GhidraMCP 2.0 with headless mode on October 10. Binary Ninja 6.0 shipped a first-party MCP server on September 3.
+- **Reddit.** REA's own case page collects Reddit write-ups, including one person reverse engineering the Govee app to build a local Home Assistant integration.
+
+The common thread: coding agents are already good at reading code. MCP servers hand them code that was never meant to be read.
+
+## What the agent sees without a decompiler, in one example
+
+Here is the smallest version of the problem. A compiled pricing tool applies a discount code, and you want to know which codes exist and what they do.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+static int discount_for(const char *code) {
+    if (strcmp(code, "LAUNCH50") == 0) return 50;
+    if (strcmp(code, "TEAM20") == 0) return 20;
+    return 0;
+}
+
+int main(int argc, char **argv) {
+    int price = 4900;
+    if (argc > 1) price -= price * discount_for(argv[1]) / 100;
+    printf("total: %d.%02d\n", price / 100, price % 100);
+    return 0;
+}
+```
+
+I compiled it with symbols stripped, the way most shipped binaries arrive, and ran it on Ubuntu:
+
+```bash
+gcc -O2 -s -o pricing pricing.c
+./pricing
+./pricing TEAM20
+strings -n 5 pricing | grep -E 'LAUNCH|TEAM|total'
+objdump -d --no-show-raw-insn pricing | grep 'call.*strcmp'
+```
+
+The output is as shown below:
+
+```
+total: 49.00
+total: 39.20
+LAUNCH50
+TEAM20
+total: %d.%02d
+    109d:	call   1060 <strcmp@plt>
+    10b0:	call   1060 <strcmp@plt>
+```
+
+`strings` gives you the two codes. `objdump` tells you there are two string comparisons. Neither tells you that `LAUNCH50` means 50% and `TEAM20` means 20%, because `discount_for` was inlined and the function name is gone. An agent with only a shell can grind through raw assembly to work that out, but it burns a lot of context doing it.
+
+That is the gap every tool below fills. They let the agent ask Ghidra, IDA, Binary Ninja or radare2 for pseudocode, cross references and renames, and get back something close to the C above.
+
+I could not install Ghidra, IDA or npm packages in my sandbox for this post, so the commands in each section below come from each project's current docs and release notes, not from my own run.
+
+## REA (Reverse Engineer Anything)
+
+### What it does
+
+[REA](https://github.com/morluto/rea) is one MCP server plus a CLI that covers native binaries, JavaScript and Electron apps, .NET assemblies, Android APKs and websites. It is not a decompiler. For native code it drives Hopper, Ghidra or IDA if you have them, and its static JavaScript analysis needs no native engine at all. Each finding comes back with its evidence and a list of what it could not resolve.
+
+### Who it is for
+
+Developers who see a feature in an app and want to know how it works, without first learning a disassembler. It is also the only tool here that handles Electron and web targets out of the box.
+
+### Facts
+
+- Stars: 258,293 on GitHub when I checked, repo created April 14, 2026
+- Latest release: rea-agents 6.5.0 (October 13, 2026), published to npm on October 14
+- Licence: MIT for REA's own code. Commercial engines like IDA and Hopper need their own licences.
+- Price: free
+- Needs: Node.js 22.19+, 24.11+ or 26+
+
+### Try it
+
+1. Run setup and pick your agent from the list:
+
+```bash
+npx rea-agents@latest setup
+```
+
+2. Approve the plan it shows you. It adds the MCP server and an investigation skill, and backs up your existing config first. Restart the agent.
+
+3. Or skip the agent and analyse an Electron app folder or `.asar` file straight from the terminal:
+
+```bash
+npx -y rea-agents@latest analyze-javascript-application /absolute/path/to/app --json
+```
+
+### Honest limitation
+
+Two things. First, the star count is not a normal signal. Going from nothing to over 250,000 stars in six months, with roughly 215,000 in one week, is far outside what any other repo in this roundup does, so judge REA on the docs and your own test, not the counter. Second, its IDA provider talks to the community ida-pro-mcp tool names, not the official Hex-Rays server. A feature request to support the official server was still open as of October 13, per [reaguide.com](https://reaguide.com/rea-vs-ida-mcp/) (unverified against the issue tracker by me).
+
+## Hex-Rays IDA MCP
+
+### What it does
+
+[IDA MCP](https://github.com/HexRaysSA/ida-mcp) is the official MCP server from Hex-Rays, the company behind IDA. It connects your agent to IDA's disassemblers and decompilers, works headless through idalib, and can share many IDA databases across many agents and a human at once. Rename a function in the GUI and the agent sees it. Hex-Rays says its "code mode" design cut token use by about 20% on its internal malware benchmark compared with popular alternatives.
+
+### Who it is for
+
+People who already own IDA 9.4 or newer and want the most stable native-code setup. It is also the one to look at for running a fleet of sub-agents on different parts of the same binary.
+
+### Facts
+
+- Stars: about 1,067 on GitHub, repo created August 27, 2026
+- Latest release: v20261008.0.1 (October 8, 2026)
+- Licence: MIT for the server
+- Price: the server is free, but IDA is not. IDA Home is $365 a year and is non-commercial only. IDA Free does not include idalib, so it will not work.
+- Needs: IDA 9.4+ (Home, Pro or Classroom) with idalib, Python 3.11+, Git and uv
+
+### Try it
+
+1. Install the server, the GUI plugin and your agent plugin in one step:
+
+```bash
+uvx ida-hcli mcp install
+```
+
+2. The installer asks which agents to wire up. Accept the ones you use, restart the agent, and point it at a binary.
+
+### Honest limitation
+
+The licence is the real cost. If you are freelancing or doing this at work, IDA Home's non-commercial terms rule it out and you are into IDA Pro pricing. Hex-Rays also asks you to disable other IDA MCP servers first, so do not stack it with mrexodia's ida-pro-mcp. That older community server (12,885 stars, v1.4.0 on October 6) is still maintained, but its own README now recommends the official one.
+
+## GhidraMCP
+
+### What it does
+
+[GhidraMCP](https://github.com/LaurieWired/GhidraMCP) exposes Ghidra to any MCP client: decompile functions, list methods, classes, imports and exports, follow cross references, and rename things. Version 2.0 dropped the old Python bridge and added a headless mode that imports and analyses a binary through PyGhidra with no GUI running.
+
+### Who it is for
+
+Anyone who wants native binary analysis for $0. Ghidra is free and open source, and this is the most starred Ghidra MCP server.
+
+### Facts
+
+- Stars: 11,278 on GitHub when I checked
+- Latest release: GhidraMCP 2.0 (October 10, 2026)
+- Licence: Apache 2.0
+- Price: free
+- Needs: Ghidra 12.1.4, a JDK 21 runtime, and Python 3.10 to 3.13 for headless mode
+
+### Try it
+
+1. For the GUI route, download the release zip, then in Ghidra go to File, Install Extensions, add the zip, restart, and enable GhidraMCPPlugin under File, Configure, Developer.
+
+2. For headless use, set your Ghidra path and launch it against a binary:
+
+```bash
+export GHIDRA_INSTALL_DIR=/path/to/ghidra_12.1.4_PUBLIC
+uvx --python 3.13 --from "ghidra-mcp[headless] @ git+https://github.com/LaurieWired/GhidraMCP" \
+  ghidra-mcp --headless --binary /path/to/target
+```
+
+3. Use the same command and arguments as the server entry in your agent's MCP config. Add `--project DIR` if you want Ghidra to keep your renames between runs.
+
+### Honest limitation
+
+Setup is the heaviest here. You need a matching Ghidra version (12.1.4 for this release), a JDK, and on macOS a one-time native decompiler build. The headless install also pulls from the Git repo rather than a pinned package, so pin a tag yourself if you need repeatable CI runs.
+
+## Binary Ninja MCP server
+
+### What it does
+
+Binary Ninja 6.0 (Krypton) shipped a first-party MCP server. Your agent can open files, run analysis, and query functions, symbols, strings, sections, disassembly, IL and decompiled text. There are two variants: an HTTP server inside the GUI, and a standalone `binaryninja_mcp` stdio server for headless use.
+
+### Who it is for
+
+People who already use Binary Ninja, or who want a polished GUI with an MCP server they do not have to install separately. The free edition now decompiles x86, x86_64, armv7 and AArch64.
+
+### Facts
+
+- Latest release: Binary Ninja 6.0 (September 3, 2026)
+- Licence: commercial, closed source. It is the only non-open-source tool in this list.
+- Price: Free $0, Personal $199, Commercial $1,799, all one-time purchases with a year of updates
+- MCP availability: the GUI MCP server is in every edition, including Free. The headless server is only in Commercial and Ultimate, on macOS and Linux.
+
+### Try it
+
+1. Head to [binary.ninja](https://binary.ninja) and download the free edition.
+2. Open a binary, then enable and start the MCP server from inside Binary Ninja.
+3. Add it to your agent as an HTTP MCP server, following the [MCP guide](https://docs.binary.ninja/guide/mcp.html).
+
+### Honest limitation
+
+The built-in tools are read-only BinaryView queries plus analysis control, so out of the box the agent inspects rather than patches. If you want the agent to work without the GUI open, you are paying for Commercial, and native Windows packages do not ship the headless binary yet.
+
+## radare2 MCP (r2mcp)
+
+### What it does
+
+[r2mcp](https://github.com/radareorg/radare2-mcp) is an MCP stdio server for radare2, written in C on top of the native r2 libraries. It can also run as an r2 plugin, it can attach to a running r2 or iaito session, and it starts in sandbox mode by default. Version 1.8.2 added HTTP session multiplexing so several agents can work in isolated sessions.
+
+### Who it is for
+
+Terminal people, CTF players and anyone who wants the smallest footprint. No Java, no Python, no GUI.
+
+### Facts
+
+- Stars: 275 on GitHub when I checked
+- Latest release: 1.8.8 (September 6, 2026)
+- Licence: MIT
+- Price: free
+
+### Try it
+
+1. Install it with radare2's package manager:
+
+```bash
+r2pm -Uci r2mcp
+```
+
+2. Add it to your agent's MCP config:
+
+```json
+{
+  "mcpServers": {
+    "radare2": {
+      "command": "r2pm",
+      "args": ["-r", "r2mcp"]
+    }
+  }
+}
+```
+
+### Honest limitation
+
+radare2's decompiler output depends on which decompiler plugin you have installed, and the default pseudocode is rougher than Ghidra's or IDA's. The project is also much smaller, with 275 stars against GhidraMCP's 11,000+, so expect fewer guides when something breaks.
+
+## Comparison table
+
+| Tool | Engine | Targets beyond native code | Licence | Cost to start | Install |
+| --- | --- | --- | --- | --- | --- |
+| REA | Hopper, Ghidra or IDA, plus built-in analysers | JS, Electron, .NET, APK, web | MIT | $0 with Ghidra | `npx rea-agents@latest setup` |
+| IDA MCP | IDA 9.4+ via idalib | Whatever IDA loads | MIT (IDA is paid) | $365/yr IDA Home | `uvx ida-hcli mcp install` |
+| GhidraMCP | Ghidra 12.1.4 | Whatever Ghidra loads | Apache 2.0 | $0 | Extension zip or `uvx` |
+| Binary Ninja MCP | Binary Ninja 6.0 | Whatever Binary Ninja loads | Closed source | $0 GUI, $1,799 headless | Built in |
+| r2mcp | radare2 | Whatever r2 loads | MIT | $0 | `r2pm -Uci r2mcp` |
+
+## Which one should you set up first
+
+1. If you have no reverse engineering tools installed, start with REA. One `npx` command gets you working on Electron and JavaScript apps today, and you can add Ghidra later for native code.
+2. If your targets are native binaries and you want free, install Ghidra and GhidraMCP 2.0. Headless mode makes it usable from CI too.
+3. If you already pay for IDA 9.4+, use the official IDA MCP and turn off any other IDA server.
+4. If you live in the terminal and already know radare2, r2mcp is the lightest option.
+
+What I would skip: running two servers that wrap the same engine at once. Hex-Rays warns about it for IDA, and the same logic applies to Ghidra. The agent sees two sets of similar tools and picks badly.
+
+## FAQ
+
+### What is a reverse engineering MCP server?
+
+It is a Model Context Protocol server that exposes a disassembler or decompiler, like Ghidra, IDA, Binary Ninja or radare2, as tools an AI agent can call. The agent can ask for pseudocode, cross references or strings, and rename things as it learns. None of these servers is a new decompiler; they wrap existing engines.
+
+### Can Claude Code reverse engineer a binary?
+
+Yes, if you connect it to one of these servers. REA's setup supports Claude Code, Codex, Cursor and Gemini CLI, and the official IDA MCP installer offers Claude Code and Codex plugins. Without a server, Claude Code is limited to shell tools like `strings` and `objdump`, which miss most of the logic, as shown in the example above.
+
+### Is there a free reverse engineering MCP server?
+
+Yes. GhidraMCP (Apache 2.0) and r2mcp (MIT) are free and wrap free engines. REA is MIT and free with Ghidra, and Binary Ninja Free includes its GUI MCP server.
+
+### Is it legal to reverse engineer software with an AI agent?
+
+It depends on where you are and what you do with the result. In the EU, the Software Directive allows observing how a program runs and limits decompilation to narrow cases like interoperability. REA's README is clear that you must legally own any commercial tools you connect, and an HN commenter working on a reimplementation said their lawyers banned Ghidra entirely to keep the work clean room. Ask a lawyer before you publish anything you rebuilt.
+
+### Does reverse engineering with an agent send the binary to the cloud?
+
+The servers themselves run locally: REA, GhidraMCP, IDA MCP and r2mcp all analyse on your machine. What the agent reads, such as decompiled functions, still goes to your model provider like any other prompt. If that matters, Hex-Rays notes its server is model-agnostic and can run against a local model in an airgapped setup.
+
+## How this ties to ai.dosa.dev
+
+None of these five tools are in the ai.dosa.dev directory yet, so this post fills a real gap. The agents they plug into are all listed: [Claude Code](/tools/claude-code), [Codex CLI](/tools/codex-cli), [Cursor](/tools/cursor), [Gemini CLI](/tools/gemini-cli) and [OpenCode](/tools/opencode). For a security angle on the agent itself, see [Cloudflare's security-audit](/tools/security-audit) skill.
+
+Running a reverse engineering agent on an unknown binary is exactly the case where you want isolation, so pair this with our post on [open source sandboxes for AI coding agents](/blog/open-source-sandboxes-for-ai-coding-agents). If the code you are studying is open source, our roundup of [code knowledge graph tools for AI coding agents](/blog/code-knowledge-graph-tools-ai-coding-agents) is the better fit.
+
+Happy Testing!
+
+What is the first app you would point a reverse engineering agent at: something you own, an abandoned tool you still depend on, or a feature you want to rebuild?
