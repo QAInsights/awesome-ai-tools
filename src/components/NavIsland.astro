@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import HouseAdFeature from './HouseAdFeature.astro';
+import TodayPromos from './TodayPromos.astro';
 import houseAds from '../data/house-ads.json';
 
 /**
@@ -14,7 +14,7 @@ import houseAds from '../data/house-ads.json';
 
 interface Props {
     activeNav?: string;
-    search?: boolean;
+    search?: 'live' | 'link';
 }
 
 type NavItem = { key: string; href: string; label: string; desc?: string; icon: string; external?: boolean };
@@ -79,7 +79,7 @@ const allItems = [...browse, ...utilities, ...more];
 const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const derived = path === '/' ? 'directory' : SECTION_PREFIXES.find(([prefix]) => path.startsWith(prefix))?.[1];
 const active = allItems.find(item => item.key === (activeNavKey(Astro.props.activeNav) ?? derived));
-const search = Astro.props.search ?? false;
+const search = Astro.props.search ?? 'link';
 const pillLabel = active?.label ?? 'Menu';
 const pillIcon = ICONS[active?.icon ?? 'menu'];
 
@@ -91,9 +91,6 @@ const newsPosts = await getCollection('blog', ({ data }) =>
     data.draft !== true && data.tags?.includes('news')
 );
 const latestNews = newsPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())[0];
-const latestNewsDate = latestNews
-    ? latestNews.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' })
-    : null;
 
 const linkAttrs = (item: NavItem) => ({
     href: item.href,
@@ -104,7 +101,7 @@ const linkAttrs = (item: NavItem) => ({
 
 <div class="ni-scrim" data-ni-scrim aria-hidden="true"></div>
 
-<div class="ni" id="navIsland" data-nav-island data-open="false">
+<div class="ni" id="navIsland" data-nav-island data-open="false" data-view="nav" data-search={search}>
     <button type="button" class="ni-pill" data-ni-toggle aria-expanded="false" aria-controls="navIslandPanel" aria-label={`Open site menu. Current section: ${pillLabel}`}>
         <span class="ni-sec">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={pillIcon}></svg>
@@ -117,6 +114,7 @@ const linkAttrs = (item: NavItem) => ({
             {houseAds.map(ad => <span class="ni-tick-item" data-ni-tick-ad={ad.id}><b class="text-[#a8e86f]">Ad</b>{ad.name}: {ad.tagline}</span>)}
             <span class={`ni-tick-item${latestNews ? '' : ' is-on'}`}><b class="text-gold-soft">Featured</b>Promote your AI tool to developers</span>
         </span>
+        <span class="ni-status" data-ni-status hidden></span>
         <kbd class="ni-kbd" aria-hidden="true" data-ni-kbd>Ctrl K</kbd>
         <span class="ni-chev" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -125,7 +123,23 @@ const linkAttrs = (item: NavItem) => ({
 
     <div class="ni-panel" id="navIslandPanel">
         <div class="ni-panel-inner">
-            {search && (
+            {search === 'live' ? (
+                <div class="ni-search-row">
+                    <div class="search-shell relative w-full group">
+                        <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-[#6f6a63] group-focus-within:text-[#d6c7a8] w-4.5 h-4.5 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="searchInput" aria-label="Search tools" placeholder="Search tools, agents, and workflows" autocomplete="off" class="search-input w-full rounded-2xl text-[15px] outline-none transition-all duration-300">
+                        <div class="absolute right-3.5 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                            <button class="bg-transparent border-none text-ink-muted text-sm cursor-pointer p-1 hidden hover:text-white" id="searchClear" aria-label="Clear search" title="Clear search">&#x2715;</button>
+                            <span class="search-shortcut hidden md:inline-flex" aria-hidden="true">/</span>
+                            <span id="resultCount" class="search-result-count font-mono text-[10px] hidden md:block"></span>
+                        </div>
+                    </div>
+                    <slot name="search-actions" />
+                </div>
+            ) : (
                 <form action="/" method="get" role="search" class="search-shell relative max-w-[560px] w-full group ni-search">
                     <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-[#6f6a63] group-focus-within:text-[#d6c7a8] w-4.5 h-4.5 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
@@ -135,6 +149,7 @@ const linkAttrs = (item: NavItem) => ({
                     <span class="search-shortcut hidden md:inline-flex absolute right-3.5 top-1/2 -translate-y-1/2" aria-hidden="true">/</span>
                 </form>
             )}
+            <slot name="scope" />
             <nav class="ni-grid" aria-label="Site">
                 <div>
                     <div class="ni-h">Browse</div>
@@ -169,27 +184,7 @@ const linkAttrs = (item: NavItem) => ({
                     </ul>
                 </div>
 
-                <div class="ni-promos">
-                    <div class="ni-h">Today</div>
-                    {latestNews && (
-                        <div class="ni-promo">
-                            <div class="flex items-center justify-between mb-1.5">
-                                <div class="font-mono text-[11px] uppercase text-ink-muted tracking-widest flex items-center gap-1.5"><span class="ni-live" aria-hidden="true"></span>Today in AI</div>
-                                <span class="font-mono text-[11px] text-ink-disabled">{latestNewsDate}</span>
-                            </div>
-                            <a href={`/blog/${latestNews.id}`} class="text-[13px] text-[#e5e5e5] leading-snug no-underline hover:text-white transition-colors block">{latestNews.data.title}</a>
-                            <a href="/news" class="gradient-link inline-block mt-2 font-mono text-[12px] hover:underline">All briefs &rarr;</a>
-                        </div>
-                    )}
-                    <HouseAdFeature sectionClass="rounded-xl border border-border bg-white/[0.01] p-3" />
-                    <div class="ni-promo border-dashed">
-                        <div class="font-mono text-[11px] uppercase text-ink-muted mb-1.5 tracking-wide">Featured</div>
-                        <div class="text-[13px] text-ink-secondary leading-relaxed">
-                            Promote your AI tool directly to developers.
-                            <a href="/advertise" class="gradient-link block mt-1.5 font-mono hover:underline">Book this space &rarr;</a>
-                        </div>
-                    </div>
-                </div>
+                <TodayPromos layout="stack" />
             </nav>
 
             <footer class="ni-foot">
@@ -212,7 +207,7 @@ const linkAttrs = (item: NavItem) => ({
     }
 
     .ni {
-        --ni-w: min(520px, calc(100vw - 440px));
+        --ni-w: min(520px, calc(100vw - 480px));
         --ni-open-w: min(1080px, calc(100vw - 32px));
         --ni-ease: cubic-bezier(0.32, 0.72, 0, 1);
         position: fixed;
@@ -230,7 +225,7 @@ const linkAttrs = (item: NavItem) => ({
         transition: width 0.5s var(--ni-ease), border-radius 0.5s var(--ni-ease), box-shadow 0.4s ease;
     }
     @media (min-width: 1280px) {
-        .ni { --ni-w: min(520px, calc(100vw - 820px)); }
+        .ni { --ni-w: min(520px, calc(100vw - 960px)); }
     }
     .ni::before {
         content: '';
@@ -272,6 +267,7 @@ const linkAttrs = (item: NavItem) => ({
     .ni-div { width: 1px; height: 18px; background: #2a2a2a; flex-shrink: 0; }
     .ni-live { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--color-danger); box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.15); animation: ni-pulse 1.6s infinite; flex-shrink: 0; }
     .ni-tick { position: relative; flex: 1; min-width: 0; height: 20px; overflow: hidden; font-size: 13px; color: #d4d4d4; }
+    .ni-status { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; color: var(--color-gold-soft); }
     .ni-tick-item { position: absolute; inset: 0; display: flex; gap: 6px; align-items: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0; translate: 0 8px; transition: opacity 0.4s ease, translate 0.4s var(--ni-ease); }
     .ni-tick-item b { font: 600 10px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.12em; text-transform: uppercase; flex-shrink: 0; }
     .ni-tick-item.is-on { opacity: 1; translate: 0 0; }
@@ -279,13 +275,48 @@ const linkAttrs = (item: NavItem) => ({
     .ni-chev { width: 30px; height: 30px; border-radius: 50%; background: #1a1a1a; display: grid; place-items: center; color: var(--color-ink-secondary); flex-shrink: 0; transition: rotate 0.4s var(--ni-ease); }
     .ni[data-open='true'] .ni-chev { rotate: 180deg; }
     .ni[data-open='true'] .ni-tick, .ni[data-open='true'] .ni-div, .ni[data-open='true'] .ni-pill > .ni-live, .ni[data-open='true'] .ni-kbd { opacity: 0; }
+    .ni[data-filtered] .ni-tick, .ni[data-filtered] .ni-pill > .ni-live { display: none; }
 
     .ni-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.5s var(--ni-ease); }
     .ni[data-open='true'] .ni-panel, .ni:not([data-enhanced]):is(:hover, :focus-within) .ni-panel { grid-template-rows: 1fr; }
     .ni-panel-inner { min-height: 0; overflow: hidden; opacity: 0; transition: opacity 0.25s ease; }
     .ni[data-open='true'] .ni-panel-inner, .ni:not([data-enhanced]):is(:hover, :focus-within) .ni-panel-inner { opacity: 1; overflow-y: auto; max-height: calc(100dvh - 72px); transition-delay: 0.12s; scrollbar-width: thin; }
 
+    .ni-search-row { display: flex; align-items: center; gap: 10px; margin: 16px 18px 0; }
+    .ni-search-row .search-shell { flex: 1; width: auto; max-width: none; min-width: 0; }
     .ni-search { margin: 16px 18px 0; width: auto; max-width: none; }
+    .ni :global(#filterAccordion) {
+        position: static;
+        top: auto;
+        left: auto;
+        right: auto;
+        z-index: auto;
+        margin: 0;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        backdrop-filter: none;
+    }
+    .ni :global(#filterAccordion:not(.hidden)) {
+        max-height: 85vh;
+        opacity: 1;
+        overflow-y: auto;
+    }
+    .ni[data-view='scope'] .ni-grid,
+    .ni[data-view='scope'] .ni-foot,
+    .ni[data-view='results'] .ni-grid,
+    .ni[data-view='results'] .ni-foot { display: none; }
+    .ni[data-view='results'] { width: min(560px, calc(100vw - 32px)); border-radius: 16px; }
+    .ni[data-view='results']::before { opacity: 0; }
+    .ni[data-view='results'] .ni-pill { display: none; }
+    .ni[data-view='results'] .ni-panel { grid-template-rows: 1fr; }
+    .ni[data-view='results'] .ni-panel-inner { opacity: 1; overflow: visible; max-height: none; transition-delay: 0s; }
+    .ni[data-view='results'] .ni-search-row { margin: 8px; }
+    .ni[data-view='results'] .ni-search-row :global(#filterAccordionBtn) { display: none; }
     .ni-grid { display: grid; gap: 22px; padding: 10px 20px 18px; grid-template-columns: 1.25fr 1fr 1.15fr; }
     .ni-h { font: 11px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-ink-muted); margin: 0 0 8px 2px; }
     .ni-h-gap { margin-top: 20px; }
@@ -302,19 +333,17 @@ const linkAttrs = (item: NavItem) => ({
     .ni-chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
     .ni-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--color-ink-secondary); border: 1px solid #262626; border-radius: 999px; padding: 6px 11px; text-decoration: none; transition: color 0.2s, border-color 0.2s, background-color 0.2s; }
     .ni-chip:hover, .ni-chip[aria-current='page'] { color: #fff; border-color: var(--color-border-strong); background: rgba(255, 255, 255, 0.04); }
-    .ni-promos { display: flex; flex-direction: column; gap: 8px; }
-    .ni-promo { padding: 12px; border: 1px solid var(--color-border); border-radius: 12px; background: rgba(255, 255, 255, 0.01); }
     .ni-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; padding: 10px 20px 14px; border-top: 1px solid var(--color-border); font-size: 13px; }
     .ni-foot a { color: var(--color-ink-secondary); text-decoration: none; }
     .ni-foot a:hover { color: #fff; }
 
     .ni-scrim { position: fixed; inset: 0; z-index: 44; background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(3px); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
     .ni-scrim.is-on { opacity: 1; pointer-events: auto; }
+    .ni-scrim:not(.is-on) { backdrop-filter: none; }
 
     @media (max-width: 1023px) {
         .ni-grid { grid-template-columns: 1fr 1fr; }
-        .ni-promos { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); align-items: start; }
-        .ni-promos > .ni-h { grid-column: 1 / -1; margin-bottom: 0; }
+        .ni :global(.ni-promos) { grid-column: 1 / -1; }
     }
 
     @media (max-width: 767px) {
@@ -326,15 +355,18 @@ const linkAttrs = (item: NavItem) => ({
             flex-direction: column-reverse;
         }
         .ni[data-open='true'] { bottom: calc(8px + env(safe-area-inset-bottom, 0px) + var(--ea-float-h, 0px)); z-index: 56; }
+        .ni[data-view='results'] { bottom: calc(8px + env(safe-area-inset-bottom, 0px) + var(--ea-float-h, 0px) + var(--ni-lift, 0px)); }
         .ni-scrim.is-on { z-index: 55; }
         .ni-pill { height: 48px; }
         .ni-kbd { display: none; }
         .ni[data-open='true'] .ni-chev { rotate: 0deg; }
         .ni-chev { rotate: 180deg; }
         .ni-search { margin: 14px 14px 0; }
+        .ni-search-row { margin: 14px 14px 0; }
+        .ni[data-view='results'] .ni-search-row { margin: 8px; }
         .ni[data-open='true'] .ni-panel-inner, .ni:not([data-enhanced]):is(:hover, :focus-within) .ni-panel-inner { max-height: calc(100dvh - 96px - var(--ea-float-h, 0px)); }
         .ni-grid { grid-template-columns: 1fr; gap: 18px; padding: 16px 14px 12px; }
-        .ni-promos { display: flex; }
+        .ni[data-view='results'] { width: var(--ni-open-w); }
         .ni-foot { padding: 10px 14px 12px; }
         :global(main.overflow-y-auto)::after, :global(#toolGrid)::after {
             content: '';
@@ -358,6 +390,13 @@ const linkAttrs = (item: NavItem) => ({
     const toggle = island?.querySelector<HTMLButtonElement>('[data-ni-toggle]');
     const panel = island?.querySelector<HTMLElement>('#navIslandPanel');
     const scrim = document.querySelector<HTMLElement>('[data-ni-scrim]');
+    const searchInput = island?.querySelector<HTMLInputElement>('#searchInput');
+    const scopePanel = island?.querySelector<HTMLElement>('#filterAccordion');
+    const scopeButton = island?.querySelector<HTMLButtonElement>('#filterAccordionBtn');
+    const status = island?.querySelector<HTMLElement>('[data-ni-status]');
+    const authHeader = document.getElementById('authHeader');
+    const brand = document.querySelector<HTMLElement>('[data-brand]');
+    const liveSearch = island?.dataset.search === 'live';
 
     if (island && toggle && panel && scrim) {
         const canHover = window.matchMedia('(hover: hover) and (min-width: 768px)');
@@ -377,7 +416,7 @@ const linkAttrs = (item: NavItem) => ({
         island.dataset.enhanced = '';
 
         const syncScrollLock = () => {
-            const lock = open && isMobile.matches;
+            const lock = open && isMobile.matches && island.dataset.view !== 'results';
             if (lock === scrollLocked) return;
             scrollLocked = lock;
             if (lock) {
@@ -388,6 +427,19 @@ const linkAttrs = (item: NavItem) => ({
             }
         };
         isMobile.addEventListener('change', syncScrollLock);
+
+        const updateView = () => {
+            const inScope = open && liveSearch && Boolean(scopePanel && !scopePanel.classList.contains('hidden'));
+            const showResults = open
+                && liveSearch
+                && !inScope
+                && searchInput === document.activeElement
+                && Boolean(searchInput?.value.trim());
+            const view = inScope ? 'scope' : showResults ? 'results' : 'nav';
+            island.dataset.view = view;
+            scrim.classList.toggle('is-on', open && view !== 'results');
+            syncScrollLock();
+        };
 
         const compareBar = document.getElementById('compareFloatingBar');
         if (compareBar) {
@@ -403,14 +455,20 @@ const linkAttrs = (item: NavItem) => ({
         const setOpen = (next: boolean, { pin = false, focusFirst = false } = {}) => {
             window.clearTimeout(hoverTimer);
             pinned = next && (pin || pinned);
-            if (next === open) return;
+            if (!next) {
+                scopePanel?.classList.add('hidden');
+                scopeButton?.classList.remove('active');
+            }
+            if (next === open) {
+                updateView();
+                return;
+            }
             open = next;
             island.dataset.open = String(next);
             toggle.setAttribute('aria-expanded', String(next));
             toggle.setAttribute('aria-label', next ? 'Close site menu' : toggle.dataset.closedLabel ?? 'Open site menu');
             panel.inert = !next;
-            scrim.classList.toggle('is-on', next);
-            syncScrollLock();
+            updateView();
             if (next && focusFirst) panel.querySelector<HTMLElement>('input, a')?.focus({ preventScroll: true });
         };
         toggle.dataset.closedLabel = toggle.getAttribute('aria-label') ?? '';
@@ -427,15 +485,50 @@ const linkAttrs = (item: NavItem) => ({
         island.addEventListener('pointerleave', () => {
             if (!canHover.matches) return;
             window.clearTimeout(hoverTimer);
-            if (open && !pinned) hoverTimer = window.setTimeout(() => setOpen(false), 220);
+            if (open && !pinned && !island.contains(document.activeElement)) hoverTimer = window.setTimeout(() => setOpen(false), 220);
+        });
+        island.addEventListener('focusin', () => {
+            if (open) pinned = true;
         });
         island.addEventListener('focusout', (event) => {
             const next = (event as FocusEvent).relatedTarget as Node | null;
             if (open && next && !island.contains(next)) setOpen(false);
         });
         scrim.addEventListener('click', () => setOpen(false));
+        document.addEventListener('pointerdown', (event) => {
+            if (open && !island.contains(event.target as Node)) setOpen(false);
+        });
 
         document.addEventListener('nav-island:open', () => setOpen(true, { pin: true }));
+        document.addEventListener('nav-island:close', () => setOpen(false));
+
+        searchInput?.addEventListener('input', updateView);
+        searchInput?.addEventListener('focus', updateView);
+        searchInput?.addEventListener('blur', updateView);
+        if (scopePanel) new MutationObserver(updateView).observe(scopePanel, { attributes: true, attributeFilter: ['class'] });
+
+        document.addEventListener('directory:filtered', (event) => {
+            const { query, category, label } = (event as CustomEvent<{
+                query: string;
+                category: string | null;
+                shown: number;
+                total: number;
+                label: string;
+            }>).detail;
+            if (query || category) {
+                island.dataset.filtered = '';
+                if (status) {
+                    status.textContent = label;
+                    status.hidden = false;
+                }
+            } else {
+                delete island.dataset.filtered;
+                if (status) {
+                    status.textContent = '';
+                    status.hidden = true;
+                }
+            }
+        });
 
         document.addEventListener('keydown', (event) => {
             if ((event.metaKey || event.ctrlKey) && !event.altKey && !event.shiftKey && event.key.toLowerCase() === 'k') {
@@ -454,6 +547,30 @@ const linkAttrs = (item: NavItem) => ({
                 if (hadFocus) toggle.focus();
             }
         });
+
+        const sizePill = () => {
+            if (isMobile.matches) {
+                island.style.removeProperty('--ni-w');
+                return;
+            }
+            const brandRight = brand?.getBoundingClientRect().right ?? 0;
+            const authFirst = authHeader && Array.from(authHeader.children).find(child => {
+                const style = window.getComputedStyle(child);
+                return style.display !== 'none'
+                    && style.visibility !== 'hidden'
+                    && child.getBoundingClientRect().width > 0;
+            });
+            const authLeft = authFirst?.getBoundingClientRect().left
+                ?? authHeader?.getBoundingClientRect().left
+                ?? window.innerWidth;
+            const half = Math.min(window.innerWidth / 2 - brandRight, authLeft - window.innerWidth / 2) - 16;
+            island.style.setProperty('--ni-w', `${Math.max(240, Math.min(520, 2 * half))}px`);
+        };
+        sizePill();
+        if (authHeader) new ResizeObserver(sizePill).observe(authHeader);
+        window.addEventListener('resize', sizePill);
+        window.addEventListener('load', sizePill, { once: true });
+        updateView();
 
         const ticker = island.querySelector<HTMLElement>('[data-ni-ticker]');
         const shownAd = island.querySelector<HTMLElement>('[data-house-ad]:not([hidden])')?.dataset.houseAd;

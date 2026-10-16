@@ -13,6 +13,7 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
+import TodayPromos from '../components/TodayPromos.astro';
 import ToolRow from '../components/ToolRow.astro';
 import { formatDate, getAllTools, getLatestUpdate } from '../lib/tools';
 import { ORGANIZATION } from '../lib/site';
@@ -98,7 +99,7 @@ const toolsJson = JSON.stringify(tools);
                     </button>
                     <!-- Filter Mega Menu Overlay -->
                     <div id="filterAccordion" class="hidden" slot="overlay">
-                        <div class="px-8 py-8 max-w-[1400px] mx-auto">
+                        <div class="px-5 pt-3 pb-4">
                             <div class="font-mono text-[11px] uppercase text-[#525252] mb-6 tracking-[0.2em] px-1">Browse by Category</div>
                             <div id="categoryFilters">
                                 <!-- Cards injected via JS -->
@@ -107,19 +108,24 @@ const toolsJson = JSON.stringify(tools);
                     </div>
                 </SiteHeader>
                 <!-- Hero: one-line orientation for first-time visitors -->
-                <div class="px-4 md:px-8 pt-6 md:pt-8 pb-2 shrink-0">
-                    <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-2.5 flex items-center gap-2">
-                        <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#d6b77a]"></span>
-                        {tools.length} tools &middot; {categoryCount} categories &middot; curated by hand{latestUpdateLabel && <>&nbsp;&middot; updated <time datetime={latestUpdate!}>{latestUpdateLabel}</time></>}
-                    </p>
-                    <p class="text-[22px] md:text-[28px] font-semibold text-white leading-tight tracking-tight m-0">
-                        Find your <span class="text-[#e2c48a]">AI coding stack</span>
-                    </p>
-                    <a href="/trending" class="inline-flex items-center gap-1.5 mt-2 font-mono text-[12px] text-[#a3a3a3] hover:text-[#e2c48a] transition-colors">Trending this week &rarr;</a>
+                <div class="px-4 md:px-8 pt-6 md:pt-8 pb-2 shrink-0 flex items-start gap-6">
+                    <div class="min-w-0 flex-1">
+                        <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-2.5">
+                            <span class="inline-block align-middle mr-2 w-1.5 h-1.5 rounded-full bg-[#d6b77a]"></span>
+                            {tools.length} tools &middot; {categoryCount} categories &middot; curated by hand{latestUpdateLabel && <>&nbsp;&middot; updated <time datetime={latestUpdate!}>{latestUpdateLabel}</time></>}
+                        </p>
+                        <p class="text-[22px] md:text-[28px] font-semibold text-white leading-tight tracking-tight m-0">
+                            Find your <span class="text-[#e2c48a]">AI coding stack</span>
+                        </p>
+                        <a href="/trending" class="inline-flex items-center gap-1.5 mt-2 font-mono text-[12px] text-[#a3a3a3] hover:text-[#e2c48a] transition-colors">Trending this week &rarr;</a>
+                    </div>
+                    <div class="hidden xl:block ml-auto w-full max-w-[640px]">
+                        <TodayPromos layout="row" />
+                    </div>
                 </div>
 
                 <!-- Table Header -->
-                <div class="table-header hidden md:flex items-center px-8 py-5 border-b border-[#222] font-mono text-[14px] text-[#a3a3a3] uppercase tracking-widest bg-black shrink-0 transition-all duration-300 sticky top-[89px] z-10 overflow-y-auto" id="tableHeader">
+                <div class="table-header hidden md:flex items-center px-8 py-5 border-b border-[#222] font-mono text-[14px] text-[#a3a3a3] uppercase tracking-widest bg-black shrink-0 transition-all duration-300 sticky top-[64px] z-10 overflow-y-auto" id="tableHeader">
                     <div class="reg-col-name text-sm transition-all duration-300 cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="name" id="thName">Name <span class="sort-icon opacity-50">↕</span></div>
                     <div class="reg-col-company text-sm cursor-pointer hover:text-white select-none flex items-center gap-2" data-sort="company">Company <span class="sort-icon opacity-50">↕</span></div>
                     <div class="reg-col-desc text-sm cursor-pointer hover:text-white select-none" style="pointer-events: none;">Description</div>
