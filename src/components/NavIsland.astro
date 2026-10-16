@@ -239,7 +239,7 @@ const linkAttrs = (item: NavItem) => ({
         mask-composite: exclude;
         pointer-events: none;
     }
-    .ni[data-open='false']:hover::before { animation: ni-orbit 6s linear infinite; }
+    .ni[data-enhanced][data-open='false']:hover::before { animation: ni-orbit 6s linear infinite; }
     .ni[data-open='true'], .ni:not([data-enhanced]):is(:hover, :focus-within) {
         width: var(--ni-open-w);
         border-radius: 24px;
@@ -381,7 +381,7 @@ const linkAttrs = (item: NavItem) => ({
 
     @media (prefers-reduced-motion: reduce) {
         .ni, .ni *, .ni-scrim { transition-duration: 0.01ms !important; transition-delay: 0s !important; }
-        .ni::before, .ni-live, .ni[data-open='false']:hover::before { animation: none; }
+        .ni::before, .ni-live, .ni[data-enhanced][data-open='false']:hover::before { animation: none; }
     }
 </style>
 
