@@ -265,7 +265,7 @@ const linkAttrs = (item: NavItem) => ({
     .ni-sec { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; white-space: nowrap; }
     .ni-sec svg { color: var(--color-gold-soft); flex-shrink: 0; }
     .ni-div { width: 1px; height: 18px; background: #2a2a2a; flex-shrink: 0; }
-    .ni-live { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--color-danger); box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.15); animation: ni-pulse 1.6s infinite; flex-shrink: 0; }
+    .ni-live { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--color-danger); box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.15); animation: ni-pulse 1.6s 3; flex-shrink: 0; }
     .ni-tick { position: relative; flex: 1; min-width: 0; height: 20px; overflow: hidden; font-size: 13px; color: #d4d4d4; }
     .ni-status { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; color: var(--color-gold-soft); }
     .ni-tick-item { position: absolute; inset: 0; display: flex; gap: 6px; align-items: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0; translate: 0 8px; transition: opacity 0.4s ease, translate 0.4s var(--ni-ease); }
