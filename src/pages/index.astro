@@ -8,11 +8,10 @@
  * Key differences from the old index.html:
  *   - Tool cards are NOT pre-rendered in HTML - the grid is populated by
  *     client-side JS (same as before) reading a build-time injected JSON blob.
- *   - Sidebar is a reusable component, not inline HTML.
+ *   - Site navigation lives in SiteHeader (NavIsland), not inline HTML.
  *   - Layout is static and does not require runtime shell injection.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Sidebar from '../components/Sidebar.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import ToolRow from '../components/ToolRow.astro';
 import { formatDate, getAllTools, getLatestUpdate } from '../lib/tools';
@@ -86,7 +85,6 @@ const toolsJson = JSON.stringify(tools);
     jsonLd={jsonLd}
 >
     <div class="flex h-[100dvh] overflow-hidden">
-        <Sidebar variant="index" />
 
         <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative">
             <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-0">

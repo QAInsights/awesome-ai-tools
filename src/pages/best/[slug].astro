@@ -8,7 +8,6 @@
  * src/lib/indexing.ts).
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Sidebar from '../../components/Sidebar.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import { formatDate, getCategorySlug, getToolBySlug } from '../../lib/tools';
 import { getBestFreePick, getBestPages, type BestPage } from '../../lib/best';
@@ -146,7 +145,6 @@ const num = () => String(++n).padStart(2, '0');
     markdownUrl={`/best/${facet.slug}.md`}
 >
     <div class="flex h-[100dvh] overflow-hidden">
-        <Sidebar variant="tool" />
 
         <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
             <SiteHeader variant="page" title={facet.title} />

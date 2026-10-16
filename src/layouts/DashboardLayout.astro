@@ -9,7 +9,6 @@
  *   activeNav - highlights the active link in the sidebar nav
  */
 import BaseLayout from './BaseLayout.astro';
-import Sidebar from '../components/Sidebar.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 
 interface Props {
@@ -36,10 +35,9 @@ const { title, activeNav, ...layoutProps } = Astro.props;
 
 <BaseLayout title={title} {...layoutProps}>
     <div class="flex h-[100dvh] overflow-hidden">
-        <Sidebar variant="tool" activeNav={activeNav} />
 
         <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
-            <SiteHeader variant="page" title={title.replace(' | ai.dosa.dev', '').replace('ai.dosa.dev | ', '')} />
+            <SiteHeader variant="page" activeNav={activeNav} title={title.replace(' | ai.dosa.dev', '').replace('ai.dosa.dev | ', '')} />
 
             <slot />
             <footer class="shrink-0 mt-auto px-6 md:px-8 pt-10 pb-8 text-center font-mono text-[11px] text-ink-disabled">
