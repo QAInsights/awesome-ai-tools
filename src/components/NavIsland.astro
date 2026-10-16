@@ -237,9 +237,9 @@ const linkAttrs = (item: NavItem) => ({
         -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
         -webkit-mask-composite: xor;
         mask-composite: exclude;
-        animation: ni-orbit 6s linear infinite;
         pointer-events: none;
     }
+    .ni[data-open='false']:hover::before { animation: ni-orbit 6s linear infinite; }
     .ni[data-open='true'], .ni:not([data-enhanced]):is(:hover, :focus-within) {
         width: var(--ni-open-w);
         border-radius: 24px;
@@ -281,6 +281,7 @@ const linkAttrs = (item: NavItem) => ({
     .ni[data-open='true'] .ni-panel, .ni:not([data-enhanced]):is(:hover, :focus-within) .ni-panel { grid-template-rows: 1fr; }
     .ni-panel-inner { min-height: 0; overflow: hidden; opacity: 0; transition: opacity 0.25s ease; }
     .ni[data-open='true'] .ni-panel-inner, .ni:not([data-enhanced]):is(:hover, :focus-within) .ni-panel-inner { opacity: 1; overflow-y: auto; max-height: calc(100dvh - 72px); transition-delay: 0.12s; scrollbar-width: thin; }
+    .ni[data-open='false'] .ni-panel :global(*) { animation-play-state: paused; }
 
     .ni-search-row { display: flex; align-items: center; gap: 10px; margin: 16px 18px 0; }
     .ni-search-row .search-shell { flex: 1; width: auto; max-width: none; min-width: 0; }
@@ -337,9 +338,8 @@ const linkAttrs = (item: NavItem) => ({
     .ni-foot a { color: var(--color-ink-secondary); text-decoration: none; }
     .ni-foot a:hover { color: #fff; }
 
-    .ni-scrim { position: fixed; inset: 0; z-index: 44; background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(3px); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+    .ni-scrim { position: fixed; inset: 0; z-index: 44; background: rgba(0, 0, 0, 0.62); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
     .ni-scrim.is-on { opacity: 1; pointer-events: auto; }
-    .ni-scrim:not(.is-on) { backdrop-filter: none; }
 
     @media (max-width: 1023px) {
         .ni-grid { grid-template-columns: 1fr 1fr; }
@@ -381,7 +381,7 @@ const linkAttrs = (item: NavItem) => ({
 
     @media (prefers-reduced-motion: reduce) {
         .ni, .ni *, .ni-scrim { transition-duration: 0.01ms !important; transition-delay: 0s !important; }
-        .ni::before, .ni-live { animation: none; }
+        .ni::before, .ni-live, .ni[data-open='false']:hover::before { animation: none; }
     }
 </style>
 
