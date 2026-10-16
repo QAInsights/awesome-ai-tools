@@ -86,6 +86,27 @@ export function initFilterManager(config) {
         window.history.replaceState({}, '', url);
     }
 
+    let cardsRendered = false;
+
+    function ensureCategoryCards() {
+        if (cardsRendered || !filtersContainer) return;
+        cardsRendered = true;
+        filtersContainer.innerHTML = '';
+        filtersContainer.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4';
+
+        const fragment = document.createDocumentFragment();
+        const allCard = createCategoryCard('all', 'All Categories', toolsData.length, toolsData.slice(0, 3));
+        allCard.classList.add('active');
+        fragment.appendChild(allCard);
+
+        categories.forEach(cat => {
+            const categoryTools = toolsData.filter(t => t.category === cat);
+            const card = createCategoryCard(cat, cat, categoryTools.length, categoryTools.slice(0, 3));
+            fragment.appendChild(card);
+        });
+        filtersContainer.appendChild(fragment);
+    }
+
     function renderFilters() {
         if (!filtersContainer || !accordionBtn) return;
 
@@ -93,6 +114,7 @@ export function initFilterManager(config) {
         accordionBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             const isHidden = accordionContent.classList.contains('hidden');
+            if (isHidden) ensureCategoryCards();
             
             // Close other popups (managed via app.js or specific events)
             const userMenuPopup = document.getElementById('userMenuPopup');
@@ -104,24 +126,15 @@ export function initFilterManager(config) {
 
         // Close on click outside
         document.addEventListener('click', (e) => {
-            if (!accordionContent.contains(e.target) && !accordionBtn.contains(e.target)) {
+            if (
+                accordionContent
+                && !accordionContent.classList.contains('hidden')
+                && !accordionContent.contains(e.target)
+                && !accordionBtn.contains(e.target)
+            ) {
                 accordionContent.classList.add('hidden');
                 accordionBtn.classList.remove('active');
             }
-        });
-
-        filtersContainer.innerHTML = '';
-        filtersContainer.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4';
-
-        // Add "All Tools" card
-        const allCard = createCategoryCard('all', 'All Categories', toolsData.length, toolsData.slice(0, 3));
-        allCard.classList.add('active');
-        filtersContainer.appendChild(allCard);
-
-        categories.forEach(cat => {
-            const categoryTools = toolsData.filter(t => t.category === cat);
-            const card = createCategoryCard(cat, cat, categoryTools.length, categoryTools.slice(0, 3));
-            filtersContainer.appendChild(card);
         });
     }
 
@@ -142,7 +155,7 @@ export function initFilterManager(config) {
                         try {
                             const domain = new URL(t.url).hostname;
                             return `<div class="w-8 h-8 rounded-full border-2 border-[#0d0d0d] bg-white overflow-hidden shadow-lg">
-                                <img src="https://www.google.com/s2/favicons?domain=${domain}&sz=64" class="w-full h-full object-cover" alt="" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-[10px] text-black font-bold\\'>${t.name[0]}</div>'">
+                                <img src="https://www.google.com/s2/favicons?domain=${domain}&sz=64" loading="lazy" decoding="async" class="w-full h-full object-cover" alt="" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center text-[10px] text-black font-bold\\'>${t.name[0]}</div>'">
                             </div>`;
                         } catch(e) { return ''; }
                     }).join('')}

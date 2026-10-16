@@ -73,9 +73,8 @@ const jsonLd = JSON.stringify({
     ]
 });
 
-// Serialize all tool data for client-side hydration
-// The client JS reads this to power search/filter/sort/voting
-const toolsJson = JSON.stringify(tools);
+// Serialize tool seed data for client-side hydration (omit heavy enriched fields unused by client grid)
+const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed));
 ---
 
 <BaseLayout

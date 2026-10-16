@@ -79,4 +79,67 @@ describe('filter manager search shortcut', () => {
             else delete globalThis.document;
         }
     });
+
+    test('defers rendering category cards until the scope accordion button is clicked', () => {
+        let clickHandler;
+        const appended = [];
+        const filtersContainer = {
+            innerHTML: '',
+            className: '',
+            appendChild: node => appended.push(node),
+        };
+        const accordionBtn = {
+            addEventListener: (type, fn) => {
+                if (type === 'click') clickHandler = fn;
+            },
+            classList: { toggle() {}, remove() {} },
+        };
+        const accordionContent = {
+            classList: {
+                hidden: true,
+                contains(cls) { return cls === 'hidden' && this.hidden; },
+                toggle(cls) { if (cls === 'hidden') this.hidden = !this.hidden; },
+                add(cls) { if (cls === 'hidden') this.hidden = true; },
+            },
+        };
+        const fakeDocument = {
+            getElementById: id => {
+                if (id === 'categoryFilters') return filtersContainer;
+                if (id === 'filterAccordionBtn') return accordionBtn;
+                if (id === 'filterAccordion') return accordionContent;
+                return null;
+            },
+            addEventListener() {},
+            createDocumentFragment: () => ({
+                children: [],
+                appendChild(child) { this.children.push(child); },
+            }),
+            createElement: () => ({
+                className: '',
+                dataset: {},
+                innerHTML: '',
+                classList: { add() {}, remove() {} },
+                addEventListener() {},
+            }),
+        };
+        const originalDocument = globalThis.document;
+        globalThis.document = fakeDocument;
+
+        try {
+            const fm = initFilterManager({
+                toolsData: [{ name: 'Cursor', url: 'https://cursor.com', category: 'AI IDEs' }],
+                categories: new Set(['AI IDEs']),
+            });
+            fm.renderFilters();
+            expect(appended.length).toBe(0);
+
+            clickHandler({ stopPropagation() {} });
+            expect(appended.length).toBe(1);
+            expect(appended[0].children.length).toBe(2);
+            expect(appended[0].children[0].innerHTML).toContain('loading="lazy" decoding="async"');
+        } finally {
+            if (originalDocument) globalThis.document = originalDocument;
+            else delete globalThis.document;
+        }
+    });
 });
