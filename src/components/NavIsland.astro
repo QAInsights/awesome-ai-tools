@@ -1,0 +1,428 @@
+---
+import { getCollection } from 'astro:content';
+import HouseAdFeature from './HouseAdFeature.astro';
+import houseAds from '../data/house-ads.json';
+
+/**
+ * Site navigation "island": a pill pinned top-centre on desktop (bottom on
+ * mobile) that shows the current section plus a rotating promo ticker, and
+ * morphs into the full nav panel on hover, click or Cmd/Ctrl+K.
+ *
+ * Props:
+ *  - activeNav: optional section key override; otherwise derived from the URL
+ */
+
+interface Props {
+    activeNav?: string;
+}
+
+type NavItem = { key: string; href: string; label: string; desc?: string; icon: string; external?: boolean };
+
+const ICONS: Record<string, string> = {
+    grid: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+    news: '<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/>',
+    trend: '<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
+    award: '<circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/>',
+    compare: '<path d="M16 3h5v5M8 21H3v-5M21 3l-7 7M3 21l7-7"/>',
+    blog: '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
+    hash: '<line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/>',
+    gauge: '<path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/>',
+    help: '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+    badge: '<path d="M12 2 15.09 8.26 22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>',
+    megaphone: '<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+    plus: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>',
+    coffee: '<path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>',
+    github: '<path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/>',
+    menu: '<line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>',
+};
+
+const browse: NavItem[] = [
+    { key: 'directory', href: '/', label: 'Directory', desc: 'Every curated AI coding tool', icon: 'grid' },
+    { key: 'news', href: '/news', label: 'Today in AI', desc: 'Daily model and tooling briefs', icon: 'news' },
+    { key: 'trending', href: '/trending', label: 'Trending this week', desc: 'Most-zapped tools right now', icon: 'trend' },
+    { key: 'best', href: '/best', label: 'Best AI Tools', desc: 'Ranked roundups by use case', icon: 'award' },
+    { key: 'compare', href: '/compare', label: 'Comparisons', desc: 'Head-to-head breakdowns', icon: 'compare' },
+    { key: 'blog', href: '/blog', label: 'Blog', desc: 'Guides and deep dives', icon: 'blog' },
+];
+
+const utilities: NavItem[] = [
+    { key: 'token-counter', href: '/tools/token-counter', label: 'Token Counter', desc: 'Count tokens across popular models', icon: 'hash' },
+    { key: 'hallucination-scorer', href: '/tools/hallucination-scorer', label: 'Hallucination Scorer', desc: 'Score answers for made-up claims', icon: 'gauge' },
+];
+
+const more: NavItem[] = [
+    { key: 'help', href: '/help', label: 'Help & Support', icon: 'help' },
+    { key: 'badge', href: '/badge', label: 'Featured Badge', icon: 'badge' },
+    { key: 'advertise', href: '/advertise', label: 'Advertise', icon: 'megaphone' },
+    { key: 'submit', href: 'https://github.com/QAInsights/awesome-ai-tools/issues/new?template=submit-tool.yml', label: 'Submit a Tool', icon: 'plus', external: true },
+    { key: 'support', href: 'https://buymeacoffee.com/qainsights', label: 'Support the Project', icon: 'coffee', external: true },
+    { key: 'github', href: 'https://github.com/QAInsights/awesome-ai-tools', label: 'GitHub', icon: 'github', external: true },
+];
+
+const SECTION_PREFIXES: [string, string][] = [
+    ['/news', 'news'],
+    ['/trending', 'trending'],
+    ['/best', 'best'],
+    ['/compare', 'compare'],
+    ['/blog', 'blog'],
+    ['/tools/token-counter', 'token-counter'],
+    ['/tools/hallucination-scorer', 'hallucination-scorer'],
+    ['/help', 'help'],
+    ['/badge', 'badge'],
+    ['/advertise', 'advertise'],
+    ['/tools/', 'directory'],
+    ['/category/', 'directory'],
+];
+
+const allItems = [...browse, ...utilities, ...more];
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const derived = path === '/' ? 'directory' : SECTION_PREFIXES.find(([prefix]) => path.startsWith(prefix))?.[1];
+const active = allItems.find(item => item.key === (activeNavKey(Astro.props.activeNav) ?? derived));
+const pillLabel = active?.label ?? 'Menu';
+const pillIcon = ICONS[active?.icon ?? 'menu'];
+
+function activeNavKey(key?: string) {
+    return key && allItems.some(item => item.key === key) ? key : undefined;
+}
+
+const newsPosts = await getCollection('blog', ({ data }) =>
+    data.draft !== true && data.tags?.includes('news')
+);
+const latestNews = newsPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())[0];
+const latestNewsDate = latestNews
+    ? latestNews.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' })
+    : null;
+
+const linkAttrs = (item: NavItem) => ({
+    href: item.href,
+    ...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}),
+    'aria-current': item.key === active?.key ? ('page' as const) : undefined,
+});
+---
+
+<div class="ni-scrim" data-ni-scrim aria-hidden="true"></div>
+
+<div class="ni" id="navIsland" data-nav-island data-open="false">
+    <button type="button" class="ni-pill" data-ni-toggle aria-expanded="false" aria-controls="navIslandPanel" aria-label={`Open site menu. Current section: ${pillLabel}`}>
+        <span class="ni-sec">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={pillIcon}></svg>
+            <span>{pillLabel}</span>
+        </span>
+        <span class="ni-div" aria-hidden="true"></span>
+        <span class="ni-live" aria-hidden="true"></span>
+        <span class="ni-tick" aria-hidden="true" data-ni-ticker>
+            {latestNews && <span class="ni-tick-item is-on"><b class="text-danger">Today in AI</b>{latestNews.data.title}</span>}
+            {houseAds.map(ad => <span class="ni-tick-item" data-ni-tick-ad={ad.id}><b class="text-[#a8e86f]">Ad</b>{ad.name}: {ad.tagline}</span>)}
+            <span class={`ni-tick-item${latestNews ? '' : ' is-on'}`}><b class="text-gold-soft">Featured</b>Promote your AI tool to developers</span>
+        </span>
+        <kbd class="ni-kbd" aria-hidden="true" data-ni-kbd>Ctrl K</kbd>
+        <span class="ni-chev" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </span>
+    </button>
+
+    <div class="ni-panel" id="navIslandPanel" inert>
+        <div class="ni-panel-inner">
+            <nav class="ni-grid" aria-label="Site">
+                <div>
+                    <div class="ni-h">Browse</div>
+                    <ul class="ni-list">
+                        {browse.map(item => (
+                            <li><a class="ni-link" {...linkAttrs(item)}>
+                                <span class="ni-ib"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONS[item.icon]}></svg></span>
+                                <span class="min-w-0"><span class="ni-link-t">{item.label}</span><span class="ni-link-d">{item.desc}</span></span>
+                            </a></li>
+                        ))}
+                    </ul>
+                </div>
+
+                <div>
+                    <div class="ni-h">AI Utilities</div>
+                    <ul class="ni-list">
+                        {utilities.map(item => (
+                            <li><a class="ni-card" {...linkAttrs(item)}>
+                                <span class="ni-ib"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONS[item.icon]}></svg></span>
+                                <span class="min-w-0"><span class="ni-link-t">{item.label}</span><span class="ni-link-d">{item.desc}</span></span>
+                            </a></li>
+                        ))}
+                    </ul>
+                    <div class="ni-h ni-h-gap">More</div>
+                    <ul class="ni-chips">
+                        {more.map(item => (
+                            <li><a class="ni-chip" {...linkAttrs(item)}>
+                                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONS[item.icon]}></svg>
+                                {item.label}
+                            </a></li>
+                        ))}
+                    </ul>
+                </div>
+
+                <div class="ni-promos">
+                    <div class="ni-h">Today</div>
+                    {latestNews && (
+                        <div class="ni-promo">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <div class="font-mono text-[11px] uppercase text-ink-muted tracking-widest flex items-center gap-1.5"><span class="ni-live" aria-hidden="true"></span>Today in AI</div>
+                                <span class="font-mono text-[11px] text-ink-disabled">{latestNewsDate}</span>
+                            </div>
+                            <a href={`/blog/${latestNews.id}`} class="text-[13px] text-[#e5e5e5] leading-snug no-underline hover:text-white transition-colors block">{latestNews.data.title}</a>
+                            <a href="/news" class="gradient-link inline-block mt-2 font-mono text-[12px] hover:underline">All briefs &rarr;</a>
+                        </div>
+                    )}
+                    <HouseAdFeature sectionClass="rounded-xl border border-border bg-white/[0.01] p-3" />
+                    <div class="ni-promo border-dashed">
+                        <div class="font-mono text-[11px] uppercase text-ink-muted mb-1.5 tracking-wide">Featured</div>
+                        <div class="text-[13px] text-ink-secondary leading-relaxed">
+                            Promote your AI tool directly to developers.
+                            <a href="/advertise" class="gradient-link block mt-1.5 font-mono hover:underline">Book this space &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <footer class="ni-foot">
+                <div class="flex flex-wrap gap-x-3 gap-y-1">
+                    <a href="https://dosa.dev" target="_blank" rel="noopener noreferrer">dosa.dev</a>
+                    <a href="https://qainsights.com" target="_blank" rel="noopener noreferrer">qainsights.com</a>
+                    <a href="https://jmeter.ai" target="_blank" rel="noopener noreferrer">jmeter.ai</a>
+                </div>
+                <div class="font-mono text-[12px] text-ink-muted"><span class="footer-copy">&copy; dosa.dev</span> · <span class="app-version"></span></div>
+            </footer>
+        </div>
+    </div>
+</div>
+
+<style>
+    @property --ni-angle {
+        syntax: '<angle>';
+        initial-value: 0deg;
+        inherits: false;
+    }
+
+    .ni {
+        --ni-w: min(520px, calc(100vw - 440px));
+        --ni-open-w: min(1080px, calc(100vw - 32px));
+        --ni-ease: cubic-bezier(0.32, 0.72, 0, 1);
+        position: fixed;
+        top: 10px;
+        left: 50%;
+        z-index: 45;
+        width: var(--ni-w);
+        translate: -50% 0;
+        display: flex;
+        flex-direction: column;
+        border-radius: 22px;
+        background: #0b0b0b;
+        border: 1px solid #2a2a2a;
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 20px 50px -20px rgba(226, 196, 138, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        transition: width 0.5s var(--ni-ease), border-radius 0.5s var(--ni-ease), box-shadow 0.4s ease;
+    }
+    @media (min-width: 1280px) {
+        .ni { --ni-w: min(520px, calc(100vw - 820px)); }
+    }
+    .ni::before {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        border-radius: inherit;
+        padding: 1px;
+        background: conic-gradient(from var(--ni-angle), transparent 0 70%, rgba(226, 196, 138, 0.7) 80%, transparent 90%);
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        animation: ni-orbit 6s linear infinite;
+        pointer-events: none;
+    }
+    .ni[data-open='true'] {
+        width: var(--ni-open-w);
+        border-radius: 24px;
+        box-shadow: 0 60px 120px -20px rgba(0, 0, 0, 0.95), 0 0 0 1px #2a2a2a, 0 30px 80px -30px rgba(226, 196, 138, 0.25);
+    }
+    .ni[data-open='true']::before { opacity: 0; }
+
+    .ni-pill {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        height: 42px;
+        width: 100%;
+        padding: 0 7px 0 16px;
+        background: transparent;
+        border: 0;
+        border-radius: 22px;
+        color: #fff;
+        cursor: pointer;
+        text-align: left;
+    }
+    .ni-pill:focus-visible { outline: 2px solid var(--color-gold-soft); outline-offset: 2px; }
+    .ni-sec { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; white-space: nowrap; }
+    .ni-sec svg { color: var(--color-gold-soft); flex-shrink: 0; }
+    .ni-div { width: 1px; height: 18px; background: #2a2a2a; flex-shrink: 0; }
+    .ni-live { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--color-danger); box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.15); animation: ni-pulse 1.6s infinite; flex-shrink: 0; }
+    .ni-tick { position: relative; flex: 1; min-width: 0; height: 20px; overflow: hidden; font-size: 13px; color: #d4d4d4; }
+    .ni-tick-item { position: absolute; inset: 0; display: flex; gap: 6px; align-items: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0; translate: 0 8px; transition: opacity 0.4s ease, translate 0.4s var(--ni-ease); }
+    .ni-tick-item b { font: 600 10px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.12em; text-transform: uppercase; flex-shrink: 0; }
+    .ni-tick-item.is-on { opacity: 1; translate: 0 0; }
+    .ni-kbd { font: 11px var(--font-mono, ui-monospace, monospace); color: var(--color-ink-muted); border: 1px solid #2a2a2a; border-radius: 6px; padding: 2px 6px; white-space: nowrap; flex-shrink: 0; }
+    .ni-chev { width: 30px; height: 30px; border-radius: 50%; background: #1a1a1a; display: grid; place-items: center; color: var(--color-ink-secondary); flex-shrink: 0; transition: rotate 0.4s var(--ni-ease); }
+    .ni[data-open='true'] .ni-chev { rotate: 180deg; }
+    .ni[data-open='true'] .ni-tick, .ni[data-open='true'] .ni-div, .ni[data-open='true'] .ni-pill > .ni-live, .ni[data-open='true'] .ni-kbd { opacity: 0; }
+
+    .ni-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.5s var(--ni-ease); }
+    .ni[data-open='true'] .ni-panel { grid-template-rows: 1fr; }
+    .ni-panel-inner { min-height: 0; overflow: hidden; opacity: 0; transition: opacity 0.25s ease; }
+    .ni[data-open='true'] .ni-panel-inner { opacity: 1; overflow-y: auto; max-height: calc(100dvh - 72px); transition-delay: 0.12s; scrollbar-width: thin; }
+
+    .ni-grid { display: grid; gap: 22px; padding: 10px 20px 18px; grid-template-columns: 1.25fr 1fr 1.15fr; }
+    .ni-h { font: 11px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-ink-muted); margin: 0 0 8px 2px; }
+    .ni-h-gap { margin-top: 20px; }
+    .ni-list { display: grid; gap: 4px; list-style: none; margin: 0; padding: 0; }
+    .ni-link, .ni-card { display: flex; gap: 12px; align-items: flex-start; padding: 8px 10px; border-radius: 12px; color: #fff; text-decoration: none; transition: background-color 0.2s, border-color 0.2s; }
+    .ni-card { padding: 12px; border: 1px solid #232323; background: linear-gradient(160deg, #141414, #0c0c0c); border-radius: 14px; }
+    .ni-link:hover, .ni-link[aria-current='page'] { background: rgba(255, 255, 255, 0.05); }
+    .ni-card:hover, .ni-card[aria-current='page'] { border-color: var(--color-border-strong); }
+    .ni-link:focus-visible, .ni-card:focus-visible, .ni-chip:focus-visible, .ni-foot a:focus-visible { outline: 2px solid var(--color-gold-soft); outline-offset: 1px; }
+    .ni-ib { width: 32px; height: 32px; border-radius: 9px; background: #151515; border: 1px solid #262626; display: grid; place-items: center; color: var(--color-gold-soft); flex-shrink: 0; }
+    .ni-link-t { display: block; font-size: 14px; font-weight: 600; line-height: 1.3; }
+    .ni-link-d { display: block; font-size: 12px; color: var(--color-ink-muted); line-height: 1.4; }
+    .ni-link[aria-current='page'] .ni-link-t, .ni-card[aria-current='page'] .ni-link-t { color: var(--color-gold-soft); }
+    .ni-chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+    .ni-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--color-ink-secondary); border: 1px solid #262626; border-radius: 999px; padding: 6px 11px; text-decoration: none; transition: color 0.2s, border-color 0.2s, background-color 0.2s; }
+    .ni-chip:hover, .ni-chip[aria-current='page'] { color: #fff; border-color: var(--color-border-strong); background: rgba(255, 255, 255, 0.04); }
+    .ni-promos { display: flex; flex-direction: column; gap: 8px; }
+    .ni-promo { padding: 12px; border: 1px solid var(--color-border); border-radius: 12px; background: rgba(255, 255, 255, 0.01); }
+    .ni-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; padding: 10px 20px 14px; border-top: 1px solid var(--color-border); font-size: 13px; }
+    .ni-foot a { color: var(--color-ink-secondary); text-decoration: none; }
+    .ni-foot a:hover { color: #fff; }
+
+    .ni-scrim { position: fixed; inset: 0; z-index: 44; background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(3px); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+    .ni-scrim.is-on { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 1023px) {
+        .ni-grid { grid-template-columns: 1fr 1fr; }
+        .ni-promos { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); align-items: start; }
+        .ni-promos > .ni-h { grid-column: 1 / -1; margin-bottom: 0; }
+    }
+
+    @media (max-width: 767px) {
+        .ni {
+            --ni-w: min(420px, calc(100vw - 24px));
+            --ni-open-w: calc(100vw - 16px);
+            top: auto;
+            bottom: calc(12px + env(safe-area-inset-bottom, 0px) + var(--ea-float-h, 0px));
+            flex-direction: column-reverse;
+        }
+        .ni[data-open='true'] { bottom: calc(8px + env(safe-area-inset-bottom, 0px) + var(--ea-float-h, 0px)); }
+        .ni-pill { height: 48px; }
+        .ni-kbd { display: none; }
+        .ni[data-open='true'] .ni-chev { rotate: 0deg; }
+        .ni-chev { rotate: 180deg; }
+        .ni[data-open='true'] .ni-panel-inner { max-height: calc(100dvh - 96px - var(--ea-float-h, 0px)); }
+        .ni-grid { grid-template-columns: 1fr; gap: 18px; padding: 16px 14px 12px; }
+        .ni-promos { display: flex; }
+        .ni-foot { padding: 10px 14px 12px; }
+        :global(main.overflow-y-auto)::after, :global(#toolGrid)::after {
+            content: '';
+            display: block;
+            flex-shrink: 0;
+            height: calc(76px + var(--ea-float-h, 0px));
+        }
+    }
+
+    @keyframes ni-orbit { to { --ni-angle: 360deg; } }
+    @keyframes ni-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ni, .ni *, .ni-scrim { transition-duration: 0.01ms !important; transition-delay: 0s !important; }
+        .ni::before, .ni-live { animation: none; }
+    }
+</style>
+
+<script>
+    const island = document.querySelector<HTMLElement>('[data-nav-island]');
+    const toggle = island?.querySelector<HTMLButtonElement>('[data-ni-toggle]');
+    const panel = island?.querySelector<HTMLElement>('#navIslandPanel');
+    const scrim = document.querySelector<HTMLElement>('[data-ni-scrim]');
+
+    if (island && toggle && panel && scrim) {
+        const canHover = window.matchMedia('(hover: hover) and (min-width: 768px)');
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const isMobile = window.matchMedia('(max-width: 767px)');
+        const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+        const kbd = island.querySelector<HTMLElement>('[data-ni-kbd]');
+        if (kbd && isMac) kbd.textContent = '⌘K';
+
+        let open = false;
+        let pinned = false;
+        let hoverTimer: number | undefined;
+
+        const setOpen = (next: boolean, { pin = false, focusFirst = false } = {}) => {
+            window.clearTimeout(hoverTimer);
+            pinned = next && (pin || pinned);
+            if (next === open) return;
+            open = next;
+            island.dataset.open = String(next);
+            toggle.setAttribute('aria-expanded', String(next));
+            toggle.setAttribute('aria-label', next ? 'Close site menu' : toggle.dataset.closedLabel ?? 'Open site menu');
+            panel.inert = !next;
+            scrim.classList.toggle('is-on', next);
+            document.body.style.overflow = next && isMobile.matches ? 'hidden' : '';
+            if (next && focusFirst) panel.querySelector<HTMLElement>('a')?.focus({ preventScroll: true });
+        };
+        toggle.dataset.closedLabel = toggle.getAttribute('aria-label') ?? '';
+
+        toggle.addEventListener('click', () => {
+            if (open && !pinned && canHover.matches) setOpen(true, { pin: true });
+            else setOpen(!open, { pin: true });
+        });
+        island.addEventListener('pointerenter', () => {
+            if (!canHover.matches || open) return;
+            window.clearTimeout(hoverTimer);
+            hoverTimer = window.setTimeout(() => setOpen(true), 90);
+        });
+        island.addEventListener('pointerleave', () => {
+            if (!canHover.matches) return;
+            window.clearTimeout(hoverTimer);
+            if (open && !pinned) hoverTimer = window.setTimeout(() => setOpen(false), 220);
+        });
+        island.addEventListener('focusout', (event) => {
+            const next = (event as FocusEvent).relatedTarget as Node | null;
+            if (open && next && !island.contains(next)) setOpen(false);
+        });
+        scrim.addEventListener('click', () => setOpen(false));
+
+        document.addEventListener('keydown', (event) => {
+            if ((event.metaKey || event.ctrlKey) && !event.altKey && !event.shiftKey && event.key.toLowerCase() === 'k') {
+                event.preventDefault();
+                if (open) {
+                    setOpen(false);
+                    toggle.focus();
+                } else {
+                    setOpen(true, { pin: true, focusFirst: true });
+                }
+                return;
+            }
+            if (event.key === 'Escape' && open) {
+                const hadFocus = island.contains(document.activeElement);
+                setOpen(false);
+                if (hadFocus) toggle.focus();
+            }
+        });
+
+        const ticker = island.querySelector<HTMLElement>('[data-ni-ticker]');
+        const shownAd = island.querySelector<HTMLElement>('[data-house-ad]:not([hidden])')?.dataset.houseAd;
+        ticker?.querySelectorAll<HTMLElement>('[data-ni-tick-ad]').forEach(item => {
+            if (item.dataset.niTickAd !== shownAd) item.remove();
+        });
+        const items = ticker ? Array.from(ticker.querySelectorAll<HTMLElement>('.ni-tick-item')) : [];
+        let index = Math.max(0, items.findIndex(item => item.classList.contains('is-on')));
+        if (items.length > 1) {
+            window.setInterval(() => {
+                if (open || document.hidden || reducedMotion.matches) return;
+                items[index]?.classList.remove('is-on');
+                index = (index + 1) % items.length;
+                items[index]?.classList.add('is-on');
+            }, 4500);
+        }
+    }
+</script>

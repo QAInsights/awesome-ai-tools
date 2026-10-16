@@ -1,5 +1,11 @@
 ---
 import houseAds from '../data/house-ads.json';
+
+interface Props {
+    sectionClass?: string;
+}
+
+const { sectionClass = 'mx-4 mt-2 shrink-0 rounded-md border border-[#222] bg-white/[0.01] p-3' } = Astro.props;
 ---
 
 <div data-house-ads>
@@ -8,7 +14,7 @@ import houseAds from '../data/house-ads.json';
             aria-labelledby={`house-ad-${ad.id}-title`}
             data-house-ad={ad.id}
             hidden={index !== 0}
-            class="mx-4 mt-2 shrink-0 rounded-md border border-[#222] bg-white/[0.01] p-3"
+            class={sectionClass}
         >
             <div class="mb-2 font-mono text-[11px] uppercase tracking-wide text-[#737373]">{ad.label}</div>
             <div class="flex items-center gap-2.5">
