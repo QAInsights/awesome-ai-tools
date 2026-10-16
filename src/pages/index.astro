@@ -110,8 +110,8 @@ const toolsJson = JSON.stringify(tools);
                 <!-- Hero: one-line orientation for first-time visitors -->
                 <div class="px-4 md:px-8 pt-6 md:pt-8 pb-2 shrink-0 flex items-start gap-6">
                     <div class="min-w-0 flex-1">
-                        <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-2.5 flex items-center gap-2">
-                            <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#d6b77a]"></span>
+                        <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-2.5">
+                            <span class="inline-block align-middle mr-2 w-1.5 h-1.5 rounded-full bg-[#d6b77a]"></span>
                             {tools.length} tools &middot; {categoryCount} categories &middot; curated by hand{latestUpdateLabel && <>&nbsp;&middot; updated <time datetime={latestUpdate!}>{latestUpdateLabel}</time></>}
                         </p>
                         <p class="text-[22px] md:text-[28px] font-semibold text-white leading-tight tracking-tight m-0">
@@ -119,7 +119,7 @@ const toolsJson = JSON.stringify(tools);
                         </p>
                         <a href="/trending" class="inline-flex items-center gap-1.5 mt-2 font-mono text-[12px] text-[#a3a3a3] hover:text-[#e2c48a] transition-colors">Trending this week &rarr;</a>
                     </div>
-                    <div class="hidden xl:block ml-auto w-full max-w-[720px]">
+                    <div class="hidden xl:block ml-auto w-full max-w-[640px]">
                         <TodayPromos layout="row" />
                     </div>
                 </div>

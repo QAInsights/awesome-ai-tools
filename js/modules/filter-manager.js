@@ -168,7 +168,7 @@ export function initFilterManager(config) {
                 }
             }
 
-            document.getElementById('tableHeader')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.getElementById('toolGrid')?.scrollTo({ top: 0, behavior: 'smooth' });
             accordionContent?.classList.add('hidden');
             accordionBtn?.classList.remove('active');
             document.dispatchEvent(new CustomEvent('nav-island:close'));

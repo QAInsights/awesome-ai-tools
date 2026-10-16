@@ -139,6 +139,11 @@
         padding: 0.2rem 0.5rem;
         border-radius: 999px;
     }
+}
+
+.search-result-count:empty { display: none; }
+
+@layer components {
 
     .refine-btn {
         border: 1px solid #2a2a2a;
