@@ -13,6 +13,7 @@ import {
     getVisibleStackItems,
     resolveStackPage,
 } from '../../../lib/stack-public-view';
+import { buildStackEmbedSnippets } from '../../../lib/stack-svg';
 import { getCookieSessionUser } from '../../../lib/server/route-auth';
 import {
     getOwnedStack,
@@ -89,6 +90,9 @@ Astro.response.headers.set('Cache-Control', !stack || isOwner || isPrivate ? 'pr
 const updatedIso = pageData?.updatedIso ?? '';
 const facts = pageData?.facts ?? [];
 const jsonLd = pageData?.jsonLd;
+const embedSnippets = stack && !isPrivate
+    ? buildStackEmbedSnippets(username, stack.slug, stack.title)
+    : null;
 ---
 
 <BaseLayout
@@ -129,6 +133,17 @@ const jsonLd = pageData?.jsonLd;
                                 </div>
                                 <div class="fo-cta fo-fade" style="--d:.85s">
                                     {isOwner && <a class="fo-btn" href={`/stacks/edit?id=${encodeURIComponent(stack.id)}`}>Edit stack <i aria-hidden="true">→</i></a>}
+                                    {!isPrivate && visibleItems.length > 0 && (
+                                        <button
+                                            type="button"
+                                            class={isOwner ? 'fo-link' : 'fo-btn'}
+                                            data-fork-stack
+                                            data-stack-username={username}
+                                            data-stack-slug={stack.slug}
+                                        >
+                                            Fork stack <i aria-hidden="true">⑂</i>
+                                        </button>
+                                    )}
                                     <a class="fo-link" href="/stacks">Build your own stack</a>
                                 </div>
                             </div>
@@ -170,8 +185,40 @@ const jsonLd = pageData?.jsonLd;
                         </div>
                     </section>
 
+                    {embedSnippets && (
+                        <section class="fo-sec" id="embed-stack" aria-labelledby="embed-heading">
+                            <h2 class="fo-label" id="embed-heading"><em>02</em>GitHub README card</h2>
+                            <div class="fo-body">
+                                <p class="fo-text sm">Embed this live stack card in your GitHub profile README or personal site. It updates automatically whenever the stack changes.</p>
+                                <div class="mt-4 mb-4">
+                                    <img
+                                        src={`/u/${encodeURIComponent(username)}/${encodeURIComponent(stack.slug)}.svg`}
+                                        alt={`${stack.title} — ai.dosa.dev`}
+                                        width="480"
+                                        loading="lazy"
+                                        class="max-w-full h-auto rounded-xl border border-[#222]"
+                                    />
+                                </div>
+                                <div class="border border-[#222] bg-white/[0.02] rounded-xl p-4">
+                                    <div class="flex items-center justify-between gap-3 mb-2">
+                                        <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-[#8a8378]">Markdown</span>
+                                        <button
+                                            type="button"
+                                            data-copy-snippet
+                                            data-copy-target="stackBadgeMd"
+                                            class="rounded-full border border-[#333] px-3.5 py-1 text-[12px] text-[#d4d4d4] hover:text-white hover:border-[#555] transition-colors"
+                                        >
+                                            Copy Markdown
+                                        </button>
+                                    </div>
+                                    <pre class="m-0"><code id="stackBadgeMd" class="font-mono text-[12px] text-[#a3a3a3] whitespace-pre-wrap break-all">{embedSnippets.markdown}</code></pre>
+                                </div>
+                            </div>
+                        </section>
+                    )}
+
                     <section class="fo-sec" id="build-your-own" aria-labelledby="build-heading">
-                        <h2 class="fo-label" id="build-heading"><em>02</em>Build your own</h2>
+                        <h2 class="fo-label" id="build-heading"><em>{embedSnippets ? '03' : '02'}</em>Build your own</h2>
                         <div class="fo-body">
                             <p class="fo-text sm">Put your own AI workflow together, explain how each tool fits, and share it when it is ready.</p>
                             <div class="fo-more"><a href="/stacks">Create a tool stack →</a></div>

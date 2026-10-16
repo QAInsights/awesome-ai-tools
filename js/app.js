@@ -4,6 +4,7 @@
  */
 
 import './add-to-stack.js';
+import { initializeStackShare } from './stack-share.js';
 import { initRenderer, renderTools, hydrateGrid, setFavoriteContext, setVotingContext, refreshVotingButtons } from './renderer.js';
 import { authAttribution } from './auth-attribution.js';
 import { CollapsedSidebar } from './collapsed-sidebar.js';
@@ -15,6 +16,7 @@ import { initSortManager } from './modules/sort-manager.js';
 import { sortTools } from './sorting.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
+    initializeStackShare();
     initGlobalSearch();
     initGradientSelection();
     const grid = document.getElementById('toolGrid');

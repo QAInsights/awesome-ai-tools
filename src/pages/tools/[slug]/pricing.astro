@@ -147,6 +147,24 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                             </div>
                             <div class="fo-cta fo-fade" style="--d:.85s">
                                 {hasSiteLink && <a class="fo-btn" href={siteHref} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${displayName} website`}>Visit site <i aria-hidden="true">→</i></a>}
+                                <div class="fo-save">
+                                    <button
+                                        class="follow-btn detail"
+                                        type="button"
+                                        data-tool-slug={tool.slug}
+                                        data-tool-name={displayName}
+                                        data-follow-default="Track price changes"
+                                        data-follow-active="Tracking price changes"
+                                        aria-label={`Sign in to follow ${displayName}`}
+                                        aria-pressed="false"
+                                        title={`Get email updates about ${displayName}`}
+                                    >
+                                        <svg class="follow-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/>
+                                        </svg>
+                                        <span data-follow-label>Track price changes</span>
+                                    </button>
+                                </div>
                                 <a class="fo-link" href={`/tools/${tool.slug}`}>Full {displayName} review</a>
                             </div>
                         </div>
@@ -165,6 +183,28 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                     <h2 class="fo-label"><em>{num('plans')}</em>Plans</h2>
                     <div class="fo-body">
                         <FolioPlans pricing={enriched?.pricing} detail={enriched?.pricingDetail} footnote="Pricing changes often - verify on the official site." />
+                        <div class="mt-5 border border-[#c9aa6e]/25 bg-[#c9aa6e]/[0.04] rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div>
+                                <p class="text-[14px] font-medium text-white m-0">Waiting for a price drop or free-tier update on {displayName}?</p>
+                                <p class="text-[13px] text-[#a3a3a3] m-0 mt-1">Follow {displayName} to get notified in your weekly digest when plans, limits, or features change.</p>
+                            </div>
+                            <button
+                                class="follow-btn detail shrink-0"
+                                type="button"
+                                data-tool-slug={tool.slug}
+                                data-tool-name={displayName}
+                                data-follow-default="Notify me of changes"
+                                data-follow-active="Following updates"
+                                aria-label={`Sign in to follow ${displayName}`}
+                                aria-pressed="false"
+                                title={`Get email updates about ${displayName}`}
+                            >
+                                <svg class="follow-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/>
+                                </svg>
+                                <span data-follow-label>Notify me of changes</span>
+                            </button>
+                        </div>
                     </div>
                 </section>
 
