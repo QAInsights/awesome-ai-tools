@@ -13,9 +13,19 @@ export function isSearchShortcutEvent(event) {
     return !TYPING_TAGS.has(target.tagName?.toLowerCase());
 }
 
+function cleanCategoryName(name) {
+    return name.replace(/[\u2700-\u27BF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u26FF]|[\uFE00-\uFE0F]/g, '').trim();
+}
+
+export function formatFilterStatus(query, category, shown) {
+    if (!query && !category) return '';
+    return [query && `“${query}”`, category, `${shown} tools`].filter(Boolean).join(' · ');
+}
+
 export function initFilterManager(config) {
     const { toolsData, categories, onFilter } = config;
     let currentCategory = 'all';
+    let currentCategoryLabel = null;
 
     const searchInput = document.getElementById('searchInput');
     const searchClear = document.getElementById('searchClear');
@@ -38,6 +48,17 @@ export function initFilterManager(config) {
         }
 
         if (onFilter) onFilter(filtered);
+        const query = searchInput?.value.trim() || '';
+        const category = currentCategory === 'all' ? null : currentCategoryLabel;
+        document.dispatchEvent(new CustomEvent('directory:filtered', {
+            detail: {
+                query,
+                category,
+                shown: filtered.length,
+                total: toolsData.length,
+                label: formatFilterStatus(query, category, filtered.length),
+            },
+        }));
     }
 
     function updateResultCount(shown, total) {
@@ -77,7 +98,7 @@ export function initFilterManager(config) {
             if (userMenuPopup) userMenuPopup.classList.add('hidden');
             
             accordionContent.classList.toggle('hidden');
-            accordionBtn.classList.toggle('active', !isHidden);
+            accordionBtn.classList.toggle('active', isHidden);
         });
 
         // Close on click outside
@@ -108,7 +129,7 @@ export function initFilterManager(config) {
         card.className = `category-card group cursor-pointer p-5 rounded-2xl border border-[#222] bg-[#0d0d0d] hover:bg-[#151515] hover:border-[#444] transition-all duration-300 flex flex-col justify-between min-h-[140px] ${currentCategory === slug ? 'active' : ''}`;
         card.dataset.category = slug;
 
-        const cleanName = name.replace(/^[\u2700-\u27BF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u26FF]/g, '').trim();
+        const cleanName = cleanCategoryName(name);
 
         card.innerHTML = `
             <div class="mb-4">
@@ -135,6 +156,7 @@ export function initFilterManager(config) {
             document.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
             card.classList.add('active');
             currentCategory = slug;
+            currentCategoryLabel = slug === 'all' ? null : cleanName;
             filterAndRender();
             
             if (slug === 'all') {
@@ -149,6 +171,7 @@ export function initFilterManager(config) {
             document.getElementById('tableHeader')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             accordionContent?.classList.add('hidden');
             accordionBtn?.classList.remove('active');
+            document.dispatchEvent(new CustomEvent('nav-island:close'));
         });
 
         return card;
@@ -160,6 +183,7 @@ export function initFilterManager(config) {
         document.addEventListener('keydown', (e) => {
             if (!isSearchShortcutEvent(e)) return;
             e.preventDefault();
+            document.dispatchEvent(new CustomEvent('nav-island:open'));
             searchInput.focus();
             searchInput.select?.();
         });

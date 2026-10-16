@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import HouseAdFeature from './HouseAdFeature.astro';
+
+interface Props {
+    layout: 'stack' | 'row';
+}
+
+const { layout } = Astro.props;
+const newsPosts = await getCollection('blog', ({ data }) =>
+    data.draft !== true && data.tags?.includes('news')
+);
+const latestNews = newsPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())[0];
+const latestNewsDate = latestNews
+    ? latestNews.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' })
+    : null;
+const houseAdClass = layout === 'row'
+    ? 'h-full rounded-xl border border-border bg-white/[0.01] p-3'
+    : 'rounded-xl border border-border bg-white/[0.01] p-3';
+---
+
+<div class:list={['ni-promos', `ni-promos-${layout}`]}>
+    {layout === 'stack' && <div class="ni-h">Today</div>}
+    {latestNews && (
+        <div class="ni-promo border border-border rounded-xl p-3 bg-white/[0.01]">
+            <div class="flex items-center justify-between mb-1.5">
+                <div class="font-mono text-[11px] uppercase text-ink-muted tracking-widest flex items-center gap-1.5"><span class="ni-live" aria-hidden="true"></span>Today in AI</div>
+                <span class="font-mono text-[11px] text-ink-disabled">{latestNewsDate}</span>
+            </div>
+            <a href={`/blog/${latestNews.id}`} class="ni-promo-title text-[13px] text-[#e5e5e5] leading-snug no-underline hover:text-white transition-colors block">{latestNews.data.title}</a>
+            <a href="/news" class="gradient-link inline-block mt-2 font-mono text-[12px] hover:underline">All briefs &rarr;</a>
+        </div>
+    )}
+    <HouseAdFeature sectionClass={houseAdClass} idPrefix={layout} />
+    <div class="ni-promo border border-dashed border-border rounded-xl p-3 bg-white/[0.01]">
+        <div class="font-mono text-[11px] uppercase text-ink-muted mb-1.5 tracking-wide">Featured</div>
+        <div class="text-[13px] text-ink-secondary leading-relaxed">
+            Promote your AI tool directly to developers.
+            <a href="/advertise" class="gradient-link block mt-1.5 font-mono hover:underline">Book this space &rarr;</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .ni-promos-stack { display: flex; flex-direction: column; gap: 8px; }
+    .ni-promos-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .ni-h { font: 11px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-ink-muted); margin: 0 0 8px 2px; }
+    .ni-live { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--color-danger); box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.15); animation: ni-promos-pulse 1.6s infinite; flex-shrink: 0; }
+    .ni-promos-row .ni-promo,
+    .ni-promos-row [data-house-ads] { min-width: 0; min-height: 124px; }
+    .ni-promos-row [data-house-ad] { height: 100%; }
+    .ni-promos-row .ni-promo-title {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+    }
+    @keyframes ni-promos-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+</style>
