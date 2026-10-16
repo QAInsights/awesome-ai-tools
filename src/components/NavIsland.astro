@@ -209,7 +209,7 @@ const linkAttrs = (item: NavItem) => ({
     .ni {
         --ni-w: min(520px, calc(100vw - 480px));
         --ni-open-w: min(1080px, calc(100vw - 32px));
-        --ni-ease: cubic-bezier(0.32, 0.72, 0, 1);
+        --ni-ease: cubic-bezier(0.22, 1, 0.36, 1);
         position: fixed;
         top: 10px;
         left: 50%;
@@ -222,7 +222,8 @@ const linkAttrs = (item: NavItem) => ({
         background: #0b0b0b;
         border: 1px solid #2a2a2a;
         box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 20px 50px -20px rgba(226, 196, 138, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-        transition: width 0.5s var(--ni-ease), border-radius 0.5s var(--ni-ease), box-shadow 0.4s ease;
+        will-change: width;
+        transition: width 0.16s var(--ni-ease), border-radius 0.16s var(--ni-ease), box-shadow 0.14s ease;
     }
     @media (min-width: 1280px) {
         .ni { --ni-w: min(520px, calc(100vw - 960px)); }
@@ -237,15 +238,22 @@ const linkAttrs = (item: NavItem) => ({
         -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
         -webkit-mask-composite: xor;
         mask-composite: exclude;
+        animation: ni-orbit 6s linear infinite;
         pointer-events: none;
+        transition: opacity 0.12s ease 0.16s;
     }
-    .ni[data-enhanced][data-open='false']:hover::before { animation: ni-orbit 6s linear infinite; }
     .ni[data-open='true'], .ni:not([data-enhanced]):is(:hover, :focus-within) {
         width: var(--ni-open-w);
         border-radius: 24px;
         box-shadow: 0 60px 120px -20px rgba(0, 0, 0, 0.95), 0 0 0 1px #2a2a2a, 0 30px 80px -30px rgba(226, 196, 138, 0.25);
+        transition: width 0.24s var(--ni-ease), border-radius 0.24s var(--ni-ease), box-shadow 0.2s ease;
     }
-    .ni[data-open='true']::before { opacity: 0; }
+    .ni[data-open='true']::before,
+    .ni:not([data-enhanced]):is(:hover, :focus-within)::before {
+        opacity: 0;
+        animation: none;
+        transition: none;
+    }
 
     .ni-pill {
         display: flex;
@@ -272,16 +280,17 @@ const linkAttrs = (item: NavItem) => ({
     .ni-tick-item b { font: 600 10px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.12em; text-transform: uppercase; flex-shrink: 0; }
     .ni-tick-item.is-on { opacity: 1; translate: 0 0; }
     .ni-kbd { font: 11px var(--font-mono, ui-monospace, monospace); color: var(--color-ink-muted); border: 1px solid #2a2a2a; border-radius: 6px; padding: 2px 6px; white-space: nowrap; flex-shrink: 0; }
-    .ni-chev { width: 30px; height: 30px; border-radius: 50%; background: #1a1a1a; display: grid; place-items: center; color: var(--color-ink-secondary); flex-shrink: 0; transition: rotate 0.4s var(--ni-ease); }
-    .ni[data-open='true'] .ni-chev { rotate: 180deg; }
+    .ni-chev { width: 30px; height: 30px; border-radius: 50%; background: #1a1a1a; display: grid; place-items: center; color: var(--color-ink-secondary); flex-shrink: 0; transition: rotate 0.16s var(--ni-ease); }
+    .ni[data-open='true'] .ni-chev { rotate: 180deg; transition: rotate 0.24s var(--ni-ease); }
     .ni[data-open='true'] .ni-tick, .ni[data-open='true'] .ni-div, .ni[data-open='true'] .ni-pill > .ni-live, .ni[data-open='true'] .ni-kbd { opacity: 0; }
     .ni[data-filtered] .ni-tick, .ni[data-filtered] .ni-pill > .ni-live { display: none; }
 
-    .ni-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.5s var(--ni-ease); }
-    .ni[data-open='true'] .ni-panel, .ni:not([data-enhanced]):is(:hover, :focus-within) .ni-panel { grid-template-rows: 1fr; }
-    .ni-panel-inner { min-height: 0; overflow: hidden; opacity: 0; transition: opacity 0.25s ease; }
-    .ni[data-open='true'] .ni-panel-inner, .ni:not([data-enhanced]):is(:hover, :focus-within) .ni-panel-inner { opacity: 1; overflow-y: auto; max-height: calc(100dvh - 72px); transition-delay: 0.12s; scrollbar-width: thin; }
-    .ni[data-open='false'] .ni-panel :global(*) { animation-play-state: paused; }
+    .ni-panel { display: grid; grid-template-rows: 0fr; overflow: hidden; contain: layout paint; transition: grid-template-rows 0.16s var(--ni-ease); }
+    .ni[data-open='true'] .ni-panel, .ni:not([data-enhanced]):is(:hover, :focus-within) .ni-panel { grid-template-rows: 1fr; transition: grid-template-rows 0.24s var(--ni-ease); }
+    .ni-panel-inner { width: calc(var(--ni-open-w) - 2px); min-height: 0; overflow: hidden; opacity: 0; transition: opacity 0.08s ease; }
+    .ni[data-open='true'] .ni-panel-inner, .ni:not([data-enhanced]):is(:hover, :focus-within) .ni-panel-inner { opacity: 1; overflow-y: auto; max-height: calc(100dvh - 72px); transition: opacity 0.16s ease 0.03s; scrollbar-width: thin; }
+    .ni[data-open='false'] .ni-panel :global(.ni-live),
+    .ni[data-open='false'] .ni-panel :global(.gradient-link) { animation-play-state: paused; }
 
     .ni-search-row { display: flex; align-items: center; gap: 10px; margin: 16px 18px 0; }
     .ni-search-row .search-shell { flex: 1; width: auto; max-width: none; min-width: 0; }
@@ -315,7 +324,7 @@ const linkAttrs = (item: NavItem) => ({
     .ni[data-view='results']::before { opacity: 0; }
     .ni[data-view='results'] .ni-pill { display: none; }
     .ni[data-view='results'] .ni-panel { grid-template-rows: 1fr; }
-    .ni[data-view='results'] .ni-panel-inner { opacity: 1; overflow: visible; max-height: none; transition-delay: 0s; }
+    .ni[data-view='results'] .ni-panel-inner { width: 100%; opacity: 1; overflow: visible; max-height: none; transition-delay: 0s; }
     .ni[data-view='results'] .ni-search-row { margin: 8px; }
     .ni[data-view='results'] .ni-search-row :global(#filterAccordionBtn) { display: none; }
     .ni-grid { display: grid; gap: 22px; padding: 10px 20px 18px; grid-template-columns: 1.25fr 1fr 1.15fr; }
@@ -338,8 +347,8 @@ const linkAttrs = (item: NavItem) => ({
     .ni-foot a { color: var(--color-ink-secondary); text-decoration: none; }
     .ni-foot a:hover { color: #fff; }
 
-    .ni-scrim { position: fixed; inset: 0; z-index: 44; background: rgba(0, 0, 0, 0.62); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
-    .ni-scrim.is-on { opacity: 1; pointer-events: auto; }
+    .ni-scrim { position: fixed; inset: 0; z-index: 44; background: rgba(0, 0, 0, 0.62); opacity: 0; pointer-events: none; transition: opacity 0.14s ease; }
+    .ni-scrim.is-on { opacity: 1; pointer-events: auto; transition: opacity 0.2s ease; }
 
     @media (max-width: 1023px) {
         .ni-grid { grid-template-columns: 1fr 1fr; }
@@ -381,7 +390,7 @@ const linkAttrs = (item: NavItem) => ({
 
     @media (prefers-reduced-motion: reduce) {
         .ni, .ni *, .ni-scrim { transition-duration: 0.01ms !important; transition-delay: 0s !important; }
-        .ni::before, .ni-live, .ni[data-enhanced][data-open='false']:hover::before { animation: none; }
+        .ni::before, .ni-live { animation: none; }
     }
 </style>
 
@@ -436,7 +445,7 @@ const linkAttrs = (item: NavItem) => ({
                 && searchInput === document.activeElement
                 && Boolean(searchInput?.value.trim());
             const view = inScope ? 'scope' : showResults ? 'results' : 'nav';
-            island.dataset.view = view;
+            if (island.dataset.view !== view) island.dataset.view = view;
             scrim.classList.toggle('is-on', open && view !== 'results');
             syncScrollLock();
         };
@@ -455,8 +464,8 @@ const linkAttrs = (item: NavItem) => ({
         const setOpen = (next: boolean, { pin = false, focusFirst = false } = {}) => {
             window.clearTimeout(hoverTimer);
             pinned = next && (pin || pinned);
-            if (!next) {
-                scopePanel?.classList.add('hidden');
+            if (!next && scopePanel && !scopePanel.classList.contains('hidden')) {
+                scopePanel.classList.add('hidden');
                 scopeButton?.classList.remove('active');
             }
             if (next === open) {
@@ -480,12 +489,12 @@ const linkAttrs = (item: NavItem) => ({
         island.addEventListener('pointerenter', () => {
             if (!canHover.matches || open) return;
             window.clearTimeout(hoverTimer);
-            hoverTimer = window.setTimeout(() => setOpen(true), 90);
+            hoverTimer = window.setTimeout(() => setOpen(true), 35);
         });
         island.addEventListener('pointerleave', () => {
             if (!canHover.matches) return;
             window.clearTimeout(hoverTimer);
-            if (open && !pinned && !island.contains(document.activeElement)) hoverTimer = window.setTimeout(() => setOpen(false), 220);
+            if (open && !pinned && !island.contains(document.activeElement)) hoverTimer = window.setTimeout(() => setOpen(false), 40);
         });
         island.addEventListener('focusin', () => {
             if (open) pinned = true;
