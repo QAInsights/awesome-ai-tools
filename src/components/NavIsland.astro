@@ -14,6 +14,7 @@ import houseAds from '../data/house-ads.json';
 
 interface Props {
     activeNav?: string;
+    search?: boolean;
 }
 
 type NavItem = { key: string; href: string; label: string; desc?: string; icon: string; external?: boolean };
@@ -78,6 +79,7 @@ const allItems = [...browse, ...utilities, ...more];
 const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const derived = path === '/' ? 'directory' : SECTION_PREFIXES.find(([prefix]) => path.startsWith(prefix))?.[1];
 const active = allItems.find(item => item.key === (activeNavKey(Astro.props.activeNav) ?? derived));
+const search = Astro.props.search ?? false;
 const pillLabel = active?.label ?? 'Menu';
 const pillIcon = ICONS[active?.icon ?? 'menu'];
 
@@ -123,6 +125,16 @@ const linkAttrs = (item: NavItem) => ({
 
     <div class="ni-panel" id="navIslandPanel">
         <div class="ni-panel-inner">
+            {search && (
+                <form action="/" method="get" role="search" class="search-shell relative max-w-[560px] w-full group ni-search">
+                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-[#6f6a63] group-focus-within:text-[#d6c7a8] w-4.5 h-4.5 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="search" name="q" id="globalSearchInput" aria-label="Search tools" placeholder="Search tools, agents, and workflows" autocomplete="off" class="search-input w-full rounded-2xl text-[15px] outline-none transition-all duration-300">
+                    <span class="search-shortcut hidden md:inline-flex absolute right-3.5 top-1/2 -translate-y-1/2" aria-hidden="true">/</span>
+                </form>
+            )}
             <nav class="ni-grid" aria-label="Site">
                 <div>
                     <div class="ni-h">Browse</div>
@@ -273,6 +285,7 @@ const linkAttrs = (item: NavItem) => ({
     .ni-panel-inner { min-height: 0; overflow: hidden; opacity: 0; transition: opacity 0.25s ease; }
     .ni[data-open='true'] .ni-panel-inner, .ni:not([data-enhanced]):is(:hover, :focus-within) .ni-panel-inner { opacity: 1; overflow-y: auto; max-height: calc(100dvh - 72px); transition-delay: 0.12s; scrollbar-width: thin; }
 
+    .ni-search { margin: 16px 18px 0; max-width: none; }
     .ni-grid { display: grid; gap: 22px; padding: 10px 20px 18px; grid-template-columns: 1.25fr 1fr 1.15fr; }
     .ni-h { font: 11px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-ink-muted); margin: 0 0 8px 2px; }
     .ni-h-gap { margin-top: 20px; }
@@ -318,6 +331,7 @@ const linkAttrs = (item: NavItem) => ({
         .ni-kbd { display: none; }
         .ni[data-open='true'] .ni-chev { rotate: 0deg; }
         .ni-chev { rotate: 180deg; }
+        .ni-search { margin: 14px 14px 0; }
         .ni[data-open='true'] .ni-panel-inner, .ni:not([data-enhanced]):is(:hover, :focus-within) .ni-panel-inner { max-height: calc(100dvh - 96px - var(--ea-float-h, 0px)); }
         .ni-grid { grid-template-columns: 1fr; gap: 18px; padding: 16px 14px 12px; }
         .ni-promos { display: flex; }
@@ -397,7 +411,7 @@ const linkAttrs = (item: NavItem) => ({
             panel.inert = !next;
             scrim.classList.toggle('is-on', next);
             syncScrollLock();
-            if (next && focusFirst) panel.querySelector<HTMLElement>('a')?.focus({ preventScroll: true });
+            if (next && focusFirst) panel.querySelector<HTMLElement>('input, a')?.focus({ preventScroll: true });
         };
         toggle.dataset.closedLabel = toggle.getAttribute('aria-label') ?? '';
 
@@ -420,6 +434,8 @@ const linkAttrs = (item: NavItem) => ({
             if (open && next && !island.contains(next)) setOpen(false);
         });
         scrim.addEventListener('click', () => setOpen(false));
+
+        document.addEventListener('nav-island:open', () => setOpen(true, { pin: true }));
 
         document.addEventListener('keydown', (event) => {
             if ((event.metaKey || event.ctrlKey) && !event.altKey && !event.shiftKey && event.key.toLowerCase() === 'k') {

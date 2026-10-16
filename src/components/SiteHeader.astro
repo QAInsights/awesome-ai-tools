@@ -11,10 +11,10 @@ const { variant, title = 'ai.dosa.dev', activeNav } = Astro.props;
 const isIndex = variant === 'index';
 ---
 
-<NavIsland activeNav={activeNav} />
+<NavIsland activeNav={activeNav} search={!isIndex} />
 
 <div class="border-b border-border bg-black/80 backdrop-blur-xl sticky top-0 z-20">
-    <div class="flex items-center gap-3 h-14 md:h-16 px-4 md:px-8 border-b border-border">
+    <div class:list={['flex items-center gap-3 h-14 md:h-16 px-4 md:px-8', isIndex && 'border-b border-border']}>
         <a href="/" class="group flex items-center gap-2.5 md:gap-3 no-underline min-w-0">
             <img src="/images/icons/favicon-96x96.png" alt="dosa.dev logo" width="28" height="28" fetchpriority="high" decoding="async" class="shrink-0 w-6 h-6 md:w-7 md:h-7 transition-transform duration-300 group-hover:scale-105" />
             {isIndex
@@ -60,8 +60,8 @@ const isIndex = variant === 'index';
             </div>
         </div>
     </div>
-    <div class="flex items-center gap-3 md:gap-4 px-4 md:px-8 py-3 md:py-4">
-        {variant === 'index' ? (
+    {isIndex && (
+        <div class="flex items-center gap-3 md:gap-4 px-4 md:px-8 py-3 md:py-4">
             <div class="search-shell relative max-w-[560px] w-full group">
                 <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-[#6f6a63] group-focus-within:text-[#d6c7a8] w-4.5 h-4.5 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="11" cy="11" r="8"></circle>
@@ -74,19 +74,10 @@ const isIndex = variant === 'index';
                     <span id="resultCount" class="search-result-count font-mono text-[10px] hidden md:block"></span>
                 </div>
             </div>
-        ) : (
-            <form action="/" method="get" role="search" class="search-shell relative max-w-[560px] w-full group">
-                <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-[#6f6a63] group-focus-within:text-[#d6c7a8] w-4.5 h-4.5 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <input type="search" name="q" id="globalSearchInput" placeholder="Search tools, agents, and workflows" autocomplete="off" class="search-input w-full rounded-2xl text-[15px] outline-none transition-all duration-300">
-                <span class="search-shortcut hidden md:inline-flex absolute right-3.5 top-1/2 -translate-y-1/2" aria-hidden="true">/</span>
-            </form>
-        )}
 
-        {variant === 'index' && <slot />}
+            <slot />
 
-    </div>
+        </div>
+    )}
     <slot name="overlay" />
 </div>

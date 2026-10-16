@@ -7,6 +7,7 @@ export function initGlobalSearch(root = document) {
     root.addEventListener('keydown', event => {
         if (!isSearchShortcutEvent(event)) return;
         event.preventDefault();
+        if (typeof root.dispatchEvent === 'function') root.dispatchEvent(new CustomEvent('nav-island:open'));
         input.focus();
         input.select?.();
     });
