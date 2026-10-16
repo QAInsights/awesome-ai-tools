@@ -121,7 +121,7 @@ const linkAttrs = (item: NavItem) => ({
         </span>
     </button>
 
-    <div class="ni-panel" id="navIslandPanel" inert>
+    <div class="ni-panel" id="navIslandPanel">
         <div class="ni-panel-inner">
             <nav class="ni-grid" aria-label="Site">
                 <div>
@@ -233,7 +233,7 @@ const linkAttrs = (item: NavItem) => ({
         animation: ni-orbit 6s linear infinite;
         pointer-events: none;
     }
-    .ni[data-open='true'] {
+    .ni[data-open='true'], .ni:not([data-enhanced]):is(:hover, :focus-within) {
         width: var(--ni-open-w);
         border-radius: 24px;
         box-shadow: 0 60px 120px -20px rgba(0, 0, 0, 0.95), 0 0 0 1px #2a2a2a, 0 30px 80px -30px rgba(226, 196, 138, 0.25);
@@ -269,9 +269,9 @@ const linkAttrs = (item: NavItem) => ({
     .ni[data-open='true'] .ni-tick, .ni[data-open='true'] .ni-div, .ni[data-open='true'] .ni-pill > .ni-live, .ni[data-open='true'] .ni-kbd { opacity: 0; }
 
     .ni-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.5s var(--ni-ease); }
-    .ni[data-open='true'] .ni-panel { grid-template-rows: 1fr; }
+    .ni[data-open='true'] .ni-panel, .ni:not([data-enhanced]):is(:hover, :focus-within) .ni-panel { grid-template-rows: 1fr; }
     .ni-panel-inner { min-height: 0; overflow: hidden; opacity: 0; transition: opacity 0.25s ease; }
-    .ni[data-open='true'] .ni-panel-inner { opacity: 1; overflow-y: auto; max-height: calc(100dvh - 72px); transition-delay: 0.12s; scrollbar-width: thin; }
+    .ni[data-open='true'] .ni-panel-inner, .ni:not([data-enhanced]):is(:hover, :focus-within) .ni-panel-inner { opacity: 1; overflow-y: auto; max-height: calc(100dvh - 72px); transition-delay: 0.12s; scrollbar-width: thin; }
 
     .ni-grid { display: grid; gap: 22px; padding: 10px 20px 18px; grid-template-columns: 1.25fr 1fr 1.15fr; }
     .ni-h { font: 11px var(--font-mono, ui-monospace, monospace); letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-ink-muted); margin: 0 0 8px 2px; }
@@ -309,15 +309,16 @@ const linkAttrs = (item: NavItem) => ({
             --ni-w: min(420px, calc(100vw - 24px));
             --ni-open-w: calc(100vw - 16px);
             top: auto;
-            bottom: calc(12px + env(safe-area-inset-bottom, 0px) + var(--ea-float-h, 0px));
+            bottom: calc(12px + env(safe-area-inset-bottom, 0px) + var(--ea-float-h, 0px) + var(--ni-lift, 0px));
             flex-direction: column-reverse;
         }
-        .ni[data-open='true'] { bottom: calc(8px + env(safe-area-inset-bottom, 0px) + var(--ea-float-h, 0px)); }
+        .ni[data-open='true'] { bottom: calc(8px + env(safe-area-inset-bottom, 0px) + var(--ea-float-h, 0px)); z-index: 56; }
+        .ni-scrim.is-on { z-index: 55; }
         .ni-pill { height: 48px; }
         .ni-kbd { display: none; }
         .ni[data-open='true'] .ni-chev { rotate: 0deg; }
         .ni-chev { rotate: 180deg; }
-        .ni[data-open='true'] .ni-panel-inner { max-height: calc(100dvh - 96px - var(--ea-float-h, 0px)); }
+        .ni[data-open='true'] .ni-panel-inner, .ni:not([data-enhanced]):is(:hover, :focus-within) .ni-panel-inner { max-height: calc(100dvh - 96px - var(--ea-float-h, 0px)); }
         .ni-grid { grid-template-columns: 1fr; gap: 18px; padding: 16px 14px 12px; }
         .ni-promos { display: flex; }
         .ni-foot { padding: 10px 14px 12px; }
@@ -355,6 +356,35 @@ const linkAttrs = (item: NavItem) => ({
         let open = false;
         let pinned = false;
         let hoverTimer: number | undefined;
+        let scrollLocked = false;
+        let prevBodyOverflow = '';
+
+        panel.inert = true;
+        island.dataset.enhanced = '';
+
+        const syncScrollLock = () => {
+            const lock = open && isMobile.matches;
+            if (lock === scrollLocked) return;
+            scrollLocked = lock;
+            if (lock) {
+                prevBodyOverflow = document.body.style.overflow;
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = prevBodyOverflow;
+            }
+        };
+        isMobile.addEventListener('change', syncScrollLock);
+
+        const compareBar = document.getElementById('compareFloatingBar');
+        if (compareBar) {
+            const syncLift = () => {
+                const visible = !compareBar.style.translate.includes('100%');
+                island.style.setProperty('--ni-lift', visible ? `${compareBar.offsetHeight}px` : '0px');
+            };
+            new MutationObserver(syncLift).observe(compareBar, { attributes: true, attributeFilter: ['style'] });
+            new ResizeObserver(syncLift).observe(compareBar);
+            syncLift();
+        }
 
         const setOpen = (next: boolean, { pin = false, focusFirst = false } = {}) => {
             window.clearTimeout(hoverTimer);
@@ -366,7 +396,7 @@ const linkAttrs = (item: NavItem) => ({
             toggle.setAttribute('aria-label', next ? 'Close site menu' : toggle.dataset.closedLabel ?? 'Open site menu');
             panel.inert = !next;
             scrim.classList.toggle('is-on', next);
-            document.body.style.overflow = next && isMobile.matches ? 'hidden' : '';
+            syncScrollLock();
             if (next && focusFirst) panel.querySelector<HTMLElement>('a')?.focus({ preventScroll: true });
         };
         toggle.dataset.closedLabel = toggle.getAttribute('aria-label') ?? '';
