@@ -36,7 +36,8 @@ export function initFilterManager(config) {
     const activeFilterBadge = document.getElementById('activeFilterBadge');
 
     function filterAndRender() {
-        const searchVal = searchInput?.value.toLowerCase() || '';
+        const searchQuery = (searchInput?.value || '').trim();
+        const searchVal = searchQuery.toLowerCase();
         const filtered = filterTools(toolsData, currentCategory, searchVal);
         renderTools(filtered);
         updateResultCount(filtered.length, toolsData.length);
@@ -48,7 +49,7 @@ export function initFilterManager(config) {
         }
 
         if (onFilter) onFilter(filtered);
-        const query = searchInput?.value.trim() || '';
+        const query = searchQuery;
         const category = currentCategory === 'all' ? null : currentCategoryLabel;
         document.dispatchEvent(new CustomEvent('directory:filtered', {
             detail: {

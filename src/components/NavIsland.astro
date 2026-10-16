@@ -355,6 +355,7 @@ const linkAttrs = (item: NavItem) => ({
             flex-direction: column-reverse;
         }
         .ni[data-open='true'] { bottom: calc(8px + env(safe-area-inset-bottom, 0px) + var(--ea-float-h, 0px)); z-index: 56; }
+        .ni[data-view='results'] { bottom: calc(8px + env(safe-area-inset-bottom, 0px) + var(--ea-float-h, 0px) + var(--ni-lift, 0px)); }
         .ni-scrim.is-on { z-index: 55; }
         .ni-pill { height: 48px; }
         .ni-kbd { display: none; }
@@ -391,6 +392,7 @@ const linkAttrs = (item: NavItem) => ({
     const scrim = document.querySelector<HTMLElement>('[data-ni-scrim]');
     const searchInput = island?.querySelector<HTMLInputElement>('#searchInput');
     const scopePanel = island?.querySelector<HTMLElement>('#filterAccordion');
+    const scopeButton = island?.querySelector<HTMLButtonElement>('#filterAccordionBtn');
     const status = island?.querySelector<HTMLElement>('[data-ni-status]');
     const authHeader = document.getElementById('authHeader');
     const brand = document.querySelector<HTMLElement>('[data-brand]');
@@ -427,7 +429,7 @@ const linkAttrs = (item: NavItem) => ({
         isMobile.addEventListener('change', syncScrollLock);
 
         const updateView = () => {
-            const inScope = liveSearch && Boolean(scopePanel && !scopePanel.classList.contains('hidden'));
+            const inScope = open && liveSearch && Boolean(scopePanel && !scopePanel.classList.contains('hidden'));
             const showResults = open
                 && liveSearch
                 && !inScope
@@ -453,6 +455,10 @@ const linkAttrs = (item: NavItem) => ({
         const setOpen = (next: boolean, { pin = false, focusFirst = false } = {}) => {
             window.clearTimeout(hoverTimer);
             pinned = next && (pin || pinned);
+            if (!next) {
+                scopePanel?.classList.add('hidden');
+                scopeButton?.classList.remove('active');
+            }
             if (next === open) {
                 updateView();
                 return;
