@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 
+import { priceSummary, unitWords } from './folio';
 import { buildPricingBreakdown, extractPlans, pricingSignals, splitPricePoints } from './pricing-breakdown';
 
 describe('extractPlans', () => {
@@ -8,6 +9,26 @@ describe('extractPlans', () => {
             { name: 'Pro', price: '$20', unit: '/mo', note: '' },
             { name: 'Max', price: '$200', unit: '/mo', note: '' },
             { name: 'Teams', price: '$80', unit: '/mo', note: 'base plus $40/seat' },
+        ]);
+    });
+
+    test('parses "per user/mo" units and merges duplicate-price ticks on the scale', () => {
+        const detail =
+            'Offers a free tier with limited functionality for individual developers. Paid individual plans include Copilot Pro ($10/mo), Pro+ ($39/mo), and Max ($100/mo). Organizational plans include Copilot Business ($19 per user/mo) and Enterprise ($39 per user/mo), with additional usage billed via AI credits at $0.01 per credit.';
+        const summary = priceSummary('freemium', detail);
+
+        expect(summary.plans.map(p => `${p.name} ${p.price} ${unitWords(p.unit)}`)).toEqual([
+            'Copilot Pro $10 per month',
+            'Pro+ $39 per month',
+            'Max $100 per month',
+            'Copilot Business $19 per user / month',
+            'Enterprise $39 per user / month',
+        ]);
+        expect(summary.scale.map(s => `${s.p.name} ${s.p.price}`)).toEqual([
+            'Copilot Pro $10',
+            'Copilot Business $19',
+            'Pro+ · Enterprise $39',
+            'Max $100',
         ]);
     });
 
