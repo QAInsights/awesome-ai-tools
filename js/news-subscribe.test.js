@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'bun:test';
 import {
     NEWS_SUBSCRIBE_PENDING_KEY,
+    clearPendingNewsSubscribe,
     handleNewsSubscribeClick,
     renderNewsSubscribeButtons,
     syncNewsSubscribe,
@@ -15,7 +16,12 @@ function createMemoryStorage() {
     };
 }
 
-function createFakeDom({ pressed = 'false', defaultLabel = 'Get daily brief by email', activeLabel = 'Subscribed to daily brief' } = {}) {
+function createFakeDom({
+    pressed = 'false',
+    defaultLabel = 'Get daily brief by email',
+    activeLabel = 'Subscribed to daily brief',
+    includeButtons = true,
+} = {}) {
     const classes = new Set();
     const statusClasses = new Set(['hidden']);
     const labelEl = { textContent: defaultLabel };
@@ -48,6 +54,7 @@ function createFakeDom({ pressed = 'false', defaultLabel = 'Get daily brief by e
     };
     const root = {
         querySelectorAll: selector => {
+            if (!includeButtons) return [];
             if (selector === '[data-news-subscribe]') return [button];
             if (selector === '[data-news-subscribe-status]') return [statusEl];
             return [];
@@ -82,7 +89,7 @@ describe('news-subscribe', () => {
         ]);
     });
 
-    test('authenticated click toggles subscription and renders active state with email', async () => {
+    test('authenticated click toggles subscription and renders active state with verified email', async () => {
         const { root, button, labelEl, statusEl } = createFakeDom();
         const calls = [];
 
@@ -94,7 +101,12 @@ describe('news-subscribe', () => {
             prefsApi: {
                 setNewsEnabled: async enabled => {
                     calls.push(enabled);
-                    return { newsEnabled: enabled, emailEnabled: true, email: 'dev@example.com' };
+                    return {
+                        newsEnabled: enabled,
+                        emailEnabled: true,
+                        email: 'dev@example.com',
+                        emailVerified: true,
+                    };
                 },
             },
             storage: createMemoryStorage(),
@@ -107,21 +119,79 @@ describe('news-subscribe', () => {
         expect(button.classList.contains('is-subscribed')).toBe(true);
         expect(labelEl.textContent).toBe('Subscribed to daily brief');
         expect(statusEl.classList.contains('hidden')).toBe(false);
-        expect(statusEl.textContent).toContain('dev@example.com');
+        expect(statusEl.textContent).toContain('Delivering to dev@example.com');
     });
 
-    test('syncNewsSubscribe auto-enables news digest when returning from sign-in with pending flag', async () => {
-        const { root, button, labelEl } = createFakeDom();
+    test('renderNewsSubscribeButtons warns when account email is unverified instead of saying Delivering to', () => {
+        const { root, statusEl } = createFakeDom();
+        renderNewsSubscribeButtons(root, {
+            authenticated: true,
+            newsEnabled: true,
+            email: 'unverified@example.com',
+            emailVerified: false,
+        });
+
+        expect(statusEl.classList.contains('hidden')).toBe(false);
+        expect(statusEl.textContent).not.toContain('Delivering to');
+        expect(statusEl.textContent).toContain('verified email address');
+        expect(statusEl.textContent).toContain('Settings');
+    });
+
+    test('syncNewsSubscribe auto-enables news digest even on pages without subscribe buttons (e.g. after GitHub OAuth redirect to /)', async () => {
+        const { root } = createFakeDom({ includeButtons: false });
         const storage = createMemoryStorage();
         storage.setItem(NEWS_SUBSCRIBE_PENDING_KEY, '1');
         const setCalls = [];
 
         const res = await syncNewsSubscribe({ id: 'github:ada' }, {
             prefsApi: {
-                getPrefs: async () => ({ newsEnabled: false, email: 'ada@example.com' }),
+                getPrefs: async () => ({ newsEnabled: false, email: 'ada@example.com', emailVerified: true }),
                 setNewsEnabled: async enabled => {
                     setCalls.push(enabled);
-                    return { newsEnabled: enabled, email: 'ada@example.com' };
+                    return { newsEnabled: enabled, email: 'ada@example.com', emailVerified: true };
+                },
+            },
+            storage,
+            root,
+        });
+
+        expect(res.status).toBe('subscribed');
+        expect(setCalls).toEqual([true]);
+        expect(storage.getItem(NEWS_SUBSCRIBE_PENDING_KEY)).toBeNull();
+    });
+
+    test('syncNewsSubscribe returns idle on pages without buttons when no pending flag is set', async () => {
+        const { root } = createFakeDom({ includeButtons: false });
+        const storage = createMemoryStorage();
+        let getPrefsCalled = false;
+
+        const res = await syncNewsSubscribe({ id: 'github:ada' }, {
+            prefsApi: {
+                getPrefs: async () => {
+                    getPrefsCalled = true;
+                    return { newsEnabled: false };
+                },
+            },
+            storage,
+            root,
+        });
+
+        expect(res.status).toBe('idle');
+        expect(getPrefsCalled).toBe(false);
+    });
+
+    test('syncNewsSubscribe auto-enables news digest when returning from sign-in with pending flag', async () => {
+        const { root, button, labelEl, statusEl } = createFakeDom();
+        const storage = createMemoryStorage();
+        storage.setItem(NEWS_SUBSCRIBE_PENDING_KEY, '1');
+        const setCalls = [];
+
+        const res = await syncNewsSubscribe({ id: 'github:ada' }, {
+            prefsApi: {
+                getPrefs: async () => ({ newsEnabled: false, email: 'ada@example.com', emailVerified: true }),
+                setNewsEnabled: async enabled => {
+                    setCalls.push(enabled);
+                    return { newsEnabled: enabled, email: 'ada@example.com', emailVerified: true };
                 },
             },
             storage,
@@ -133,6 +203,7 @@ describe('news-subscribe', () => {
         expect(storage.getItem(NEWS_SUBSCRIBE_PENDING_KEY)).toBeNull();
         expect(button.getAttribute('aria-pressed')).toBe('true');
         expect(labelEl.textContent).toBe('Subscribed to daily brief');
+        expect(statusEl.textContent).toContain('Delivering to ada@example.com');
     });
 
     test('handleNewsSubscribeClick returns busy when button is already disabled', async () => {
@@ -142,8 +213,8 @@ describe('news-subscribe', () => {
         expect(res.status).toBe('busy');
     });
 
-    test('syncNewsSubscribe restores pending intent if auto-subscribe fails', async () => {
-        const { root } = createFakeDom();
+    test('syncNewsSubscribe keeps pending intent and shows retry label if auto-subscribe fails', async () => {
+        const { root, labelEl } = createFakeDom();
         const storage = createMemoryStorage();
         storage.setItem(NEWS_SUBSCRIBE_PENDING_KEY, '1');
 
@@ -159,13 +230,110 @@ describe('news-subscribe', () => {
 
         expect(res.status).toBe('error');
         expect(storage.getItem(NEWS_SUBSCRIBE_PENDING_KEY)).toBe('1');
+        expect(labelEl.textContent).toBe('Could not save — try again');
+    });
+
+    test('clearPendingNewsSubscribe removes pending intent when sign-in modal is dismissed', () => {
+        const storage = createMemoryStorage();
+        storage.setItem(NEWS_SUBSCRIBE_PENDING_KEY, '1');
+        clearPendingNewsSubscribe(storage);
+        expect(storage.getItem(NEWS_SUBSCRIBE_PENDING_KEY)).toBeNull();
+    });
+
+    test('401 on unsubscribe preserves false intent for same user and does not force subscribe on a different user', async () => {
+        const { root, button } = createFakeDom({ pressed: 'true' });
+        const storage = createMemoryStorage();
+        let signedOut = false;
+
+        const clickRes = await handleNewsSubscribeClick(button, {
+            authManager: {
+                initialize: async () => {},
+                isAuthenticated: () => true,
+                getCurrentUser: () => ({ id: 'github:ada' }),
+                signOut: async () => {
+                    signedOut = true;
+                },
+            },
+            attribution: { open: () => {} },
+            prefsApi: {
+                setNewsEnabled: async () => {
+                    const err = new Error('Unauthorized');
+                    err.status = 401;
+                    throw err;
+                },
+            },
+            storage,
+            root,
+        });
+
+        expect(clickRes.status).toBe('unauthenticated');
+        expect(signedOut).toBe(true);
+
+        // If a different user (bob) signs in next, the pending unsubscribe/subscribe intent is discarded
+        const setCallsForBob = [];
+        const bobRes = await syncNewsSubscribe({ id: 'github:bob' }, {
+            prefsApi: {
+                getPrefs: async () => ({ newsEnabled: false, email: 'bob@example.com', emailVerified: true }),
+                setNewsEnabled: async enabled => {
+                    setCallsForBob.push(enabled);
+                    return { newsEnabled: enabled, email: 'bob@example.com', emailVerified: true };
+                },
+            },
+            storage,
+            root,
+        });
+
+        expect(bobRes.status).toBe('unsubscribed');
+        expect(setCallsForBob).toEqual([]);
+        expect(storage.getItem(NEWS_SUBSCRIBE_PENDING_KEY)).toBeNull();
+    });
+
+    test('401 on unsubscribe applies enabled=false when the same user signs back in', async () => {
+        const { root, button } = createFakeDom({ pressed: 'true' });
+        const storage = createMemoryStorage();
+
+        await handleNewsSubscribeClick(button, {
+            authManager: {
+                initialize: async () => {},
+                isAuthenticated: () => true,
+                getCurrentUser: () => ({ id: 'github:ada' }),
+                signOut: async () => {},
+            },
+            attribution: { open: () => {} },
+            prefsApi: {
+                setNewsEnabled: async () => {
+                    const err = new Error('Unauthorized');
+                    err.status = 401;
+                    throw err;
+                },
+            },
+            storage,
+            root,
+        });
+
+        const setCallsForAda = [];
+        const adaRes = await syncNewsSubscribe({ id: 'github:ada' }, {
+            prefsApi: {
+                getPrefs: async () => ({ newsEnabled: true, email: 'ada@example.com', emailVerified: true }),
+                setNewsEnabled: async enabled => {
+                    setCallsForAda.push(enabled);
+                    return { newsEnabled: enabled, email: 'ada@example.com', emailVerified: true };
+                },
+            },
+            storage,
+            root,
+        });
+
+        expect(adaRes.status).toBe('unsubscribed');
+        expect(setCallsForAda).toEqual([false]);
+        expect(storage.getItem(NEWS_SUBSCRIBE_PENDING_KEY)).toBeNull();
     });
 
     test('syncNewsSubscribe aborts and returns stale if isCurrent returns false', async () => {
         const { root, button } = createFakeDom();
         const res = await syncNewsSubscribe({ id: 'github:ada' }, {
             prefsApi: {
-                getPrefs: async () => ({ newsEnabled: true, email: 'ada@example.com' }),
+                getPrefs: async () => ({ newsEnabled: true, email: 'ada@example.com', emailVerified: true }),
             },
             root,
             isCurrent: () => false,
@@ -183,4 +351,3 @@ describe('news-subscribe', () => {
         expect(statusEl.classList.contains('hidden')).toBe(true);
     });
 });
-

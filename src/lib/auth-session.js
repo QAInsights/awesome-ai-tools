@@ -1,6 +1,8 @@
 export const AUTH_SESSION_TTL_MS = 24 * 60 * 60 * 1000;
 export const AUTH_RETURN_PATHS = Object.freeze([
     '/',
+    '/blog',
+    '/news',
     '/settings',
     '/favorites',
     '/zap',

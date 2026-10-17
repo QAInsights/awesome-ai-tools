@@ -5,6 +5,9 @@ import { authAttribution } from './auth-attribution.js';
 
 export const NEWS_SUBSCRIBE_PENDING_KEY = 'aat_news_subscribe_pending';
 
+const UNVERIFIED_EMAIL_STATUS =
+    'Preference saved — your account does not have a verified email address, so emails will not send until verified in Settings';
+
 const defaultPrefsApi = {
     async getPrefs() {
         const response = await fetch('/api/notifications/prefs');
@@ -30,6 +33,15 @@ const defaultPrefsApi = {
     },
 };
 
+let rollbackTimerId = null;
+
+function clearRollbackTimer() {
+    if (rollbackTimerId !== null) {
+        clearTimeout(rollbackTimerId);
+        rollbackTimerId = null;
+    }
+}
+
 function setButtonLabel(button, text) {
     const labelEl = button.querySelector?.('[data-subscribe-label]');
     if (labelEl) labelEl.textContent = text;
@@ -40,6 +52,7 @@ export function renderNewsSubscribeButtons(root = document, {
     authenticated = false,
     newsEnabled = false,
     email = null,
+    emailVerified = false,
 } = {}) {
     const active = Boolean(authenticated && newsEnabled);
     root.querySelectorAll?.('[data-news-subscribe]').forEach(button => {
@@ -52,9 +65,9 @@ export function renderNewsSubscribeButtons(root = document, {
 
     root.querySelectorAll?.('[data-news-subscribe-status]').forEach(statusEl => {
         if (active) {
-            statusEl.textContent = email
+            statusEl.textContent = email && emailVerified
                 ? `Delivering to ${email} · manage anytime in Settings`
-                : 'Subscribed · manage anytime in Settings';
+                : UNVERIFIED_EMAIL_STATUS;
             statusEl.classList.remove('hidden');
         } else {
             statusEl.textContent = '';
@@ -65,17 +78,42 @@ export function renderNewsSubscribeButtons(root = document, {
 
 function readPending(storage) {
     try {
-        return storage?.getItem(NEWS_SUBSCRIBE_PENDING_KEY) === '1';
+        const raw = storage?.getItem(NEWS_SUBSCRIBE_PENDING_KEY);
+        if (!raw) return null;
+        if (raw === '1') return { enabled: true, userId: null };
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed.enabled === 'boolean') {
+            return {
+                enabled: parsed.enabled,
+                userId: typeof parsed.userId === 'string' && parsed.userId ? parsed.userId : null,
+            };
+        }
+        return null;
     } catch {
-        return false;
+        return null;
     }
 }
 
-function writePending(storage, enabled) {
+function writePending(storage, pending) {
     try {
-        if (enabled) storage?.setItem(NEWS_SUBSCRIBE_PENDING_KEY, '1');
-        else storage?.removeItem(NEWS_SUBSCRIBE_PENDING_KEY);
+        if (!pending) {
+            storage?.removeItem(NEWS_SUBSCRIBE_PENDING_KEY);
+        } else if (pending === true) {
+            storage?.setItem(NEWS_SUBSCRIBE_PENDING_KEY, '1');
+        } else if (typeof pending === 'object' && typeof pending.enabled === 'boolean') {
+            storage?.setItem(
+                NEWS_SUBSCRIBE_PENDING_KEY,
+                JSON.stringify({
+                    enabled: pending.enabled,
+                    userId: typeof pending.userId === 'string' ? pending.userId : null,
+                })
+            );
+        }
     } catch {}
+}
+
+export function clearPendingNewsSubscribe(storage = globalThis.sessionStorage) {
+    writePending(storage, false);
 }
 
 export async function handleNewsSubscribeClick(button, {
@@ -88,40 +126,69 @@ export async function handleNewsSubscribeClick(button, {
 } = {}) {
     if (button.disabled) return { status: 'busy' };
     button.disabled = true;
+    clearRollbackTimer();
 
     try {
         await authManager.initialize();
+        const nextValue = button.getAttribute('aria-pressed') !== 'true';
+
         if (!authManager.isAuthenticated()) {
             const subject = button.dataset?.subscribeSubject || 'today-in-ai';
-            writePending(storage, true);
+            writePending(storage, nextValue ? true : false);
             analyticsClient.track(EVENTS.GATE_BLOCKED, { trigger: 'news_cta', subject });
             attribution.open('news_cta');
             return { status: 'unauthenticated' };
         }
 
-        const nextValue = button.getAttribute('aria-pressed') !== 'true';
         setButtonLabel(button, nextValue ? 'Subscribing…' : 'Updating…');
 
         try {
             const prefs = await prefsApi.setNewsEnabled(nextValue);
+            clearRollbackTimer();
+            writePending(storage, false);
             renderNewsSubscribeButtons(root, {
                 authenticated: true,
                 newsEnabled: prefs.newsEnabled,
                 email: prefs.email,
+                emailVerified: Boolean(prefs.emailVerified),
             });
             return { status: prefs.newsEnabled ? 'subscribed' : 'unsubscribed', prefs };
         } catch (error) {
             if (error?.status === 401) {
+                const previousUserId = authManager.getCurrentUser?.()?.id || null;
                 await authManager.signOut();
-                writePending(storage, true);
+                if (previousUserId) {
+                    writePending(storage, { enabled: nextValue, userId: previousUserId });
+                } else {
+                    writePending(storage, nextValue ? true : false);
+                }
                 renderNewsSubscribeButtons(root, { authenticated: false, newsEnabled: false });
                 attribution.open('news_cta');
                 return { status: 'unauthenticated' };
             }
             setButtonLabel(button, 'Could not save — try again');
-            setTimeout(() => {
+            clearRollbackTimer();
+            rollbackTimerId = setTimeout(async () => {
+                rollbackTimerId = null;
+                const authenticated = authManager.isAuthenticated();
+                if (!authenticated) {
+                    renderNewsSubscribeButtons(root, { authenticated: false, newsEnabled: false });
+                    return;
+                }
+                try {
+                    if (typeof prefsApi.getPrefs === 'function') {
+                        const currentPrefs = await prefsApi.getPrefs();
+                        renderNewsSubscribeButtons(root, {
+                            authenticated: true,
+                            newsEnabled: currentPrefs.newsEnabled,
+                            email: currentPrefs.email,
+                            emailVerified: Boolean(currentPrefs.emailVerified),
+                        });
+                        return;
+                    }
+                } catch {}
                 renderNewsSubscribeButtons(root, {
-                    authenticated: authManager.isAuthenticated(),
+                    authenticated: true,
                     newsEnabled: !nextValue,
                 });
             }, 2200);
@@ -138,30 +205,48 @@ export async function syncNewsSubscribe(user, {
     root = document,
     isCurrent = () => true,
 } = {}) {
+    clearRollbackTimer();
     const buttons = root.querySelectorAll?.('[data-news-subscribe]') ?? [];
-    if (!buttons.length) return { status: 'idle' };
 
     if (!user) {
-        renderNewsSubscribeButtons(root, { authenticated: false, newsEnabled: false });
+        if (buttons.length) {
+            renderNewsSubscribeButtons(root, { authenticated: false, newsEnabled: false });
+        }
         return { status: 'signed_out' };
     }
 
-    const shouldAutoSubscribe = readPending(storage);
-    if (shouldAutoSubscribe) writePending(storage, false);
+    const pending = readPending(storage);
+    const isDifferentUser = Boolean(pending?.userId && pending.userId !== user.id);
+    if (isDifferentUser) {
+        writePending(storage, false);
+    }
+    const activePending = pending && !isDifferentUser ? pending : null;
+
+    if (!buttons.length && !activePending) {
+        return { status: 'idle' };
+    }
 
     try {
-        const prefs = shouldAutoSubscribe
-            ? await prefsApi.setNewsEnabled(true)
+        const prefs = activePending
+            ? await prefsApi.setNewsEnabled(activePending.enabled)
             : await prefsApi.getPrefs();
+        if (activePending && prefs.newsEnabled === activePending.enabled) {
+            writePending(storage, false);
+        }
         if (!isCurrent()) return { status: 'stale' };
-        renderNewsSubscribeButtons(root, {
-            authenticated: true,
-            newsEnabled: prefs.newsEnabled,
-            email: prefs.email,
-        });
+        if (buttons.length) {
+            renderNewsSubscribeButtons(root, {
+                authenticated: true,
+                newsEnabled: prefs.newsEnabled,
+                email: prefs.email,
+                emailVerified: Boolean(prefs.emailVerified),
+            });
+        }
         return { status: prefs.newsEnabled ? 'subscribed' : 'unsubscribed', prefs };
     } catch {
-        if (shouldAutoSubscribe) writePending(storage, true);
+        if (activePending && isCurrent()) {
+            buttons.forEach(button => setButtonLabel(button, 'Could not save — try again'));
+        }
         return { status: 'error' };
     }
 }

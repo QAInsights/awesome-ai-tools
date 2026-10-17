@@ -3,9 +3,11 @@ import { analytics } from '../analytics-client.js';
 import { authAttribution } from '../auth-attribution.js';
 import { auth } from '../auth.js';
 import { bindAuthSession } from '../auth-session-binding.js';
+import { clearPendingNewsSubscribe, syncNewsSubscribe } from '../news-subscribe.js';
 
 export function initAuthManager(callbacks) {
     const { onStateChange, collapsedSidebar } = callbacks;
+    let newsSubscribeGeneration = 0;
 
     async function initializeAuth() {
         try {
@@ -20,13 +22,21 @@ export function initAuthManager(callbacks) {
             if (signInTriggerBtn && signInModal) {
                 signInTriggerBtn.addEventListener('click', () => {
                     const trigger = authAttribution.begin();
+                    if (trigger !== 'news_cta') {
+                        clearPendingNewsSubscribe();
+                    }
                     analytics.track(EVENTS.SIGNIN_MODAL_SHOWN, { trigger });
                     signInModal.classList.remove('hidden');
                     // Render buttons only when modal opens to ensure container is ready
                     renderSignInButtons();
                 });
 
-                const closeModal = () => signInModal.classList.add('hidden');
+                const closeModal = () => {
+                    signInModal.classList.add('hidden');
+                    if (!auth.isAuthenticated()) {
+                        clearPendingNewsSubscribe();
+                    }
+                };
                 closeSignInModal?.addEventListener('click', closeModal);
                 signInModalOverlay?.addEventListener('click', closeModal);
             }
@@ -78,6 +88,10 @@ export function initAuthManager(callbacks) {
 
     function handleAuthStateChange({ user }) {
         updateAuthUI(user);
+        const generation = ++newsSubscribeGeneration;
+        void syncNewsSubscribe(user, {
+            isCurrent: () => generation === newsSubscribeGeneration,
+        });
         if (onStateChange) onStateChange(user);
         
         // Close modal if user just signed in
