@@ -44,4 +44,34 @@ describe('follows UI', () => {
         expect(classes.has('followed')).toBe(false);
         expect(attributes.get('aria-pressed')).toBe('false');
     });
+
+    test('renders custom follow button labels when data-follow-default and data-follow-active are set', async () => {
+        let authenticated = true;
+        const labelEl = { textContent: '' };
+        const button = {
+            dataset: {
+                toolSlug: 'cursor',
+                toolName: 'Cursor',
+                followDefault: 'Notify me of price changes',
+                followActive: 'Price alerts active',
+            },
+            classList: { toggle: () => {} },
+            querySelector: selector => selector === '[data-follow-label]' ? labelEl : null,
+            setAttribute: () => {},
+            title: '',
+        };
+        global.document = {
+            addEventListener: () => {},
+            querySelectorAll: () => [button],
+        };
+        global.fetch = async () => jsonResponse([{ slug: 'cursor', createdAt: 20 }]);
+        const follows = await import(`./follows.js?test=${++moduleId}`);
+        follows.initFollows({ isAuthenticated: () => authenticated });
+        await follows.loadFollows();
+        expect(labelEl.textContent).toBe('Price alerts active');
+
+        authenticated = false;
+        follows.refreshFollowButtons();
+        expect(labelEl.textContent).toBe('Notify me of price changes');
+    });
 });

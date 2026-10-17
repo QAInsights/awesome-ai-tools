@@ -34,6 +34,7 @@ export const GET: APIRoute = () => {
         '',
         `- **URL**: ${SITE}`,
         `- **Canonical tool listing for LLMs**: ${SITE}/llms-full.txt (every tool with category, URL, and one-line description)`,
+        `- **Agent & CLI Query API**: ${SITE}/api/v1/tools (supports \`?q=\`, \`?category=\`, \`?pricing=\`, \`?tag=\`, \`?slug=\`, \`?limit=\`)`,
         `- **Machine-readable data**: ${SITE}/data/enriched-tools.json (full metadata) · ${SITE}/data/slugs.json (slug catalog)`,
         `- **Feeds**: ${SITE}/rss.xml (blog) · ${SITE}/news/rss.xml (Today in AI) · ${SITE}/tools/rss.xml (new tools)`,
         `- **Sitemap**: ${SITE}/sitemap-index.xml`,
@@ -51,7 +52,7 @@ export const GET: APIRoute = () => {
     for (const cat of categories) {
         const examples = cat.tools.slice(0, 6).map(t => t.enriched?.name ?? t.name).join(', ');
         const desc = cat.description ? `${cat.description.replace(/\s+/g, ' ').trim()} ` : '';
-        lines.push(`- [${cat.name}](${SITE}/category/${cat.slug}) (${cat.tools.length} tools) - ${desc}Includes: ${examples}.`);
+        lines.push(`- [${cat.name}](${SITE}/category/${cat.slug}) (${cat.tools.length} tools) - ${desc}Includes: ${examples}. Markdown: ${SITE}/category/${cat.slug}.md`);
     }
 
     lines.push(
@@ -59,10 +60,10 @@ export const GET: APIRoute = () => {
         '## Pages',
         '',
         `- [Tool Directory](${SITE}/) - Browsable catalog with sidebar navigation, search, and filtering`,
-        `- [Tool Detail Pages](${SITE}/tools/cursor) - One page per tool at \`/tools/<slug>\` with pricing, key features, best-for / not-ideal-for guidance, recent updates, verdict, and FAQ`,
+        `- [Tool Detail Pages](${SITE}/tools/cursor) - One page per tool at \`/tools/<slug>\` (Markdown mirror at \`/tools/<slug>.md\`) with pricing, key features, best-for / not-ideal-for guidance, recent updates, verdict, and FAQ`,
         `- [Alternatives Pages](${SITE}/tools/cursor/alternatives) - \`/tools/<slug>/alternatives\` lists same-category alternatives for a tool`,
         `- [Compare](${SITE}/compare) - ${comparisons.length} side-by-side comparisons at \`/compare/<a>-vs-<b>\`; each has a Markdown mirror at \`/compare/<a>-vs-<b>.md\``,
-        `- [Categories](${SITE}/category/${categories[0]?.slug ?? ''}) - \`/category/<slug>\` pages with every tool in a category`,
+        `- [Categories](${SITE}/category/${categories[0]?.slug ?? ''}) - \`/category/<slug>\` pages with every tool in a category; each has a Markdown mirror at \`/category/<slug>.md\``,
         `- [Best-of lists](${SITE}/best) - ${bestPages.length} ranked "best X for Y" lists at \`/best/<slug>\`, re-ranked monthly; each has a Markdown mirror at \`/best/<slug>.md\``,
         `- [Blog](${SITE}/blog) - Deep dives, comparisons, and tutorials on AI coding tools`,
         `- [Today in AI](${SITE}/news) - Daily AI news brief for builders`,

@@ -34,7 +34,11 @@ export function refreshFollowButtons(root = document) {
         const icon = button.querySelector('.follow-icon');
         if (icon) icon.setAttribute('fill', active ? 'currentColor' : 'none');
         const text = button.querySelector('[data-follow-label]');
-        if (text) text.textContent = active ? 'Following' : 'Follow';
+        if (text) {
+            text.textContent = active
+                ? (button.dataset.followActive || 'Following')
+                : (button.dataset.followDefault || 'Follow');
+        }
     });
 }
 

@@ -5,6 +5,7 @@
  */
 import { getToolBySlug } from '../lib/tools';
 import { TRENDING_WEIGHTS, formatWeekSpan, formatWeekTitle, type TrendingSnapshot } from '../lib/trending';
+import { buildTrendingBadgeMarkdown, buildTrendingShareUrl } from '../lib/trending-badge';
 
 interface Props {
     snapshot: TrendingSnapshot;
@@ -16,6 +17,7 @@ const Heading = headingLevel;
 const toolHref = (slug: string) => (getToolBySlug(slug) ? `/tools/${slug}` : null);
 const signed = (value: number) => (value > 0 ? `+${value}` : String(value));
 const stars = (value: number | null) => (value === null ? '-' : signed(value));
+const isTopRank = (rank: number) => rank <= 5;
 const generated = new Date(snapshot.generatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
 ---
 
@@ -50,12 +52,44 @@ const generated = new Date(snapshot.generatedAt).toLocaleDateString('en-US', { y
                 <tbody>
                     {snapshot.entries.map(entry => {
                         const href = toolHref(entry.slug);
+                        const isTopFive = isTopRank(entry.rank);
+                        const badgeMd = isTopFive
+                            ? buildTrendingBadgeMarkdown(snapshot.week, entry.rank, entry.slug, entry.name)
+                            : '';
+                        const shareUrl = isTopFive
+                            ? buildTrendingShareUrl(snapshot.week, entry.rank, entry.name)
+                            : '';
                         return (
                             <tr class="border-b border-[#1a1a1a] last:border-0">
                                 <td class="px-4 py-3 font-mono text-[12px] text-[#525252]">{entry.rank}</td>
                                 <td class="px-4 py-3">
                                     {href ? <a href={href} class="font-medium text-white hover:text-[#e2c48a] transition-colors">{entry.name}</a> : <span class="font-medium text-white">{entry.name}</span>}
-                                    <div class="font-mono text-[10px] uppercase tracking-wide text-[#737373] mt-0.5">{entry.company}</div>
+                                    <div class="font-mono text-[10px] uppercase tracking-wide text-[#737373] mt-0.5 flex items-center gap-2 flex-wrap">
+                                        <span>{entry.company}</span>
+                                        {isTopFive && (
+                                            <Fragment>
+                                                <span>&middot;</span>
+                                                <button
+                                                    type="button"
+                                                    data-copy-snippet
+                                                    data-copy-value={badgeMd}
+                                                    class="text-[#d6b77a] hover:text-white transition-colors cursor-pointer bg-transparent border-0 p-0 font-mono text-[10px] uppercase tracking-wide"
+                                                    title={`Copy #${entry.rank} Trending README badge`}
+                                                >
+                                                    Copy #{entry.rank} badge
+                                                </button>
+                                                <span>&middot;</span>
+                                                <a
+                                                    href={shareUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    class="text-[#a3a3a3] hover:text-white transition-colors"
+                                                >
+                                                    Share ↗
+                                                </a>
+                                            </Fragment>
+                                        )}
+                                    </div>
                                 </td>
                                 <td class="px-4 py-3 text-right font-mono text-[#e2c48a]">{entry.score}</td>
                                 <td class="px-4 py-3 text-right font-mono text-[#a3a3a3] hidden sm:table-cell">{entry.zaps}</td>
