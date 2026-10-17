@@ -38,8 +38,9 @@ export interface ToolQueryResult {
 }
 
 const SITE = 'https://ai.dosa.dev';
-const DEFAULT_LIMIT = 25;
-const MAX_LIMIT = 100;
+export const DEFAULT_LIMIT = 25;
+export const MAX_LIMIT = 100;
+export const MAX_OFFSET = 10_000;
 
 function normalizeInt(value: number | string | null | undefined, fallback: number, min: number, max: number): number {
     if (value === undefined || value === null || value === '') return fallback;
@@ -138,7 +139,7 @@ export function queryCatalogTools(tools: Tool[], params: ToolQueryParams = {}): 
     const pricing = (params.pricing ?? '').trim();
     const tag = (params.tag ?? '').trim();
     const limit = normalizeInt(params.limit, DEFAULT_LIMIT, 1, MAX_LIMIT);
-    const offset = normalizeInt(params.offset, 0, 0, 10_000);
+    const offset = normalizeInt(params.offset, 0, 0, MAX_OFFSET);
 
     const scored: { tool: Tool; score: number }[] = [];
     for (const tool of tools) {

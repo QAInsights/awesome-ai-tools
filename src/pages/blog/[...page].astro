@@ -3,6 +3,7 @@ import type { GetStaticPaths, Page } from 'astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
 import BlogCardGradient from '../../components/BlogCardGradient.astro';
+import NewsSubscribeCta from '../../components/NewsSubscribeCta.astro';
 import PostCard from '../../components/PostCard.astro';
 import { safeJsonForScript } from '../../lib/serialize';
 
@@ -194,6 +195,10 @@ const listPosts =
         {/* All posts (paginated) */}
         <div id="post-list" class="space-y-6">
           {listPosts.map((post) => <PostCard post={post} featured={isFeatured(post)} />)}
+        </div>
+
+        <div class="mt-10">
+          <NewsSubscribeCta isNewsPost={false} subject="blog-index" compact />
         </div>
 
         {page.lastPage > 1 && (
