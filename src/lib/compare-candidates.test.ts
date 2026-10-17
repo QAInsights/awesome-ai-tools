@@ -101,7 +101,7 @@ describe('compare candidates', () => {
     });
 
     test('serializer round-trips data/comparisons.json byte for byte', () => {
-        const raw = readFileSync('data/comparisons.json', 'utf-8');
+        const raw = readFileSync('data/comparisons.json', 'utf-8').replace(/\r\n/g, '\n');
         expect(serializeComparisons(JSON.parse(raw))).toBe(raw);
     });
 

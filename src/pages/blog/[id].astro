@@ -150,9 +150,9 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
   activeNav="blog"
 >
   <div class="max-w-[1400px] mx-auto w-full flex flex-col grow shrink-0 p-6 md:p-8">
-    <div class="max-w-3xl mx-auto flex flex-col flex-1 w-full min-w-0">
-      <div class="mb-5">
-        <a href={backHref} class="text-[#737373] hover:text-white transition-colors flex items-center text-sm font-mono tracking-wide w-fit">
+    <div class="max-w-4xl mx-auto flex flex-col flex-1 w-full min-w-0">
+      <div class="mb-6">
+        <a href={backHref} class="text-[#8a8a8a] hover:text-white transition-colors flex items-center text-[14px] font-mono tracking-wide w-fit">
           <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
@@ -161,12 +161,12 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
       </div>
 
       <article class="select-text">
-        <header class="mb-6 text-left select-text">
-          <h1 class="text-3xl sm:text-4xl font-semibold text-white tracking-tight mb-3 select-text">
+        <header class="mb-8 text-left select-text">
+          <h1 class="text-3xl sm:text-5xl font-bold text-white tracking-tight mb-4 select-text leading-tight">
             {entry.data.title}
           </h1>
-          <p class="post-lede text-base sm:text-lg text-[#a3a3a3] leading-relaxed mb-4 select-text">{entry.data.description}</p>
-          <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-[#737373] font-mono">
+          <p class="post-lede text-lg sm:text-xl text-[#b4b4b4] leading-relaxed mb-5 select-text font-normal">{entry.data.description}</p>
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-2 text-[14px] text-[#8a8a8a] font-mono">
             <time datetime={entry.data.pubDate.toISOString()}>
               {entry.data.pubDate.toLocaleDateString('en-us', {
                 year: 'numeric',
@@ -177,15 +177,15 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
             <span>•</span>
             <span>{entry.data.author}</span>
             {remarkPluginFrontmatter && remarkPluginFrontmatter.readingTime && (
-              <>
+              <Fragment>
                 <span>•</span>
                 <span>{remarkPluginFrontmatter.readingTime}</span>
-              </>
+              </Fragment>
             )}
             {displayTags.length > 0 && (
               <span class="flex flex-wrap items-center gap-1.5">
                 {displayTags.map((tag) => (
-                  <span class="inline-flex items-center px-2 py-0.5 rounded border border-[#282828] text-xs bg-white/[0.03] text-[#8a8a8a]">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md border border-[#333] text-[13px] font-mono bg-white/[0.03] text-[#b4b4b4]">
                     {tag}
                   </span>
                 ))}
@@ -194,7 +194,7 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
           </div>
 
           {/* Compact share row, right under the byline */}
-          <div class="mt-4 flex flex-wrap items-center gap-2">
+          <div class="mt-5 flex flex-wrap items-center gap-2">
             {shareLinks.map((link) => (
               <a
                 href={link.href}
@@ -202,7 +202,7 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
                 rel="noopener noreferrer"
                 aria-label={`Share on ${link.name}`}
                 title={`Share on ${link.name}`}
-                class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors"
+                class="inline-flex items-center justify-center w-9 h-9 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors"
               >
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" set:html={link.icon} />
               </a>
@@ -212,7 +212,7 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
               data-copy={postUrl}
               aria-label="Copy article link"
               title="Copy link"
-              class="copy-link-btn inline-flex items-center justify-center w-8 h-8 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors"
+              class="copy-link-btn inline-flex items-center justify-center w-9 h-9 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors"
             >
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 0 0-5.656 0l-4 4a4 4 0 1 0 5.656 5.656l1.102-1.101m-.758-4.899a4 4 0 0 0 5.656 0l4-4a4 4 0 0 0-5.656-5.656l-1.1 1.1" />
@@ -223,22 +223,22 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
 
         {/* Compact, collapsible table of contents at the top of the content */}
         {showToc && (
-          <details class="group mb-8 rounded-lg border border-[#1e1e1e] bg-white/[0.02]">
-            <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-2.5 text-xs font-mono uppercase tracking-widest text-[#525252] hover:text-[#a3a3a3] transition-colors">
+          <details class="group mb-10 rounded-xl border border-[#222] bg-white/[0.02]">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-[13px] font-mono uppercase tracking-widest text-[#8a8a8a] hover:text-white transition-colors">
               <span>In this {isNewsPost ? 'brief' : 'article'} · {tocHeadings.length} sections</span>
               <svg class="w-4 h-4 shrink-0 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
               </svg>
             </summary>
-            <nav aria-label="Table of contents" class="px-4 pb-3">
-              <ul class="space-y-0.5 text-sm">
+            <nav aria-label="Table of contents" class="px-4 pb-4">
+              <ul class="space-y-1 text-[15px]">
                 {tocHeadings.map((h) => (
                   <li>
                     <a
                       href={`#${h.slug}`}
                       data-toc-link={h.slug}
                       class:list={[
-                        'toc-link block py-0.5 border-l-2 border-transparent pl-3 text-[#737373] hover:text-white transition-colors leading-snug',
+                        'toc-link block py-1 border-l-2 border-transparent pl-3 text-[#999] hover:text-white transition-colors leading-relaxed',
                         { 'pl-7': h.depth === 3 },
                       ]}
                     >
@@ -251,14 +251,14 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
           </details>
         )}
 
-        <div id="article-body" class="select-text prose prose-invert prose-zinc max-w-none prose-headings:font-semibold prose-a:text-[#22d3ee] hover:prose-a:text-[#67e8f9] prose-a:no-underline hover:prose-a:underline prose-code:text-[#a78bfa] prose-pre:bg-[#0a0a0a] prose-pre:border prose-pre:border-[#222] prose-img:rounded-lg prose-img:border prose-img:border-[#222] prose-hr:border-[#222]">
+        <div id="article-body" class="select-text prose prose-lg prose-invert prose-zinc max-w-none prose-p:text-[#d4d4d4] prose-p:leading-[1.8] prose-p:text-[17px] sm:prose-p:text-[18px] prose-headings:text-white prose-headings:font-semibold prose-headings:tracking-tight prose-h2:text-2xl sm:prose-h2:text-3xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl sm:prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-a:text-[#22d3ee] hover:prose-a:text-[#67e8f9] prose-a:no-underline hover:prose-a:underline prose-code:text-[#a78bfa] prose-code:text-[15px] prose-pre:bg-[#0a0a0a] prose-pre:border prose-pre:border-[#222] prose-pre:text-[15px] prose-img:rounded-xl prose-img:border prose-img:border-[#222] prose-hr:border-[#222] prose-li:text-[#d4d4d4] prose-li:text-[17px] sm:prose-li:text-[18px]">
           <Content />
         </div>
 
         {/* Share and AI actions, after the story */}
         <div class="mt-12 pt-8 border-t border-[#222] space-y-6">
           <div>
-            <p class="text-xs font-mono uppercase tracking-widest text-[#525252] mb-3">Share</p>
+            <p class="text-[13px] font-mono uppercase tracking-widest text-[#8a8a8a] mb-3">Share</p>
             <div class="flex flex-wrap items-center gap-2">
               {shareLinks.map((link) => (
                 <a
@@ -267,7 +267,7 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
                   rel="noopener noreferrer"
                   aria-label={`Share on ${link.name}`}
                   title={`Share on ${link.name}`}
-                  class="inline-flex items-center justify-center w-8 h-8 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors"
+                  class="inline-flex items-center justify-center w-9 h-9 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors"
                 >
                   <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" set:html={link.icon} />
                 </a>
@@ -277,7 +277,7 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
                 data-copy={postUrl}
                 aria-label="Copy article link"
                 title="Copy link"
-                class="copy-link-btn inline-flex items-center justify-center gap-1.5 h-8 px-2.5 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors text-xs font-mono"
+                class="copy-link-btn inline-flex items-center justify-center gap-1.5 h-9 px-3 rounded-md border border-[#333] bg-white/[0.03] text-[#b4b4b4] hover:text-white hover:border-[#555] transition-colors text-[13px] font-mono"
               >
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 0 0-5.656 0l-4 4a4 4 0 1 0 5.656 5.656l1.102-1.101m-.758-4.899a4 4 0 0 0 5.656 0l4-4a4 4 0 0 0-5.656-5.656l-1.1 1.1" />
@@ -288,14 +288,14 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
           </div>
 
           <div>
-            <p class="text-xs font-mono uppercase tracking-widest text-[#525252] mb-3">Discuss with AI</p>
+            <p class="text-[13px] font-mono uppercase tracking-widest text-[#8a8a8a] mb-3">Discuss with AI</p>
             <div class="flex flex-wrap items-center gap-2">
               {aiTargets.map((target) => (
                 <a
                   href={target.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="ai-copy-btn inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors text-xs font-mono"
+                  class="ai-copy-btn inline-flex items-center gap-1.5 h-9 px-3 rounded-md border border-[#333] bg-white/[0.03] text-[#b4b4b4] hover:text-white hover:border-[#555] transition-colors text-[13px] font-mono"
                   data-copy={aiPrompt}
                   data-copied-label={target.copiedLabel}
                   aria-label={`Discuss this article in ${target.name}`}
@@ -313,7 +313,7 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
                 id="copy-llm-btn"
                 aria-label="Copy full article as markdown for an LLM"
                 title="Copy full article as markdown"
-                class="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md border border-[#333] bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors text-xs font-mono"
+                class="inline-flex items-center gap-1.5 h-9 px-3 rounded-md border border-[#333] bg-white/[0.03] text-[#b4b4b4] hover:text-white hover:border-[#555] transition-colors text-[13px] font-mono"
               >
                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>

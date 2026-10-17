@@ -9,12 +9,12 @@ export const getStaticPaths = (() => {
         if (entries.length === 0) {
             return [{
                 params: { week: snapshot.week, rank: '1' },
-                props: { week: snapshot.week, rank: 1, toolName: undefined },
+                props: { week: snapshot.week, rank: 1, toolName: undefined as string | undefined },
             }];
         }
         return entries.map(entry => ({
             params: { week: snapshot.week, rank: String(entry.rank) },
-            props: { week: snapshot.week, rank: entry.rank, toolName: entry.name },
+            props: { week: snapshot.week, rank: entry.rank, toolName: entry.name as string | undefined },
         }));
     });
 }) satisfies GetStaticPaths;
