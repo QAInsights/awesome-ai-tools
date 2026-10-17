@@ -67,6 +67,7 @@ export const GET: APIRoute = () => {
         `- [Best-of lists](${SITE}/best) - ${bestPages.length} ranked "best X for Y" lists at \`/best/<slug>\`, re-ranked monthly; each has a Markdown mirror at \`/best/<slug>.md\``,
         `- [Blog](${SITE}/blog) - Deep dives, comparisons, and tutorials on AI coding tools; each post has a Markdown mirror at \`/blog/<id>.md\``,
         `- [Today in AI](${SITE}/news) - Daily AI news brief for builders`,
+        `- [Monthly AI Coding Cost Calculator](${SITE}/tools/cost-calculator) - Interactive seat + live LLM token cost calculator (cached from models.dev via \`/api/v1/models.json\`) with cheaper alternatives`,
         `- [Token Counter & Cost Estimator](${SITE}/tools/token-counter) - Client-side token counts and cost estimates for major LLMs`,
         `- [Hallucination Risk Scorer](${SITE}/tools/hallucination-scorer) - Heuristic scorer that flags prompt patterns prone to hallucination`,
         `- [Help / FAQ](${SITE}/help) - Usage guide and frequently asked questions`,
