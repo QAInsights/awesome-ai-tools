@@ -155,7 +155,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const renderCard = (post) => {
-        const card = el('article', 'bg-white/[0.02] border border-[#222] rounded-lg overflow-hidden hover:border-[#444] transition-all group');
+        const borderClass = post.featured
+            ? 'border-[#f0d08f]/25 hover:border-[#f0d08f]/50'
+            : 'border-[#222] hover:border-[#444]';
+        const card = el('article', `bg-white/[0.02] border rounded-xl overflow-hidden transition-all group ${borderClass}`);
         const link = el('a', 'flex flex-col md:flex-row h-full');
         link.href = post.url;
 
@@ -163,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const slug = post.url.replace(/^\/blog\//, '');
         const theme = getBlogTheme(slug, post.tags);
 
-        const imgWrap = el('div', 'w-full md:w-[200px] h-[160px] md:h-auto shrink-0 relative overflow-hidden bg-[#06080d] flex items-center justify-center p-4 select-none');
+        const imgWrap = el('div', 'w-full md:w-[240px] h-[170px] md:h-auto shrink-0 relative overflow-hidden bg-[#06080d] flex items-center justify-center p-4 select-none');
         imgWrap.style.backgroundImage = theme.gradient;
 
         const glassCard = el('div', 'relative z-10 backdrop-blur-md bg-white/[0.04] border border-white/20 rounded-xl p-3.5 flex flex-col items-center justify-center text-center max-w-[88%] transition-transform duration-500 group-hover:scale-105 group-hover:border-white/40 shadow-xl overflow-hidden');
@@ -177,25 +180,27 @@ document.addEventListener('DOMContentLoaded', () => {
         imgWrap.appendChild(glassCard);
         link.appendChild(imgWrap);
 
-        const content = el('div', 'flex-1 p-6 flex flex-col justify-between');
+        const content = el('div', 'flex-1 p-6 md:p-7 flex flex-col justify-between gap-4');
         const top = el('div');
-        const meta = el('div', 'flex items-center space-x-2 text-xs text-[#737373] mb-3 font-mono');
+        const meta = el('div', 'flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-[#8a8a8a] mb-3 font-mono');
         if (post.featured) {
-            meta.appendChild(el('span', 'text-[#f0d08f]', 'Featured'));
+            const featBadge = el('span', 'inline-flex items-center gap-1 text-[#f0d08f]');
+            featBadge.innerHTML = '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Featured';
+            meta.appendChild(featBadge);
             meta.appendChild(el('span', '', '•'));
         }
         meta.appendChild(el('span', '', post.date));
         meta.appendChild(el('span', '', '•'));
         meta.appendChild(el('span', '', post.author));
         top.appendChild(meta);
-        top.appendChild(el('h3', 'text-xl font-semibold text-white group-hover:text-[#22d3ee] transition-colors mb-2', post.title));
-        top.appendChild(el('p', 'text-[#a3a3a3] text-[15px] leading-relaxed mb-4 line-clamp-2', post.description));
+        top.appendChild(el('h3', 'text-[22px] leading-snug font-semibold text-white group-hover:text-[#22d3ee] transition-colors mb-2.5', post.title));
+        top.appendChild(el('p', 'text-[#b4b4b4] text-base leading-relaxed line-clamp-3', post.description));
         content.appendChild(top);
 
         if (post.tags.length) {
             const tagRow = el('div', 'flex flex-wrap gap-2');
             post.tags.forEach((tag) => {
-                tagRow.appendChild(el('span', 'inline-flex items-center px-2 py-0.5 rounded border border-[#333] text-xs font-mono bg-white/[0.03] text-[#a3a3a3]', tag));
+                tagRow.appendChild(el('span', 'inline-flex items-center px-2.5 py-1 rounded-md border border-[#333] text-[13px] font-mono bg-white/[0.03] text-[#b4b4b4]', tag));
             });
             content.appendChild(tagRow);
         }

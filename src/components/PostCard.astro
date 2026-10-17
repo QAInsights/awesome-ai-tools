@@ -1,0 +1,76 @@
+---
+/**
+ * Post card shared by /blog (list + featured) and /news.
+ * Keep the markup and classes in sync with renderCard() in js/blog.js, which
+ * rebuilds the same card for client-side search results.
+ */
+import type { CollectionEntry } from 'astro:content';
+import BlogCardGradient from './BlogCardGradient.astro';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  featured?: boolean;
+  /** Hide the feed marker tags (news, today-in-ai) on /news where they are redundant. */
+  hideFeedTags?: boolean;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { post, featured = false, hideFeedTags = false, headingLevel = 'h3' } = Astro.props;
+const Heading = headingLevel;
+const tags = (post.data.tags ?? []).filter(
+  (tag) => !(hideFeedTags && (tag === 'news' || tag === 'today-in-ai'))
+);
+const date = post.data.pubDate.toLocaleDateString('en-us', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+---
+
+<article
+  class:list={[
+    'bg-white/[0.02] border rounded-xl overflow-hidden transition-all group',
+    featured ? 'border-[#f0d08f]/25 hover:border-[#f0d08f]/50' : 'border-[#222] hover:border-[#444]',
+  ]}
+>
+  <a href={`/blog/${post.id}`} class="flex flex-col md:flex-row h-full">
+    <div class="w-full md:w-[240px] h-[170px] md:h-auto shrink-0 relative overflow-hidden bg-[#111]">
+      <BlogCardGradient title={post.data.title} slug={post.id} tags={post.data.tags} aspect="card" />
+    </div>
+    <div class="flex-1 p-6 md:p-7 flex flex-col justify-between gap-4">
+      <div>
+        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-[#8a8a8a] mb-3 font-mono">
+          {featured && (
+            <Fragment>
+              <span class="inline-flex items-center gap-1 text-[#f0d08f]">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                Featured
+              </span>
+              <span>•</span>
+            </Fragment>
+          )}
+          <time datetime={post.data.pubDate.toISOString()}>{date}</time>
+          <span>•</span>
+          <span>{post.data.author}</span>
+        </div>
+        <Heading class="text-[22px] leading-snug font-semibold text-white group-hover:text-[#22d3ee] transition-colors mb-2.5">
+          {post.data.title}
+        </Heading>
+        <p class="text-[#b4b4b4] text-base leading-relaxed line-clamp-3">
+          {post.data.description}
+        </p>
+      </div>
+      {tags.length > 0 && (
+        <div class="flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <span class="inline-flex items-center px-2.5 py-1 rounded-md border border-[#333] text-[13px] font-mono bg-white/[0.03] text-[#b4b4b4]">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  </a>
+</article>

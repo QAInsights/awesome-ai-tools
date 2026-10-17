@@ -2,7 +2,7 @@
 import type { GetStaticPaths, Page } from 'astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
-import BlogCardGradient from '../../components/BlogCardGradient.astro';
+import PostCard from '../../components/PostCard.astro';
 
 interface Props {
   page: Page<CollectionEntry<'blog'>>;
@@ -78,60 +78,69 @@ const jsonLd = JSON.stringify({
   activeNav="news"
 >
   <div class="max-w-[1400px] mx-auto w-full flex flex-col grow shrink-0 p-6 md:p-8">
-    <div class="max-w-3xl mx-auto flex flex-col flex-1 w-full">
-      <h1 class="text-3xl sm:text-4xl font-semibold text-white tracking-tight mb-3">Today in AI</h1>
-      <p class="text-[#a3a3a3] text-[15px] leading-relaxed mb-6">
+    <div class="max-w-4xl mx-auto flex flex-col flex-1 w-full">
+      <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-3">
+        <h1 class="text-3xl sm:text-5xl font-bold text-white tracking-tight">Today in AI</h1>
+        <a href="/news/rss.xml" class="inline-flex items-center gap-1.5 text-[14px] font-mono text-[#8a8a8a] hover:text-[#22d3ee] transition-colors">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16M5 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+          </svg>
+          RSS feed
+        </a>
+      </div>
+      <p class="text-[#b4b4b4] text-base sm:text-lg leading-relaxed mb-6">
         A daily AI brief for builders: the launches, funding, tooling, and policy moves that matter.
       </p>
-      <a href="/news/rss.xml" class="inline-block mb-6 text-[13px] font-mono text-[#737373] hover:text-white">RSS feed</a>
+
       {popularTags.length > 0 && (
         <div class="flex flex-wrap items-center gap-2 mb-8">
-          <span class="text-xs font-mono uppercase tracking-widest text-[#525252] mr-1">Topics</span>
+          <span class="text-[13px] font-mono uppercase tracking-widest text-[#8a8a8a] mr-1">Topics</span>
           {popularTags.map(([tag, count]) => (
-            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded border border-[#333] text-xs font-mono bg-white/[0.03] text-[#a3a3a3]">
-              {tag}<span class="text-[#525252]">{count}</span>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-[#333] text-[13px] font-mono bg-white/[0.03] text-[#b4b4b4]">
+              {tag}<span class="text-[#737373]">{count}</span>
             </span>
           ))}
         </div>
       )}
+
       {page.data.length === 0 && (
         <div class="border border-dashed border-[#222] rounded-lg bg-white/[0.01] p-8 text-center">
-          <p class="text-[#a3a3a3] text-[15px] leading-relaxed mb-1">No brief published yet.</p>
-          <p class="text-[#737373] text-sm">A new edition lands every day at 00:30 UTC.</p>
+          <p class="text-[#b4b4b4] text-base leading-relaxed mb-1">No brief published yet.</p>
+          <p class="text-[#737373] text-sm font-mono">A new edition lands every day at 00:30 UTC.</p>
         </div>
       )}
+
       <div class="space-y-6">
         {page.data.map((post) => (
-          <article class="bg-white/[0.02] border border-[#222] rounded-lg overflow-hidden hover:border-[#444] transition-all group">
-            <a href={`/blog/${post.id}`} class="flex flex-col md:flex-row h-full">
-              <div class="w-full md:w-[200px] h-[160px] md:h-auto shrink-0 relative overflow-hidden bg-[#111]">
-                <BlogCardGradient title={post.data.title} slug={post.id} tags={post.data.tags} aspect="card" />
-              </div>
-              <div class="flex-1 p-6">
-                <div class="flex items-center space-x-2 text-xs text-[#737373] mb-3 font-mono">
-                  <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('en-us', { year: 'numeric', month: 'short', day: 'numeric' })}</time>
-                  <span>•</span><span>{post.data.author}</span>
-                </div>
-                <h2 class="text-xl font-semibold text-white group-hover:text-[#22d3ee] transition-colors mb-2">{post.data.title}</h2>
-                <p class="text-[#a3a3a3] text-[15px] leading-relaxed mb-4">{post.data.description}</p>
-                <div class="flex flex-wrap gap-2">
-                  {(post.data.tags ?? []).map((tag) => (
-                    <span class="inline-flex items-center px-2 py-0.5 rounded border border-[#333] text-xs font-mono bg-white/[0.03] text-[#a3a3a3]">{tag}</span>
-                  ))}
-                </div>
-              </div>
-            </a>
-          </article>
+          <PostCard post={post} hideFeedTags headingLevel="h2" />
         ))}
       </div>
+
       {page.lastPage > 1 && (
         <div class="mt-12 flex items-center justify-between border-t border-[#222] pt-6">
-          {page.url.prev ? <a href={page.url.prev} class="inline-flex py-2 px-4 bg-white/5 text-white text-sm border border-[#222] rounded-md">← Newer Briefs</a> : <div />}
-          <div class="text-sm font-mono text-[#737373]">Page {page.currentPage} of {page.lastPage}</div>
-          {page.url.next ? <a href={page.url.next} class="inline-flex py-2 px-4 bg-white/5 text-white text-sm border border-[#222] rounded-md">Older Briefs →</a> : <div />}
+          {page.url.prev ? (
+            <a href={page.url.prev} class="inline-flex items-center justify-center py-2 px-4 bg-white/5 text-white text-sm font-medium border border-[#222] rounded-md transition-all hover:bg-white/10 hover:-translate-y-px">
+              &larr; Newer Briefs
+            </a>
+          ) : (
+            <div></div>
+          )}
+          <div class="text-sm font-mono text-[#737373]">
+            Page {page.currentPage} of {page.lastPage}
+          </div>
+          {page.url.next ? (
+            <a href={page.url.next} class="inline-flex items-center justify-center py-2 px-4 bg-white/5 text-white text-sm font-medium border border-[#222] rounded-md transition-all hover:bg-white/10 hover:-translate-y-px">
+              Older Briefs &rarr;
+            </a>
+          ) : (
+            <div></div>
+          )}
         </div>
       )}
-      <footer class="pt-12 pb-6 text-center mt-auto"><span class="font-mono text-xs text-[#525252]">© {new Date().getFullYear()} dosa.dev</span></footer>
+
+      <footer class="pt-12 pb-6 text-center mt-auto">
+        <span class="font-mono text-xs text-[#525252]">© {new Date().getFullYear()} dosa.dev</span>
+      </footer>
     </div>
   </div>
 </DashboardLayout>

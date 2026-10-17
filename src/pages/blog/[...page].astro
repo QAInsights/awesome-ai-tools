@@ -3,6 +3,7 @@ import type { GetStaticPaths, Page } from 'astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
 import BlogCardGradient from '../../components/BlogCardGradient.astro';
+import PostCard from '../../components/PostCard.astro';
 import { safeJsonForScript } from '../../lib/serialize';
 
 interface Props {
@@ -112,15 +113,15 @@ const listPosts =
   activeNav="blog"
 >
   <div class="max-w-[1400px] mx-auto w-full flex flex-col grow shrink-0 p-6 md:p-8">
-    <div class="max-w-3xl mx-auto flex flex-col flex-1 w-full">
+    <div class="max-w-4xl mx-auto flex flex-col flex-1 w-full">
       <h2 class="sr-only">AI Tools Blog</h2>
       <BlogCardGradient title="Blog" slug="blog-hero" aspect="hero" />
 
       {/* Search */}
-      <div class="mb-4">
+      <div class="mb-6">
         <div class="flex gap-2">
           <div class="relative flex-1">
-            <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#525252] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#737373] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="8"></circle>
               <path stroke-linecap="round" d="m21 21-4.35-4.35"></path>
             </svg>
@@ -129,13 +130,13 @@ const listPosts =
               type="search"
               placeholder="Search articles by title, topic, or tag..."
               aria-label="Search blog articles"
-              class="w-full h-10 pl-9 pr-3 rounded-md border border-[#333] bg-white/[0.03] text-white text-sm placeholder:text-[#525252] focus:outline-none focus:border-[#22d3ee]/50 transition-colors"
+              class="w-full h-11 pl-10 pr-3 rounded-lg border border-[#333] bg-white/[0.03] text-white text-[15px] placeholder:text-[#737373] focus:outline-none focus:border-[#22d3ee]/50 transition-colors"
             />
           </div>
           <button
             id="blog-search-btn"
             type="button"
-            class="inline-flex items-center gap-2 h-10 px-4 rounded-md border border-[#333] bg-white/5 text-white text-sm font-medium transition-all hover:bg-white/10 shrink-0"
+            class="inline-flex items-center gap-2 h-11 px-5 rounded-lg border border-[#333] bg-white/5 text-white text-[15px] font-medium transition-all hover:bg-white/10 shrink-0"
           >
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="8"></circle>
@@ -147,16 +148,16 @@ const listPosts =
 
         {/* Popular tags */}
         {popularTags.length > 0 && (
-          <div class="flex flex-wrap items-center gap-2 mt-3">
-            <span class="text-xs font-mono uppercase tracking-widest text-[#525252] mr-1">Popular</span>
+          <div class="flex flex-wrap items-center gap-2 mt-4">
+            <span class="text-[13px] font-mono uppercase tracking-widest text-[#8a8a8a] mr-1">Popular</span>
             {popularTags.map(([tag, count]) => (
               <button
                 type="button"
-                class="tag-filter inline-flex items-center gap-1.5 px-2 py-0.5 rounded border border-[#333] text-xs font-mono bg-white/[0.03] text-[#a3a3a3] hover:text-white hover:border-[#555] transition-colors"
+                class="tag-filter inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-[#333] text-[13px] font-mono bg-white/[0.03] text-[#b4b4b4] hover:text-white hover:border-[#555] transition-colors"
                 data-tag={tag}
               >
                 {tag}
-                <span class="text-[#525252]">{count}</span>
+                <span class="text-[#737373]">{count}</span>
               </button>
             ))}
           </div>
@@ -166,8 +167,8 @@ const listPosts =
       {/* Search results (client-rendered, hidden until a query runs) */}
       <div id="search-results" class="hidden">
         <div class="flex items-center justify-between mb-4">
-          <p id="search-results-summary" class="text-sm text-[#a3a3a3] font-mono"></p>
-          <button id="search-clear" type="button" class="text-sm font-mono text-[#737373] hover:text-white transition-colors">
+          <p id="search-results-summary" class="text-[15px] text-[#b4b4b4] font-mono"></p>
+          <button id="search-clear" type="button" class="text-[15px] font-mono text-[#8a8a8a] hover:text-white transition-colors">
             Clear search
           </button>
         </div>
@@ -178,118 +179,21 @@ const listPosts =
         {/* Featured posts (first page only) */}
         {page.currentPage === 1 && featuredPosts.length > 0 && (
           <section id="featured-section" class="mb-10">
-            <h3 class="text-xs font-mono uppercase tracking-widest text-[#525252] mb-4 flex items-center gap-2">
-              <svg class="w-3.5 h-3.5 text-[#f0d08f]" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+            <h3 class="text-[13px] font-mono uppercase tracking-widest text-[#8a8a8a] mb-4 flex items-center gap-2">
+              <svg class="w-4 h-4 text-[#f0d08f]" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true">
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
               </svg>
               Featured
             </h3>
             <div class="space-y-6">
-              {featuredPosts.map((post) => (
-                <article class="bg-white/[0.02] border border-[#f0d08f]/25 rounded-lg overflow-hidden hover:border-[#f0d08f]/50 transition-all group">
-                  <a href={`/blog/${post.id}`} class="flex flex-col md:flex-row h-full">
-                    <div class="w-full md:w-[200px] h-[160px] md:h-auto shrink-0 relative overflow-hidden bg-[#111]">
-                      <BlogCardGradient title={post.data.title} slug={post.id} tags={post.data.tags} aspect="card" />
-                    </div>
-                    <div class="flex-1 p-6 flex flex-col justify-between">
-                      <div>
-                        <div class="flex items-center space-x-2 text-xs text-[#737373] mb-3 font-mono">
-                          <span class="inline-flex items-center gap-1 text-[#f0d08f]">
-                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            Featured
-                          </span>
-                          <span>•</span>
-                          <time datetime={post.data.pubDate.toISOString()}>
-                            {post.data.pubDate.toLocaleDateString('en-us', {
-                              year: 'numeric',
-                              month: 'short',
-                              day: 'numeric',
-                            })}
-                          </time>
-                          <span>•</span>
-                          <span>{post.data.author}</span>
-                        </div>
-                        <h3 class="text-xl font-semibold text-white group-hover:text-[#22d3ee] transition-colors mb-2">
-                          {post.data.title}
-                        </h3>
-                        <p class="text-[#a3a3a3] text-[15px] leading-relaxed mb-4 line-clamp-2">
-                          {post.data.description}
-                        </p>
-                      </div>
-                      {post.data.tags && post.data.tags.length > 0 && (
-                        <div class="flex flex-wrap gap-2">
-                          {post.data.tags.map((tag) => (
-                            <span class="inline-flex items-center px-2 py-0.5 rounded border border-[#333] text-xs font-mono bg-white/[0.03] text-[#a3a3a3]">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </a>
-                </article>
-              ))}
+              {featuredPosts.map((post) => <PostCard post={post} featured />)}
             </div>
           </section>
         )}
 
         {/* All posts (paginated) */}
         <div id="post-list" class="space-y-6">
-          {listPosts.map((post) => (
-            <article class="bg-white/[0.02] border border-[#222] rounded-lg overflow-hidden hover:border-[#444] transition-all group">
-              <a href={`/blog/${post.id}`} class="flex flex-col md:flex-row h-full">
-                {/* Image Section */}
-                <div class="w-full md:w-[200px] h-[160px] md:h-auto shrink-0 relative overflow-hidden bg-[#111]">
-                  <BlogCardGradient title={post.data.title} slug={post.id} tags={post.data.tags} aspect="card" />
-                </div>
-
-                {/* Content Section */}
-                <div class="flex-1 p-6 flex flex-col justify-between">
-                  <div>
-                    <div class="flex items-center space-x-2 text-xs text-[#737373] mb-3 font-mono">
-                      {isFeatured(post) && (
-                        <>
-                          <span class="inline-flex items-center gap-1 text-[#f0d08f]">
-                            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-                              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            Featured
-                          </span>
-                          <span>•</span>
-                        </>
-                      )}
-                      <time datetime={post.data.pubDate.toISOString()}>
-                        {post.data.pubDate.toLocaleDateString('en-us', {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric',
-                        })}
-                      </time>
-                      <span>•</span>
-                      <span>{post.data.author}</span>
-                    </div>
-                    <h3 class="text-xl font-semibold text-white group-hover:text-[#22d3ee] transition-colors mb-2">
-                      {post.data.title}
-                    </h3>
-                    <p class="text-[#a3a3a3] text-[15px] leading-relaxed mb-4 line-clamp-2">
-                      {post.data.description}
-                    </p>
-                  </div>
-                  {post.data.tags && post.data.tags.length > 0 && (
-                    <div class="flex flex-wrap gap-2">
-                      {post.data.tags.map((tag) => (
-                        <span class="inline-flex items-center px-2 py-0.5 rounded border border-[#333] text-xs font-mono bg-white/[0.03] text-[#a3a3a3]">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </a>
-            </article>
-          ))}
+          {listPosts.map((post) => <PostCard post={post} featured={isFeatured(post)} />)}
         </div>
 
         {page.lastPage > 1 && (
