@@ -24,6 +24,32 @@ export interface PriceSummary {
     scale: { p: PricingPlan; x: number }[];
 }
 
+function buildScale(paid: PricingPlan[], min: number, span: number): { p: PricingPlan; x: number }[] {
+    if (span <= 0) return [];
+    const grouped: PricingPlan[] = [];
+    for (const p of paid) {
+        const prev = grouped[grouped.length - 1];
+        if (prev && Math.abs(monthly(prev) - monthly(p)) < 1e-6) {
+            grouped[grouped.length - 1] = { ...prev, name: `${prev.name} · ${p.name}` };
+        } else {
+            grouped.push(p);
+        }
+    }
+    if (grouped.length < 2) return [];
+
+    const xs = grouped.map(p => (Math.log(monthly(p)) - Math.log(min)) / span);
+    const minGap = Math.min(0.15, 0.9 / (grouped.length - 1));
+    xs[0] = 0;
+    xs[xs.length - 1] = 1;
+    for (let i = 1; i < xs.length - 1; i++) {
+        xs[i] = Math.max(xs[i]!, xs[i - 1]! + minGap);
+    }
+    for (let i = xs.length - 2; i >= 1; i--) {
+        xs[i] = Math.min(xs[i]!, xs[i + 1]! - minGap);
+    }
+    return grouped.map((p, i) => ({ p, x: xs[i]! }));
+}
+
 export function priceSummary(pricing?: string, detail?: string): PriceSummary {
     const plans = buildPricingBreakdown(pricing, detail).plans.filter(p => Number.isFinite(monthly(p)));
     const paid = plans.filter(p => monthly(p) > 0).sort((a, b) => monthly(a) - monthly(b));
@@ -38,7 +64,7 @@ export function priceSummary(pricing?: string, detail?: string): PriceSummary {
     const min = paid.length ? Math.min(...paid.map(monthly)) : 0;
     const max = paid.length ? Math.max(...paid.map(monthly)) : 0;
     const span = Math.log(max) - Math.log(min || 1);
-    const scale = paid.map(p => ({ p, x: span > 0 ? (Math.log(monthly(p)) - Math.log(min)) / span : 0 }));
+    const scale = buildScale(paid, min, span);
     return { plans, paid, entry, freeTier, main, unit, model: humanizePricing(pricing) || 'Unlisted', scale };
 }
 

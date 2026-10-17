@@ -21,7 +21,7 @@ export interface PricingBreakdown {
 const NAME = String.raw`[A-Z][\w+]*(?:\s+(?:\d+x|[A-Z][\w+]*))?`;
 const AMOUNT = String.raw`\$\d+(?:,\d{3})*(?:\.\d+)?`;
 const PRICE = String.raw`${AMOUNT}(?:\s*[-\u2013]\s*${AMOUNT})?`;
-const UNIT = String.raw`(?:\s*\/\s*[a-z]+)*`;
+const UNIT = String.raw`(?:\s+per\s+[a-z]+(?:\s*\/\s*[a-z]+)*|(?:\s*\/\s*[a-z]+)+)?`;
 
 const NAMED_PAREN = new RegExp(String.raw`(${NAME})\s*\(\s*(${PRICE})(${UNIT})([^)]*)\)`, 'g');
 const PRICE_PAREN = new RegExp(String.raw`(${PRICE})(${UNIT})\s*\((${NAME})\)`, 'g');
@@ -38,7 +38,8 @@ const NOT_PLAN_NAMES = new Set([
 const LICENSE = /\b(MIT|Apache(?:[ -]2\.0)?|AGPL(?:-?v?3(?:\.0)?)?|LGPL(?:-?v?3(?:\.0)?)?|GPL(?:-?v?[23](?:\.0)?)?|GNU GPLv?3|BSD(?:-\d-Clause)?|MPL(?:-?2\.0)?)\b/;
 
 function normalizeUnit(raw: string): string {
-    const parts = raw.split('/').map(p => p.trim().toLowerCase()).filter(Boolean);
+    const cleaned = raw.replace(/^\s*per\s+/i, '/');
+    const parts = cleaned.split('/').map(p => p.trim().toLowerCase()).filter(Boolean);
     return parts
         .map(p => ({ month: 'mo', monthly: 'mo', mo: 'mo', year: 'yr', yr: 'yr', annually: 'yr', seat: 'seat', user: 'user' } as Record<string, string>)[p] ?? p)
         .map(p => `/${p}`)
