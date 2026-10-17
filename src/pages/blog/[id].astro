@@ -1,7 +1,9 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import NewsSubscribeCta from '../../components/NewsSubscribeCta.astro';
 import { safeJsonForScript } from '../../lib/serialize';
+import { postMarkdown } from '../../lib/post-markdown';
 import { extractNewsCitations } from '../../lib/news-citations.js';
 import { DEFAULT_AUTHOR, ORGANIZATION } from '../../lib/site';
 
@@ -117,21 +119,7 @@ const aiTargets = [
   { name: 'Perplexity', href: `https://www.perplexity.ai/search?q=${encodeURIComponent(aiPrompt)}`, copiedLabel: 'Copied!' },
 ];
 
-const articleBody = entry.body?.trim() ?? '';
-const llmMarkdown = [
-  `# ${entry.data.title}`,
-  '',
-  `> ${entry.data.description}`,
-  '',
-  `Source: ${postUrl}`,
-  `Published: ${entry.data.pubDate.toISOString().slice(0, 10)}`,
-  `Author: ${entry.data.author}`,
-  '',
-  '---',
-  '',
-  articleBody,
-].join('\n');
-const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
+const articleMarkdownJson = safeJsonForScript({ markdown: postMarkdown(entry) });
 ---
 
 <DashboardLayout
@@ -147,6 +135,7 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
   tags={topicTags}
   keywords={[...topicTags, 'AI coding tools', 'ai.dosa.dev'].join(', ')}
   jsonLd={jsonLd}
+  markdownUrl={`/blog/${entry.id}.md`}
   activeNav="blog"
 >
   <div class="max-w-[1400px] mx-auto w-full flex flex-col grow shrink-0 p-6 md:p-8">
@@ -254,6 +243,8 @@ const articleMarkdownJson = safeJsonForScript({ markdown: llmMarkdown });
         <div id="article-body" class="select-text prose prose-lg prose-invert prose-zinc max-w-none prose-p:text-[#d4d4d4] prose-p:leading-[1.8] prose-p:text-[17px] sm:prose-p:text-[18px] prose-headings:text-white prose-headings:font-semibold prose-headings:tracking-tight prose-h2:text-2xl sm:prose-h2:text-3xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl sm:prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3 prose-a:text-[#22d3ee] hover:prose-a:text-[#67e8f9] prose-a:no-underline hover:prose-a:underline prose-code:text-[#a78bfa] prose-code:text-[15px] prose-pre:bg-[#0a0a0a] prose-pre:border prose-pre:border-[#222] prose-pre:text-[15px] prose-img:rounded-xl prose-img:border prose-img:border-[#222] prose-hr:border-[#222] prose-li:text-[#d4d4d4] prose-li:text-[17px] sm:prose-li:text-[18px]">
           <Content />
         </div>
+
+        <NewsSubscribeCta isNewsPost={Boolean(isNewsPost)} subject={entry.id} />
 
         {/* Share and AI actions, after the story */}
         <div class="mt-12 pt-8 border-t border-[#222] space-y-6">

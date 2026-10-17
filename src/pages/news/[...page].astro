@@ -2,6 +2,7 @@
 import type { GetStaticPaths, Page } from 'astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import NewsSubscribeCta from '../../components/NewsSubscribeCta.astro';
 import PostCard from '../../components/PostCard.astro';
 
 interface Props {
@@ -93,7 +94,7 @@ const jsonLd = JSON.stringify({
       </p>
 
       {popularTags.length > 0 && (
-        <div class="flex flex-wrap items-center gap-2 mb-8">
+        <div class="flex flex-wrap items-center gap-2 mb-6">
           <span class="text-[13px] font-mono uppercase tracking-widest text-[#8a8a8a] mr-1">Topics</span>
           {popularTags.map(([tag, count]) => (
             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-[#333] text-[13px] font-mono bg-white/[0.03] text-[#b4b4b4]">
@@ -102,6 +103,10 @@ const jsonLd = JSON.stringify({
           ))}
         </div>
       )}
+
+      <div class="mb-8">
+        <NewsSubscribeCta isNewsPost={true} subject="today-in-ai" compact />
+      </div>
 
       {page.data.length === 0 && (
         <div class="border border-dashed border-[#222] rounded-lg bg-white/[0.01] p-8 text-center">
