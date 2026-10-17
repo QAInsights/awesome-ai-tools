@@ -86,43 +86,47 @@ export async function handleNewsSubscribeClick(button, {
     storage = globalThis.sessionStorage,
     root = document,
 } = {}) {
-    await authManager.initialize();
-    if (!authManager.isAuthenticated()) {
-        const subject = button.dataset?.subscribeSubject || 'today-in-ai';
-        writePending(storage, true);
-        analyticsClient.track(EVENTS.GATE_BLOCKED, { trigger: 'news_cta', subject });
-        attribution.open('news_cta');
-        return { status: 'unauthenticated' };
-    }
-
-    const nextValue = button.getAttribute('aria-pressed') !== 'true';
+    if (button.disabled) return { status: 'busy' };
     button.disabled = true;
-    setButtonLabel(button, nextValue ? 'Subscribing…' : 'Updating…');
 
     try {
-        const prefs = await prefsApi.setNewsEnabled(nextValue);
-        renderNewsSubscribeButtons(root, {
-            authenticated: true,
-            newsEnabled: prefs.newsEnabled,
-            email: prefs.email,
-        });
-        return { status: prefs.newsEnabled ? 'subscribed' : 'unsubscribed', prefs };
-    } catch (error) {
-        if (error?.status === 401) {
-            await authManager.signOut();
+        await authManager.initialize();
+        if (!authManager.isAuthenticated()) {
+            const subject = button.dataset?.subscribeSubject || 'today-in-ai';
             writePending(storage, true);
-            renderNewsSubscribeButtons(root, { authenticated: false, newsEnabled: false });
+            analyticsClient.track(EVENTS.GATE_BLOCKED, { trigger: 'news_cta', subject });
             attribution.open('news_cta');
             return { status: 'unauthenticated' };
         }
-        setButtonLabel(button, 'Could not save — try again');
-        setTimeout(() => {
+
+        const nextValue = button.getAttribute('aria-pressed') !== 'true';
+        setButtonLabel(button, nextValue ? 'Subscribing…' : 'Updating…');
+
+        try {
+            const prefs = await prefsApi.setNewsEnabled(nextValue);
             renderNewsSubscribeButtons(root, {
-                authenticated: authManager.isAuthenticated(),
-                newsEnabled: !nextValue,
+                authenticated: true,
+                newsEnabled: prefs.newsEnabled,
+                email: prefs.email,
             });
-        }, 2200);
-        return { status: 'error', message: error?.message || 'Unable to save' };
+            return { status: prefs.newsEnabled ? 'subscribed' : 'unsubscribed', prefs };
+        } catch (error) {
+            if (error?.status === 401) {
+                await authManager.signOut();
+                writePending(storage, true);
+                renderNewsSubscribeButtons(root, { authenticated: false, newsEnabled: false });
+                attribution.open('news_cta');
+                return { status: 'unauthenticated' };
+            }
+            setButtonLabel(button, 'Could not save — try again');
+            setTimeout(() => {
+                renderNewsSubscribeButtons(root, {
+                    authenticated: authManager.isAuthenticated(),
+                    newsEnabled: !nextValue,
+                });
+            }, 2200);
+            return { status: 'error', message: error?.message || 'Unable to save' };
+        }
     } finally {
         button.disabled = false;
     }
@@ -132,6 +136,7 @@ export async function syncNewsSubscribe(user, {
     prefsApi = defaultPrefsApi,
     storage = globalThis.sessionStorage,
     root = document,
+    isCurrent = () => true,
 } = {}) {
     const buttons = root.querySelectorAll?.('[data-news-subscribe]') ?? [];
     if (!buttons.length) return { status: 'idle' };
@@ -148,6 +153,7 @@ export async function syncNewsSubscribe(user, {
         const prefs = shouldAutoSubscribe
             ? await prefsApi.setNewsEnabled(true)
             : await prefsApi.getPrefs();
+        if (!isCurrent()) return { status: 'stale' };
         renderNewsSubscribeButtons(root, {
             authenticated: true,
             newsEnabled: prefs.newsEnabled,
@@ -155,6 +161,7 @@ export async function syncNewsSubscribe(user, {
         });
         return { status: prefs.newsEnabled ? 'subscribed' : 'unsubscribed', prefs };
     } catch {
+        if (shouldAutoSubscribe) writePending(storage, true);
         return { status: 'error' };
     }
 }

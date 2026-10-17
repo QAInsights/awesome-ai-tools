@@ -7,6 +7,8 @@
 import type { APIRoute } from 'astro';
 import { buildOpenApiSpec } from '../../../lib/openapi-spec';
 
+export const prerender = false;
+
 export const GET: APIRoute = () => new Response(JSON.stringify(buildOpenApiSpec(), null, 2), {
   headers: {
     'Content-Type': 'application/json; charset=utf-8',
@@ -14,3 +16,4 @@ export const GET: APIRoute = () => new Response(JSON.stringify(buildOpenApiSpec(
     'Cache-Control': 'public, max-age=3600',
   },
 });
+

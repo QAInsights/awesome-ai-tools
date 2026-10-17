@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     initUiManager();
     initializeStackShare();
     initializeNewsSubscribe();
+    let newsSubscribeGeneration = 0;
     const { initAuthManager } = await import('./modules/auth-manager.js');
 
     const collapsedSidebar = new CollapsedSidebar('iconSidebar', {
@@ -20,7 +21,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     await initAuthManager({
         collapsedSidebar,
         onStateChange: (user) => {
-            void syncNewsSubscribe(user);
+            const generation = ++newsSubscribeGeneration;
+            void syncNewsSubscribe(user, {
+                isCurrent: () => generation === newsSubscribeGeneration,
+            });
         },
     }).initializeAuth();
     initGlobalSearch();

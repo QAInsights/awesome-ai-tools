@@ -135,6 +135,46 @@ describe('news-subscribe', () => {
         expect(labelEl.textContent).toBe('Subscribed to daily brief');
     });
 
+    test('handleNewsSubscribeClick returns busy when button is already disabled', async () => {
+        const { root, button } = createFakeDom();
+        button.disabled = true;
+        const res = await handleNewsSubscribeClick(button, { root });
+        expect(res.status).toBe('busy');
+    });
+
+    test('syncNewsSubscribe restores pending intent if auto-subscribe fails', async () => {
+        const { root } = createFakeDom();
+        const storage = createMemoryStorage();
+        storage.setItem(NEWS_SUBSCRIBE_PENDING_KEY, '1');
+
+        const res = await syncNewsSubscribe({ id: 'github:ada' }, {
+            prefsApi: {
+                setNewsEnabled: async () => {
+                    throw new Error('API failure');
+                },
+            },
+            storage,
+            root,
+        });
+
+        expect(res.status).toBe('error');
+        expect(storage.getItem(NEWS_SUBSCRIBE_PENDING_KEY)).toBe('1');
+    });
+
+    test('syncNewsSubscribe aborts and returns stale if isCurrent returns false', async () => {
+        const { root, button } = createFakeDom();
+        const res = await syncNewsSubscribe({ id: 'github:ada' }, {
+            prefsApi: {
+                getPrefs: async () => ({ newsEnabled: true, email: 'ada@example.com' }),
+            },
+            root,
+            isCurrent: () => false,
+        });
+
+        expect(res.status).toBe('stale');
+        expect(button.getAttribute('aria-pressed')).toBe('false');
+    });
+
     test('renderNewsSubscribeButtons resets state when signed out', () => {
         const { root, button, labelEl, statusEl } = createFakeDom({ pressed: 'true' });
         renderNewsSubscribeButtons(root, { authenticated: false, newsEnabled: true });
@@ -143,3 +183,4 @@ describe('news-subscribe', () => {
         expect(statusEl.classList.contains('hidden')).toBe(true);
     });
 });
+
