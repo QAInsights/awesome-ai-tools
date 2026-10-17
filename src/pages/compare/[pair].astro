@@ -185,6 +185,22 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                                 <div class="acts">
                                     <a class="fo-btn" href={`/tools/${t.slug}`}>Full review <i aria-hidden="true">→</i></a>
                                     {siteHref && <a class="fo-link" href={siteHref} target="_blank" rel="noopener noreferrer">Visit site ↗</a>}
+                                    <button
+                                        class="follow-btn detail"
+                                        type="button"
+                                        data-tool-slug={t.slug}
+                                        data-tool-name={t.name}
+                                        data-follow-default={`Follow ${t.name}`}
+                                        data-follow-active="Following"
+                                        aria-label={`Sign in to follow ${t.name}`}
+                                        aria-pressed="false"
+                                        title={`Get email updates about ${t.name}`}
+                                    >
+                                        <svg class="follow-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/>
+                                        </svg>
+                                        <span data-follow-label>{`Follow ${t.name}`}</span>
+                                    </button>
                                 </div>
                             </div>
                         ))}

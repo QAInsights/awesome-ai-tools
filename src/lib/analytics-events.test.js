@@ -23,6 +23,7 @@ describe('analytics event catalog', () => {
         expect(sanitizeAuthTrigger('follow_bell')).toBe('follow_bell');
         expect(sanitizeAuthTrigger('stack_add')).toBe('stack_add');
         expect(sanitizeAuthTrigger('ad_close')).toBe('ad_close');
+        expect(sanitizeAuthTrigger('news_cta')).toBe('news_cta');
         expect(sanitizeAuthTrigger('first_run')).toBe('sidebar');
     });
 
