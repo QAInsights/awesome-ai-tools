@@ -1,0 +1,76 @@
+---
+title: "Anthropic pitches its own frontier AI safety bill to Congress"
+description: "Anthropic drafts a federal frontier model bill, reports a $60B TPU financing, Reflection opens Beam, NVIDIA ships a local Qwen build, and Copilot wins at the Ninth Circuit."
+pubDate: 2026-10-17
+tags: ["news","today-in-ai","anthropic","policy","open-weights","nvidia","copyright","coding-agents"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-10-17 UTC.
+
+A policy draft, a giant chip financing, two open-weight releases and a copyright ruling that lands on every coding agent.
+
+## Anthropic drafts its own federal frontier AI safety bill
+
+**What happened:** Anthropic shared a draft federal bill with Capitol Hill that would let the government halt a frontier model only by court order, and only for imminent risks above $1 billion in damage or more than 50 people killed or seriously injured, per Politico and Reuters.
+
+**Why it matters:** The thresholds in that text would set when Washington can stop a model from shipping, so labs building near the frontier should read the draft alongside the FRONTIER Act.
+
+[Source: Politico via 1EyeAI](<https://1eyeai.com/wire/>)
+
+## Anthropic offers Blackstone 10% coupon in $60B TPU financing
+
+**What happened:** The Financial Times reports Anthropic is offering Blackstone a 10% coupon, with total returns above that after fees, for $9 billion of junior debt in Project North Star, a $60 billion package to fund about 1.5 gigawatts of Google TPUs.
+
+**Why it matters:** Compute financing costs feed straight into inference pricing, so watch whether pricier debt shows up in what you pay per token.
+
+[Source: Financial Times via 1EyeAI](<https://1eyeai.com/wire/>)
+
+## Reflection AI opens Beam, a 501B coding model under Apache 2.0
+
+**What happened:** Reflection AI released Beam 1.0, a sparse mixture-of-experts model with 501 billion total and 23 billion active parameters built for agentic coding. Weights ship under Apache 2.0 on Hugging Face, and the model is on Amazon SageMaker JumpStart in two US regions.
+
+**Why it matters:** A permissively licensed coding model that size can be self-hosted or fine-tuned without a vendor contract, and Vercel's AI Gateway is serving it free for a limited launch period.
+
+[Source: TPS](<https://tpsreport.news/news>)
+
+## NVIDIA packs Qwen3.8-Flash-Next into 96 GiB for one Blackwell GPU
+
+**What happened:** NVIDIA published Qwen3.8-Flash-Next-FP4-Local, a 96 GiB NVFP4 quantization of Alibaba's 125B-parameter MoE model, on Hugging Face. NVIDIA reports 91.5% on GPQA Diamond versus 92.2% for BF16, and it needs NVIDIA's custom vLLM containers because upstream support has not landed.
+
+**Why it matters:** A 125B model that fits one GPU or a DGX Spark changes what you can run locally, but you are pinned to NVIDIA's container build for now.
+
+[Source: TPS](<https://tpsreport.news/news>)
+
+## Ninth Circuit: Copilot writes new code, so it strips no rights info
+
+**What happened:** The Ninth Circuit affirmed dismissal of DMCA claims against GitHub, Microsoft and OpenAI in Doe v. GitHub, holding that a tool which creates new work rather than reproducing stored work cannot remove copyright management information from a copy that never existed.
+
+**Why it matters:** It is among the first federal appellate rulings applying the CMI rules to generative output, which removes one legal risk from shipping code assistants.
+
+[Source: Fenwick](<https://www.fenwick.com/insights/publications/nothing-remove-ninth-circuit-holds-copilot-creates-new-code-not-stripped>)
+
+## NVIDIA puts a 74B local agent model on RTX Spark PCs
+
+**What happened:** NVIDIA detailed RTX Spark, pairing the GB10 chip with up to 128GB of unified memory, and introduced Nemotron 3.5 Bolt 74B-A9B 24GB, a 2-bit quantized MoE built for local agents that runs on llama.cpp, vLLM, Ollama, Unsloth and LM Studio. NVIDIA claims 4.6x faster coding-agent performance than Intel Panther Lake 12Xe.
+
+**Why it matters:** If the claims hold, a single desktop can run the coding agent, the fine-tune and the deploy step without a cloud VM in the loop.
+
+[Source: NVIDIA](<https://developer.nvidia.com/blog/code-test-and-deploy-on-one-machine-with-nvidia-rtx-spark/>)
+
+## Replit CEO says the company has stopped working with Anthropic
+
+**What happened:** Replit CEO Amjad Masad said at TechCrunch Disrupt that the company is no longer working with Anthropic, citing cost, partnership and performance. Insiders pushed back that the partnership was still in place, and TechCrunch said it had asked Replit for clarification.
+
+**Why it matters:** Model choice is now a cost decision for agent platforms, and this one is publicly contested, so treat the split as unconfirmed until Replit states it plainly.
+
+[Source: TechCrunch](<https://aiagentnews.io/topics/infrastructure>)
+
+## Sources
+
+- [Politico via 1EyeAI](<https://1eyeai.com/wire/>)
+- [TPS](<https://tpsreport.news/news>)
+- [Fenwick](<https://www.fenwick.com/insights/publications/nothing-remove-ninth-circuit-holds-copilot-creates-new-code-not-stripped>)
+- [NVIDIA](<https://developer.nvidia.com/blog/code-test-and-deploy-on-one-machine-with-nvidia-rtx-spark/>)
+- [TechCrunch](<https://aiagentnews.io/topics/infrastructure>)
