@@ -18,6 +18,7 @@ import {
     type ResolvedComparison,
 } from '../../lib/compare';
 import { formatDate, getCategorySlug } from '../../lib/tools';
+import { getSwitchGuidesBetween } from '../../lib/switch-guides';
 import { robotsFor } from '../../lib/indexing';
 import { ORGANIZATION } from '../../lib/site';
 import { addOutboundUtmParams } from '../../lib/outbound-utm.js';
@@ -54,6 +55,7 @@ const related = getResolvedComparisons()
     .filter(c => c.slug !== comparison.slug && (c.a === toolA.slug || c.b === toolA.slug || c.a === toolB.slug || c.b === toolB.slug))
     .slice(0, 6);
 const alternativesLinks = [toolA, toolB].filter(t => hasAlternativesPage(t.slug));
+const switchGuides = getSwitchGuidesBetween(toolA.slug, toolB.slug);
 
 const jsonLd = JSON.stringify({
     "@context": "https://schema.org",
@@ -171,6 +173,20 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                         <p class="fo-text sm cmp-answer fo-reveal">{quickAnswer}</p>
                     </div>
                 </section>
+
+                {switchGuides.length > 0 && (
+                    <div class="fo-track">
+                        <div>
+                            <b>Ready to switch?</b>
+                            <p>Read the step-by-step migration guide - config file mapping, a 4-step checklist and the seat cost delta.</p>
+                        </div>
+                        <div>
+                            {switchGuides.map(g => (
+                                <a class="fo-btn" href={`/switch/${g.slug}`}>Switch {g.fromTool.name} → {g.toTool.name} <i aria-hidden="true">→</i></a>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
                 <section class="fo-sec" id="tools" aria-label="Tool summaries">
                     <h2 class="fo-label"><em>{num('tools')}</em>The two tools</h2>

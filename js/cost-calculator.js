@@ -176,16 +176,19 @@ export function parseCalculatorStateFromUrl(search) {
       : 'daily';
 
   const seatsParam = params.get('seats');
-  const selectedSeats = seatsParam
-    ? seatsParam
-        .split(',')
-        .map(s => s.trim())
-        .filter(Boolean)
-        .map(token => {
-          const [slug, planName] = token.split(':');
-          return { slug: slug.trim(), planName: planName ? planName.trim() : undefined };
-        })
-        .filter(s => Boolean(s.slug))
+  const seatsExplicit = params.has('seats');
+  const selectedSeats = seatsExplicit
+    ? seatsParam === 'none'
+      ? []
+      : (seatsParam ?? '')
+          .split(',')
+          .map(s => s.trim())
+          .filter(Boolean)
+          .map(token => {
+            const [slug, planName] = token.split(':');
+            return { slug: slug.trim(), planName: planName ? planName.trim() : undefined };
+          })
+          .filter(s => Boolean(s.slug))
     : [
         { slug: 'cursor', planName: 'Pro' },
         { slug: 'github-copilot', planName: 'Pro' },
@@ -225,6 +228,7 @@ export function parseCalculatorStateFromUrl(search) {
     selectedSeats,
     selectedModels,
     usage,
+    seatsExplicit,
   };
 }
 
@@ -243,6 +247,8 @@ export function buildCalculatorUrlSearch(state) {
       'seats',
       state.selectedSeats.map(s => (s.planName ? `${s.slug}:${s.planName}` : s.slug)).join(','),
     );
+  } else if (Array.isArray(state.selectedSeats) && state.selectedSeats.length === 0) {
+    params.set('seats', 'none');
   }
   if (Array.isArray(state.selectedModels) && state.selectedModels.length > 0) {
     params.set('models', state.selectedModels.map(m => m.id).join(','));

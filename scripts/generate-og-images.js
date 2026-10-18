@@ -24,6 +24,7 @@ const BLOG_OUT_DIR = join(OUT_DIR, 'blog');
 const TRENDING_OUT_DIR = join(OUT_DIR, 'trending');
 const BEST_OUT_DIR = join(OUT_DIR, 'best');
 const COMPARE_OUT_DIR = join(OUT_DIR, 'compare');
+const SWITCH_OUT_DIR = join(OUT_DIR, 'switch');
 const FONT_DIR = join(ROOT, 'assets', 'fonts');
 
 const fonts = [
@@ -192,6 +193,7 @@ async function main() {
     mkdirSync(TRENDING_OUT_DIR, { recursive: true });
     mkdirSync(BEST_OUT_DIR, { recursive: true });
     mkdirSync(COMPARE_OUT_DIR, { recursive: true });
+    mkdirSync(SWITCH_OUT_DIR, { recursive: true });
 
     let written = 0, skipped = 0, blogWritten = 0, blogSkipped = 0;
     for (const tool of tools) {
@@ -297,7 +299,29 @@ async function main() {
         compareWritten++;
     }
 
-    console.log(`OG images: ${written} generated, ${skipped} up-to-date (${tools.length} tools); ${blogWritten} blog posts generated, ${blogSkipped} up-to-date (${posts.length} posts total); ${trendingWritten} trending weeks generated, ${trendingSkipped} up-to-date; ${bestWritten} best-of pages generated, ${bestSkipped} up-to-date; ${compareWritten} comparisons generated, ${compareSkipped} up-to-date`);
+    const switchGuides = JSON.parse(readFileSync(join(ROOT, 'data', 'switch-guides.json'), 'utf-8'));
+    let switchWritten = 0, switchSkipped = 0;
+    for (const g of switchGuides) {
+        const pair = [toolBySlug.get(g.from), toolBySlug.get(g.to)];
+        if (!pair[0] || !pair[1]) continue;
+        const contentKey = hash(JSON.stringify([g.slug, g.group, pair.map(t => t.name)]));
+        const outPath = join(SWITCH_OUT_DIR, `${g.slug}.png`);
+        const hashPath = join(SWITCH_OUT_DIR, `${g.slug}.hash`);
+        if (existsSync(outPath) && existsSync(hashPath) && readFileSync(hashPath, 'utf-8') === contentKey) {
+            switchSkipped++;
+            continue;
+        }
+        const png = await renderCardPng({
+            label: 'Switch',
+            title: truncate(`${pair[0].name} → ${pair[1].name}`, 48),
+            subtitle: truncate(g.group, 42),
+        });
+        writeFileSync(outPath, png);
+        writeFileSync(hashPath, contentKey);
+        switchWritten++;
+    }
+
+    console.log(`OG images: ${written} generated, ${skipped} up-to-date (${tools.length} tools); ${blogWritten} blog posts generated, ${blogSkipped} up-to-date (${posts.length} posts total); ${trendingWritten} trending weeks generated, ${trendingSkipped} up-to-date; ${bestWritten} best-of pages generated, ${bestSkipped} up-to-date; ${compareWritten} comparisons generated, ${compareSkipped} up-to-date; ${switchWritten} switch guides generated, ${switchSkipped} up-to-date`);
 }
 
 main().catch(err => { console.error('OG image generation failed:', err); process.exit(1); });

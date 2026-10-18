@@ -44,6 +44,11 @@ describe('extractPlans', () => {
             .toEqual(['Max 5x $100', 'Pro $100-$200', 'Solo $1,000']);
     });
 
+    test('reads "Name subscription at $price/unit" plans', () => {
+        expect(extractPlans('Offers a free tier for autocomplete inference and a Pro subscription at $10 per month per user, which includes a 1 million token context window.'))
+            .toEqual([expect.objectContaining({ name: 'Pro', price: '$10', unit: '/mo/user' })]);
+    });
+
     test('ignores lead-in words and prose without plans', () => {
         expect(extractPlans('Starting at $10/month for everyone.')).toEqual([]);
         expect(extractPlans('Free and open-source under the MIT License.')).toEqual([]);

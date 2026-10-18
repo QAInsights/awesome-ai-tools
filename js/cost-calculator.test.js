@@ -162,3 +162,22 @@ describe('js/cost-calculator client controller', () => {
     expect(summary).toContain('$700/mo');
   });
 });
+
+describe('explicit empty seats', () => {
+  test('seats=none yields an empty selection marked explicit', () => {
+    const state = parseCalculatorStateFromUrl('?team=10&seats=none&preset=daily');
+    expect(state.selectedSeats).toEqual([]);
+    expect(state.seatsExplicit).toBe(true);
+  });
+
+  test('absent seats param keeps the default pair and stays implicit', () => {
+    const state = parseCalculatorStateFromUrl('?team=10');
+    expect(state.selectedSeats.length).toBe(2);
+    expect(state.seatsExplicit).toBe(false);
+  });
+
+  test('buildCalculatorUrlSearch emits seats=none for an empty seat list', () => {
+    const qs = buildCalculatorUrlSearch({ teamSize: 10, selectedSeats: [], selectedModels: [], preset: 'daily' });
+    expect(qs).toContain('seats=none');
+  });
+});
