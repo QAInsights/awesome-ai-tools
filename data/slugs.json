@@ -1098,6 +1098,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "rakazo",
+    "name": "Rakazo",
+    "company": "Elie Steinbock (elie222)",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -2181,6 +2187,18 @@
     "slug": "coucou",
     "name": "Coucou",
     "company": "Louis Raillé (Louis-CFM)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "lazyskills",
+    "name": "LazySkills",
+    "company": "Alvin (alvinunreal)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "otari",
+    "name": "Otari",
+    "company": "Mozilla.ai",
     "category": "Developer Productivity & Workflow"
   },
   {
