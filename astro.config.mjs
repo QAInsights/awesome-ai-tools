@@ -78,6 +78,14 @@ function loadLastmodMap() {
         }
     } catch { /* comparison data optional */ }
     try {
+        const guides = JSON.parse(readFileSync(new URL('./data/switch-guides.json', import.meta.url), 'utf8'));
+        const updatesBySlug = new Map(enriched.map(t => [t.slug, t.lastUpdated]));
+        for (const guide of guides) {
+            const latest = maxDate([updatesBySlug.get(guide.from), updatesBySlug.get(guide.to)]);
+            if (latest) map.set(`/switch/${guide.slug}`, latest);
+        }
+    } catch { /* switch guide data optional */ }
+    try {
         const facets = JSON.parse(readFileSync(new URL('./data/best-facets.json', import.meta.url), 'utf8'));
         const slugs = JSON.parse(readFileSync(new URL('./data/slugs.json', import.meta.url), 'utf8'));
         const comparisons = JSON.parse(readFileSync(new URL('./data/comparisons.json', import.meta.url), 'utf8'));
@@ -163,6 +171,9 @@ export default defineConfig({
                 const lastmod = lastmodMap.get(path);
                 if (lastmod) item.lastmod = new Date(lastmod).toISOString();
                 if (/\/compare\/[^/]+\/$/.test(url) || /\/compare\/[^/]+$/.test(url)) {
+                    item.priority = 0.8;
+                    item.changefreq = 'weekly';
+                } else if (/\/switch\/[^/]+\/?$/.test(url)) {
                     item.priority = 0.8;
                     item.changefreq = 'weekly';
                 } else if (/\/tools\/[^/]+\/pricing\/?$/.test(url)) {

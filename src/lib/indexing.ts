@@ -2,7 +2,7 @@
  * Indexing guardrails for generated pages.
  *
  * Every templated page (tool, compare, alternatives, pricing, category,
- * "best X for Y" facet, weekly trending) must carry data unique to it before it is offered to search
+ * "best X for Y" facet, weekly trending, directional switch guide) must carry data unique to it before it is offered to search
  * engines. A page is indexable only when:
  *   - the tools it is about have the enrichment fields the template renders,
  *   - it lists enough qualifying (enriched) tools to be a real collection,
@@ -15,10 +15,11 @@ import { getAllTools, getAlternativesFor, getCategoriesDetailed, getToolBySlug, 
 import { getAlternativesPageTools, getResolvedComparisons, getTopPricingTools } from './compare';
 import { getTrendingSnapshots } from './trending-data';
 import { getBestPages } from './best';
+import { getResolvedSwitchGuides } from './switch-guides';
 
-export type GeneratedPageType = 'tool' | 'compare' | 'alternatives' | 'pricing' | 'category' | 'trending' | 'best';
+export type GeneratedPageType = 'tool' | 'compare' | 'alternatives' | 'pricing' | 'category' | 'trending' | 'best' | 'switch';
 
-export const GENERATED_PAGE_TYPES: GeneratedPageType[] = ['tool', 'compare', 'alternatives', 'pricing', 'category', 'trending', 'best'];
+export const GENERATED_PAGE_TYPES: GeneratedPageType[] = ['tool', 'compare', 'alternatives', 'pricing', 'category', 'trending', 'best', 'switch'];
 
 export type EnrichedField = Exclude<keyof EnrichedTool, 'slug'>;
 
@@ -66,6 +67,11 @@ export const INDEXING_RULES: Record<GeneratedPageType, IndexingRule> = {
         subjectFields: [],
         listedFields: ['description', 'pricing', 'verdict'],
         minQualifying: 5,
+    },
+    switch: {
+        subjectFields: ['description', 'keyFeatures', 'bestFor', 'verdict', 'pricing', 'lastUpdated'],
+        listedFields: [],
+        minQualifying: 0,
     },
 };
 
@@ -218,7 +224,15 @@ export function getGeneratedPageCandidates(): IndexCandidate[] {
         listed: page.tools,
         primaryContent: page.tools.map(t => t.slug).join(' '),
     }));
-    return [...tools, ...compares, ...alternatives, ...pricing, ...categories, ...trending, ...best];
+    // Directional: "a to b" and "b to a" are distinct pages, so no slug sorting
+    const switches: IndexCandidate[] = getResolvedSwitchGuides().map(g => ({
+        type: 'switch',
+        path: `/switch/${g.slug}`,
+        subjects: [g.fromTool, g.toTool],
+        listed: [],
+        primaryContent: `${g.from} to ${g.to}`,
+    }));
+    return [...tools, ...compares, ...alternatives, ...pricing, ...categories, ...trending, ...best, ...switches];
 }
 
 let _decisions: Map<string, IndexDecision> | null = null;

@@ -9,6 +9,7 @@
 import type { APIRoute } from 'astro';
 import { getAllTools, getCategoriesDetailed, getLatestUpdate, formatDate } from '../lib/tools';
 import { getResolvedComparisons } from '../lib/compare';
+import { getResolvedSwitchGuides } from '../lib/switch-guides';
 import { getBestPages } from '../lib/best';
 import { getIndexingDecisions } from '../lib/indexing';
 
@@ -20,6 +21,7 @@ export const GET: APIRoute = () => {
     const latest = getLatestUpdate(tools);
     const decisions = getIndexingDecisions();
     const comparisons = getResolvedComparisons().filter(c => decisions.get(`/compare/${c.slug}`)?.indexable);
+    const switchGuides = getResolvedSwitchGuides().filter(g => decisions.get(`/switch/${g.slug}`)?.indexable);
     const bestPages = getBestPages().filter(p => decisions.get(`/best/${p.facet.slug}`)?.indexable);
     const toolCount = Math.floor(tools.length / 10) * 10;
 
@@ -63,11 +65,13 @@ export const GET: APIRoute = () => {
         `- [Tool Detail Pages](${SITE}/tools/cursor) - One page per tool at \`/tools/<slug>\` (Markdown mirror at \`/tools/<slug>.md\`) with pricing, key features, best-for / not-ideal-for guidance, recent updates, verdict, and FAQ`,
         `- [Alternatives Pages](${SITE}/tools/cursor/alternatives) - \`/tools/<slug>/alternatives\` lists same-category alternatives for a tool`,
         `- [Compare](${SITE}/compare) - ${comparisons.length} side-by-side comparisons at \`/compare/<a>-vs-<b>\`; each has a Markdown mirror at \`/compare/<a>-vs-<b>.md\``,
+        `- [Switch guides](${SITE}/switch) - ${switchGuides.length} directional migration guides at \`/switch/<from>-to-<to>\` with config-file mapping, 4-step checklist and seat cost delta; Markdown mirror at \`/switch/<from>-to-<to>.md\``,
         `- [Categories](${SITE}/category/${categories[0]?.slug ?? ''}) - \`/category/<slug>\` pages with every tool in a category; each has a Markdown mirror at \`/category/<slug>.md\``,
         `- [Best-of lists](${SITE}/best) - ${bestPages.length} ranked "best X for Y" lists at \`/best/<slug>\`, re-ranked monthly; each has a Markdown mirror at \`/best/<slug>.md\``,
         `- [Blog](${SITE}/blog) - Deep dives, comparisons, and tutorials on AI coding tools; each post has a Markdown mirror at \`/blog/<id>.md\``,
         `- [Today in AI](${SITE}/news) - Daily AI news brief for builders`,
         `- [Monthly AI Coding Cost Calculator](${SITE}/tools/cost-calculator) - Interactive seat + live LLM token cost calculator (cached from models.dev via \`/api/v1/models.json\`) with cheaper alternatives`,
+        `- [AI Agent Rules & Config Converter](${SITE}/tools/rules-converter) - Client-side converter between CLAUDE.md, Cursor .mdc, .cursorrules, AGENTS.md, .windsurfrules, Copilot instructions and .clinerules`,
         `- [Token Counter & Cost Estimator](${SITE}/tools/token-counter) - Client-side token counts and cost estimates for major LLMs`,
         `- [Hallucination Risk Scorer](${SITE}/tools/hallucination-scorer) - Heuristic scorer that flags prompt patterns prone to hallucination`,
         `- [Help / FAQ](${SITE}/help) - Usage guide and frequently asked questions`,
@@ -89,6 +93,16 @@ export const GET: APIRoute = () => {
 
     for (const c of comparisons) {
         lines.push(`- [${c.toolA.name} vs ${c.toolB.name}](${SITE}/compare/${c.slug}) - ${c.group}. Markdown: ${SITE}/compare/${c.slug}.md`);
+    }
+
+    lines.push(
+        '',
+        '## Switch guides',
+        '',
+    );
+
+    for (const g of switchGuides) {
+        lines.push(`- [Switch from ${g.fromTool.name} to ${g.toTool.name}](${SITE}/switch/${g.slug}) - ${g.group}. Markdown: ${SITE}/switch/${g.slug}.md`);
     }
 
     lines.push(

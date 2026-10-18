@@ -4,6 +4,7 @@ import { getAllTools, getCategoriesDetailed } from './tools';
 import { getAlternativesPageTools, getResolvedComparisons, getTopPricingTools } from './compare';
 import { getTrendingSnapshots } from './trending-data';
 import { getBestFacets } from './best';
+import { getResolvedSwitchGuides } from './switch-guides';
 import {
     contentFingerprint,
     evaluatePages,
@@ -157,6 +158,7 @@ describe('generated page catalog', () => {
             category: getCategoriesDetailed().length,
             trending: getTrendingSnapshots().length,
             best: getBestFacets().length,
+            switch: getResolvedSwitchGuides().length,
         });
         const paths = getGeneratedPageCandidates().map(p => p.path);
         expect(new Set(paths).size).toBe(paths.length);

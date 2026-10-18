@@ -96,7 +96,10 @@ const jsonLd = JSON.stringify({
 
         <!-- Curated comparison pages (server-rendered, crawlable) -->
         <div class="border-t border-[#222] pt-8 flex flex-col gap-8">
-            <h2 class="text-xl sm:text-2xl font-semibold text-white m-0">Curated comparisons</h2>
+            <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
+                <h2 class="text-xl sm:text-2xl font-semibold text-white m-0">Curated comparisons</h2>
+                <a href="/switch" class="text-sm text-[#a3a3a3] hover:text-white transition-colors">Already decided? Step-by-step switch guides →</a>
+            </div>
             {[...groups.entries()].map(([group, pairs]) => (
                 <section aria-label={`${group} comparisons`}>
                     <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em] mb-3">{group}</div>

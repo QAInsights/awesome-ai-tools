@@ -1,0 +1,318 @@
+---
+/**
+ * Directional migration guide - /switch/[slug]
+ *
+ * One pre-rendered page per curated guide from data/switch-guides.json.
+ * All content is derived at build time from enriched tool data - no
+ * client-side fetch - so search engines and AI crawlers get the full
+ * checklist, config mapping, cost delta and FAQs in the initial HTML.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import {
+    getResolvedSwitchGuides,
+    getReverseGuide,
+    getSwitchGuidesForTool,
+    buildMigrationSteps,
+    buildSwitchFaqs,
+    buildTradeoffs,
+    switchQuickAnswer,
+    switchGuideJsonLd,
+    type ResolvedSwitchGuide,
+} from '../../lib/switch-guides';
+import { getResolvedComparisons, hasAlternativesPage, humanizePricing } from '../../lib/compare';
+import { formatDate, getCategorySlug } from '../../lib/tools';
+import { robotsFor } from '../../lib/indexing';
+import { priceSummary } from '../../lib/folio';
+import FolioStyles from '../../components/folio/FolioStyles.astro';
+import FolioTitle from '../../components/folio/FolioTitle.astro';
+import FolioFaq from '../../components/folio/FolioFaq.astro';
+import FolioScroll from '../../components/folio/FolioScroll.astro';
+
+export async function getStaticPaths() {
+    return getResolvedSwitchGuides().map(guide => ({
+        params: { slug: guide.slug },
+        props: { guide },
+    }));
+}
+
+interface Props {
+    guide: ResolvedSwitchGuide;
+}
+
+const { guide } = Astro.props;
+const { fromTool, toTool } = guide;
+
+const from = fromTool.name;
+const to = toTool.name;
+const pageUrl = `https://ai.dosa.dev/switch/${guide.slug}`;
+const ogImage = `https://ai.dosa.dev/images/og/switch/${guide.slug}.png`;
+
+const quickAnswer = switchQuickAnswer(guide);
+const steps = buildMigrationSteps(guide);
+const faqs = buildSwitchFaqs(guide);
+const { gain, giveUp, together } = buildTradeoffs(guide);
+const lastUpdatedLabel = formatDate(guide.lastUpdated);
+
+const delta = guide.costDelta;
+const deltaLabel = { cheaper: `−$${Math.abs(delta.monthlyDeltaPerSeat)}/seat`, pricier: `+$${delta.monthlyDeltaPerSeat}/seat`, same: 'Same price', byok: 'BYOK', unlisted: 'See pricing' }[delta.kind];
+const reverse = getReverseGuide(guide);
+const compare = getResolvedComparisons().find(c => (c.a === guide.from && c.b === guide.to) || (c.a === guide.to && c.b === guide.from));
+const alternativesLinks = [fromTool, toTool].filter(t => hasAlternativesPage(t.slug));
+const related = getSwitchGuidesForTool(fromTool.slug)
+    .concat(getSwitchGuidesForTool(toTool.slug))
+    .filter((g, i, all) => g.slug !== guide.slug && all.findIndex(o => o.slug === g.slug) === i)
+    .slice(0, 6);
+
+const jsonLd = JSON.stringify(switchGuideJsonLd(guide));
+
+const sides = [fromTool, toTool].map(t => ({
+    t,
+    price: priceSummary(t.enriched?.pricing, t.enriched?.pricingDetail),
+}));
+const facts = [
+    ...sides.map(({ t, price }) => ({ k: `${t.name} from`, v: price.entry ? `${price.entry.price}${price.entry.unit}` : price.main })),
+    { k: 'Per seat delta', v: deltaLabel },
+    { k: 'Updated', v: lastUpdatedLabel || '—' },
+];
+const entryLabel = (monthly: number, plan: string | null) =>
+    plan ? `${plan} ($${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(monthly)}/mo)` : monthly > 0 ? `$${monthly}/mo` : '—';
+const sections = ['brief', 'rules', 'steps', 'tradeoffs', 'spec', 'faq', (related.length || reverse || compare || alternativesLinks.length) && 'more'].filter(Boolean) as string[];
+const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
+---
+
+<BaseLayout
+    title={`Switch from ${from} to ${to} (2026): Migration Guide, Config & Cost | ai.dosa.dev`}
+    description={`Move from ${from} to ${to}: config file mapping (${guide.fromProfile?.path ?? 'no rules file'} → ${guide.toProfile?.path ?? 'no rules file'}), a 4-step migration checklist, seat cost delta and trade-offs.`}
+    keywords={`switch from ${from} to ${to}, ${from} to ${to} migration, ${to} migration guide, ${from} alternative, ${guide.group}`}
+    canonical={pageUrl}
+    robots={robotsFor(`/switch/${guide.slug}`)}
+    jsonLd={jsonLd}
+    ogImage={ogImage}
+    ogType="article"
+    modifiedTime={guide.lastUpdated ?? undefined}
+    markdownUrl={`/switch/${guide.slug}.md`}
+>
+    <div class="flex h-[100dvh] overflow-hidden">
+
+        <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
+            <SiteHeader variant="page" title={`${from} → ${to}`} />
+
+            <article class="fo">
+                <header class="fo-hero">
+                    <div>
+                        <div class="fo-top fo-fade" style="--d:.1s">
+                            <nav aria-label="Breadcrumb" class="fo-crumbs">
+                                <a href="/">Home</a><span>/</span>
+                                <a href="/switch">Switch</a><span>/</span>
+                                <span class="here">{from} → {to}</span>
+                            </nav>
+                            {lastUpdatedLabel && <span class="fo-status"><span>Updated {lastUpdatedLabel}</span></span>}
+                        </div>
+                        <div class="fo-rule"></div>
+                    </div>
+                    <div>
+                        <FolioTitle parts={[{ text: from }, { text: '→', plain: true }, { text: to }]} size="lg" />
+                        <div class="fo-intro">
+                            <p class="fo-lead sw-intro fo-fade" style="--d:.55s">
+                                {guide.primaryReason} This guide maps your config files, walks a 4-step migration checklist and prices the seat delta for a 10-dev team.
+                            </p>
+                            <div class="fo-cta fo-fade" style="--d:.85s">
+                                <a class="fo-link" href="/switch">All migration guides</a>
+                            </div>
+                        </div>
+                        <div class="fo-facts">
+                            {facts.map((f, i) => (
+                                <div class="fo-fact fo-fade" style={`--d:${0.9 + i * 0.08}s`}>
+                                    <span class="fo-k">{f.k}</span>
+                                    <b>{f.v}</b>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </header>
+
+                <section class="fo-sec" id="brief" aria-label="Migration brief">
+                    <h2 class="fo-label"><em>{num('brief')}</em>Migration brief</h2>
+                    <div class="fo-body">
+                        <p class="fo-text sm sw-answer fo-reveal">{quickAnswer}</p>
+                        <div class="fo-duo" style="margin-top:48px">
+                            {sides.map(({ t, price }) => (
+                                <div>
+                                    <h3><a href={`/tools/${t.slug}`}>{t.name}</a></h3>
+                                    <span class="co">{t.company}</span>
+                                    <b class="big">{price.main}</b>
+                                    <span class="u">{price.unit}{t.enriched?.pricing && ` · ${humanizePricing(t.enriched.pricing)}`}</span>
+                                    <p>{t.enriched?.description ?? t.notes}</p>
+                                    <div class="acts">
+                                        <a class="fo-btn" href={`/tools/${t.slug}`}>Full review <i aria-hidden="true">→</i></a>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                <section class="fo-sec" id="rules" aria-label="Rules and cost">
+                    <h2 class="fo-label"><em>{num('rules')}</em>Rules &amp; cost</h2>
+                    <div class="fo-body">
+                        <div class="fo-track">
+                            <div>
+                                <b><span class="sw-code">{guide.fromProfile?.path ?? 'no rules file'}</span> → <span class="sw-code">{guide.toProfile?.path ?? 'no rules file'}</span></b>
+                                <p>{guide.converterHref
+                                    ? `Convert ${from} rules to the ${to} format, then review the output before committing.`
+                                    : guide.fromProfile && guide.toProfile
+                                        ? `${to} reads the same rules format - copy the file as-is.`
+                                        : 'No automated conversion for this pair - carry prompts and settings over manually as team docs.'}</p>
+                            </div>
+                            <div>
+                                {guide.converterHref
+                                    ? <a class="fo-btn" href={guide.converterHref}>Convert {from} rules to {to} <i aria-hidden="true">→</i></a>
+                                    : <p>Manual carry-over.</p>}
+                            </div>
+                        </div>
+                        <div class="fo-track">
+                            <div>
+                                <b>{deltaLabel}</b>
+                                <p>{delta.summary}</p>
+                            </div>
+                            <div>
+                                <a class="fo-btn" href={delta.calculatorHref}>Simulate 10-dev cost delta <i aria-hidden="true">→</i></a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="fo-sec" id="steps" aria-label="Migration checklist">
+                    <h2 class="fo-label"><em>{num('steps')}</em>4-step checklist</h2>
+                    <div class="fo-body">
+                        <ol class="fo-list sw-steps">
+                            {steps.map((s, i) => (
+                                <li>
+                                    <span>{String(i + 1).padStart(2, '0')}</span>
+                                    <p><b>{s.name}</b>{s.text}{' '}{s.url && <a class="fo-link" href={s.url} {...(s.url.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{s.url.startsWith('http') ? 'Open ↗' : 'Open →'}</a>}</p>
+                                </li>
+                            ))}
+                        </ol>
+                    </div>
+                </section>
+
+                <section class="fo-sec" id="tradeoffs" aria-label="Trade-offs">
+                    <h2 class="fo-label"><em>{num('tradeoffs')}</em>Trade-offs</h2>
+                    <div class="fo-body">
+                        <div class="fo-fit">
+                            <div>
+                                <h3>What you gain</h3>
+                                <ul class="sw-list">
+                                    {gain.map(s => <li>{s}</li>)}
+                                </ul>
+                            </div>
+                            <div>
+                                <h3>What you give up</h3>
+                                <ul class="sw-list">
+                                    {giveUp.map(s => <li>{s}</li>)}
+                                </ul>
+                            </div>
+                        </div>
+                        <p class="fo-note">Running both together: {together}</p>
+                    </div>
+                </section>
+
+                <section class="fo-sec" id="spec" aria-label="Spec sheet">
+                    <h2 class="fo-label"><em>{num('spec')}</em>Spec sheet</h2>
+                    <div class="fo-body">
+                        <table class="fo-ctable">
+                            <caption class="sr-only">{from} vs {to}: the migration spec sheet</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col"><a href={`/tools/${fromTool.slug}`}>{from}</a></th>
+                                    <th scope="col"><a href={`/tools/${toTool.slug}`}>{to}</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Company</th>
+                                    <td>{fromTool.company}</td>
+                                    <td>{toTool.company}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Category</th>
+                                    <td><a href={`/category/${getCategorySlug(fromTool.categoryShort)}`}>{fromTool.categoryClean}</a></td>
+                                    <td><a href={`/category/${getCategorySlug(toTool.categoryShort)}`}>{toTool.categoryClean}</a></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Pricing</th>
+                                    <td>
+                                        {humanizePricing(fromTool.enriched?.pricing)}
+                                        {fromTool.enriched?.pricingDetail && <small>{fromTool.enriched.pricingDetail}</small>}
+                                    </td>
+                                    <td>
+                                        {humanizePricing(toTool.enriched?.pricing)}
+                                        {toTool.enriched?.pricingDetail && <small>{toTool.enriched.pricingDetail}</small>}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Entry paid plan</th>
+                                    <td>{entryLabel(delta.fromMonthlyPerSeat, delta.fromPlanName)}</td>
+                                    <td>{entryLabel(delta.toMonthlyPerSeat, delta.toPlanName)}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Rules file</th>
+                                    <td>{guide.fromProfile ? <span class="sw-code">{guide.fromProfile.path}</span> : '—'}</td>
+                                    <td>{guide.toProfile ? <span class="sw-code">{guide.toProfile.path}</span> : '—'}</td>
+                                </tr>
+                                {(fromTool.enriched?.keyFeatures || toTool.enriched?.keyFeatures) && (
+                                    <tr>
+                                        <th scope="row">Key features</th>
+                                        <td>{fromTool.enriched?.keyFeatures ? <ul>{fromTool.enriched.keyFeatures.map(f => <li>{f}</li>)}</ul> : '-'}</td>
+                                        <td>{toTool.enriched?.keyFeatures ? <ul>{toTool.enriched.keyFeatures.map(f => <li>{f}</li>)}</ul> : '-'}</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="fo-sec" id="faq" aria-label="Frequently asked questions">
+                    <h2 class="fo-label"><em>{num('faq')}</em>FAQ</h2>
+                    <FolioFaq faqs={faqs} />
+                </section>
+
+                {(related.length > 0 || reverse || compare || alternativesLinks.length > 0) && (
+                    <nav class="fo-sec" id="more" aria-label="Related guides">
+                        <h2 class="fo-label"><em>{num('more')}</em>More</h2>
+                        <div class="fo-body">
+                            <ul class="fo-tags">
+                                {reverse && <li><a href={`/switch/${reverse.slug}`}>Switch back: {reverse.fromTool.name} → {reverse.toTool.name}</a></li>}
+                                {compare && <li><a href={`/compare/${compare.slug}`}>{compare.toolA.name} vs {compare.toolB.name}</a></li>}
+                                {alternativesLinks.map(t => <li><a href={`/tools/${t.slug}/alternatives`}>{t.name} alternatives</a></li>)}
+                                {related.map(g => <li><a href={`/switch/${g.slug}`}>{g.fromTool.name} → {g.toTool.name}</a></li>)}
+                            </ul>
+                            <div class="fo-more"><a href="/switch">All migration guides →</a></div>
+                        </div>
+                    </nav>
+                )}
+
+                <div class="fo-notes">
+                    <span>Migration guides are generated from our enriched tool data. Verify pricing and features with each vendor before switching.</span>
+                    <a class="back" href="/switch">← All migration guides</a>
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <FolioStyles />
+    <FolioScroll />
+    <style is:global>
+        .sw-code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .85em; }
+        .sw-list { list-style: none; margin: 0; padding: 0; }
+        .sw-list li { padding: 14px 0 14px 20px; border-top: 1px solid var(--rule); position: relative; font-size: 17px; line-height: 1.55; color: #cfcfcc; }
+        .sw-list li::before { content: '–'; position: absolute; left: 0; color: var(--dim); }
+        .sw-steps li { align-items: start; }
+        .sw-steps li p { font-size: 17px; line-height: 1.6; color: #cfcfcc; }
+        .sw-steps li p b { display: block; font-size: 22px; font-weight: 500; letter-spacing: -.02em; color: var(--ink); margin-bottom: 8px; }
+        .sw-steps li:hover p { transform: none; }
+    </style>
+    <script src="/dist/app.js" type="module" defer></script>
+</BaseLayout>

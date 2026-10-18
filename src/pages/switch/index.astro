@@ -1,0 +1,177 @@
+---
+/**
+ * Switch guides hub - /switch
+ *
+ * Crawlable index of the directional migration guides defined in
+ * data/switch-guides.json, grouped like the compare directory.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import { getResolvedSwitchGuides, type ResolvedSwitchGuide } from '../../lib/switch-guides';
+import { getIndexingDecisions } from '../../lib/indexing';
+import FolioStyles from '../../components/folio/FolioStyles.astro';
+import FolioTitle from '../../components/folio/FolioTitle.astro';
+import FolioScroll from '../../components/folio/FolioScroll.astro';
+
+const decisions = getIndexingDecisions();
+const guides = getResolvedSwitchGuides();
+const indexable = guides.filter(g => decisions.get(`/switch/${g.slug}`)?.indexable);
+const pageUrl = 'https://ai.dosa.dev/switch';
+const description = `${guides.length} directional migration guides between AI coding tools: config file mapping, a 4-step checklist and the seat cost delta for each switch.`;
+
+// Group guides, preserving data-file order
+const groups = new Map<string, ResolvedSwitchGuide[]>();
+for (const g of guides) {
+    const list = groups.get(g.group) ?? [];
+    list.push(g);
+    groups.set(g.group, list);
+}
+const ordinals = new Map(guides.map((g, i) => [g.slug, i + 1]));
+
+const deltaBadge = (g: ResolvedSwitchGuide) => {
+    const d = g.costDelta;
+    if (d.kind === 'cheaper') return `−$${Math.abs(d.monthlyDeltaPerSeat)}/seat`;
+    if (d.kind === 'pricier') return `+$${d.monthlyDeltaPerSeat}/seat`;
+    if (d.kind === 'same') return 'Same price';
+    if (d.kind === 'byok') return 'BYOK';
+    return 'See pricing';
+};
+
+const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "CollectionPage",
+            "@id": `${pageUrl}#collection`,
+            "url": pageUrl,
+            "name": "Switch Guides - AI Coding Tool Migrations",
+            "description": description,
+            "inLanguage": "en",
+            "isPartOf": { "@type": "WebSite", "@id": "https://ai.dosa.dev/#website", "url": "https://ai.dosa.dev", "name": "ai.dosa.dev - Awesome AI Tools" },
+        },
+        {
+            "@type": "ItemList",
+            "numberOfItems": indexable.length,
+            "itemListElement": indexable.map((g, i) => ({
+                "@type": "ListItem",
+                "position": i + 1,
+                "name": `Switch from ${g.fromTool.name} to ${g.toTool.name}`,
+                "url": `https://ai.dosa.dev/switch/${g.slug}`
+            }))
+        },
+        {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ai.dosa.dev" },
+                { "@type": "ListItem", "position": 2, "name": "Switch guides", "item": pageUrl }
+            ]
+        }
+    ]
+});
+---
+
+<BaseLayout
+    title="Switch Guides (2026): Migrate Between AI Coding Tools | ai.dosa.dev"
+    description={description}
+    keywords="switch AI coding tools, migrate Cursor to Claude Code, Copilot to Cursor migration, AI IDE migration guide"
+    canonical={pageUrl}
+    jsonLd={jsonLd}
+>
+    <div class="flex h-[100dvh] overflow-hidden">
+
+        <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
+            <SiteHeader variant="page" title="Switch guides" />
+
+            <article class="fo">
+                <header class="fo-hero">
+                    <div>
+                        <div class="fo-top fo-fade" style="--d:.1s">
+                            <nav aria-label="Breadcrumb" class="fo-crumbs">
+                                <a href="/">Home</a><span>/</span>
+                                <span class="here">Switch</span>
+                            </nav>
+                            <span class="fo-status"><span>{guides.length} guides</span></span>
+                        </div>
+                        <div class="fo-rule"></div>
+                    </div>
+                    <div>
+                        <FolioTitle parts={[{ text: 'Switch Guides' }, { text: 'From → To', plain: true }]} size="md" />
+                        <div class="fo-intro">
+                            <p class="fo-lead fo-fade" style="--d:.55s">
+                                Directional migration guides: each one maps your config files between tools, walks a 4-step pilot checklist, prices the seat delta for a 10-dev team and lists what you gain and give up.
+                            </p>
+                        </div>
+                    </div>
+                </header>
+
+                <div>
+                    <input id="swSearch" class="sw-search" type="search" placeholder="Filter guides, e.g. cursor" aria-label="Filter migration guides" />
+                </div>
+
+                <div class="fo-track">
+                    <div>
+                        <b>Convert your rules file first</b>
+                        <p>CLAUDE.md, .cursor/rules, .windsurfrules, AGENTS.md, Copilot instructions and .clinerules - translated client-side, nothing leaves your browser.</p>
+                    </div>
+                    <div>
+                        <a class="fo-btn" href="/tools/rules-converter">Rules Converter <i aria-hidden="true">→</i></a>
+                    </div>
+                </div>
+                <div class="fo-track" style="border-bottom:1px solid var(--rule)">
+                    <div>
+                        <b>Price the seat delta</b>
+                        <p>Model seat + token costs for your whole team before reallocating licenses.</p>
+                    </div>
+                    <div>
+                        <a class="fo-btn" href="/tools/cost-calculator">Cost Calculator <i aria-hidden="true">→</i></a>
+                    </div>
+                </div>
+
+                {[...groups.entries()].map(([group, list], gi) => (
+                    <section class="fo-sec" data-group aria-label={`${group} migration guides`}>
+                        <h2 class="fo-label"><em>{String(gi + 1).padStart(2, '0')}</em>{group}</h2>
+                        <div class="fo-body">
+                            {list.map(g => (
+                                <div class="fo-rank" data-text={`${g.fromTool.name} ${g.toTool.name} ${g.from} ${g.to}`.toLowerCase()}>
+                                    <span class="no">{String(ordinals.get(g.slug)).padStart(2, '0')}</span>
+                                    <div>
+                                        <h3><a href={`/switch/${g.slug}`}>{g.fromTool.name} → {g.toTool.name}</a></h3>
+                                        <p>{g.primaryReason}</p>
+                                    </div>
+                                    <span class="pr">{deltaBadge(g)}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                ))}
+
+                <div class="fo-notes">
+                    <span>Migration guides are generated from our enriched tool data. Verify pricing and features with each vendor before switching.</span>
+                    <a class="back" href="/compare">All comparisons →</a>
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <FolioStyles />
+    <FolioScroll />
+    <style is:global>
+        .sw-search { width: 100%; max-width: 420px; height: 46px; padding: 0 18px; margin: 24px 0 8px; background: #0a0a0a; border: 1px solid var(--rule); border-radius: 999px; color: var(--ink); font-size: 15px; }
+        .sw-search:focus { outline: none; border-color: var(--dim); }
+        .sw-search::placeholder { color: var(--mute); }
+    </style>
+    <script>
+        const input = document.getElementById('swSearch');
+        input?.addEventListener('input', () => {
+            const q = (input as HTMLInputElement).value.trim().toLowerCase();
+            document.querySelectorAll<HTMLElement>('.fo-rank[data-text]').forEach(el => {
+                el.style.display = !q || (el.dataset.text ?? '').includes(q) ? '' : 'none';
+            });
+            document.querySelectorAll<HTMLElement>('.fo-sec[data-group]').forEach(sec => {
+                const visible = Array.from(sec.querySelectorAll<HTMLElement>('.fo-rank[data-text]')).some(r => r.style.display !== 'none');
+                sec.style.display = visible ? '' : 'none';
+            });
+        });
+    </script>
+    <script src="/dist/app.js" type="module" defer></script>
+</BaseLayout>
