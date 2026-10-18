@@ -80,10 +80,33 @@ alwaysApply: false
       alwaysApply: true,
     });
     expect(converted).toContain('---');
-    expect(converted).toContain('description: Test rulebook');
+    expect(converted).toContain('description: "Test rulebook"');
     expect(converted).toContain('globs: "*.ts"');
     expect(converted).toContain('alwaysApply: true');
     expect(converted).toContain('# Project Rules');
+  });
+
+  test('convertRules emits valid YAML scalars for cursor-mdc frontmatter', () => {
+    const converted = convertRules('# API: coding conventions\n- be nice\n', 'cursor-mdc');
+    expect(converted).toContain('description: "API: coding conventions"');
+    const withQuotes = convertRules('# Rules "v2"\n- be nice\n', 'cursor-mdc');
+    expect(withQuotes).toContain('description: "Rules \\"v2\\""');
+  });
+
+  test('convertRules does not duplicate a single-line title', () => {
+    const converted = convertRules('# Only title', 'claude-md');
+    expect(converted).toBe('# Only title\n');
+    const agents = convertRules('# Only title', 'agents-md');
+    expect(agents).toBe('# AGENTS.md — Only title\n');
+  });
+
+  test('convertRules does not double-prefix existing format titles', () => {
+    const converted = convertRules(STARTER_TEMPLATES['python-fastapi'].content, 'agents-md');
+    expect(converted).toContain('# AGENTS.md — FastAPI Microservice');
+    expect(converted).not.toContain('AGENTS.md — AGENTS.md');
+    const copilot = convertRules('# Copilot Instructions: Web App\n- rule\n', 'copilot');
+    expect(copilot).toContain('# Copilot Instructions: Web App');
+    expect(copilot).not.toContain('Instructions: Copilot');
   });
 
   test('convertRules strips frontmatter and formats for CLAUDE.md', () => {

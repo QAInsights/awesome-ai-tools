@@ -44,7 +44,7 @@ export const RULE_FORMATS = [
     label: 'AGENTS.md',
     targetFile: 'AGENTS.md',
     toolName: 'Codex / Universal',
-    toolSlug: 'codex',
+    toolSlug: 'codex-cli',
     badge: 'Open Standard',
     description: 'Cross-agent standard adopted by Codex, OpenCode, and multi-agent frameworks.',
   },
@@ -286,6 +286,38 @@ export function parseRulesDocument(rawText) {
 }
 
 /**
+ * Serializes a value as a YAML double-quoted scalar for .mdc frontmatter.
+ */
+function yamlDoubleQuoted(value) {
+  return `"${String(value ?? '')
+    .replace(/\\/g, '\\\\')
+    .replace(/"/g, '\\"')
+    .replace(/\r?\n/g, '\\n')}"`;
+}
+
+/**
+ * Removes a leading H1 heading, whether followed by newlines or end-of-body.
+ */
+function stripLeadingHeading(body) {
+  return body.replace(/^#\s+[^\n]+(?:\r?\n+|$)/, '');
+}
+
+const TARGET_TITLE_PREFIXES = {
+  'agents-md': /^AGENTS\.md\s*[-–—:]*\s*/i,
+  'copilot': /^(?:GitHub\s+)?Copilot(?:\s+Custom)?\s+Instructions\s*[-–—:]*\s*/i,
+  'clinerules': /^\.?clinerules\s*[-–—:]*\s*/i,
+};
+
+/**
+ * Removes an existing format-specific prefix from a title so it is not
+ * duplicated when the target format re-emits its own prefix.
+ */
+function stripTargetPrefix(title, targetId) {
+  const re = TARGET_TITLE_PREFIXES[targetId];
+  return re ? title.replace(re, '').trim() : title;
+}
+
+/**
  * Converts a RulesIR into the requested target format string.
  *
  * @param {string} rawText
@@ -303,10 +335,10 @@ export function convertRules(rawText, targetFormat, options = {}) {
       const desc = opts.description || ir.title || 'Project rules and AI instructions';
       const globs = opts.globs || '*';
       const alwaysApply = opts.alwaysApply !== false;
-      const cleanBody = ir.rawBody.replace(/^#\s+[^\n]+\n+/, '');
+      const cleanBody = stripLeadingHeading(ir.rawBody);
       return `---
-description: ${desc}
-globs: "${globs}"
+description: ${yamlDoubleQuoted(desc)}
+globs: ${yamlDoubleQuoted(globs)}
 alwaysApply: ${alwaysApply}
 ---
 
@@ -317,38 +349,41 @@ ${cleanBody}`.trim() + '\n';
 
     case 'claude-md': {
       const title = ir.title ? `# ${ir.title}` : '# Project Guidelines & Commands';
-      const cleanBody = ir.rawBody.replace(/^#\s+[^\n]+\n+/, '');
+      const cleanBody = stripLeadingHeading(ir.rawBody);
       return `${title}\n\n${cleanBody}`.trim() + '\n';
     }
 
     case 'agents-md': {
-      const title = ir.title ? `# AGENTS.md — ${ir.title}` : '# AGENTS.md';
-      const cleanBody = ir.rawBody.replace(/^#\s+[^\n]+\n+/, '');
+      const base = stripTargetPrefix(ir.title, 'agents-md');
+      const title = base ? `# AGENTS.md — ${base}` : '# AGENTS.md';
+      const cleanBody = stripLeadingHeading(ir.rawBody);
       return `${title}\n\n${cleanBody}`.trim() + '\n';
     }
 
     case 'windsurfrules': {
       const title = ir.title ? `# ${ir.title}` : '# Workspace Context & Rules';
-      const cleanBody = ir.rawBody.replace(/^#\s+[^\n]+\n+/, '');
+      const cleanBody = stripLeadingHeading(ir.rawBody);
       return `${title}\n\n${cleanBody}`.trim() + '\n';
     }
 
     case 'copilot': {
-      const title = ir.title ? `# Copilot Instructions: ${ir.title}` : '# GitHub Copilot Custom Instructions';
-      const cleanBody = ir.rawBody.replace(/^#\s+[^\n]+\n+/, '');
+      const base = stripTargetPrefix(ir.title, 'copilot');
+      const title = base ? `# Copilot Instructions: ${base}` : '# GitHub Copilot Custom Instructions';
+      const cleanBody = stripLeadingHeading(ir.rawBody);
       return `${title}\n\n${cleanBody}`.trim() + '\n';
     }
 
     case 'clinerules': {
-      const title = ir.title ? `# .clinerules — ${ir.title}` : '# .clinerules — Execution Guidelines';
-      const cleanBody = ir.rawBody.replace(/^#\s+[^\n]+\n+/, '');
+      const base = stripTargetPrefix(ir.title, 'clinerules');
+      const title = base ? `# .clinerules — ${base}` : '# .clinerules — Execution Guidelines';
+      const cleanBody = stripLeadingHeading(ir.rawBody);
       return `${title}\n\n${cleanBody}`.trim() + '\n';
     }
 
     case 'cursorrules':
     default: {
       const title = ir.title ? `# ${ir.title}` : '# Project Rules';
-      const cleanBody = ir.rawBody.replace(/^#\s+[^\n]+\n+/, '');
+      const cleanBody = stripLeadingHeading(ir.rawBody);
       return `${title}\n\n${cleanBody}`.trim() + '\n';
     }
   }

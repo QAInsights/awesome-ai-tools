@@ -63,8 +63,7 @@ const jsonLd = JSON.stringify({
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ai.dosa.dev" },
-        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ai.dosa.dev/tools/token-counter" },
-        { "@type": "ListItem", "position": 3, "name": "Rules Converter", "item": "https://ai.dosa.dev/tools/rules-converter" }
+        { "@type": "ListItem", "position": 2, "name": "Rules Converter", "item": "https://ai.dosa.dev/tools/rules-converter" }
       ]
     }
   ]
@@ -131,7 +130,7 @@ const jsonLd = JSON.stringify({
               <span id="autoDetectBadge" class="rc-detect-tag">Auto-detecting…</span>
             </div>
             <div class="flex items-center gap-1.5">
-              <input id="fileInput" type="file" accept=".md,.mdc,.txt,.json,.yml,.yaml" class="hidden" />
+              <input id="fileInput" type="file" accept=".md,.mdc,.txt,.json,.yml,.yaml,.cursorrules,.windsurfrules,.clinerules" class="hidden" />
               <button id="uploadBtn" type="button" class="rc-sub-btn" title="Upload local rules file">Upload File</button>
               <button id="clearSourceBtn" type="button" class="rc-sub-btn" title="Clear input">Clear</button>
             </div>

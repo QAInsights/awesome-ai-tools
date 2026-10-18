@@ -12,6 +12,7 @@ import {
   detectRuleFormat,
   estimateTokens,
   parseConverterUrlState,
+  parseRulesDocument,
 } from './rules-converter.js';
 
 export function initRulesConverterUI() {
@@ -67,9 +68,28 @@ export function initRulesConverterUI() {
     els.mdcOptionsPanel.style.display = isMdc ? 'grid' : 'none';
   }
 
+  // Tracks the source text the MDC controls were last populated from, so
+  // user-edited options are only overwritten when the source changes.
+  let mdcSyncedSource = null;
+
+  function syncMdcControlsFromSource(raw) {
+    if (raw === mdcSyncedSource) return;
+    mdcSyncedSource = raw;
+    const fm = parseRulesDocument(raw).frontmatter;
+    state.mdcOptions.description = fm.description || '';
+    state.mdcOptions.globs = fm.globs || '*';
+    state.mdcOptions.alwaysApply = fm.alwaysApply !== false;
+    if (els.mdcDescriptionInput) els.mdcDescriptionInput.value = state.mdcOptions.description;
+    if (els.mdcGlobsInput) els.mdcGlobsInput.value = state.mdcOptions.globs;
+    if (els.mdcAlwaysApplyCheck) els.mdcAlwaysApplyCheck.checked = state.mdcOptions.alwaysApply;
+  }
+
   function convert() {
     const raw = els.sourceText?.value ?? '';
-    const detected = detectRuleFormat(raw);
+    syncMdcControlsFromSource(raw);
+    const detected = state.templateKey && STARTER_TEMPLATES[state.templateKey]
+      ? STARTER_TEMPLATES[state.templateKey].format
+      : detectRuleFormat(raw);
 
     if (els.autoDetectBadge) {
       const detectedInfo = RULE_FORMATS.find(f => f.id === detected);
@@ -138,6 +158,8 @@ export function initRulesConverterUI() {
     // Swap text if output has content
     if (els.outputText?.value && els.sourceText) {
       els.sourceText.value = els.outputText.value;
+      state.templateKey = '';
+      els.starterChips?.forEach(chip => chip.classList.remove('active'));
     }
     updateMdcVisibility();
     convert();
@@ -242,6 +264,9 @@ export function initRulesConverterUI() {
 
   if (state.templateKey && STARTER_TEMPLATES[state.templateKey]) {
     loadTemplate(state.templateKey);
+  } else if (/[?&](from|to|tpl)=/.test(window.location.search)) {
+    // A shared link already selected formats; keep them instead of the preset.
+    convert();
   } else {
     loadTemplate('astro-cf');
   }
