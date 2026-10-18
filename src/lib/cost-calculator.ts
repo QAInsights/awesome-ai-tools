@@ -132,6 +132,9 @@ export interface SavingsAlternative {
 export interface StackCostBreakdown {
   teamSize: number;
   billingCycle: BillingCycle;
+  discountPercent: number;
+  listMonthlyTotal: number;
+  discountMonthlySavings: number;
   seatMonthlyTotal: number;
   apiMonthlyTotal: number;
   monthlyTotal: number;
@@ -242,6 +245,8 @@ export function calculateModelMonthlyCost(
   };
 }
 
+export const MAX_TEAM_SIZE = 100_000;
+
 export function calculateStackCost(params: {
   catalog: ReadonlyArray<CalculatorToolItem>;
   models: ReadonlyArray<NormalizedModelPricing>;
@@ -249,10 +254,13 @@ export function calculateStackCost(params: {
   selectedModels: ReadonlyArray<SelectedApiModel>;
   teamSize: number;
   billingCycle?: BillingCycle;
+  discountPercent?: number;
   usage?: TokenUsageProfile;
 }): StackCostBreakdown {
-  const teamSize = Math.max(1, Math.min(10_000, Math.round(params.teamSize || 1)));
+  const teamSize = Math.max(1, Math.min(MAX_TEAM_SIZE, Math.round(params.teamSize || 1)));
   const billingCycle: BillingCycle = params.billingCycle ?? 'monthly';
+  const discountPercent = Math.max(0, Math.min(50, Math.round(params.discountPercent || 0)));
+  const netFactor = 1 - discountPercent / 100;
   const usage = params.usage ?? WORKLOAD_PRESETS.daily;
   const toolBySlug = new Map(params.catalog.map(t => [t.slug, t]));
   const modelById = new Map<string, NormalizedModelPricing>();
@@ -262,6 +270,7 @@ export function calculateStackCost(params: {
   }
 
   const lineItems: StackCostLineItem[] = [];
+  let listSeatMonthlyTotal = 0;
   let seatMonthlyTotal = 0;
 
   for (const sel of params.selectedSeats) {
@@ -270,15 +279,17 @@ export function calculateStackCost(params: {
     const plan =
       (sel.planName ? tool.plans.find(p => p.name.toLowerCase() === sel.planName!.toLowerCase()) : undefined) ??
       tool.plans[0]!;
-    const teamMonthly = roundCurrency(plan.perSeat ? plan.monthlyAmount * teamSize : plan.monthlyAmount);
+    const rawTeamMonthly = plan.perSeat ? plan.monthlyAmount * teamSize : plan.monthlyAmount;
+    const teamMonthly = roundCurrency(rawTeamMonthly * netFactor);
     const perDevMonthly = roundCurrency(teamMonthly / teamSize);
+    listSeatMonthlyTotal = roundCurrency(listSeatMonthlyTotal + rawTeamMonthly);
     seatMonthlyTotal = roundCurrency(seatMonthlyTotal + teamMonthly);
 
     lineItems.push({
       kind: 'seat',
       id: `${tool.slug}:${plan.name}`,
       name: tool.name,
-      subtitle: `${plan.name} (${plan.price}${plan.unit})`,
+      subtitle: `${plan.name} (${plan.price}${plan.unit}${discountPercent > 0 ? ` · -${discountPercent}%` : ''})`,
       category: tool.categoryShort,
       perDevMonthly,
       teamMonthly,
@@ -286,6 +297,7 @@ export function calculateStackCost(params: {
     });
   }
 
+  let listApiMonthlyTotal = 0;
   let apiMonthlyTotal = 0;
   const validModels = params.selectedModels
     .map(s => ({ sel: s, model: modelById.get(s.id) }))
@@ -301,21 +313,26 @@ export function calculateStackCost(params: {
       outputMillionsPerDevDay: usage.outputMillionsPerDevDay * weight,
     };
     const cost = calculateModelMonthlyCost(model, scaledUsage, teamSize);
-    apiMonthlyTotal = roundCurrency(apiMonthlyTotal + cost.teamMonthly);
+    const netTeamMonthly = roundCurrency(cost.teamMonthly * netFactor);
+    const netPerDevMonthly = roundCurrency(netTeamMonthly / teamSize);
+    listApiMonthlyTotal = roundCurrency(listApiMonthlyTotal + cost.teamMonthly);
+    apiMonthlyTotal = roundCurrency(apiMonthlyTotal + netTeamMonthly);
 
     lineItems.push({
       kind: 'api',
       id: model.id,
       name: model.name,
-      subtitle: `${model.provider} · $${model.cost.input}/$${model.cost.output} per 1M (${Math.round(weight * 100)}% load)`,
+      subtitle: `${model.provider} · $${model.cost.input}/$${model.cost.output} per 1M (${Math.round(weight * 100)}% load${discountPercent > 0 ? ` · -${discountPercent}%` : ''})`,
       category: 'LLM API (BYOK)',
-      perDevMonthly: cost.perDevMonthly,
-      teamMonthly: cost.teamMonthly,
-      teamAnnual: roundCurrency(cost.teamMonthly * 12),
+      perDevMonthly: netPerDevMonthly,
+      teamMonthly: netTeamMonthly,
+      teamAnnual: roundCurrency(netTeamMonthly * 12),
     });
   }
 
+  const listMonthlyTotal = roundCurrency(listSeatMonthlyTotal + listApiMonthlyTotal);
   const monthlyTotal = roundCurrency(seatMonthlyTotal + apiMonthlyTotal);
+  const discountMonthlySavings = roundCurrency(listMonthlyTotal - monthlyTotal);
   const annualTotal = roundCurrency(monthlyTotal * 12);
   const perDevMonthly = roundCurrency(monthlyTotal / teamSize);
 
@@ -331,6 +348,9 @@ export function calculateStackCost(params: {
   return {
     teamSize,
     billingCycle,
+    discountPercent,
+    listMonthlyTotal,
+    discountMonthlySavings,
     seatMonthlyTotal,
     apiMonthlyTotal,
     monthlyTotal,

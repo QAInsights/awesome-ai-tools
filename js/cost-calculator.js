@@ -8,6 +8,7 @@
  */
 
 import {
+  MAX_TEAM_SIZE,
   WORKLOAD_PRESETS,
   calculateModelMonthlyCost,
   calculateStackCost,
@@ -18,6 +19,7 @@ import {
 } from '../src/lib/models-pricing';
 
 export {
+  MAX_TEAM_SIZE,
   WORKLOAD_PRESETS,
   FALLBACK_MODEL_PRICING,
   MODELS_CACHE_TTL_MS,
@@ -118,6 +120,42 @@ export async function loadModelsPricing(options = {}) {
   }
 }
 
+const SLIDER_STOPS = [
+  { pos: 0, devs: 1, step: 1 },
+  { pos: 250, devs: 50, step: 5 },
+  { pos: 500, devs: 500, step: 25 },
+  { pos: 750, devs: 5_000, step: 100 },
+  { pos: 1000, devs: 25_000, step: 500 },
+];
+
+export function sliderToTeamSize(rawPos) {
+  const pos = Math.max(0, Math.min(1000, Number(rawPos) || 0));
+  for (let i = 0; i < SLIDER_STOPS.length - 1; i++) {
+    const a = SLIDER_STOPS[i];
+    const b = SLIDER_STOPS[i + 1];
+    if (pos <= b.pos) {
+      const t = (pos - a.pos) / (b.pos - a.pos);
+      const rawDevs = a.devs + t * (b.devs - a.devs);
+      const step = pos < 250 ? 1 : a.step;
+      return Math.max(1, Math.round(rawDevs / step) * step);
+    }
+  }
+  return 25_000;
+}
+
+export function teamSizeToSlider(rawDevs) {
+  const devs = Math.max(1, Math.min(25_000, Number(rawDevs) || 1));
+  for (let i = 0; i < SLIDER_STOPS.length - 1; i++) {
+    const a = SLIDER_STOPS[i];
+    const b = SLIDER_STOPS[i + 1];
+    if (devs <= b.devs) {
+      const t = (devs - a.devs) / (b.devs - a.devs);
+      return Math.round(a.pos + t * (b.pos - a.pos));
+    }
+  }
+  return 1000;
+}
+
 /**
  * Parses calculator configuration from URL query parameters.
  *
@@ -126,8 +164,11 @@ export async function loadModelsPricing(options = {}) {
 export function parseCalculatorStateFromUrl(search) {
   const params = new URLSearchParams(search || '');
   const teamRaw = Number(params.get('team'));
-  const teamSize = Number.isFinite(teamRaw) && teamRaw >= 1 ? Math.min(250, Math.round(teamRaw)) : 5;
+  const teamSize = Number.isFinite(teamRaw) && teamRaw >= 1 ? Math.min(MAX_TEAM_SIZE, Math.round(teamRaw)) : 5;
   const billingCycle = params.get('cycle') === 'annual' ? 'annual' : 'monthly';
+  const discountRaw = Number(params.get('discount'));
+  const discountPercent =
+    Number.isFinite(discountRaw) && discountRaw >= 0 ? Math.min(50, Math.round(discountRaw)) : 0;
   const presetRaw = params.get('preset') || 'daily';
   const preset =
     presetRaw === 'light' || presetRaw === 'daily' || presetRaw === 'agentic' || presetRaw === 'custom'
@@ -179,6 +220,7 @@ export function parseCalculatorStateFromUrl(search) {
   return {
     teamSize,
     billingCycle,
+    discountPercent,
     preset,
     selectedSeats,
     selectedModels,
@@ -193,6 +235,7 @@ export function buildCalculatorUrlSearch(state) {
   const params = new URLSearchParams();
   params.set('team', String(state.teamSize || 1));
   if (state.billingCycle === 'annual') params.set('cycle', 'annual');
+  if (state.discountPercent > 0) params.set('discount', String(state.discountPercent));
   params.set('preset', state.preset || 'daily');
 
   if (Array.isArray(state.selectedSeats) && state.selectedSeats.length > 0) {
@@ -227,6 +270,11 @@ export function formatStackSummaryText(breakdown, usage) {
     `==================================================`,
     `Total Monthly Spend : ${formatUsd(breakdown.monthlyTotal)}/mo (${formatUsd(breakdown.perDevMonthly)}/dev/mo)`,
     `Annual Projection   : ${formatUsd(breakdown.annualTotal)}/yr`,
+    ...(breakdown.discountPercent > 0
+      ? [
+          `Negotiated Discount : ${breakdown.discountPercent}% off list (${formatUsd(breakdown.listMonthlyTotal)}/mo list -> saves ${formatUsd(breakdown.discountMonthlySavings)}/mo)`,
+        ]
+      : []),
     `Seat Subscriptions  : ${formatUsd(breakdown.seatMonthlyTotal)}/mo`,
     `LLM API Token Spend : ${formatUsd(breakdown.apiMonthlyTotal)}/mo (${usage.inputMillionsPerDevDay}M in / ${usage.outputMillionsPerDevDay}M out per dev/day, ${Math.round(usage.cacheHitRatio * 100)}% cache hit)`,
     ``,

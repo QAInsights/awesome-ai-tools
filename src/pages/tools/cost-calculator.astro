@@ -92,18 +92,85 @@ const jsonLd = JSON.stringify({
             <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
               <div>
                 <div class="cc-label">01 · Team & Billing</div>
-                <p class="text-xs text-[#737373] mt-0.5">Scale per-seat licenses and daily token usage across your engineering org.</p>
+                <p class="text-xs text-[#737373] mt-0.5">Scale from solo builders to 25,000+ enterprise engineering orgs.</p>
               </div>
-              <div class="inline-flex rounded-lg p-0.5 bg-[#111] border border-[#222]">
+              <div class="inline-flex rounded-lg p-0.5 bg-[#111] border border-[#222] shrink-0">
                 <button type="button" data-cycle="monthly" class="cc-cycle-btn active">Monthly</button>
                 <button type="button" data-cycle="annual" class="cc-cycle-btn">Annual View</button>
               </div>
             </div>
             <div class="flex items-center gap-4">
-              <input id="teamSizeSlider" type="range" min="1" max="100" value="5" class="flex-1 accent-[#d6b77a]" aria-label="Team size slider" />
-              <div class="flex items-center gap-1.5 bg-[#111] border border-[#2a2a2a] focus-within:border-[#c8a96a] rounded-lg px-3 py-1.5 transition-colors">
-                <input id="teamSizeInput" type="number" min="1" max="250" value="5" class="w-14 bg-transparent text-[#f4f4f2] font-mono text-sm text-right focus:outline-none" aria-label="Number of developers" />
-                <span class="text-xs font-mono text-[#737373]">devs</span>
+              <div class="flex-1 flex flex-col gap-1.5">
+                <input id="teamSizeSlider" type="range" min="0" max="1000" value="20" autocomplete="off" class="cc-range w-full" aria-label="Team size slider (1 to 25,000 developers)" />
+                <div class="flex justify-between text-[10px] font-mono text-[#525252] px-0.5 select-none">
+                  <span>1</span>
+                  <span>50</span>
+                  <span>500</span>
+                  <span>5k</span>
+                  <span>25k</span>
+                </div>
+              </div>
+              <div class="cc-team-input-shell">
+                <button type="button" id="teamSizeDecBtn" class="cc-team-step-btn" aria-label="Decrease team size" title="Decrease by 1 dev">&minus;</button>
+                <label for="teamSizeInput" class="cc-team-input-field">
+                  <input id="teamSizeInput" type="number" min="1" max="100000" value="5" autocomplete="off" class="cc-team-input" aria-label="Number of developers" />
+                  <span class="cc-team-input-unit">devs</span>
+                </label>
+                <button type="button" id="teamSizeIncBtn" class="cc-team-step-btn" aria-label="Increase team size" title="Increase by 1 dev">&#43;</button>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4">
+              <button type="button" data-team-preset="1" class="cc-team-card">
+                <div class="cc-team-card-top"><span>Solo</span><i class="cc-team-dot"></i></div>
+                <div class="cc-team-card-val">1 <small>dev</small></div>
+              </button>
+              <button type="button" data-team-preset="10" class="cc-team-card">
+                <div class="cc-team-card-top"><span>Startup</span><i class="cc-team-dot"></i></div>
+                <div class="cc-team-card-val">10 <small>devs</small></div>
+              </button>
+              <button type="button" data-team-preset="50" class="cc-team-card">
+                <div class="cc-team-card-top"><span>Scaleup</span><i class="cc-team-dot"></i></div>
+                <div class="cc-team-card-val">50 <small>devs</small></div>
+              </button>
+              <button type="button" data-team-preset="250" class="cc-team-card">
+                <div class="cc-team-card-top"><span>Mid-Market</span><i class="cc-team-dot"></i></div>
+                <div class="cc-team-card-val">250 <small>devs</small></div>
+              </button>
+              <button type="button" data-team-preset="1000" class="cc-team-card">
+                <div class="cc-team-card-top"><span>Enterprise</span><i class="cc-team-dot"></i></div>
+                <div class="cc-team-card-val">1,000 <small>devs</small></div>
+              </button>
+              <button type="button" data-team-preset="5000" class="cc-team-card">
+                <div class="cc-team-card-top"><span>Global Org</span><i class="cc-team-dot"></i></div>
+                <div class="cc-team-card-val">5,000 <small>devs</small></div>
+              </button>
+              <button type="button" data-team-preset="10000" class="cc-team-card">
+                <div class="cc-team-card-top"><span>Big Tech</span><i class="cc-team-dot"></i></div>
+                <div class="cc-team-card-val">10,000 <small>devs</small></div>
+              </button>
+              <button type="button" data-team-preset="25000" class="cc-team-card">
+                <div class="cc-team-card-top"><span>Hyperscale</span><i class="cc-team-dot"></i></div>
+                <div class="cc-team-card-val">25,000 <small>devs</small></div>
+              </button>
+            </div>
+
+            <!-- Enterprise / Negotiated Volume Discount (0% default) -->
+            <div class="mt-4 pt-3.5 border-t border-[#1d1d1c] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="min-w-0">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-medium text-[#f4f4f2]">Negotiated / Commit Discount</span>
+                  <span id="discountVal" class="text-[11px] font-mono px-2 py-0.5 rounded bg-[#211c16] border border-[#4c4030] text-[#e2c48a] tabular-nums">0% (List Price)</span>
+                </div>
+                <p class="text-[11px] text-[#737373] mt-0.5">Enterprise EA / committed-spend discount across seat licenses &amp; LLM API rates.</p>
+              </div>
+              <div class="w-full sm:w-44 shrink-0 flex flex-col gap-1">
+                <input id="discountSlider" type="range" min="0" max="50" step="1" value="0" autocomplete="off" class="cc-range w-full" aria-label="Negotiated volume discount percentage" />
+                <div class="flex justify-between text-[9px] font-mono text-[#525252] px-0.5 select-none">
+                  <span>0%</span>
+                  <span>15%</span>
+                  <span>30%</span>
+                  <span>50%</span>
+                </div>
               </div>
             </div>
           </section>
@@ -148,16 +215,25 @@ const jsonLd = JSON.stringify({
             <!-- Workload Presets -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-4">
               <button type="button" data-workload="light" class="cc-workload-btn">
-                <div class="text-xs font-semibold text-[#f4f4f2]">Light Assist</div>
-                <div class="text-[10px] font-mono text-[#8b8b88] mt-0.5">0.25M in / 0.05M out · day</div>
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-xs font-semibold text-[#f4f4f2]">Light Assist</span>
+                  <i class="cc-team-dot"></i>
+                </div>
+                <div class="text-[10px] font-mono text-[#8b8b88] mt-1">0.25M in / 0.05M out · day</div>
               </button>
               <button type="button" data-workload="daily" class="cc-workload-btn active">
-                <div class="text-xs font-semibold text-[#f4f4f2]">Daily Driver</div>
-                <div class="text-[10px] font-mono text-[#8b8b88] mt-0.5">1.0M in / 0.20M out · day</div>
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-xs font-semibold text-[#f4f4f2]">Daily Driver</span>
+                  <i class="cc-team-dot"></i>
+                </div>
+                <div class="text-[10px] font-mono text-[#8b8b88] mt-1">1.0M in / 0.20M out · day</div>
               </button>
               <button type="button" data-workload="agentic" class="cc-workload-btn">
-                <div class="text-xs font-semibold text-[#f4f4f2]">Heavy Agentic</div>
-                <div class="text-[10px] font-mono text-[#8b8b88] mt-0.5">3.5M in / 0.60M out · day</div>
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-xs font-semibold text-[#f4f4f2]">Heavy Agentic</span>
+                  <i class="cc-team-dot"></i>
+                </div>
+                <div class="text-[10px] font-mono text-[#8b8b88] mt-1">3.5M in / 0.60M out · day</div>
               </button>
             </div>
 
@@ -166,23 +242,23 @@ const jsonLd = JSON.stringify({
               <div>
                 <div class="flex justify-between text-[11px] font-mono mb-1.5">
                   <span class="text-[#8b8b88]">Input / dev</span>
-                  <span id="inputTokensVal" class="text-[#e2c48a]">1.00M / day</span>
+                  <span id="inputTokensVal" class="text-[#e2c48a] tabular-nums">1.00M / day</span>
                 </div>
-                <input id="inputTokensSlider" type="range" min="0" max="10" step="0.25" value="1" class="w-full accent-[#d6b77a]" />
+                <input id="inputTokensSlider" type="range" min="0" max="10" step="0.25" value="1" autocomplete="off" class="cc-range w-full" />
               </div>
               <div>
                 <div class="flex justify-between text-[11px] font-mono mb-1.5">
                   <span class="text-[#8b8b88]">Output / dev</span>
-                  <span id="outputTokensVal" class="text-[#e2c48a]">0.20M / day</span>
+                  <span id="outputTokensVal" class="text-[#e2c48a] tabular-nums">0.20M / day</span>
                 </div>
-                <input id="outputTokensSlider" type="range" min="0" max="3" step="0.05" value="0.2" class="w-full accent-[#d6b77a]" />
+                <input id="outputTokensSlider" type="range" min="0" max="3" step="0.05" value="0.2" autocomplete="off" class="cc-range w-full" />
               </div>
               <div>
                 <div class="flex justify-between text-[11px] font-mono mb-1.5">
                   <span class="text-[#8b8b88]">Prompt Cache Hit</span>
-                  <span id="cacheHitVal" class="text-[#e2c48a]">65%</span>
+                  <span id="cacheHitVal" class="text-[#e2c48a] tabular-nums">65%</span>
                 </div>
-                <input id="cacheHitSlider" type="range" min="0" max="90" step="5" value="65" class="w-full accent-[#d6b77a]" />
+                <input id="cacheHitSlider" type="range" min="0" max="90" step="5" value="65" autocomplete="off" class="cc-range w-full" />
               </div>
             </div>
 
@@ -203,6 +279,7 @@ const jsonLd = JSON.stringify({
               <span id="totalPrimaryUnit" class="text-sm font-mono text-[#8b8b88]">/ month</span>
             </div>
             <div id="totalSecondaryValue" class="text-xs font-mono text-[#e2c48a] mt-1">$0/yr projected</div>
+            <div id="discountSavingsBadge" style="display:none" class="mt-2.5 px-3 py-1.5 rounded-lg bg-[#211c16] border border-[#4c4030] text-[11px] font-mono text-[#e2c48a]"></div>
 
             <!-- KPIs -->
             <div class="grid grid-cols-3 gap-3 mt-5 pt-4 border-t border-[#1d1d1c]">
@@ -245,21 +322,46 @@ const jsonLd = JSON.stringify({
   </main>
 </DashboardLayout>
 
-<style is:global>
+<style is:inline>
   .cc-panel { background: rgba(255, 255, 255, 0.02); border: 1px solid #222; border-radius: 14px; padding: 20px; }
-  .cc-panel-featured { background: linear-gradient(180deg, rgba(33, 28, 22, 0.42) 0%, rgba(10, 10, 10, 0.9) 100%); border-color: #4c4030; }
+  .cc-panel-featured { background: linear-gradient(180deg, rgba(33, 28, 22, 0.42) 0%, rgba(10, 10, 10, 0.9) 100%); border-color: #4c4030; font-variant-numeric: tabular-nums; }
   .cc-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: #a3a3a3; font-weight: 600; }
   .cc-action-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 999px; font-size: 12px; font-family: 'JetBrains Mono', monospace; color: #dcdcd9; background: #111; border: 1px solid #2c2c2b; cursor: pointer; transition: all 0.2s; }
   .cc-action-btn:hover { color: #fff; border-color: #4c4030; background: #191612; }
   .cc-action-btn-primary { background: #f4f4f2; color: #000; border-color: #f4f4f2; font-weight: 500; }
   .cc-action-btn-primary:hover { background: #fff; color: #000; border-color: #fff; }
-  .cc-cycle-btn { padding: 5px 11px; font-size: 11px; font-family: 'JetBrains Mono', monospace; border-radius: 6px; color: #737373; cursor: pointer; transition: all 0.15s; }
-  .cc-cycle-btn.active { background: #211c16; color: #fff4de; border: 1px solid #4c4030; }
-  .cc-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 9999px; font-size: 11px; font-family: 'JetBrains Mono', monospace; background: #111; border: 1px solid #262626; color: #a3a3a3; cursor: pointer; transition: all 0.15s; }
-  .cc-chip:hover { border-color: #3d3529; color: #f4f4f2; }
-  .cc-chip.active { background: #211c16; border-color: #c8a96a; color: #fff4de; box-shadow: 0 0 0 3px rgba(214, 183, 122, 0.08); }
-  .cc-chip-price { color: #8b8b88; font-size: 10px; }
-  .cc-chip.active .cc-chip-price { color: #e2c48a; }
+  .cc-cycle-btn { padding: 5px 11px; font-size: 11px; font-family: 'JetBrains Mono', monospace; border-radius: 6px; color: #737373; border: 1px solid transparent; cursor: pointer; transition: background-color 0.15s, color 0.15s, border-color 0.15s; }
+  .cc-cycle-btn.active { background: #211c16; color: #fff4de; border-color: #4c4030; }
+  .cc-range { -webkit-appearance: none; appearance: none; height: 6px; border-radius: 999px; background: #1a1a1a; border: 1px solid #2a2a2a; outline: none; cursor: pointer; }
+  .cc-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #e2c48a; border: 2px solid #0a0a0a; box-shadow: 0 0 0 1px #c8a96a, 0 2px 6px rgba(0,0,0,0.6); cursor: grab; transition: transform 0.15s, background-color 0.15s; }
+  .cc-range::-webkit-slider-thumb:hover { transform: scale(1.1); background: #fff4de; }
+  .cc-range::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #e2c48a; border: 2px solid #0a0a0a; box-shadow: 0 0 0 1px #c8a96a; cursor: grab; }
+  .cc-team-input-shell { display: inline-flex; align-items: center; gap: 4px; padding: 4px; border-radius: 12px; background: linear-gradient(180deg, #16130f 0%, #0d0c0a 100%); border: 1px solid #352d22; box-shadow: inset 0 1px 0 rgba(255, 244, 222, 0.06), 0 4px 12px rgba(0, 0, 0, 0.35); flex-shrink: 0; transition: border-color 0.18s, box-shadow 0.18s; }
+  .cc-team-input-shell:hover { border-color: #4c4030; }
+  .cc-team-input-shell:focus-within { border-color: #c8a96a; box-shadow: inset 0 1px 0 rgba(255, 244, 222, 0.12), 0 0 0 3px rgba(200, 169, 106, 0.14); }
+  .cc-team-input-field { display: inline-flex; align-items: baseline; gap: 6px; padding: 4px 8px; cursor: text; }
+  .cc-team-input { width: 68px; background: transparent; border: none; outline: none; color: #fff4de; font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; -moz-appearance: textfield; appearance: textfield; }
+  .cc-team-input::-webkit-outer-spin-button, .cc-team-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .cc-team-input-unit { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #c8a96a; user-select: none; }
+  .cc-team-step-btn { width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; background: rgba(255, 255, 255, 0.03); border: 1px solid #26221c; color: #a3a3a3; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 600; line-height: 1; cursor: pointer; user-select: none; transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.1s; }
+  .cc-team-step-btn:hover { background: #262018; border-color: #c8a96a; color: #fff4de; }
+  .cc-team-step-btn:active { transform: scale(0.95); }
+  .cc-team-card { display: flex; flex-direction: column; justify-content: space-between; gap: 4px; padding: 9px 11px; border-radius: 10px; background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, rgba(255,255,255,0.008) 100%); border: 1px solid #222; text-align: left; cursor: pointer; transition: border-color 0.18s, background 0.18s, transform 0.18s, box-shadow 0.18s; font-variant-numeric: tabular-nums; }
+  .cc-team-card:hover { border-color: #3d3529; background: linear-gradient(180deg, rgba(214,183,122,0.06) 0%, rgba(255,255,255,0.015) 100%); transform: translateY(-1px); }
+  .cc-team-card.active { background: linear-gradient(180deg, #262018 0%, #17130e 100%); border-color: #c8a96a; box-shadow: inset 0 1px 0 rgba(255,244,222,0.12), 0 0 0 3px rgba(200,169,106,0.1); }
+  .cc-team-card-top { display: flex; align-items: center; justify-content: space-between; width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em; color: #737373; }
+  .cc-team-card.active .cc-team-card-top { color: #e2c48a; }
+  .cc-team-dot { width: 6px; height: 6px; border-radius: 999px; background: #262626; transition: background-color 0.18s, box-shadow 0.18s; }
+  .cc-team-card.active .cc-team-dot { background: #e2c48a; box-shadow: 0 0 8px rgba(226,196,138,0.7); }
+  .cc-team-card-val { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: #f4f4f2; letter-spacing: -0.02em; }
+  .cc-team-card.active .cc-team-card-val { color: #fff4de; }
+  .cc-team-card-val small { font-size: 10px; font-weight: 400; color: #737373; }
+  .cc-team-card.active .cc-team-card-val small { color: #c8a96a; }
+  .cc-chip { display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px; border-radius: 9px; font-size: 11px; font-family: 'JetBrains Mono', monospace; background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, rgba(255,255,255,0.008) 100%); border: 1px solid #242424; color: #cfcfcc; cursor: pointer; transition: border-color 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s; }
+  .cc-chip:hover { border-color: #3d3529; color: #f4f4f2; background: #171410; }
+  .cc-chip.active { background: linear-gradient(180deg, #262018 0%, #17130e 100%); border-color: #c8a96a; color: #fff4de; box-shadow: inset 0 1px 0 rgba(255,244,222,0.1), 0 0 0 3px rgba(214, 183, 122, 0.08); }
+  .cc-chip-price { color: #737373; font-size: 10px; padding-left: 6px; border-left: 1px solid #262626; }
+  .cc-chip.active .cc-chip-price { color: #e2c48a; border-left-color: #4c4030; }
   .cc-search-item { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 9px 13px; text-align: left; border-bottom: 1px solid #1d1d1c; cursor: pointer; transition: background 0.15s; }
   .cc-search-item:hover { background: #191612; }
   .cc-selected-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 12px; border-radius: 10px; background: #0f0f0f; border: 1px solid #222; }
@@ -267,9 +369,10 @@ const jsonLd = JSON.stringify({
   .cc-plan-select:focus { border-color: #c8a96a; outline: none; }
   .cc-remove-btn { width: 24px; height: 24px; border-radius: 6px; color: #737373; font-size: 16px; line-height: 1; cursor: pointer; transition: color 0.15s; }
   .cc-remove-btn:hover { color: #f87171; }
-  .cc-workload-btn { text-align: left; padding: 11px 13px; border-radius: 10px; background: #111; border: 1px solid #222; cursor: pointer; transition: all 0.15s; }
-  .cc-workload-btn:hover { border-color: #383838; }
-  .cc-workload-btn.active { border-color: #c8a96a; background: #211c16; box-shadow: 0 0 0 3px rgba(214, 183, 122, 0.08); }
+  .cc-workload-btn { text-align: left; padding: 11px 13px; border-radius: 10px; background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, rgba(255,255,255,0.008) 100%); border: 1px solid #222; cursor: pointer; transition: all 0.15s; }
+  .cc-workload-btn:hover { border-color: #3d3529; background: linear-gradient(180deg, rgba(214,183,122,0.06) 0%, rgba(255,255,255,0.015) 100%); }
+  .cc-workload-btn.active { border-color: #c8a96a; background: linear-gradient(180deg, #262018 0%, #17130e 100%); box-shadow: inset 0 1px 0 rgba(255,244,222,0.12), 0 0 0 3px rgba(214, 183, 122, 0.08); }
+  .cc-workload-btn.active .cc-team-dot { background: #e2c48a; box-shadow: 0 0 8px rgba(226,196,138,0.7); }
   .cc-provider-tab { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-family: 'JetBrains Mono', monospace; background: #111; border: 1px solid #222; color: #8b8b88; cursor: pointer; transition: all 0.15s; }
   .cc-provider-tab:hover { color: #f4f4f2; border-color: #383838; }
   .cc-provider-tab.active { border-color: #c8a96a; color: #fff4de; background: #211c16; }

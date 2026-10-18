@@ -2,42 +2,29 @@
  * DOM controller for /tools/cost-calculator.
  *
  * Kept in a dedicated module so pure calculation/caching logic (`js/cost-calculator.js`)
- * and interactive DOM rendering each stay single-responsibility and <300 lines.
+ * and interactive DOM rendering each stay single-responsibility and under 500 lines.
  */
 
 import {
-  WORKLOAD_PRESETS,
-  buildCalculatorUrlSearch,
-  calculateStackCost,
-  formatStackSummaryText,
-  formatUsd,
-  loadModelsPricing,
-  parseCalculatorStateFromUrl,
+  MAX_TEAM_SIZE, WORKLOAD_PRESETS, buildCalculatorUrlSearch, calculateStackCost,
+  formatStackSummaryText, formatUsd, loadModelsPricing, parseCalculatorStateFromUrl,
+  sliderToTeamSize, teamSizeToSlider,
 } from './cost-calculator.js';
 
 const POPULAR_TOOL_SLUGS = [
-  'cursor',
-  'github-copilot',
-  'claude-code',
-  'windsurf',
-  'zed',
-  'supermaven',
-  'jetbrains-ai-assistant',
-  'augment-code',
+  'cursor', 'github-copilot', 'claude-code', 'windsurf', 'devin',
+  'zed', 'supermaven', 'jetbrains-ai-assistant', 'augment-code',
 ];
 
-function esc(str) {
-  return String(str ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
+const esc = str =>
+  String(str ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 export function initCostCalculatorUI(catalog) {
   const paidCatalog = catalog.filter(t => Array.isArray(t.plans) && t.plans.length > 0);
   const state = parseCalculatorStateFromUrl(window.location.search);
-  // Filter initial seats to slugs that exist in paidCatalog
+  // Always start Negotiated / Commit Discount at 0% (List Price) by default on load
+  state.discountPercent = 0;
+
   state.selectedSeats = state.selectedSeats.filter(s => paidCatalog.some(t => t.slug === s.slug));
   if (state.selectedSeats.length === 0 && paidCatalog.length > 0) {
     const fallbackTool = paidCatalog.find(t => t.slug === 'cursor') ?? paidCatalog[0];
@@ -49,41 +36,32 @@ export function initCostCalculatorUI(catalog) {
   let toolSearchQuery = '';
   let lastBreakdown = null;
 
+  const byId = id => document.getElementById(id);
   const els = {
-    teamSlider: document.getElementById('teamSizeSlider'),
-    teamInput: document.getElementById('teamSizeInput'),
+    teamSlider: byId('teamSizeSlider'), teamInput: byId('teamSizeInput'),
+    teamDecBtn: byId('teamSizeDecBtn'), teamIncBtn: byId('teamSizeIncBtn'),
+    teamPresets: document.querySelectorAll('[data-team-preset]'),
+    discountSlider: byId('discountSlider'), discountVal: byId('discountVal'),
+    discountSavingsBadge: byId('discountSavingsBadge'),
     cycleBtns: document.querySelectorAll('[data-cycle]'),
-    presetChips: document.getElementById('popularToolChips'),
-    toolSearch: document.getElementById('toolSearchInput'),
-    toolDropdown: document.getElementById('toolSearchResults'),
-    selectedSeatsList: document.getElementById('selectedSeatsList'),
-    providerTabs: document.getElementById('providerTabs'),
-    modelPickerGrid: document.getElementById('modelPickerGrid'),
+    presetChips: byId('popularToolChips'), toolSearch: byId('toolSearchInput'),
+    toolDropdown: byId('toolSearchResults'), selectedSeatsList: byId('selectedSeatsList'),
+    providerTabs: byId('providerTabs'), modelPickerGrid: byId('modelPickerGrid'),
     workloadBtns: document.querySelectorAll('[data-workload]'),
-    inputSlider: document.getElementById('inputTokensSlider'),
-    outputSlider: document.getElementById('outputTokensSlider'),
-    cacheSlider: document.getElementById('cacheHitSlider'),
-    inputVal: document.getElementById('inputTokensVal'),
-    outputVal: document.getElementById('outputTokensVal'),
-    cacheVal: document.getElementById('cacheHitVal'),
-    cacheBadge: document.getElementById('modelsCacheBadge'),
-    refreshModelsBtn: document.getElementById('refreshModelsBtn'),
-    totalPrimary: document.getElementById('totalPrimaryValue'),
-    totalPrimaryUnit: document.getElementById('totalPrimaryUnit'),
-    totalSecondary: document.getElementById('totalSecondaryValue'),
-    perDevValue: document.getElementById('perDevValue'),
-    seatTotalValue: document.getElementById('seatTotalValue'),
-    apiTotalValue: document.getElementById('apiTotalValue'),
-    seatBarFill: document.getElementById('seatBarFill'),
-    apiBarFill: document.getElementById('apiBarFill'),
-    lineItemsList: document.getElementById('lineItemsList'),
-    alternativesList: document.getElementById('alternativesList'),
-    copyBtn: document.getElementById('copySummaryBtn'),
-    shareBtn: document.getElementById('shareCalcBtn'),
+    inputSlider: byId('inputTokensSlider'), outputSlider: byId('outputTokensSlider'),
+    cacheSlider: byId('cacheHitSlider'), inputVal: byId('inputTokensVal'),
+    outputVal: byId('outputTokensVal'), cacheVal: byId('cacheHitVal'),
+    cacheBadge: byId('modelsCacheBadge'), refreshModelsBtn: byId('refreshModelsBtn'),
+    totalPrimary: byId('totalPrimaryValue'), totalPrimaryUnit: byId('totalPrimaryUnit'),
+    totalSecondary: byId('totalSecondaryValue'), perDevValue: byId('perDevValue'),
+    seatTotalValue: byId('seatTotalValue'), apiTotalValue: byId('apiTotalValue'),
+    seatBarFill: byId('seatBarFill'), apiBarFill: byId('apiBarFill'),
+    lineItemsList: byId('lineItemsList'), alternativesList: byId('alternativesList'),
+    copyBtn: byId('copySummaryBtn'), shareBtn: byId('shareCalcBtn'),
   };
 
   function syncUrl() {
-    const search = buildCalculatorUrlSearch(state);
+    const search = buildCalculatorUrlSearch({ ...state, discountPercent: 0 });
     window.history.replaceState(null, '', `${window.location.pathname}${search}`);
   }
 
@@ -156,8 +134,7 @@ export function initCostCalculatorUI(catalog) {
 
     els.toolDropdown.querySelectorAll('[data-add-slug]').forEach(btn => {
       btn.addEventListener('click', () => {
-        const slug = btn.getAttribute('data-add-slug');
-        const tool = paidCatalog.find(t => t.slug === slug);
+        const tool = paidCatalog.find(t => t.slug === btn.getAttribute('data-add-slug'));
         if (tool) {
           state.selectedSeats.push({ slug: tool.slug, planName: tool.plans[0]?.name });
           toolSearchQuery = '';
@@ -213,8 +190,7 @@ export function initCostCalculatorUI(catalog) {
 
     els.selectedSeatsList.querySelectorAll('[data-remove-seat]').forEach(btn => {
       btn.addEventListener('click', () => {
-        const idx = Number(btn.getAttribute('data-remove-seat'));
-        state.selectedSeats.splice(idx, 1);
+        state.selectedSeats.splice(Number(btn.getAttribute('data-remove-seat')), 1);
         recalc();
       });
     });
@@ -242,10 +218,7 @@ export function initCostCalculatorUI(catalog) {
   function renderModelPicker() {
     if (!els.modelPickerGrid) return;
     const selectedIds = new Set(state.selectedModels.map(m => m.id));
-    const filtered = (activeProvider === 'All' ? models : models.filter(m => m.provider === activeProvider)).slice(
-      0,
-      24,
-    );
+    const filtered = (activeProvider === 'All' ? models : models.filter(m => m.provider === activeProvider)).slice(0, 24);
 
     els.modelPickerGrid.innerHTML = filtered
       .map(m => {
@@ -267,11 +240,8 @@ export function initCostCalculatorUI(catalog) {
       btn.addEventListener('click', () => {
         const id = btn.getAttribute('data-model-id');
         const idx = state.selectedModels.findIndex(m => m.id === id);
-        if (idx >= 0) {
-          state.selectedModels.splice(idx, 1);
-        } else {
-          state.selectedModels.push({ id });
-        }
+        if (idx >= 0) state.selectedModels.splice(idx, 1);
+        else state.selectedModels.push({ id });
         recalc();
       });
     });
@@ -289,15 +259,22 @@ export function initCostCalculatorUI(catalog) {
         ? `${formatUsd(secondaryAmount)}/mo equivalent`
         : `${formatUsd(secondaryAmount)}/yr projected`;
     }
+    if (els.discountSavingsBadge) {
+      if (breakdown.discountPercent > 0 && breakdown.discountMonthlySavings > 0) {
+        els.discountSavingsBadge.style.display = 'block';
+        els.discountSavingsBadge.textContent = `List: ${formatUsd(breakdown.listMonthlyTotal)}/mo · Saving ${formatUsd(breakdown.discountMonthlySavings)}/mo (-${breakdown.discountPercent}% negotiated)`;
+      } else {
+        els.discountSavingsBadge.style.display = 'none';
+      }
+    }
     if (els.perDevValue) els.perDevValue.textContent = `${formatUsd(breakdown.perDevMonthly)}/mo`;
     if (els.seatTotalValue) els.seatTotalValue.textContent = `${formatUsd(breakdown.seatMonthlyTotal)}/mo`;
     if (els.apiTotalValue) els.apiTotalValue.textContent = `${formatUsd(breakdown.apiMonthlyTotal)}/mo`;
 
     const total = breakdown.monthlyTotal || 1;
     const seatPct = breakdown.monthlyTotal > 0 ? Math.round((breakdown.seatMonthlyTotal / total) * 100) : 50;
-    const apiPct = breakdown.monthlyTotal > 0 ? 100 - seatPct : 50;
     if (els.seatBarFill) els.seatBarFill.style.width = `${seatPct}%`;
-    if (els.apiBarFill) els.apiBarFill.style.width = `${apiPct}%`;
+    if (els.apiBarFill) els.apiBarFill.style.width = `${100 - seatPct}%`;
 
     if (els.lineItemsList) {
       els.lineItemsList.innerHTML =
@@ -359,9 +336,7 @@ export function initCostCalculatorUI(catalog) {
             }
           } else if (alt.kind === 'model-swap') {
             const modelIdx = state.selectedModels.findIndex(m => m.id === alt.fromId);
-            if (modelIdx >= 0) {
-              state.selectedModels[modelIdx] = { id: alt.toSlugOrId };
-            }
+            if (modelIdx >= 0) state.selectedModels[modelIdx] = { id: alt.toSlugOrId };
           }
           recalc();
         });
@@ -370,8 +345,17 @@ export function initCostCalculatorUI(catalog) {
   }
 
   function syncControlsFromState() {
-    if (els.teamSlider) els.teamSlider.value = String(state.teamSize);
-    if (els.teamInput) els.teamInput.value = String(state.teamSize);
+    if (els.teamSlider) els.teamSlider.value = String(teamSizeToSlider(state.teamSize));
+    if (els.teamInput && document.activeElement !== els.teamInput) {
+      els.teamInput.value = String(state.teamSize);
+    }
+    els.teamPresets?.forEach(btn => {
+      btn.classList.toggle('active', Number(btn.getAttribute('data-team-preset')) === state.teamSize);
+    });
+    if (els.discountSlider) els.discountSlider.value = String(state.discountPercent || 0);
+    if (els.discountVal) {
+      els.discountVal.textContent = state.discountPercent > 0 ? `${state.discountPercent}% off` : '0% (List Price)';
+    }
     els.cycleBtns.forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-cycle') === state.billingCycle);
     });
@@ -392,25 +376,43 @@ export function initCostCalculatorUI(catalog) {
     renderSelectedSeats();
     renderModelPicker();
     lastBreakdown = calculateStackCost({
-      catalog,
-      models,
-      selectedSeats: state.selectedSeats,
-      selectedModels: state.selectedModels,
-      teamSize: state.teamSize,
-      billingCycle: state.billingCycle,
-      usage: state.usage,
+      catalog, models, selectedSeats: state.selectedSeats, selectedModels: state.selectedModels,
+      teamSize: state.teamSize, billingCycle: state.billingCycle, discountPercent: state.discountPercent, usage: state.usage,
     });
     renderDashboard(lastBreakdown);
     syncUrl();
   }
 
-  // Wire controls
   els.teamSlider?.addEventListener('input', e => {
-    state.teamSize = Number(e.target.value) || 1;
+    state.teamSize = sliderToTeamSize(e.target.value);
+    if (els.teamInput) els.teamInput.value = String(state.teamSize);
     recalc();
   });
+  const onTeamInputChange = e => {
+    state.teamSize = Math.max(1, Math.min(MAX_TEAM_SIZE, Math.round(Number(e.target.value) || 1)));
+    recalc();
+  };
+  els.teamInput?.addEventListener('input', onTeamInputChange);
   els.teamInput?.addEventListener('change', e => {
-    state.teamSize = Math.max(1, Math.min(250, Number(e.target.value) || 1));
+    onTeamInputChange(e);
+    if (els.teamInput) els.teamInput.value = String(state.teamSize);
+  });
+  const stepTeamSize = delta => {
+    state.teamSize = Math.max(1, Math.min(MAX_TEAM_SIZE, (Number(state.teamSize) || 1) + delta));
+    if (els.teamInput) els.teamInput.value = String(state.teamSize);
+    recalc();
+  };
+  els.teamDecBtn?.addEventListener('click', () => stepTeamSize(-1));
+  els.teamIncBtn?.addEventListener('click', () => stepTeamSize(1));
+  els.teamPresets?.forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.teamSize = Math.max(1, Math.min(MAX_TEAM_SIZE, Number(btn.getAttribute('data-team-preset')) || 1));
+      if (els.teamInput) els.teamInput.value = String(state.teamSize);
+      recalc();
+    });
+  });
+  els.discountSlider?.addEventListener('input', e => {
+    state.discountPercent = Math.max(0, Math.min(50, Number(e.target.value) || 0));
     recalc();
   });
   els.cycleBtns.forEach(btn => {
@@ -463,30 +465,25 @@ export function initCostCalculatorUI(catalog) {
       await navigator.clipboard.writeText(formatStackSummaryText(lastBreakdown, state.usage));
       const orig = els.copyBtn.textContent;
       els.copyBtn.textContent = 'Copied!';
-      setTimeout(() => {
-        els.copyBtn.textContent = orig;
-      }, 2000);
+      setTimeout(() => (els.copyBtn.textContent = orig), 2000);
     } catch {}
   });
 
   els.shareBtn?.addEventListener('click', async () => {
     try {
-      await navigator.clipboard.writeText(window.location.href);
+      const shareUrl = `${window.location.origin}${window.location.pathname}${buildCalculatorUrlSearch(state)}`;
+      await navigator.clipboard.writeText(shareUrl);
       const orig = els.shareBtn.textContent;
       els.shareBtn.textContent = 'Link Copied!';
-      setTimeout(() => {
-        els.shareBtn.textContent = orig;
-      }, 2000);
+      setTimeout(() => (els.shareBtn.textContent = orig), 2000);
     } catch {}
   });
 
   function updateCacheBadge(res) {
     if (!els.cacheBadge) return;
     const labelMap = {
-      live: 'Live from models.dev (cached 6h)',
-      'edge-cache': 'Edge cached from models.dev',
-      'client-cache': 'Cached locally from models.dev',
-      'stale-cache': 'Offline stale cache',
+      live: 'Live from models.dev (cached 6h)', 'edge-cache': 'Edge cached from models.dev',
+      'client-cache': 'Cached locally from models.dev', 'stale-cache': 'Offline stale cache',
       fallback: 'Built-in fallback snapshot',
     };
     els.cacheBadge.textContent = `${res.models.length} models · ${labelMap[res.source] || 'Ready'}`;

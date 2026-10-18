@@ -105,9 +105,9 @@ describe('js/cost-calculator client controller', () => {
     expect(stale.models.length).toBe(2);
   });
 
-  test('round-trips URL state parameters and formats readable plain-text summary', () => {
+  test('round-trips URL state parameters (including enterprise 10k+ headcounts) and piecewise slider mapping', () => {
     const search = buildCalculatorUrlSearch({
-      teamSize: 12,
+      teamSize: 10_000,
       billingCycle: 'annual',
       preset: 'custom',
       selectedSeats: [{ slug: 'cursor', planName: 'Business' }],
@@ -121,7 +121,7 @@ describe('js/cost-calculator client controller', () => {
     });
 
     const parsed = parseCalculatorStateFromUrl(search);
-    expect(parsed.teamSize).toBe(12);
+    expect(parsed.teamSize).toBe(10_000);
     expect(parsed.billingCycle).toBe('annual');
     expect(parsed.preset).toBe('custom');
     expect(parsed.selectedSeats).toEqual([{ slug: 'cursor', planName: 'Business' }]);

@@ -141,5 +141,25 @@ describe('cost-calculator engine', () => {
         expect(alt.href.startsWith('/tools/')).toBe(true);
       }
     }
+
+    // With 20% negotiated discount across seats + API
+    const discounted = calculateStackCost({
+      catalog,
+      models: FALLBACK_MODEL_PRICING,
+      selectedSeats: [
+        { slug: 'cursor', planName: 'Business' },
+        { slug: 'github-copilot', planName: 'Business' },
+      ],
+      selectedModels: [{ id: 'claude-opus-4-5', share: 1 }],
+      teamSize: 10,
+      billingCycle: 'monthly',
+      discountPercent: 20,
+      usage: WORKLOAD_PRESETS.daily,
+    });
+    expect(discounted.discountPercent).toBe(20);
+    expect(discounted.listMonthlyTotal).toBeCloseTo(breakdown.monthlyTotal, 2);
+    expect(discounted.seatMonthlyTotal).toBe(472); // $590 * 0.8
+    expect(discounted.monthlyTotal).toBeCloseTo(breakdown.monthlyTotal * 0.8, 1);
+    expect(discounted.discountMonthlySavings).toBeCloseTo(breakdown.monthlyTotal * 0.2, 1);
   });
 });
