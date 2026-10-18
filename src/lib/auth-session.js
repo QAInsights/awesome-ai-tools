@@ -7,6 +7,7 @@ export const AUTH_RETURN_PATHS = Object.freeze([
     '/favorites',
     '/zap',
     '/help',
+    '/tools/cost-calculator',
     '/tools/token-counter',
     '/tools/hallucination-scorer',
 ]);

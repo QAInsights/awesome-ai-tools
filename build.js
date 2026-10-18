@@ -58,6 +58,7 @@ const result = await build({
         // Utility pages — bundled as separate ES modules served at /dist/
         './js/token-counter.js',
         './js/hallucination-scorer.js',
+        './js/cost-calculator.js',
     ],
     outdir: './public/dist',
     root: './js',

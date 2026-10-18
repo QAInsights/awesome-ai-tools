@@ -3,6 +3,7 @@
 @plugin "@tailwindcss/typography";
 @source "../index.html";
 @source "../js/**/*.js";
+@source "./**/*.{astro,ts}";
 
 /* Self-hosted fonts (variable: one file covers all weights).
    latin-ext first so latin's narrower range wins the cascade for ASCII. */
