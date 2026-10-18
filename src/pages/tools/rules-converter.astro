@@ -1,0 +1,265 @@
+---
+/**
+ * Agent Rules & Config Converter (/tools/rules-converter).
+ *
+ * 100% client-side conversion between CLAUDE.md, Cursor .mdc,
+ * .cursorrules, AGENTS.md, .windsurfrules, and Copilot instructions.
+ */
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import { RULE_FORMATS } from '../../../js/rules-converter.js';
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://ai.dosa.dev/tools/rules-converter#app",
+      "name": "AI Agent Rules & Config Converter",
+      "url": "https://ai.dosa.dev/tools/rules-converter",
+      "description": "Convert AI coding rules between CLAUDE.md, Cursor .mdc, .cursorrules, .windsurfrules, AGENTS.md, and GitHub Copilot instructions. 100% client-side.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": [
+        "Convert CLAUDE.md to Cursor .mdc with YAML frontmatter",
+        "Convert Cursor rules to AGENTS.md, Windsurf, or Copilot",
+        "Auto-detection of rules format",
+        "1-click starter templates (Astro, Next.js, FastAPI, Clean Code)",
+        "Download formatted config files directly to disk",
+        "100% client-side — your code and prompts never leave your browser"
+      ],
+      "isPartOf": { "@type": "WebSite", "@id": "https://ai.dosa.dev/#website" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the difference between CLAUDE.md, .cursorrules, and Cursor .mdc?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "CLAUDE.md is read by Anthropic Claude Code in the repo root for build commands and guidelines. Cursor legacy used a single .cursorrules file, whereas modern Cursor uses modular .cursor/rules/*.mdc files with YAML frontmatter defining glob patterns and alwaysApply toggles."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is AGENTS.md?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AGENTS.md is an open, cross-agent specification used by tools like Codex, OpenCode, and multi-agent frameworks to document project setup, code conventions, and verification steps in a standardized format."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the converter upload my project rules to a server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The rules converter runs completely inside your browser using client-side JavaScript. Your text and project guidelines are never sent to any server."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ai.dosa.dev" },
+        { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://ai.dosa.dev/tools/token-counter" },
+        { "@type": "ListItem", "position": 3, "name": "Rules Converter", "item": "https://ai.dosa.dev/tools/rules-converter" }
+      ]
+    }
+  ]
+});
+---
+
+<DashboardLayout
+  title="AI Agent Rules & Config Converter — Cursor, Claude Code, Windsurf, Copilot | ai.dosa.dev"
+  description="Convert AI coding instructions between CLAUDE.md, Cursor .mdc, .cursorrules, .windsurfrules, AGENTS.md, and Copilot instructions. 100% client-side with starter templates."
+  canonical="https://ai.dosa.dev/tools/rules-converter"
+  activeNav="rules-converter"
+>
+  <script type="application/ld+json" set:html={jsonLd.replace(/</g, '\\u003c')} />
+
+  <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
+    <div class="max-w-[1360px] mx-auto w-full flex flex-col grow shrink-0 p-4 md:p-8 gap-6">
+
+      <!-- Page Header -->
+      <header class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-5 border-b border-[#1f1f1e]">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="rc-badge">Free Developer Utility</span>
+            <span class="rc-badge-sub">100% Client-Side</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-semibold tracking-tight text-[#f4f4f2] flex items-center gap-2.5">
+            AI Agent Rules &amp; Config Converter
+          </h1>
+          <p class="text-[#a3a3a3] text-sm leading-relaxed mt-1.5 max-w-[72ch]">
+            Seamlessly translate project instructions and agent guardrails between
+            <strong class="text-[#f4f4f2] font-medium">Claude Code</strong>,
+            <strong class="text-[#f4f4f2] font-medium">Cursor</strong>,
+            <strong class="text-[#f4f4f2] font-medium">Windsurf</strong>,
+            <strong class="text-[#f4f4f2] font-medium">AGENTS.md</strong>, and
+            <strong class="text-[#f4f4f2] font-medium">Copilot</strong>.
+          </p>
+        </div>
+        <div class="flex items-center gap-2.5 shrink-0">
+          <button id="shareLinkBtn" type="button" class="rc-action-btn rc-action-btn-primary">Share Config</button>
+        </div>
+      </header>
+
+      <!-- Starter Templates bar -->
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-xs font-mono uppercase tracking-wider text-[#737373] mr-1">Starter Presets:</span>
+        <button type="button" data-starter-tpl="astro-cf" class="rc-chip active">Astro + Cloudflare</button>
+        <button type="button" data-starter-tpl="next-ts" class="rc-chip">Next.js 15 App Router</button>
+        <button type="button" data-starter-tpl="python-fastapi" class="rc-chip">Python + FastAPI</button>
+        <button type="button" data-starter-tpl="clean-code" class="rc-chip">Strict Clean Code</button>
+      </div>
+
+      <!-- Main 2-column Converter Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 items-start">
+
+        <!-- Left Pane: Source Editor -->
+        <section class="rc-panel flex flex-col gap-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5">
+              <label for="sourceFormatSelect" class="text-xs font-mono uppercase text-[#a3a3a3]">From:</label>
+              <select id="sourceFormatSelect" class="rc-select" aria-label="Source rules format">
+                {RULE_FORMATS.map(f => (
+                  <option value={f.id}>{f.label} ({f.toolName})</option>
+                ))}
+              </select>
+              <span id="autoDetectBadge" class="rc-detect-tag">Auto-detecting…</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <input id="fileInput" type="file" accept=".md,.mdc,.txt,.json,.yml,.yaml" class="hidden" />
+              <button id="uploadBtn" type="button" class="rc-sub-btn" title="Upload local rules file">Upload File</button>
+              <button id="clearSourceBtn" type="button" class="rc-sub-btn" title="Clear input">Clear</button>
+            </div>
+          </div>
+
+          <textarea
+            id="sourceText"
+            rows="18"
+            placeholder="Paste your CLAUDE.md, .cursorrules, .mdc, or markdown instructions here…"
+            autocomplete="off"
+            spellcheck="false"
+            class="rc-textarea"
+            aria-label="Source rules text"
+          ></textarea>
+
+          <div class="flex items-center justify-between text-[11px] font-mono text-[#737373] pt-1 border-t border-[#1a1a19]">
+            <span id="sourceStats">0 chars · ~0 tokens</span>
+            <a href="/tools/token-counter" class="hover:text-[#e2c48a] transition-colors underline underline-offset-2">Token details →</a>
+          </div>
+        </section>
+
+        <!-- Right Pane: Target Output -->
+        <section class="rc-panel flex flex-col gap-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5">
+              <label for="targetFormatSelect" class="text-xs font-mono uppercase text-[#a3a3a3]">To:</label>
+              <select id="targetFormatSelect" class="rc-select" aria-label="Target rules format">
+                {RULE_FORMATS.map(f => (
+                  <option value={f.id}>{f.label} ({f.toolName})</option>
+                ))}
+              </select>
+              <button id="swapFormatsBtn" type="button" class="rc-swap-btn" title="Swap source and target formats" aria-label="Swap formats">⇄</button>
+            </div>
+            <div class="flex items-center gap-2">
+              <span id="targetFilenameBadge" class="rc-filename-badge">CLAUDE.md</span>
+              <button id="copyOutputBtn" type="button" class="rc-sub-btn rc-sub-btn-accent">Copy Output</button>
+              <button id="downloadOutputBtn" type="button" class="rc-sub-btn">Download</button>
+            </div>
+          </div>
+
+          <!-- Contextual Cursor MDC options -->
+          <div id="mdcOptionsPanel" style="display:none" class="grid grid-cols-1 sm:grid-cols-12 gap-2 p-2.5 rounded-lg bg-[#14120e] border border-[#30271c] text-xs">
+            <div class="sm:col-span-6 flex flex-col gap-1">
+              <label for="mdcDescriptionInput" class="text-[10px] font-mono uppercase text-[#c8a96a]">Rule Description</label>
+              <input id="mdcDescriptionInput" type="text" placeholder="e.g. Next.js 15 TypeScript guidelines" class="rc-sub-input" />
+            </div>
+            <div class="sm:col-span-3 flex flex-col gap-1">
+              <label for="mdcGlobsInput" class="text-[10px] font-mono uppercase text-[#c8a96a]">File Globs</label>
+              <input id="mdcGlobsInput" type="text" value="*" class="rc-sub-input font-mono" />
+            </div>
+            <div class="sm:col-span-3 flex items-center justify-end gap-2 pt-4">
+              <label class="inline-flex items-center gap-1.5 cursor-pointer text-xs font-mono text-[#dcdcd9]">
+                <input id="mdcAlwaysApplyCheck" type="checkbox" checked class="accent-[#c8a96a] rounded" />
+                <span>alwaysApply</span>
+              </label>
+            </div>
+          </div>
+
+          <textarea
+            id="outputText"
+            rows="18"
+            readonly
+            placeholder="Converted output will appear here…"
+            autocomplete="off"
+            spellcheck="false"
+            class="rc-textarea rc-textarea-out"
+            aria-label="Converted output text"
+          ></textarea>
+
+          <div class="flex items-center justify-between text-[11px] font-mono text-[#737373] pt-1 border-t border-[#1a1a19]">
+            <span id="outputStats">0 chars · ~0 tokens</span>
+            <a id="targetToolLink" href="/tools/cursor" class="text-[#e2c48a] hover:text-[#fff4de] transition-colors underline underline-offset-2">Inspect tool →</a>
+          </div>
+        </section>
+      </div>
+
+      <!-- Format Comparison Guide & FAQ -->
+      <section class="mt-4 pt-8 border-t border-[#1d1d1c]">
+        <h2 class="text-lg font-semibold text-[#f4f4f2] mb-3">AI Coding Rules File Reference</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+          {RULE_FORMATS.map(fmt => (
+            <div class="p-3.5 rounded-xl bg-[#0e0e0d] border border-[#222]">
+              <div class="flex items-center justify-between gap-2 mb-1">
+                <span class="text-xs font-semibold text-[#f4f4f2]">{fmt.label}</span>
+                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#1c1813] text-[#e2c48a] border border-[#3d3222]">{fmt.badge}</span>
+              </div>
+              <p class="text-[11px] text-[#8b8b88] leading-relaxed mb-2">{fmt.description}</p>
+              <div class="flex items-center justify-between text-[10px] font-mono text-[#737373] pt-2 border-t border-[#1a1a19]">
+                <code>{fmt.targetFile}</code>
+                <a href={`/tools/${fmt.toolSlug}`} class="text-[#c8a96a] hover:underline">{fmt.toolName} →</a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+    </div>
+  </main>
+</DashboardLayout>
+
+<style is:inline>
+  .rc-panel { background: rgba(255, 255, 255, 0.02); border: 1px solid #222; border-radius: 14px; padding: 18px; }
+  .rc-badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.12em; background: #211c16; border: 1px solid #4c4030; color: #e2c48a; }
+  .rc-badge-sub { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.12em; background: #141414; border: 1px solid #2a2a2a; color: #8b8b88; }
+  .rc-action-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 15px; border-radius: 999px; font-size: 12px; font-family: 'JetBrains Mono', monospace; color: #dcdcd9; background: #111; border: 1px solid #2c2c2b; cursor: pointer; transition: all 0.2s; }
+  .rc-action-btn-primary { background: #f4f4f2; color: #000; border-color: #f4f4f2; font-weight: 500; }
+  .rc-action-btn-primary:hover { background: #fff; border-color: #fff; }
+  .rc-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 8px; font-size: 11px; font-family: 'JetBrains Mono', monospace; background: #111; border: 1px solid #262626; color: #a3a3a3; cursor: pointer; transition: all 0.15s; }
+  .rc-chip:hover { border-color: #3d3529; color: #f4f4f2; background: #171410; }
+  .rc-chip.active { background: #211c16; border-color: #c8a96a; color: #fff4de; box-shadow: 0 0 0 2px rgba(200, 169, 106, 0.1); }
+  .rc-select { background: #12100d; border: 1px solid #352d22; border-radius: 8px; padding: 5px 10px; font-size: 12px; font-family: 'JetBrains Mono', monospace; color: #fff4de; outline: none; cursor: pointer; transition: border-color 0.15s; }
+  .rc-select:focus { border-color: #c8a96a; }
+  .rc-swap-btn { width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; background: #16130f; border: 1px solid #352d22; color: #c8a96a; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .rc-swap-btn:hover { background: #211c16; border-color: #c8a96a; color: #fff4de; transform: scale(1.05); }
+  .rc-sub-btn { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-family: 'JetBrains Mono', monospace; background: #141414; border: 1px solid #282828; color: #dcdcd9; cursor: pointer; transition: all 0.15s; }
+  .rc-sub-btn:hover { background: #222; color: #fff; }
+  .rc-sub-btn-accent { background: #211c16; border-color: #4c4030; color: #e2c48a; }
+  .rc-sub-btn-accent:hover { background: #2c251d; border-color: #c8a96a; color: #fff4de; }
+  .rc-filename-badge { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 3px 8px; border-radius: 6px; background: #111; border: 1px solid #282828; color: #e2c48a; }
+  .rc-detect-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #737373; padding: 2px 6px; border-radius: 4px; background: #111; }
+  .rc-textarea { width: 100%; border-radius: 10px; background: #0c0c0b; border: 1px solid #222; padding: 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.6; color: #f4f4f2; resize: vertical; outline: none; transition: border-color 0.18s; }
+  .rc-textarea:focus { border-color: #c8a96a; box-shadow: 0 0 0 2px rgba(200, 169, 106, 0.1); }
+  .rc-textarea-out { background: #090908; border-color: #1c1c1b; color: #e8e8e4; }
+  .rc-sub-input { background: #0c0b09; border: 1px solid #262118; border-radius: 6px; padding: 4px 8px; font-size: 11px; color: #fff4de; outline: none; }
+  .rc-sub-input:focus { border-color: #c8a96a; }
+</style>
+
+<script type="module">
+  import initRulesConverterUI from '/dist/rules-converter.js';
+  initRulesConverterUI();
+</script>
