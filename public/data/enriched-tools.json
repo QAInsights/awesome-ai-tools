@@ -10071,5 +10071,92 @@
       "Developer Productivity"
     ],
     "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "rakazo",
+    "name": "Rakazo",
+    "company": "Elie Steinbock (elie222)",
+    "pricing": "free",
+    "pricingDetail": "Free and open source under the Apache-2.0 license when self-hosted; you bring your own model API credentials and sandbox/computer provider, which are billed separately. The project is in beta.",
+    "description": "Rakazo is an open-source, self-hosted AI agent platform for persistent AI teammates. Each bot keeps its own conversations, memory, routines and history and works on shared or private computers with browser, terminal, file and desktop access, delegating to peer bots or subagents when needed.",
+    "keyFeatures": [
+      "Persistent bots with their own conversations, memory, routines and history",
+      "Shared Team Computers and isolated Private computers with browser, terminal, file and graphical desktop access",
+      "Delegation to peer bots or short-lived subagents",
+      "Bring-your-own models via Pi and sandboxes on Docker, E2B, Daytona, CreateOS, Box or a trusted local machine",
+      "Integrations through Composio, Pipedream Connect, remote MCP, OpenAPI and Treg tool sources",
+      "Web, Electron desktop, iPhone and Android apps with voice mode"
+    ],
+    "bestFor": "Developers and small teams who want a self-hosted, model-agnostic alternative to hosted agent assistants, with sandboxed computers and tool integrations they control.",
+    "notIdealFor": "Teams that want a fully managed, production-hardened coding agent today; Rakazo is in beta and self-hosting requires Docker plus your own model and sandbox credentials.",
+    "recentUpdates": "Released v0.2.0 and a downloadable Android APK on October 10, 2026, following v0.1.6 on September 8, 2026; the repository is under daily development (October 18, 2026 commits add new Claude model entries) and trended on GitHub in mid-October 2026.",
+    "verdict": "A fast-growing, well-structured open-source agent platform that gives OpenClaw- and Hermes-style persistent agents a polished multi-device UI and pluggable sandboxes; promising but still beta.",
+    "tags": [
+      "AI Agents",
+      "Autonomous Agents",
+      "Self-Hosted",
+      "Open Source",
+      "Sandboxes",
+      "MCP"
+    ],
+    "lastUpdated": "2026-10-18"
+  },
+  {
+    "slug": "lazyskills",
+    "name": "LazySkills",
+    "company": "Alvin (alvinunreal)",
+    "pricing": "free",
+    "pricingDetail": "Free and open source under the MIT license with no paid tiers.",
+    "description": "LazySkills is a fast terminal UI and CLI for managing AI agent skills. It shows every installed skill across project, global and agent-specific locations, checks which coding agents can actually see each one, and diagnoses broken installs before offering previewed, confirmation-gated fixes.",
+    "keyFeatures": [
+      "Single TUI view of project, global, universal and agent-specific skills",
+      "Per-agent visibility checks for Claude Code, OpenCode, Codex, Cursor, Gemini CLI and more",
+      "Detection of missing SKILL.md files, invalid frontmatter, broken symlinks, missing lock entries and ghost skills",
+      "Previewed, confirmation-gated reinstall, update, remove and prune actions",
+      "Search and install from skills.sh, plus lazyskills find --json for agents",
+      "Read-only lazyskills doctor health report and lock-file restore"
+    ],
+    "bestFor": "Developers who use several coding agents and have accumulated many agent skills that need auditing, fixing and syncing from the terminal.",
+    "notIdealFor": "Users who prefer a desktop GUI for skill management or who only use a handful of skills in a single agent.",
+    "recentUpdates": "Version 1.2.0 (September 26, 2026) added discovery of native OpenCode project skills, following v1.1.0 on September 7, 2026; the project trended on GitHub's Go list in October 2026.",
+    "verdict": "A focused, keyboard-driven tool that makes the growing mess of cross-agent skills inspectable and safely fixable; a strong pick for terminal-first agent users.",
+    "tags": [
+      "Developer Productivity",
+      "Agent Skills",
+      "TUI",
+      "CLI",
+      "Coding Agents",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-18"
+  },
+  {
+    "slug": "otari",
+    "name": "Otari",
+    "company": "Mozilla.ai",
+    "pricing": "freemium",
+    "pricingDetail": "The gateway is free and open source (Apache-2.0) to self-host in standalone mode; a hybrid mode connects a self-run data plane to the hosted otari.ai control plane. Model usage is billed by your providers.",
+    "description": "Otari is Mozilla.ai's open-source LLM gateway and control plane. It exposes one OpenAI- and Anthropic-compatible endpoint for 40+ providers, issues scoped virtual keys, enforces budgets before requests are dispatched and records usage, and its CLI adds repo-committed guardrails for coding agents.",
+    "keyFeatures": [
+      "OpenAI and Anthropic-compatible endpoint for 40+ providers via any-llm",
+      "Revocable virtual keys scoped by user, workspace and model",
+      "Budget checks before dispatch and usage tracking after settlement",
+      "Failover, weighted and learned routing policies with an admin dashboard",
+      "Optional code execution, web search, MCP and inference guardrails",
+      "otari hook Agent Guardrails that block forbidden coding-agent tool calls and diffs, also checkable in CI"
+    ],
+    "bestFor": "Teams that want to route Claude Code and other LLM clients through a self-hosted gateway with per-user keys, budgets and usage visibility.",
+    "notIdealFor": "Solo developers with a single provider key who do not need centralized key management, budgets or routing.",
+    "recentUpdates": "Shipped rapid releases through v0.28.0 on October 16, 2026, with active development continuing on October 18, 2026; Mozilla.ai launched it publicly in July 2026 as an open-source LLM control plane.",
+    "verdict": "A credible, actively developed open-source gateway from Mozilla.ai that combines provider routing and spend control with practical guardrails for coding agents.",
+    "tags": [
+      "AI Gateway",
+      "LLM Ops",
+      "Developer Productivity",
+      "Coding Agents",
+      "Governance",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-18"
   }
 ]
