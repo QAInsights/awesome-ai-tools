@@ -59,11 +59,16 @@ export interface CostDelta {
     toMonthlyPerSeat: number;
     fromPlanName: string | null;
     toPlanName: string | null;
+    /** Optional paid plan of a BYOK destination (e.g. OpenCode Go) - not counted in the delta. */
+    toOptionalPlan: { name: string; monthly: number } | null;
     monthlyDeltaPerSeat: number;
     annualDeltaTeam10: number;
     kind: 'cheaper' | 'pricier' | 'same' | 'byok' | 'unlisted';
     summary: string;
+    /** Short badge, e.g. "−$12/seat", "BYOK", "See pricing". */
+    label: string;
     calculatorHref: string;
+    calculatorLabel: string;
 }
 
 export interface MigrationStep {
@@ -89,22 +94,25 @@ export interface ResolvedSwitchGuide extends SwitchGuide {
 }
 
 const SITE = 'https://ai.dosa.dev';
-const money = (n: number) => `$${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(n)}`;
+const money = (n: number) => `$${new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(n)}`;
 const oneLine = (s?: string) => (s ?? '').replace(/\s+/g, ' ').trim();
 const BYOK = /\bBYOK\b|bring (?:their|your) own|own API keys?|user-provided API keys?/i;
-const firstSentence = (s: string | undefined, max: number) => truncate((oneLine(s).match(/^[^.;]+/) ?? [''])[0], max);
+const firstSentence = (s: string | undefined, max: number) => truncate(oneLine(s).split(/[.;](?=\s|$)/)[0] ?? '', max);
+const cents = (n: number) => Math.round(n * 100) / 100;
 const lowerFirst = (s: string) => (/^[A-Z][a-z]/.test(s) ? s.charAt(0).toLowerCase() + s.slice(1) : s);
 const asSentence = (s: string) => (/[.!?…]$/.test(s) ? s : s + '.');
 const fingerprint = (s: string) => s.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, ' ').trim();
 
 let _guides: SwitchGuide[] | null = null;
 
+/** All curated switch guides from data/switch-guides.json (cached). */
 export function getSwitchGuides(): SwitchGuide[] {
     if (_guides) return _guides;
     _guides = switchGuidesJson as SwitchGuide[];
     return _guides!;
 }
 
+/** Resolve a guide against the tool catalog; null when either slug is unknown or self-referential. */
 export function resolveSwitchGuide(g: SwitchGuide): ResolvedSwitchGuide | null {
     const fromTool = getToolBySlug(g.from);
     const toTool = getToolBySlug(g.to);
@@ -125,6 +133,7 @@ export function resolveSwitchGuide(g: SwitchGuide): ResolvedSwitchGuide | null {
     return { ...g, fromTool, toTool, lastUpdated: latest?.raw ?? null, fromProfile, toProfile, converterHref, costDelta: computeCostDelta(fromTool, toTool) };
 }
 
+/** Every guide with both tools resolved, in data-file order. */
 export function getResolvedSwitchGuides(): ResolvedSwitchGuide[] {
     return getSwitchGuides()
         .map(resolveSwitchGuide)
@@ -146,49 +155,69 @@ export function getReverseGuide(g: ResolvedSwitchGuide): ResolvedSwitchGuide | n
     return getResolvedSwitchGuides().find(o => o.from === g.to && o.to === g.from) ?? null;
 }
 
-/** Per-seat entry-price delta derived from the cost calculator catalog. */
+/**
+ * Per-seat entry-price delta derived from the cost calculator catalog.
+ * Open-source destinations are priced on their free BYOK path (optional paid
+ * plans are mentioned, not counted); destinations without a parseable seat
+ * price quote their own pricing sentence instead of claiming a saving.
+ */
 export function computeCostDelta(fromTool: Tool, toTool: Tool): CostDelta {
     const fromItem = buildCalculatorToolCatalog([fromTool])[0];
     const toItem = buildCalculatorToolCatalog([toTool])[0];
+    const detail = toTool.enriched?.pricingDetail ?? '';
     const fromMonthly = fromItem?.entryMonthly ?? 0;
-    const toMonthly = toItem?.entryMonthly ?? 0;
     const fromPlanName = fromItem?.plans[0]?.name ?? null;
-    const toPlanName = toItem?.plans[0]?.name ?? null;
-    const delta = toMonthly - fromMonthly;
+    const byok = Boolean(toItem && (toItem.openSource || (toItem.entryMonthly === 0 && BYOK.test(detail))));
+    const optional = byok && toItem?.plans[0] ? { name: toItem.plans[0].name, monthly: toItem.plans[0].monthlyAmount } : null;
+    const toMonthly = byok ? 0 : toItem?.entryMonthly ?? 0;
+    const toPlanName = byok ? null : toItem?.plans[0]?.name ?? null;
+    const delta = cents(toMonthly - fromMonthly);
+    const fromSeat = fromPlanName ? `${fromTool.slug}:${encodeURIComponent(fromPlanName)}` : null;
 
     let kind: CostDelta['kind'];
     let summary: string;
-    if (toMonthly === 0 && toItem && (toItem.openSource || BYOK.test(toTool.enriched?.pricingDetail ?? ''))) {
+    let calculatorHref: string;
+    let calculatorLabel: string;
+    if (byok) {
         kind = 'byok';
+        const opt = optional ? ` (${optional.name} is an optional ${money(optional.monthly)}/mo plan.)` : '';
         summary = fromMonthly > 0
-            ? `Shifts from a fixed ${money(fromMonthly)}/mo seat to pay-as-you-go API tokens.`
-            : 'Both are free or open-source at the entry tier; costs come from API token usage.';
+            ? `Shifts from a fixed ${money(fromMonthly)}/mo seat to pay-as-you-go API tokens.${opt}`
+            : `Both are free or open-source at the entry tier; costs come from API token usage.${opt}`;
+        calculatorHref = '/tools/cost-calculator?team=10&seats=none&preset=daily';
+        calculatorLabel = 'Model API token spend for 10 devs';
     } else if (toMonthly === 0) {
         kind = 'unlisted';
-        const detail = firstSentence(toTool.enriched?.pricingDetail, 140);
-        summary = `${toTool.name} has no fixed per-seat price listed${detail ? ` — ${asSentence(detail)}` : '.'}${fromMonthly > 0 ? ` Compare it against ${fromTool.name}'s ${money(fromMonthly)}/mo seat before switching.` : ''}`;
-    } else if (delta < 0) {
-        kind = 'cheaper';
-        summary = `Saves ${money(-delta)}/seat/mo (${money(-delta * 120)}/yr for a 10-dev team).`;
-    } else if (delta > 0) {
-        kind = 'pricier';
-        summary = `Costs ${money(delta)}/seat/mo more (+${money(delta * 120)}/yr for a 10-dev team).`;
+        const first = firstSentence(detail, 140);
+        summary = `${toTool.name} has no fixed per-seat price listed${first ? ` — ${asSentence(first)}` : '.'}${fromMonthly > 0 ? ` Compare it against ${fromTool.name}'s ${money(fromMonthly)}/mo seat before switching.` : ''}`;
+        calculatorHref = `/tools/cost-calculator?team=10&seats=${fromSeat ?? 'none'}`;
+        calculatorLabel = fromSeat ? `Model your current ${fromTool.name} seats` : 'Open the cost calculator';
     } else {
-        kind = 'same';
-        summary = `Same entry price (${money(toMonthly)}/mo per seat).`;
+        calculatorHref = `/tools/cost-calculator?team=10&seats=${toTool.slug}:${encodeURIComponent(toPlanName!)}`;
+        calculatorLabel = 'Simulate 10-dev cost delta';
+        if (Math.abs(delta) < 1) {
+            kind = 'same';
+            summary = delta === 0
+                ? `Same entry price (${money(toMonthly)}/mo per seat).`
+                : `Effectively the same entry price (${money(fromMonthly)} vs ${money(toMonthly)} per seat/mo).`;
+        } else if (delta < 0) {
+            kind = 'cheaper';
+            summary = `Saves ${money(-delta)}/seat/mo (${money(cents(-delta * 120))}/yr for a 10-dev team).`;
+        } else {
+            kind = 'pricier';
+            summary = `Costs ${money(delta)}/seat/mo more (+${money(cents(delta * 120))}/yr for a 10-dev team).`;
+        }
     }
+    const label = { cheaper: `−${money(-delta)}/seat`, pricier: `+${money(delta)}/seat`, same: 'Same price', byok: 'BYOK', unlisted: 'See pricing' }[kind];
+    return { fromMonthlyPerSeat: fromMonthly, toMonthlyPerSeat: toMonthly, fromPlanName, toPlanName, toOptionalPlan: optional, monthlyDeltaPerSeat: delta, annualDeltaTeam10: cents(delta * 120), kind, summary, label, calculatorHref, calculatorLabel };
+}
 
-    return {
-        fromMonthlyPerSeat: fromMonthly,
-        toMonthlyPerSeat: toMonthly,
-        fromPlanName,
-        toPlanName,
-        monthlyDeltaPerSeat: delta,
-        annualDeltaTeam10: delta * 120,
-        kind,
-        summary,
-        calculatorHref: `/tools/cost-calculator?team=10&seats=${toTool.slug}${toPlanName ? `:${encodeURIComponent(toPlanName)}` : ''}`,
-    };
+/** Entry-plan cell label for spec sheets: "BYOK (optional X $10/mo)" for BYOK destinations. */
+export function entryPlanLabel(d: CostDelta, side: 'from' | 'to'): string {
+    if (side === 'to' && d.toOptionalPlan) return `BYOK (optional ${d.toOptionalPlan.name} ${money(d.toOptionalPlan.monthly)}/mo)`;
+    const monthly = side === 'from' ? d.fromMonthlyPerSeat : d.toMonthlyPerSeat;
+    const plan = side === 'from' ? d.fromPlanName : d.toPlanName;
+    return plan ? `${plan} (${money(monthly)}/mo)` : monthly > 0 ? `${money(monthly)}/mo` : '—';
 }
 
 const TRANSITION_SENTENCE: Record<TransitionType, string> = {
@@ -214,9 +243,9 @@ export function buildMigrationSteps(g: ResolvedSwitchGuide): MigrationStep[] {
     } else if (g.fromProfile && g.toProfile) {
         audit = { name: `Audit & export your ${from} rules`, text: `${from} reads repo-level rules from ${g.fromProfile.path}; ${to} reads the same format, so copy the file as-is to ${g.toProfile.path}.` };
     } else if (g.fromProfile) {
-        audit = { name: `Audit & export your ${from} rules`, text: `${from} reads repo-level rules from ${g.fromProfile.path}. ${to} has no repo-level rules file, so keep them as team docs or recreate them in ${to}'s settings.` };
+        audit = { name: `Audit & export your ${from} rules`, text: `${from} reads repo-level rules from ${g.fromProfile.path}. ${to} isn't covered by the Rules Converter — check its own project-config docs and keep these notes as team docs.` };
     } else {
-        audit = { name: `Audit & export your ${from} rules`, text: `List the prompts, snippets and settings you rely on in ${from}; ${to} ${g.toProfile ? `reads ${g.toProfile.path} — port the ones that still apply` : 'has no repo-level rules file, so keep this list as team docs'}.` };
+        audit = { name: `Audit & export your ${from} rules`, text: `List the prompts, snippets and settings you rely on in ${from}; ${to} ${g.toProfile ? `reads ${g.toProfile.path} — port the ones that still apply` : `isn't covered by the Rules Converter — keep this list as team docs and check ${to}'s own project-config docs`}.` };
     }
 
     const siteUrl = /^https?:\/\//i.test(g.toTool.url ?? '') ? addOutboundUtmParams(g.toTool.url) : undefined;
@@ -253,7 +282,7 @@ export function buildTradeoffs(g: ResolvedSwitchGuide): Tradeoffs {
         if (!fromFingerprints.has(fingerprint(feature))) gain.push(asSentence(truncate(feature, 160)));
     }
     const giveUp: string[] = [];
-    if (g.fromTool.enriched?.bestFor) giveUp.push(asSentence(`${from} remains stronger for ${lowerFirst(truncate(g.fromTool.enriched.bestFor, 200))}`));
+    if (g.fromTool.enriched?.bestFor) giveUp.push(asSentence(`${from} is positioned for ${lowerFirst(truncate(g.fromTool.enriched.bestFor, 200))} — confirm ${to} covers that before cancelling seats`));
     if (g.toTool.enriched?.notIdealFor) giveUp.push(asSentence(`${to} is not ideal for ${lowerFirst(truncate(g.toTool.enriched.notIdealFor, 200))}`));
     const together = g.fromTool.categoryShort === g.toTool.categoryShort
         ? `Running both is mostly redundant — pilot ${to} on one repo for a sprint, then pick one.`
@@ -273,11 +302,11 @@ export function buildSwitchFaqs(g: ResolvedSwitchGuide): { q: string; a: string 
     } else if (g.fromProfile && g.toProfile) {
         rules = `Both tools use the same rules format — copy ${g.fromProfile.path} to ${g.toProfile.path} as-is.`;
     } else if (g.fromProfile) {
-        rules = `${to} has no repo-level rules file — keep your ${g.fromProfile.path} contents as team docs or recreate them in ${to}'s settings.`;
+        rules = `${to} isn't covered by the Rules Converter — check its own project-config docs and keep your ${g.fromProfile.path} contents as team docs.`;
     } else if (g.toProfile) {
-        rules = `${from} has no repo-level rules file; recreate your saved prompts and settings in ${g.toProfile.path}.`;
+        rules = `${from} isn't covered by the Rules Converter — recreate your saved prompts and settings in ${g.toProfile.path}.`;
     } else {
-        rules = 'Neither tool uses a repo-level rules file — carry your prompts and settings over manually as team docs.';
+        rules = 'Neither tool is covered by the Rules Converter — carry prompts and settings over manually as team docs, and check each tool\'s own config docs.';
     }
 
     const seat = (name: string, monthly: number, plan: string | null) =>
@@ -363,7 +392,7 @@ export function switchGuideMarkdown(g: ResolvedSwitchGuide): string {
     const cell = (s?: string) => oneLine(s).replace(/\|/g, '\\|') || '-';
     const row = (label: string, pick: (t: Tool, profile: ToolRulesProfile | null) => string | undefined) =>
         `| ${label} | ${cell(pick(g.fromTool, g.fromProfile))} | ${cell(pick(g.toTool, g.toProfile))} |`;
-    const entry = (monthly: number, plan: string | null) => (plan ? `${plan} (${money(monthly)}/mo)` : monthly > 0 ? `${money(monthly)}/mo` : '—');
+    const entry = (side: 'from' | 'to') => entryPlanLabel(g.costDelta, side);
     const signed = (n: number) => `${n > 0 ? '+' : n < 0 ? '−' : ''}${money(Math.abs(n))}`;
     const compare = getResolvedComparisons().find(c => (c.a === g.from && c.b === g.to) || (c.a === g.to && c.b === g.from));
     const reverse = getReverseGuide(g);
@@ -384,7 +413,7 @@ export function switchGuideMarkdown(g: ResolvedSwitchGuide): string {
         '',
         `| | ${cell(from)} | ${cell(to)} |`,
         '|---|---|---|',
-        `| Entry paid plan | ${entry(g.costDelta.fromMonthlyPerSeat, g.costDelta.fromPlanName)} | ${entry(g.costDelta.toMonthlyPerSeat, g.costDelta.toPlanName)} |`,
+        `| Entry paid plan | ${entry('from')} | ${entry('to')} |`,
         `| Per-seat monthly delta | ${signed(g.costDelta.monthlyDeltaPerSeat)} | |`,
         `| 10-dev team annual delta | ${signed(g.costDelta.annualDeltaTeam10)} | |`,
         '',
@@ -392,8 +421,8 @@ export function switchGuideMarkdown(g: ResolvedSwitchGuide): string {
         '',
         '## Config migration',
         '',
-        `- ${from} rules: ${g.fromProfile ? `\`${g.fromProfile.path}\`` : 'no repo-level rules file'}`,
-        `- ${to} rules: ${g.toProfile ? `\`${g.toProfile.path}\`` : 'no repo-level rules file'}`,
+        `- ${from} rules: ${g.fromProfile ? `\`${g.fromProfile.path}\`` : 'not covered by the Rules Converter — check its own project-config docs'}`,
+        `- ${to} rules: ${g.toProfile ? `\`${g.toProfile.path}\`` : 'not covered by the Rules Converter — check its own project-config docs'}`,
     ];
     if (g.converterHref) lines.push(`- Convert with the Rules Converter: ${SITE}${g.converterHref}`);
     lines.push('', '## 4-step checklist', '');
@@ -417,7 +446,7 @@ export function switchGuideMarkdown(g: ResolvedSwitchGuide): string {
         row('Company', t => t.company),
         row('Category', t => t.categoryClean),
         row('Pricing', t => humanizePricing(t.enriched?.pricing)),
-        `| Entry paid plan | ${entry(g.costDelta.fromMonthlyPerSeat, g.costDelta.fromPlanName)} | ${entry(g.costDelta.toMonthlyPerSeat, g.costDelta.toPlanName)} |`,
+        `| Entry paid plan | ${entry('from')} | ${entry('to')} |`,
         row('Rules file', (_t, p) => p?.path),
         '',
         '## FAQ',

@@ -26,7 +26,7 @@ export function initCostCalculatorUI(catalog) {
   state.discountPercent = 0;
 
   state.selectedSeats = state.selectedSeats.filter(s => paidCatalog.some(t => t.slug === s.slug));
-  if (state.selectedSeats.length === 0 && paidCatalog.length > 0) {
+  if (!state.seatsExplicit && state.selectedSeats.length === 0 && paidCatalog.length > 0) {
     const fallbackTool = paidCatalog.find(t => t.slug === 'cursor') ?? paidCatalog[0];
     state.selectedSeats = [{ slug: fallbackTool.slug, planName: fallbackTool.plans[0]?.name }];
   }

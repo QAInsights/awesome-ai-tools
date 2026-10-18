@@ -18,6 +18,7 @@ import {
     buildTradeoffs,
     switchQuickAnswer,
     switchGuideJsonLd,
+    entryPlanLabel,
     type ResolvedSwitchGuide,
 } from '../../lib/switch-guides';
 import { getResolvedComparisons, hasAlternativesPage, humanizePricing } from '../../lib/compare';
@@ -55,7 +56,6 @@ const { gain, giveUp, together } = buildTradeoffs(guide);
 const lastUpdatedLabel = formatDate(guide.lastUpdated);
 
 const delta = guide.costDelta;
-const deltaLabel = { cheaper: `−$${Math.abs(delta.monthlyDeltaPerSeat)}/seat`, pricier: `+$${delta.monthlyDeltaPerSeat}/seat`, same: 'Same price', byok: 'BYOK', unlisted: 'See pricing' }[delta.kind];
 const reverse = getReverseGuide(guide);
 const compare = getResolvedComparisons().find(c => (c.a === guide.from && c.b === guide.to) || (c.a === guide.to && c.b === guide.from));
 const alternativesLinks = [fromTool, toTool].filter(t => hasAlternativesPage(t.slug));
@@ -72,18 +72,16 @@ const sides = [fromTool, toTool].map(t => ({
 }));
 const facts = [
     ...sides.map(({ t, price }) => ({ k: `${t.name} from`, v: price.entry ? `${price.entry.price}${price.entry.unit}` : price.main })),
-    { k: 'Per seat delta', v: deltaLabel },
+    { k: 'Per seat delta', v: delta.label },
     { k: 'Updated', v: lastUpdatedLabel || '—' },
 ];
-const entryLabel = (monthly: number, plan: string | null) =>
-    plan ? `${plan} ($${new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(monthly)}/mo)` : monthly > 0 ? `$${monthly}/mo` : '—';
 const sections = ['brief', 'rules', 'steps', 'tradeoffs', 'spec', 'faq', (related.length || reverse || compare || alternativesLinks.length) && 'more'].filter(Boolean) as string[];
 const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
 ---
 
 <BaseLayout
     title={`Switch from ${from} to ${to} (2026): Migration Guide, Config & Cost | ai.dosa.dev`}
-    description={`Move from ${from} to ${to}: config file mapping (${guide.fromProfile?.path ?? 'no rules file'} → ${guide.toProfile?.path ?? 'no rules file'}), a 4-step migration checklist, seat cost delta and trade-offs.`}
+    description={`Move from ${from} to ${to}: config file mapping (${guide.fromProfile?.path ?? 'not covered by the Rules Converter'} → ${guide.toProfile?.path ?? 'not covered by the Rules Converter'}), a 4-step migration checklist, seat cost delta and trade-offs.`}
     keywords={`switch from ${from} to ${to}, ${from} to ${to} migration, ${to} migration guide, ${from} alternative, ${guide.group}`}
     canonical={pageUrl}
     robots={robotsFor(`/switch/${guide.slug}`)}
@@ -158,12 +156,12 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                     <div class="fo-body">
                         <div class="fo-track">
                             <div>
-                                <b><span class="sw-code">{guide.fromProfile?.path ?? 'no rules file'}</span> → <span class="sw-code">{guide.toProfile?.path ?? 'no rules file'}</span></b>
+                                <b><span class="sw-code">{guide.fromProfile?.path ?? 'not covered by converter'}</span> → <span class="sw-code">{guide.toProfile?.path ?? 'not covered by converter'}</span></b>
                                 <p>{guide.converterHref
                                     ? `Convert ${from} rules to the ${to} format, then review the output before committing.`
                                     : guide.fromProfile && guide.toProfile
                                         ? `${to} reads the same rules format - copy the file as-is.`
-                                        : 'No automated conversion for this pair - carry prompts and settings over manually as team docs.'}</p>
+                                        : 'This pair is not fully covered by the Rules Converter - carry prompts and settings over manually as team docs, and check each tool\'s own config docs.'}</p>
                             </div>
                             <div>
                                 {guide.converterHref
@@ -173,11 +171,11 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                         </div>
                         <div class="fo-track">
                             <div>
-                                <b>{deltaLabel}</b>
+                                <b>{delta.label}</b>
                                 <p>{delta.summary}</p>
                             </div>
                             <div>
-                                <a class="fo-btn" href={delta.calculatorHref}>Simulate 10-dev cost delta <i aria-hidden="true">→</i></a>
+                                <a class="fo-btn" href={delta.calculatorHref}>{delta.calculatorLabel} <i aria-hidden="true">→</i></a>
                             </div>
                         </div>
                     </div>
@@ -254,8 +252,8 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                                 </tr>
                                 <tr>
                                     <th scope="row">Entry paid plan</th>
-                                    <td>{entryLabel(delta.fromMonthlyPerSeat, delta.fromPlanName)}</td>
-                                    <td>{entryLabel(delta.toMonthlyPerSeat, delta.toPlanName)}</td>
+                                    <td>{entryPlanLabel(delta, 'from')}</td>
+                                    <td>{entryPlanLabel(delta, 'to')}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Rules file</th>

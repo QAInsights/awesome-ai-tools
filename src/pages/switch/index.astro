@@ -28,14 +28,6 @@ for (const g of guides) {
 }
 const ordinals = new Map(guides.map((g, i) => [g.slug, i + 1]));
 
-const deltaBadge = (g: ResolvedSwitchGuide) => {
-    const d = g.costDelta;
-    if (d.kind === 'cheaper') return `−$${Math.abs(d.monthlyDeltaPerSeat)}/seat`;
-    if (d.kind === 'pricier') return `+$${d.monthlyDeltaPerSeat}/seat`;
-    if (d.kind === 'same') return 'Same price';
-    if (d.kind === 'byok') return 'BYOK';
-    return 'See pricing';
-};
 
 const jsonLd = JSON.stringify({
     "@context": "https://schema.org",
@@ -138,7 +130,7 @@ const jsonLd = JSON.stringify({
                                         <h3><a href={`/switch/${g.slug}`}>{g.fromTool.name} → {g.toTool.name}</a></h3>
                                         <p>{g.primaryReason}</p>
                                     </div>
-                                    <span class="pr">{deltaBadge(g)}</span>
+                                    <span class="pr">{g.costDelta.label}</span>
                                 </div>
                             ))}
                         </div>

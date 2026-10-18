@@ -12,8 +12,16 @@ import {
     resolveSwitchGuide,
     switchGuideMarkdown,
 } from './switch-guides';
-import { getToolBySlug } from './tools';
+import { getToolBySlug, type Tool } from './tools';
+import { buildCalculatorToolCatalog } from './cost-calculator';
 import { getIndexingDecisions, robotsFor } from './indexing';
+
+function makeTool(slug: string, pricing: string, pricingDetail: string): Tool {
+    return {
+        slug, name: slug, company: 'Acme', category: 'Terminal & CLI Agents', categoryClean: 'Terminal & CLI Agents', categoryShort: 'CLI Agents', notes: '', url: 'https://example.com',
+        enriched: { slug, pricing, pricingDetail, description: 'd', keyFeatures: ['k'], bestFor: 'b', verdict: 'v', lastUpdated: '2026-09-01' },
+    };
+}
 
 const FORMAT_IDS = new Set(RULE_FORMATS.map((f: { id: string }) => f.id));
 
@@ -82,13 +90,44 @@ describe('cost delta', () => {
     test('BYOK, unlisted and same-price kinds follow the parsed pricing data', () => {
         const bySlug = new Map(getResolvedSwitchGuides().map(g => [g.slug, g]));
         expect(bySlug.get('cursor-to-cline')?.costDelta.kind).toBe('byok');
+        expect(bySlug.get('github-copilot-to-cline')?.costDelta.kind).toBe('byok');
         expect(bySlug.get('claude-code-to-aider')?.costDelta.kind).toBe('byok');
+
+        const opencode = bySlug.get('claude-code-to-opencode')?.costDelta;
+        expect(opencode?.kind).toBe('byok');
+        expect(opencode?.toOptionalPlan?.name).toBe('OpenCode Go');
+        expect(opencode?.summary).toContain('optional $10/mo plan');
+        expect(opencode?.calculatorHref).toBe('/tools/cost-calculator?team=10&seats=none&preset=daily');
+
         const codex = bySlug.get('cursor-to-codex-cli')?.costDelta;
         expect(codex?.kind).toBe('unlisted');
         expect(codex?.summary).toContain('no fixed per-seat price');
         expect(codex?.summary).toContain('Included in ChatGPT plans');
+        expect(codex?.calculatorHref).toMatch(/^\/tools\/cost-calculator\?team=10&seats=cursor:/);
+
         expect(bySlug.get('cursor-to-antigravity')?.costDelta.kind).toBe('unlisted');
         expect(bySlug.get('github-copilot-to-supermaven')?.costDelta.kind).toBe('same');
+    });
+
+    test('firstSentence does not cut at a decimal point in the price', () => {
+        const from = makeTool('seat-tool', 'paid', 'Pro is $20/month.');
+        const to = makeTool('token-tool', 'paid', 'Usage billed at $1.25 per million tokens. No seats.');
+        const delta = computeCostDelta(from, to);
+        expect(delta.kind).toBe('unlisted');
+        expect(delta.summary).toContain('$1.25 per million tokens');
+    });
+
+    test('deltas stay at 2 decimals, labels are non-empty and seat links reference real plans', () => {
+        for (const g of getResolvedSwitchGuides()) {
+            const d = g.costDelta;
+            expect(Number.isInteger(Math.round(d.monthlyDeltaPerSeat * 100) / 100)).toBe(true);
+            expect(d.label.length).toBeGreaterThan(0);
+            const seatMatch = d.calculatorHref.match(/seats=([a-z0-9-]+):/);
+            if (seatMatch) {
+                const tool = getToolBySlug(seatMatch[1]!)!;
+                expect(buildCalculatorToolCatalog([tool])[0]?.plans.length ?? 0).toBeGreaterThan(0);
+            }
+        }
     });
 });
 
