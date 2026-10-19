@@ -2232,6 +2232,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "harness2",
+    "name": "Harness2",
+    "company": "Google Research",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",

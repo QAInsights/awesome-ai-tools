@@ -10303,5 +10303,34 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-19"
+  },
+  {
+    "slug": "harness2",
+    "name": "Harness2",
+    "company": "Google Research",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under Apache-2.0. The local demo needs no model credentials; benchmark runs call Vertex AI models and incur your own API costs.",
+    "description": "Harness2 (Harness²) is Google Research's open-source framework for recursive agent harnessing. Model weights stay fixed while it refines the harness around coding agents such as OpenCode and Codex for each task, and it accumulates lessons in a persistent improvement harness for tasks it has not seen before.",
+    "keyFeatures": [
+      "Task-level Propose-Probe-Compose refinement without ground-truth feedback",
+      "Persistent improvement harness that keeps adopted harnesses and lessons",
+      "Eight editable components: system prompt, guardrails, memory, tool guidance, subagents, skills, scripts and plugins",
+      "Parallel and sequential recursion modes with a configurable budget",
+      "OpenCode and Codex executors",
+      "JobBench, LAB and WorkBuddy-Bench setup, judging and reporting CLIs"
+    ],
+    "bestFor": "Researchers and agent builders who want to automatically tune prompts, skills, tools and guardrails around coding agents and measure the gains on benchmarks.",
+    "notIdealFor": "Developers looking for a ready-to-use coding assistant; it is a Linux and Python 3.12 research framework that needs Vertex AI setup for model-backed runs.",
+    "recentUpdates": "Open-sourced by Google Research on October 8, 2026 with an accompanying arXiv paper; the repository was updated on October 14, 2026 and reached the Hacker News front page on October 19, 2026.",
+    "verdict": "A notable research release that treats the agent harness, not the model, as the thing to optimize, with practical OpenCode and Codex integration for experimentation.",
+    "tags": [
+      "Agent Harness",
+      "Coding Agents",
+      "Research",
+      "Benchmarks",
+      "Self-Improvement",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-19"
   }
 ]
