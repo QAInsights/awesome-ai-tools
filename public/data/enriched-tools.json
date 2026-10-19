@@ -10332,5 +10332,34 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-19"
+  },
+  {
+    "slug": "orchestratorinc",
+    "name": "Orchestrator.inc",
+    "company": "Orchestrator.inc",
+    "pricing": "open-source",
+    "pricingDetail": "The desktop app and daemon are free and open source under Apache-2.0. You bring your own coding-agent CLIs and their subscriptions or API keys.",
+    "description": "Orchestrator.inc is an open-source desktop workspace for running many coding agents on a project. Each worker gets an isolated branch and worktree, a persistent project orchestrator plans and delegates the work, and a live Kanban follows every worker's pull request, CI and review state until merge.",
+    "keyFeatures": [
+      "Workers pairing one task and one agent with an isolated Git branch and worktree",
+      "Persistent project orchestrator that plans, splits and delegates tasks",
+      "Live Kanban derived from session, pull request, CI and review state",
+      "CI failures and review comments routed back to the agent that owns the work",
+      "Per-worker terminal, structured Chat and isolated agent-controllable browser",
+      "Supports Claude Code, Codex, Cursor, opencode, Aider, Copilot, Devin and 30+ agents"
+    ],
+    "bestFor": "Developers running several coding agents in parallel who want one place to plan work, isolate branches and track PRs through CI and review.",
+    "notIdealFor": "Developers who use a single agent in one terminal and do not need multi-agent coordination or Kanban tracking.",
+    "recentUpdates": "Released v0.14.3 on October 19, 2026, with nightly builds published daily and desktop installers for macOS, Windows and Linux.",
+    "verdict": "A capable open-source command center for multi-agent development with broad agent support and tight PR, CI and review integration.",
+    "tags": [
+      "Agent Orchestration",
+      "Parallel Agents",
+      "Coding Agents",
+      "Desktop App",
+      "Git Worktrees",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-19"
   }
 ]
