@@ -1,5 +1,446 @@
 [
   {
+    "week": "2026-w42",
+    "start": "2026-10-12T00:00:00.000Z",
+    "end": "2026-10-19T00:00:00.000Z",
+    "generatedAt": "2026-10-19T04:43:30.784Z",
+    "entries": [
+      {
+        "slug": "rea",
+        "name": "REA",
+        "company": "morluto",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 20,
+        "rank": 1,
+        "score": 919,
+        "starGrowth": 208193
+      },
+      {
+        "slug": "magpie",
+        "name": "magpie",
+        "company": "yetone",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 2,
+        "score": 161.6,
+        "starGrowth": 6528
+      },
+      {
+        "slug": "deepseek-harness",
+        "name": "DeepSeek Harness",
+        "company": "DeepSeek",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 30,
+        "rank": 3,
+        "score": 156.2,
+        "starGrowth": 5676
+      },
+      {
+        "slug": "context-mode",
+        "name": "Context Mode",
+        "company": "mksglu",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 30,
+        "rank": 4,
+        "score": 133.5,
+        "starGrowth": 4099
+      },
+      {
+        "slug": "superpowers",
+        "name": "Superpowers",
+        "company": "obra",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 5,
+        "score": 124.6,
+        "starGrowth": 3880
+      },
+      {
+        "slug": "security-audit",
+        "name": "security-audit",
+        "company": "Cloudflare",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 6,
+        "score": 106.2,
+        "starGrowth": 2821
+      },
+      {
+        "slug": "ruflo",
+        "name": "Ruflo",
+        "company": "ruvnet",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 10,
+        "rank": 7,
+        "score": 100.5,
+        "starGrowth": 2271
+      },
+      {
+        "slug": "caveman-code",
+        "name": "Caveman Code",
+        "company": "Julius Brussee",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 8,
+        "score": 98.1,
+        "starGrowth": 2405
+      },
+      {
+        "slug": "hermes-agent",
+        "name": "Hermes Agent",
+        "company": "Nous Research",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 9,
+        "score": 95.2,
+        "starGrowth": 2119
+      },
+      {
+        "slug": "ai-memory",
+        "name": "AI-MEMORY",
+        "company": "AkitaOnRails",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 3,
+        "views": 10,
+        "rank": 10,
+        "score": 83.9,
+        "starGrowth": 1493
+      },
+      {
+        "slug": "codex-cli",
+        "name": "Codex CLI",
+        "company": "OpenAI",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 20,
+        "rank": 11,
+        "score": 70.5,
+        "starGrowth": 1091
+      },
+      {
+        "slug": "i-have-adhd",
+        "name": "i-have-adhd",
+        "company": "ayghri",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 12,
+        "score": 69.1,
+        "starGrowth": 1195
+      },
+      {
+        "slug": "paseo",
+        "name": "Paseo",
+        "company": "getpaseo",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 13,
+        "score": 58.7,
+        "starGrowth": 770
+      },
+      {
+        "slug": "oh-my-pi",
+        "name": "Oh My Pi",
+        "company": "Can Bölük",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 0,
+        "rank": 14,
+        "score": 57.5,
+        "starGrowth": 771
+      },
+      {
+        "slug": "gstack",
+        "name": "gstack",
+        "company": "Garry Tan",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 15,
+        "score": 57.3,
+        "starGrowth": 821
+      },
+      {
+        "slug": "jcode",
+        "name": "jcode",
+        "company": "Jeremy Huang",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 20,
+        "rank": 16,
+        "score": 51.4,
+        "starGrowth": 504
+      },
+      {
+        "slug": "openhands",
+        "name": "OpenHands",
+        "company": "All Hands",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 0,
+        "rank": 17,
+        "score": 50.4,
+        "starGrowth": 585
+      },
+      {
+        "slug": "bitfun",
+        "name": "BitFun",
+        "company": "GCWing",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 18,
+        "score": 45,
+        "starGrowth": 437
+      },
+      {
+        "slug": "browserskill",
+        "name": "BrowserSkill",
+        "company": "Tencent",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 19,
+        "score": 44.7,
+        "starGrowth": 499
+      },
+      {
+        "slug": "ax",
+        "name": "AX",
+        "company": "Google",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 20,
+        "score": 44.4,
+        "starGrowth": 493
+      },
+      {
+        "slug": "unsloth",
+        "name": "unsloth",
+        "company": "unsloth",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 21,
+        "score": 40.5,
+        "starGrowth": 410
+      },
+      {
+        "slug": "cline",
+        "name": "Cline",
+        "company": "Cline",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 22,
+        "score": 36.8,
+        "starGrowth": 339
+      },
+      {
+        "slug": "pi-desktop",
+        "name": "PI-Desktop",
+        "company": "vastsa",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 23,
+        "score": 35.8,
+        "starGrowth": 320
+      },
+      {
+        "slug": "bb",
+        "name": "bb",
+        "company": "bb",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 2,
+        "views": 0,
+        "rank": 24,
+        "score": 31.9,
+        "starGrowth": 212
+      },
+      {
+        "slug": "monocode",
+        "name": "MonoCode",
+        "company": "Nick",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 25,
+        "score": 31.2,
+        "starGrowth": 197
+      }
+    ],
+    "rising": [
+      {
+        "slug": "rea",
+        "name": "REA",
+        "company": "morluto",
+        "rank": 1,
+        "previousRank": 135,
+        "score": 919,
+        "previousScore": 2.8,
+        "delta": 916.2
+      },
+      {
+        "slug": "context-mode",
+        "name": "Context Mode",
+        "company": "mksglu",
+        "rank": 4,
+        "previousRank": 9,
+        "score": 133.5,
+        "previousScore": 72.1,
+        "delta": 61.4
+      },
+      {
+        "slug": "ruflo",
+        "name": "Ruflo",
+        "company": "ruvnet",
+        "rank": 7,
+        "previousRank": 16,
+        "score": 100.5,
+        "previousScore": 49.4,
+        "delta": 51.1
+      },
+      {
+        "slug": "ai-memory",
+        "name": "AI-MEMORY",
+        "company": "AkitaOnRails",
+        "rank": 10,
+        "previousRank": 22,
+        "score": 83.9,
+        "previousScore": 35.9,
+        "delta": 48
+      },
+      {
+        "slug": "bitfun",
+        "name": "BitFun",
+        "company": "GCWing",
+        "rank": 18,
+        "previousRank": 72,
+        "score": 45,
+        "previousScore": 3.2,
+        "delta": 41.8
+      }
+    ],
+    "newTools": [
+      {
+        "slug": "maki",
+        "name": "maki",
+        "company": "Tony Solomonik"
+      },
+      {
+        "slug": "uniterm",
+        "name": "uniTerm",
+        "company": "ys-ll"
+      },
+      {
+        "slug": "cmux",
+        "name": "cmux",
+        "company": "Manaflow"
+      },
+      {
+        "slug": "reason",
+        "name": "Reason",
+        "company": "Reason Machines"
+      },
+      {
+        "slug": "rakazo",
+        "name": "Rakazo",
+        "company": "Elie Steinbock (elie222)"
+      },
+      {
+        "slug": "modaal",
+        "name": "Modaal",
+        "company": "Modaal"
+      },
+      {
+        "slug": "heydeer",
+        "name": "HeyDeer",
+        "company": "ETOILEE PTE. LTD. (submitted by HeyDeer's maintainer)"
+      },
+      {
+        "slug": "xerj",
+        "name": "XERJ",
+        "company": "XERJ"
+      },
+      {
+        "slug": "graphify",
+        "name": "Graphify",
+        "company": "Graphify Labs"
+      },
+      {
+        "slug": "free-claude-code",
+        "name": "Free Claude Code",
+        "company": "Ali Khokhar (Alishahryar1)"
+      }
+    ],
+    "guard": {
+      "ungatedZapsDropped": 0,
+      "burstActorsDropped": 0
+    }
+  },
+  {
     "week": "2026-w41",
     "start": "2026-10-05T00:00:00.000Z",
     "end": "2026-10-12T00:00:00.000Z",
