@@ -1486,5 +1486,33 @@
   {
     "companyName": "Mozilla.ai",
     "toolName": "Otari"
+  },
+  {
+    "companyName": "Graphicle AI",
+    "toolName": "Graphicle"
+  },
+  {
+    "companyName": "Vercel Labs",
+    "toolName": "skills.sh"
+  },
+  {
+    "companyName": "GitHub",
+    "toolName": "GitHub MCP Server"
+  },
+  {
+    "companyName": "Tencent Cloud",
+    "toolName": "TencentDB Agent Memory"
+  },
+  {
+    "companyName": "Shawn Pana",
+    "toolName": "Phone Harness"
+  },
+  {
+    "companyName": "Google Research",
+    "toolName": "Harness2"
+  },
+  {
+    "companyName": "Orchestrator.inc",
+    "toolName": "Orchestrator.inc"
   }
 ]
