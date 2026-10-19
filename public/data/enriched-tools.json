@@ -10158,5 +10158,150 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-18"
+  },
+  {
+    "slug": "graphicle",
+    "name": "Graphicle",
+    "company": "Graphicle AI",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under Apache-2.0; runs locally with no account or API key. Optional written answers use your own Anthropic, OpenAI or Ollama model.",
+    "description": "Graphicle is an open-source Rust program that maps a repository into a code graph, remembers project docs, decisions and past agent sessions, and serves cited file-and-line excerpts to coding agents over MCP or from the terminal.",
+    "keyFeatures": [
+      "Code graph of the repository built and kept current by Git hooks",
+      "Project memory of docs, decisions and captured agent sessions",
+      "Cited file-and-line evidence via MCP for Claude Code, Cursor, Codex, VS Code and Claude Desktop",
+      "graphicle ask terminal queries with token-budgeted excerpts",
+      "graphicle graph affected impact analysis for symbol changes",
+      "One-command setup with backups and a full graphicle disconnect undo"
+    ],
+    "bestFor": "Developers who want local, citation-backed code search and project memory for their coding agents without sending code to a hosted service.",
+    "notIdealFor": "Teams needing a mature, long-supported product; it is a very new 0.1.x project with a Windows build still in preview.",
+    "recentUpdates": "Shipped v0.1.1 on October 16 and v0.1.2 on October 18, 2026 (light theme for the dashboard, MCP Registry publishing), shortly after its October 14, 2026 Show HN launch.",
+    "verdict": "A promising local code-graph and memory layer for coding agents that adds session memory on top of the Graphify approach, though still early.",
+    "tags": [
+      "Code Intelligence",
+      "Agent Memory",
+      "MCP",
+      "Coding Agents",
+      "Rust",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-19"
+  },
+  {
+    "slug": "skillssh",
+    "name": "skills.sh",
+    "company": "Vercel Labs",
+    "pricing": "open-source",
+    "pricingDetail": "The skills CLI is free and open source under MIT; the skills.sh directory is free to browse.",
+    "description": "skills is Vercel Labs' open-source CLI for the open agent skills ecosystem. It installs, updates and removes SKILL.md skills from Git sources or local paths across OpenCode, Claude Code, Codex, Cursor and 75+ other coding agents, backed by the public skills.sh directory.",
+    "keyFeatures": [
+      "npx skills add from GitHub, GitLab, Azure Repos, any Git URL or local path",
+      "Installs into 75+ agents including Claude Code, Codex, Cursor and OpenCode",
+      "Symlinks every agent to one canonical skill copy",
+      "find, list, update, remove and init commands",
+      "skills use generates a prompt or starts an agent with a skill without installing",
+      "Private repositories via existing Git, GitHub CLI or SSH auth"
+    ],
+    "bestFor": "Developers who use several coding agents and want one package-manager-style workflow for discovering and installing agent skills.",
+    "notIdealFor": "Users of a single agent with a built-in plugin marketplace who do not need cross-agent skill management.",
+    "recentUpdates": "Released v1.7.1 on October 6 and v1.7.2 on October 9, 2026, adding recursive workspace sync, package.json skills fields and remembered agent selection.",
+    "verdict": "The de facto cross-agent installer for Agent Skills, with strong adoption and frequent releases from Vercel Labs.",
+    "tags": [
+      "Agent Skills",
+      "CLI",
+      "Coding Agents",
+      "Developer Productivity",
+      "Package Manager",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-19"
+  },
+  {
+    "slug": "github-mcp-server",
+    "name": "GitHub MCP Server",
+    "company": "GitHub",
+    "pricing": "free",
+    "pricingDetail": "Free and open source under MIT. The hosted remote server and local Docker/binary builds are free to use with your GitHub account; underlying GitHub plan limits still apply.",
+    "description": "GitHub MCP Server is GitHub's official Model Context Protocol server. It lets AI agents and IDEs read repositories and code, manage issues and pull requests, inspect GitHub Actions runs, releases and security alerts, either through a GitHub-hosted remote endpoint or a local Docker image.",
+    "keyFeatures": [
+      "Repository browsing, code search and commit analysis",
+      "Issue and pull request creation, updates and triage",
+      "GitHub Actions workflow run monitoring and failure analysis",
+      "Code scanning and Dependabot alert access",
+      "Hosted remote server with OAuth or local Docker/Go binary with a PAT",
+      "Configurable toolsets, read-only mode and an insiders channel"
+    ],
+    "bestFor": "Developers who want Claude, Cursor, VS Code Copilot or any MCP host to act on GitHub repositories, issues, PRs and CI directly.",
+    "notIdealFor": "Teams on other Git hosts such as GitLab or Bitbucket, or those who prefer agents to use the gh CLI instead of MCP tools.",
+    "recentUpdates": "Released v2.0.1 on October 7 and v2.0.2 on October 8, 2026, correcting the v2 Go module path and restoring typed tool HTTP header validation.",
+    "verdict": "The official, widely adopted way to give AI agents first-class GitHub access, and a default MCP server for most coding-agent setups.",
+    "tags": [
+      "MCP",
+      "GitHub",
+      "Developer Productivity",
+      "Coding Agents",
+      "Integrations",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-19"
+  },
+  {
+    "slug": "tencentdb-agent-memory",
+    "name": "TencentDB Agent Memory",
+    "company": "Tencent Cloud",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under MIT to self-host; you supply the LLM endpoints for the memory and proxy services.",
+    "description": "TencentDB Agent Memory is Tencent Cloud's open-source, team-level memory hub for AI agents. A drop-in proxy shares one memory server across Claude Code, Codex, CodeBuddy and other agents, turning conversations, documents and code into reusable Chat Memory, Skills, a Wiki and a CodeGraph.",
+    "keyFeatures": [
+      "Base-URL proxy integration with no plugin, hook or MCP server required",
+      "Shared memory across Claude Code, Codex, CodeBuddy, WorkBuddy, Hermes and OpenClaw",
+      "Layered Chat Memory distilled from conversations to personas",
+      "Versioned, reviewable Skills extracted from completed work",
+      "Wiki from docs and CodeGraph from code repositories",
+      "Team roles with review before personal assets are shared"
+    ],
+    "bestFor": "Teams running several coding agents who want shared, self-hosted project memory and reusable skills across agents and members.",
+    "notIdealFor": "Solo developers wanting a lightweight local memory file; it runs multiple services and Team Memory is still in beta.",
+    "recentUpdates": "Released v2.0.2 on October 9 and v2.0.3-beta.1 on October 13, 2026, adding a pluggable decision service, on-demand skill selection and session trace recording.",
+    "verdict": "A substantial, fast-moving memory platform from Tencent Cloud that suits teams standardizing context across multiple coding agents.",
+    "tags": [
+      "Agent Memory",
+      "Coding Agents",
+      "Knowledge Management",
+      "Developer Productivity",
+      "Self-Hosted",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-19"
+  },
+  {
+    "slug": "phone-harness",
+    "name": "Phone Harness",
+    "company": "Shawn Pana",
+    "pricing": "freemium",
+    "pricingDetail": "The CLI is free and open source under MIT for your own iPhone or Android. Phone Harness Cloud offers hosted devices; cloud Android includes 100 free minutes, then bills per minute.",
+    "description": "Phone Harness is an open-source CLI and agent skill that lets Claude Code, Codex or other agents control a real phone: iPhone through macOS iPhone Mirroring, Android over adb, or a hosted cloud device. The agent reads the screen, taps, types and verifies results.",
+    "keyFeatures": [
+      "iPhone control via macOS iPhone Mirroring with no jailbreak or Xcode",
+      "Android control over adb from macOS, Linux or Windows",
+      "Python helpers such as screen, find_text, tap_text, type_text and open_app",
+      "Agent-driven onboarding and phone-harness doctor diagnostics",
+      "Optional hosted iPhone and Android cloud phones",
+      "Integrations for Claude Code, Codex and Hermes Agent"
+    ],
+    "bestFor": "Developers who want coding agents to exercise mobile apps or automate tasks on a real iPhone or Android device.",
+    "notIdealFor": "Teams needing a full mobile test framework with device farms, reporting and CI integration out of the box.",
+    "recentUpdates": "Released 0.3.2 on October 12 and 0.3.3rc1 on October 17, 2026, adding file push and open_url for cloud iPhones and environment-first setup with cloud fallback.",
+    "verdict": "A practical, actively maintained bridge that gives coding agents real phone access, useful for mobile app checks and agentic automation.",
+    "tags": [
+      "Mobile",
+      "Agent Tools",
+      "Coding Agents",
+      "Automation",
+      "Developer Productivity",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-19"
   }
 ]
