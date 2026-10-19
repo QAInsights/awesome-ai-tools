@@ -13,6 +13,14 @@ describe('tool-markdown', () => {
         expect(md).toContain('## Top alternatives');
     });
 
+    test('renders successor line for discontinued tools', () => {
+        const cont = getToolBySlug('continue');
+        expect(cont).toBeDefined();
+        const md = toolPageMarkdown(cont!);
+        expect(md).toContain('- **Status**: discontinued');
+        expect(md).toContain('- **Successor**: [Cursor](https://ai.dosa.dev/tools/cursor)');
+    });
+
     test('renders category markdown table and ranked tool list', () => {
         const categories = getCategoriesDetailed();
         expect(categories.length).toBeGreaterThan(0);

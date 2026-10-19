@@ -47,6 +47,7 @@ const { enriched } = tool;
 const displayName = enriched?.name ?? tool.name;
 const displayCompany = enriched?.company ?? tool.company;
 const isDiscontinued = (enriched?.status ?? '').toLowerCase() === 'discontinued';
+const successor = isDiscontinued && enriched?.successor ? getToolBySlug(enriched.successor) : undefined;
 const hasSiteLink = typeof tool.url === 'string' && /^https?:\/\//i.test(tool.url);
 const displayDescription = enriched?.description ?? tool.notes;
 
@@ -245,6 +246,12 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                             </span>
                         </div>
                         <div class="fo-rule"></div>
+                        {isDiscontinued && (
+                            <aside class="fo-notice fo-fade" style="--d:.2s" role="note">
+                                <span><b>No longer maintained.</b> {displayName} has been discontinued{successor ? ` and folded into ${successor.enriched?.name ?? successor.name}` : ''}.</span>
+                                {successor && <a href={`/tools/${successor.slug}`}>See {successor.enriched?.name ?? successor.name} →</a>}
+                            </aside>
+                        )}
                     </div>
                     <div>
                         <FolioTitle parts={[{ text: displayName }]} />

@@ -1711,7 +1711,7 @@
     ],
     "bestFor": "Developers who prioritize auditability, privacy, and self-hosting, and who want to build or adapt custom AI agent workflows using their own model infrastructure.",
     "notIdealFor": "Teams looking for an actively maintained commercial product with vendor-backed support, roadmap updates, or guaranteed compatibility with future IDE versions.",
-    "recentUpdates": "The project was acquired by Cursor in January 2026, leading to the repository becoming read-only and no longer receiving active maintenance from the original team.",
+    "recentUpdates": "Acquired by Cursor in June 2026; the hosted product was shut down on July 15, 2026 and the open-source repository was frozen at a final v2.0.0 release.",
     "verdict": "Continue is a powerful, auditable foundation for custom AI coding tools, but it is now effectively a frozen, self-maintained codebase rather than a supported commercial product.",
     "tags": [
       "AI coding assistant",
@@ -1720,7 +1720,9 @@
       "Agentic AI",
       "Self-hosted"
     ],
-    "lastUpdated": "2026-10-15"
+    "lastUpdated": "2026-10-15",
+    "status": "discontinued",
+    "successor": "cursor"
   },
   {
     "slug": "augment-code",
