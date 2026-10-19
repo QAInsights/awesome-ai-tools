@@ -60,6 +60,7 @@ const result = await build({
         './js/hallucination-scorer.js',
         './js/cost-calculator.js',
         './js/rules-converter.js',
+        './js/stack-matcher.js',
     ],
     outdir: './public/dist',
     root: './js',

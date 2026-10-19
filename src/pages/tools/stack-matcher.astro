@@ -1,0 +1,266 @@
+---
+/**
+ * AI Coding Stack Matcher - /tools/stack-matcher
+ *
+ * 4-question quiz that recommends a 3-tool stack (primary environment +
+ * companion agent + review/QA). 100% client-side matching; optional
+ * sign-in to save the result to My Stacks.
+ */
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import { getAllTools } from '../../lib/tools';
+import { buildStackMatcherCatalog } from '../../lib/stack-matcher-catalog';
+import { safeJsonForScript } from '../../lib/serialize';
+import switchGuides from '../../../data/switch-guides.json';
+import {
+  DEFAULT_ANSWERS,
+  PERSONA_PRESETS,
+  QUIZ_DIMENSIONS,
+  SLOT_DEFS,
+} from '../../../js/stack-matcher-data.js';
+
+const catalog = buildStackMatcherCatalog(getAllTools());
+const switchPairs = switchGuides.map(g => ({ slug: g.slug, from: g.from, to: g.to }));
+
+const SLOT_EXPLAINERS: Record<string, string> = {
+  primary: 'Hard-filtered to tools native to your environment; full AI IDEs outrank plugins for GUI editors, and only free-tier or open-source tools survive a $0 budget.',
+  companion: 'Prefers a complementary form factor — a terminal agent next to a GUI editor — and boosts tools built for your privacy model (BYOK or local).',
+  quality: 'Environment-agnostic PR review, security, and testing tools scored on workflow fit, with seat cost taken from the live catalog pricing.',
+};
+
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebApplication',
+      '@id': 'https://ai.dosa.dev/tools/stack-matcher#app',
+      name: 'AI Coding Stack Matcher',
+      url: 'https://ai.dosa.dev/tools/stack-matcher',
+      description:
+        'Interactive 4-question quiz that recommends a 3-tool AI coding stack — primary editor or agent, companion agent, and review/QA — with cost estimates, rules config export, and 1-click save to My Stacks. 100% client-side.',
+      applicationCategory: 'DeveloperApplication',
+      operatingSystem: 'Any',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      featureList: [
+        '4-question quiz covering environment, budget, privacy, and workflow',
+        'Recommends a 3-tool stack: primary environment, companion agent, review/QA',
+        '1-click persona presets and per-slot tool swapping',
+        'Estimated monthly seat cost with deep links into the cost calculator',
+        'Save the matched stack to My Stacks with one click',
+      ],
+      isPartOf: { '@type': 'WebSite', '@id': 'https://ai.dosa.dev/#website' },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'How does the Stack Matcher pick tools?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Each tool in the catalog has a matching profile (environments, privacy model, workflow strengths, seat pricing). The matcher hard-filters tools that cannot fit your answers — e.g. local-only privacy or a $0 budget — then scores the survivors and picks the strongest candidate for each of the three slots.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Does the matcher upload anything to a server?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'No. Matching runs entirely in your browser — your answers never leave the page. The only server call happens if you choose to save the recommended stack to My Stacks, which requires signing in.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Can I swap one of the recommended tools?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes. Every slot shows up to three runner-up alternatives — click any of them to swap it in, or reset the slot to the natural top pick. The URL updates so you can share the customized stack.',
+          },
+        },
+      ],
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://ai.dosa.dev' },
+        { '@type': 'ListItem', position: 2, name: 'Stack Matcher', item: 'https://ai.dosa.dev/tools/stack-matcher' },
+      ],
+    },
+  ],
+}).replace(/</g, '\\u003c');
+---
+
+<DashboardLayout
+  title="AI Coding Stack Matcher — Build Your Cursor, Claude Code & Review Stack | ai.dosa.dev"
+  description="Answer 4 questions and get a matched 3-tool AI coding stack: primary environment, companion agent, and review/QA — with seat cost estimates and 1-click save to My Stacks."
+  canonical="https://ai.dosa.dev/tools/stack-matcher"
+  activeNav="stack-matcher"
+>
+  <script type="application/ld+json" set:html={jsonLd} />
+  <script type="application/json" id="stack-matcher-catalog" set:html={safeJsonForScript(catalog)} />
+  <script type="application/json" id="stack-matcher-switches" set:html={safeJsonForScript(switchPairs)} />
+
+  <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
+    <div class="max-w-[1200px] mx-auto w-full flex flex-col grow shrink-0 p-5 md:p-8 gap-6">
+      <!-- Editorial Header -->
+      <header class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-5 border-b border-[#1d1d1c]">
+        <div class="min-w-0">
+          <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#d6b77a] mb-2">Interactive Utility · 100% Client-Side</p>
+          <h1 class="text-2xl md:text-3xl font-semibold tracking-tight flex items-center gap-2.5 text-[#f4f4f2]">
+            <svg class="w-5 h-5 md:w-6 md:h-6 text-[#d6b77a] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2" />
+              <polyline points="2 17 12 22 22 17" />
+              <polyline points="2 12 12 17 22 12" />
+            </svg>
+            AI Coding Stack Matcher
+          </h1>
+          <p class="text-[#a3a3a3] text-sm leading-relaxed mt-1.5 max-w-[68ch]">
+            Answer four questions about how you work and get a matched 3-tool stack —
+            a primary environment, a companion agent, and a review layer — with monthly cost estimates.
+          </p>
+        </div>
+        <div class="flex items-center gap-2.5 shrink-0">
+          <button id="smCopyBtn" type="button" class="sm-action-btn">Copy Markdown</button>
+          <button id="smShareBtn" type="button" class="sm-action-btn">Share Link</button>
+        </div>
+      </header>
+
+      <!-- 1-Click Persona Presets -->
+      <div>
+        <div class="sm-label">1-Click Presets</div>
+        <p class="text-[11px] text-[#737373] mt-1 mb-2.5">Pick an archetype, then fine-tune the four questions below</p>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-2">
+          {PERSONA_PRESETS.map(p => (
+            <button type="button" data-persona={p.id} class="sm-persona">
+              <span class="sm-persona-label">{p.label}</span>
+              <span class="sm-persona-blurb">{p.blurb}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Main 2-column grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Left: Quiz (7 cols) -->
+        <div class="lg:col-span-7 flex flex-col gap-5">
+          {QUIZ_DIMENSIONS.map(dim => (
+            <fieldset class="sm-panel">
+              <legend class="sm-label">{dim.step} · {dim.label}</legend>
+              <div class="grid grid-cols-2 gap-2">
+                {dim.options.map(opt => (
+                  <label class="sm-opt">
+                    <input
+                      type="radio"
+                      class="sr-only"
+                      name={dim.id}
+                      value={opt.id}
+                      checked={opt.id === DEFAULT_ANSWERS[dim.id as keyof typeof DEFAULT_ANSWERS]}
+                    />
+                    <span class="sm-opt-label">{opt.label}</span>
+                    <span class="sm-opt-hint">{opt.hint}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+          ))}
+        </div>
+
+        <!-- Right: Recommendation (5 cols, sticky) -->
+        <aside class="lg:col-span-5 lg:sticky lg:top-6 flex flex-col gap-5">
+          <section class="sm-panel sm-panel-featured">
+            <div class="sm-label text-[#d6b77a]">Matched Stack</div>
+            <h2 id="smTitle" class="text-xl md:text-2xl font-semibold tracking-tight text-[#f4f4f2] mt-1.5">—</h2>
+            <div id="smAnswerChips" class="flex flex-wrap gap-1.5 mt-2.5"></div>
+            <div id="smEstimate" class="text-2xl md:text-3xl font-medium tracking-tight font-mono text-[#e2c48a] mt-4">$0/mo</div>
+            <p id="smSummary" class="text-xs text-[#a3a3a3] leading-relaxed mt-2"></p>
+
+            <div id="smSlots" class="flex flex-col gap-3 mt-5 pt-4 border-t border-[#1d1d1c]"></div>
+
+            <div class="flex flex-wrap items-center gap-2.5 mt-5 pt-4 border-t border-[#1d1d1c]">
+              <button id="smSaveBtn" type="button" class="sm-save-btn">Save to My Stacks</button>
+              <a id="smCostLink" href="/tools/cost-calculator" class="sm-out-link">Simulate Cost →</a>
+              <a id="smRulesLink" href="/tools/rules-converter" class="sm-out-link">Export Rules Config →</a>
+            </div>
+            <p id="smStatus" role="status" class="text-[11px] font-mono text-[#e2c48a] mt-2.5 min-h-[1em]"></p>
+          </section>
+
+          <section id="smSwitchLinks" class="sm-panel" style="display:none"></section>
+        </aside>
+      </div>
+
+      <!-- How matching works -->
+      <section class="mt-4 pt-8 border-t border-[#1d1d1c]">
+        <h2 class="text-lg font-semibold text-[#f4f4f2] mb-3">How matching works</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          {SLOT_DEFS.map(slot => (
+            <div class="p-3.5 rounded-xl bg-[#0e0e0d] border border-[#222]">
+              <div class="sm-label mb-1.5">{slot.step} · {slot.label}</div>
+              <p class="text-[11px] text-[#8b8b88] leading-relaxed">{slot.blurb}. {SLOT_EXPLAINERS[slot.id]}</p>
+            </div>
+          ))}
+        </div>
+        <p class="text-[11px] font-mono text-[#737373] mt-4">
+          Price out the matched stack in the <a href="/tools/cost-calculator" class="text-[#c8a96a] hover:underline">Cost Calculator</a> or convert its rules files with the <a href="/tools/rules-converter" class="text-[#c8a96a] hover:underline">Rules Converter</a>.
+        </p>
+      </section>
+    </div>
+  </main>
+</DashboardLayout>
+
+<style is:inline>
+  .sm-panel { background: rgba(255, 255, 255, 0.02); border: 1px solid #222; border-radius: 14px; padding: 20px; }
+  fieldset.sm-panel { margin: 0; }
+  .sm-panel-featured { background: linear-gradient(180deg, rgba(33, 28, 22, 0.42) 0%, rgba(10, 10, 10, 0.9) 100%); border-color: #4c4030; }
+  .sm-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: #a3a3a3; font-weight: 600; }
+  legend.sm-label { padding: 0 4px; }
+  .sm-action-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 999px; font-size: 12px; font-family: 'JetBrains Mono', monospace; color: #dcdcd9; background: #111; border: 1px solid #2c2c2b; cursor: pointer; transition: all 0.2s; }
+  .sm-action-btn:hover { color: #fff; border-color: #4c4030; background: #191612; }
+  .sm-persona { display: flex; flex-direction: column; gap: 2px; width: 100%; min-height: 64px; justify-content: center; padding: 8px 12px; border-radius: 10px; background: #111; border: 1px solid #262626; cursor: pointer; text-align: left; transition: all 0.15s; }
+  .sm-persona:hover { border-color: #3d3529; background: #171410; }
+  .sm-persona.active { background: #211c16; border-color: #c8a96a; }
+  .sm-persona-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: #f4f4f2; }
+  .sm-persona-blurb { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #737373; line-height: 1.35; }
+  .sm-persona.active .sm-persona-label { color: #fff4de; }
+  .sm-opt { display: flex; flex-direction: column; gap: 3px; padding: 10px 12px; border-radius: 10px; background: #0d0d0d; border: 1px solid #222; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+  .sm-opt:hover { border-color: #383838; }
+  .sm-opt:has(:checked) { background: #211c16; border-color: #c8a96a; }
+  .sm-opt:has(:focus-visible) { outline: 2px solid #e2c48a; outline-offset: 2px; }
+  .sm-opt-label { font-size: 12px; font-weight: 600; color: #f4f4f2; }
+  .sm-opt:has(:checked) .sm-opt-label { color: #fff4de; }
+  .sm-opt-hint { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #737373; }
+  .sm-chip { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-family: 'JetBrains Mono', monospace; background: #141414; border: 1px solid #2a2a2a; color: #a3a3a3; }
+  .sm-slot { padding: 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.02); border: 1px solid #1d1d1c; }
+  .sm-slot-head { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+  .sm-slot-step { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #c8a96a; padding-top: 2px; }
+  .sm-slot-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: #8b8b88; }
+  .sm-slot-blurb { font-size: 10px; color: #737373; margin-top: 1px; }
+  .sm-slot-tool { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .sm-slot-name { font-size: 14px; font-weight: 600; color: #f4f4f2; text-decoration: none; }
+  .sm-slot-name:hover { color: #e2c48a; }
+  .sm-pill { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 2px 7px; border-radius: 999px; background: #151515; border: 1px solid #262626; color: #8b8b88; }
+  .sm-pill-seat { background: #211c16; border-color: #4c4030; color: #e2c48a; }
+  .sm-why { font-size: 11px; color: #a3a3a3; line-height: 1.5; margin-top: 6px; }
+  .sm-relaxed { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #e2c48a; margin-top: 6px; padding: 4px 8px; border-radius: 6px; background: #211c16; border: 1px solid #4c4030; }
+  .sm-swaps { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 6px; margin-top: 8px; }
+  .sm-swaps-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #737373; }
+  .sm-swap-chip { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 4px 9px; border-radius: 6px; background: #141414; border: 1px solid #282828; color: #dcdcd9; cursor: pointer; transition: all 0.15s; }
+  .sm-swap-chip:hover { border-color: #c8a96a; color: #fff4de; background: #211c16; }
+  .sm-swap-price { color: #737373; padding-left: 6px; border-left: 1px solid #262626; margin-left: 2px; }
+  .sm-swap-reset { border-style: dashed; color: #8b8b88; }
+  .sm-save-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 999px; font-size: 12px; font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #0a0a0a; background: #e2c48a; border: 1px solid #e2c48a; cursor: pointer; transition: all 0.2s; }
+  .sm-save-btn:hover:not(:disabled) { background: #fff4de; border-color: #fff4de; }
+  .sm-save-btn:disabled { opacity: 0.55; cursor: wait; }
+  .sm-out-link { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #c8a96a; text-decoration: none; padding: 6px 4px; transition: color 0.15s; }
+  .sm-out-link:hover { color: #fff4de; text-decoration: underline; text-underline-offset: 3px; }
+  .sm-switch-link { display: block; font-size: 12px; color: #dcdcd9; text-decoration: none; padding: 7px 10px; border-radius: 8px; background: #0d0d0d; border: 1px solid #222; transition: all 0.15s; }
+  .sm-switch-link:hover { border-color: #4c4030; color: #e2c48a; }
+  @media (prefers-reduced-motion: reduce) {
+    .sm-persona, .sm-opt, .sm-swap-chip, .sm-save-btn, .sm-action-btn, .sm-switch-link, .sm-out-link { transition: none; }
+  }
+</style>
+
+<script type="module">
+  import { initStackMatcherUI } from '/dist/stack-matcher.js';
+  const catalog = JSON.parse(document.getElementById('stack-matcher-catalog').textContent);
+  const switchPairs = JSON.parse(document.getElementById('stack-matcher-switches').textContent);
+  initStackMatcherUI({ catalog, switchPairs });
+</script>
