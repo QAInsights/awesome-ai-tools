@@ -1,0 +1,292 @@
+---
+title: "How to Run Multiple Coding Agents in Parallel: Orca, Paseo, Superset, Emdash and Harness Compared"
+description: "Learn how to run multiple coding agents in parallel with Orca, Paseo, Superset, Emdash and Harness. Worktrees, licences, installs and real limits, Oct 2026."
+pubDate: 2026-10-19
+tags: ["parallel-agents", "git-worktree", "claude-code", "codex", "open-source", "roundup", "orca", "paseo", "superset", "emdash", "harness"]
+---
+
+In this blog post, we will see how to run multiple coding agents in parallel without them overwriting each other, which five open source apps do the bookkeeping for you, and a 25 line script that shows the one thing none of them can fix. Every version, licence, price and star count below was checked on October 19, 2026.
+
+## Table of Contents
+
+1. [The short answer](#the-short-answer)
+2. [Why parallel agent apps are trending this week](#why-parallel-agent-apps-are-trending-this-week)
+3. [How parallel coding agents work, in one script](#how-parallel-coding-agents-work-in-one-script)
+4. [Orca](#orca)
+5. [Paseo](#paseo)
+6. [Superset](#superset)
+7. [Emdash](#emdash)
+8. [Harness by Autonomous](#harness-by-autonomous)
+9. [Side by side](#side-by-side)
+10. [Which one I would install first](#which-one-i-would-install-first)
+11. [FAQ](#faq)
+12. [How this ties to ai.dosa.dev](#how-this-ties-to-aidosadev)
+
+## The short answer
+
+To run multiple coding agents in parallel, give each agent its own git worktree and branch, then review and merge each branch like a pull request. Orca, Paseo, Superset, Emdash and Harness automate that loop for Claude Code, Codex and other CLIs. Start with Orca on any OS, Paseo if you want a phone client, Superset if you live on a Mac.
+
+## Why parallel agent apps are trending this week
+
+Facts checked October 19, 2026. This is not one viral repo, it is a whole category moving at once:
+
+- **GitHub stars.** Orca gained about 7,000 stars in seven days according to both OSS Radar (+6.9k) and findarepo (+7.2k), which puts it in the top five fastest growing AI repos this week at roughly 97,000 total. In the ai.dosa.dev weekly snapshots, [Paseo](/tools/paseo) gained 1,027 stars in week 41 and 770 in week 42.
+- **Product Hunt.** Harness by Autonomous, pitched as "every coding agent, every machine, one command center", was the number 2 launch on October 16 with 330 votes. Parallax, a Mac app for the same job, launched the same week, and Beam.win (run agents on one Mac, use their windows on another) topped October 19.
+- **Releases.** Paseo shipped v0.12.0 and Orca shipped v1.4.230 on the same day, October 19. Superset shipped desktop v1.38.0 on October 14 and Emdash shipped v1.2.8 on October 10.
+- **Hacker News.** Offrun's Show HN ("manage every coding agent from one workspace", 78 points, 68 comments) landed on October 4, just outside my 14 day window, so I count it as background. The comment threads are the useful part: people list Superset, T3 Code, Conductor, Paseo and Orca as near-identical, then argue about which small feature made them switch.
+
+The common thread: one agent is no longer the bottleneck. Waiting on one agent is.
+
+## How parallel coding agents work, in one script
+
+Every app below is a nicer interface over `git worktree`. A worktree is a second working folder for the same repository, on its own branch, sharing one history. One agent per worktree means no agent edits a file another agent has open.
+
+Here is the whole idea with two fake "agents" that each change one line of the same file at the same time:
+
+```bash
+#!/usr/bin/env bash
+set -uo pipefail
+
+git init -q -b main app && cd app
+printf 'def greet(name):\n    return "Hello " + name\n' > greet.py
+git add greet.py && git commit -qm "init"
+
+# One worktree and one branch per "agent"
+git worktree add -q -b agent-a ../app-agent-a
+git worktree add -q -b agent-b ../app-agent-b
+
+# Both agents edit the same file at the same time, one line each
+(cd ../app-agent-a && perl -pi -e 's/def greet\(name\):/def greet(name: str) -> str:/' greet.py && git commit -qam "type hints") &
+(cd ../app-agent-b && perl -pi -e 's/"Hello " \+ name/f"Hello {name}"/' greet.py && git commit -qam "f-string") &
+wait
+
+git worktree list
+echo "--- agent-a ---"; cat ../app-agent-a/greet.py
+echo "--- agent-b ---"; cat ../app-agent-b/greet.py
+echo "--- main, untouched ---"; cat greet.py
+
+echo "--- merging both ---"
+git merge -q agent-a
+git merge -q --no-edit agent-b || git diff --name-only --diff-filter=U
+```
+
+I ran it on Ubuntu with git 2.34.1, bash 5.1.16 and perl 5.34, and the output is as shown below:
+
+```
+~/code/app          efc6966 [main]
+~/code/app-agent-a  666c417 [agent-a]
+~/code/app-agent-b  9ba89a3 [agent-b]
+--- agent-a ---
+def greet(name: str) -> str:
+    return "Hello " + name
+--- agent-b ---
+def greet(name):
+    return f"Hello {name}"
+--- main, untouched ---
+def greet(name):
+    return "Hello " + name
+--- merging both ---
+Auto-merging greet.py
+CONFLICT (content): Merge conflict in greet.py
+Automatic merge failed; fix conflicts and then commit the result.
+greet.py
+```
+
+The first half is the good news. Both agents worked at the same moment, neither saw the other's change, and `main` stayed clean.
+
+The second half surprised me. The two edits were on different lines, and I expected git to merge them cleanly. It did not, because the lines are adjacent and git treats them as one overlapping hunk. Worktrees stop agents from clobbering each other while they work. They do nothing about the merge. Superset's own README says it plainly: worktrees "do not sandbox processes or prevent merge conflicts."
+
+So when you pick a tool below, look less at "how many agents can it run" and more at how it helps you review and merge.
+
+## Orca
+
+**What it does:** Orca, from Stably AI, is a desktop "agent development environment". You run Claude Code, Codex, OpenCode, Pi or any other agent CLI side by side, each in its own worktree, with GPU-rendered terminal splits, a diff viewer where you can leave comments that go back to the agent, an embedded Chromium window with a design mode (click an element, its HTML, CSS and a screenshot go into the prompt), GitHub and Linear panels, SSH worktrees, and a mobile companion app.
+
+**Who it is for:** Anyone who wants one app for parallel agents on macOS, Windows or Linux, especially frontend work where the design mode saves copy and paste.
+
+**Facts:** MIT, latest release v1.4.230 (October 19, 2026), about 97,200 GitHub stars, free. Releases are close to daily: eight stable tags between October 8 and October 19.
+
+### Try it
+
+Head to https://www.onorca.dev/download for the installers, or use a package manager:
+
+```bash
+# macOS
+brew install --cask stablyai/orca/orca
+
+# Arch Linux (AUR)
+yay -S stably-orca-bin
+```
+
+On first launch Orca offers to import `~/.claude`, `~/.codex` and your Ghostty settings. Once you register the bundled CLI (in Settings), scripts and agents can drive it too:
+
+```bash
+orca status --json
+orca worktree create --name flaky-login --agent codex --prompt "Investigate the flaky login test" --json
+orca worktree ps --json
+```
+
+### Honest limitation
+
+On Linux, outside Orca's own terminals, a bare `orca` usually resolves to the GNOME Orca screen reader at `/usr/bin/orca`, and Orca's own skill file warns that it "starts speech on the user's machine". Use `orca-ide` there. The daily release pace also means the UI moves under you; if you want stability, stay on the Homebrew cask, which tracks the stable channel only.
+
+## Paseo
+
+**What it does:** Paseo runs a local daemon that manages your coding agents, and desktop, web, mobile and CLI clients connect to it. Agents get their own worktrees, can create worktrees and launch other agents themselves, and you get an editor, terminals, diffs, PRs and a browser in one window. It supports Claude Code, Codex, Copilot, OpenCode, Pi, Antigravity and Muse Code directly, plus more through ACP.
+
+**Who it is for:** Developers who want to start work at the desk and check on it from a phone, or who want to script agents from the terminal. It is the most CLI-friendly of the five.
+
+**Facts:** Apache 2.0 (relicensed from AGPL-3.0 in August 2026, tracked in issue #2982), latest release v0.12.0 (October 19, 2026), 21,190 GitHub stars, free, no telemetry. Paseo Hub and the hosted relay are optional paid services; the open source app does not need them.
+
+### Try it
+
+```bash
+# Desktop app on macOS 13 or newer
+brew install --cask paseo
+
+# Or a headless server plus CLI
+npm install -g @getpaseo/cli && paseo
+```
+
+Then fan work out from the terminal:
+
+```bash
+paseo run --new-workspace worktree --worktree-mode branch-off \
+  --new-branch fix/flaky-login --base origin/main "fix the flaky login test"
+paseo run --provider codex "refactor the API layer"
+paseo ls
+paseo usage
+```
+
+`paseo usage`, new in 0.12.0, shows quotas, balances and reset times for your accounts, which is the thing you actually run out of when you run four agents at once.
+
+### Honest limitation
+
+It moves fast and the backlog shows it: 1,363 open issues today, and 0.12.0 already deprecates `paseo run --background` in favour of `--no-wait`. Pin the version in any script you care about. Also pass `--base origin/main` rather than `main`; the docs warn that a bare `main` resolves to your possibly stale local branch.
+
+## Superset
+
+**What it does:** Superset is a Mac-first agentic IDE: each task gets a worktree with its own branch, terminals and port detection, the sidebar shows which agent is working or waiting, and setup scripts can install dependencies and start dev servers per workspace. It also ships a CLI, a TypeScript SDK and an MCP server so agents can create workspaces themselves.
+
+**Who it is for:** Mac users who want the most polished single-machine experience and who might later want team features like Slack and Linear triggers.
+
+**Facts:** Elastic License 2.0, latest desktop release v1.38.0 (October 14, 2026), 15,322 GitHub stars. The desktop app is free for one user; Pro is $20 per user per month, or $15 billed yearly, and adds remote access, automations, mobile, and Slack and Linear integrations.
+
+### Try it
+
+Head to https://docs.superset.sh/install to download the macOS app. All you need is Git; the GitHub CLI is optional for the PR workflow. The standalone CLI:
+
+```bash
+brew install superset-sh/tap/superset
+# or
+curl -fsSL https://superset.sh/cli/install.sh | sh
+
+superset workspaces create --project prj_... --name "fix-login-bug" \
+  --branch fix/login-bug --local
+```
+
+### Honest limitation
+
+Two of them. Elastic License 2.0 is source-available, not an OSI open source licence: you can fork and self-host it, but not resell Superset as a service. And it is a Mac product today. The Linux AppImage is marked experimental and there is no Windows build.
+
+## Emdash
+
+**What it does:** Emdash, a YC W26 company, is a desktop app where each task runs in its own worktree and you review diffs, open PRs, check CI and merge from one place. Its strength is ticket intake: it pulls issues from Linear, GitHub, Jira, GitLab, Asana, YouTrack and more straight into an agent. v1.2.8 added bundled language servers for JavaScript, TypeScript and Python and a Usage page that shows remaining Claude Code and Codex allowances.
+
+**Who it is for:** Teams that start agent work from a ticket queue, and people who want SSH remote projects without paying for anything.
+
+**Facts:** Apache 2.0 (moved from MIT in April 2026), latest release v1.2.8 (October 10, 2026), about 6,000 GitHub stars, last commit on October 18. I found no paid plan on the repo or install docs, so treat pricing beyond "free download" as unverified.
+
+### Try it
+
+```bash
+brew install --cask emdash
+```
+
+Windows and Linux (x64 and ARM64, AppImage, DEB or RPM) builds are on the latest GitHub release. Emdash detects installed agent CLIs on launch, so install Claude Code or Codex first.
+
+### Honest limitation
+
+To track status and resumable sessions, Emdash writes marker-tagged hook entries into each agent's user-level config. They are inert outside Emdash, but if you keep your `~/.claude` settings in a dotfiles repo, expect a diff. Momentum is also much lower than Orca's: about 78 new stars this week.
+
+## Harness by Autonomous
+
+**What it does:** Harness runs each agent in its own tmux pane (a "harness") and shows every one in desktop, web and phone apps, across all your machines. You link a laptop, a home server and a GPU box with a password, and terminals stream peer to peer as text, end-to-end encrypted. It does not wrap the agent; it reads transcripts and uses each vendor's own hooks. Claude Code and Codex can also start, wait for and read other harnesses through a plugin.
+
+**Who it is for:** People who already run agents on more than one computer and want one window over all of them, and tmux users who want to keep their keybindings.
+
+**Facts:** MIT, latest release Harness Desktop 1.2.90 (October 18, 2026), 1,311 GitHub stars, 451 releases since the repo was created on August 4, 2026. The app is free; Harness Pro is a $299 desk device that shows agent progress.
+
+### Try it
+
+```bash
+curl -fsSL https://harness.autonomous.ai/cli/install.sh | bash
+harness start
+```
+
+No account is needed for harnesses on the same computer. `harness login` links other machines. To let Claude Code start other agents through Harness:
+
+```bash
+claude plugin marketplace add autonomous-ai/openharness --sparse .claude-plugin plugins
+claude plugin install harness@openharness
+```
+
+### Honest limitation
+
+It is two and a half months old, with the smallest community here. macOS and Linux only, it needs tmux (the installer may ask for your password to `apt-get` it), and "agents can start other agents" is an experiment that is off by default and has to be turned on by you, not by the agent.
+
+## Side by side
+
+| Tool | Licence | Latest (date) | Stars | Runs on | Price | Stand-out feature |
+| --- | --- | --- | --- | --- | --- | --- |
+| Orca | MIT | v1.4.230 (Oct 19) | ~97,200 | macOS, Windows, Linux | Free | Browser design mode, diff comments back to agent |
+| Paseo | Apache 2.0 | v0.12.0 (Oct 19) | 21,190 | macOS, Windows, Linux, iOS, Android, web | Free, optional paid Hub | Full CLI and native mobile client |
+| Superset | Elastic 2.0 | desktop v1.38.0 (Oct 14) | 15,322 | macOS (Linux experimental) | Free 1 user, Pro $20/user/mo | Per-workspace setup scripts and ports |
+| Emdash | Apache 2.0 | v1.2.8 (Oct 10) | ~6,000 | macOS, Windows, Linux | Free | Ticket intake from 10+ trackers |
+| Harness | MIT | Desktop 1.2.90 (Oct 18) | 1,311 | macOS, Linux | Free, $299 device | One window over many machines, tmux panes |
+
+## Which one I would install first
+
+1. **I want one app and I am not on a Mac:** Orca. It is the only one here with first-class Windows and Linux builds plus the biggest community.
+2. **I want to check on agents from my phone or script them:** Paseo. `paseo run` with `--new-workspace worktree` is the cleanest CLI in the group.
+3. **I am on a Mac and want polish:** Superset, as long as Elastic 2.0 is fine for you.
+4. **My work starts in Jira or Linear:** Emdash.
+5. **My agents already live on three machines:** Harness.
+
+What I would skip: running more than three or four agents on one repo before you have a review habit. My script above hit a conflict with two agents and a two line file. The bottleneck moves from writing code to reading it.
+
+## FAQ
+
+### Can I run multiple Claude Code sessions at the same time?
+
+Yes. Open each session in its own git worktree with `git worktree add ../my-repo-task -b task` and run `claude` there. Every app in this post automates exactly that, and some, like Paseo and Emdash, also show how much of your subscription quota is left.
+
+### What is a git worktree and why do coding agents need one?
+
+A git worktree is an extra working folder for the same repository, checked out on its own branch and sharing one history. Coding agents need one each so two agents never edit the same files on disk at the same moment.
+
+### Do git worktrees prevent merge conflicts between agents?
+
+No. Worktrees isolate files while agents work, but when you merge the branches, overlapping or even adjacent edits still conflict. In my test, two one-line edits on neighbouring lines produced a conflict.
+
+### Are these parallel agent apps free?
+
+Orca, Paseo, Emdash and Harness are free open source downloads. Superset's desktop app is free for one user, and Pro costs $20 per user per month. You still pay for the agents themselves through your own Claude, ChatGPT or API plans.
+
+### What is an agent development environment (ADE)?
+
+ADE is the label Orca, Paseo and Emdash use for an app built around running agents rather than typing code yourself. It bundles worktrees, agent terminals, diff review, a browser and PR tools in one window.
+
+## How this ties to ai.dosa.dev
+
+Four of the five are already in the directory's [AI IDEs category](/category/ai-ides): [Orca](/tools/orca), [Paseo](/tools/paseo), [Superset](/tools/superset) and [Emdash](/tools/emdash). Close cousins with a different take are [Vibe Kanban](/tools/vibe-kanban) and [Cline Kanban](/tools/cline-kanban) (a board instead of a sidebar), [OpenChamber](/tools/openchamber), [T3 Code](/tools/t3-code) and [Fletch](/tools/fletch), which adds Docker or Seatbelt isolation and chained workflows. Harness by Autonomous is not listed yet. Head to https://github.com/QAInsights/awesome-ai-tools/issues/new?template=submit-tool.yml to submit it.
+
+The agents these apps run are covered in our [AI coding CLIs roundup](/blog/best-ai-coding-clis) and the [Claude Code deep dive](/blog/claude-code-deep-dive). Worktrees do not sandbox processes, so if parallel agents are running shell commands unattended, pair this with our post on [open source sandboxes for AI coding agents](/blog/open-source-sandboxes-for-ai-coding-agents).
+
+Happy Testing!
+
+How many agents can you actually review in parallel before the diffs start piling up: two, four, or more?
+
+---
+
+*Sources checked on October 19, 2026: stablyai/orca README, releases and tags, onorca.dev install, CLI reference and the orca-cli skill file; getpaseo/paseo README, LICENSE, issue #2982, v0.12.0 release notes, paseo.sh download, CLI and worktree docs, and the @getpaseo/cli npm page; superset-sh/superset README and releases, docs.superset.sh install and CLI docs, and superset.sh/pricing; generalaction/emdash README, LICENSE.md, PR #1691 and v1.2.8 release notes; autonomous-ai/openharness README, harness.autonomous.ai download page and llms.txt, and autonomous.ai/harness; OSS Radar and findarepo weekly AI rankings; the ai.dosa.dev weekly trending snapshots for weeks 41 and 42; the Product Hunt daily leaderboards for October 16 and 19; the Offrun Show HN thread. Star counts come from GitHub search snapshots and RepositoryStats or Upstar on October 19 and are approximate. The worktree script was run on Ubuntu with git 2.34.1. Outbound network is locked down on my test machine, so I could not execute the app installs; those commands are copied from each project's official docs.*
