@@ -1,0 +1,77 @@
+---
+title: "OpenAI chases $30B as Anthropic IPO clock ticks"
+description: "OpenAI seeks about $30B ahead of Anthropic's IPO, Tenstorrent raises $1.5B, MiniMax ships a cheaper agent model, and DHS orders DeepSeek off agency systems."
+pubDate: 2026-10-20
+tags: ["news","today-in-ai","funding","chips","open-models","policy","multimodal"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-10-20 UTC.
+
+Capital is moving fast, chips are getting funded, and a cheap Chinese agent model lands with a warning attached.
+
+## OpenAI seeks about $30B ahead of Anthropic's IPO
+
+**What happened:** Reuters reported OpenAI is lining up roughly $30 billion at a valuation above $1.4 trillion, with SoftBank and MGX in talks to join. OpenAI is pitching $50 billion in annualised revenue after GPT-6 Astra and expects $70 billion by year-end, per one person familiar.
+
+**Why it matters:** A raise this size sets the compute and pricing budget your API bill depends on, and it is timed to land before Anthropic's numbers go public.
+
+[Source: Reuters via AI Affairs](<https://www.aiaffairs.com/markets/openai-30-billion-fundraising-anthropic-ipo/>)
+
+## Tenstorrent raises $1.5B at a $6.2B valuation
+
+**What happened:** Trace Capital and Innovation X led the round, which Tenstorrent says will fund volume manufacturing and Galaxy server rollouts.
+
+**Why it matters:** Another accelerator vendor gets the capital to ship at volume, which is the only way it becomes a real alternative to NVIDIA in your inference stack.
+
+[Source: AI Early Edition](<https://www.aiearlyedition.com/tape/>)
+
+## MiniMax ships M3.1 Flash at half the price of M3
+
+**What happened:** MiniMax released M3.1 Flash on October 19 at $0.15 per million input tokens and $0.60 per million output, half the price of MiniMax-M3. Artificial Analysis ranks it fourth of 173 models at 42 points, but measured a lower speed than claimed and a 93% hallucination rate.
+
+**Why it matters:** Cheap agent tokens are tempting, but a model that answers almost everything means you need your own abstention and verification layer before routing production traffic to it.
+
+[Source: Silicon AI News](<https://siliconainews.com/topics/ai-models>)
+
+## DHS orders civilian agencies to strip out DeepSeek
+
+**What happened:** A Homeland Security order signed July 24 and made public October 19 bans federal civilian agencies from buying DeepSeek products and tells them to remove them, including other vendors' products built on DeepSeek. Military and intelligence systems are not covered.
+
+**Why it matters:** If you sell to US civilian agencies, any DeepSeek dependency in your stack is now a procurement problem you have to document and remove.
+
+[Source: Silicon AI News](<https://siliconainews.com/topics/policy-law>)
+
+## GoTo releases a free 27B model for Indonesian languages
+
+**What happened:** GoTo released GoTo-AI-Gemma-3-27B-IT on October 19, built on Google's Gemma 3 with AI Singapore. It handles Indonesian, English, Javanese, Sundanese, Balinese and Batak Toba, with weights on Hugging Face under the Gemma licence. GoTo published no benchmark scores.
+
+**Why it matters:** Builders targeting Southeast Asia get downloadable weights for languages most open models handle poorly, though you will have to run your own evals.
+
+[Source: Silicon AI News](<https://siliconainews.com/topics/ai-models>)
+
+## TwelveLabs Pegasus 1.5 lands on Amazon Bedrock
+
+**What happened:** AWS says Pegasus 1.5 is available in us-west-2, analysing videos up to two hours and returning matching segments as timestamped JSON with no pre-indexing step.
+
+**Why it matters:** Video search without an indexing pipeline removes a whole ingestion stage from media and moderation apps built on Bedrock.
+
+[Source: Models at Work](<https://modelsatwork.news/>)
+
+## IBM's Torch-Spyre runs Hugging Face models on Spyre
+
+**What happened:** IBM Research says its open source Torch-Spyre project gives the Spyre accelerator a PyTorch PrivateUse1 device with an Inductor backend, and that Spyre can now run thousands of Hugging Face and vLLM models.
+
+**Why it matters:** Out-of-tree accelerators that plug into stock PyTorch mean less custom glue code when you evaluate non-NVIDIA hardware.
+
+[Source: IBM Research](<https://research.ibm.com/publications/integrating-the-ibm-spyre-accelerator>)
+
+## Sources
+
+- [Reuters via AI Affairs](<https://www.aiaffairs.com/markets/openai-30-billion-fundraising-anthropic-ipo/>)
+- [AI Early Edition](<https://www.aiearlyedition.com/tape/>)
+- [Silicon AI News](<https://siliconainews.com/topics/ai-models>)
+- [Silicon AI News](<https://siliconainews.com/topics/policy-law>)
+- [Models at Work](<https://modelsatwork.news/>)
+- [IBM Research](<https://research.ibm.com/publications/integrating-the-ibm-spyre-accelerator>)
