@@ -35,6 +35,7 @@ export interface EnrichedTool {
     verdict?: string;
     tags?: string[];
     status?: string;
+    successor?: string;
     lastUpdated?: string;
 }
 

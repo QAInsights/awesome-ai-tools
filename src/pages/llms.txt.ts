@@ -70,6 +70,7 @@ export const GET: APIRoute = () => {
         `- [Best-of lists](${SITE}/best) - ${bestPages.length} ranked "best X for Y" lists at \`/best/<slug>\`, re-ranked monthly; each has a Markdown mirror at \`/best/<slug>.md\``,
         `- [Blog](${SITE}/blog) - Deep dives, comparisons, and tutorials on AI coding tools; each post has a Markdown mirror at \`/blog/<id>.md\``,
         `- [Today in AI](${SITE}/news) - Daily AI news brief for builders`,
+        `- [AI Coding Stack Matcher](${SITE}/tools/stack-matcher) - 4-question quiz that recommends a 3-tool AI coding stack (editor, companion agent, review/QA) with 1-click save to My Stacks and deep links into the cost calculator and rules converter`,
         `- [Monthly AI Coding Cost Calculator](${SITE}/tools/cost-calculator) - Interactive seat + live LLM token cost calculator (cached from models.dev via \`/api/v1/models.json\`) with cheaper alternatives`,
         `- [AI Agent Rules & Config Converter](${SITE}/tools/rules-converter) - Client-side converter between CLAUDE.md, Cursor .mdc, .cursorrules, AGENTS.md, .windsurfrules, Copilot instructions and .clinerules`,
         `- [Token Counter & Cost Estimator](${SITE}/tools/token-counter) - Client-side token counts and cost estimates for major LLMs`,

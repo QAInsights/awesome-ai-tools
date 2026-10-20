@@ -180,4 +180,11 @@ describe('explicit empty seats', () => {
     const qs = buildCalculatorUrlSearch({ teamSize: 10, selectedSeats: [], selectedModels: [], preset: 'daily' });
     expect(qs).toContain('seats=none');
   });
+
+  test('models=none parses to an empty model list and round-trips', () => {
+    const parsed = parseCalculatorStateFromUrl('?models=none');
+    expect(parsed.selectedModels).toEqual([]);
+    const qs = buildCalculatorUrlSearch({ teamSize: 1, selectedSeats: [], selectedModels: [], preset: 'daily' });
+    expect(qs).toContain('models=none');
+  });
 });

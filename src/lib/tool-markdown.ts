@@ -1,6 +1,6 @@
 import { getComparisonsForTool, hasAlternativesPage, hasPricingPage, humanizePricing, resolveComparison } from './compare';
 import { buildToolFaqs } from './tool-faqs';
-import { formatDate, getAlternativesFor, getCategorySlug, maxLastUpdated, type CategoryInfo, type Tool } from './tools';
+import { formatDate, getAlternativesFor, getCategorySlug, getToolBySlug, maxLastUpdated, type CategoryInfo, type Tool } from './tools';
 
 const SITE = 'https://ai.dosa.dev';
 const oneLine = (s?: string) => (s ?? '').replace(/\s+/g, ' ').trim();
@@ -41,6 +41,11 @@ export function toolPageMarkdown(tool: Tool): string {
     }
     if (e?.status) {
         lines.push(`- **Status**: ${e.status}`);
+    }
+    if (e?.successor) {
+        const successor = getToolBySlug(e.successor);
+        const successorName = successor?.enriched?.name ?? successor?.name ?? e.successor;
+        lines.push(`- **Successor**: [${successorName}](${SITE}/tools/${e.successor})`);
     }
     lines.push('');
 

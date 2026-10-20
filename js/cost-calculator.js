@@ -196,11 +196,13 @@ export function parseCalculatorStateFromUrl(search) {
 
   const modelsParam = params.get('models');
   const selectedModels = modelsParam
-    ? modelsParam
-        .split(',')
-        .map(s => s.trim())
-        .filter(Boolean)
-        .map(id => ({ id }))
+    ? modelsParam === 'none'
+      ? []
+      : modelsParam
+            .split(',')
+            .map(s => s.trim())
+            .filter(Boolean)
+            .map(id => ({ id }))
     : [{ id: 'claude-sonnet-4-5' }];
 
   const basePreset = WORKLOAD_PRESETS[preset === 'custom' ? 'daily' : preset];
@@ -252,6 +254,8 @@ export function buildCalculatorUrlSearch(state) {
   }
   if (Array.isArray(state.selectedModels) && state.selectedModels.length > 0) {
     params.set('models', state.selectedModels.map(m => m.id).join(','));
+  } else if (Array.isArray(state.selectedModels) && state.selectedModels.length === 0) {
+    params.set('models', 'none');
   }
   if (state.preset === 'custom' && state.usage) {
     params.set('in', String(state.usage.inputMillionsPerDevDay));

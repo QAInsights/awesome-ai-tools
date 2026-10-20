@@ -12,6 +12,10 @@
     .fo-crumbs a:hover { color: var(--ink); }
     .fo-status { display: flex; gap: 18px; align-items: center; }
     .fo-off { color: #f87171; }
+    .fo-notice { display: flex; justify-content: space-between; align-items: baseline; gap: 8px 24px; flex-wrap: wrap; margin: 0; padding: 14px 0; border-bottom: 1px solid var(--rule); color: var(--mute); font-size: 13px; line-height: 1.5; }
+    .fo-notice b { color: #f87171; font-weight: 500; margin-right: 6px; }
+    .fo-notice a { color: var(--gold); text-decoration: none; white-space: nowrap; transition: color .3s; }
+    .fo-notice a:hover { color: var(--ink); }
     .fo-rule { height: 1px; background: var(--rule); transform-origin: left; animation: fo-draw 1.6s var(--ease) both; animation-delay: var(--d, 0s); }
     .fo-name { font-size: var(--fs); font-weight: 600; letter-spacing: -.058em; line-height: .9; margin: clamp(28px, 5vw, 64px) 0 0; overflow-wrap: normal; }
     @property --fo-p { syntax: '<number>'; inherits: true; initial-value: 0; }

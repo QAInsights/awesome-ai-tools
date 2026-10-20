@@ -279,8 +279,17 @@ Extract structured JSON matching the schema. Use the submitter's pricing hint bu
 function mergeEnriched(slug, entry) {
     const arr = loadEnriched();
     const idx = arr.findIndex(e => e.slug === slug);
-    if (idx >= 0) arr[idx] = entry;
-    else arr.push(entry);
+    // Lifecycle flags (status, successor) are curated by hand, not by the LLM.
+    if (idx >= 0) {
+        const existing = arr[idx];
+        arr[idx] = {
+            ...entry,
+            ...(existing.status && !entry.status ? { status: existing.status } : {}),
+            ...(existing.successor && !entry.successor ? { successor: existing.successor } : {}),
+        };
+    } else {
+        arr.push(entry);
+    }
     saveEnriched(arr);
     console.log(`  ✓ Merged enriched entry for slug: ${slug}`);
 }
