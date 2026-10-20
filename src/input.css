@@ -1093,3 +1093,15 @@ body:has([data-ea-style="fixedfooter"].loaded) [data-onboarding-float] {
     margin-top: auto;
     padding-top: 0.5rem;
 }
+
+/* Browse gate (js/browse-gate.js): signed-out visitors on the default
+   directory view see the first 30 rows; the wall stays until sign-in.
+   index.astro sets <html data-browse-gate="locked"> pre-paint so the
+   full list never flashes; the module then controls the same hiding
+   via .browse-gated on the grid so filtered/search views (which rebuild
+   the grid) are never clipped. Rows are <div> children of #toolGrid;
+   the wall card is an <aside> so it does not shift the count. */
+html[data-browse-gate="locked"] #toolGrid > div[data-compare-row]:nth-of-type(n+31),
+#toolGrid.browse-gated > div[data-compare-row]:nth-of-type(n+31) {
+    display: none;
+}

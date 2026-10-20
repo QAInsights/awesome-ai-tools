@@ -54,6 +54,7 @@ const result = await build({
         './js/site-analytics.js',
         './js/onboarding.js',
         './js/ad-gate.js',
+        './js/browse-gate.js',
         './js/advertise-dashboard.js',
         // Utility pages — bundled as separate ES modules served at /dist/
         './js/token-counter.js',

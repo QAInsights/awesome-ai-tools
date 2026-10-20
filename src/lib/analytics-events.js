@@ -23,8 +23,9 @@ const subjectPolicies = {
     },
 };
 
-export const AUTH_TRIGGERS = Object.freeze(['sidebar', 'favorite_heart', 'follow_bell', 'zap_btn', 'ad_close', 'stack_add', 'news_cta']);
+export const AUTH_TRIGGERS = Object.freeze(['sidebar', 'favorite_heart', 'follow_bell', 'zap_btn', 'ad_close', 'stack_add', 'news_cta', 'browse_gate']);
 export const AD_STYLES = Object.freeze(['stickybox', 'fixedfooter']);
+export const BROWSE_GATE_SURFACES = Object.freeze(['wall', 'nudge']);
 export const OUTBOUND_TRIGGERS = Object.freeze(['tool_card', 'tool_detail', 'comparison', 'category', 'unknown']);
 export const ONBOARDING_TRIGGERS = Object.freeze(['inline', 'float', 'unknown']);
 export const ONBOARDING_STEP_SUBJECTS = Object.freeze(['favorites', 'follows', 'badge']);
@@ -54,6 +55,8 @@ export const EVENTS = Object.freeze({
     AD_CLOSED: 'ad_closed',
     AD_PROMPT_SHOWN: 'ad_prompt_shown',
     AD_PROMPT_DISMISSED: 'ad_prompt_dismissed',
+    BROWSE_GATE_SHOWN: 'browse_gate_shown',
+    BROWSE_GATE_DISMISSED: 'browse_gate_dismissed',
     VISIT: 'visit',
 });
 
@@ -69,7 +72,7 @@ export const EVENT_CATALOG = Object.freeze({
     [EVENTS.AUTH_ERROR]: { client: false, triggers: AUTH_TRIGGERS, subject: value => typeof value === 'string' ? value.slice(0, 128) : '' },
     [EVENTS.SIGNIN_MODAL_SHOWN]: { client: true, triggers: AUTH_TRIGGERS, subject: subjectPolicies.none },
     [EVENTS.SIGNIN_STARTED]: { client: true, triggers: AUTH_TRIGGERS, subject: subjectPolicies.none },
-    [EVENTS.GATE_BLOCKED]: { client: true, triggers: ['favorite_heart', 'follow_bell', 'zap_btn', 'news_cta'], subject: subjectPolicies.slug },
+    [EVENTS.GATE_BLOCKED]: { client: true, triggers: ['favorite_heart', 'follow_bell', 'zap_btn', 'news_cta', 'browse_gate'], subject: subjectPolicies.slug },
     [EVENTS.ZAP_CAST]: { client: true, triggers: ['zap_btn'], subject: subjectPolicies.slug },
     [EVENTS.OUTBOUND_CLICK]: { client: true, triggers: OUTBOUND_TRIGGERS, subject: subjectPolicies.slug },
     [EVENTS.COMPARE_BUILT]: { client: true, triggers: ['comparison'], subject: subjectPolicies.comparison },
@@ -80,6 +83,8 @@ export const EVENT_CATALOG = Object.freeze({
     [EVENTS.AD_CLOSED]: { client: true, triggers: AD_STYLES, subject: subjectPolicies.none },
     [EVENTS.AD_PROMPT_SHOWN]: { client: true, triggers: AD_STYLES, subject: subjectPolicies.none },
     [EVENTS.AD_PROMPT_DISMISSED]: { client: true, triggers: AD_STYLES, subject: subjectPolicies.none },
+    [EVENTS.BROWSE_GATE_SHOWN]: { client: true, triggers: BROWSE_GATE_SURFACES, subject: subjectPolicies.none },
+    [EVENTS.BROWSE_GATE_DISMISSED]: { client: true, triggers: BROWSE_GATE_SURFACES, subject: subjectPolicies.none },
     // One per browser session: trigger = ?ref= source, subject = external referrer host.
     [EVENTS.VISIT]: { client: true, triggers: REF_SOURCES, subject: subjectPolicies.host },
 });

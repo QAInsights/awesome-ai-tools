@@ -120,6 +120,9 @@ export function initAdGate({
         if (doc.querySelector('[data-ad-prompt]')) return;
 
         writeStorage(storage, AD_PROMPT_STORAGE_KEY, String(at));
+        // One floating prompt at a time: the browse-gate nudge shares this
+        // corner, so clear it before the ad prompt takes the spot.
+        doc.querySelectorAll?.('[data-browse-gate-nudge]')?.forEach(nudge => nudge.remove?.());
         const prompt = buildAdPrompt(doc, {
             style,
             onDismiss: () => {

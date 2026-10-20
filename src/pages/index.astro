@@ -132,6 +132,18 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
                     <div class="reg-col-zap text-sm cursor-pointer hover:text-white select-none flex items-center justify-center gap-2" data-sort="votes">⚡ Zap <span class="sort-icon opacity-50">↕</span></div>
                 </div>
 
+                <!-- Browse gate: presumed signed-out visitors get rows past the
+                     wall hidden before first paint; js/browse-gate.js confirms the
+                     session and lifts it for members and search/filter views.
+                     The hint is the member ad-free flag js/ad-gate.js keeps in
+                     sync with the session on every page. -->
+                <script is:inline>
+                    try {
+                        const member = localStorage.getItem('aat_ad_free') === '1';
+                        const searching = new URLSearchParams(location.search).has('q');
+                        if (!member && !searching) document.documentElement.dataset.browseGate = 'locked';
+                    } catch {}
+                </script>
                 <!-- Tool Grid - pre-rendered at build time (SSR); JS hydrates compare/zap
                      state in place and only re-renders on search/filter/sort interaction -->
                 <div class="registry px-4 pb-4 pt-2 md:px-8 md:pb-8 md:pt-4 grow overflow-y-auto" id="toolGrid" data-registry data-ssr="true">
@@ -182,4 +194,5 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
 
     <!-- Client-side application scripts -->
     <script src="/dist/app.js" type="module" defer></script>
+    <script src="/dist/browse-gate.js" type="module" defer></script>
 </BaseLayout>
