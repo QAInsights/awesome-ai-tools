@@ -102,7 +102,12 @@ function fakeDocument() {
         return [];
     };
     doc.querySelector = selector => doc.querySelectorAll(selector)[0] ?? null;
-    doc.getElementById = id => (id === 'toolGrid' ? doc.grid : id === 'tools-data' ? doc.toolsDataEl ?? null : null);
+    doc.getElementById = id => {
+        if (id === 'toolGrid') return doc.grid;
+        if (id === 'tools-data') return doc.toolsDataEl ?? null;
+        if (id === 'signInModal') return doc.signInModal ?? null;
+        return null;
+    };
     doc.addEventListener = (type, fn) => { (doc.listeners[type] ??= []).push(fn); };
     doc.dispatch = (type, detail) => (doc.listeners[type] ?? []).forEach(fn => fn({ detail }));
     return doc;
@@ -115,6 +120,14 @@ const NUDGE_SEL = '[data-browse-gate-nudge]';
 
 function fakeWindow(search = '') {
     return { location: { search }, innerWidth: 1440 };
+}
+
+function fakeModal(doc, open = false) {
+    const modal = fakeNode('div', doc);
+    if (!open) modal.classList.add('hidden');
+    doc.signInModal = modal;
+    doc.body.appendChild(modal);
+    return modal;
 }
 
 function fakeSession(user) {
@@ -149,8 +162,9 @@ function setup({ user = null, storage = memoryStorage(), search = '', rows = 40,
     const observed = [];
     const opens = [];
     if (lastNudgeAt) storage.setItem(BROWSE_GATE_NUDGE_KEY, lastNudgeAt);
+    const win = fakeWindow(search);
     initBrowseGate({
-        win: fakeWindow(search),
+        win,
         doc,
         storage,
         tracker: { track: (event, fields) => events.push([event, fields?.trigger]) },
@@ -160,7 +174,7 @@ function setup({ user = null, storage = memoryStorage(), search = '', rows = 40,
         watchGrid: () => () => {},
         now: () => 5 * BROWSE_GATE_COOLDOWN_MS,
     });
-    return { doc, grid, events, session, observed, opens, storage };
+    return { doc, grid, events, session, observed, opens, storage, win };
 }
 
 const flush = () => new Promise(resolve => setTimeout(resolve, 0));
@@ -299,13 +313,28 @@ describe('initBrowseGate', () => {
     });
 
     test('both CTAs open the sign-in modal with browse_gate attribution', async () => {
-        const { doc, observed, opens } = setup();
+        const { doc, win, observed, opens } = setup();
         await flush();
         const flat = node => [node, ...node.children.flatMap(flat)];
         flat(doc.querySelector(CARD_SEL)).find(n => n.tagName === 'BUTTON').click();
         observed[0].onVisible();
         flat(doc.querySelector(NUDGE_SEL)).filter(n => n.tagName === 'BUTTON').at(-1).click();
         expect(opens).toEqual(['browse_gate', 'browse_gate']);
+        // No modal element in this harness: both clicks fall back to the
+        // ?signin=1 deep link (early-click safety).
+        expect(win.location.href).toBe('/?signin=1');
+    });
+
+    test('no deep-link fallback when the sign-in modal opens', async () => {
+        const { doc, win, opens } = setup();
+        fakeModal(doc, false);
+        await flush();
+        const flat = node => [node, ...node.children.flatMap(flat)];
+        // Simulate the bound header listener: the click handler opened the modal.
+        doc.signInModal.classList.remove('hidden');
+        flat(doc.querySelector(CARD_SEL)).find(n => n.tagName === 'BUTTON').click();
+        expect(opens).toEqual(['browse_gate']);
+        expect(win.location.href).toBeUndefined();
     });
 
     test('an open ad prompt suppresses the nudge (one floating card max)', async () => {

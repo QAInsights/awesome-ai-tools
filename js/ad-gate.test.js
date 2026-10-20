@@ -44,6 +44,7 @@ function fakeDocument() {
     const matches = (node, selector) => {
         if (selector === '.ea-slot') return node.className.split(' ').includes('ea-slot');
         if (selector === '[data-ad-prompt]') return 'data-ad-prompt' in node.attributes;
+        if (selector === '[data-browse-gate-nudge]') return 'data-browse-gate-nudge' in node.attributes;
         return false;
     };
     doc.querySelectorAll = selector => all(doc.body).filter(node => matches(node, selector));
@@ -144,6 +145,18 @@ describe('initAdGate', () => {
         nodes.find(node => node.tagName === 'BUTTON').click();
         expect(doc.querySelector('[data-ad-prompt]')).toBeNull();
         expect(events.at(-1)).toEqual(['ad_prompt_dismissed', 'fixedfooter']);
+    });
+
+    test('the ad prompt takes the corner from an open browse-gate nudge', async () => {
+        const { win, doc } = setup(null);
+        const nudge = fakeNode('aside', doc);
+        nudge.setAttribute('data-browse-gate-nudge', 'true');
+        doc.body.append(nudge);
+
+        await win.dispatch(AD_CLOSED_EVENT, { style: 'stickybox' });
+
+        expect(doc.querySelector('[data-browse-gate-nudge]')).toBeNull();
+        expect(doc.querySelector('[data-ad-prompt]')).not.toBeNull();
     });
 
     test('respects the cooldown and never prompts members', async () => {

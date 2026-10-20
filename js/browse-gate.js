@@ -218,6 +218,14 @@ export function initBrowseGate({
 
     function onSignIn() {
         attribution.open('browse_gate');
+        // The header trigger's click listener is only bound inside the
+        // deferred bootstrap, so a CTA click before it lands is a no-op.
+        // If the modal did not open synchronously, fall back to the
+        // ?signin=1 deep link, which app.js honours once auth is ready.
+        const modal = doc.getElementById?.('signInModal');
+        if (!modal || modal.classList.contains('hidden')) {
+            win.location.href = '/?signin=1';
+        }
     }
 
     // The wall must sit right after the last free row. Lazy batches append
@@ -283,6 +291,9 @@ export function initBrowseGate({
     }
 
     function maybeShowNudge() {
+        // The ad-close prompt owns the same corner and removes the nudge
+        // node directly; drop the stale reference so state stays honest.
+        if (nudge && nudge.parentNode !== doc.body) nudge = null;
         if (nudge) return;
         if (doc.querySelector(NUDGE_SELECTOR) || doc.querySelector('[data-ad-prompt]')) return;
         const at = now();
