@@ -17,14 +17,16 @@ import { bindAuthSession } from './auth-session-binding.js';
  *    the ad-free flag (AD_FREE_STORAGE_KEY) that js/ad-gate.js keeps in
  *    sync with the session on every page.
  *  - This module then moves control to .browse-gated on #toolGrid (same
- *    CSS rule) so filtered re-renders are never clipped, inserts the
- *    wall card after the row limit, and shows a once-a-day floating
- *    nudge when the wall scrolls into view.
+ *    CSS rule) so filtered re-renders are never clipped, interleaves the
+ *    wall card after BROWSE_GATE_CARD_ROW rows (mid-feed, before the
+ *    free limit ends the list), and shows a once-a-day floating nudge
+ *    when the card scrolls into view.
  *  - directory:filtered (js/modules/filter-manager.js) reports whether
  *    the grid shows the pristine list; the gate re-applies when it does.
  */
 
 export const BROWSE_GATE_ROW_LIMIT = 30;
+export const BROWSE_GATE_CARD_ROW = 20; // wall card interleaves after the 20th row
 export const BROWSE_GATE_NUDGE_KEY = 'aat_gate_nudge_at';
 export const BROWSE_GATE_COOLDOWN_MS = 24 * 60 * 60 * 1000;
 export const BROWSE_GATE_ATTR = 'browseGate'; // <html data-browse-gate="locked">
@@ -80,7 +82,7 @@ function totalTools(doc) {
     return doc.getElementById('toolGrid')?.querySelectorAll?.('[data-compare-row]')?.length || 0;
 }
 
-/** The wall card rendered after BROWSE_GATE_ROW_LIMIT rows. */
+/** The wall card interleaved after BROWSE_GATE_CARD_ROW rows. */
 export function buildGateCard(doc, { total, limit, onSignIn }) {
     const card = el(doc, 'aside',
         'browse-gate-card my-4 md:my-6 rounded-3xl border border-[#3a2d1a] ' +
@@ -96,7 +98,7 @@ export function buildGateCard(doc, { total, limit, onSignIn }) {
 
     card.append(el(doc, 'p',
         'text-[22px] md:text-[28px] font-semibold text-white leading-tight tracking-tight m-0',
-        `${total} tools curated by hand. You have seen ${limit}.`));
+        `${total} tools curated by hand. The first ${limit} are free.`));
 
     card.append(el(doc, 'p',
         'text-[15px] text-[#a3a3a3] leading-relaxed m-0 max-w-[640px]',
@@ -133,7 +135,7 @@ export function buildGateNudge(doc, { total, limit, onSignIn, onDismiss }) {
     card.setAttribute('aria-label', 'Unlock the full index');
 
     const top = el(doc, 'div', 'flex items-center justify-between gap-3');
-    top.append(el(doc, 'p', 'font-mono text-[10px] uppercase tracking-[0.2em] text-[#e2c48a] m-0', 'You hit the free limit'));
+    top.append(el(doc, 'p', 'font-mono text-[10px] uppercase tracking-[0.2em] text-[#e2c48a] m-0', 'Free preview'));
     const close = el(doc, 'button', 'text-[#737373] hover:text-white p-1 -m-1 transition-colors shrink-0', '✕');
     close.type = 'button';
     close.setAttribute('aria-label', 'Dismiss unlock offer');
@@ -228,14 +230,16 @@ export function initBrowseGate({
         }
     }
 
-    // The wall must sit right after the last free row. Lazy batches append
-    // rows at the grid end, so the card is re-pinned on every childList
-    // change (MutationObserver): before row 31 when it exists, at the end
-    // otherwise (the hidden sentinel and hidden rows take no space).
+    // The card sits mid-feed, right after the BROWSE_GATE_CARD_ROW-th row,
+    // while the remaining free rows (up to BROWSE_GATE_ROW_LIMIT) continue
+    // below it. Lazy batches append rows at the grid end, so the card is
+    // re-pinned on every childList change (MutationObserver): before the
+    // anchor row when it exists, at the end otherwise (the hidden sentinel
+    // and hidden rows take no space).
     function positionCard() {
         if (!card || positioning) return;
         const rows = grid.querySelectorAll('[data-compare-row]');
-        const anchor = rows[BROWSE_GATE_ROW_LIMIT] || null;
+        const anchor = rows[BROWSE_GATE_CARD_ROW] || null;
         positioning = true;
         try {
             if (anchor) {

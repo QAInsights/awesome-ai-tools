@@ -216,6 +216,16 @@ describe('initBrowseGate', () => {
         expect(observed).toHaveLength(1);
     });
 
+    test('the wall card interleaves after the 20th row', async () => {
+        const { doc, grid } = setup();
+        await flush();
+        const card = doc.querySelector(CARD_SEL);
+        const rows = grid.children.filter(child => 'data-compare-row' in child.attributes);
+        expect(grid.children[20]).toBe(card);
+        expect(card.nextElementSibling).toBe(rows[20]);
+        expect(rows).toHaveLength(40);
+    });
+
     test('wall visible tracks gate_blocked once and shows the nudge', async () => {
         const { doc, events, observed, storage } = setup();
         await flush();
