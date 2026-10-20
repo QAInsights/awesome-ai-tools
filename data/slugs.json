@@ -900,6 +900,18 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "herdr",
+    "name": "Herdr",
+    "company": "Herdr",
+    "category": "Terminal & CLI Agents"
+  },
+  {
+    "slug": "agent-deck",
+    "name": "Agent Deck",
+    "company": "Ashesh Goplani",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
@@ -1353,6 +1365,12 @@
     "slug": "ifixai",
     "name": "iFixAi",
     "company": "iFixAi",
+    "category": "AI Testing & Quality Assurance"
+  },
+  {
+    "slug": "artemis",
+    "name": "ARTEMIS",
+    "company": "Google",
     "category": "AI Testing & Quality Assurance"
   },
   {
@@ -2241,6 +2259,18 @@
     "slug": "harness2",
     "name": "Harness2",
     "company": "Google Research",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "agentsview",
+    "name": "AgentsView",
+    "company": "Kenn Software",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "laminar",
+    "name": "Laminar",
+    "company": "Laminar (YC S24)",
     "category": "Developer Productivity & Workflow"
   },
   {
