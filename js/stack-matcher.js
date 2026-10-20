@@ -262,6 +262,7 @@ export function recommendStack(rawAnswers, context = {}, overrides = {}) {
 
   const selectedSlugs = [];
   const slots = [];
+  const appliedOverrides = {};
 
   for (const def of SLOT_DEFS) {
     const forced = validOverrides.get(def.id) ?? null;
@@ -270,16 +271,14 @@ export function recommendStack(rawAnswers, context = {}, overrides = {}) {
       if (slotId !== def.id) excluded.add(profile.slug);
     }
 
+    const ranked = rankSlot(def.id, answers, [...excluded], profiles);
     let profile;
-    let ranked;
     let overridden = false;
-    if (forced) {
+    if (forced && ranked.candidates.some(c => c.profile.slug === forced.slug)) {
       profile = forced;
       overridden = true;
-      excluded.add(profile.slug);
-      ranked = rankSlot(def.id, answers, [...excluded], profiles);
+      appliedOverrides[def.id] = forced.slug;
     } else {
-      ranked = rankSlot(def.id, answers, [...excluded], profiles);
       profile = ranked.candidates[0]?.profile ?? null;
     }
     if (!profile) continue;
@@ -361,6 +360,7 @@ export function recommendStack(rawAnswers, context = {}, overrides = {}) {
   costParams.set('team', '1');
   costParams.set('preset', preset);
   costParams.set('seats', seatTokens.length > 0 ? seatTokens.join(',') : 'none');
+  if (answers.privacy === 'local') costParams.set('models', 'none');
   const costCalculatorUrl = `/tools/cost-calculator?${costParams.toString()}`;
 
   const rulesFormats = slots.map(s => s.selected.rules);
@@ -402,6 +402,7 @@ export function recommendStack(rawAnswers, context = {}, overrides = {}) {
 
   return {
     answers,
+    overrides: appliedOverrides,
     title,
     summary,
     estimatedMonthly,
@@ -466,7 +467,7 @@ export function formatRecommendedStackMarkdown(rec, origin = 'https://ai.dosa.de
     '',
     `- [Simulate cost](${origin}${rec.costCalculatorUrl})`,
     `- [Rules config](${origin}${rec.rulesConverterUrl})`,
-    `- [Share](${origin}/tools/stack-matcher${buildMatcherUrlSearch(rec)})`,
+    `- [Share](${origin}/tools/stack-matcher${buildMatcherUrlSearch({ answers: rec.answers, overrides: rec.overrides })})`,
     '',
     `Matched via ${origin}/tools/stack-matcher`,
   ];

@@ -14,6 +14,7 @@ import type { Tool } from './tools';
 export interface StackMatcherPlan {
     name: string;
     monthlyAmount: number;
+    unit: string;
 }
 
 export interface StackMatcherCatalogEntry {
@@ -32,6 +33,8 @@ export interface StackMatcherCatalogEntry {
 }
 
 const ENTERPRISE_PLAN_RE = /business|team|enterprise|org/i;
+const RECURRING_UNIT_RE = /\/(mo|month|yr|year)\b/i;
+const ORG_UNIT_RE = /\/(org|organization|team|company|workspace)\b/i;
 const LOCAL_HINT_RE =
     /\b(local(ly|-first)?|offline|self-host(ed)?|air-gap(ped)?|on-device|ollama|llama\.cpp|lm studio)\b/i;
 
@@ -59,8 +62,14 @@ export function buildStackMatcherCatalog(
         const enriched = tool.enriched;
         const calculatorEntry = calculatorBySlug.get(tool.slug);
         const plans = (calculatorEntry?.plans ?? [])
-            .filter(p => p.monthlyAmount >= 1)
-            .map(p => ({ name: p.name, monthlyAmount: p.monthlyAmount }));
+            .filter(
+                p =>
+                    p.monthlyAmount >= 1 &&
+                    p.perSeat === true &&
+                    RECURRING_UNIT_RE.test(p.unit) &&
+                    !ORG_UNIT_RE.test(p.unit),
+            )
+            .map(p => ({ name: p.name, monthlyAmount: p.monthlyAmount, unit: p.unit }));
         const description = truncateOnWordBoundary(enriched?.description ?? tool.notes ?? '', 140);
         const enterprisePlan =
             plans.some(p => ENTERPRISE_PLAN_RE.test(p.name)) ||

@@ -133,6 +133,25 @@ describe('stack-matcher engine', () => {
     expect(rec.slots[0].alternatives[0].slug).toBe(natural.slots[0].selected.slug);
   });
 
+  test('applied overrides are returned and carried in the share link', () => {
+    const rec = recommendStack(DEFAULT_ANSWERS, ctx, { primary: 'zed', companion: 'aider' });
+    expect(rec.overrides).toEqual({ primary: 'zed', companion: 'aider' });
+    const md = formatRecommendedStackMarkdown(rec);
+    expect(md).toContain('s1=zed');
+    expect(md).toContain('s2=aider');
+  });
+
+  test('overrides that fail quiz filters are rejected', () => {
+    const rec = recommendStack(
+      { editor: 'browser', budget: 'free', privacy: 'local', workflow: 'greenfield' },
+      ctx,
+      { primary: 'cursor' },
+    );
+    expect(rec.slots[0].selected.slug).not.toBe('cursor');
+    expect(rec.slots[0].selected.overridden).toBe(false);
+    expect(rec.overrides.primary).toBeUndefined();
+  });
+
   test.each(PERSONA_PRESETS.map(p => [p.id, p]))('persona %s yields a 3-slot stack', (id, preset) => {
     const rec = recommendStack(preset.answers, ctx);
     expect(rec.slots.length).toBe(3);
@@ -148,6 +167,10 @@ describe('stack-matcher engine', () => {
 
     const agentic = recommendStack({ editor: 'terminal', budget: 'power', privacy: 'byok', workflow: 'agentic' }, ctx);
     expect(agentic.costCalculatorUrl).toContain('preset=agentic');
+
+    const local = recommendStack(PERSONA_PRESETS.find(p => p.id === 'local-private').answers, ctx);
+    expect(local.costCalculatorUrl).toContain('models=none');
+    expect(rec.costCalculatorUrl).not.toContain('models=');
 
     const pro = recommendStack(PERSONA_PRESETS.find(p => p.id === 'agentic-pro').answers, ctx);
     expect(pro.costCalculatorUrl).toContain('claude-code%3A');

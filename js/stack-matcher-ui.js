@@ -18,6 +18,7 @@ import { auth } from './auth.js';
 import { authAttribution } from './auth-attribution.js';
 
 const PENDING_STACK_KEY = 'dosa_pending_matcher_stack';
+const PENDING_TTL_MS = 15 * 60 * 1000;
 
 const esc = str =>
   String(str ?? '')
@@ -78,6 +79,8 @@ export function initStackMatcherUI({ catalog = {}, switchPairs = [] } = {}) {
   let overrides = parsed.overrides;
   let lastRec = null;
   let statusTimer = null;
+  let createdStackId = null;
+  let saving = false;
 
   function setStatus(message, { sticky = false } = {}) {
     if (!els.status) return;
@@ -180,11 +183,17 @@ export function initStackMatcherUI({ catalog = {}, switchPairs = [] } = {}) {
     window.history.replaceState(null, '', `${window.location.pathname}${search}`);
   }
 
+  function cancelPendingSave() {
+    clearPending();
+    createdStackId = null;
+  }
+
   els.radios.forEach(radio => {
     radio.addEventListener('change', () => {
       if (!radio.checked) return;
       answers = normalizeAnswers({ ...answers, [radio.name]: radio.value });
       overrides = {};
+      cancelPendingSave();
       recompute();
     });
   });
@@ -195,6 +204,7 @@ export function initStackMatcherUI({ catalog = {}, switchPairs = [] } = {}) {
       if (!preset) return;
       answers = normalizeAnswers(preset.answers);
       overrides = {};
+      cancelPendingSave();
       recompute();
     });
   });
@@ -203,6 +213,7 @@ export function initStackMatcherUI({ catalog = {}, switchPairs = [] } = {}) {
     const swap = event.target.closest?.('[data-swap-slot][data-swap-slug]');
     if (swap) {
       overrides = { ...overrides, [swap.getAttribute('data-swap-slot')]: swap.getAttribute('data-swap-slug') };
+      cancelPendingSave();
       recompute();
       return;
     }
@@ -211,13 +222,37 @@ export function initStackMatcherUI({ catalog = {}, switchPairs = [] } = {}) {
       const next = { ...overrides };
       delete next[reset.getAttribute('data-reset-slot')];
       overrides = next;
+      cancelPendingSave();
       recompute();
     }
   });
 
+  function readPending() {
+    try {
+      const raw = sessionStorage.getItem(PENDING_STACK_KEY);
+      if (!raw) return null;
+      const p = JSON.parse(raw);
+      if (!p || typeof p !== 'object' || typeof p.savedAt !== 'number' || Date.now() - p.savedAt > PENDING_TTL_MS) {
+        sessionStorage.removeItem(PENDING_STACK_KEY);
+        return null;
+      }
+      return p;
+    } catch {
+      try { sessionStorage.removeItem(PENDING_STACK_KEY); } catch {}
+      return null;
+    }
+  }
+
+  function clearPending() {
+    try { sessionStorage.removeItem(PENDING_STACK_KEY); } catch {}
+  }
+
   function stashPending() {
     try {
-      sessionStorage.setItem(PENDING_STACK_KEY, JSON.stringify({ answers, overrides, savedAt: Date.now() }));
+      sessionStorage.setItem(
+        PENDING_STACK_KEY,
+        JSON.stringify({ answers, overrides, stackId: createdStackId, savedAt: Date.now() }),
+      );
     } catch {}
   }
 
@@ -228,44 +263,54 @@ export function initStackMatcherUI({ catalog = {}, switchPairs = [] } = {}) {
   }
 
   async function runSave() {
-    if (!lastRec || !els.saveBtn) return;
-    await auth.initialize();
-    if (!auth.isAuthenticated()) {
-      promptSignIn();
-      return;
-    }
+    if (!lastRec || !els.saveBtn || saving) return;
+    saving = true;
     try {
-      sessionStorage.removeItem(PENDING_STACK_KEY);
-    } catch {}
-    els.saveBtn.disabled = true;
-    setStatus('Saving…');
-    try {
-      const created = await requestJson('/api/stacks', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: lastRec.stackPayload.title, description: lastRec.stackPayload.description }),
-      });
-      const stackId = created.stack.id;
+      await auth.initialize();
+      if (!auth.isAuthenticated()) {
+        promptSignIn();
+        return;
+      }
+      els.saveBtn.disabled = true;
+      setStatus('Saving…');
+      if (createdStackId === null) {
+        try {
+          const created = await requestJson('/api/stacks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: lastRec.stackPayload.title, description: lastRec.stackPayload.description }),
+          });
+          createdStackId = created.stack.id;
+        } catch (error) {
+          if (error.status === 409 && error.message === 'stack_limit') {
+            setStatus("You've reached the 20-stack limit. Delete one in My Stacks first.", { sticky: true });
+          } else if (error.status === 401) {
+            await auth.signOut();
+            promptSignIn();
+          } else {
+            setStatus(error.message || 'Could not save this stack.');
+          }
+          return;
+        }
+      }
       try {
-        await requestJson(`/api/stacks/${encodeURIComponent(stackId)}/items`, {
+        await requestJson(`/api/stacks/${encodeURIComponent(createdStackId)}/items`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ items: lastRec.stackPayload.items }),
         });
-      } catch {
-        // Stack exists — the editor can still reconcile the items.
+      } catch (error) {
+        setStatus(`Stack created, but adding the tools failed (${error.message}). Click Save again to retry.`, {
+          sticky: true,
+        });
+        return;
       }
+      clearPending();
+      const stackId = createdStackId;
+      createdStackId = null;
       window.location.href = `/stacks/edit?id=${encodeURIComponent(stackId)}`;
-    } catch (error) {
-      if (error.status === 409 && error.message === 'stack_limit') {
-        setStatus("You've reached the 20-stack limit. Delete one in My Stacks first.", { sticky: true });
-      } else if (error.status === 401) {
-        await auth.signOut();
-        promptSignIn();
-      } else {
-        setStatus(error.message || 'Could not save this stack.');
-      }
     } finally {
+      saving = false;
       els.saveBtn.disabled = false;
     }
   }
@@ -294,19 +339,16 @@ export function initStackMatcherUI({ catalog = {}, switchPairs = [] } = {}) {
     }
   });
 
-  // Initial render, then pick up a stack queued before a sign-in redirect.
-  let pending = null;
-  try {
-    const raw = sessionStorage.getItem(PENDING_STACK_KEY);
-    if (raw) {
-      const parsedPending = JSON.parse(raw);
-      if (parsedPending && typeof parsedPending === 'object') pending = parsedPending;
-    }
-  } catch {}
+  auth.onAuthChange(({ event }) => {
+    if (event === 'signin' && readPending()) void runSave();
+  });
 
+  // Initial render, then pick up a stack queued before a sign-in redirect.
+  const pending = readPending();
   if (pending) {
     answers = normalizeAnswers(pending.answers);
     overrides = pending.overrides && typeof pending.overrides === 'object' ? pending.overrides : {};
+    createdStackId = pending.stackId ?? null;
   }
 
   syncControls();
@@ -319,13 +361,6 @@ export function initStackMatcherUI({ catalog = {}, switchPairs = [] } = {}) {
         void runSave();
       } else {
         setStatus('Sign in to finish saving your stack.', { sticky: true });
-        let armed = true;
-        auth.onAuthChange(({ event }) => {
-          if (armed && event === 'signin') {
-            armed = false;
-            void runSave();
-          }
-        });
       }
     })();
   }

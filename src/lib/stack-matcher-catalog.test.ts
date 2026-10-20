@@ -40,4 +40,16 @@ describe('stack-matcher catalog', () => {
   test('excludes discontinued tools', () => {
     expect(catalog['continue']).toBeUndefined();
   });
+
+  test('plans are recurring per-seat units only', () => {
+    const recurring = /\/(mo|month|yr|year)\b/i;
+    const org = /\/(org|organization|team|company|workspace)\b/i;
+    for (const entry of Object.values(catalog)) {
+      for (const p of entry.plans) {
+        expect(recurring.test(p.unit)).toBe(true);
+        expect(org.test(p.unit)).toBe(false);
+        expect(['/week', '/pack', '/credit']).not.toContain(p.unit);
+      }
+    }
+  });
 });
