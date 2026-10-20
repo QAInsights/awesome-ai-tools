@@ -77,7 +77,7 @@ const jsonLd = JSON.stringify({
             to forecast team spend and uncover cheaper alternatives.
           </p>
         </div>
-        <div class="flex items-center gap-2.5 shrink-0">
+        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
           <button id="copySummaryBtn" type="button" class="cc-action-btn">Copy Summary</button>
           <button id="shareCalcBtn" type="button" class="cc-action-btn cc-action-btn-primary">Share Stack</button>
         </div>
@@ -99,7 +99,7 @@ const jsonLd = JSON.stringify({
                 <button type="button" data-cycle="annual" class="cc-cycle-btn">Annual View</button>
               </div>
             </div>
-            <div class="flex items-center gap-4">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-4">
               <div class="flex-1 flex flex-col gap-1.5">
                 <input id="teamSizeSlider" type="range" min="0" max="1000" value="20" autocomplete="off" class="cc-range w-full" aria-label="Team size slider (1 to 25,000 developers)" />
                 <div class="flex justify-between text-[10px] font-mono text-[#525252] px-0.5 select-none">
@@ -188,7 +188,7 @@ const jsonLd = JSON.stringify({
               <input
                 id="toolSearchInput"
                 type="search"
-                placeholder="Search 100+ catalog tools with paid tiers (e.g. Cursor, Copilot, Devin)…"
+                placeholder="Search 100+ paid tools (Cursor, Copilot…)"
                 autocomplete="off"
                 class="w-full bg-[#111] border border-[#2a2a2a] hover:border-[#383838] focus:border-[#c8a96a] rounded-lg px-3.5 py-2.5 text-xs text-[#f5f2eb] placeholder-[#737373] focus:outline-none font-mono transition-colors"
               />
@@ -206,7 +206,7 @@ const jsonLd = JSON.stringify({
                 <div class="cc-label">03 · BYOK / API Token Workload (models.dev)</div>
                 <p class="text-xs text-[#737373] mt-0.5">Estimate metered LLM API spend for CLI agents (Claude Code, Aider, Cline, OpenCode).</p>
               </div>
-              <div class="flex items-center gap-2.5">
+              <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1">
                 <span id="modelsCacheBadge" class="text-[11px] font-mono text-[#8b8b88]">Loading models.dev…</span>
                 <button id="refreshModelsBtn" type="button" class="text-[11px] font-mono text-[#e2c48a] hover:text-[#fff4de] underline underline-offset-2 cursor-pointer transition-colors">Refresh</button>
               </div>
@@ -364,8 +364,8 @@ const jsonLd = JSON.stringify({
   .cc-chip.active .cc-chip-price { color: #e2c48a; border-left-color: #4c4030; }
   .cc-search-item { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 9px 13px; text-align: left; border-bottom: 1px solid #1d1d1c; cursor: pointer; transition: background 0.15s; }
   .cc-search-item:hover { background: #191612; }
-  .cc-selected-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 12px; border-radius: 10px; background: #0f0f0f; border: 1px solid #222; }
-  .cc-plan-select { background: #151515; border: 1px solid #2c2c2b; border-radius: 6px; padding: 4px 9px; font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #f4f4f2; }
+  .cc-selected-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 12px; border-radius: 10px; background: #0f0f0f; border: 1px solid #222; }
+  .cc-plan-select { background: #151515; border: 1px solid #2c2c2b; border-radius: 6px; padding: 4px 9px; font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #f4f4f2; min-width: 0; max-width: 100%; }
   .cc-plan-select:focus { border-color: #c8a96a; outline: none; }
   .cc-remove-btn { width: 24px; height: 24px; border-radius: 6px; color: #737373; font-size: 16px; line-height: 1; cursor: pointer; transition: color 0.15s; }
   .cc-remove-btn:hover { color: #f87171; }
@@ -384,6 +384,17 @@ const jsonLd = JSON.stringify({
   .cc-alt-card:hover { border-color: #3a3225; }
   .cc-apply-btn { padding: 4px 10px; border-radius: 999px; font-size: 11px; font-family: 'JetBrains Mono', monospace; background: #211c16; color: #fff4de; border: 1px solid #4c4030; cursor: pointer; transition: all 0.15s; }
   .cc-apply-btn:hover { border-color: #c8a96a; background: #2b241c; }
+
+  @media (max-width: 767px) {
+    .cc-panel { padding: 14px; }
+    .cc-team-input-shell { width: 100%; justify-content: space-between; }
+    .cc-team-input { width: 100%; max-width: 110px; }
+    .cc-team-step-btn { width: 40px; height: 40px; }
+    #toolSearchInput, .cc-plan-select, .cc-team-input { font-size: 16px; }
+    .cc-provider-tab, .cc-cycle-btn, .cc-apply-btn, .cc-chip { min-height: 38px; }
+    .cc-remove-btn { width: 36px; height: 36px; }
+    .cc-range::-webkit-slider-thumb, .cc-range::-moz-range-thumb { width: 22px; height: 22px; }
+  }
 </style>
 
 <script type="module">

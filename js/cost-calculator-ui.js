@@ -164,14 +164,14 @@ export function initCostCalculatorUI(catalog) {
           )
           .join('');
         return `<div class="cc-selected-row">
-          <div class="min-w-0">
+          <div class="min-w-0 flex-1">
             <div class="flex items-center gap-2">
-              <a href="/tools/${esc(tool.slug)}" class="text-sm font-medium text-[#f4f4f2] hover:text-[#e2c48a] transition-colors truncate">${esc(tool.name)}</a>
-              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#151515] text-[#8b8b88] border border-[#262626]">${esc(tool.categoryShort)}</span>
+              <a href="/tools/${esc(tool.slug)}" class="text-sm font-medium text-[#f4f4f2] hover:text-[#e2c48a] transition-colors break-words">${esc(tool.name)}</a>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#151515] text-[#8b8b88] border border-[#262626] whitespace-nowrap">${esc(tool.categoryShort)}</span>
             </div>
           </div>
-          <div class="flex items-center gap-2 shrink-0">
-            <select data-seat-plan="${index}" aria-label="${esc(tool.name)} tier" class="cc-plan-select">${optionsHtml}</select>
+          <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+            <select data-seat-plan="${index}" aria-label="${esc(tool.name)} tier" class="cc-plan-select min-w-0 flex-1 sm:flex-none">${optionsHtml}</select>
             <button type="button" data-remove-seat="${index}" class="cc-remove-btn" title="Remove tool" aria-label="Remove ${esc(tool.name)}">&times;</button>
           </div>
         </div>`;
