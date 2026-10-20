@@ -10363,5 +10363,150 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-19"
+  },
+  {
+    "slug": "herdr",
+    "name": "Herdr",
+    "company": "Herdr",
+    "pricing": "open-source",
+    "pricingDetail": "Herdr is free and open source under Apache-2.0. You bring your own coding-agent CLIs and their subscriptions or API keys.",
+    "description": "Herdr is an open-source agent multiplexer that runs inside your existing terminal and owns the terminals of coding agents such as Claude Code, Codex, Cursor and OpenCode. A background server keeps panes alive across detaches, SSH drops and restarts, and each pane shows whether its agent is working, blocked or idle.",
+    "keyFeatures": [
+      "Background server keeps agent panes running after detach or SSH disconnect and restores layouts after restarts",
+      "Per-pane working, blocked and idle status so stuck agents are easy to spot",
+      "Local and saved SSH machines combined in one window with a shared agent list",
+      "CLI and socket API plus an agent skill so agents can spawn panes and prompt each other",
+      "tmux-style prefix keys alongside first-class mouse splitting and dragging",
+      "Plugin marketplace and a single Rust binary with no Electron"
+    ],
+    "bestFor": "Developers running several CLI coding agents at once, locally or over SSH, who want tmux-style persistence with agent-aware status.",
+    "notIdealFor": "Developers who want a graphical IDE or desktop app rather than a terminal-based workflow.",
+    "recentUpdates": "Released v0.9.5 on October 14, 2026, a hotfix for v0.9.4 (October 13, 2026), which added `herdr plugin update` and persistent Windows notifications.",
+    "verdict": "A fast-moving, widely adopted terminal runtime for multi-agent work that adds agent awareness and persistence without replacing the agents themselves.",
+    "tags": [
+      "Terminal",
+      "Agent Multiplexer",
+      "Coding Agents",
+      "Parallel Agents",
+      "Rust",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-20"
+  },
+  {
+    "slug": "agent-deck",
+    "name": "Agent Deck",
+    "company": "Ashesh Goplani",
+    "pricing": "open-source",
+    "pricingDetail": "Agent Deck is free and open source under the MIT License. You bring your own coding-agent CLIs and their subscriptions or API keys.",
+    "description": "Agent Deck is an open-source terminal session manager for AI coding agents. One TUI lists every Claude Code, Codex, Gemini, OpenCode and Pi session with its running, waiting or idle state, and adds session forking, per-project MCP and skills management, and a conductor session that can report on the fleet through chat apps.",
+    "keyFeatures": [
+      "Single TUI showing every agent session and whether it is running, waiting or idle",
+      "Fork Claude, Codex, OpenCode and Pi sessions with inherited conversation history",
+      "MCP Manager and Skills Manager to toggle servers and skills per project",
+      "Git worktree setup and sandboxed container sessions",
+      "Built-in web UI via `agent-deck web`",
+      "Conductor session with Telegram, Slack, Discord and Mattermost channels"
+    ],
+    "bestFor": "Developers juggling many terminal coding-agent sessions across projects who want one dashboard plus remote status updates.",
+    "notIdealFor": "Native Windows users outside WSL or developers who only run a single agent session at a time.",
+    "recentUpdates": "Released v1.16.30 on October 18, 2026, following v1.16.29 the same day and v1.16.27 and v1.16.28 on October 10, 2026.",
+    "verdict": "A mature, frequently released command center for terminal agent fleets with useful forking, MCP and remote-conductor features.",
+    "tags": [
+      "Terminal",
+      "Session Manager",
+      "Coding Agents",
+      "TUI",
+      "Go",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-20"
+  },
+  {
+    "slug": "artemis",
+    "name": "ARTEMIS",
+    "company": "Google",
+    "pricing": "open-source",
+    "pricingDetail": "ARTEMIS is free and open source under Apache-2.0. It runs locally against your own Android device or emulator, and you supply the model provider credentials it uses.",
+    "description": "ARTEMIS is an open-source Google project that turns natural-language instructions into Android automation for end-to-end testing and everyday workflows. It drives real devices or emulators through an observe-and-act loop and exposes an MCP server so AI coding assistants can run device tests and collect diagnostics.",
+    "keyFeatures": [
+      "Natural-language cross-app automation on Android devices and emulators",
+      "Element-index targeting with coordinate and visual fallbacks for custom UIs",
+      "Built-in MCP server for Antigravity, Claude Code, Codex, Cursor and Windsurf",
+      "Logcat and screenshot capture for diagnostic test reports",
+      "Local web console with live screen mirroring, prompt sandbox and execution replays",
+      "Reports 99%+ task completion on the AndroidWorld benchmark"
+    ],
+    "bestFor": "Mobile developers and QA engineers who want AI assistants to execute and diagnose Android end-to-end tests on real hardware.",
+    "notIdealFor": "Teams testing iOS or web apps, or those needing a hosted device cloud rather than a locally connected phone or emulator.",
+    "recentUpdates": "Latest commits on September 29, 2026 fixed server status, the CLI entry point, replay and test issues; the repository was published in August 2026 and has since passed 13,000 GitHub stars.",
+    "verdict": "A strong open-source option for agent-driven Android testing, especially for teams already using MCP-capable coding assistants.",
+    "tags": [
+      "AI Testing",
+      "Android",
+      "Mobile Automation",
+      "MCP",
+      "End-to-End Testing",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-20"
+  },
+  {
+    "slug": "agentsview",
+    "name": "AgentsView",
+    "company": "Kenn Software",
+    "pricing": "open-source",
+    "pricingDetail": "AgentsView is free and open source under the MIT License, and session data stays on your machine by default.",
+    "description": "AgentsView is a local-first archive and analytics tool for AI coding agent sessions. It discovers sessions from Claude Code, Codex, Cursor, Copilot CLI, Gemini CLI and 20+ other agents, syncs them into a local SQLite database, and provides a web UI and CLI for search, transcripts, stats and token cost tracking.",
+    "keyFeatures": [
+      "Automatic session discovery across Claude Code, Codex, Cursor, Copilot CLI, Gemini CLI, Devin CLI and 20+ agents",
+      "Full-text session search and transcripts with tool errors and recovery",
+      "Token usage and cost tracking with daily usage reports",
+      "Per-session details and aggregate session statistics",
+      "Desktop app, CLI, install script and Docker image",
+      "Optional PostgreSQL, ClickHouse and DuckDB sync for team analytics"
+    ],
+    "bestFor": "Developers using several coding agents who want one private, searchable history of sessions along with token and cost reporting.",
+    "notIdealFor": "Teams looking for runtime tracing of their own production AI agents rather than a history of coding-agent sessions.",
+    "recentUpdates": "Released v0.45.0 on October 9, 2026, adding Spanish, Junie, OMO and StepCode sessions, message-frequency charts and conversation-memory plugins for Claude Code and Codex.",
+    "verdict": "A broad, privacy-respecting session browser and cost tracker that covers more coding agents than most alternatives.",
+    "tags": [
+      "Observability",
+      "Session Analytics",
+      "Coding Agents",
+      "Cost Tracking",
+      "Local-First",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-20"
+  },
+  {
+    "slug": "laminar",
+    "name": "Laminar",
+    "company": "Laminar (YC S24)",
+    "pricing": "freemium",
+    "pricingDetail": "The platform is open source under Apache-2.0 and can be self-hosted with Docker Compose. The managed cloud has a Free tier, Starter at $30/month, Pro at $150/month and custom Enterprise pricing, with usage-based data overages.",
+    "description": "Laminar is an open-source observability platform built for AI agents. It combines OpenTelemetry-native tracing, plain-English Signals that flag agent failures on every run, evals, dashboards and datasets, and gives coding agents MCP and CLI access to query traces and debug issues.",
+    "keyFeatures": [
+      "OpenTelemetry-native tracing that auto-instruments Vercel AI SDK, LangChain, Browser Use, OpenAI, Anthropic and Gemini",
+      "Signals that describe agent behaviors in plain English and alert in Slack",
+      "RL-trained flow-1 model for finding errors in agent traces",
+      "Evals SDK and CLI for local runs or CI/CD pipelines",
+      "SQL-backed custom dashboards, data annotation and datasets",
+      "MCP server and CLI so coding agents can query traces"
+    ],
+    "bestFor": "Teams building production AI agents who need tracing, failure detection and evals in one open-source platform.",
+    "notIdealFor": "Individual developers who only want usage stats for their own coding-agent sessions rather than instrumenting an agent application.",
+    "recentUpdates": "Released v0.3.2 on October 16, 2026, and launched on Hacker News on October 19, 2026 with flow-1, an RL-trained model for detecting errors in agent traces.",
+    "verdict": "A capable, high-performance agent observability stack with a distinctive automated failure-detection model and a self-hosting option.",
+    "tags": [
+      "Observability",
+      "AI Agents",
+      "Tracing",
+      "Evals",
+      "OpenTelemetry",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-20"
   }
 ]
