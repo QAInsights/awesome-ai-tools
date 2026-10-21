@@ -20,4 +20,3 @@ describe('auth session configuration', () => {
         expect(resolveAuthReturnPath(null)).toBe('/');
     });
 });
-

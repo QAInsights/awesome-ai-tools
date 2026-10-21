@@ -8,7 +8,7 @@
 import {
   MAX_TEAM_SIZE, WORKLOAD_PRESETS, buildCalculatorUrlSearch, calculateStackCost,
   formatStackSummaryText, formatUsd, loadModelsPricing, parseCalculatorStateFromUrl,
-  sliderToTeamSize, teamSizeToSlider,
+  mergeCalculatorViewSearch, parseCalculatorViewFromUrl, sliderToTeamSize, teamSizeToSlider,
 } from './cost-calculator.js';
 
 const POPULAR_TOOL_SLUGS = [
@@ -61,7 +61,8 @@ export function initCostCalculatorUI(catalog) {
   };
 
   function syncUrl() {
-    const search = buildCalculatorUrlSearch({ ...state, discountPercent: 0 });
+    const costSearch = buildCalculatorUrlSearch({ ...state, discountPercent: 0 });
+    const search = mergeCalculatorViewSearch(costSearch, parseCalculatorViewFromUrl(window.location.search));
     window.history.replaceState(null, '', `${window.location.pathname}${search}`);
   }
 

@@ -6,6 +6,8 @@ import {
   formatStackSummaryText,
   formatUsd,
   loadModelsPricing,
+  mergeCalculatorViewSearch,
+  parseCalculatorViewFromUrl,
   parseCalculatorStateFromUrl,
 } from './cost-calculator.js';
 
@@ -22,6 +24,16 @@ function createMemoryStorage() {
 }
 
 describe('js/cost-calculator client controller', () => {
+  test('parses the selected calculator view and merges it without losing cost parameters', () => {
+    const costSearch = '?team=10&seats=cursor%3ABusiness&preset=daily';
+    expect(parseCalculatorViewFromUrl(costSearch)).toBe('cost');
+    expect(parseCalculatorViewFromUrl(`${costSearch}&view=efficiency`)).toBe('efficiency');
+    expect(mergeCalculatorViewSearch(costSearch, 'efficiency')).toBe(
+      '?team=10&seats=cursor%3ABusiness&preset=daily&view=efficiency',
+    );
+    expect(mergeCalculatorViewSearch(`${costSearch}&view=efficiency`, 'cost')).toBe(costSearch);
+  });
+
   test('loads models from /api/v1/models.json, caches in localStorage, and serves client-cache within 6h TTL', async () => {
     const storage = createMemoryStorage();
     let fetchCalls = 0;
