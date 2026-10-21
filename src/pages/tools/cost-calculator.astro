@@ -201,7 +201,7 @@ const jsonLd = JSON.stringify({
               <input
                 id="toolSearchInput"
                 type="search"
-                placeholder="Search 100+ paid tools (Cursor, Copilot…)"
+                placeholder="Search 100+ paid tools"
                 autocomplete="off"
                 class="w-full bg-[#111] border border-[#2a2a2a] hover:border-[#383838] focus:border-[#c8a96a] rounded-lg px-3.5 py-2.5 text-xs text-[#f5f2eb] placeholder-[#737373] focus:outline-none font-mono transition-colors"
               />
@@ -407,14 +407,23 @@ const jsonLd = JSON.stringify({
 
   @media (max-width: 767px) {
     .cc-panel { padding: 14px; }
+    .cc-view-tabs { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+    .cc-view-tabs .cc-cycle-btn { min-width: 0; text-align: center; }
     .cc-team-input-shell { width: 100%; justify-content: space-between; }
-    .cc-team-input { width: 100%; max-width: 110px; }
-    .cc-team-step-btn { width: 40px; height: 40px; }
+    .cc-team-input-field { flex: 1; justify-content: center; }
+    .cc-team-input { width: auto; field-sizing: content; min-width: 2ch; max-width: 7ch; text-align: center; }
+    .cc-team-step-btn { width: 36px; height: 36px; }
     #toolSearchInput, .cc-plan-select, .cc-team-input { font-size: 16px; }
     .cc-provider-tab, .cc-cycle-btn, .cc-apply-btn, .cc-chip { min-height: 38px; }
+    #providerTabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -14px; padding-inline: 14px; }
+    #providerTabs::-webkit-scrollbar { display: none; }
+    #providerTabs .cc-provider-tab { flex-shrink: 0; }
     .cc-view-tabs .cc-cycle-btn { min-height: 44px; }
     .cc-remove-btn { width: 36px; height: 36px; }
     .cc-range::-webkit-slider-thumb, .cc-range::-moz-range-thumb { width: 22px; height: 22px; }
+    @supports not (field-sizing: content) {
+      .cc-team-input { width: 7ch; text-align: right; }
+    }
   }
 </style>
 
