@@ -45,8 +45,7 @@
   ],
   "send_email": [
     {
-      "name": "EMAIL",
-      "remote": true
+      "name": "EMAIL"
     }
   ],
   "ratelimits": [
@@ -129,8 +128,7 @@
       ],
       "send_email": [
         {
-          "name": "EMAIL",
-          "remote": true
+          "name": "EMAIL"
         }
       ],
       "ratelimits": [
