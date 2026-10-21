@@ -47,7 +47,7 @@
           <p class="ec-muted">Count sessions only when they produce useful work, such as a merged PR or a delivered non-PR outcome.</p>
         </div>
         <div class="ec-actions">
-          <button id="resetExamples" type="button" class="cc-action-btn">Reset to blog examples</button>
+          <button id="resetExamples" type="button" class="cc-action-btn" aria-label="Reset to blog examples" title="Reset to blog examples">Reset examples</button>
           <button id="addEngineer" type="button" class="cc-action-btn">Add row</button>
         </div>
       </div>
@@ -104,7 +104,7 @@
       <div><dt>Blended cost / productive hour</dt><dd id="summaryBlendedCost">$60.51/h</dd></div>
       <div><dt>Value delivered and ROI</dt><dd id="summaryValue">$32,980 · 1.65x ROI</dd></div>
       <div><dt>Spend without useful work (est.)</dt><dd id="summaryWastedSpend">$9,588</dd></div>
-      <div><dt>Grade distribution</dt><dd id="summaryGrades">1 Healthy · 2 Satisfactory · 1 Needs Improvement · 0 Unknown</dd></div>
+      <div class="ec-summary-stack"><dt>Grade distribution</dt><dd id="summaryGrades">1 Healthy · 2 Satisfactory · 1 Needs Improvement · 0 Unknown</dd></div>
       <div><dt>Average score</dt><dd id="summaryAverage">58</dd></div>
     </dl>
     <div class="ec-summary-divider"></div>
@@ -152,9 +152,10 @@
   .ec-engineer-card { min-width: 0; padding: 13px; border: 1px solid #242424; border-radius: 10px; background: #0d0d0d; }
   .ec-engineer-heading { display: flex; align-items: flex-end; gap: 9px; }
   .ec-name-field { flex: 1; }
-  .ec-remove { min-height: 38px; padding: 7px 11px; border: 1px solid #2a2a2a; border-radius: 8px; background: #111; color: #9a7c6d; cursor: pointer; }
+  .ec-remove { min-height: 38px; padding: 7px 11px; border: 1px solid #2a2a2a; border-radius: 8px; background: #111; color: #9a7c6d; font: 11px 'JetBrains Mono', monospace; cursor: pointer; }
   .ec-input-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; margin-top: 10px; }
   .ec-field { display: flex; min-width: 0; flex-direction: column; gap: 5px; color: #858582; font: 9px/1.4 'JetBrains Mono', monospace; }
+  .ec-input-grid .ec-field, .ec-settings-grid .ec-field { justify-content: flex-end; }
   .ec-field input { width: 100%; min-width: 0; min-height: 38px; padding: 7px 9px; border: 1px solid #2a2a2a; border-radius: 7px; outline: none; background: #111; color: #f4f4f2; font: 12px 'JetBrains Mono', monospace; }
   .ec-field input:focus { border-color: #c8a96a; box-shadow: 0 0 0 2px rgba(200, 169, 106, 0.12); }
   .ec-derived-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; margin: 12px 0 0; }
@@ -183,20 +184,30 @@
   @media (max-width: 767px) {
     .ec-section-heading { align-items: flex-start; flex-direction: column; }
     .ec-heading-actions, .ec-actions { width: 100%; }
-    .ec-heading-actions > *, .ec-actions > * { flex: 1; }
+    .ec-heading-actions { justify-content: space-between; }
+    .ec-heading-actions .ec-lambda { display: inline-flex; align-items: center; height: 40px; padding: 0 12px; }
+    .ec-heading-actions .cc-action-btn { height: 40px; }
+    .ec-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .ec-actions > * { height: 40px; justify-content: center; white-space: nowrap; }
     .ec-explorer-grid, .ec-method-grid { grid-template-columns: 1fr; gap: 13px; }
     .ec-score-result { align-items: flex-start; flex-direction: column; }
     .ec-point-grid { gap: 5px; }
     .ec-point-grid div { padding: 8px 6px; }
     .ec-point-grid span { min-height: 26px; line-height: 1.35; }
     .ec-column-labels { display: none; }
-    .ec-engineer-heading { align-items: stretch; }
+    .ec-chip-row { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+    .ec-chip-row .ec-chip { min-height: 40px; padding: 6px 8px; text-align: center; line-height: 1.3; }
+    .ec-engineer-heading { align-items: flex-end; }
+    .ec-remove { height: 44px; min-height: 44px; padding: 0 12px; font: 11px 'JetBrains Mono', monospace; }
     .ec-input-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
-    .ec-derived-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 10px; }
+    .ec-derived-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 10px; }
     .ec-settings-grid { grid-template-columns: 1fr; }
     .ec-field { font-size: 10px; }
     .ec-field input { min-height: 44px; font-size: 16px; }
-    .ec-chip, .ec-remove { min-height: 44px; }
+    .ec-chip { min-height: 40px; }
+    .ec-summary-stack { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .ec-summary-stack dt { max-width: none; }
+    .ec-summary-stack dd { text-align: left; }
     .ec-summary-list dt { max-width: 58%; }
   }
 </style>
