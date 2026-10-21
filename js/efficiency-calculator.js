@@ -12,6 +12,34 @@ import {
   saturatingRating,
 } from '../src/lib/efficiency-calculator';
 
+const numericFieldDomains = {
+  benchmarkCostPerHour: { min: 0, minExclusive: true },
+  benchmarkHoursPerDay: { min: 0, minExclusive: true },
+  workdaysPerMonth: { min: 0, minExclusive: true },
+  minSessionsForGrade: { min: 0 },
+  baseMonthlyLimit: { min: 0 },
+  autoApproveCeiling: { min: 0 },
+  engineerHourlyCost: { min: 0 },
+  healthyThreshold: { min: 0, max: 100 },
+  satisfactoryThreshold: { min: 0, max: 100 },
+  monthlySpend: { min: 0 },
+  sessionsPerMonth: { min: 0 },
+  hoursPerUsefulSession: { min: 0 },
+  usefulRate: { min: 0, max: 100 },
+};
+
+export function parseNumericField(key, raw) {
+  const domain = Object.hasOwn(numericFieldDomains, key) ? numericFieldDomains[key] : null;
+  const rawValue = raw === null || raw === undefined ? '' : String(raw).trim();
+  if (!domain || rawValue === '') return null;
+
+  const value = Number(rawValue);
+  if (!Number.isFinite(value)) return null;
+  if (domain.minExclusive ? value <= domain.min : value < domain.min) return null;
+  if (domain.max !== undefined && value > domain.max) return null;
+  return value;
+}
+
 export {
   BLOG_SCORE_EXAMPLES,
   DEFAULT_EFFICIENCY_SETTINGS,

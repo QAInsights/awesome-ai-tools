@@ -6,6 +6,7 @@ import {
   computeEfficiencyScore,
   formatEfficiencySummaryText,
   gradeForScore,
+  parseNumericField,
 } from './efficiency-calculator.js';
 
 const esc = value =>
@@ -72,40 +73,49 @@ export function initEfficiencyCalculatorUI() {
     return `Admin review ${usd(approval.pendingAdmin)}`;
   }
 
+  function renderRowDerived(engineer) {
+    const costPerHour = engineer.costPerProductiveHour === null ? 'Not available' : `${usd(engineer.costPerProductiveHour)}/h`;
+    const targetCost =
+      engineer.costPerHourForSatisfactory === null
+        ? ''
+        : `<p class="ec-hint">Reach Satisfactory at ≤ ${usd(engineer.costPerHourForSatisfactory)} per productive hour</p>`;
+    return `<dl class="ec-derived-grid">
+      <div><dt>Productive hrs</dt><dd>${compact(engineer.productiveHours)}</dd></div>
+      <div><dt>Cost / productive hr</dt><dd>${costPerHour}</dd></div>
+      <div><dt>E</dt><dd>${engineer.efficiencyRating.toFixed(2)}</dd></div>
+      <div><dt>V</dt><dd>${engineer.volumeRating.toFixed(2)}</dd></div>
+      <div><dt>Score</dt><dd>${engineer.score.score}</dd></div>
+      <div><dt>Grade</dt><dd><span class="ec-grade ec-grade-${engineer.grade}">${gradeNames[engineer.grade]}</span></dd></div>
+    </dl>
+    <p class="ec-approval"><span>Limit outcome</span><strong>${approvalText(engineer.approval)}</strong></p>
+    ${targetCost}`;
+  }
+
   function renderRows(summary) {
     const container = byId('engineerRows');
     if (!container) return;
     container.innerHTML = summary.engineers
-      .map((engineer, index) => {
-        const costPerHour = engineer.costPerProductiveHour === null ? 'Not available' : `${usd(engineer.costPerProductiveHour)}/h`;
-        const targetCost =
-          engineer.costPerHourForSatisfactory === null
-            ? ''
-            : `<p class="ec-hint">Reach Satisfactory at ≤ ${usd(engineer.costPerHourForSatisfactory)} per productive hour</p>`;
-        return `<article class="ec-engineer-card">
-          <div class="ec-engineer-heading">
-            <label class="ec-field ec-name-field"><span>Name</span><input type="text" data-row-index="${index}" data-field="name" value="${esc(engineer.name)}" aria-label="Engineer name" /></label>
-            <button type="button" class="ec-remove" data-remove-row="${index}" aria-label="Remove ${esc(engineer.name)}">Remove</button>
-          </div>
-          <div class="ec-input-grid">
-            <label class="ec-field"><span>Monthly spend ($)</span><input type="number" min="0" step="1" data-row-index="${index}" data-field="monthlySpend" value="${esc(engineer.monthlySpend)}" /></label>
-            <label class="ec-field"><span>Sessions / mo</span><input type="number" min="0" step="1" data-row-index="${index}" data-field="sessionsPerMonth" value="${esc(engineer.sessionsPerMonth)}" /></label>
-            <label class="ec-field"><span>Useful-work rate (%)</span><input type="number" min="0" max="100" step="1" data-row-index="${index}" data-field="usefulRate" value="${esc(engineer.usefulRate * 100)}" /></label>
-            <label class="ec-field"><span>Productive h / useful session</span><input type="number" min="0" step="0.1" data-row-index="${index}" data-field="hoursPerUsefulSession" value="${esc(engineer.hoursPerUsefulSession)}" /></label>
-          </div>
-          <dl class="ec-derived-grid">
-            <div><dt>Productive hrs</dt><dd>${compact(engineer.productiveHours)}</dd></div>
-            <div><dt>Cost / productive hr</dt><dd>${costPerHour}</dd></div>
-            <div><dt>E</dt><dd>${engineer.efficiencyRating.toFixed(2)}</dd></div>
-            <div><dt>V</dt><dd>${engineer.volumeRating.toFixed(2)}</dd></div>
-            <div><dt>Score</dt><dd>${engineer.score.score}</dd></div>
-            <div><dt>Grade</dt><dd><span class="ec-grade ec-grade-${engineer.grade}">${gradeNames[engineer.grade]}</span></dd></div>
-          </dl>
-          <p class="ec-approval"><span>Limit outcome</span><strong>${approvalText(engineer.approval)}</strong></p>
-          ${targetCost}
-        </article>`;
-      })
+      .map((engineer, index) => `<article class="ec-engineer-card">
+        <div class="ec-engineer-heading">
+          <label class="ec-field ec-name-field"><span>Name</span><input type="text" data-row-index="${index}" data-field="name" value="${esc(engineer.name)}" aria-label="Engineer name" /></label>
+          <button type="button" class="ec-remove" data-remove-row="${index}" aria-label="Remove ${esc(engineer.name)}">Remove</button>
+        </div>
+        <div class="ec-input-grid">
+          <label class="ec-field"><span>Monthly spend ($)</span><input type="number" min="0" step="1" data-row-index="${index}" data-field="monthlySpend" value="${esc(engineer.monthlySpend)}" /></label>
+          <label class="ec-field"><span>Sessions / mo</span><input type="number" min="0" step="1" data-row-index="${index}" data-field="sessionsPerMonth" value="${esc(engineer.sessionsPerMonth)}" /></label>
+          <label class="ec-field"><span>Useful-work rate (%)</span><input type="number" min="0" max="100" step="1" data-row-index="${index}" data-field="usefulRate" value="${esc(engineer.usefulRate * 100)}" /></label>
+          <label class="ec-field"><span>Productive h / useful session</span><input type="number" min="0" step="0.1" data-row-index="${index}" data-field="hoursPerUsefulSession" value="${esc(engineer.hoursPerUsefulSession)}" /></label>
+        </div>
+        <div data-row-derived="${index}">${renderRowDerived(engineer)}</div>
+      </article>`)
       .join('');
+  }
+
+  function renderDerived(summary) {
+    summary.engineers.forEach((engineer, index) => {
+      const container = root.querySelector(`[data-row-derived="${index}"]`);
+      if (container) container.innerHTML = renderRowDerived(engineer);
+    });
   }
 
   function renderSummary(summary) {
@@ -133,22 +143,12 @@ export function initEfficiencyCalculatorUI() {
     setText('summaryAdminQueue', `${usd(summary.pendingAdminSpend)} · ${summary.adminQueueCount} ${engineerWord}`);
   }
 
-  function recalculate(focusTarget = null) {
+  function recalculate({ rebuildRows = false } = {}) {
     const summary = calculateTeamEfficiency(state.engineers, state.settings);
-    renderRows(summary);
+    if (rebuildRows) renderRows(summary);
+    else renderDerived(summary);
     renderSummary(summary);
     renderExplorer();
-    if (focusTarget?.dataset.field) {
-      const rowIndex = Number(focusTarget.dataset.rowIndex);
-      const field = focusTarget.dataset.field;
-      const next = root.querySelector(`[data-row-index="${rowIndex}"][data-field="${field}"]`);
-      next?.focus();
-      if (field === 'name' && typeof next?.setSelectionRange === 'function') {
-        next.setSelectionRange(focusTarget.selectionStart, focusTarget.selectionEnd);
-      }
-    } else if (focusTarget?.dataset.setting) {
-      root.querySelector(`[data-setting="${focusTarget.dataset.setting}"]`)?.focus();
-    }
   }
 
   function renderSettings() {
@@ -156,6 +156,35 @@ export function initEfficiencyCalculatorUI() {
       const key = input.dataset.setting;
       if (key && key in state.settings) input.value = String(state.settings[key]);
     });
+  }
+
+  function restoreNumericInput(target) {
+    if (!(target instanceof HTMLInputElement) || target.type !== 'number') return;
+    const setting = target.dataset.setting;
+    if (setting && setting in state.settings) {
+      target.value = String(state.settings[setting]);
+      return;
+    }
+    if (target.dataset.rowIndex === undefined) return;
+    const engineer = state.engineers[Number(target.dataset.rowIndex)];
+    const field = target.dataset.field;
+    if (!engineer || !field || field === 'name' || !(field in engineer)) return;
+    const value = field === 'usefulRate' ? engineer.usefulRate * 100 : engineer[field];
+    if (typeof value === 'number') target.value = String(value);
+  }
+
+  async function copySummary(button, text) {
+    try {
+      const clipboard = globalThis.navigator?.clipboard;
+      if (typeof clipboard?.writeText !== 'function') throw new Error('Clipboard unavailable');
+      await clipboard.writeText(text);
+      button.textContent = 'Copied';
+    } catch {
+      button.textContent = 'Copy failed';
+    }
+    window.setTimeout(() => {
+      button.textContent = 'Copy Summary';
+    }, 1400);
   }
 
   root.querySelectorAll('[data-explorer]').forEach(input => {
@@ -180,22 +209,31 @@ export function initEfficiencyCalculatorUI() {
   root.addEventListener('input', event => {
     const target = event.target;
     if (target instanceof HTMLInputElement && target.dataset.rowIndex !== undefined) {
-      const engineer = state.engineers[Number(target.dataset.rowIndex)];
+      const rowIndex = Number(target.dataset.rowIndex);
+      const engineer = state.engineers[rowIndex];
       const field = target.dataset.field;
       if (!engineer || !field) return;
-      if (field === 'name') engineer.name = target.value;
-      if (field === 'usefulRate') engineer.usefulRate = Number(target.value) / 100;
-      if (field === 'monthlySpend' || field === 'sessionsPerMonth' || field === 'hoursPerUsefulSession') {
-        engineer[field] = Number(target.value);
+      if (field === 'name') {
+        engineer.name = target.value;
+        root.querySelector(`[data-remove-row="${rowIndex}"]`)?.setAttribute('aria-label', `Remove ${engineer.name}`);
+      } else {
+        const value = parseNumericField(field, target.value);
+        if (value === null) return;
+        engineer[field] = field === 'usefulRate' ? value / 100 : value;
       }
-      recalculate(target);
+      recalculate();
     }
     if (target instanceof HTMLInputElement && target.dataset.setting) {
       const key = target.dataset.setting;
-      if (key in state.settings) state.settings[key] = Number(target.value);
-      recalculate(target);
+      const value = parseNumericField(key, target.value);
+      if (value === null) return;
+      state.settings[key] = value;
+      recalculate();
     }
   });
+
+  root.addEventListener('change', event => restoreNumericInput(event.target));
+  root.addEventListener('focusout', event => restoreNumericInput(event.target));
 
   root.addEventListener('click', event => {
     const button = event.target.closest('button');
@@ -210,28 +248,23 @@ export function initEfficiencyCalculatorUI() {
         usefulRate: 0.7,
         hoursPerUsefulSession: 1.5,
       });
-      recalculate();
+      recalculate({ rebuildRows: true });
     }
     if (button.id === 'resetExamples') {
       state.engineers = SAMPLE_TEAM.map(engineer => ({ ...engineer }));
       state.nextId = SAMPLE_TEAM.length + 1;
-      recalculate();
+      recalculate({ rebuildRows: true });
     }
     if (button.dataset.removeRow !== undefined) {
       state.engineers.splice(Number(button.dataset.removeRow), 1);
-      recalculate();
+      recalculate({ rebuildRows: true });
     }
     if (button.id === 'copyEfficiencySummary') {
       const summary = calculateTeamEfficiency(state.engineers, state.settings);
-      navigator.clipboard?.writeText(formatEfficiencySummaryText(summary, state.settings)).then(() => {
-        button.textContent = 'Copied';
-        window.setTimeout(() => {
-          button.textContent = 'Copy Summary';
-        }, 1400);
-      });
+      void copySummary(button, formatEfficiencySummaryText(summary, state.settings));
     }
   });
 
   renderSettings();
-  recalculate();
+  recalculate({ rebuildRows: true });
 }

@@ -1,5 +1,24 @@
 import { describe, expect, test } from 'bun:test';
-import { calculateTeamEfficiency, formatEfficiencySummaryText, SAMPLE_TEAM } from './efficiency-calculator.js';
+import {
+  calculateTeamEfficiency,
+  formatEfficiencySummaryText,
+  parseNumericField,
+  SAMPLE_TEAM,
+} from './efficiency-calculator.js';
+
+describe('efficiency calculator numeric fields', () => {
+  test('rejects empty, non-finite, and out-of-domain values', () => {
+    expect(parseNumericField('monthlySpend', '')).toBeNull();
+    expect(parseNumericField('monthlySpend', 'abc')).toBeNull();
+    expect(parseNumericField('benchmarkCostPerHour', '0')).toBeNull();
+    expect(parseNumericField('benchmarkCostPerHour', '2.5')).toBe(2.5);
+    expect(parseNumericField('usefulRate', '101')).toBeNull();
+    expect(parseNumericField('hoursPerUsefulSession', '-1')).toBeNull();
+    expect(parseNumericField('healthyThreshold', '100')).toBe(100);
+    expect(parseNumericField('baseMonthlyLimit', '0')).toBe(0);
+    expect(parseNumericField('unknownField', '2')).toBeNull();
+  });
+});
 
 describe('efficiency calculator summary text', () => {
   test('includes team efficiency and approval details with a canonical footer', () => {
