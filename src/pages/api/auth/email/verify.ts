@@ -73,9 +73,14 @@ export const POST: APIRoute = async ({ request, cookies }) => {
                 emailVerified: true,
             } satisfies IdentityProfile);
 
-        await db.prepare('DELETE FROM email_otps WHERE email = ? AND id <> ?')
-            .bind(email, verification.id)
-            .run();
+        consumedOtp = null;
+        try {
+            await db.prepare('DELETE FROM email_otps WHERE email = ? AND id <> ?')
+                .bind(email, verification.id)
+                .run();
+        } catch (cleanupError) {
+            console.error('[Email Auth] Failed to clear older sign-in codes:', cleanupError instanceof Error ? cleanupError.message : String(cleanupError));
+        }
         cookies.set(
             SESSION_COOKIE_NAME,
             session.token,
