@@ -112,6 +112,9 @@ describe('favorites page bootstrap', () => {
         expect(elements.favoritesGrid.classList.contains('hidden')).toBe(false);
         expect(elements.favoriteCount.textContent).toBe('1 saved');
         expect(elements.favoritesGrid.innerHTML).toContain('follow-btn');
+        const actionWrapper = /<div class="grid grid-cols-2 gap-2 @lg:flex @lg:shrink-0">([\s\S]*?)<\/div>/.exec(elements.favoritesGrid.innerHTML)?.[1];
+        expect(actionWrapper).toContain('class="favorite-btn detail favorited"');
+        expect(actionWrapper).toContain('class="follow-btn detail"');
 
         followOptions.onToggle(true, 'cursor');
         expect(loadFavoritesCalls).toBe(1);
