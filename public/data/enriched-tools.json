@@ -1103,6 +1103,35 @@
     "lastUpdated": "2026-10-15"
   },
   {
+    "slug": "orchestratorinc",
+    "name": "Orchestrator.inc",
+    "company": "Orchestrator.inc",
+    "pricing": "open-source",
+    "pricingDetail": "The desktop app and daemon are free and open source under Apache-2.0. You bring your own coding-agent CLIs and their subscriptions or API keys.",
+    "description": "Orchestrator.inc is an open-source desktop workspace for running many coding agents on a project. Each worker gets an isolated branch and worktree, a persistent project orchestrator plans and delegates the work, and a live Kanban follows every worker's pull request, CI and review state until merge.",
+    "keyFeatures": [
+      "Workers pairing one task and one agent with an isolated Git branch and worktree",
+      "Persistent project orchestrator that plans, splits and delegates tasks",
+      "Live Kanban derived from session, pull request, CI and review state",
+      "CI failures and review comments routed back to the agent that owns the work",
+      "Per-worker terminal, structured Chat and isolated agent-controllable browser",
+      "Supports Claude Code, Codex, Cursor, opencode, Aider, Copilot, Devin and 30+ agents"
+    ],
+    "bestFor": "Developers running several coding agents in parallel who want one place to plan work, isolate branches and track PRs through CI and review.",
+    "notIdealFor": "Developers who use a single agent in one terminal and do not need multi-agent coordination or Kanban tracking.",
+    "recentUpdates": "Released v0.14.3 on October 19, 2026, with nightly builds published daily and desktop installers for macOS, Windows and Linux.",
+    "verdict": "A capable open-source command center for multi-agent development with broad agent support and tight PR, CI and review integration.",
+    "tags": [
+      "Agent Orchestration",
+      "Parallel Agents",
+      "Coding Agents",
+      "Desktop App",
+      "Git Worktrees",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-19"
+  },
+  {
     "slug": "supercode",
     "name": "Supercode",
     "company": "Yash Dewasthale",
@@ -4014,6 +4043,64 @@
     "lastUpdated": "2026-10-15"
   },
   {
+    "slug": "herdr",
+    "name": "Herdr",
+    "company": "Herdr",
+    "pricing": "open-source",
+    "pricingDetail": "Herdr is free and open source under Apache-2.0. You bring your own coding-agent CLIs and their subscriptions or API keys.",
+    "description": "Herdr is an open-source agent multiplexer that runs inside your existing terminal and owns the terminals of coding agents such as Claude Code, Codex, Cursor and OpenCode. A background server keeps panes alive across detaches, SSH drops and restarts, and each pane shows whether its agent is working, blocked or idle.",
+    "keyFeatures": [
+      "Background server keeps agent panes running after detach or SSH disconnect and restores layouts after restarts",
+      "Per-pane working, blocked and idle status so stuck agents are easy to spot",
+      "Local and saved SSH machines combined in one window with a shared agent list",
+      "CLI and socket API plus an agent skill so agents can spawn panes and prompt each other",
+      "tmux-style prefix keys alongside first-class mouse splitting and dragging",
+      "Plugin marketplace and a single Rust binary with no Electron"
+    ],
+    "bestFor": "Developers running several CLI coding agents at once, locally or over SSH, who want tmux-style persistence with agent-aware status.",
+    "notIdealFor": "Developers who want a graphical IDE or desktop app rather than a terminal-based workflow.",
+    "recentUpdates": "Released v0.9.5 on October 14, 2026, a hotfix for v0.9.4 (October 13, 2026), which added `herdr plugin update` and persistent Windows notifications.",
+    "verdict": "A fast-moving, widely adopted terminal runtime for multi-agent work that adds agent awareness and persistence without replacing the agents themselves.",
+    "tags": [
+      "Terminal",
+      "Agent Multiplexer",
+      "Coding Agents",
+      "Parallel Agents",
+      "Rust",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-20"
+  },
+  {
+    "slug": "agent-deck",
+    "name": "Agent Deck",
+    "company": "Ashesh Goplani",
+    "pricing": "open-source",
+    "pricingDetail": "Agent Deck is free and open source under the MIT License. You bring your own coding-agent CLIs and their subscriptions or API keys.",
+    "description": "Agent Deck is an open-source terminal session manager for AI coding agents. One TUI lists every Claude Code, Codex, Gemini, OpenCode and Pi session with its running, waiting or idle state, and adds session forking, per-project MCP and skills management, and a conductor session that can report on the fleet through chat apps.",
+    "keyFeatures": [
+      "Single TUI showing every agent session and whether it is running, waiting or idle",
+      "Fork Claude, Codex, OpenCode and Pi sessions with inherited conversation history",
+      "MCP Manager and Skills Manager to toggle servers and skills per project",
+      "Git worktree setup and sandboxed container sessions",
+      "Built-in web UI via `agent-deck web`",
+      "Conductor session with Telegram, Slack, Discord and Mattermost channels"
+    ],
+    "bestFor": "Developers juggling many terminal coding-agent sessions across projects who want one dashboard plus remote status updates.",
+    "notIdealFor": "Native Windows users outside WSL or developers who only run a single agent session at a time.",
+    "recentUpdates": "Released v1.16.30 on October 18, 2026, following v1.16.29 the same day and v1.16.27 and v1.16.28 on October 10, 2026.",
+    "verdict": "A mature, frequently released command center for terminal agent fleets with useful forking, MCP and remote-conductor features.",
+    "tags": [
+      "Terminal",
+      "Session Manager",
+      "Coding Agents",
+      "TUI",
+      "Go",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-20"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
@@ -4909,6 +4996,66 @@
       "Desktop App"
     ],
     "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "reason",
+    "name": "Reason",
+    "company": "Reason Machines",
+    "pricing": "freemium",
+    "pricingDetail": "Developer plan is free with $10 in welcome compute credits, unlimited Bring Your Own Key (BYOK) support and one active cloud session at a time, no card required. Team Platform covers up to 15 members with zero per-seat fees, monthly platform credits and parallel background runners (price not published, 30-day money-back guarantee, no annual lock-in). Enterprise is custom with dedicated VPC/on-prem runners, SSO/SAML and custom SLAs. YC companies get $1,000 in credits.",
+    "description": "Reason is an autonomous software engineer for GitHub from Reason Machines. Connect a repository, assign issues, and its cloud agents open evidence-backed pull requests with screen recordings, logs and review-ready diffs. People drive it from the web app, a macOS desktop app (Reason for macOS runs cloud sessions against local files, tools and ports), and a CLI; programmatic access runs through an authenticated HTTP API and a Streamable HTTP MCP server with OAuth or API-key auth.",
+    "keyFeatures": [
+      "Issue-to-PR autonomous agents: assign GitHub issues and Reason's cloud sessions produce review-ready pull requests with screen recordings, logs and diffs as evidence",
+      "Reason Agent 1.1 harness claims a Coding Agent Index of 65.1 on GPT-6 Astra, beating Codex (62.5) at up to 22% lower cost per solved task, using parallel tool execution via a codemode tool and a fully cache-eligible prompt",
+      "Backlog chore daemon: Team Platform connects Linear and GitHub and runs parallel background agents on routine fixes and maintenance PRs",
+      "Multiple surfaces: web app, macOS desktop app, CLI, plus reason-plugins for Claude Code and Codex and a plugin marketplace",
+      "Full HTTP API (v3) with per-user API keys, idempotent session creation and a Reason MCP server (OAuth or Bearer key) for agent clients",
+      "Bring Your Own Key: plug in your own Anthropic, OpenAI or OpenRouter keys on the free Developer tier"
+    ],
+    "bestFor": "Indie developers and engineering teams who want an async agent to clear GitHub/Linear backlog chores autonomously, with verifiable PR evidence, and prefer BYOK pricing or predictable platform credits over per-seat fees.",
+    "notIdealFor": "Teams needing non-GitHub providers (GitLab/Bitbucket are not listed), anyone wanting fully on-prem code execution on the free tier (cloud sessions run on Reason's infrastructure; dedicated VPC/on-prem is Enterprise-only), or buyers who need a published Team Platform price before talking to sales.",
+    "recentUpdates": "Reason Agent 1.1 (October 10, 2026) claims to beat Codex on the Coding Agent Index, 65.1 vs 62.5 on GPT-6 Astra, at 22% lower cost per solved task; Reason for macOS brings cloud sessions to local files and ports; Agent 1.0 had earlier reported up to 39% lower median solving time on DeepSWE v1.1. Reason also launched a Reason for Startups deal giving current and alumni YC companies $1,000 in credits via Bookface.",
+    "verdict": "Reason pairs a credibly benchmarked agent harness (its own public Harbor jobs back the Codex-beating claims) with the surfaces teams actually need: web, desktop, CLI, API and MCP. The free BYOK Developer tier is genuinely usable for evaluation; the gaps are GitHub-only repo support, unpublished Team Platform pricing, and benchmark numbers that are self-reported rather than third-party-verified.",
+    "tags": [
+      "autonomous agent",
+      "async PRs",
+      "GitHub",
+      "Linear",
+      "BYOK",
+      "MCP",
+      "cloud agents",
+      "backlog automation"
+    ],
+    "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "rakazo",
+    "name": "Rakazo",
+    "company": "Elie Steinbock (elie222)",
+    "pricing": "free",
+    "pricingDetail": "Free and open source under the Apache-2.0 license when self-hosted; you bring your own model API credentials and sandbox/computer provider, which are billed separately. The project is in beta.",
+    "description": "Rakazo is an open-source, self-hosted AI agent platform for persistent AI teammates. Each bot keeps its own conversations, memory, routines and history and works on shared or private computers with browser, terminal, file and desktop access, delegating to peer bots or subagents when needed.",
+    "keyFeatures": [
+      "Persistent bots with their own conversations, memory, routines and history",
+      "Shared Team Computers and isolated Private computers with browser, terminal, file and graphical desktop access",
+      "Delegation to peer bots or short-lived subagents",
+      "Bring-your-own models via Pi and sandboxes on Docker, E2B, Daytona, CreateOS, Box or a trusted local machine",
+      "Integrations through Composio, Pipedream Connect, remote MCP, OpenAPI and Treg tool sources",
+      "Web, Electron desktop, iPhone and Android apps with voice mode"
+    ],
+    "bestFor": "Developers and small teams who want a self-hosted, model-agnostic alternative to hosted agent assistants, with sandboxed computers and tool integrations they control.",
+    "notIdealFor": "Teams that want a fully managed, production-hardened coding agent today; Rakazo is in beta and self-hosting requires Docker plus your own model and sandbox credentials.",
+    "recentUpdates": "Released v0.2.0 and a downloadable Android APK on October 10, 2026, following v0.1.6 on September 8, 2026; the repository is under daily development (October 18, 2026 commits add new Claude model entries) and trended on GitHub in mid-October 2026.",
+    "verdict": "A fast-growing, well-structured open-source agent platform that gives OpenClaw- and Hermes-style persistent agents a polished multi-device UI and pluggable sandboxes; promising but still beta.",
+    "tags": [
+      "AI Agents",
+      "Autonomous Agents",
+      "Self-Hosted",
+      "Open Source",
+      "Sandboxes",
+      "MCP"
+    ],
+    "lastUpdated": "2026-10-18"
   },
   {
     "slug": "boltnew",
@@ -6020,6 +6167,35 @@
     "lastUpdated": "2026-10-15"
   },
   {
+    "slug": "artemis",
+    "name": "ARTEMIS",
+    "company": "Google",
+    "pricing": "open-source",
+    "pricingDetail": "ARTEMIS is free and open source under Apache-2.0. It runs locally against your own Android device or emulator, and you supply the model provider credentials it uses.",
+    "description": "ARTEMIS is an open-source Google project that turns natural-language instructions into Android automation for end-to-end testing and everyday workflows. It drives real devices or emulators through an observe-and-act loop and exposes an MCP server so AI coding assistants can run device tests and collect diagnostics.",
+    "keyFeatures": [
+      "Natural-language cross-app automation on Android devices and emulators",
+      "Element-index targeting with coordinate and visual fallbacks for custom UIs",
+      "Built-in MCP server for Antigravity, Claude Code, Codex, Cursor and Windsurf",
+      "Logcat and screenshot capture for diagnostic test reports",
+      "Local web console with live screen mirroring, prompt sandbox and execution replays",
+      "Reports 99%+ task completion on the AndroidWorld benchmark"
+    ],
+    "bestFor": "Mobile developers and QA engineers who want AI assistants to execute and diagnose Android end-to-end tests on real hardware.",
+    "notIdealFor": "Teams testing iOS or web apps, or those needing a hosted device cloud rather than a locally connected phone or emulator.",
+    "recentUpdates": "Latest commits on September 29, 2026 fixed server status, the CLI entry point, replay and test issues; the repository was published in August 2026 and has since passed 13,000 GitHub stars.",
+    "verdict": "A strong open-source option for agent-driven Android testing, especially for teams already using MCP-capable coding assistants.",
+    "tags": [
+      "AI Testing",
+      "Android",
+      "Mobile Automation",
+      "MCP",
+      "End-to-End Testing",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-20"
+  },
+  {
     "slug": "claude",
     "name": "Claude",
     "company": "Anthropic",
@@ -6641,6 +6817,64 @@
       "DeveloperTools"
     ],
     "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "graphify",
+    "name": "Graphify",
+    "company": "Graphify Labs",
+    "pricing": "freemium",
+    "pricingDetail": "The Graphify skill and CLI are free and open source under Apache-2.0; code mapping runs fully locally with no LLM, while the optional semantic pass over docs, PDFs, images and video uses your assistant's model or your own API key. Graphify Cloud, an always-on hosted graph with cross-repo support, formal verification and code review, is a paid service with a free 14-day trial (pricing on graphify.com).",
+    "description": "Graphify turns a codebase, along with its docs, SQL schemas, configs, PDFs, images and video, into a queryable knowledge graph that AI coding assistants traverse instead of grepping through files. Typing `/graphify` in Claude Code, Cursor, Codex, Gemini CLI, GitHub Copilot or 20+ other assistants builds the graph locally with tree-sitter AST parsing and writes an interactive graph.html, a GRAPH_REPORT.md summary and a reusable graph.json.",
+    "keyFeatures": [
+      "Deterministic, fully local code mapping with tree-sitter AST parsing; no embeddings or vector store",
+      "Every edge tagged EXTRACTED (explicit in source) or INFERRED so agents can tell read facts from resolved ones",
+      "Multimodal ingestion of docs, SQL schemas, configs, PDFs, images and video into the same graph",
+      "One-command install (`uv tool install graphifyy`, `graphify install`) that registers the skill for Claude Code, Cursor, Codex, Gemini CLI, GitHub Copilot and 20+ assistants on macOS, Linux and Windows",
+      "Outputs graph.html, GRAPH_REPORT.md and versioned graph.json, plus an MCP server for querying the graph",
+      "Optional Graphify Cloud for live cross-repo graphs, code review and Sentry/Jira connectors"
+    ],
+    "bestFor": "Developers using AI coding assistants on large or unfamiliar codebases who want to cut token spend and give agents an explainable structural map rather than repeated file searches.",
+    "notIdealFor": "Teams that need an always-on, shared graph without paying for Graphify Cloud, or environments without Python 3.10+ and uv/pipx; the non-code semantic pass also sends content to your assistant's model or configured API.",
+    "recentUpdates": "Ships near-daily releases; v0.9.91 (October 14, 2026) merged eight community fixes, including a Windows MCP stdio hang fix, Rust/JS/TS call-resolution and id-collision fixes, an Ollama context-size fix and a bumped AST cache schema.",
+    "verdict": "One of the most widely adopted code-knowledge-graph skills for coding agents, with a fully local, deterministic core and transparent edge provenance; the open-source CLI covers most individual needs, while Cloud is the upsell for teams wanting a live cross-repo graph.",
+    "tags": [
+      "AI",
+      "Code Intelligence",
+      "Knowledge Graph",
+      "Agent Skills",
+      "MCP",
+      "Developer Tools"
+    ],
+    "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "graphicle",
+    "name": "Graphicle",
+    "company": "Graphicle AI",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under Apache-2.0; runs locally with no account or API key. Optional written answers use your own Anthropic, OpenAI or Ollama model.",
+    "description": "Graphicle is an open-source Rust program that maps a repository into a code graph, remembers project docs, decisions and past agent sessions, and serves cited file-and-line excerpts to coding agents over MCP or from the terminal.",
+    "keyFeatures": [
+      "Code graph of the repository built and kept current by Git hooks",
+      "Project memory of docs, decisions and captured agent sessions",
+      "Cited file-and-line evidence via MCP for Claude Code, Cursor, Codex, VS Code and Claude Desktop",
+      "graphicle ask terminal queries with token-budgeted excerpts",
+      "graphicle graph affected impact analysis for symbol changes",
+      "One-command setup with backups and a full graphicle disconnect undo"
+    ],
+    "bestFor": "Developers who want local, citation-backed code search and project memory for their coding agents without sending code to a hosted service.",
+    "notIdealFor": "Teams needing a mature, long-supported product; it is a very new 0.1.x project with a Windows build still in preview.",
+    "recentUpdates": "Shipped v0.1.1 on October 16 and v0.1.2 on October 18, 2026 (light theme for the dashboard, MCP Registry publishing), shortly after its October 14, 2026 Show HN launch.",
+    "verdict": "A promising local code-graph and memory layer for coding agents that adds session memory on top of the Graphify approach, though still early.",
+    "tags": [
+      "Code Intelligence",
+      "Agent Memory",
+      "MCP",
+      "Coding Agents",
+      "Rust",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-19"
   },
   {
     "slug": "pieces-for-developers",
@@ -9688,6 +9922,380 @@
     "lastUpdated": "2026-10-15"
   },
   {
+    "slug": "neckbeard",
+    "name": "neckbeard",
+    "company": "bealesh",
+    "pricing": "free",
+    "pricingDetail": "Free and open source under Apache-2.0 with no account. You pay only for your coding agent's model usage and for the cloud resources you choose to deploy; optional helpers such as Infracost, OpenTofu and Checkov are separate tools.",
+    "description": "neckbeard is a DevOps/platform plugin for coding agents that turns an application repository into reviewable cloud infrastructure with a cost estimate attached. The agent analyzes the repo and asks the questions code can't answer, then a deterministic Go CLI maps the answers onto a human-maintained, CI-tested catalog of OpenTofu modules, so the agent never invents infrastructure.",
+    "keyFeatures": [
+      "`/neckbeard:analyze` builds an app profile where every fact cites a file and line, inferences carry confidence and open assumptions block planning",
+      "`/neckbeard:estimate` prices the plan against the catalog with Infracost before anything is created",
+      "`/neckbeard:sync` scaffolds OpenTofu, CI pipelines and Kubernetes manifests, validates them and reports what was and wasn't proven",
+      "Hash-verified blueprint.yaml and a pure-function renderer that refuses to overwrite hand-edited files",
+      "Covers AWS, GCP and Azure as serverless containers (Cloud Run, ECS Fargate, Container Apps) or Kubernetes (EKS, GKE, AKS) with GitHub Actions or GitLab CI",
+      "Installs as a Claude Code plugin marketplace entry; SKILL.md install for Codex, Cursor and other hosts; budget alerts and cost ceilings per environment"
+    ],
+    "bestFor": "Teams using Claude Code, Codex or Cursor who want agent-assisted infrastructure that stays within a vetted module catalog, with a reviewable diff and a monthly cost estimate before deploying.",
+    "notIdealFor": "Apps needing services outside the catalog's single workload shape (for example Redis today), or teams wanting a fully managed PaaS rather than reviewing generated OpenTofu and pipelines.",
+    "recentUpdates": "v0.3.0 (October 15, 2026) added real per-environment budget alerts with a refusing cost ceiling, mapped Docker Compose images to datastore capabilities and documented running alongside ponytail; it was discussed on Hacker News on October 14, 2026.",
+    "verdict": "A thoughtful guardrail-first take on agent-driven infrastructure: deterministic rendering from a tested catalog plus upfront cost estimates addresses the main failure modes of letting agents write IaC, though catalog coverage is still narrow.",
+    "tags": [
+      "AI",
+      "DevOps",
+      "Infrastructure as Code",
+      "OpenTofu",
+      "Agent Plugins",
+      "FinOps"
+    ],
+    "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "billion-context",
+    "name": "billion-context",
+    "company": "ranxianglei",
+    "pricing": "free",
+    "pricingDetail": "Free and open source under the MIT License with an added attribution term for products that incorporate it. You keep paying your own model provider; the proxy aims to reduce token usage rather than add fees.",
+    "description": "billion-context is a context-compression proxy and plugin for AI coding agents that sits between the agent and its Anthropic- or OpenAI-compatible model API. It injects context-management tools so the model itself decides when and what to fold into layered, reversible summaries, keeping long sessions inside a small context window while preserving the prompt-cache prefix.",
+    "keyFeatures": [
+      "Model-driven incremental compression via injected compress, decompress, search_context and acp_status tools",
+      "Reversible, prefix-cache-friendly summaries targeting ~5x fewer tokens and month-long single sessions within a 100K window",
+      "Launchers and native plugins via the `bili` CLI (`bili claude`, `bili codex`, `bili opencode`, `bili pi`, `bili plugin install <host>`)",
+      "Broad host support: Claude Code, Codex, OpenCode, pi, Gemini CLI, Qwen Code, Kimi, Hermes, Aider, GitHub Copilot CLI, Amp and more",
+      "Built on the open acp-kernel compression engine with an accompanying open preprint and cache-health diagnostics (`/acp`, `/acp-cache`)"
+    ],
+    "bestFor": "Developers running very long coding-agent sessions who hit context-window limits or high token bills and want compression that the model controls and can undo.",
+    "notIdealFor": "Users who cannot route agent traffic through a local proxy or certificate MITM for closed-binary hosts, or teams whose products cannot meet the license's visible-attribution requirement.",
+    "recentUpdates": "Ships frequent releases (v0.1.197 on October 14, 2026) and trended on GitHub's weekly chart in mid-October 2026; recent work expanded native plugins for hosts such as Kimi Code, Hermes and zcode.",
+    "verdict": "An ambitious, actively maintained context-compression layer with unusually broad agent coverage and a published methodology; worth trying for marathon sessions, with the caveats of proxy setup and an attribution-bearing license.",
+    "tags": [
+      "AI",
+      "Context Compression",
+      "LLM Optimization",
+      "Coding Agents",
+      "Developer Productivity"
+    ],
+    "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "coucou",
+    "name": "Coucou",
+    "company": "Louis Raillé (Louis-CFM)",
+    "pricing": "free",
+    "pricingDetail": "Free and open source; the code is MIT-licensed while the Coucou name, the Mochi character and sounds remain © Louis Raillé. The iPhone app is a free TestFlight beta and the Android app is a free APK. Built-in chat uses your own provider API keys or local models.",
+    "description": "Coucou is an open-source notch companion that keeps an eye on AI coding agent sessions from the Mac's notch, or the top of the screen on Windows and Linux, with companion iPhone and Android apps. It shows what Claude Code, Codex, Cursor, Gemini CLI and other agents are reading, editing and running, and lets you approve permission requests or answer agent questions without switching windows.",
+    "keyFeatures": [
+      "Live view of Claude Code, Codex, Cursor, Gemini CLI, Antigravity, Copilot CLI, OpenCode, Amp, Hermes and other agent sessions",
+      "Allow/Deny/Always permission approvals and AskUserQuestion answers from the notch, Lock Screen or Dynamic Island",
+      "iPhone (Live Activities, widgets, Siri, Shortcuts) and Android (fingerprint approvals, widgets) companions",
+      "Claude and Codex plan-usage pills",
+      "Multi-provider chat with Claude, Gemini, OpenAI, DeepSeek, Qwen, Moonshot or local Ollama/LM Studio",
+      "Offline hold-to-talk dictation and call notes in 0.4"
+    ],
+    "bestFor": "Developers running several coding agents in parallel who want to see status and handle approvals at a glance, including from their phone when away from the desk.",
+    "notIdealFor": "Users who want a pure productivity tool without a playful mascot, or those needing App Store distribution today (Mac and iPhone App Store builds are still pending).",
+    "recentUpdates": "Coucou 0.4.0 (October 15, 2026) turned the Mac build into a full Dock app with offline Parakeet dictation and call notetaking; Windows and Linux builds plus an Android app (October 11–13, 2026) followed the late-September first release.",
+    "verdict": "A fast-moving, genuinely cross-platform agent monitor that makes approvals and session status ambient; its feature scope is expanding beyond agents, but agent supervision remains the core reason to install it.",
+    "tags": [
+      "AI",
+      "Coding Agents",
+      "Agent Monitoring",
+      "macOS",
+      "Mobile",
+      "Developer Productivity"
+    ],
+    "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "lazyskills",
+    "name": "LazySkills",
+    "company": "Alvin (alvinunreal)",
+    "pricing": "free",
+    "pricingDetail": "Free and open source under the MIT license with no paid tiers.",
+    "description": "LazySkills is a fast terminal UI and CLI for managing AI agent skills. It shows every installed skill across project, global and agent-specific locations, checks which coding agents can actually see each one, and diagnoses broken installs before offering previewed, confirmation-gated fixes.",
+    "keyFeatures": [
+      "Single TUI view of project, global, universal and agent-specific skills",
+      "Per-agent visibility checks for Claude Code, OpenCode, Codex, Cursor, Gemini CLI and more",
+      "Detection of missing SKILL.md files, invalid frontmatter, broken symlinks, missing lock entries and ghost skills",
+      "Previewed, confirmation-gated reinstall, update, remove and prune actions",
+      "Search and install from skills.sh, plus lazyskills find --json for agents",
+      "Read-only lazyskills doctor health report and lock-file restore"
+    ],
+    "bestFor": "Developers who use several coding agents and have accumulated many agent skills that need auditing, fixing and syncing from the terminal.",
+    "notIdealFor": "Users who prefer a desktop GUI for skill management or who only use a handful of skills in a single agent.",
+    "recentUpdates": "Version 1.2.0 (September 26, 2026) added discovery of native OpenCode project skills, following v1.1.0 on September 7, 2026; the project trended on GitHub's Go list in October 2026.",
+    "verdict": "A focused, keyboard-driven tool that makes the growing mess of cross-agent skills inspectable and safely fixable; a strong pick for terminal-first agent users.",
+    "tags": [
+      "Developer Productivity",
+      "Agent Skills",
+      "TUI",
+      "CLI",
+      "Coding Agents",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-18"
+  },
+  {
+    "slug": "otari",
+    "name": "Otari",
+    "company": "Mozilla.ai",
+    "pricing": "freemium",
+    "pricingDetail": "The gateway is free and open source (Apache-2.0) to self-host in standalone mode; a hybrid mode connects a self-run data plane to the hosted otari.ai control plane. Model usage is billed by your providers.",
+    "description": "Otari is Mozilla.ai's open-source LLM gateway and control plane. It exposes one OpenAI- and Anthropic-compatible endpoint for 40+ providers, issues scoped virtual keys, enforces budgets before requests are dispatched and records usage, and its CLI adds repo-committed guardrails for coding agents.",
+    "keyFeatures": [
+      "OpenAI and Anthropic-compatible endpoint for 40+ providers via any-llm",
+      "Revocable virtual keys scoped by user, workspace and model",
+      "Budget checks before dispatch and usage tracking after settlement",
+      "Failover, weighted and learned routing policies with an admin dashboard",
+      "Optional code execution, web search, MCP and inference guardrails",
+      "otari hook Agent Guardrails that block forbidden coding-agent tool calls and diffs, also checkable in CI"
+    ],
+    "bestFor": "Teams that want to route Claude Code and other LLM clients through a self-hosted gateway with per-user keys, budgets and usage visibility.",
+    "notIdealFor": "Solo developers with a single provider key who do not need centralized key management, budgets or routing.",
+    "recentUpdates": "Shipped rapid releases through v0.28.0 on October 16, 2026, with active development continuing on October 18, 2026; Mozilla.ai launched it publicly in July 2026 as an open-source LLM control plane.",
+    "verdict": "A credible, actively developed open-source gateway from Mozilla.ai that combines provider routing and spend control with practical guardrails for coding agents.",
+    "tags": [
+      "AI Gateway",
+      "LLM Ops",
+      "Developer Productivity",
+      "Coding Agents",
+      "Governance",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-18"
+  },
+  {
+    "slug": "skillssh",
+    "name": "skills.sh",
+    "company": "Vercel Labs",
+    "pricing": "open-source",
+    "pricingDetail": "The skills CLI is free and open source under MIT; the skills.sh directory is free to browse.",
+    "description": "skills is Vercel Labs' open-source CLI for the open agent skills ecosystem. It installs, updates and removes SKILL.md skills from Git sources or local paths across OpenCode, Claude Code, Codex, Cursor and 75+ other coding agents, backed by the public skills.sh directory.",
+    "keyFeatures": [
+      "npx skills add from GitHub, GitLab, Azure Repos, any Git URL or local path",
+      "Installs into 75+ agents including Claude Code, Codex, Cursor and OpenCode",
+      "Symlinks every agent to one canonical skill copy",
+      "find, list, update, remove and init commands",
+      "skills use generates a prompt or starts an agent with a skill without installing",
+      "Private repositories via existing Git, GitHub CLI or SSH auth"
+    ],
+    "bestFor": "Developers who use several coding agents and want one package-manager-style workflow for discovering and installing agent skills.",
+    "notIdealFor": "Users of a single agent with a built-in plugin marketplace who do not need cross-agent skill management.",
+    "recentUpdates": "Released v1.7.1 on October 6 and v1.7.2 on October 9, 2026, adding recursive workspace sync, package.json skills fields and remembered agent selection.",
+    "verdict": "The de facto cross-agent installer for Agent Skills, with strong adoption and frequent releases from Vercel Labs.",
+    "tags": [
+      "Agent Skills",
+      "CLI",
+      "Coding Agents",
+      "Developer Productivity",
+      "Package Manager",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-19"
+  },
+  {
+    "slug": "github-mcp-server",
+    "name": "GitHub MCP Server",
+    "company": "GitHub",
+    "pricing": "free",
+    "pricingDetail": "Free and open source under MIT. The hosted remote server and local Docker/binary builds are free to use with your GitHub account; underlying GitHub plan limits still apply.",
+    "description": "GitHub MCP Server is GitHub's official Model Context Protocol server. It lets AI agents and IDEs read repositories and code, manage issues and pull requests, inspect GitHub Actions runs, releases and security alerts, either through a GitHub-hosted remote endpoint or a local Docker image.",
+    "keyFeatures": [
+      "Repository browsing, code search and commit analysis",
+      "Issue and pull request creation, updates and triage",
+      "GitHub Actions workflow run monitoring and failure analysis",
+      "Code scanning and Dependabot alert access",
+      "Hosted remote server with OAuth or local Docker/Go binary with a PAT",
+      "Configurable toolsets, read-only mode and an insiders channel"
+    ],
+    "bestFor": "Developers who want Claude, Cursor, VS Code Copilot or any MCP host to act on GitHub repositories, issues, PRs and CI directly.",
+    "notIdealFor": "Teams on other Git hosts such as GitLab or Bitbucket, or those who prefer agents to use the gh CLI instead of MCP tools.",
+    "recentUpdates": "Released v2.0.1 on October 7 and v2.0.2 on October 8, 2026, correcting the v2 Go module path and restoring typed tool HTTP header validation.",
+    "verdict": "The official, widely adopted way to give AI agents first-class GitHub access, and a default MCP server for most coding-agent setups.",
+    "tags": [
+      "MCP",
+      "GitHub",
+      "Developer Productivity",
+      "Coding Agents",
+      "Integrations",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-19"
+  },
+  {
+    "slug": "tencentdb-agent-memory",
+    "name": "TencentDB Agent Memory",
+    "company": "Tencent Cloud",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under MIT to self-host; you supply the LLM endpoints for the memory and proxy services.",
+    "description": "TencentDB Agent Memory is Tencent Cloud's open-source, team-level memory hub for AI agents. A drop-in proxy shares one memory server across Claude Code, Codex, CodeBuddy and other agents, turning conversations, documents and code into reusable Chat Memory, Skills, a Wiki and a CodeGraph.",
+    "keyFeatures": [
+      "Base-URL proxy integration with no plugin, hook or MCP server required",
+      "Shared memory across Claude Code, Codex, CodeBuddy, WorkBuddy, Hermes and OpenClaw",
+      "Layered Chat Memory distilled from conversations to personas",
+      "Versioned, reviewable Skills extracted from completed work",
+      "Wiki from docs and CodeGraph from code repositories",
+      "Team roles with review before personal assets are shared"
+    ],
+    "bestFor": "Teams running several coding agents who want shared, self-hosted project memory and reusable skills across agents and members.",
+    "notIdealFor": "Solo developers wanting a lightweight local memory file; it runs multiple services and Team Memory is still in beta.",
+    "recentUpdates": "Released v2.0.2 on October 9 and v2.0.3-beta.1 on October 13, 2026, adding a pluggable decision service, on-demand skill selection and session trace recording.",
+    "verdict": "A substantial, fast-moving memory platform from Tencent Cloud that suits teams standardizing context across multiple coding agents.",
+    "tags": [
+      "Agent Memory",
+      "Coding Agents",
+      "Knowledge Management",
+      "Developer Productivity",
+      "Self-Hosted",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-19"
+  },
+  {
+    "slug": "phone-harness",
+    "name": "Phone Harness",
+    "company": "Shawn Pana",
+    "pricing": "freemium",
+    "pricingDetail": "The CLI is free and open source under MIT for your own iPhone or Android. Phone Harness Cloud offers hosted devices; cloud Android includes 100 free minutes, then bills per minute.",
+    "description": "Phone Harness is an open-source CLI and agent skill that lets Claude Code, Codex or other agents control a real phone: iPhone through macOS iPhone Mirroring, Android over adb, or a hosted cloud device. The agent reads the screen, taps, types and verifies results.",
+    "keyFeatures": [
+      "iPhone control via macOS iPhone Mirroring with no jailbreak or Xcode",
+      "Android control over adb from macOS, Linux or Windows",
+      "Python helpers such as screen, find_text, tap_text, type_text and open_app",
+      "Agent-driven onboarding and phone-harness doctor diagnostics",
+      "Optional hosted iPhone and Android cloud phones",
+      "Integrations for Claude Code, Codex and Hermes Agent"
+    ],
+    "bestFor": "Developers who want coding agents to exercise mobile apps or automate tasks on a real iPhone or Android device.",
+    "notIdealFor": "Teams needing a full mobile test framework with device farms, reporting and CI integration out of the box.",
+    "recentUpdates": "Released 0.3.2 on October 12 and 0.3.3rc1 on October 17, 2026, adding file push and open_url for cloud iPhones and environment-first setup with cloud fallback.",
+    "verdict": "A practical, actively maintained bridge that gives coding agents real phone access, useful for mobile app checks and agentic automation.",
+    "tags": [
+      "Mobile",
+      "Agent Tools",
+      "Coding Agents",
+      "Automation",
+      "Developer Productivity",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-19"
+  },
+  {
+    "slug": "harness2",
+    "name": "Harness2",
+    "company": "Google Research",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under Apache-2.0. The local demo needs no model credentials; benchmark runs call Vertex AI models and incur your own API costs.",
+    "description": "Harness2 (Harness²) is Google Research's open-source framework for recursive agent harnessing. Model weights stay fixed while it refines the harness around coding agents such as OpenCode and Codex for each task, and it accumulates lessons in a persistent improvement harness for tasks it has not seen before.",
+    "keyFeatures": [
+      "Task-level Propose-Probe-Compose refinement without ground-truth feedback",
+      "Persistent improvement harness that keeps adopted harnesses and lessons",
+      "Eight editable components: system prompt, guardrails, memory, tool guidance, subagents, skills, scripts and plugins",
+      "Parallel and sequential recursion modes with a configurable budget",
+      "OpenCode and Codex executors",
+      "JobBench, LAB and WorkBuddy-Bench setup, judging and reporting CLIs"
+    ],
+    "bestFor": "Researchers and agent builders who want to automatically tune prompts, skills, tools and guardrails around coding agents and measure the gains on benchmarks.",
+    "notIdealFor": "Developers looking for a ready-to-use coding assistant; it is a Linux and Python 3.12 research framework that needs Vertex AI setup for model-backed runs.",
+    "recentUpdates": "Open-sourced by Google Research on October 8, 2026 with an accompanying arXiv paper; the repository was updated on October 14, 2026 and reached the Hacker News front page on October 19, 2026.",
+    "verdict": "A notable research release that treats the agent harness, not the model, as the thing to optimize, with practical OpenCode and Codex integration for experimentation.",
+    "tags": [
+      "Agent Harness",
+      "Coding Agents",
+      "Research",
+      "Benchmarks",
+      "Self-Improvement",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-19"
+  },
+  {
+    "slug": "agentsview",
+    "name": "AgentsView",
+    "company": "Kenn Software",
+    "pricing": "open-source",
+    "pricingDetail": "AgentsView is free and open source under the MIT License, and session data stays on your machine by default.",
+    "description": "AgentsView is a local-first archive and analytics tool for AI coding agent sessions. It discovers sessions from Claude Code, Codex, Cursor, Copilot CLI, Gemini CLI and 20+ other agents, syncs them into a local SQLite database, and provides a web UI and CLI for search, transcripts, stats and token cost tracking.",
+    "keyFeatures": [
+      "Automatic session discovery across Claude Code, Codex, Cursor, Copilot CLI, Gemini CLI, Devin CLI and 20+ agents",
+      "Full-text session search and transcripts with tool errors and recovery",
+      "Token usage and cost tracking with daily usage reports",
+      "Per-session details and aggregate session statistics",
+      "Desktop app, CLI, install script and Docker image",
+      "Optional PostgreSQL, ClickHouse and DuckDB sync for team analytics"
+    ],
+    "bestFor": "Developers using several coding agents who want one private, searchable history of sessions along with token and cost reporting.",
+    "notIdealFor": "Teams looking for runtime tracing of their own production AI agents rather than a history of coding-agent sessions.",
+    "recentUpdates": "Released v0.45.0 on October 9, 2026, adding Spanish, Junie, OMO and StepCode sessions, message-frequency charts and conversation-memory plugins for Claude Code and Codex.",
+    "verdict": "A broad, privacy-respecting session browser and cost tracker that covers more coding agents than most alternatives.",
+    "tags": [
+      "Observability",
+      "Session Analytics",
+      "Coding Agents",
+      "Cost Tracking",
+      "Local-First",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-20"
+  },
+  {
+    "slug": "laminar",
+    "name": "Laminar",
+    "company": "Laminar (YC S24)",
+    "pricing": "freemium",
+    "pricingDetail": "The platform is open source under Apache-2.0 and can be self-hosted with Docker Compose. The managed cloud has a Free tier, Starter at $30/month, Pro at $150/month and custom Enterprise pricing, with usage-based data overages.",
+    "description": "Laminar is an open-source observability platform built for AI agents. It combines OpenTelemetry-native tracing, plain-English Signals that flag agent failures on every run, evals, dashboards and datasets, and gives coding agents MCP and CLI access to query traces and debug issues.",
+    "keyFeatures": [
+      "OpenTelemetry-native tracing that auto-instruments Vercel AI SDK, LangChain, Browser Use, OpenAI, Anthropic and Gemini",
+      "Signals that describe agent behaviors in plain English and alert in Slack",
+      "RL-trained flow-1 model for finding errors in agent traces",
+      "Evals SDK and CLI for local runs or CI/CD pipelines",
+      "SQL-backed custom dashboards, data annotation and datasets",
+      "MCP server and CLI so coding agents can query traces"
+    ],
+    "bestFor": "Teams building production AI agents who need tracing, failure detection and evals in one open-source platform.",
+    "notIdealFor": "Individual developers who only want usage stats for their own coding-agent sessions rather than instrumenting an agent application.",
+    "recentUpdates": "Released v0.3.2 on October 16, 2026, and launched on Hacker News on October 19, 2026 with flow-1, an RL-trained model for detecting errors in agent traces.",
+    "verdict": "A capable, high-performance agent observability stack with a distinctive automated failure-detection model and a self-hosting option.",
+    "tags": [
+      "Observability",
+      "AI Agents",
+      "Tracing",
+      "Evals",
+      "OpenTelemetry",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-20"
+  },
+  {
+    "slug": "threadkeep",
+    "name": "ThreadKeep",
+    "company": "Interesting Concepts LLC",
+    "pricing": "freemium",
+    "pricingDetail": "Free plan includes 3 tasks and 100 checkpoint writes per UTC month; Pro is $12/month for 100 tasks and 10,000 writes.",
+    "description": "ThreadKeep is an MCP/HTTP checkpoint service that saves task goals, decisions, progress, and next actions so AI coding agents can resume work in a fresh session using the same workspace and task ID. It also offers editable context packs and optional AI-assisted context updates, while checkpoint saves and reads themselves do not call an AI model.",
+    "keyFeatures": [
+      "Persistent checkpoints storing goals, decisions, progress, next actions, and blockers",
+      "Resume a task in a new session via task ID and workspace",
+      "Works with Claude Code, Codex CLI, Cursor, and other MCP hosts",
+      "Retry-safe, versioned saves with expected_version and request_id semantics",
+      "Editable context packs and optional AI context updates",
+      "Remote Streamable HTTP MCP server with agent-key auth; never stores credentials"
+    ],
+    "bestFor": "Developers who frequently hit context resets or hand off work between AI coding agents and want a lightweight, host-agnostic way to resume tasks.",
+    "notIdealFor": "Teams needing full project memory vaults, file backups (referenced files are not backed up), or deep code-context versioning rather than task-level checkpoints.",
+    "recentUpdates": "Listed in the official MCP Registry on September 20, 2026 (v1.0.0); live directory checks in October 2026 showed server version 1.2.0 with 7 tools and 100% uptime over 30 days.",
+    "verdict": "ThreadKeep addresses a real pain point—losing context between AI coding sessions—with a simple, retry-safe checkpoint model that works across major agent hosts. It is still in beta, stores only the latest checkpoint per task, and doesn't back up referenced files, so it complements rather than replaces fuller memory solutions.",
+    "tags": [
+      "MCP",
+      "AI coding agents",
+      "context management",
+      "checkpoints",
+      "developer productivity"
+    ],
+    "lastUpdated": "2026-10-21"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
@@ -9928,586 +10536,6 @@
       "Generative Design"
     ],
     "lastUpdated": "2026-10-15"
-  },
-  {
-    "slug": "reason",
-    "name": "Reason",
-    "company": "Reason Machines",
-    "pricing": "freemium",
-    "pricingDetail": "Developer plan is free with $10 in welcome compute credits, unlimited Bring Your Own Key (BYOK) support and one active cloud session at a time, no card required. Team Platform covers up to 15 members with zero per-seat fees, monthly platform credits and parallel background runners (price not published, 30-day money-back guarantee, no annual lock-in). Enterprise is custom with dedicated VPC/on-prem runners, SSO/SAML and custom SLAs. YC companies get $1,000 in credits.",
-    "description": "Reason is an autonomous software engineer for GitHub from Reason Machines. Connect a repository, assign issues, and its cloud agents open evidence-backed pull requests with screen recordings, logs and review-ready diffs. People drive it from the web app, a macOS desktop app (Reason for macOS runs cloud sessions against local files, tools and ports), and a CLI; programmatic access runs through an authenticated HTTP API and a Streamable HTTP MCP server with OAuth or API-key auth.",
-    "keyFeatures": [
-      "Issue-to-PR autonomous agents: assign GitHub issues and Reason's cloud sessions produce review-ready pull requests with screen recordings, logs and diffs as evidence",
-      "Reason Agent 1.1 harness claims a Coding Agent Index of 65.1 on GPT-6 Astra, beating Codex (62.5) at up to 22% lower cost per solved task, using parallel tool execution via a codemode tool and a fully cache-eligible prompt",
-      "Backlog chore daemon: Team Platform connects Linear and GitHub and runs parallel background agents on routine fixes and maintenance PRs",
-      "Multiple surfaces: web app, macOS desktop app, CLI, plus reason-plugins for Claude Code and Codex and a plugin marketplace",
-      "Full HTTP API (v3) with per-user API keys, idempotent session creation and a Reason MCP server (OAuth or Bearer key) for agent clients",
-      "Bring Your Own Key: plug in your own Anthropic, OpenAI or OpenRouter keys on the free Developer tier"
-    ],
-    "bestFor": "Indie developers and engineering teams who want an async agent to clear GitHub/Linear backlog chores autonomously, with verifiable PR evidence, and prefer BYOK pricing or predictable platform credits over per-seat fees.",
-    "notIdealFor": "Teams needing non-GitHub providers (GitLab/Bitbucket are not listed), anyone wanting fully on-prem code execution on the free tier (cloud sessions run on Reason's infrastructure; dedicated VPC/on-prem is Enterprise-only), or buyers who need a published Team Platform price before talking to sales.",
-    "recentUpdates": "Reason Agent 1.1 (October 10, 2026) claims to beat Codex on the Coding Agent Index, 65.1 vs 62.5 on GPT-6 Astra, at 22% lower cost per solved task; Reason for macOS brings cloud sessions to local files and ports; Agent 1.0 had earlier reported up to 39% lower median solving time on DeepSWE v1.1. Reason also launched a Reason for Startups deal giving current and alumni YC companies $1,000 in credits via Bookface.",
-    "verdict": "Reason pairs a credibly benchmarked agent harness (its own public Harbor jobs back the Codex-beating claims) with the surfaces teams actually need: web, desktop, CLI, API and MCP. The free BYOK Developer tier is genuinely usable for evaluation; the gaps are GitHub-only repo support, unpublished Team Platform pricing, and benchmark numbers that are self-reported rather than third-party-verified.",
-    "tags": [
-      "autonomous agent",
-      "async PRs",
-      "GitHub",
-      "Linear",
-      "BYOK",
-      "MCP",
-      "cloud agents",
-      "backlog automation"
-    ],
-    "lastUpdated": "2026-10-15"
-  },
-  {
-    "slug": "graphify",
-    "name": "Graphify",
-    "company": "Graphify Labs",
-    "pricing": "freemium",
-    "pricingDetail": "The Graphify skill and CLI are free and open source under Apache-2.0; code mapping runs fully locally with no LLM, while the optional semantic pass over docs, PDFs, images and video uses your assistant's model or your own API key. Graphify Cloud, an always-on hosted graph with cross-repo support, formal verification and code review, is a paid service with a free 14-day trial (pricing on graphify.com).",
-    "description": "Graphify turns a codebase, along with its docs, SQL schemas, configs, PDFs, images and video, into a queryable knowledge graph that AI coding assistants traverse instead of grepping through files. Typing `/graphify` in Claude Code, Cursor, Codex, Gemini CLI, GitHub Copilot or 20+ other assistants builds the graph locally with tree-sitter AST parsing and writes an interactive graph.html, a GRAPH_REPORT.md summary and a reusable graph.json.",
-    "keyFeatures": [
-      "Deterministic, fully local code mapping with tree-sitter AST parsing; no embeddings or vector store",
-      "Every edge tagged EXTRACTED (explicit in source) or INFERRED so agents can tell read facts from resolved ones",
-      "Multimodal ingestion of docs, SQL schemas, configs, PDFs, images and video into the same graph",
-      "One-command install (`uv tool install graphifyy`, `graphify install`) that registers the skill for Claude Code, Cursor, Codex, Gemini CLI, GitHub Copilot and 20+ assistants on macOS, Linux and Windows",
-      "Outputs graph.html, GRAPH_REPORT.md and versioned graph.json, plus an MCP server for querying the graph",
-      "Optional Graphify Cloud for live cross-repo graphs, code review and Sentry/Jira connectors"
-    ],
-    "bestFor": "Developers using AI coding assistants on large or unfamiliar codebases who want to cut token spend and give agents an explainable structural map rather than repeated file searches.",
-    "notIdealFor": "Teams that need an always-on, shared graph without paying for Graphify Cloud, or environments without Python 3.10+ and uv/pipx; the non-code semantic pass also sends content to your assistant's model or configured API.",
-    "recentUpdates": "Ships near-daily releases; v0.9.91 (October 14, 2026) merged eight community fixes, including a Windows MCP stdio hang fix, Rust/JS/TS call-resolution and id-collision fixes, an Ollama context-size fix and a bumped AST cache schema.",
-    "verdict": "One of the most widely adopted code-knowledge-graph skills for coding agents, with a fully local, deterministic core and transparent edge provenance; the open-source CLI covers most individual needs, while Cloud is the upsell for teams wanting a live cross-repo graph.",
-    "tags": [
-      "AI",
-      "Code Intelligence",
-      "Knowledge Graph",
-      "Agent Skills",
-      "MCP",
-      "Developer Tools"
-    ],
-    "lastUpdated": "2026-10-15"
-  },
-  {
-    "slug": "neckbeard",
-    "name": "neckbeard",
-    "company": "bealesh",
-    "pricing": "free",
-    "pricingDetail": "Free and open source under Apache-2.0 with no account. You pay only for your coding agent's model usage and for the cloud resources you choose to deploy; optional helpers such as Infracost, OpenTofu and Checkov are separate tools.",
-    "description": "neckbeard is a DevOps/platform plugin for coding agents that turns an application repository into reviewable cloud infrastructure with a cost estimate attached. The agent analyzes the repo and asks the questions code can't answer, then a deterministic Go CLI maps the answers onto a human-maintained, CI-tested catalog of OpenTofu modules, so the agent never invents infrastructure.",
-    "keyFeatures": [
-      "`/neckbeard:analyze` builds an app profile where every fact cites a file and line, inferences carry confidence and open assumptions block planning",
-      "`/neckbeard:estimate` prices the plan against the catalog with Infracost before anything is created",
-      "`/neckbeard:sync` scaffolds OpenTofu, CI pipelines and Kubernetes manifests, validates them and reports what was and wasn't proven",
-      "Hash-verified blueprint.yaml and a pure-function renderer that refuses to overwrite hand-edited files",
-      "Covers AWS, GCP and Azure as serverless containers (Cloud Run, ECS Fargate, Container Apps) or Kubernetes (EKS, GKE, AKS) with GitHub Actions or GitLab CI",
-      "Installs as a Claude Code plugin marketplace entry; SKILL.md install for Codex, Cursor and other hosts; budget alerts and cost ceilings per environment"
-    ],
-    "bestFor": "Teams using Claude Code, Codex or Cursor who want agent-assisted infrastructure that stays within a vetted module catalog, with a reviewable diff and a monthly cost estimate before deploying.",
-    "notIdealFor": "Apps needing services outside the catalog's single workload shape (for example Redis today), or teams wanting a fully managed PaaS rather than reviewing generated OpenTofu and pipelines.",
-    "recentUpdates": "v0.3.0 (October 15, 2026) added real per-environment budget alerts with a refusing cost ceiling, mapped Docker Compose images to datastore capabilities and documented running alongside ponytail; it was discussed on Hacker News on October 14, 2026.",
-    "verdict": "A thoughtful guardrail-first take on agent-driven infrastructure: deterministic rendering from a tested catalog plus upfront cost estimates addresses the main failure modes of letting agents write IaC, though catalog coverage is still narrow.",
-    "tags": [
-      "AI",
-      "DevOps",
-      "Infrastructure as Code",
-      "OpenTofu",
-      "Agent Plugins",
-      "FinOps"
-    ],
-    "lastUpdated": "2026-10-15"
-  },
-  {
-    "slug": "billion-context",
-    "name": "billion-context",
-    "company": "ranxianglei",
-    "pricing": "free",
-    "pricingDetail": "Free and open source under the MIT License with an added attribution term for products that incorporate it. You keep paying your own model provider; the proxy aims to reduce token usage rather than add fees.",
-    "description": "billion-context is a context-compression proxy and plugin for AI coding agents that sits between the agent and its Anthropic- or OpenAI-compatible model API. It injects context-management tools so the model itself decides when and what to fold into layered, reversible summaries, keeping long sessions inside a small context window while preserving the prompt-cache prefix.",
-    "keyFeatures": [
-      "Model-driven incremental compression via injected compress, decompress, search_context and acp_status tools",
-      "Reversible, prefix-cache-friendly summaries targeting ~5x fewer tokens and month-long single sessions within a 100K window",
-      "Launchers and native plugins via the `bili` CLI (`bili claude`, `bili codex`, `bili opencode`, `bili pi`, `bili plugin install <host>`)",
-      "Broad host support: Claude Code, Codex, OpenCode, pi, Gemini CLI, Qwen Code, Kimi, Hermes, Aider, GitHub Copilot CLI, Amp and more",
-      "Built on the open acp-kernel compression engine with an accompanying open preprint and cache-health diagnostics (`/acp`, `/acp-cache`)"
-    ],
-    "bestFor": "Developers running very long coding-agent sessions who hit context-window limits or high token bills and want compression that the model controls and can undo.",
-    "notIdealFor": "Users who cannot route agent traffic through a local proxy or certificate MITM for closed-binary hosts, or teams whose products cannot meet the license's visible-attribution requirement.",
-    "recentUpdates": "Ships frequent releases (v0.1.197 on October 14, 2026) and trended on GitHub's weekly chart in mid-October 2026; recent work expanded native plugins for hosts such as Kimi Code, Hermes and zcode.",
-    "verdict": "An ambitious, actively maintained context-compression layer with unusually broad agent coverage and a published methodology; worth trying for marathon sessions, with the caveats of proxy setup and an attribution-bearing license.",
-    "tags": [
-      "AI",
-      "Context Compression",
-      "LLM Optimization",
-      "Coding Agents",
-      "Developer Productivity"
-    ],
-    "lastUpdated": "2026-10-15"
-  },
-  {
-    "slug": "coucou",
-    "name": "Coucou",
-    "company": "Louis Raillé (Louis-CFM)",
-    "pricing": "free",
-    "pricingDetail": "Free and open source; the code is MIT-licensed while the Coucou name, the Mochi character and sounds remain © Louis Raillé. The iPhone app is a free TestFlight beta and the Android app is a free APK. Built-in chat uses your own provider API keys or local models.",
-    "description": "Coucou is an open-source notch companion that keeps an eye on AI coding agent sessions from the Mac's notch, or the top of the screen on Windows and Linux, with companion iPhone and Android apps. It shows what Claude Code, Codex, Cursor, Gemini CLI and other agents are reading, editing and running, and lets you approve permission requests or answer agent questions without switching windows.",
-    "keyFeatures": [
-      "Live view of Claude Code, Codex, Cursor, Gemini CLI, Antigravity, Copilot CLI, OpenCode, Amp, Hermes and other agent sessions",
-      "Allow/Deny/Always permission approvals and AskUserQuestion answers from the notch, Lock Screen or Dynamic Island",
-      "iPhone (Live Activities, widgets, Siri, Shortcuts) and Android (fingerprint approvals, widgets) companions",
-      "Claude and Codex plan-usage pills",
-      "Multi-provider chat with Claude, Gemini, OpenAI, DeepSeek, Qwen, Moonshot or local Ollama/LM Studio",
-      "Offline hold-to-talk dictation and call notes in 0.4"
-    ],
-    "bestFor": "Developers running several coding agents in parallel who want to see status and handle approvals at a glance, including from their phone when away from the desk.",
-    "notIdealFor": "Users who want a pure productivity tool without a playful mascot, or those needing App Store distribution today (Mac and iPhone App Store builds are still pending).",
-    "recentUpdates": "Coucou 0.4.0 (October 15, 2026) turned the Mac build into a full Dock app with offline Parakeet dictation and call notetaking; Windows and Linux builds plus an Android app (October 11–13, 2026) followed the late-September first release.",
-    "verdict": "A fast-moving, genuinely cross-platform agent monitor that makes approvals and session status ambient; its feature scope is expanding beyond agents, but agent supervision remains the core reason to install it.",
-    "tags": [
-      "AI",
-      "Coding Agents",
-      "Agent Monitoring",
-      "macOS",
-      "Mobile",
-      "Developer Productivity"
-    ],
-    "lastUpdated": "2026-10-15"
-  },
-  {
-    "slug": "rakazo",
-    "name": "Rakazo",
-    "company": "Elie Steinbock (elie222)",
-    "pricing": "free",
-    "pricingDetail": "Free and open source under the Apache-2.0 license when self-hosted; you bring your own model API credentials and sandbox/computer provider, which are billed separately. The project is in beta.",
-    "description": "Rakazo is an open-source, self-hosted AI agent platform for persistent AI teammates. Each bot keeps its own conversations, memory, routines and history and works on shared or private computers with browser, terminal, file and desktop access, delegating to peer bots or subagents when needed.",
-    "keyFeatures": [
-      "Persistent bots with their own conversations, memory, routines and history",
-      "Shared Team Computers and isolated Private computers with browser, terminal, file and graphical desktop access",
-      "Delegation to peer bots or short-lived subagents",
-      "Bring-your-own models via Pi and sandboxes on Docker, E2B, Daytona, CreateOS, Box or a trusted local machine",
-      "Integrations through Composio, Pipedream Connect, remote MCP, OpenAPI and Treg tool sources",
-      "Web, Electron desktop, iPhone and Android apps with voice mode"
-    ],
-    "bestFor": "Developers and small teams who want a self-hosted, model-agnostic alternative to hosted agent assistants, with sandboxed computers and tool integrations they control.",
-    "notIdealFor": "Teams that want a fully managed, production-hardened coding agent today; Rakazo is in beta and self-hosting requires Docker plus your own model and sandbox credentials.",
-    "recentUpdates": "Released v0.2.0 and a downloadable Android APK on October 10, 2026, following v0.1.6 on September 8, 2026; the repository is under daily development (October 18, 2026 commits add new Claude model entries) and trended on GitHub in mid-October 2026.",
-    "verdict": "A fast-growing, well-structured open-source agent platform that gives OpenClaw- and Hermes-style persistent agents a polished multi-device UI and pluggable sandboxes; promising but still beta.",
-    "tags": [
-      "AI Agents",
-      "Autonomous Agents",
-      "Self-Hosted",
-      "Open Source",
-      "Sandboxes",
-      "MCP"
-    ],
-    "lastUpdated": "2026-10-18"
-  },
-  {
-    "slug": "lazyskills",
-    "name": "LazySkills",
-    "company": "Alvin (alvinunreal)",
-    "pricing": "free",
-    "pricingDetail": "Free and open source under the MIT license with no paid tiers.",
-    "description": "LazySkills is a fast terminal UI and CLI for managing AI agent skills. It shows every installed skill across project, global and agent-specific locations, checks which coding agents can actually see each one, and diagnoses broken installs before offering previewed, confirmation-gated fixes.",
-    "keyFeatures": [
-      "Single TUI view of project, global, universal and agent-specific skills",
-      "Per-agent visibility checks for Claude Code, OpenCode, Codex, Cursor, Gemini CLI and more",
-      "Detection of missing SKILL.md files, invalid frontmatter, broken symlinks, missing lock entries and ghost skills",
-      "Previewed, confirmation-gated reinstall, update, remove and prune actions",
-      "Search and install from skills.sh, plus lazyskills find --json for agents",
-      "Read-only lazyskills doctor health report and lock-file restore"
-    ],
-    "bestFor": "Developers who use several coding agents and have accumulated many agent skills that need auditing, fixing and syncing from the terminal.",
-    "notIdealFor": "Users who prefer a desktop GUI for skill management or who only use a handful of skills in a single agent.",
-    "recentUpdates": "Version 1.2.0 (September 26, 2026) added discovery of native OpenCode project skills, following v1.1.0 on September 7, 2026; the project trended on GitHub's Go list in October 2026.",
-    "verdict": "A focused, keyboard-driven tool that makes the growing mess of cross-agent skills inspectable and safely fixable; a strong pick for terminal-first agent users.",
-    "tags": [
-      "Developer Productivity",
-      "Agent Skills",
-      "TUI",
-      "CLI",
-      "Coding Agents",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-18"
-  },
-  {
-    "slug": "otari",
-    "name": "Otari",
-    "company": "Mozilla.ai",
-    "pricing": "freemium",
-    "pricingDetail": "The gateway is free and open source (Apache-2.0) to self-host in standalone mode; a hybrid mode connects a self-run data plane to the hosted otari.ai control plane. Model usage is billed by your providers.",
-    "description": "Otari is Mozilla.ai's open-source LLM gateway and control plane. It exposes one OpenAI- and Anthropic-compatible endpoint for 40+ providers, issues scoped virtual keys, enforces budgets before requests are dispatched and records usage, and its CLI adds repo-committed guardrails for coding agents.",
-    "keyFeatures": [
-      "OpenAI and Anthropic-compatible endpoint for 40+ providers via any-llm",
-      "Revocable virtual keys scoped by user, workspace and model",
-      "Budget checks before dispatch and usage tracking after settlement",
-      "Failover, weighted and learned routing policies with an admin dashboard",
-      "Optional code execution, web search, MCP and inference guardrails",
-      "otari hook Agent Guardrails that block forbidden coding-agent tool calls and diffs, also checkable in CI"
-    ],
-    "bestFor": "Teams that want to route Claude Code and other LLM clients through a self-hosted gateway with per-user keys, budgets and usage visibility.",
-    "notIdealFor": "Solo developers with a single provider key who do not need centralized key management, budgets or routing.",
-    "recentUpdates": "Shipped rapid releases through v0.28.0 on October 16, 2026, with active development continuing on October 18, 2026; Mozilla.ai launched it publicly in July 2026 as an open-source LLM control plane.",
-    "verdict": "A credible, actively developed open-source gateway from Mozilla.ai that combines provider routing and spend control with practical guardrails for coding agents.",
-    "tags": [
-      "AI Gateway",
-      "LLM Ops",
-      "Developer Productivity",
-      "Coding Agents",
-      "Governance",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-18"
-  },
-  {
-    "slug": "graphicle",
-    "name": "Graphicle",
-    "company": "Graphicle AI",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under Apache-2.0; runs locally with no account or API key. Optional written answers use your own Anthropic, OpenAI or Ollama model.",
-    "description": "Graphicle is an open-source Rust program that maps a repository into a code graph, remembers project docs, decisions and past agent sessions, and serves cited file-and-line excerpts to coding agents over MCP or from the terminal.",
-    "keyFeatures": [
-      "Code graph of the repository built and kept current by Git hooks",
-      "Project memory of docs, decisions and captured agent sessions",
-      "Cited file-and-line evidence via MCP for Claude Code, Cursor, Codex, VS Code and Claude Desktop",
-      "graphicle ask terminal queries with token-budgeted excerpts",
-      "graphicle graph affected impact analysis for symbol changes",
-      "One-command setup with backups and a full graphicle disconnect undo"
-    ],
-    "bestFor": "Developers who want local, citation-backed code search and project memory for their coding agents without sending code to a hosted service.",
-    "notIdealFor": "Teams needing a mature, long-supported product; it is a very new 0.1.x project with a Windows build still in preview.",
-    "recentUpdates": "Shipped v0.1.1 on October 16 and v0.1.2 on October 18, 2026 (light theme for the dashboard, MCP Registry publishing), shortly after its October 14, 2026 Show HN launch.",
-    "verdict": "A promising local code-graph and memory layer for coding agents that adds session memory on top of the Graphify approach, though still early.",
-    "tags": [
-      "Code Intelligence",
-      "Agent Memory",
-      "MCP",
-      "Coding Agents",
-      "Rust",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-19"
-  },
-  {
-    "slug": "skillssh",
-    "name": "skills.sh",
-    "company": "Vercel Labs",
-    "pricing": "open-source",
-    "pricingDetail": "The skills CLI is free and open source under MIT; the skills.sh directory is free to browse.",
-    "description": "skills is Vercel Labs' open-source CLI for the open agent skills ecosystem. It installs, updates and removes SKILL.md skills from Git sources or local paths across OpenCode, Claude Code, Codex, Cursor and 75+ other coding agents, backed by the public skills.sh directory.",
-    "keyFeatures": [
-      "npx skills add from GitHub, GitLab, Azure Repos, any Git URL or local path",
-      "Installs into 75+ agents including Claude Code, Codex, Cursor and OpenCode",
-      "Symlinks every agent to one canonical skill copy",
-      "find, list, update, remove and init commands",
-      "skills use generates a prompt or starts an agent with a skill without installing",
-      "Private repositories via existing Git, GitHub CLI or SSH auth"
-    ],
-    "bestFor": "Developers who use several coding agents and want one package-manager-style workflow for discovering and installing agent skills.",
-    "notIdealFor": "Users of a single agent with a built-in plugin marketplace who do not need cross-agent skill management.",
-    "recentUpdates": "Released v1.7.1 on October 6 and v1.7.2 on October 9, 2026, adding recursive workspace sync, package.json skills fields and remembered agent selection.",
-    "verdict": "The de facto cross-agent installer for Agent Skills, with strong adoption and frequent releases from Vercel Labs.",
-    "tags": [
-      "Agent Skills",
-      "CLI",
-      "Coding Agents",
-      "Developer Productivity",
-      "Package Manager",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-19"
-  },
-  {
-    "slug": "github-mcp-server",
-    "name": "GitHub MCP Server",
-    "company": "GitHub",
-    "pricing": "free",
-    "pricingDetail": "Free and open source under MIT. The hosted remote server and local Docker/binary builds are free to use with your GitHub account; underlying GitHub plan limits still apply.",
-    "description": "GitHub MCP Server is GitHub's official Model Context Protocol server. It lets AI agents and IDEs read repositories and code, manage issues and pull requests, inspect GitHub Actions runs, releases and security alerts, either through a GitHub-hosted remote endpoint or a local Docker image.",
-    "keyFeatures": [
-      "Repository browsing, code search and commit analysis",
-      "Issue and pull request creation, updates and triage",
-      "GitHub Actions workflow run monitoring and failure analysis",
-      "Code scanning and Dependabot alert access",
-      "Hosted remote server with OAuth or local Docker/Go binary with a PAT",
-      "Configurable toolsets, read-only mode and an insiders channel"
-    ],
-    "bestFor": "Developers who want Claude, Cursor, VS Code Copilot or any MCP host to act on GitHub repositories, issues, PRs and CI directly.",
-    "notIdealFor": "Teams on other Git hosts such as GitLab or Bitbucket, or those who prefer agents to use the gh CLI instead of MCP tools.",
-    "recentUpdates": "Released v2.0.1 on October 7 and v2.0.2 on October 8, 2026, correcting the v2 Go module path and restoring typed tool HTTP header validation.",
-    "verdict": "The official, widely adopted way to give AI agents first-class GitHub access, and a default MCP server for most coding-agent setups.",
-    "tags": [
-      "MCP",
-      "GitHub",
-      "Developer Productivity",
-      "Coding Agents",
-      "Integrations",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-19"
-  },
-  {
-    "slug": "tencentdb-agent-memory",
-    "name": "TencentDB Agent Memory",
-    "company": "Tencent Cloud",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under MIT to self-host; you supply the LLM endpoints for the memory and proxy services.",
-    "description": "TencentDB Agent Memory is Tencent Cloud's open-source, team-level memory hub for AI agents. A drop-in proxy shares one memory server across Claude Code, Codex, CodeBuddy and other agents, turning conversations, documents and code into reusable Chat Memory, Skills, a Wiki and a CodeGraph.",
-    "keyFeatures": [
-      "Base-URL proxy integration with no plugin, hook or MCP server required",
-      "Shared memory across Claude Code, Codex, CodeBuddy, WorkBuddy, Hermes and OpenClaw",
-      "Layered Chat Memory distilled from conversations to personas",
-      "Versioned, reviewable Skills extracted from completed work",
-      "Wiki from docs and CodeGraph from code repositories",
-      "Team roles with review before personal assets are shared"
-    ],
-    "bestFor": "Teams running several coding agents who want shared, self-hosted project memory and reusable skills across agents and members.",
-    "notIdealFor": "Solo developers wanting a lightweight local memory file; it runs multiple services and Team Memory is still in beta.",
-    "recentUpdates": "Released v2.0.2 on October 9 and v2.0.3-beta.1 on October 13, 2026, adding a pluggable decision service, on-demand skill selection and session trace recording.",
-    "verdict": "A substantial, fast-moving memory platform from Tencent Cloud that suits teams standardizing context across multiple coding agents.",
-    "tags": [
-      "Agent Memory",
-      "Coding Agents",
-      "Knowledge Management",
-      "Developer Productivity",
-      "Self-Hosted",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-19"
-  },
-  {
-    "slug": "phone-harness",
-    "name": "Phone Harness",
-    "company": "Shawn Pana",
-    "pricing": "freemium",
-    "pricingDetail": "The CLI is free and open source under MIT for your own iPhone or Android. Phone Harness Cloud offers hosted devices; cloud Android includes 100 free minutes, then bills per minute.",
-    "description": "Phone Harness is an open-source CLI and agent skill that lets Claude Code, Codex or other agents control a real phone: iPhone through macOS iPhone Mirroring, Android over adb, or a hosted cloud device. The agent reads the screen, taps, types and verifies results.",
-    "keyFeatures": [
-      "iPhone control via macOS iPhone Mirroring with no jailbreak or Xcode",
-      "Android control over adb from macOS, Linux or Windows",
-      "Python helpers such as screen, find_text, tap_text, type_text and open_app",
-      "Agent-driven onboarding and phone-harness doctor diagnostics",
-      "Optional hosted iPhone and Android cloud phones",
-      "Integrations for Claude Code, Codex and Hermes Agent"
-    ],
-    "bestFor": "Developers who want coding agents to exercise mobile apps or automate tasks on a real iPhone or Android device.",
-    "notIdealFor": "Teams needing a full mobile test framework with device farms, reporting and CI integration out of the box.",
-    "recentUpdates": "Released 0.3.2 on October 12 and 0.3.3rc1 on October 17, 2026, adding file push and open_url for cloud iPhones and environment-first setup with cloud fallback.",
-    "verdict": "A practical, actively maintained bridge that gives coding agents real phone access, useful for mobile app checks and agentic automation.",
-    "tags": [
-      "Mobile",
-      "Agent Tools",
-      "Coding Agents",
-      "Automation",
-      "Developer Productivity",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-19"
-  },
-  {
-    "slug": "harness2",
-    "name": "Harness2",
-    "company": "Google Research",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under Apache-2.0. The local demo needs no model credentials; benchmark runs call Vertex AI models and incur your own API costs.",
-    "description": "Harness2 (Harness²) is Google Research's open-source framework for recursive agent harnessing. Model weights stay fixed while it refines the harness around coding agents such as OpenCode and Codex for each task, and it accumulates lessons in a persistent improvement harness for tasks it has not seen before.",
-    "keyFeatures": [
-      "Task-level Propose-Probe-Compose refinement without ground-truth feedback",
-      "Persistent improvement harness that keeps adopted harnesses and lessons",
-      "Eight editable components: system prompt, guardrails, memory, tool guidance, subagents, skills, scripts and plugins",
-      "Parallel and sequential recursion modes with a configurable budget",
-      "OpenCode and Codex executors",
-      "JobBench, LAB and WorkBuddy-Bench setup, judging and reporting CLIs"
-    ],
-    "bestFor": "Researchers and agent builders who want to automatically tune prompts, skills, tools and guardrails around coding agents and measure the gains on benchmarks.",
-    "notIdealFor": "Developers looking for a ready-to-use coding assistant; it is a Linux and Python 3.12 research framework that needs Vertex AI setup for model-backed runs.",
-    "recentUpdates": "Open-sourced by Google Research on October 8, 2026 with an accompanying arXiv paper; the repository was updated on October 14, 2026 and reached the Hacker News front page on October 19, 2026.",
-    "verdict": "A notable research release that treats the agent harness, not the model, as the thing to optimize, with practical OpenCode and Codex integration for experimentation.",
-    "tags": [
-      "Agent Harness",
-      "Coding Agents",
-      "Research",
-      "Benchmarks",
-      "Self-Improvement",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-19"
-  },
-  {
-    "slug": "orchestratorinc",
-    "name": "Orchestrator.inc",
-    "company": "Orchestrator.inc",
-    "pricing": "open-source",
-    "pricingDetail": "The desktop app and daemon are free and open source under Apache-2.0. You bring your own coding-agent CLIs and their subscriptions or API keys.",
-    "description": "Orchestrator.inc is an open-source desktop workspace for running many coding agents on a project. Each worker gets an isolated branch and worktree, a persistent project orchestrator plans and delegates the work, and a live Kanban follows every worker's pull request, CI and review state until merge.",
-    "keyFeatures": [
-      "Workers pairing one task and one agent with an isolated Git branch and worktree",
-      "Persistent project orchestrator that plans, splits and delegates tasks",
-      "Live Kanban derived from session, pull request, CI and review state",
-      "CI failures and review comments routed back to the agent that owns the work",
-      "Per-worker terminal, structured Chat and isolated agent-controllable browser",
-      "Supports Claude Code, Codex, Cursor, opencode, Aider, Copilot, Devin and 30+ agents"
-    ],
-    "bestFor": "Developers running several coding agents in parallel who want one place to plan work, isolate branches and track PRs through CI and review.",
-    "notIdealFor": "Developers who use a single agent in one terminal and do not need multi-agent coordination or Kanban tracking.",
-    "recentUpdates": "Released v0.14.3 on October 19, 2026, with nightly builds published daily and desktop installers for macOS, Windows and Linux.",
-    "verdict": "A capable open-source command center for multi-agent development with broad agent support and tight PR, CI and review integration.",
-    "tags": [
-      "Agent Orchestration",
-      "Parallel Agents",
-      "Coding Agents",
-      "Desktop App",
-      "Git Worktrees",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-19"
-  },
-  {
-    "slug": "herdr",
-    "name": "Herdr",
-    "company": "Herdr",
-    "pricing": "open-source",
-    "pricingDetail": "Herdr is free and open source under Apache-2.0. You bring your own coding-agent CLIs and their subscriptions or API keys.",
-    "description": "Herdr is an open-source agent multiplexer that runs inside your existing terminal and owns the terminals of coding agents such as Claude Code, Codex, Cursor and OpenCode. A background server keeps panes alive across detaches, SSH drops and restarts, and each pane shows whether its agent is working, blocked or idle.",
-    "keyFeatures": [
-      "Background server keeps agent panes running after detach or SSH disconnect and restores layouts after restarts",
-      "Per-pane working, blocked and idle status so stuck agents are easy to spot",
-      "Local and saved SSH machines combined in one window with a shared agent list",
-      "CLI and socket API plus an agent skill so agents can spawn panes and prompt each other",
-      "tmux-style prefix keys alongside first-class mouse splitting and dragging",
-      "Plugin marketplace and a single Rust binary with no Electron"
-    ],
-    "bestFor": "Developers running several CLI coding agents at once, locally or over SSH, who want tmux-style persistence with agent-aware status.",
-    "notIdealFor": "Developers who want a graphical IDE or desktop app rather than a terminal-based workflow.",
-    "recentUpdates": "Released v0.9.5 on October 14, 2026, a hotfix for v0.9.4 (October 13, 2026), which added `herdr plugin update` and persistent Windows notifications.",
-    "verdict": "A fast-moving, widely adopted terminal runtime for multi-agent work that adds agent awareness and persistence without replacing the agents themselves.",
-    "tags": [
-      "Terminal",
-      "Agent Multiplexer",
-      "Coding Agents",
-      "Parallel Agents",
-      "Rust",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-20"
-  },
-  {
-    "slug": "agent-deck",
-    "name": "Agent Deck",
-    "company": "Ashesh Goplani",
-    "pricing": "open-source",
-    "pricingDetail": "Agent Deck is free and open source under the MIT License. You bring your own coding-agent CLIs and their subscriptions or API keys.",
-    "description": "Agent Deck is an open-source terminal session manager for AI coding agents. One TUI lists every Claude Code, Codex, Gemini, OpenCode and Pi session with its running, waiting or idle state, and adds session forking, per-project MCP and skills management, and a conductor session that can report on the fleet through chat apps.",
-    "keyFeatures": [
-      "Single TUI showing every agent session and whether it is running, waiting or idle",
-      "Fork Claude, Codex, OpenCode and Pi sessions with inherited conversation history",
-      "MCP Manager and Skills Manager to toggle servers and skills per project",
-      "Git worktree setup and sandboxed container sessions",
-      "Built-in web UI via `agent-deck web`",
-      "Conductor session with Telegram, Slack, Discord and Mattermost channels"
-    ],
-    "bestFor": "Developers juggling many terminal coding-agent sessions across projects who want one dashboard plus remote status updates.",
-    "notIdealFor": "Native Windows users outside WSL or developers who only run a single agent session at a time.",
-    "recentUpdates": "Released v1.16.30 on October 18, 2026, following v1.16.29 the same day and v1.16.27 and v1.16.28 on October 10, 2026.",
-    "verdict": "A mature, frequently released command center for terminal agent fleets with useful forking, MCP and remote-conductor features.",
-    "tags": [
-      "Terminal",
-      "Session Manager",
-      "Coding Agents",
-      "TUI",
-      "Go",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-20"
-  },
-  {
-    "slug": "artemis",
-    "name": "ARTEMIS",
-    "company": "Google",
-    "pricing": "open-source",
-    "pricingDetail": "ARTEMIS is free and open source under Apache-2.0. It runs locally against your own Android device or emulator, and you supply the model provider credentials it uses.",
-    "description": "ARTEMIS is an open-source Google project that turns natural-language instructions into Android automation for end-to-end testing and everyday workflows. It drives real devices or emulators through an observe-and-act loop and exposes an MCP server so AI coding assistants can run device tests and collect diagnostics.",
-    "keyFeatures": [
-      "Natural-language cross-app automation on Android devices and emulators",
-      "Element-index targeting with coordinate and visual fallbacks for custom UIs",
-      "Built-in MCP server for Antigravity, Claude Code, Codex, Cursor and Windsurf",
-      "Logcat and screenshot capture for diagnostic test reports",
-      "Local web console with live screen mirroring, prompt sandbox and execution replays",
-      "Reports 99%+ task completion on the AndroidWorld benchmark"
-    ],
-    "bestFor": "Mobile developers and QA engineers who want AI assistants to execute and diagnose Android end-to-end tests on real hardware.",
-    "notIdealFor": "Teams testing iOS or web apps, or those needing a hosted device cloud rather than a locally connected phone or emulator.",
-    "recentUpdates": "Latest commits on September 29, 2026 fixed server status, the CLI entry point, replay and test issues; the repository was published in August 2026 and has since passed 13,000 GitHub stars.",
-    "verdict": "A strong open-source option for agent-driven Android testing, especially for teams already using MCP-capable coding assistants.",
-    "tags": [
-      "AI Testing",
-      "Android",
-      "Mobile Automation",
-      "MCP",
-      "End-to-End Testing",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-20"
-  },
-  {
-    "slug": "agentsview",
-    "name": "AgentsView",
-    "company": "Kenn Software",
-    "pricing": "open-source",
-    "pricingDetail": "AgentsView is free and open source under the MIT License, and session data stays on your machine by default.",
-    "description": "AgentsView is a local-first archive and analytics tool for AI coding agent sessions. It discovers sessions from Claude Code, Codex, Cursor, Copilot CLI, Gemini CLI and 20+ other agents, syncs them into a local SQLite database, and provides a web UI and CLI for search, transcripts, stats and token cost tracking.",
-    "keyFeatures": [
-      "Automatic session discovery across Claude Code, Codex, Cursor, Copilot CLI, Gemini CLI, Devin CLI and 20+ agents",
-      "Full-text session search and transcripts with tool errors and recovery",
-      "Token usage and cost tracking with daily usage reports",
-      "Per-session details and aggregate session statistics",
-      "Desktop app, CLI, install script and Docker image",
-      "Optional PostgreSQL, ClickHouse and DuckDB sync for team analytics"
-    ],
-    "bestFor": "Developers using several coding agents who want one private, searchable history of sessions along with token and cost reporting.",
-    "notIdealFor": "Teams looking for runtime tracing of their own production AI agents rather than a history of coding-agent sessions.",
-    "recentUpdates": "Released v0.45.0 on October 9, 2026, adding Spanish, Junie, OMO and StepCode sessions, message-frequency charts and conversation-memory plugins for Claude Code and Codex.",
-    "verdict": "A broad, privacy-respecting session browser and cost tracker that covers more coding agents than most alternatives.",
-    "tags": [
-      "Observability",
-      "Session Analytics",
-      "Coding Agents",
-      "Cost Tracking",
-      "Local-First",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-20"
-  },
-  {
-    "slug": "laminar",
-    "name": "Laminar",
-    "company": "Laminar (YC S24)",
-    "pricing": "freemium",
-    "pricingDetail": "The platform is open source under Apache-2.0 and can be self-hosted with Docker Compose. The managed cloud has a Free tier, Starter at $30/month, Pro at $150/month and custom Enterprise pricing, with usage-based data overages.",
-    "description": "Laminar is an open-source observability platform built for AI agents. It combines OpenTelemetry-native tracing, plain-English Signals that flag agent failures on every run, evals, dashboards and datasets, and gives coding agents MCP and CLI access to query traces and debug issues.",
-    "keyFeatures": [
-      "OpenTelemetry-native tracing that auto-instruments Vercel AI SDK, LangChain, Browser Use, OpenAI, Anthropic and Gemini",
-      "Signals that describe agent behaviors in plain English and alert in Slack",
-      "RL-trained flow-1 model for finding errors in agent traces",
-      "Evals SDK and CLI for local runs or CI/CD pipelines",
-      "SQL-backed custom dashboards, data annotation and datasets",
-      "MCP server and CLI so coding agents can query traces"
-    ],
-    "bestFor": "Teams building production AI agents who need tracing, failure detection and evals in one open-source platform.",
-    "notIdealFor": "Individual developers who only want usage stats for their own coding-agent sessions rather than instrumenting an agent application.",
-    "recentUpdates": "Released v0.3.2 on October 16, 2026, and launched on Hacker News on October 19, 2026 with flow-1, an RL-trained model for detecting errors in agent traces.",
-    "verdict": "A capable, high-performance agent observability stack with a distinctive automated failure-detection model and a self-hosting option.",
-    "tags": [
-      "Observability",
-      "AI Agents",
-      "Tracing",
-      "Evals",
-      "OpenTelemetry",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-20"
   },
   {
     "slug": "space",
