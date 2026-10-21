@@ -4,7 +4,7 @@ import type { BoundStatement, Database } from './db';
 export const SESSION_COOKIE_NAME = 'aat_session';
 
 export interface IdentityProfile {
-    provider: 'google' | 'github';
+    provider: 'google' | 'github' | 'email';
     providerUserId: string;
     name: string;
     email: string | null;
@@ -64,6 +64,19 @@ function toSessionUser(profile: IdentityProfile): SessionUser {
     };
 }
 
+function sessionUserFromRow(row: SessionUserRow): SessionUser {
+    return {
+        id: row.id,
+        provider: row.provider,
+        providerUserId: row.provider_user_id,
+        name: row.display_name,
+        email: row.email,
+        picture: row.avatar_url,
+        githubUsername: row.github_username,
+        emailVerified: Boolean(row.email_verified),
+    };
+}
+
 export async function createUserSession(
     db: Database,
     profile: IdentityProfile,
@@ -114,6 +127,41 @@ export async function createUserSession(
     return { token, user, isNewUser: createdAt === now };
 }
 
+export async function createSessionForUser(
+    db: Database,
+    userId: string,
+    now = Date.now(),
+    tokenFactory: () => string = defaultTokenFactory,
+): Promise<{ token: string; user: SessionUser; isNewUser: false }> {
+    const row = await db.prepare(`
+        SELECT
+            id,
+            provider,
+            provider_user_id,
+            display_name,
+            email,
+            avatar_url,
+            github_username,
+            email_verified,
+            last_seen_at
+        FROM users
+        WHERE id = ?
+        LIMIT 1
+    `).bind(userId).first<SessionUserRow>();
+    if (!row) throw new Error('User not found');
+
+    const token = tokenFactory();
+    const tokenHash = await hashSessionToken(token);
+    await db.batch([
+        db.prepare('UPDATE users SET last_seen_at = ? WHERE id = ?').bind(now, userId),
+        db.prepare(`
+            INSERT INTO sessions (token_hash, user_id, created_at, expires_at)
+            VALUES (?, ?, ?, ?)
+        `).bind(tokenHash, userId, now, now + AUTH_SESSION_TTL_MS),
+    ]);
+    return { token, user: sessionUserFromRow(row), isNewUser: false };
+}
+
 export async function getSessionUser(
     db: Database,
     token: string,
@@ -143,16 +191,7 @@ export async function getSessionUser(
     if (!row.last_seen_at || Math.floor(row.last_seen_at / 86_400_000) < utcDay) {
         await db.prepare('UPDATE users SET last_seen_at = ? WHERE id = ?').bind(now, row.id).run();
     }
-    return {
-        id: row.id,
-        provider: row.provider,
-        providerUserId: row.provider_user_id,
-        name: row.display_name,
-        email: row.email,
-        picture: row.avatar_url,
-        githubUsername: row.github_username,
-        emailVerified: Boolean(row.email_verified),
-    };
+    return sessionUserFromRow(row);
 }
 
 export async function deleteUserSession(db: Database, token: string): Promise<void> {

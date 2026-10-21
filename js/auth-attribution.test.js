@@ -32,4 +32,18 @@ describe('auth attribution', () => {
         attribution.setPending('unknown');
         expect(attribution.begin()).toBe('sidebar');
     });
+
+    test('keeps a follow subject with its trigger until the modal opens', () => {
+        const attribution = createAuthAttribution({
+            storage: memoryStorage(),
+            documentRef: {},
+            locationRef: { protocol: 'https:', href: '' },
+        });
+
+        attribution.setPending('follow_bell', 'Cursor');
+        expect(attribution.begin()).toBe('follow_bell');
+        expect(attribution.subject()).toBe('Cursor');
+        attribution.clear();
+        expect(attribution.subject()).toBe('');
+    });
 });

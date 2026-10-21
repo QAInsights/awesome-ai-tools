@@ -127,4 +127,51 @@ describe('session mutation ordering', () => {
         expect(manager.getCurrentUser()).toEqual({ id: 'github:42', provider: 'github' });
         expect(events[0]?.event).toBe('error');
     });
+
+    test('requests an email code and notifies listeners after email verification', async () => {
+        const user = { id: 'email:abc123', provider: 'email', name: 'Ada', picture: null };
+        const events = [];
+        const requests = [];
+        const originalFetch = global.fetch;
+        global.window = {};
+        global.fetch = async (path, options) => {
+            requests.push({ path, options });
+            return new Response(JSON.stringify(path.endsWith('/start') ? { ok: true } : { user }), {
+                status: path.endsWith('/start') ? 202 : 201,
+                headers: { 'Content-Type': 'application/json' },
+            });
+        };
+        try {
+            const manager = new AuthManager();
+            manager.onAuthChange(event => events.push(event));
+
+            await manager.requestEmailCode('ada@example.com');
+            expect(await manager.verifyEmailCode('ada@example.com', '001234')).toEqual(user);
+            expect(requests.map(request => request.path)).toEqual([
+                '/api/auth/email/start',
+                '/api/auth/email/verify',
+            ]);
+            expect(JSON.parse(requests[0].options.body)).toEqual({ email: 'ada@example.com' });
+            expect(JSON.parse(requests[1].options.body)).toEqual({ email: 'ada@example.com', code: '001234' });
+            expect(events).toEqual([{ event: 'signin', user, error: null }]);
+        } finally {
+            global.fetch = originalFetch;
+        }
+    });
+
+    test('preserves the server error status when requesting an email code', async () => {
+        const originalFetch = global.fetch;
+        global.fetch = async () => new Response(JSON.stringify({ error: 'rate_limited' }), {
+            status: 429,
+            headers: { 'Content-Type': 'application/json' },
+        });
+        try {
+            await expect(new AuthManager().requestEmailCode('ada@example.com')).rejects.toMatchObject({
+                message: 'rate_limited',
+                status: 429,
+            });
+        } finally {
+            global.fetch = originalFetch;
+        }
+    });
 });

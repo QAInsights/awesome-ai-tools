@@ -1,4 +1,5 @@
 import { afterAll, describe, expect, mock, test } from 'bun:test';
+import { ANALYTICS_PROVIDERS } from '../analytics-events.js';
 
 mock.module('cloudflare:workers', () => ({ env: {} }));
 const { buildFunnelViewModel, buildGrowthViewModel, formatDelta, formatPointDelta, formatRate, growthCountsQuery, referrerGroup, visitorDaysQuery } = await import(`./analytics-query.ts?test=${Date.now()}`);
@@ -20,12 +21,20 @@ describe('funnel view model', () => {
             { event: 'ad_prompt_shown', trigger: 'fixedfooter', subject: '', provider: '', n: 7 },
             { event: 'signin_modal_shown', trigger: 'ad_close', subject: '', provider: '', n: 2 },
             { event: 'signin_completed', trigger: 'ad_close', subject: '', provider: 'google', n: 1 },
+            { event: 'signin_started', trigger: 'follow_bell', subject: '', provider: 'email', n: 3 },
+            { event: 'signin_completed', trigger: 'follow_bell', subject: '', provider: 'email', n: 2 },
         ]);
 
         expect(model.shown).toBe(12);
-        expect(model.started).toBe(6);
-        expect(model.completed).toBe(5);
+        expect(model.started).toBe(9);
+        expect(model.completed).toBe(7);
         expect(model.providers[0]).toEqual({ provider: 'github', started: 6, completed: 4 });
+        expect(ANALYTICS_PROVIDERS).toContain('email');
+        expect(model.providers.find((provider: { provider: string; started: number; completed: number }) => provider.provider === 'email')).toEqual({
+            provider: 'email',
+            started: 3,
+            completed: 2,
+        });
         expect(model.triggers).toContainEqual({ trigger: 'zap_btn', blocked: 8, completed: 4 });
         expect(model.outbound[0]).toEqual(['cursor', 7]);
         expect(model.badgeReferrals).toEqual([['cursor', 3], ['(home)', 1]]);

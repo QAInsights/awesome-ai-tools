@@ -4,9 +4,12 @@
         <button id="closeSignInModal" class="absolute top-6 right-6 text-ink-disabled hover:text-white transition-colors">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
-        <div class="mb-8">
-            <h3 class="text-xl font-bold text-white mb-2 text-center">Track your AI stack</h3>
-            <ul class="text-ink-secondary text-sm flex flex-col gap-2.5 mt-4">
+        <div id="signInIntro" class="mb-8">
+            <h3 id="signInHeadline" class="text-xl font-bold text-white mb-2 text-center">Track your AI stack</h3>
+            <p id="signInEmailSubcopy" class="hidden text-ink-secondary text-sm text-center leading-6">
+                We'll email you a 6-digit code. No password needed.
+            </p>
+            <ul id="signInBenefits" class="text-ink-secondary text-sm flex flex-col gap-2.5 mt-4">
                 <li class="flex items-center gap-2.5">
                     <svg class="w-4 h-4 shrink-0 text-gold-soft" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4.5 13.5H11L10 22L19.5 10.5H13L13 2Z"/></svg>
                     Zap tools to vote - public counts surface the best
@@ -21,10 +24,62 @@
                 </li>
             </ul>
         </div>
-        <div class="flex flex-col gap-4">
-            <div id="googleSignInBtn" class="w-full min-h-[44px]"></div>
-            <div id="githubSignInBtn" class="w-full min-h-[44px]"></div>
-            <div id="devSignInBtn" class="w-full min-h-[44px] empty:hidden"></div>
+        <div id="signInMethods" class="flex flex-col gap-4">
+            <div id="oauthSignInGroup" class="flex flex-col gap-4">
+                <div id="googleSignInBtn" class="w-full min-h-[44px]"></div>
+                <div id="githubSignInBtn" class="w-full min-h-[44px]"></div>
+                <div id="devSignInBtn" class="w-full min-h-[44px] empty:hidden"></div>
+            </div>
+            <div id="emailOauthDivider" class="flex items-center gap-3 text-xs text-ink-disabled" aria-hidden="true">
+                <span class="h-px flex-1 bg-border"></span>
+                <span>or</span>
+                <span class="h-px flex-1 bg-border"></span>
+            </div>
+            <div id="emailSignInFlow" class="w-full">
+                <form id="emailStartForm" class="flex flex-col gap-3">
+                    <label for="emailAddressInput" class="sr-only">Email address</label>
+                    <input
+                        id="emailAddressInput"
+                        type="email"
+                        autocomplete="email"
+                        required
+                        placeholder="you@example.com"
+                        class="w-full min-h-[44px] rounded-xl border border-border bg-white/[0.03] px-4 text-sm text-white placeholder:text-ink-disabled focus:border-[#6d6048] focus:outline-none"
+                    />
+                    <button
+                        id="requestEmailCode"
+                        type="submit"
+                        class="w-full min-h-[44px] rounded-xl bg-white px-4 text-sm font-semibold text-black transition-colors hover:bg-gray-200 disabled:cursor-wait disabled:opacity-60"
+                    >Continue with email</button>
+                </form>
+                <div id="emailCodeStep" class="hidden flex-col gap-3">
+                    <p id="emailCodePrompt" class="min-h-[40px] text-center text-sm leading-5 text-ink-secondary"></p>
+                    <form id="verifyEmailForm" class="flex flex-col gap-3">
+                        <label for="emailCodeInput" class="sr-only">6-digit sign-in code</label>
+                        <input
+                            id="emailCodeInput"
+                            type="text"
+                            inputmode="numeric"
+                            autocomplete="one-time-code"
+                            maxlength="6"
+                            pattern="[0-9]*"
+                            required
+                            placeholder="000000"
+                            class="w-full min-h-[44px] rounded-xl border border-border bg-white/[0.03] px-4 text-center font-mono text-xl tracking-[0.4em] text-white placeholder:text-ink-disabled focus:border-[#6d6048] focus:outline-none"
+                        />
+                        <button
+                            id="verifyEmailCode"
+                            type="submit"
+                            class="w-full min-h-[44px] rounded-xl bg-white px-4 text-sm font-semibold text-black transition-colors hover:bg-gray-200 disabled:cursor-wait disabled:opacity-60"
+                        >Verify code</button>
+                    </form>
+                    <div class="flex min-h-[36px] items-center justify-between gap-3 text-xs">
+                        <button id="useDifferentEmail" type="button" class="text-ink-secondary underline decoration-white/20 underline-offset-4 hover:text-white">Use a different email</button>
+                        <button id="resendEmailCode" type="button" disabled class="shrink-0 text-ink-disabled disabled:cursor-not-allowed">Resend code in 30s</button>
+                    </div>
+                </div>
+                <p id="emailAuthError" class="min-h-[20px] pt-2 text-sm leading-5 text-red-300" role="alert" aria-live="polite"></p>
+            </div>
         </div>
     </div>
 </div>

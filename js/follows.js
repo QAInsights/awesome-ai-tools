@@ -60,7 +60,7 @@ export function initFollows(options = {}) {
         if (!context.isAuthenticated()) {
             const subject = button.dataset.toolSlug;
             analytics.track(EVENTS.GATE_BLOCKED, { trigger: 'follow_bell', subject });
-            authAttribution.open('follow_bell');
+            authAttribution.open('follow_bell', button.dataset.toolName || '');
             return;
         }
 
