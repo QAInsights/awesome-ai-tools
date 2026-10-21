@@ -30,6 +30,18 @@ export {
 export const CLIENT_MODELS_CACHE_KEY = 'aat_models_pricing_v1';
 export const MODELS_ENDPOINT = '/api/v1/models.json';
 
+export function parseCalculatorViewFromUrl(search) {
+  return new URLSearchParams(search || '').get('view') === 'efficiency' ? 'efficiency' : 'cost';
+}
+
+export function mergeCalculatorViewSearch(search, view) {
+  const params = new URLSearchParams(search || '');
+  if (view === 'efficiency') params.set('view', 'efficiency');
+  else params.delete('view');
+  const query = params.toString();
+  return query ? `?${query}` : '';
+}
+
 /**
  * Loads normalized LLM token pricing using localStorage -> /api/v1/models.json -> fallback.
  *
@@ -206,9 +218,13 @@ export function parseCalculatorStateFromUrl(search) {
     : [{ id: 'claude-sonnet-4-5' }];
 
   const basePreset = WORKLOAD_PRESETS[preset === 'custom' ? 'daily' : preset];
-  const inRaw = Number(params.get('in'));
-  const outRaw = Number(params.get('out'));
-  const cacheRaw = Number(params.get('cache'));
+  const usageParamNumber = key => {
+    const raw = params.get(key);
+    return params.has(key) && raw !== null && raw.trim() !== '' ? Number(raw) : Number.NaN;
+  };
+  const inRaw = usageParamNumber('in');
+  const outRaw = usageParamNumber('out');
+  const cacheRaw = usageParamNumber('cache');
 
   const usage = {
     inputMillionsPerDevDay:
@@ -306,4 +322,3 @@ export function formatStackSummaryText(breakdown, usage) {
 }
 
 export { initCostCalculatorUI } from './cost-calculator-ui.js';
-

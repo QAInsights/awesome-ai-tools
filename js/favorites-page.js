@@ -103,20 +103,22 @@ export async function initializeFavoritesPage({
             const name = escapeHtml(tool.name);
             const slug = escapeHtml(tool.slug);
             return `
-                <article class="group border border-[#222] bg-white/[0.02] rounded-xl p-5 transition-all hover:border-[#3a3a3a] hover:bg-white/[0.035]">
-                    <div class="flex items-start justify-between gap-4">
-                        <div class="min-w-0">
+                <article class="group @container border border-[#222] bg-white/[0.02] rounded-xl p-5 transition-all hover:border-[#3a3a3a] hover:bg-white/[0.035]">
+                    <div class="flex flex-col gap-3 @lg:flex-row @lg:items-start @lg:justify-between @lg:gap-4">
+                        <div class="min-w-0 @lg:flex-1">
                             <a href="/tools/${slug}" class="text-lg font-semibold text-white hover:text-[#e2c48a] transition-colors">${name}</a>
-                            <div class="font-mono text-[11px] uppercase tracking-wide text-[#737373] mt-1">${escapeHtml(tool.company)} · ${escapeHtml(tool.category)}</div>
+                            <div class="font-mono text-[11px] uppercase tracking-wide text-[#737373] mt-1 break-words">${escapeHtml(tool.company)} · ${escapeHtml(tool.category)}</div>
                         </div>
-                        <button class="favorite-btn detail favorited" type="button" data-tool-slug="${slug}" data-tool-name="${name}" aria-label="Remove ${name} from favorites" aria-pressed="true" title="Remove ${name} from favorites">
-                            <svg class="favorite-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.75L6 21V4.75Z"/></svg>
-                            <span data-favorite-label>Saved</span>
-                        </button>
-                        <button class="follow-btn detail" type="button" data-tool-slug="${slug}" data-tool-name="${name}" aria-label="Sign in to follow ${name}" aria-pressed="false" title="Get email updates about ${name}">
-                            <svg class="follow-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
-                            <span data-follow-label>Follow</span>
-                        </button>
+                        <div class="grid grid-cols-2 gap-2 @lg:flex @lg:shrink-0">
+                            <button class="favorite-btn detail favorited" type="button" data-tool-slug="${slug}" data-tool-name="${name}" aria-label="Remove ${name} from favorites" aria-pressed="true" title="Remove ${name} from favorites">
+                                <svg class="favorite-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.75L6 21V4.75Z"/></svg>
+                                <span data-favorite-label>Saved</span>
+                            </button>
+                            <button class="follow-btn detail" type="button" data-tool-slug="${slug}" data-tool-name="${name}" aria-label="Sign in to follow ${name}" aria-pressed="false" title="Get email updates about ${name}">
+                                <svg class="follow-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></svg>
+                                <span data-follow-label>Follow</span>
+                            </button>
+                        </div>
                     </div>
                     <p class="text-[14px] text-[#a3a3a3] leading-relaxed mt-4">${escapeHtml(tool.description)}</p>
                 </article>`;

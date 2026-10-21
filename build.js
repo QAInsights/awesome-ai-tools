@@ -60,6 +60,7 @@ const result = await build({
         './js/token-counter.js',
         './js/hallucination-scorer.js',
         './js/cost-calculator.js',
+        './js/efficiency-calculator.js',
         './js/rules-converter.js',
         './js/stack-matcher.js',
     ],

@@ -1560,6 +1560,18 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "space",
+    "name": "SPACE",
+    "company": "Perplexity",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "layerfs",
+    "name": "LayerFS",
+    "company": "Ephemeral AI Lab",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "claude-code-templates",
     "name": "Claude Code Templates",
     "company": "Daniel Avila",
