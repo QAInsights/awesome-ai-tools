@@ -10508,5 +10508,62 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-20"
+  },
+  {
+    "slug": "space",
+    "name": "SPACE",
+    "company": "Perplexity",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 license; you run it on your own Linux/KVM and Kubernetes infrastructure and pay only for that compute.",
+    "description": "SPACE (Sandboxed Platform for Agentic Code Execution) is Perplexity's open-source sandbox platform, the sandbox layer behind Perplexity Computer. Applications use its HTTP API to create isolated Firecracker microVM sandboxes from templates, run commands, collect output, and keep, pause, suspend or delete each environment.",
+    "keyFeatures": [
+      "Firecracker microVM sandboxes, each with its own VM and writable filesystem",
+      "HTTP API for templates, sandboxes, command sessions and asynchronous lifecycle operations",
+      "Keep, pause, suspend and wake sandboxes, with base snapshots and Kubernetes warm pools",
+      "E2B Compatibility Wrapper so existing E2B Python clients can use SPACE as a backend",
+      "Operator CLI, egress profiles and observability hooks for self-hosted deployments"
+    ],
+    "bestFor": "Platform teams building agent products that need self-hosted, hardware-isolated sandboxes for agent and user code, especially those looking for an E2B-compatible backend.",
+    "notIdealFor": "Individual developers wanting a local sandbox for a single coding agent; setup requires a Linux x86_64 host with KVM and a Kubernetes (Kind) deployment.",
+    "recentUpdates": "Open-sourced by Perplexity in mid-October 2026 as the sandbox platform behind Perplexity Computer, with coverage on Hacker News and in the press; the repository receives daily commits, with updates on October 21, 2026.",
+    "verdict": "A production-grade, open-source microVM sandbox platform from a major AI company that gives agent builders a credible self-hosted alternative to hosted code-execution sandboxes.",
+    "tags": [
+      "Sandbox",
+      "MicroVM",
+      "Firecracker",
+      "AI Agents",
+      "Code Execution",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-21"
+  },
+  {
+    "slug": "layerfs",
+    "name": "LayerFS",
+    "company": "Ephemeral AI Lab",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT License, released as source.",
+    "description": "LayerFS is an open-source Rust filesystem built for AI coding agents. Every agent mounts a complete, writable Workspace over shared committed history without copying the base, commits its changes as deduplicated checkpoints, and can branch, rewind or merge, so many agents can work on one project in parallel.",
+    "keyFeatures": [
+      "Writable FUSE Workspaces over shared committed history with no base copy",
+      "Branches, Commits and Layers with deduplicated, chunked content storage",
+      "Recursive forking from any Commit and conflict refusal with optional .lww rules",
+      "Single SQLite-file Store shared by daemons and the JavaScript SDK, no database server",
+      "LayerFS x DSH plugin with Work and History tabs for DeepSeek Harness agents",
+      "Published 1.0.0 benchmarks including fs-bench, pjdfstest, fsx and fsstress"
+    ],
+    "bestFor": "Agent builders and DeepSeek Harness users who want many parallel agents to share one project history with cheap, disposable, versioned workspaces.",
+    "notIdealFor": "Storing data you cannot rebuild; the Store currently has no crash or power-loss durability, and the main supported integration today is DeepSeek Harness.",
+    "recentUpdates": "LayerFS 1.0.0, the first official release after the 0.1.x Developer Previews, was published on October 21, 2026 and reached the Hacker News front page the same day.",
+    "verdict": "A promising, benchmark-backed storage layer for multi-agent coding that makes branching and rewinding agent workspaces cheap, though still early in durability and integrations.",
+    "tags": [
+      "Filesystem",
+      "AI Agents",
+      "Coding Agents",
+      "Version Control",
+      "Rust",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-21"
   }
 ]
