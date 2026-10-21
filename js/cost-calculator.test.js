@@ -34,6 +34,32 @@ describe('js/cost-calculator client controller', () => {
     expect(mergeCalculatorViewSearch(`${costSearch}&view=efficiency`, 'cost')).toBe(costSearch);
   });
 
+  test('uses preset token usage when URL values are absent or empty', () => {
+    const daily = parseCalculatorStateFromUrl('');
+    expect(daily.usage).toEqual({
+      inputMillionsPerDevDay: 1,
+      outputMillionsPerDevDay: 0.2,
+      cacheHitRatio: 0.65,
+      workdaysPerMonth: 22,
+    });
+
+    const agentic = parseCalculatorStateFromUrl('?preset=agentic');
+    expect(agentic.preset).toBe('agentic');
+    expect(agentic.usage.inputMillionsPerDevDay).toBe(3.5);
+    expect(agentic.usage.outputMillionsPerDevDay).toBe(0.6);
+    expect(agentic.usage.cacheHitRatio).toBe(0.75);
+
+    const emptyValues = parseCalculatorStateFromUrl('?preset=agentic&in=&out=&cache=');
+    expect(emptyValues.usage.inputMillionsPerDevDay).toBe(3.5);
+    expect(emptyValues.usage.outputMillionsPerDevDay).toBe(0.6);
+    expect(emptyValues.usage.cacheHitRatio).toBe(0.75);
+
+    const custom = parseCalculatorStateFromUrl('?preset=custom&in=2&out=0.4&cache=50');
+    expect(custom.usage.inputMillionsPerDevDay).toBe(2);
+    expect(custom.usage.outputMillionsPerDevDay).toBe(0.4);
+    expect(custom.usage.cacheHitRatio).toBe(0.5);
+  });
+
   test('loads models from /api/v1/models.json, caches in localStorage, and serves client-cache within 6h TTL', async () => {
     const storage = createMemoryStorage();
     let fetchCalls = 0;

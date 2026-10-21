@@ -218,9 +218,13 @@ export function parseCalculatorStateFromUrl(search) {
     : [{ id: 'claude-sonnet-4-5' }];
 
   const basePreset = WORKLOAD_PRESETS[preset === 'custom' ? 'daily' : preset];
-  const inRaw = Number(params.get('in'));
-  const outRaw = Number(params.get('out'));
-  const cacheRaw = Number(params.get('cache'));
+  const usageParamNumber = key => {
+    const raw = params.get(key);
+    return params.has(key) && raw !== null && raw.trim() !== '' ? Number(raw) : Number.NaN;
+  };
+  const inRaw = usageParamNumber('in');
+  const outRaw = usageParamNumber('out');
+  const cacheRaw = usageParamNumber('cache');
 
   const usage = {
     inputMillionsPerDevDay:
