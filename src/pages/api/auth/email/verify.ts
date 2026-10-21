@@ -3,8 +3,9 @@ import { EVENTS } from '../../../../lib/analytics-events.js';
 import { getAuthTrigger } from '../../../../lib/server/auth-attribution';
 import { trackRequest } from '../../../../lib/server/analytics';
 import { normalizeEmail, verifyCode } from '../../../../lib/server/email-otp';
+import { enforceRateLimit } from '../../../../lib/server/rate-limit';
 import { isAllowedMutationRequest, jsonError } from '../../../../lib/server/request-security';
-import { requireDatabase } from '../../../../lib/server/runtime-env';
+import { getEmailOtpVerifyLimiter, requireDatabase } from '../../../../lib/server/runtime-env';
 import { toClientUser } from '../../../../lib/server/route-auth';
 import {
     createSessionForUser,
@@ -38,6 +39,13 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     }
 
     const trigger = getAuthTrigger(cookies);
+    const ip = request.headers.get('cf-connecting-ip')?.trim() || 'unknown';
+    const ipLimit = await enforceRateLimit(getEmailOtpVerifyLimiter(), `email-otp-verify:${ip}`);
+    if (ipLimit) {
+        trackRequest(request, EVENTS.AUTH_ERROR, { provider: 'email', trigger, subject: 'rate_limited' });
+        return ipLimit;
+    }
+
     let db: ReturnType<typeof requireDatabase> | null = null;
     let consumedOtp: { id: number; consumedAt: number } | null = null;
     try {
@@ -66,7 +74,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
             : await createUserSession(db, {
                 provider: 'email',
                 providerUserId: await emailProviderUserId(email),
-                name: email.slice(0, email.indexOf('@')),
+                name: 'Member',
                 email,
                 picture: null,
                 githubUsername: null,

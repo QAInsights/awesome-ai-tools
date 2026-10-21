@@ -5,6 +5,7 @@ import { issueCode } from './email-otp';
 let db: ReturnType<typeof createTestDatabase>['db'];
 let sqlite: ReturnType<typeof createTestDatabase>['sqlite'];
 let limiter: { limit: (input: { key: string }) => Promise<{ success: boolean }> };
+let verifyLimiter: { limit: (input: { key: string }) => Promise<{ success: boolean }> };
 let sendFailure: Error | null;
 const sentCodes: Array<{ to: string; code: string }> = [];
 const cookieWrites: Array<{ name: string; value: string; options: unknown }> = [];
@@ -14,6 +15,7 @@ class EmailBindingUnavailableError extends Error {}
 
 mock.module('./runtime-env', () => ({
     getEmailOtpLimiter: () => limiter,
+    getEmailOtpVerifyLimiter: () => verifyLimiter,
     requireDatabase: () => db,
 }));
 mock.module('./email', () => ({
@@ -42,6 +44,7 @@ beforeEach(() => {
     db = testDb.db;
     sqlite = testDb.sqlite;
     limiter = { limit: async () => ({ success: true }) };
+    verifyLimiter = { limit: async () => ({ success: true }) };
     sendFailure = null;
     sentCodes.length = 0;
     cookieWrites.length = 0;
@@ -202,6 +205,31 @@ describe('email sign-in verify route', () => {
         sqlite.close();
     });
 
+    test('applies the client IP limiter after validating the verification input', async () => {
+        let limitCalls = 0;
+        verifyLimiter = { limit: async input => {
+            limitCalls += 1;
+            expect(input.key).toBe('email-otp-verify:192.0.2.8');
+            return { success: false };
+        } };
+        const invalid = await verifyEmail(context('/api/auth/email/verify', {
+            email: 'ada@example.com',
+            code: '123',
+        }));
+        const email = 'ada@example.com';
+        await issueCode(db, email, Date.now(), '123456');
+        const limited = await verifyEmail(context('/api/auth/email/verify', { email, code: '123456' }));
+
+        expect(invalid.status).toBe(400);
+        expect(limitCalls).toBe(1);
+        expect(limited.status).toBe(429);
+        expect(await responseBody(limited)).toEqual({ error: 'rate_limited' });
+        expect(authErrors).toContain('rate_limited');
+        expect(sqlite.query('SELECT consumed_at FROM email_otps WHERE email = ?').get(email))
+            .toEqual({ consumed_at: null });
+        sqlite.close();
+    });
+
     test('returns 401 for invalid or expired codes and 429 after too many attempts', async () => {
         const invalid = await verifyEmail(context('/api/auth/email/verify', { email: 'ada@example.com', code: '123456' }));
         const email = 'grace@example.com';
@@ -230,7 +258,7 @@ describe('email sign-in verify route', () => {
         expect(body.user).toMatchObject({
             provider: 'email',
             email,
-            name: 'ada',
+            name: 'Member',
             picture: null,
             emailVerified: true,
         });

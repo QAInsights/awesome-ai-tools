@@ -93,6 +93,10 @@ export function getEmailOtpLimiter(): RateLimit | undefined {
     return runtimeEnv.EMAIL_OTP_LIMITER as RateLimit | undefined;
 }
 
+export function getEmailOtpVerifyLimiter(): RateLimit | undefined {
+    return runtimeEnv.EMAIL_OTP_VERIFY_LIMITER as RateLimit | undefined;
+}
+
 export function requireDatabase(): Database {
     const db = env.DB;
     if (!db) throw new Error('D1 binding DB is not configured');

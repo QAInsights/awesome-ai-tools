@@ -92,10 +92,11 @@ export async function fetchGitHubIdentity(
     if (!profileResponse.ok) {
         throw new Error(`Failed to fetch GitHub profile: ${profileResponse.status}`);
     }
+    if (!emailsResponse.ok) {
+        throw new Error(`Failed to fetch GitHub emails: ${emailsResponse.status}`);
+    }
 
     const profile = await profileResponse.json() as GitHubProfile;
-    const emails = emailsResponse.ok
-        ? await emailsResponse.json() as GitHubEmail[]
-        : [];
+    const emails = await emailsResponse.json() as GitHubEmail[];
     return normalizeGitHubIdentity(profile, emails);
 }
