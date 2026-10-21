@@ -73,7 +73,7 @@
         <label class="ec-field"><span>Benchmark productive hours / day</span><input type="number" min="0.01" step="0.1" data-setting="benchmarkHoursPerDay" /></label>
         <label class="ec-field"><span>Engineer loaded cost / hour ($)</span><input type="number" min="0" step="1" data-setting="engineerHourlyCost" /></label>
         <label class="ec-field"><span>Base monthly limit ($)</span><input type="number" min="0" step="100" data-setting="baseMonthlyLimit" /></label>
-        <label class="ec-field"><span>Auto-approval ceiling ($)</span><input type="number" min="0" step="100" data-setting="autoApproveCeiling" /></label>
+        <label class="ec-field"><span>Auto-approval ceiling, max total limit ($)</span><input type="number" min="0" step="100" data-setting="autoApproveCeiling" /></label>
         <label class="ec-field"><span>Healthy threshold</span><input type="number" min="0" max="100" step="1" data-setting="healthyThreshold" /></label>
         <label class="ec-field"><span>Satisfactory threshold</span><input type="number" min="0" max="100" step="1" data-setting="satisfactoryThreshold" /></label>
       </div>
@@ -89,7 +89,7 @@
         </div>
         <div>
           <h3>Assumptions used here</h3>
-          <p>The E and V curves use 1 − 2^(−x / benchmark), so each benchmark corresponds to a 0.50 rating. Defaults are $40 per productive hour, 1.5 productive hours per workday, 65 / 50 grade thresholds, and at least 5 sessions for a grade. Hours under each cap are estimated linearly per dollar. Spend pending admin review is not counted as approved spend or productive hours.</p>
+          <p>The E and V curves use 1 − 2^(−x / benchmark), so each benchmark corresponds to a 0.50 rating. Defaults are $40 per productive hour, 1.5 productive hours per workday, 65 / 50 grade thresholds, and at least 5 sessions for a grade. Hours under each cap are estimated linearly per dollar. Spend pending admin review is not counted as approved spend or productive hours. Devin scores each engineer's recent usage, and the post's examples use the most recent 200 ACUs. This calculator treats one month of inputs as that recent window. The auto-approval ceiling is read as the highest total monthly limit Devin can reach automatically, not the size of a single increase. Spend without useful work is estimated as spend × (1 − useful-work rate), which assumes every session costs about the same.</p>
         </div>
       </div>
     </section>
@@ -103,7 +103,7 @@
       <div><dt>Productive hours</dt><dd id="summaryHours">329.8 h</dd></div>
       <div><dt>Blended cost / productive hour</dt><dd id="summaryBlendedCost">$60.51/h</dd></div>
       <div><dt>Value delivered and ROI</dt><dd id="summaryValue">$32,980 · 1.65x ROI</dd></div>
-      <div><dt>Spend without useful work</dt><dd id="summaryWastedSpend">$9,588</dd></div>
+      <div><dt>Spend without useful work (est.)</dt><dd id="summaryWastedSpend">$9,588</dd></div>
       <div><dt>Grade distribution</dt><dd id="summaryGrades">1 Healthy · 2 Satisfactory · 1 Needs Improvement · 0 Unknown</dd></div>
       <div><dt>Average score</dt><dd id="summaryAverage">58</dd></div>
     </dl>

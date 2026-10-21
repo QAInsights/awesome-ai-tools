@@ -24,6 +24,7 @@ describe('efficiency calculator summary text', () => {
   test('includes team efficiency and approval details with a canonical footer', () => {
     const summary = formatEfficiencySummaryText(calculateTeamEfficiency(SAMPLE_TEAM));
     expect(summary).toContain('Monthly spend: $19,956');
+    expect(summary).toContain('Spend without useful work (est.): $9,588');
     expect(summary).toContain('Productive hours: 329.8 h');
     expect(summary).toContain('55 (Satisfactory)');
     expect(summary).toContain('41 (Needs Improvement)');

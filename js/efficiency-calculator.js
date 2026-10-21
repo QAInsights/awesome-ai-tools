@@ -72,7 +72,7 @@ export function formatEfficiencySummaryText(summary, settings = DEFAULT_EFFICIEN
       summary.blendedCostPerProductiveHour === null ? 'Not available' : usd(summary.blendedCostPerProductiveHour)
     }`,
     `Value delivered: ${usd(summary.totalValue)}${summary.roiMultiple === null ? '' : ` (${summary.roiMultiple.toFixed(2)}x ROI)`}`,
-    `Spend without useful work: ${usd(summary.wastedSpend)}`,
+    `Spend without useful work (est.): ${usd(summary.wastedSpend)}`,
     `Grades: ${summary.gradeCounts.healthy} Healthy, ${summary.gradeCounts.satisfactory} Satisfactory, ${summary.gradeCounts['needs-improvement']} Needs Improvement, ${summary.gradeCounts.unknown} Unknown`,
     `Average score: ${summary.averageScore === null ? 'Not available' : summary.averageScore}`,
     '',
