@@ -1,0 +1,77 @@
+---
+title: "DeepSeek opens DeepInfer, Salesforce buys Braze for $5.66B"
+description: "DeepSeek open-sources its V4.1-Flash inference engine, Salesforce pays $5.66B for Braze, and OpenAI buys biotech agent startup Orchestra Bio."
+pubDate: 2026-10-21
+tags: ["news","today-in-ai","deepseek","inference","acquisitions","salesforce","openai","voice"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-10-21 UTC.
+
+An inference engine goes open source, a CRM giant buys its way into real-time agent data, and OpenAI picks up a biotech agent team.
+
+## DeepSeek open-sources DeepInfer, the engine behind V4.1-Flash
+
+**What happened:** DeepSeek released DeepInfer, the internal inference framework that serves its V4.1-Flash model, under Apache 2.0. It supports NVIDIA SM100 and Huawei Ascend 950, but only V4.1-Flash, and key features are NVIDIA-only. A deepseek-recipe repo reproduces the API's token processing for self-hosted setups.
+
+**Why it matters:** Teams self-hosting DeepSeek models get the vendor's own serving stack, though the Ascend path is narrower than the NVIDIA one.
+
+[Source: TPS](<https://tpsreport.news/news>)
+
+## Salesforce agrees to buy Braze for $5.66B in cash
+
+**What happened:** Salesforce will pay $47.50 a share in cash for Braze, which sends brands' messages across apps, email and text, for about $5.66 billion in enterprise value. The deal is expected to close in Salesforce's fiscal year 2028 and still needs shareholder and regulatory approval.
+
+**Why it matters:** Salesforce is buying the real-time customer data layer its agents act on, so builders integrating with Braze should expect the roadmap to bend toward Salesforce.
+
+[Source: Silicon AI News](<https://siliconainews.com/topics/business>)
+
+## OpenAI acquires Orchestra Bio to staff up Rosalind
+
+**What happened:** OpenAI acquired Orchestra Bio, a four-year-old startup whose AI agents handle drug-discovery operations like finance tracking and clinical trial scheduling. Terms were not disclosed; it had reportedly raised around $20 million as of 2025. Its team and tech join Rosalind, OpenAI's life sciences model, and the Rosalind Workbench tool.
+
+**Why it matters:** OpenAI is folding agent tooling into a vertical product, a reminder that lab-built features can land on top of a startup's niche overnight.
+
+[Source: TechCrunch](<https://techcrunch.com/2026/10/20/openai-acquires-startup-orchestra-bio%e2%81%a0-to-beef-up-its-biotech-business/>)
+
+## Inception's Mercury 3 diffusion LLM hits 1, 068 tokens per second
+
+**What happened:** Inception released Mercury 3, its most capable diffusion language model so far, reporting 1, 068 tokens per second on NVIDIA GPUs and a 1 million token context. The OpenAI-compatible API is also available on OpenRouter, Baseten and Vercel, with pricing from $0.20 per million input tokens.
+
+**Why it matters:** A drop-in OpenAI-compatible endpoint at that throughput changes the math for latency-sensitive agent loops and long-context batch jobs.
+
+[Source: Cocoloop](<https://news.cocoloop.cn/en/>)
+
+## ElevenLabs ships Realtime v1 Max and Mini speech models
+
+**What happened:** ElevenLabs released two speech-to-speech models, Eleven Realtime v1 Max and v1 Mini, on October 20. The company says Max scores 98.8% on Big Bench Audio with a 0.57-second response time. Both are available through the ElevenAgents platform and an OpenAI-compatible Realtime API.
+
+**Why it matters:** Voice agents can be swapped in through an OpenAI-compatible Realtime API, so existing pipelines need little more than an endpoint change.
+
+[Source: TPS](<https://tpsreport.news/news>)
+
+## llm-d hits v1.0 with multi-tenant serving
+
+**What happened:** The llm-d project shipped v1.0, built by more than 500 contributors from over 25 organizations. It targets Day 2 operations: serving multiple tenants, balancing competing priorities, upgrading without downtime and supporting agentic workloads, across NVIDIA, AMD and Intel GPUs and Google TPUs via vLLM and SGLang.
+
+**Why it matters:** If you run open models in production, v1.0 adds the tenancy and upgrade plumbing that previously meant building your own control plane.
+
+[Source: llm-d](<https://llm-d.ai/blog/llm-d-v1.0-state-of-the-art-inference-ready-for-day-2>)
+
+## Espressif's ESP-Mosaico lets coding agents build hardware
+
+**What happened:** Espressif announced ESP-Mosaico, a modular platform where coding agents read the current hardware configuration and take part in application development. It offers Chat Coding for natural-language prototypes and Vibe Coding for implementation, deployment and testing on physical hardware. The host runs an ESP32-S31 RISC-V SoC at up to 320 MHz.
+
+**Why it matters:** Agents get a documented path from generated code to a running device, which shortens the loop for embedded prototypes.
+
+[Source: Espressif](<https://www.espressif.com/en/news/ESP_Mosaico_Release>)
+
+## Sources
+
+- [TPS](<https://tpsreport.news/news>)
+- [Silicon AI News](<https://siliconainews.com/topics/business>)
+- [TechCrunch](<https://techcrunch.com/2026/10/20/openai-acquires-startup-orchestra-bio%e2%81%a0-to-beef-up-its-biotech-business/>)
+- [Cocoloop](<https://news.cocoloop.cn/en/>)
+- [llm-d](<https://llm-d.ai/blog/llm-d-v1.0-state-of-the-art-inference-ready-for-day-2>)
+- [Espressif](<https://www.espressif.com/en/news/ESP_Mosaico_Release>)
