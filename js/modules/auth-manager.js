@@ -113,6 +113,7 @@ export function initAuthManager(callbacks) {
                     resendCodeButton.disabled = true;
                     resendCodeButton.textContent = 'Resend code in 30s';
                 }
+                if (differentEmailButton) differentEmailButton.disabled = false;
                 setEmailError('');
             }
 
@@ -198,6 +199,7 @@ export function initAuthManager(callbacks) {
                 setEmailError('');
                 setBusy(verifyCodeButton, true, 'Verify code', 'Checking code...');
                 emailCodeInput.disabled = true;
+                if (differentEmailButton) differentEmailButton.disabled = true;
                 const generation = emailFlowGeneration;
                 try {
                     await auth.verifyEmailCode(activeEmail, emailCodeInput.value);
@@ -211,6 +213,9 @@ export function initAuthManager(callbacks) {
                         verifyCodeButton.disabled = false;
                         verifyCodeButton.textContent = 'Verify code';
                     }
+                    if (generation === emailFlowGeneration && differentEmailButton) {
+                        differentEmailButton.disabled = false;
+                    }
                 }
             }
 
@@ -223,6 +228,7 @@ export function initAuthManager(callbacks) {
                 if (emailCodeInput.value.length === 6) void submitEmailCode();
             });
             differentEmailButton?.addEventListener('click', () => {
+                if (differentEmailButton.disabled || verifyCodeButton?.disabled) return;
                 resetEmailFlow();
                 emailInput?.focus();
             });
