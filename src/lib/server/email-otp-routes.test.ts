@@ -158,16 +158,34 @@ describe('email sign-in start route', () => {
         sqlite.close();
     });
 
-    test('returns 429 after three email codes and 503 when delivery fails', async () => {
-        for (let index = 0; index < 3; index += 1) {
-            expect((await startEmail(context('/api/auth/email/start', { email: 'ada@example.com' }))).status).toBe(202);
-        }
-        expect((await startEmail(context('/api/auth/email/start', { email: 'ada@example.com' }))).status).toBe(429);
-
+    test('deletes failed sends so they do not consume the email code quota', async () => {
         sendFailure = new Error('service unavailable');
-        expect((await startEmail(context('/api/auth/email/start', { email: 'grace@example.com' }))).status).toBe(503);
-        expect(authErrors).toContain('rate_limited');
+        const failures = [];
+        for (let index = 0; index < 3; index += 1) {
+            failures.push(await startEmail(context('/api/auth/email/start', { email: 'ada@example.com' })));
+        }
+        sendFailure = null;
+        const success = await startEmail(context('/api/auth/email/start', { email: 'ada@example.com' }));
+
+        expect(failures.map(response => response.status)).toEqual([503, 503, 503]);
+        expect(success.status).toBe(202);
+        expect(sqlite.query('SELECT COUNT(*) AS count FROM email_otps WHERE email = ?').get('ada@example.com'))
+            .toEqual({ count: 1 });
         expect(authErrors).toContain('send_failed');
+        sqlite.close();
+    });
+
+    test('keeps an earlier code valid when a resend fails', async () => {
+        const email = 'ada@example.com';
+        await issueCode(db, email, Date.now() - 1_000, '123456');
+        sendFailure = new Error('service unavailable');
+
+        const failedResend = await startEmail(context('/api/auth/email/start', { email }));
+        sendFailure = null;
+        const verified = await verifyEmail(context('/api/auth/email/verify', { email, code: '123456' }));
+
+        expect(failedResend.status).toBe(503);
+        expect(verified.status).toBe(201);
         sqlite.close();
     });
 });
@@ -287,6 +305,28 @@ describe('email sign-in verify route', () => {
             provider: 'google',
         });
         expect(sqlite.query("SELECT COUNT(*) AS count FROM users WHERE provider = 'email'").get()).toEqual({ count: 1 });
+        sqlite.close();
+    });
+
+    test('restores the code when session creation fails and rejects it after a successful retry', async () => {
+        const email = 'ada@example.com';
+        await issueCode(db, email, Date.now(), '654321');
+        sqlite.exec(`
+            CREATE TRIGGER fail_email_session BEFORE INSERT ON sessions
+            BEGIN SELECT RAISE(ABORT, 'session unavailable'); END;
+        `);
+
+        const failed = await verifyEmail(context('/api/auth/email/verify', { email, code: '654321' }));
+        expect(failed.status).toBe(503);
+        expect(sqlite.query('SELECT consumed_at FROM email_otps WHERE email = ?').get(email))
+            .toEqual({ consumed_at: null });
+
+        sqlite.exec('DROP TRIGGER fail_email_session');
+        const retried = await verifyEmail(context('/api/auth/email/verify', { email, code: '654321' }));
+        const replay = await verifyEmail(context('/api/auth/email/verify', { email, code: '654321' }));
+
+        expect(retried.status).toBe(201);
+        expect(replay.status).toBe(401);
         sqlite.close();
     });
 });

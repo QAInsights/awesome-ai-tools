@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { fetchGitHubIdentity, githubApiHeaders } from './github-auth';
+import { fetchGitHubIdentity, githubApiHeaders, normalizeGitHubIdentity } from './github-auth';
 
 describe('GitHub authentication', () => {
     test('includes the required application user agent', () => {
@@ -51,6 +51,32 @@ describe('GitHub authentication', () => {
         expect(calls.slice(1).every(call => (
             call.init?.headers as Record<string, string>
         ).Authorization === 'Bearer github-token')).toBe(true);
+    });
+
+    test('marks only GitHub-listed verified addresses as verified', () => {
+        const profile = {
+            id: 42,
+            login: 'ada',
+            name: null,
+            avatar_url: null,
+            email: 'ADA@example.com',
+        };
+        const matching = normalizeGitHubIdentity(profile, [
+            { email: 'ada@example.com', primary: true, verified: true },
+        ]);
+        const fallback = normalizeGitHubIdentity({
+            ...profile,
+            email: 'unverified@example.com',
+        }, [
+            { email: 'verified@example.com', primary: true, verified: true },
+        ]);
+        const unverified = normalizeGitHubIdentity(profile, [
+            { email: 'ada@example.com', primary: true, verified: false },
+        ]);
+
+        expect(matching).toMatchObject({ email: 'ADA@example.com', emailVerified: true });
+        expect(fallback).toMatchObject({ email: 'verified@example.com', emailVerified: true });
+        expect(unverified).toMatchObject({ email: 'ADA@example.com', emailVerified: false });
     });
 
     test('rejects a failed token exchange', async () => {

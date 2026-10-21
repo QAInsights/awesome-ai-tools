@@ -38,8 +38,10 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     }
 
     const trigger = getAuthTrigger(cookies);
+    let db: ReturnType<typeof requireDatabase> | null = null;
+    let consumedOtp: { id: number; consumedAt: number } | null = null;
     try {
-        const db = requireDatabase();
+        db = requireDatabase();
         const verification = await verifyCode(db, email, body.code);
         if (!verification.ok) {
             const tooManyAttempts = verification.reason === 'too_many_attempts';
@@ -50,6 +52,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
                 tooManyAttempts ? 429 : 401,
             );
         }
+        consumedOtp = verification;
 
         const existing = await db.prepare(`
             SELECT id
@@ -70,6 +73,9 @@ export const POST: APIRoute = async ({ request, cookies }) => {
                 emailVerified: true,
             } satisfies IdentityProfile);
 
+        await db.prepare('DELETE FROM email_otps WHERE email = ? AND id <> ?')
+            .bind(email, verification.id)
+            .run();
         cookies.set(
             SESSION_COOKIE_NAME,
             session.token,
@@ -86,6 +92,17 @@ export const POST: APIRoute = async ({ request, cookies }) => {
             headers: responseHeaders,
         });
     } catch (error) {
+        if (db && consumedOtp) {
+            try {
+                await db.prepare(`
+                    UPDATE email_otps
+                    SET consumed_at = NULL
+                    WHERE id = ? AND consumed_at = ?
+                `).bind(consumedOtp.id, consumedOtp.consumedAt).run();
+            } catch (restoreError) {
+                console.error('[Email Auth] Failed to restore sign-in code:', restoreError instanceof Error ? restoreError.message : String(restoreError));
+            }
+        }
         console.error('[Email Auth] Verification failed:', error instanceof Error ? error.message : String(error));
         trackRequest(request, EVENTS.AUTH_ERROR, { provider: 'email', trigger, subject: 'session_failed' });
         return jsonError('Authentication service unavailable', 503);

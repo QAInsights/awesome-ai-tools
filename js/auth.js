@@ -156,8 +156,10 @@ export class AuthManager {
         return data;
     }
 
-    async requestEmailCode(email) {
-        analytics.track(EVENTS.SIGNIN_STARTED, { provider: 'email', trigger: authAttribution.current() });
+    async requestEmailCode(email, { resend = false } = {}) {
+        if (!resend) {
+            analytics.track(EVENTS.SIGNIN_STARTED, { provider: 'email', trigger: authAttribution.current() });
+        }
         return this._postEmailAuth('/api/auth/email/start', { email }, 'Email code request');
     }
 

@@ -69,7 +69,9 @@ export function createAuthAttribution({
     }
 
     function open(trigger, subjectValue = '') {
-        setPending(trigger, subjectValue);
+        const normalizedTrigger = sanitizeAuthTrigger(trigger);
+        const pendingSubject = read(PENDING_KEY) === normalizedTrigger ? read(PENDING_SUBJECT_KEY) : '';
+        setPending(normalizedTrigger, subjectValue || pendingSubject);
         const button = documentRef?.getElementById?.('signInTriggerBtn');
         const modal = documentRef?.getElementById?.('signInModal');
         if (button && modal) button.click();

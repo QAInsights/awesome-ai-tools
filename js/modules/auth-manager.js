@@ -45,6 +45,7 @@ export function initAuthManager(callbacks) {
             const emailError = document.getElementById('emailAuthError');
             let activeEmail = '';
             let resendTimer = null;
+            let emailFlowGeneration = 0;
 
             function clearResendTimer() {
                 if (resendTimer !== null) clearInterval(resendTimer);
@@ -70,12 +71,17 @@ export function initAuthManager(callbacks) {
                 button.textContent = busy ? busyLabel : label;
             }
 
-            function startResendCountdown() {
+            function startResendCountdown(generation) {
+                if (generation !== emailFlowGeneration) return;
                 clearResendTimer();
                 let remaining = 30;
                 resendCodeButton.disabled = true;
                 resendCodeButton.textContent = `Resend code in ${remaining}s`;
                 resendTimer = setInterval(() => {
+                    if (generation !== emailFlowGeneration) {
+                        clearResendTimer();
+                        return;
+                    }
                     remaining -= 1;
                     if (remaining <= 0) {
                         clearResendTimer();
@@ -88,6 +94,7 @@ export function initAuthManager(callbacks) {
             }
 
             function resetEmailFlow() {
+                emailFlowGeneration += 1;
                 clearResendTimer();
                 activeEmail = '';
                 emailStartForm?.reset();
@@ -134,11 +141,15 @@ export function initAuthManager(callbacks) {
                     resetModalLayout();
                     return;
                 }
-                const subject = trigger === 'follow_bell' ? authAttribution.subject() : '';
                 if (signInHeadline) {
-                    signInHeadline.textContent = subject
-                        ? `Get updates about ${subject} by email`
-                        : 'Get updates by email';
+                    const subject = trigger === 'follow_bell' ? authAttribution.subject() : '';
+                    if (trigger === 'news_cta') {
+                        signInHeadline.textContent = 'Get the daily brief by email';
+                    } else if (subject) {
+                        signInHeadline.textContent = `Get updates about ${subject} by email`;
+                    } else {
+                        signInHeadline.textContent = 'Get updates by email';
+                    }
                 }
                 emailSubcopy?.classList.remove('hidden');
                 signInBenefits?.classList.add('hidden');
@@ -161,18 +172,21 @@ export function initAuthManager(callbacks) {
                 activeEmail = emailInput.value.trim();
                 setEmailError('');
                 setBusy(requestCodeButton, true, 'Continue with email', 'Sending code...');
+                const generation = emailFlowGeneration;
                 try {
                     await auth.requestEmailCode(activeEmail);
+                    if (generation !== emailFlowGeneration) return;
                     if (emailCodePromptAddress) emailCodePromptAddress.textContent = activeEmail;
                     emailStartForm.classList.add('hidden');
                     emailCodeStep.classList.remove('hidden');
                     emailCodeStep.classList.add('flex');
-                    startResendCountdown();
+                    startResendCountdown(generation);
                     emailCodeInput.focus();
                 } catch (error) {
+                    if (generation !== emailFlowGeneration) return;
                     setEmailError(describeEmailError(error, 'Could not send a code. Try again.'));
                 } finally {
-                    if (requestCodeButton) {
+                    if (generation === emailFlowGeneration && requestCodeButton) {
                         requestCodeButton.disabled = false;
                         requestCodeButton.textContent = 'Continue with email';
                     }
@@ -184,14 +198,16 @@ export function initAuthManager(callbacks) {
                 setEmailError('');
                 setBusy(verifyCodeButton, true, 'Verify code', 'Checking code...');
                 emailCodeInput.disabled = true;
+                const generation = emailFlowGeneration;
                 try {
                     await auth.verifyEmailCode(activeEmail, emailCodeInput.value);
                 } catch (error) {
+                    if (generation !== emailFlowGeneration) return;
                     setEmailError(describeEmailError(error, 'Could not verify the code. Try again.'));
                     emailCodeInput.disabled = false;
                     emailCodeInput.focus();
                 } finally {
-                    if (verifyCodeButton) {
+                    if (generation === emailFlowGeneration && verifyCodeButton) {
                         verifyCodeButton.disabled = false;
                         verifyCodeButton.textContent = 'Verify code';
                     }
@@ -215,10 +231,13 @@ export function initAuthManager(callbacks) {
                 setEmailError('');
                 resendCodeButton.disabled = true;
                 resendCodeButton.textContent = 'Sending code...';
+                const generation = emailFlowGeneration;
                 try {
-                    await auth.requestEmailCode(activeEmail);
-                    startResendCountdown();
+                    await auth.requestEmailCode(activeEmail, { resend: true });
+                    if (generation !== emailFlowGeneration) return;
+                    startResendCountdown(generation);
                 } catch (error) {
+                    if (generation !== emailFlowGeneration) return;
                     resendCodeButton.disabled = false;
                     resendCodeButton.textContent = 'Resend code';
                     setEmailError(describeEmailError(error, 'Could not resend the code. Try again.'));

@@ -46,4 +46,20 @@ describe('auth attribution', () => {
         attribution.clear();
         expect(attribution.subject()).toBe('');
     });
+
+    test('preserves a subject only when reopening the same pending trigger without a new subject', () => {
+        const storage = memoryStorage();
+        const locationRef = { protocol: 'https:', href: '' };
+        const attribution = createAuthAttribution({ storage, documentRef: {}, locationRef });
+
+        attribution.setPending('follow_bell', 'Cursor');
+        attribution.open('follow_bell');
+        expect(attribution.subject()).toBe('Cursor');
+
+        attribution.open('news_cta');
+        expect(attribution.subject()).toBe('');
+
+        attribution.open('follow_bell', 'Copilot');
+        expect(attribution.subject()).toBe('Copilot');
+    });
 });

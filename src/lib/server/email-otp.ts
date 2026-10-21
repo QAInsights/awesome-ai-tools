@@ -49,7 +49,7 @@ export async function issueCode(
     email: string,
     now = Date.now(),
     code = generateCode(),
-): Promise<{ ok: true; code: string } | { ok: false; reason: 'rate_limited' }> {
+): Promise<{ ok: true; id: number; code: string } | { ok: false; reason: 'rate_limited' }> {
     await db.prepare(`
         DELETE FROM email_otps
         WHERE expires_at <= ? AND created_at <= ?
@@ -64,11 +64,13 @@ export async function issueCode(
         return { ok: false, reason: 'rate_limited' };
     }
 
-    await db.prepare(`
+    const inserted = await db.prepare(`
         INSERT INTO email_otps (email, code_hash, created_at, expires_at)
         VALUES (?, ?, ?, ?)
-    `).bind(email, await hashCode(email, code), now, now + EMAIL_OTP_TTL_MS).run();
-    return { ok: true, code };
+        RETURNING id
+    `).bind(email, await hashCode(email, code), now, now + EMAIL_OTP_TTL_MS).first<{ id: number }>();
+    if (!inserted) throw new Error('Could not persist email sign-in code');
+    return { ok: true, id: inserted.id, code };
 }
 
 export async function verifyCode(
@@ -76,7 +78,7 @@ export async function verifyCode(
     email: string,
     code: string,
     now = Date.now(),
-): Promise<{ ok: true } | { ok: false; reason: 'invalid' | 'too_many_attempts' }> {
+): Promise<{ ok: true; id: number; consumedAt: number } | { ok: false; reason: 'invalid' | 'too_many_attempts' }> {
     const row = await db.prepare(`
         SELECT id, code_hash, attempts
         FROM email_otps
@@ -108,6 +110,5 @@ export async function verifyCode(
         WHERE id = ? AND consumed_at IS NULL AND expires_at > ?
     `).bind(now, row.id, now).run();
     if (consumed.meta?.changes !== 1) return { ok: false, reason: 'invalid' };
-    await db.prepare('DELETE FROM email_otps WHERE email = ? AND id <> ?').bind(email, row.id).run();
-    return { ok: true };
+    return { ok: true, id: row.id, consumedAt: now };
 }

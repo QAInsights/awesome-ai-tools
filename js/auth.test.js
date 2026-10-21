@@ -1,4 +1,7 @@
 import { afterEach, describe, expect, test } from 'bun:test';
+import { EVENTS } from '../src/lib/analytics-events.js';
+import { analytics } from './analytics-client.js';
+import { authAttribution } from './auth-attribution.js';
 import { AuthManager } from './auth.js';
 
 function flushMicrotasks(times = 3) {
@@ -172,6 +175,33 @@ describe('session mutation ordering', () => {
             });
         } finally {
             global.fetch = originalFetch;
+        }
+    });
+
+    test('tracks initial email code requests but not resends', async () => {
+        const events = [];
+        const originalTrack = analytics.track;
+        const originalCurrent = authAttribution.current;
+        const originalFetch = global.fetch;
+        global.fetch = async () => new Response(JSON.stringify({ ok: true }), {
+            status: 202,
+            headers: { 'Content-Type': 'application/json' },
+        });
+        analytics.track = (event, fields) => events.push({ event, fields });
+        authAttribution.current = () => 'follow_bell';
+        try {
+            const manager = new AuthManager();
+            await manager.requestEmailCode('ada@example.com', { resend: true });
+            await manager.requestEmailCode('ada@example.com');
+
+            expect(events).toEqual([{
+                event: EVENTS.SIGNIN_STARTED,
+                fields: { provider: 'email', trigger: 'follow_bell' },
+            }]);
+        } finally {
+            global.fetch = originalFetch;
+            analytics.track = originalTrack;
+            authAttribution.current = originalCurrent;
         }
     });
 });

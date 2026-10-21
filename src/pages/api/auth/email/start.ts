@@ -36,7 +36,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     }
 
     try {
-        const issued = await issueCode(requireDatabase(), email);
+        const db = requireDatabase();
+        const issued = await issueCode(db, email);
         if (!issued.ok) {
             trackRequest(request, EVENTS.AUTH_ERROR, { provider: 'email', trigger, subject: 'rate_limited' });
             return Response.json({ error: 'rate_limited' }, {
@@ -47,7 +48,12 @@ export const POST: APIRoute = async ({ request, cookies }) => {
                 },
             });
         }
-        await sendLoginCodeEmail(email, issued.code);
+        try {
+            await sendLoginCodeEmail(email, issued.code);
+        } catch (error) {
+            await db.prepare('DELETE FROM email_otps WHERE id = ?').bind(issued.id).run();
+            throw error;
+        }
         return Response.json({ ok: true }, { status: 202, headers: responseHeaders });
     } catch (error) {
         const reason = error instanceof EmailBindingUnavailableError ? 'not_configured' : 'send_failed';
