@@ -39,6 +39,18 @@ function maskEmail(value: string): string {
     return `${local.slice(0, 1)}***@${domain}`;
 }
 
+function sanitizeLoginEmailError(error: unknown, to: string, code: string): string {
+    let message = (error instanceof Error ? error.message : String(error)).replace(/[\r\n\t]+/g, ' ');
+    if (to) {
+        const escapedRecipient = to.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        message = message.replace(new RegExp(escapedRecipient, 'gi'), maskEmail(to));
+    }
+    return message
+        .replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, address => maskEmail(address))
+        .replaceAll(code, '[redacted]')
+        .slice(0, 500);
+}
+
 export async function sendEmail(message: OutboundEmail): Promise<EmailSendResult> {
     const apiKey = getResendApiKey();
     if (isEmailDryRun() || !apiKey) {
@@ -113,7 +125,8 @@ export async function sendLoginCodeEmail(to: string, code: string): Promise<void
             html,
             text,
         });
-    } catch {
+    } catch (error) {
+        console.error('[Email OTP] send failed:', sanitizeLoginEmailError(error, to, code));
         throw new LoginEmailDeliveryError();
     }
 }

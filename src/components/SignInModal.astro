@@ -5,7 +5,7 @@
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
         <div id="signInIntro" class="mb-8">
-            <h3 id="signInHeadline" class="text-xl font-bold text-white mb-2 text-center">Track your AI stack</h3>
+            <h3 id="signInHeadline" class="text-xl font-bold text-white mb-2 px-8 text-center">Track your AI stack</h3>
             <p id="signInEmailSubcopy" class="hidden text-ink-secondary text-sm text-center leading-6">
                 We'll email you a 6-digit code. No password needed.
             </p>
@@ -53,7 +53,9 @@
                     >Continue with email</button>
                 </form>
                 <div id="emailCodeStep" class="hidden flex-col gap-3">
-                    <p id="emailCodePrompt" class="min-h-[40px] text-center text-sm leading-5 text-ink-secondary"></p>
+                    <p id="emailCodePrompt" class="min-h-[40px] text-center text-sm leading-5 text-ink-secondary">
+                        Enter the 6-digit code sent to <span id="emailCodePromptAddress" class="block max-w-full text-white [overflow-wrap:anywhere]"></span>
+                    </p>
                     <form id="verifyEmailForm" class="flex flex-col gap-3">
                         <label for="emailCodeInput" class="sr-only">6-digit sign-in code</label>
                         <input

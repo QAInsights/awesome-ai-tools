@@ -5,6 +5,12 @@ import { auth } from '../auth.js';
 import { bindAuthSession } from '../auth-session-binding.js';
 import { clearPendingNewsSubscribe, syncNewsSubscribe } from '../news-subscribe.js';
 
+export function getSignInModalOrder(emailFirst) {
+    return emailFirst
+        ? ['emailSignInFlow', 'emailOauthDivider', 'oauthSignInGroup']
+        : ['oauthSignInGroup', 'emailOauthDivider', 'emailSignInFlow'];
+}
+
 export function initAuthManager(callbacks) {
     const { onStateChange, collapsedSidebar } = callbacks;
     let newsSubscribeGeneration = 0;
@@ -29,7 +35,7 @@ export function initAuthManager(callbacks) {
             const emailStartForm = document.getElementById('emailStartForm');
             const emailInput = document.getElementById('emailAddressInput');
             const emailCodeStep = document.getElementById('emailCodeStep');
-            const emailCodePrompt = document.getElementById('emailCodePrompt');
+            const emailCodePromptAddress = document.getElementById('emailCodePromptAddress');
             const emailCodeInput = document.getElementById('emailCodeInput');
             const verifyEmailForm = document.getElementById('verifyEmailForm');
             const requestCodeButton = document.getElementById('requestEmailCode');
@@ -85,6 +91,7 @@ export function initAuthManager(callbacks) {
                 clearResendTimer();
                 activeEmail = '';
                 emailStartForm?.reset();
+                if (emailCodePromptAddress) emailCodePromptAddress.textContent = '';
                 if (emailInput) emailInput.disabled = false;
                 if (emailCodeInput) {
                     emailCodeInput.value = '';
@@ -108,8 +115,14 @@ export function initAuthManager(callbacks) {
                 emailSubcopy?.classList.add('hidden');
                 signInBenefits?.classList.remove('hidden');
                 if (signInMethods && oauthGroup && emailDivider && emailFlow) {
-                    signInMethods.insertBefore(oauthGroup, emailDivider);
-                    signInMethods.append(emailFlow);
+                    const elements = {
+                        oauthSignInGroup: oauthGroup,
+                        emailOauthDivider: emailDivider,
+                        emailSignInFlow: emailFlow,
+                    };
+                    for (const id of getSignInModalOrder(false)) {
+                        signInMethods.append(elements[id]);
+                    }
                 }
             }
             resetSignInModalLayout = resetModalLayout;
@@ -129,8 +142,15 @@ export function initAuthManager(callbacks) {
                 }
                 emailSubcopy?.classList.remove('hidden');
                 signInBenefits?.classList.add('hidden');
-                if (signInMethods && emailFlow && emailDivider) {
-                    signInMethods.insertBefore(emailFlow, emailDivider);
+                if (signInMethods && oauthGroup && emailFlow && emailDivider) {
+                    const elements = {
+                        oauthSignInGroup: oauthGroup,
+                        emailOauthDivider: emailDivider,
+                        emailSignInFlow: emailFlow,
+                    };
+                    for (const id of getSignInModalOrder(emailFirst)) {
+                        signInMethods.append(elements[id]);
+                    }
                 }
                 setTimeout(() => emailInput?.focus(), 0);
             }
@@ -143,7 +163,7 @@ export function initAuthManager(callbacks) {
                 setBusy(requestCodeButton, true, 'Continue with email', 'Sending code...');
                 try {
                     await auth.requestEmailCode(activeEmail);
-                    emailCodePrompt.textContent = `Enter the 6-digit code sent to ${activeEmail}`;
+                    if (emailCodePromptAddress) emailCodePromptAddress.textContent = activeEmail;
                     emailStartForm.classList.add('hidden');
                     emailCodeStep.classList.remove('hidden');
                     emailCodeStep.classList.add('flex');

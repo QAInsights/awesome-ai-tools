@@ -141,11 +141,22 @@ describe('email sender', () => {
         const { LoginEmailDeliveryError, sendLoginCodeEmail } = await import(`./email.ts?delivery=${Date.now()}`);
         emailBinding = {
             send: async () => {
-                throw new Error('binding rejected the message');
+                throw new Error('delivery to ada@example.com failed for code 004219');
             },
         };
 
-        await expect(sendLoginCodeEmail('ada@example.com', '004219'))
-            .rejects.toBeInstanceOf(LoginEmailDeliveryError);
+        const errorLog = mock(() => {});
+        const originalError = console.error;
+        console.error = errorLog;
+        try {
+            await expect(sendLoginCodeEmail('ada@example.com', '004219'))
+                .rejects.toBeInstanceOf(LoginEmailDeliveryError);
+        } finally {
+            console.error = originalError;
+        }
+        expect(errorLog).toHaveBeenCalledWith(
+            '[Email OTP] send failed:',
+            'delivery to a***@example.com failed for code [redacted]',
+        );
     });
 });
