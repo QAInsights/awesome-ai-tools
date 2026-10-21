@@ -7,6 +7,7 @@
  *   2. Live & cached LLM API token pricing from https://models.dev/api.json (`/api/v1/models.json`)
  */
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import EfficiencyCalculatorPanel from '../../components/EfficiencyCalculatorPanel.astro';
 import { getAllTools } from '../../lib/tools';
 import { buildCalculatorToolCatalog } from '../../lib/cost-calculator';
 
@@ -31,6 +32,8 @@ const jsonLd = JSON.stringify({
         'Live cached LLM token pricing from models.dev',
         'Prompt cache hit ratio and daily token workload presets',
         'Automatic cheaper tool and open-source BYOK savings recommendations',
+        'Efficiency and volume ratings with productive-hours-based approval policies',
+        'Editable grade thresholds, benchmarks, and monthly approval ceilings',
       ],
       isPartOf: { '@type': 'WebSite', '@id': 'https://ai.dosa.dev/#website' },
     },
@@ -71,18 +74,28 @@ const jsonLd = JSON.stringify({
             </svg>
             Monthly AI Coding Cost Calculator
           </h1>
-          <p class="text-[#a3a3a3] text-sm leading-relaxed mt-1.5 max-w-[68ch]">
+          <p id="costCalculatorIntro" class="text-[#a3a3a3] text-sm leading-relaxed mt-1.5 max-w-[68ch]">
             Combine seat subscriptions from our catalog with live LLM token pricing from
             <a href="https://models.dev" target="_blank" rel="noopener" class="text-[#e2c48a] hover:text-[#fff4de] underline underline-offset-2 transition-colors">models.dev</a>
             to forecast team spend and uncover cheaper alternatives.
           </p>
+          <p id="efficiencyCalculatorIntro" class="text-[#a3a3a3] text-sm leading-relaxed mt-1.5 max-w-[68ch]" hidden>
+            Score AI spend by productive engineering hours, with efficiency-based monthly approval limits.
+            The score model follows <a href="https://devin.ai/blog/efficiency-based-cost-controls" target="_blank" rel="noopener" class="text-[#e2c48a] hover:text-[#fff4de] underline underline-offset-2 transition-colors">Cognition’s published post</a>.
+          </p>
         </div>
-        <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+        <div id="costTabActions" class="flex flex-wrap items-center gap-2.5 shrink-0">
           <button id="copySummaryBtn" type="button" class="cc-action-btn">Copy Summary</button>
           <button id="shareCalcBtn" type="button" class="cc-action-btn cc-action-btn-primary">Share Stack</button>
         </div>
       </header>
 
+      <div class="cc-view-tabs" role="tablist" aria-label="Calculator view">
+        <button id="costViewTab" type="button" role="tab" aria-selected="true" aria-controls="costTabPanel" tabindex="0" data-calculator-view="cost" class="cc-cycle-btn active">Cost</button>
+        <button id="efficiencyViewTab" type="button" role="tab" aria-selected="false" aria-controls="efficiencyTabPanel" tabindex="-1" data-calculator-view="efficiency" class="cc-cycle-btn">Efficiency</button>
+      </div>
+
+      <section id="costTabPanel" class="cc-tab-panel" role="tabpanel" aria-labelledby="costViewTab" tabindex="0">
       <!-- Main 2-column grid -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         <!-- Left Configurator (7 cols) -->
@@ -318,11 +331,18 @@ const jsonLd = JSON.stringify({
           </section>
         </aside>
       </div>
+      </section>
+      <section id="efficiencyTabPanel" class="cc-tab-panel" role="tabpanel" aria-labelledby="efficiencyViewTab" tabindex="0" hidden>
+        <EfficiencyCalculatorPanel />
+      </section>
     </div>
   </main>
 </DashboardLayout>
 
 <style is:inline>
+  .cc-view-tabs { display: inline-flex; width: fit-content; gap: 2px; padding: 3px; border: 1px solid #222; border-radius: 9px; background: #111; }
+  .cc-view-tabs .cc-cycle-btn { min-width: 92px; min-height: 40px; padding: 7px 14px; }
+  .cc-tab-panel[hidden] { display: none !important; }
   .cc-panel { background: rgba(255, 255, 255, 0.02); border: 1px solid #222; border-radius: 14px; padding: 20px; }
   .cc-panel-featured { background: linear-gradient(180deg, rgba(33, 28, 22, 0.42) 0%, rgba(10, 10, 10, 0.9) 100%); border-color: #4c4030; font-variant-numeric: tabular-nums; }
   .cc-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: #a3a3a3; font-weight: 600; }
@@ -392,14 +412,65 @@ const jsonLd = JSON.stringify({
     .cc-team-step-btn { width: 40px; height: 40px; }
     #toolSearchInput, .cc-plan-select, .cc-team-input { font-size: 16px; }
     .cc-provider-tab, .cc-cycle-btn, .cc-apply-btn, .cc-chip { min-height: 38px; }
+    .cc-view-tabs .cc-cycle-btn { min-height: 44px; }
     .cc-remove-btn { width: 36px; height: 36px; }
     .cc-range::-webkit-slider-thumb, .cc-range::-moz-range-thumb { width: 22px; height: 22px; }
   }
 </style>
 
 <script type="module">
-  import { initCostCalculatorUI } from '/dist/cost-calculator.js';
+  import { initCostCalculatorUI, mergeCalculatorViewSearch, parseCalculatorViewFromUrl } from '/dist/cost-calculator.js';
   const catalogEl = document.getElementById('cost-calculator-catalog');
   const catalog = catalogEl ? JSON.parse(catalogEl.textContent || '[]') : [];
+  const initialView = parseCalculatorViewFromUrl(window.location.search);
   initCostCalculatorUI(catalog);
+
+  const tabs = [...document.querySelectorAll('[data-calculator-view]')];
+  const panels = {
+    cost: document.getElementById('costTabPanel'),
+    efficiency: document.getElementById('efficiencyTabPanel'),
+  };
+  let efficiencyInitialized = false;
+
+  function activateView(view, updateUrl = false, focusTab = false) {
+    for (const tab of tabs) {
+      const selected = tab.dataset.calculatorView === view;
+      tab.setAttribute('aria-selected', String(selected));
+      tab.tabIndex = selected ? 0 : -1;
+      tab.classList.toggle('active', selected);
+      if (selected && focusTab) tab.focus();
+    }
+    panels.cost.hidden = view !== 'cost';
+    panels.efficiency.hidden = view !== 'efficiency';
+    document.getElementById('costTabActions').hidden = view !== 'cost';
+    document.getElementById('costCalculatorIntro').hidden = view !== 'cost';
+    document.getElementById('efficiencyCalculatorIntro').hidden = view !== 'efficiency';
+
+    if (view === 'efficiency' && !efficiencyInitialized) {
+      efficiencyInitialized = true;
+      import('/dist/efficiency-calculator.js').then(({ initEfficiencyCalculatorUI }) => initEfficiencyCalculatorUI());
+    }
+    if (updateUrl) {
+      const search = mergeCalculatorViewSearch(window.location.search, view);
+      window.history.replaceState(null, '', `${window.location.pathname}${search}`);
+    }
+  }
+
+  for (const tab of tabs) {
+    tab.addEventListener('click', () => activateView(tab.dataset.calculatorView, true));
+  }
+  document.querySelector('[role="tablist"]').addEventListener('keydown', event => {
+    let currentIndex = tabs.indexOf(document.activeElement);
+    if (currentIndex < 0) currentIndex = tabs.findIndex(tab => tab.getAttribute('aria-selected') === 'true');
+    let nextIndex = currentIndex;
+    if (event.key === 'ArrowRight') nextIndex = (currentIndex + 1) % tabs.length;
+    if (event.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+    if (event.key === 'Home') nextIndex = 0;
+    if (event.key === 'End') nextIndex = tabs.length - 1;
+    if (nextIndex !== currentIndex) {
+      event.preventDefault();
+      activateView(tabs[nextIndex].dataset.calculatorView, true, true);
+    }
+  });
+  activateView(initialView);
 </script>

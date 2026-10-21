@@ -1,0 +1,202 @@
+<div id="efficiencyCalculator" class="ec-layout">
+  <div class="ec-main-column">
+    <section class="cc-panel">
+      <div class="ec-section-heading">
+        <div>
+          <p class="cc-label">01 · Score formula</p>
+          <h2>Explore efficiency and volume</h2>
+          <p class="ec-muted">Volume adds at most one fifth of the points left after efficiency.</p>
+        </div>
+        <div class="ec-heading-actions">
+          <span class="ec-lambda">λ = 0.2</span>
+          <button id="copyEfficiencySummary" type="button" class="cc-action-btn">Copy Summary</button>
+        </div>
+      </div>
+      <div class="ec-explorer-grid">
+        <label class="ec-slider-field">
+          <span>Efficiency rating E <strong id="explorerEValue">0.50</strong></span>
+          <input type="range" min="0" max="1" step="0.01" value="0.5" data-explorer="e" aria-label="Efficiency rating E" />
+        </label>
+        <label class="ec-slider-field">
+          <span>Volume rating V <strong id="explorerVValue">0.50</strong></span>
+          <input type="range" min="0" max="1" step="0.01" value="0.5" data-explorer="v" aria-label="Volume rating V" />
+        </label>
+      </div>
+      <div id="scorePresets" class="ec-chip-row">
+        <button type="button" data-example="typical" class="ec-chip">Typical</button>
+        <button type="button" data-example="power" class="ec-chip">Power user</button>
+        <button type="button" data-example="wasteful" class="ec-chip">Heavy but wasteful</button>
+        <button type="button" data-example="careful" class="ec-chip">Careful, low volume</button>
+      </div>
+      <div class="ec-score-result">
+        <code id="explorerFormula">100 × (0.50 + 0.2 × 0.50 × 0.50) = 55</code>
+        <span class="ec-grade ec-grade-satisfactory" id="explorerGrade">Satisfactory</span>
+      </div>
+      <div class="ec-point-grid">
+        <div><span>Base points, 100E</span><strong id="explorerBasePoints">50 points</strong></div>
+        <div><span>Volume points</span><strong id="explorerVolumePoints">5 points</strong></div>
+        <div><span>Maximum volume points</span><strong id="explorerMaxPoints">10 points</strong></div>
+      </div>
+    </section>
+
+    <section class="cc-panel">
+      <div class="ec-section-heading">
+        <div>
+          <p class="cc-label">02 · Team usage</p>
+          <h2>Useful work and monthly spend</h2>
+          <p class="ec-muted">Count sessions only when they produce useful work, such as a merged PR or a delivered non-PR outcome.</p>
+        </div>
+        <div class="ec-actions">
+          <button id="resetExamples" type="button" class="cc-action-btn">Reset to blog examples</button>
+          <button id="addEngineer" type="button" class="cc-action-btn">Add row</button>
+        </div>
+      </div>
+      <div class="ec-column-labels" aria-hidden="true">
+        <span>Engineer and monthly inputs</span>
+        <span>Derived ratings and approval outcome</span>
+      </div>
+      <div id="engineerRows" class="ec-engineer-list"></div>
+      <p class="ec-footnote">Up to 25 engineers. Rows are local to this page and are not saved.</p>
+    </section>
+
+    <section class="cc-panel">
+      <div class="ec-section-heading">
+        <div>
+          <p class="cc-label">03 · Policy &amp; assumptions</p>
+          <h2>Set team benchmarks and limits</h2>
+          <p class="ec-muted">The post does not publish the saturation curve or score thresholds. These are editable assumptions.</p>
+        </div>
+      </div>
+      <div class="ec-settings-grid">
+        <label class="ec-field"><span>Workdays per month</span><input type="number" min="1" step="1" data-setting="workdaysPerMonth" /></label>
+        <label class="ec-field"><span>Benchmark $ / productive hour</span><input type="number" min="0.01" step="1" data-setting="benchmarkCostPerHour" /></label>
+        <label class="ec-field"><span>Benchmark productive hours / day</span><input type="number" min="0.01" step="0.1" data-setting="benchmarkHoursPerDay" /></label>
+        <label class="ec-field"><span>Engineer loaded cost / hour ($)</span><input type="number" min="0" step="1" data-setting="engineerHourlyCost" /></label>
+        <label class="ec-field"><span>Base monthly limit ($)</span><input type="number" min="0" step="100" data-setting="baseMonthlyLimit" /></label>
+        <label class="ec-field"><span>Auto-approval ceiling, max total limit ($)</span><input type="number" min="0" step="100" data-setting="autoApproveCeiling" /></label>
+        <label class="ec-field"><span>Healthy threshold</span><input type="number" min="0" max="100" step="1" data-setting="healthyThreshold" /></label>
+        <label class="ec-field"><span>Satisfactory threshold</span><input type="number" min="0" max="100" step="1" data-setting="satisfactoryThreshold" /></label>
+      </div>
+    </section>
+
+    <section class="cc-panel ec-methodology">
+      <p class="cc-label">Methodology</p>
+      <h2>Published model and local assumptions</h2>
+      <div class="ec-method-grid">
+        <div>
+          <h3>From the post</h3>
+          <p>The score is 100 × (E + λ·V·(1 − E)), with λ = 0.2. Volume can contribute no more than one fifth of the points not already earned through efficiency. Count only sessions with useful work, such as a merged PR or a delivered outcome for non-PR work. The policy uses Healthy, Satisfactory, Needs Improvement, and Unknown grades. Healthy and Satisfactory can receive automatic limit increases up to the admin-set ceiling. Requests above that ceiling and requests from other grades go to an admin. The policy does not auto-deny.</p>
+        </div>
+        <div>
+          <h3>Assumptions used here</h3>
+          <p>The E and V curves use 1 − 2^(−x / benchmark), so each benchmark corresponds to a 0.50 rating. Defaults are $40 per productive hour, 1.5 productive hours per workday, 65 / 50 grade thresholds, and at least 5 sessions for a grade. Hours under each cap are estimated linearly per dollar. Spend pending admin review is not counted as approved spend or productive hours. Devin scores each engineer's recent usage, and the post's examples use the most recent 200 ACUs. This calculator treats one month of inputs as that recent window. The auto-approval ceiling is read as the highest total monthly limit Devin can reach automatically, not the size of a single increase. Spend without useful work is estimated as spend × (1 − useful-work rate), which assumes every session costs about the same.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <aside class="cc-panel ec-summary" aria-labelledby="efficiency-summary-title">
+    <p class="cc-label">Team snapshot</p>
+    <h2 id="efficiency-summary-title">Efficiency summary</h2>
+    <dl class="ec-summary-list">
+      <div><dt>Total spend</dt><dd id="summarySpend">$19,956</dd></div>
+      <div><dt>Productive hours</dt><dd id="summaryHours">329.8 h</dd></div>
+      <div><dt>Blended cost / productive hour</dt><dd id="summaryBlendedCost">$60.51/h</dd></div>
+      <div><dt>Value delivered and ROI</dt><dd id="summaryValue">$32,980 · 1.65x ROI</dd></div>
+      <div><dt>Spend without useful work (est.)</dt><dd id="summaryWastedSpend">$9,588</dd></div>
+      <div><dt>Grade distribution</dt><dd id="summaryGrades">1 Healthy · 2 Satisfactory · 1 Needs Improvement · 0 Unknown</dd></div>
+      <div><dt>Average score</dt><dd id="summaryAverage">58</dd></div>
+    </dl>
+    <div class="ec-summary-divider"></div>
+    <h3>Blanket cap vs efficiency-based approvals</h3>
+    <dl class="ec-summary-list">
+      <div><dt>Hours under blanket cap</dt><dd id="summaryBlanketHours">70.1 h</dd></div>
+      <div><dt>Hours under efficiency policy</dt><dd id="summaryPolicyHours">197.1 h</dd></div>
+      <div><dt>Hours unlocked</dt><dd id="summaryUnlockedHours">127 h</dd></div>
+      <div><dt>Auto-approved spend</dt><dd id="summaryAutoApproved">$5,080</dd></div>
+      <div><dt>Spend in admin queue</dt><dd id="summaryAdminQueue">$11,700 · 1 engineer</dd></div>
+    </dl>
+    <p class="ec-summary-note">Admin-pending spend is not treated as granted. Approval outcomes are estimates from the selected limits and grades.</p>
+  </aside>
+</div>
+
+<style is:global>
+  .ec-layout { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(290px, 0.8fr); align-items: start; gap: 20px; }
+  .ec-main-column { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .ec-section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 17px; }
+  .ec-section-heading h2, .ec-summary h2, .ec-methodology h2 { margin: 0; color: #f4f4f2; font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
+  .ec-muted { margin: 5px 0 0; color: #737373; font-size: 12px; line-height: 1.6; }
+  .ec-heading-actions, .ec-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .ec-lambda { padding: 6px 9px; border: 1px solid #4c4030; border-radius: 7px; color: #e2c48a; background: #211c16; font: 12px 'JetBrains Mono', monospace; }
+  .ec-explorer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .ec-slider-field { display: grid; gap: 10px; color: #b8b8b5; font-size: 12px; }
+  .ec-slider-field span { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .ec-slider-field strong { color: #fff4de; font: 600 12px 'JetBrains Mono', monospace; }
+  .ec-slider-field input { width: 100%; height: 6px; accent-color: #e2c48a; cursor: pointer; }
+  .ec-chip-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 16px; }
+  .ec-chip { min-height: 38px; padding: 7px 11px; border: 1px solid #2a2a2a; border-radius: 8px; background: #111; color: #cfcfcc; font: 11px 'JetBrains Mono', monospace; cursor: pointer; }
+  .ec-chip:hover, .ec-chip.active { border-color: #c8a96a; background: #211c16; color: #fff4de; }
+  .ec-score-result { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 17px; padding: 14px; border: 1px solid #2a261f; border-radius: 10px; background: #0c0b09; }
+  .ec-score-result code { min-width: 0; color: #fff4de; font: 13px/1.5 'JetBrains Mono', monospace; overflow-wrap: anywhere; }
+  .ec-grade { display: inline-flex; align-items: center; justify-content: center; min-height: 25px; padding: 3px 8px; border: 1px solid #3b3528; border-radius: 999px; color: #e2c48a; background: #211c16; font: 10px 'JetBrains Mono', monospace; white-space: nowrap; }
+  .ec-grade-healthy { border-color: #31533b; color: #b5dfbd; background: #132018; }
+  .ec-grade-needs-improvement { border-color: #684333; color: #e6b393; background: #241710; }
+  .ec-grade-unknown { border-color: #393939; color: #b0b0ae; background: #171717; }
+  .ec-point-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+  .ec-point-grid div { display: flex; flex-direction: column; gap: 5px; padding: 10px; border-radius: 8px; background: #111; }
+  .ec-point-grid span, .ec-point-grid strong { font-size: 10px; }
+  .ec-point-grid span { color: #737373; }
+  .ec-point-grid strong { color: #e2c48a; font: 11px 'JetBrains Mono', monospace; }
+  .ec-column-labels { display: flex; justify-content: space-between; padding: 0 2px 8px; color: #666; font: 9px 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+  .ec-engineer-list { display: flex; flex-direction: column; gap: 10px; }
+  .ec-engineer-card { min-width: 0; padding: 13px; border: 1px solid #242424; border-radius: 10px; background: #0d0d0d; }
+  .ec-engineer-heading { display: flex; align-items: flex-end; gap: 9px; }
+  .ec-name-field { flex: 1; }
+  .ec-remove { min-height: 38px; padding: 7px 11px; border: 1px solid #2a2a2a; border-radius: 8px; background: #111; color: #9a7c6d; cursor: pointer; }
+  .ec-input-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; margin-top: 10px; }
+  .ec-field { display: flex; min-width: 0; flex-direction: column; gap: 5px; color: #858582; font: 9px/1.4 'JetBrains Mono', monospace; }
+  .ec-field input { width: 100%; min-width: 0; min-height: 38px; padding: 7px 9px; border: 1px solid #2a2a2a; border-radius: 7px; outline: none; background: #111; color: #f4f4f2; font: 12px 'JetBrains Mono', monospace; }
+  .ec-field input:focus { border-color: #c8a96a; box-shadow: 0 0 0 2px rgba(200, 169, 106, 0.12); }
+  .ec-derived-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; margin: 12px 0 0; }
+  .ec-derived-grid div { min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+  .ec-derived-grid dt { color: #666; font: 9px 'JetBrains Mono', monospace; }
+  .ec-derived-grid dd { overflow-wrap: anywhere; margin: 0; color: #ddd; font: 11px 'JetBrains Mono', monospace; }
+  .ec-approval { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5px 12px; margin: 11px 0 0; padding-top: 9px; border-top: 1px solid #202020; font-size: 11px; }
+  .ec-approval span { color: #777; }
+  .ec-approval strong { color: #e2c48a; font: 11px 'JetBrains Mono', monospace; text-align: right; }
+  .ec-hint { margin: 8px 0 0; color: #e2c48a; font-size: 11px; }
+  .ec-footnote { margin: 11px 0 0; color: #666; font-size: 10px; }
+  .ec-settings-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .ec-summary { position: sticky; top: 18px; }
+  .ec-summary h2 { margin-bottom: 14px; }
+  .ec-summary-list { display: flex; flex-direction: column; gap: 0; margin: 0; }
+  .ec-summary-list div { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid #1d1d1c; }
+  .ec-summary-list dt { color: #858582; font-size: 11px; line-height: 1.5; }
+  .ec-summary-list dd { margin: 0; color: #fff4de; font: 11px/1.5 'JetBrains Mono', monospace; text-align: right; }
+  .ec-summary-divider { height: 1px; margin: 14px 0; background: #282521; }
+  .ec-summary h3 { margin: 0 0 6px; color: #d6b77a; font-size: 12px; font-weight: 600; }
+  .ec-summary-note { margin: 13px 0 0; color: #666; font-size: 10px; line-height: 1.6; }
+  .ec-method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 15px; }
+  .ec-method-grid h3 { margin: 0 0 6px; color: #e2c48a; font-size: 11px; font-weight: 600; }
+  .ec-method-grid p { margin: 0; color: #92928e; font-size: 11px; line-height: 1.7; }
+  @media (max-width: 950px) { .ec-layout { grid-template-columns: minmax(0, 1fr); } .ec-summary { position: static; } }
+  @media (max-width: 767px) {
+    .ec-section-heading { align-items: flex-start; flex-direction: column; }
+    .ec-heading-actions, .ec-actions { width: 100%; }
+    .ec-heading-actions > *, .ec-actions > * { flex: 1; }
+    .ec-explorer-grid, .ec-method-grid { grid-template-columns: 1fr; gap: 13px; }
+    .ec-score-result { align-items: flex-start; flex-direction: column; }
+    .ec-point-grid { gap: 5px; }
+    .ec-point-grid div { padding: 8px 6px; }
+    .ec-point-grid span { min-height: 26px; line-height: 1.35; }
+    .ec-column-labels { display: none; }
+    .ec-engineer-heading { align-items: stretch; }
+    .ec-input-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+    .ec-derived-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 10px; }
+    .ec-settings-grid { grid-template-columns: 1fr; }
+    .ec-field { font-size: 10px; }
+    .ec-field input { min-height: 44px; font-size: 16px; }
+    .ec-chip, .ec-remove { min-height: 44px; }
+    .ec-summary-list dt { max-width: 58%; }
+  }
+</style>
