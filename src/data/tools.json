@@ -1534,5 +1534,13 @@
   {
     "companyName": "Laminar (YC S24)",
     "toolName": "Laminar"
+  },
+  {
+    "companyName": "Perplexity",
+    "toolName": "SPACE"
+  },
+  {
+    "companyName": "Ephemeral AI Lab",
+    "toolName": "LayerFS"
   }
 ]
