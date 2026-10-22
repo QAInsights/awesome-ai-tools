@@ -43,6 +43,11 @@
       "dataset": "aat_events"
     }
   ],
+  "send_email": [
+    {
+      "name": "EMAIL"
+    }
+  ],
   "ratelimits": [
     {
       "name": "STACK_WRITE_LIMITER",
@@ -63,6 +68,22 @@
     {
       "name": "ZAP_WRITE_LIMITER",
       "namespace_id": "1003",
+      "simple": {
+        "limit": 10,
+        "period": 60
+      }
+    },
+    {
+      "name": "EMAIL_OTP_LIMITER",
+      "namespace_id": "1004",
+      "simple": {
+        "limit": 5,
+        "period": 60
+      }
+    },
+    {
+      "name": "EMAIL_OTP_VERIFY_LIMITER",
+      "namespace_id": "1005",
       "simple": {
         "limit": 10,
         "period": 60
@@ -105,6 +126,11 @@
           "dataset": "aat_events_staging"
         }
       ],
+      "send_email": [
+        {
+          "name": "EMAIL"
+        }
+      ],
       "ratelimits": [
         {
           "name": "STACK_WRITE_LIMITER",
@@ -125,6 +151,22 @@
         {
           "name": "ZAP_WRITE_LIMITER",
           "namespace_id": "2003",
+          "simple": {
+            "limit": 10,
+            "period": 60
+          }
+        },
+        {
+          "name": "EMAIL_OTP_LIMITER",
+          "namespace_id": "2004",
+          "simple": {
+            "limit": 5,
+            "period": 60
+          }
+        },
+        {
+          "name": "EMAIL_OTP_VERIFY_LIMITER",
+          "namespace_id": "2005",
           "simple": {
             "limit": 10,
             "period": 60

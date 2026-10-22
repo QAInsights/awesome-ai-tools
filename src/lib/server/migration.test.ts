@@ -11,6 +11,8 @@ const migration6 = new URL('../../../migrations/0006_notification_prefs.sql', im
 const migration7 = new URL('../../../migrations/0007_news_prefs.sql', import.meta.url);
 const migration8 = new URL('../../../migrations/0008_onboarding.sql', import.meta.url);
 const migration9 = new URL('../../../migrations/0009_tool_stacks.sql', import.meta.url);
+const migration10 = new URL('../../../migrations/0010_zaps.sql', import.meta.url);
+const migration11 = new URL('../../../migrations/0011_email_otp.sql', import.meta.url);
 
 function applyMigration(db: Database, migration: URL) {
     const statements = readFileSync(migration, 'utf8')
@@ -309,6 +311,155 @@ describe('accounts and favorites migrations', () => {
         db.run('DELETE FROM users WHERE id = ?', ['github:42']);
         expect(db.query('SELECT COUNT(*) AS count FROM stacks').get()).toEqual({ count: 0 });
         expect(db.query('SELECT COUNT(*) AS count FROM stack_items').get()).toEqual({ count: 0 });
+        db.close();
+    });
+
+    test('preserves every user-dependent row and adds email OTP storage', () => {
+        const db = new Database(':memory:');
+        for (const migration of [
+            migration1,
+            migration2,
+            migration3,
+            migration4,
+            migration5,
+            migration6,
+            migration7,
+            migration8,
+            migration9,
+            migration10,
+        ]) {
+            applyMigration(db, migration);
+        }
+
+        db.run(`
+            INSERT INTO users (
+                id, provider, provider_user_id, display_name, email, email_verified,
+                created_at, updated_at, last_seen_at, username
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `, ['google:42', 'google', '42', 'Ada Lovelace', 'ada@example.com', 1, 1, 2, 3, 'ada']);
+        db.run(
+            'INSERT INTO sessions (token_hash, user_id, created_at, expires_at) VALUES (?, ?, ?, ?)',
+            ['session-hash', 'google:42', 100, 200],
+        );
+        db.run(
+            'INSERT INTO favorites (user_id, tool_slug, created_at) VALUES (?, ?, ?)',
+            ['google:42', 'cursor', 101],
+        );
+        db.run(
+            'INSERT INTO follows (user_id, tool_slug, created_at) VALUES (?, ?, ?)',
+            ['google:42', 'claude-code', 102],
+        );
+        db.run(`
+            INSERT INTO notification_prefs (
+                user_id, email_enabled, unsubscribe_token, last_digest_sent_at, updated_at, news_enabled
+            ) VALUES (?, ?, ?, ?, ?, ?)
+        `, ['google:42', 1, 'unsubscribe-42', 103, 104, 1]);
+        db.run(
+            'INSERT INTO email_log (user_id, kind, tool_slugs, message_id, sent_at) VALUES (?, ?, ?, ?, ?)',
+            ['google:42', 'digest', 'cursor', 'message-42', 105],
+        );
+        db.run(
+            'INSERT INTO user_onboarding (user_id, badge_completed_at, dismissed_at, completed_at, updated_at) VALUES (?, ?, ?, ?, ?)',
+            ['google:42', 106, 107, 108, 109],
+        );
+        db.run(
+            'INSERT INTO username_history (username, user_id, retired_at) VALUES (?, ?, ?)',
+            ['ada-old', 'google:42', 110],
+        );
+        db.run(
+            'INSERT INTO stacks (id, user_id, slug, title, description, is_public, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+            ['stack-42', 'google:42', 'ada-stack', 'Ada stack', 'A saved setup', 1, 111, 112],
+        );
+        db.run(
+            'INSERT INTO stack_slug_history (user_id, slug, stack_id) VALUES (?, ?, ?)',
+            ['google:42', 'ada-previous', 'stack-42'],
+        );
+        db.run(
+            'INSERT INTO stack_items (stack_id, tool_slug, position, purpose, usage_notes, enabled) VALUES (?, ?, ?, ?, ?, ?)',
+            ['stack-42', 'cursor', 1, 'Build', 'Use for implementation', 1],
+        );
+        db.run(
+            'INSERT INTO zap_votes (tool_id, voter_id, created_at, source) VALUES (?, ?, ?, ?)',
+            ['cursor', 'google:42', 113, 'd1'],
+        );
+        db.run('INSERT INTO zap_legacy_counts (tool_id, count) VALUES (?, ?)', ['cursor', 7]);
+
+        const tables = [
+            'users',
+            'sessions',
+            'favorites',
+            'follows',
+            'notification_prefs',
+            'email_log',
+            'user_onboarding',
+            'username_history',
+            'stacks',
+            'stack_slug_history',
+            'stack_items',
+            'zap_votes',
+            'zap_legacy_counts',
+        ];
+        const snapshot = () => Object.fromEntries(tables.map(table => [
+            table,
+            db.query(`SELECT * FROM ${table} ORDER BY rowid`).all(),
+        ]));
+        const before = snapshot();
+        expect(db.query("SELECT name FROM sqlite_schema WHERE type = 'trigger'").all()).toEqual([]);
+
+        applyMigration(db, migration11);
+
+        expect(snapshot()).toEqual(before);
+        expect(db.query('PRAGMA foreign_key_check').all()).toEqual([]);
+        expect(db.query("PRAGMA foreign_key_list('sessions')").all()).toContainEqual(
+            expect.objectContaining({ table: 'users', on_delete: 'CASCADE' }),
+        );
+        expect(db.query(`
+            SELECT name
+            FROM sqlite_schema
+            WHERE type = 'index'
+                AND name IN (
+                    'users_provider_identity_idx',
+                    'users_created_at_idx',
+                    'users_last_seen_at_idx',
+                    'users_username_idx',
+                    'email_otps_email_created_idx'
+                )
+            ORDER BY name
+        `).all()).toEqual([
+            { name: 'email_otps_email_created_idx' },
+            { name: 'users_created_at_idx' },
+            { name: 'users_last_seen_at_idx' },
+            { name: 'users_provider_identity_idx' },
+            { name: 'users_username_idx' },
+        ]);
+
+        const emailId = `email:${'a'.repeat(32)}`;
+        db.run(`
+            INSERT INTO users (
+                id, provider, provider_user_id, display_name, email, email_verified, created_at, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        `, [emailId, 'email', 'a'.repeat(32), 'Ada', 'ada@example.com', 1, 200, 200]);
+        expect(() => db.run(`
+            INSERT INTO users (
+                id, provider, provider_user_id, display_name, created_at, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?)
+        `, ['bogus:7', 'bogus', '7', 'Invalid', 200, 200])).toThrow();
+
+        db.run('DELETE FROM users WHERE id = ?', ['google:42']);
+        for (const table of [
+            'sessions',
+            'favorites',
+            'follows',
+            'notification_prefs',
+            'user_onboarding',
+            'username_history',
+            'stacks',
+            'stack_slug_history',
+            'stack_items',
+        ]) {
+            expect(db.query(`SELECT COUNT(*) AS count FROM ${table}`).get()).toEqual({ count: 0 });
+        }
+        expect(db.query('PRAGMA foreign_key_check').all()).toEqual([]);
         db.close();
     });
 });

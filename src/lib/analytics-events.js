@@ -30,7 +30,7 @@ export const OUTBOUND_TRIGGERS = Object.freeze(['tool_card', 'tool_detail', 'com
 export const ONBOARDING_TRIGGERS = Object.freeze(['inline', 'float', 'unknown']);
 export const ONBOARDING_STEP_SUBJECTS = Object.freeze(['favorites', 'follows', 'badge']);
 export const REF_SOURCES = Object.freeze(['badge', 'newsletter', 'social', 'other']);
-export const ANALYTICS_PROVIDERS = Object.freeze(['github', 'google', 'dev']);
+export const ANALYTICS_PROVIDERS = Object.freeze(['github', 'google', 'dev', 'email']);
 
 export const EVENTS = Object.freeze({
     SIGNIN_COMPLETED: 'signin_completed',

@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { fetchGitHubIdentity, githubApiHeaders } from './github-auth';
+import { fetchGitHubIdentity, githubApiHeaders, normalizeGitHubIdentity } from './github-auth';
 
 describe('GitHub authentication', () => {
     test('includes the required application user agent', () => {
@@ -51,6 +51,94 @@ describe('GitHub authentication', () => {
         expect(calls.slice(1).every(call => (
             call.init?.headers as Record<string, string>
         ).Authorization === 'Bearer github-token')).toBe(true);
+    });
+
+    test('marks only GitHub-listed verified addresses as verified', () => {
+        const profile = {
+            id: 42,
+            login: 'ada',
+            name: null,
+            avatar_url: null,
+            email: 'ADA@example.com',
+        };
+        const matching = normalizeGitHubIdentity(profile, [
+            { email: 'ada@example.com', primary: true, verified: true },
+        ]);
+        const fallback = normalizeGitHubIdentity({
+            ...profile,
+            email: 'unverified@example.com',
+        }, [
+            { email: 'verified@example.com', primary: true, verified: true },
+        ]);
+        const unverified = normalizeGitHubIdentity(profile, [
+            { email: 'ada@example.com', primary: true, verified: false },
+        ]);
+
+        expect(matching).toMatchObject({ email: 'ADA@example.com', emailVerified: true });
+        expect(fallback).toMatchObject({ email: 'verified@example.com', emailVerified: true });
+        expect(unverified).toMatchObject({ email: 'ADA@example.com', emailVerified: false });
+    });
+
+    test('treats a successful empty email list as unverified', async () => {
+        const request = async (input: string | URL | Request) => {
+            const url = String(input);
+            if (url.endsWith('/login/oauth/access_token')) {
+                return Response.json({ access_token: 'github-token' });
+            }
+            if (url.endsWith('/user/emails')) return Response.json([]);
+            return Response.json({
+                id: 42,
+                login: 'ada',
+                name: null,
+                email: 'ada@example.com',
+                avatar_url: null,
+            });
+        };
+
+        await expect(fetchGitHubIdentity('oauth-code', 'client-id', 'client-secret', request))
+            .resolves.toMatchObject({ email: 'ada@example.com', emailVerified: false });
+    });
+
+    test('rejects a non-OK GitHub email-list response', async () => {
+        const request = async (input: string | URL | Request) => {
+            const url = String(input);
+            if (url.endsWith('/login/oauth/access_token')) {
+                return Response.json({ access_token: 'github-token' });
+            }
+            if (url.endsWith('/user/emails')) {
+                return Response.json({ message: 'unavailable' }, { status: 503 });
+            }
+            return Response.json({
+                id: 42,
+                login: 'ada',
+                name: null,
+                email: 'ada@example.com',
+                avatar_url: null,
+            });
+        };
+
+        await expect(fetchGitHubIdentity('oauth-code', 'client-id', 'client-secret', request))
+            .rejects.toThrow('Failed to fetch GitHub emails: 503');
+    });
+
+    test('rejects a thrown GitHub email-list request', async () => {
+        const request = async (input: string | URL | Request) => {
+            const url = String(input);
+            if (url.endsWith('/login/oauth/access_token')) {
+                return Response.json({ access_token: 'github-token' });
+            }
+            if (url.endsWith('/user/emails')) throw new Error('GitHub email request failed');
+            return Response.json({
+                id: 42,
+                login: 'ada',
+                name: null,
+                email: 'ada@example.com',
+                avatar_url: null,
+            });
+        };
+
+        await expect(fetchGitHubIdentity('oauth-code', 'client-id', 'client-secret', request))
+            .rejects.toThrow('GitHub email request failed');
     });
 
     test('rejects a failed token exchange', async () => {

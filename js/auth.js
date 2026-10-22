@@ -135,6 +135,48 @@ export class AuthManager {
         }
     }
 
+    async _postEmailAuth(path, payload, operation) {
+        const response = await fetch(path, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        });
+        let data = {};
+        try {
+            data = await response.json();
+        } catch {}
+        if (!response.ok) {
+            const error = new Error(typeof data.error === 'string' ? data.error : `${operation} failed`);
+            error.status = response.status;
+            throw error;
+        }
+        return data;
+    }
+
+    async requestEmailCode(email, { resend = false } = {}) {
+        if (!resend) {
+            analytics.track(EVENTS.SIGNIN_STARTED, { provider: 'email', trigger: authAttribution.current() });
+        }
+        return this._postEmailAuth('/api/auth/email/start', { email }, 'Email code request');
+    }
+
+    async verifyEmailCode(email, code) {
+        return this._queueSessionMutation(async () => {
+            const result = await this._postEmailAuth(
+                '/api/auth/email/verify',
+                { email, code },
+                'Email sign-in',
+            );
+            if (!result.user) throw new Error('Email sign-in did not return a user');
+            this.user = result.user;
+            this._notifyAuthChange('signin');
+            return this.user;
+        });
+    }
+
     renderGitHubSignInButton(containerId) {
         const container = document.getElementById(containerId);
         if (!container) return;

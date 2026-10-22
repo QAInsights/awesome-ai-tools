@@ -2,12 +2,17 @@ import { afterAll, beforeEach, describe, expect, mock, test } from 'bun:test';
 
 let dryRun = false;
 let emailFrom = 'updates@ai.dosa.dev';
+let loginEmailFrom = 'login@ai.dosa.dev';
 let apiKey = 're_test';
+let emailBinding: { send: (message: Record<string, unknown>) => Promise<unknown> } | undefined;
+let loginMessage: Record<string, unknown> | undefined;
 let fetchMock: ReturnType<typeof mock>;
 const originalFetch = globalThis.fetch;
 
 mock.module('./runtime-env', () => ({
     getEmailFrom: () => emailFrom,
+    getEmailBinding: () => emailBinding,
+    getLoginEmailFrom: () => loginEmailFrom,
     getResendApiKey: () => apiKey,
     isEmailDryRun: () => dryRun,
 }));
@@ -21,7 +26,10 @@ describe('email sender', () => {
     beforeEach(() => {
         dryRun = false;
         emailFrom = 'updates@ai.dosa.dev';
+        loginEmailFrom = 'login@ai.dosa.dev';
         apiKey = 're_test';
+        emailBinding = undefined;
+        loginMessage = undefined;
         fetchMock = mock(async () => new Response(JSON.stringify({ id: 'message-1' }), { status: 200 }));
         globalThis.fetch = fetchMock as unknown as typeof fetch;
     });
@@ -84,5 +92,71 @@ describe('email sender', () => {
             html: '',
             text: '',
         })).rejects.toThrow('Resend send failed (422): invalid request');
+    });
+
+    test('sends login codes through the Cloudflare Email Service binding', async () => {
+        emailBinding = {
+            send: async message => {
+                loginMessage = message;
+                return { messageId: 'otp-message' };
+            },
+        };
+        loginEmailFrom = 'signin@example.com';
+        const { sendLoginCodeEmail } = await import(`./email.ts?otp=${Date.now()}`);
+
+        await sendLoginCodeEmail('ada@example.com', '004219');
+
+        expect(loginMessage).toMatchObject({
+            to: 'ada@example.com',
+            from: { email: 'signin@example.com', name: 'ai.dosa.dev' },
+            subject: '004219 is your ai.dosa.dev sign-in code',
+        });
+        expect(loginMessage?.html).toContain('004219');
+        expect(loginMessage?.html).toContain('It expires in 10 minutes.');
+        expect(loginMessage?.html).toContain("If you didn't ask for this, you can ignore this email. No account was changed.");
+        expect(loginMessage?.text).toContain('004219');
+        expect(loginMessage?.text).toContain('It expires in 10 minutes.');
+        expect(fetchMock).not.toHaveBeenCalled();
+    });
+
+    test('handles a missing login binding by environment', async () => {
+        const { EmailBindingUnavailableError, sendLoginCodeEmail } = await import(`./email.ts?missing=${Date.now()}`);
+        if (import.meta.env.DEV) {
+            const info = mock(() => {});
+            const originalInfo = console.info;
+            console.info = info;
+            try {
+                await expect(sendLoginCodeEmail('ada@example.com', '004219')).resolves.toBeUndefined();
+            } finally {
+                console.info = originalInfo;
+            }
+            expect(info).toHaveBeenCalledWith('[Email OTP] Local sign-in code: 004219');
+        } else {
+            await expect(sendLoginCodeEmail('ada@example.com', '004219'))
+                .rejects.toBeInstanceOf(EmailBindingUnavailableError);
+        }
+    });
+
+    test('wraps Cloudflare Email Service delivery failures', async () => {
+        const { LoginEmailDeliveryError, sendLoginCodeEmail } = await import(`./email.ts?delivery=${Date.now()}`);
+        emailBinding = {
+            send: async () => {
+                throw new Error('delivery to ada@example.com failed for code 004219');
+            },
+        };
+
+        const errorLog = mock(() => {});
+        const originalError = console.error;
+        console.error = errorLog;
+        try {
+            await expect(sendLoginCodeEmail('ada@example.com', '004219'))
+                .rejects.toBeInstanceOf(LoginEmailDeliveryError);
+        } finally {
+            console.error = originalError;
+        }
+        expect(errorLog).toHaveBeenCalledWith(
+            '[Email OTP] send failed:',
+            'delivery to a***@example.com failed for code [redacted]',
+        );
     });
 });

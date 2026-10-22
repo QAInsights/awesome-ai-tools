@@ -56,7 +56,7 @@ function funnelQuery(dataset: 'aat_events' | 'aat_events_staging', range: Funnel
 }
 
 export function buildFunnelViewModel(rows: FunnelEventRow[]): FunnelViewModel {
-    const providers = new Map(['github', 'google', 'dev'].map(provider => [provider, { provider, started: 0, completed: 0 }]));
+    const providers = new Map(['github', 'google', 'dev', 'email'].map(provider => [provider, { provider, started: 0, completed: 0 }]));
     const triggers = new Map<string, { trigger: string; blocked: number; completed: number }>();
     const outbound = new Map<string, number>();
     const badgeReferrals = new Map<string, number>();

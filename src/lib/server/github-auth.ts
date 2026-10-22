@@ -35,9 +35,14 @@ export function normalizeGitHubIdentity(
     if ((typeof profile.id !== 'number' && typeof profile.id !== 'string') || !profile.login) {
         throw new Error('GitHub profile is missing required identity fields');
     }
-    const verifiedEmail = emails.find(email => email.primary && email.verified)
-        ?? emails.find(email => email.verified);
-    const email = profile.email ?? verifiedEmail?.email ?? null;
+    const verifiedEmails = emails.filter(email => email.verified);
+    const profileEmail = profile.email;
+    const profileEmailIsVerified = profileEmail !== null && verifiedEmails.some(
+        email => email.email.toLowerCase() === profileEmail.toLowerCase(),
+    );
+    const email = profileEmailIsVerified
+        ? profileEmail
+        : verifiedEmails.find(address => address.primary)?.email ?? verifiedEmails[0]?.email ?? profileEmail ?? null;
     return {
         provider: 'github',
         providerUserId: String(profile.id),
@@ -45,7 +50,9 @@ export function normalizeGitHubIdentity(
         email,
         picture: profile.avatar_url,
         githubUsername: profile.login,
-        emailVerified: email !== null,
+        emailVerified: email !== null && verifiedEmails.some(
+            address => address.email.toLowerCase() === email.toLowerCase(),
+        ),
     };
 }
 
@@ -85,10 +92,11 @@ export async function fetchGitHubIdentity(
     if (!profileResponse.ok) {
         throw new Error(`Failed to fetch GitHub profile: ${profileResponse.status}`);
     }
+    if (!emailsResponse.ok) {
+        throw new Error(`Failed to fetch GitHub emails: ${emailsResponse.status}`);
+    }
 
     const profile = await profileResponse.json() as GitHubProfile;
-    const emails = emailsResponse.ok
-        ? await emailsResponse.json() as GitHubEmail[]
-        : [];
+    const emails = await emailsResponse.json() as GitHubEmail[];
     return normalizeGitHubIdentity(profile, emails);
 }

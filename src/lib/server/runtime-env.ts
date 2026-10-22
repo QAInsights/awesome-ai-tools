@@ -1,5 +1,5 @@
 import { env } from 'cloudflare:workers';
-import type { RateLimit } from '@cloudflare/workers-types';
+import type { RateLimit, SendEmail } from '@cloudflare/workers-types';
 import type { Database } from './db';
 
 const runtimeEnv = env as typeof env & Record<string, unknown>;
@@ -33,6 +33,15 @@ export function getCloudflareAnalyticsToken(): string {
 
 export function getEmailFrom(): string {
     return configuredValue(runtimeEnv.EMAIL_FROM, import.meta.env.EMAIL_FROM, process.env.EMAIL_FROM) || 'updates@ai.dosa.dev';
+}
+
+export function getLoginEmailFrom(): string {
+    return configuredValue(runtimeEnv.LOGIN_EMAIL_FROM, import.meta.env.LOGIN_EMAIL_FROM, process.env.LOGIN_EMAIL_FROM)
+        || 'login@ai.dosa.dev';
+}
+
+export function getEmailBinding(): SendEmail | undefined {
+    return runtimeEnv.EMAIL as SendEmail | undefined;
 }
 
 export function getResendApiKey(): string {
@@ -78,6 +87,14 @@ export function getUsernameWriteLimiter(): RateLimit | undefined {
 
 export function getZapWriteLimiter(): RateLimit | undefined {
     return runtimeEnv.ZAP_WRITE_LIMITER as RateLimit | undefined;
+}
+
+export function getEmailOtpLimiter(): RateLimit | undefined {
+    return runtimeEnv.EMAIL_OTP_LIMITER as RateLimit | undefined;
+}
+
+export function getEmailOtpVerifyLimiter(): RateLimit | undefined {
+    return runtimeEnv.EMAIL_OTP_VERIFY_LIMITER as RateLimit | undefined;
 }
 
 export function requireDatabase(): Database {
