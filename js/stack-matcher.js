@@ -234,7 +234,8 @@ function seatLabelFor(profile, monthly, budget, answersPrivacy) {
   if (profile.freeOk && profile.privacy.includes('byok') && answersPrivacy !== 'cloud') {
     return '$0 seat + API usage';
   }
-  if (profile.freeOk) return 'Free / OSS';
+  if (profile.openSource) return 'Free / OSS';
+  if (profile.freeOk) return 'Free tier';
   return 'See pricing';
 }
 

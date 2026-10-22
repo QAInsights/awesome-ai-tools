@@ -123,6 +123,21 @@ describe('stack-matcher engine', () => {
     }
   });
 
+  test('seatLabel says OSS only for open-source tools, Free tier otherwise', () => {
+    const freeCloud = recommendStack({ editor: 'vscode', budget: 'free', privacy: 'cloud', workflow: 'fullstack' }, ctx);
+    for (const slot of freeCloud.slots) {
+      const profile = PROFILE_BY_SLUG.get(slot.selected.slug);
+      expect(slot.selected.seatLabel).toBe(profile.openSource ? 'Free / OSS' : 'Free tier');
+      if (!profile.openSource) expect(slot.selected.seatLabel).not.toContain('OSS');
+    }
+    const freeLocal = recommendStack({ editor: 'vscode', budget: 'free', privacy: 'local', workflow: 'fullstack' }, ctx);
+    for (const slot of freeLocal.slots) {
+      const profile = PROFILE_BY_SLUG.get(slot.selected.slug);
+      const expected = profile.privacy.includes('byok') ? '$0 seat + API usage' : 'Free / OSS';
+      expect(slot.selected.seatLabel).toBe(expected);
+    }
+  });
+
   test('overrides force a pick and surface the natural choice as alternative', () => {
     const rec = recommendStack(DEFAULT_ANSWERS, ctx, { primary: 'zed' });
     expect(rec.slots[0].selected.slug).toBe('zed');
