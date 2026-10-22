@@ -1,0 +1,78 @@
+---
+title: "OpenAI models land in Google Cloud Model Garden"
+description: "OpenAI models and Codex come to Google Cloud's Model Garden, DeepSeek raises $15B, Anthropic ships Claude Duet, and NVIDIA details its OpenShell agent runtime."
+pubDate: 2026-10-22
+tags: ["news","today-in-ai","openai","google-cloud","deepseek","agents","funding","nvidia"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-10-22 UTC.
+
+OpenAI and Google Cloud are now selling the same models on one invoice, DeepSeek banked $15 billion, and Anthropic put an always-on agent behind a waitlist.
+
+## OpenAI models and Codex arrive in Google Cloud Model Garden
+
+**What happened:** OpenAI and Google Cloud are bringing OpenAI frontier models and Codex agentic workflows into Google Cloud's Model Garden, purchased through the Google Cloud Marketplace and drawable against existing GCP spend commitments. OpenAI models will also appear in Google Antigravity and the Gemini Agent.
+
+**Why it matters:** Teams already on GCP can call OpenAI models without a second vendor contract, and enterprises can pay for them out of committed cloud spend.
+
+[Source: OpenAI](<https://openai.com/index/openai-models-google-cloud/>)
+
+## DeepSeek raises $15 billion to take on US labs
+
+**What happened:** Bloomberg reports DeepSeek raised $15 billion, framing the round as a challenge to leading US AI labs.
+
+**Why it matters:** A war chest that size funds compute and talent for the open-weight models many builders already self-host.
+
+[Source: Bloomberg](<https://www.bloomberg.com/news/articles/2026-10-22/deepseek-raises-15-billion-in-challenge-to-leading-us-labs>)
+
+## Anthropic opens waitlist for Claude Duet, an always-on agent
+
+**What happened:** Anthropic says Claude Duet, a proactive agent built on Opus 5.5, is a research preview for US Pro and Max users on a waitlist. Team and Enterprise plans are not included.
+
+**Why it matters:** Proactive agents that act without a prompt change how you design permissions and guardrails, but business accounts cannot test it yet.
+
+[Source: Models at Work](<https://modelsatwork.news/section/breaking>)
+
+## NVIDIA OpenShell treats every agent workload as untrusted
+
+**What happened:** NVIDIA published a reference architecture for OpenShell, an open-source runtime that sandboxes agent workloads, mediates credential access and formally verifies policy permissions. CoreWeave measured more than 3x faster sandbox startup and 1.8x faster agentic loop completion on Vera versus a leading x86 CPU.
+
+**Why it matters:** Long-running agents that spawn sub-agents and pull in code need isolation and revocable credentials, and this gives a concrete pattern to copy.
+
+[Source: NVIDIA](<https://developer.nvidia.com/blog/how-nvidia-openshell-reference-architecture-secures-and-governs-ai-agent-workloads-at-scale/>)
+
+## Recursive ships Flint, a coding model for laptops
+
+**What happened:** TechCrunch reports Recursive launched Flint, a coding model the startup says was largely built by AI. Price Per Token lists it as a free model under the identifier recursive/flint-v1.0.
+
+**Why it matters:** A local coding model built by AI is a cheap way to test agentic coding without per-token API bills.
+
+[Source: TechCrunch](<https://techcrunch.com/2026/10/21/recursive-launches-flint-a-laptop-coding-model-it-says-was-largely-built-by-ai/>)
+
+## ScholarEvolve turns papers into harness code, no retraining
+
+**What happened:** Researchers at UC Santa Barbara and Microsoft built ScholarEvolve, a framework that extracts information from research papers and turns it into code upgrades for an agent's harness. It lifted Qwen3.5-27B from 69.0% to 81.4% task completion on the AppWorld Normal test set without changing model weights.
+
+**Why it matters:** You can close agent performance gaps by upgrading the harness around a fixed open-weight model instead of paying for retraining or a bigger model.
+
+[Source: VentureBeat](<https://venturebeat.com/orchestration/researchers-made-ai-agents-better-by-turning-academic-papers-into-working-code-no-retraining-required>)
+
+## Arm pitches a CPU built for agentic AI workloads
+
+**What happened:** Arm introduced Arm AGI CPU, a Neoverse-based processor class for agentic workloads, and an evaluation methodology backed by Fujitsu, Meta and OpenAI. Arm says independently verified results show up to 2x performance per rack versus leading x86 server processors.
+
+**Why it matters:** Agent orchestration and tool execution are CPU-heavy, so the chip under the sandbox matters as much as the accelerator.
+
+[Source: Arm](<https://newsroom.arm.com/blog/how-to-build-the-agentic-ai-software-stack-on-arm-agi-cpu>)
+
+## Sources
+
+- [OpenAI](<https://openai.com/index/openai-models-google-cloud/>)
+- [Bloomberg](<https://www.bloomberg.com/news/articles/2026-10-22/deepseek-raises-15-billion-in-challenge-to-leading-us-labs>)
+- [Models at Work](<https://modelsatwork.news/section/breaking>)
+- [NVIDIA](<https://developer.nvidia.com/blog/how-nvidia-openshell-reference-architecture-secures-and-governs-ai-agent-workloads-at-scale/>)
+- [TechCrunch](<https://techcrunch.com/2026/10/21/recursive-launches-flint-a-laptop-coding-model-it-says-was-largely-built-by-ai/>)
+- [VentureBeat](<https://venturebeat.com/orchestration/researchers-made-ai-agents-better-by-turning-academic-papers-into-working-code-no-retraining-required>)
+- [Arm](<https://newsroom.arm.com/blog/how-to-build-the-agentic-ai-software-stack-on-arm-agi-cpu>)
