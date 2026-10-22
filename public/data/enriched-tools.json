@@ -10621,5 +10621,92 @@
       "Generative Design"
     ],
     "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "omnara",
+    "name": "Omnara",
+    "company": "Omnara (YC S25)",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 license when self-hosted; you bring your own model provider credentials and machines or sandbox providers. A hosted Omnara Cloud (app.omnara.com) is also offered; its pricing is not published in the repository.",
+    "description": "Omnara is an open-source managed agent platform and a self-hostable alternative to Claude Managed Agents and OpenAI's Agents API. You define an agent in a small YAML config, launch it through a REST API, TypeScript SDK or CLI, and Omnara runs the durable agent loop with tools, secrets, permissions and event streaming on any model and any machine.",
+    "keyFeatures": [
+      "Agents defined in YAML and launched via REST API, `@omnara/sdk` TypeScript SDK, `npx omnara` CLI or the web dashboard",
+      "Durable agents whose state is stored in Postgres, so they survive restarts and cost nothing while idle",
+      "Machines from managed sandbox pools (including an E2B provider) or your own laptop, VM or container",
+      "Model-agnostic: OpenAI, Anthropic, OpenRouter or self-hosted model providers",
+      "Secrets, permissions and RBAC handled by the platform",
+      "Stateless workers plus message and event-stream APIs for chatting with agents"
+    ],
+    "bestFor": "Developers and platform teams building internal bots, code review agents or in-product agents who want a self-hosted, model-agnostic alternative to vendor-hosted managed agent APIs.",
+    "notIdealFor": "Individuals who just want an interactive coding agent in their editor or terminal; Omnara is agent infrastructure, and self-hosting requires running the server, Postgres and your own model and machine providers.",
+    "recentUpdates": "Relaunched as an open-source managed agent platform with a Show HN on October 21, 2026; omnarad v0.2.9 (October 21, 2026) added an E2B machine pool provider, with daily commits continuing on October 22, 2026. The company previously launched on HN (YC S25) with a remote-control app for Claude Code and Codex.",
+    "verdict": "A credible, actively developed open-source take on managed agents from a YC-backed team, with a clean YAML/API model and bring-your-own models and machines; still early, so expect APIs to keep moving.",
+    "tags": [
+      "AI Agents",
+      "Managed Agents",
+      "Agent Infrastructure",
+      "Self-Hosted",
+      "Open Source",
+      "Sandboxes"
+    ],
+    "lastUpdated": "2026-10-22"
+  },
+  {
+    "slug": "scion",
+    "name": "Scion",
+    "company": "Google Cloud Platform",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 license; you supply your own coding-agent harness subscriptions or model credentials and container or cloud infrastructure (Docker, Podman, Apple Container, Kubernetes or Cloud Run).",
+    "description": "Scion is an open-source, experimental orchestration platform from Google Cloud Platform for teams of AI agents and the people working with them. It runs harnesses such as Claude Code, Antigravity, Codex and OpenCode as independent containerized agents with their own roles, configuration and credentials, letting them delegate tasks, share findings and work in parallel locally or on cloud infrastructure.",
+    "keyFeatures": [
+      "Runs Claude Code, Antigravity, Codex and OpenCode as independent agent processes with per-agent configuration and credentials",
+      "Shared workspaces or separate Git worktrees and clones per agent",
+      "Agent roles, delegation, and group and direct messaging between agents",
+      "`scion` CLI plus a Workstation web UI with an onboarding wizard",
+      "Local, Workstation, single-node hosted and HA hosted Hub modes on Docker, Podman, Apple Container, Kubernetes or Cloud Run",
+      "Templates, a versioned Skill Bank and an A2A bridge to other agent systems"
+    ],
+    "bestFor": "Engineers and teams experimenting with multi-agent collaboration patterns who want to orchestrate several off-the-shelf coding agents in isolated containers, from a laptop up to a shared hosted Hub.",
+    "notIdealFor": "Teams that need a stable, supported product; Scion is pre-1.0, its APIs and configuration change between releases, and it is not an officially supported Google product.",
+    "recentUpdates": "Open-sourced in April 2026 (covered by InfoQ); the repository publishes nightly builds (latest nightly-20261022) and receives daily commits, with Homebrew installation via the community homebrew-scion tap and Workstation, hosted Hub and Kubernetes runtimes in active use.",
+    "verdict": "A serious, fast-moving testbed for multi-agent orchestration backed by Google Cloud engineers, with broad harness and runtime support; best treated as an experimental platform rather than production infrastructure.",
+    "tags": [
+      "AI Agents",
+      "Multi-Agent",
+      "Orchestration",
+      "Open Source",
+      "Containers",
+      "Claude Code"
+    ],
+    "lastUpdated": "2026-10-22"
+  },
+  {
+    "slug": "wshobson-agents",
+    "name": "wshobson Agents",
+    "company": "Seth Hobson",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; requires a supported coding tool (Claude Code, Codex CLI, Cursor, OpenCode, Antigravity CLI, GitHub Copilot or Pi) and its own subscription or model access.",
+    "description": "wshobson Agents is an open-source, multi-harness plugin marketplace that packages agents, skills and commands for AI coding tools. One Markdown source is adapted for Claude Code, OpenAI Codex CLI, Cursor, OpenCode, Antigravity CLI, GitHub Copilot and Pi, covering language stacks, code review, testing, infrastructure, security and other development work.",
+    "keyFeatures": [
+      "94 plugins with 202 agents, 185 skills and 105 commands from a shared Markdown source",
+      "Native marketplace install for Claude Code (`/plugin marketplace add wshobson/agents`), Codex CLI and Cursor",
+      "Generated installs for OpenCode, Antigravity CLI, GitHub Copilot and Pi via make targets",
+      "Skills-only installation with `npx skills add` or `gh skill`",
+      "Plugins for Python, JavaScript/TypeScript, code review, testing, infrastructure and security workflows",
+      "Capability matrix documenting model mappings, tool permissions and hooks per harness"
+    ],
+    "bestFor": "Developers using Claude Code, Codex or other agent harnesses who want a large, ready-made library of specialized subagents, skills and commands instead of writing their own.",
+    "notIdealFor": "Teams that want a small, tightly curated set of agent instructions or a standalone tool; it is a content collection whose quality varies by plugin and which depends on your harness's plugin support.",
+    "recentUpdates": "Expanded from a Claude Code subagent collection (July 2025) into a multi-harness marketplace; it has 41K+ GitHub stars and 4.4K+ forks, with October 2026 commits (latest October 17, 2026) fixing developer-essentials and documentation plugins.",
+    "verdict": "One of the most widely adopted open-source agent/skill libraries, now portable across most major coding harnesses; a useful starting point, though you will want to review and trim plugins for your own workflow.",
+    "tags": [
+      "Agent Skills",
+      "Plugins",
+      "Subagents",
+      "Claude Code",
+      "Codex",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-22"
   }
 ]

@@ -1128,6 +1128,18 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "omnara",
+    "name": "Omnara",
+    "company": "Omnara (YC S25)",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "scion",
+    "name": "Scion",
+    "company": "Google Cloud Platform",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1581,6 +1593,12 @@
     "slug": "claude-code-templates",
     "name": "Claude Code Templates",
     "company": "Daniel Avila",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "wshobson-agents",
+    "name": "wshobson Agents",
+    "company": "Seth Hobson",
     "category": "Developer Productivity & Workflow"
   },
   {

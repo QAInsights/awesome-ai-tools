@@ -1550,5 +1550,17 @@
   {
     "companyName": "Aident AI",
     "toolName": "Open-CUAK"
+  },
+  {
+    "companyName": "Omnara (YC S25)",
+    "toolName": "Omnara"
+  },
+  {
+    "companyName": "Google Cloud Platform",
+    "toolName": "Scion"
+  },
+  {
+    "companyName": "Seth Hobson",
+    "toolName": "wshobson Agents"
   }
 ]
