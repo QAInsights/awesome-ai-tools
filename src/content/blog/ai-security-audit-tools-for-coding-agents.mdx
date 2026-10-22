@@ -1,0 +1,343 @@
+---
+title: "AI Security Audit Tools for Coding Agents: Cloudflare security-audit, Codex Security, Trail of Bits Skills, Strix and SkillSpector"
+description: "Compare 5 AI security audit tools for coding agents: Cloudflare security-audit, Codex Security, Trail of Bits Skills, Strix and SkillSpector. Installs and limits."
+pubDate: 2026-10-22
+tags: ["security", "ai", "coding", "open-source", "roundup", "skills", "claude-code", "codex", "security-audit", "codex-security", "trail-of-bits", "strix", "skillspector"]
+---
+
+In this blog post, we will see which AI security audit tools for coding agents are worth running on your own repo this week, how they cut false positives, and a 40 line Python script that shows the "hunt, then try to disprove" idea every one of them is built on. Every version, licence, and star count below was checked on October 22, 2026.
+
+## Table of Contents
+
+1. [The short answer](#the-short-answer)
+2. [Why AI security audits are trending this week](#why-ai-security-audits-are-trending-this-week)
+3. [Hunt, then disprove: the core idea in 40 lines](#hunt-then-disprove-the-core-idea-in-40-lines)
+4. [Cloudflare security-audit skill](#cloudflare-security-audit-skill)
+5. [OpenAI Codex Security CLI](#openai-codex-security-cli)
+6. [Trail of Bits Skills](#trail-of-bits-skills)
+7. [Strix](#strix)
+8. [NVIDIA SkillSpector](#nvidia-skillspector)
+9. [Side by side](#side-by-side)
+10. [Which one I would run first](#which-one-i-would-run-first)
+11. [FAQ](#faq)
+12. [How this ties to ai.dosa.dev](#how-this-ties-to-aidosadev)
+
+## The short answer
+
+For a free, model-agnostic source audit, install Cloudflare's security-audit skill into Claude Code or Codex. If you already pay for ChatGPT Pro, Business or Enterprise, Codex Security's `cs scan .` is the quickest CLI. Add Trail of Bits Skills for diff reviews, Strix for live pentests in Docker, and SkillSpector to vet skills before installing them.
+
+## Why AI security audits are trending this week
+
+Facts checked October 22, 2026. Five signals in 14 days, from five different kinds of source:
+
+- **GitHub Trending.** `cloudflare/security-audit-skill` was the top repo on the daily chart on October 22, adding 2,012 stars in a day.
+- **Vendor releases.** OpenAI shipped Codex Security 0.5.1 on October 20 with hosted patch generation and fix verification. NVIDIA shipped SkillSpector v2.13.0 on October 16. Strix shipped v1.7.0 on October 5.
+- **Anthropic.** On October 8 it launched OSS Scanner, a free opt-in scanning service for open source projects. The post says its models found over 29,000 candidate vulnerabilities in six months, and humans could only triage about 6,000.
+- **AWS.** An October 15 post on the AWS Security Blog says its Security Agent exploited 33 of 37 new real-world CVEs.
+- **Government guidance.** Singapore's Cyber Security Agency published a Security Assessment Handbook for Agentic AI Coding Assistants on October 15.
+
+That Anthropic number is the real story. Finding candidates is now cheap. Proving which ones are real is the bottleneck, and the tools below differ mostly in how they handle that second step.
+
+## Hunt, then disprove: the core idea in 40 lines
+
+Cloudflare's skill, Codex Security and Trail of Bits' `fp-check` all split the work into two passes: a noisy hunt that flags anything suspicious, then a separate verifier that tries to prove each candidate wrong. Here is that pattern with only the Python standard library.
+
+The target is a tiny file with three SQL calls. Only one is exploitable:
+
+```python
+def get_user(db, request):
+    user_id = request.args["id"]
+    return db.execute(f"SELECT * FROM users WHERE id = {user_id}")
+
+
+def get_order(db, order_id: int):
+    return db.execute("SELECT * FROM orders WHERE id = ?", (order_id,))
+
+
+def report_count(db):
+    table = "orders"
+    return db.execute(f"SELECT COUNT(*) FROM {table}")
+```
+
+And the auditor:
+
+```python
+import ast
+import json
+import sys
+
+SOURCE = sys.argv[1]
+tree = ast.parse(open(SOURCE).read())
+
+
+def hunt(tree):
+    """Phase 2: flag every db.execute call. Cheap and noisy on purpose."""
+    for fn in ast.walk(tree):
+        if isinstance(fn, ast.FunctionDef):
+            for node in ast.walk(fn):
+                if isinstance(node, ast.Call) and getattr(node.func, "attr", "") == "execute":
+                    yield fn, node
+
+
+def tainted_names(fn):
+    """Names assigned from request.* inside the function."""
+    names = set()
+    for node in ast.walk(fn):
+        if isinstance(node, ast.Assign) and "request" in ast.unparse(node.value):
+            names |= {t.id for t in node.targets if isinstance(t, ast.Name)}
+    return names
+
+
+def verify(fn, call):
+    """Phase 3: a separate pass that tries to disprove the candidate."""
+    query = call.args[0]
+    if not isinstance(query, ast.JoinedStr):
+        return "rejected", "query is a constant; values are bound as parameters"
+    used = {n.id for n in ast.walk(query) if isinstance(n, ast.Name)}
+    hits = used & tainted_names(fn)
+    if hits:
+        return "confirmed", f"request value {sorted(hits)} reaches SQL via f-string"
+    return "rejected", f"f-string only interpolates local constants {sorted(used)}"
+
+
+findings = []
+for fn, call in hunt(tree):
+    status, reason = verify(fn, call)
+    findings.append({"function": fn.name, "line": call.lineno, "status": status, "reason": reason})
+
+json.dump(findings, open("findings.json", "w"), indent=2)
+for f in findings:
+    print(f"{f['status']:<9} {SOURCE}:{f['line']} {f['function']}: {f['reason']}")
+print(f"\n{len(findings)} candidates -> {sum(f['status'] == 'confirmed' for f in findings)} confirmed")
+```
+
+Run `python3 audit.py app.py` and the output is shown below:
+
+```text
+confirmed app.py:3 get_user: request value ['user_id'] reaches SQL via f-string
+rejected  app.py:7 get_order: query is a constant; values are bound as parameters
+rejected  app.py:12 report_count: f-string only interpolates local constants ['table']
+
+3 candidates -> 1 confirmed
+```
+
+A grep for `execute(` would have handed you three "SQL injections". The verifier kept one, and every rejection carries a reason you can check. That is exactly the `confirmed` / `rejected` split Cloudflare writes to `findings.json`.
+
+What surprised me: the `report_count` f-string is the case naive scanners love to flag, and it is also the case an LLM hunter flags when it skims. The fix is not a better hunter. It is a second pass with a different job. Real tools do this with fresh agents (and Cloudflare's harness even uses a different model) instead of a 10 line taint check.
+
+## Cloudflare security-audit skill
+
+### What it does
+
+[security-audit](https://github.com/cloudflare/security-audit-skill) is a skill that turns Claude Code, Codex or any agent that reads `SKILL.md` into a six-phase auditor: reconnaissance, coverage-led hunting, candidate validation, structured output, independent record verification, and reporting. It writes `architecture.md`, `coverage-ledger.json`, `findings.json`, `REPORT.md` and `NEEDS-VALIDATION.md`, and ships Node validators (`validate-coverage-ledger.cjs`, `validate-findings.cjs`) that check the JSON against a schema.
+
+It is the roughly 450 line skill that seeded Cloudflare's fleet-wide vulnerability harness, described in the June 18 post [Build your own vulnerability harness](https://blog.cloudflare.com/build-your-own-vulnerability-harness/).
+
+### Who it is for
+
+Developers who want a structured audit with the model they already use, and no new vendor account.
+
+### Facts
+
+- Stars: 37,977 on GitHub when I checked
+- Licence: MIT
+- Releases: none tagged. Last commit on `main` was September 14, 2026 ("Clarify guidance and full audit modes")
+- Price: free. You pay for your agent's tokens.
+
+### Try it
+
+```bash
+npx skills add https://github.com/cloudflare/security-audit-skill --skill security-audit
+```
+
+Then ask your agent for a full audit by name, for example "run a full security audit of this repo and write the report artifacts".
+
+### Honest limitation
+
+It has two modes, and that trips people up. Loading the skill alone gives you "guidance mode", which answers security questions and creates no files. You only get the six phases and `findings.json` when you explicitly ask for a full, end-to-end audit. It also launches many parallel sub-agents (the hunting guide suggests 8 to 12+ for a large app), so a full run on a big repo will chew through a plan quota fast.
+
+## OpenAI Codex Security CLI
+
+### What it does
+
+[Codex Security](https://github.com/openai/codex-security) is a CLI and TypeScript SDK that builds a threat model of your repo, hunts for vulnerabilities, tries to validate them, and proposes patches. Version 0.5.1 (October 20, 2026) added hosted patch generation and independent fix verification through `runHostedRemediation()`.
+
+### Who it is for
+
+Teams already on ChatGPT Pro, Business, Enterprise or Edu who want a scan they can drop into CI and fail a build on.
+
+### Facts
+
+- Stars: 11,161 on GitHub when I checked
+- Latest release: 0.5.1 (npm-v0.5.1, October 20, 2026)
+- Licence: Apache 2.0 for the CLI and SDK
+- Price: OpenAI's Codex Security docs list it as a research preview for ChatGPT Enterprise, Edu, Business and Pro. Codex Security Cloud uses token-based billing. No public per-scan price.
+- Runtime: Node.js 22.13+ (22.x), 24.x or 26.x, plus Python 3.10+
+
+### Try it
+
+```bash
+npm install --global @openai/codex-security
+cs login
+cs scan .
+```
+
+Useful variants from the README: `cs scan . --diff origin/main` for a PR, `cs scan . --mode deep` for a deeper pass, and `cs policy .` to draft a `SECURITY.md` that tells the scanner what counts as a bug in your project.
+
+### Honest limitation
+
+The code is Apache 2.0, but the inference is not open. Scans that use OpenAI models need Codex Security access, so a free ChatGPT account will not get you far. The `cs` alias can also collide with another tool on your `PATH`; the README says to fall back to `codex-security` or `npx @openai/codex-security`.
+
+## Trail of Bits Skills
+
+### What it does
+
+[trailofbits/skills](https://github.com/trailofbits/skills) is a Claude Code plugin marketplace from the security firm Trail of Bits. The audit plugins include `differential-review` (security review of a diff with git history), `fp-check` (false positive verification with gate reviews), `insecure-defaults`, `audit-context-building`, `c-review` for C/C++, and `agentic-actions-auditor` for GitHub Actions workflows that run AI agents.
+
+### Who it is for
+
+People who want specific tools for specific jobs rather than one big audit. `differential-review` on every PR is the one I would install first.
+
+### Facts
+
+- Stars: 7,668 on GitHub when I checked
+- Licence: CC BY-SA 4.0 (a content licence, not an OSI software licence)
+- Price: free
+- Works in Codex too, through its Claude marketplace compatibility
+
+### Try it
+
+In Claude Code:
+
+```bash
+/plugin marketplace add trailofbits/skills
+/plugin menu
+```
+
+In Codex:
+
+```bash
+codex plugin marketplace add trailofbits/skills
+```
+
+### Honest limitation
+
+It is a toolbox, not a pipeline. There is no single command that runs everything and writes one report, so you decide which plugin to call and when. The companion [skills-curated](https://github.com/trailofbits/skills-curated) repo exists because, in Trail of Bits' own words, published skills "have been found with backdoors and malicious hooks". That is a good reason to read the next section before installing anything.
+
+## Strix
+
+### What it does
+
+[Strix](https://github.com/usestrix/strix) runs a team of AI pentest agents against your app inside a Docker sandbox. Unlike the three tools above, it does dynamic testing: it runs the code, sends requests, and only reports findings it can back with a proof of concept. v1.7.0 (October 5, 2026) started linking HTTP exchange evidence to each proxy-validated finding.
+
+### Who it is for
+
+Developers who want to see an exploit actually fire against a local or staging build, not just a source-code argument.
+
+### Facts
+
+- Stars: 70,840 on GitHub when I checked
+- Latest release: v1.7.0 (October 5, 2026). PyPI package `strix-agent` 1.7.0, Python 3.12+
+- Licence: Apache 2.0
+- Price: free and bring your own LLM key. A hosted Strix cloud exists; I did not verify its pricing.
+
+### Try it
+
+```bash
+curl -sSL https://strix.ai/install | bash
+export STRIX_LLM="openrouter/z-ai/glm-5.3"
+export LLM_API_KEY="your-api-key"
+strix --target ./app-directory
+```
+
+Docker must be running. The first run pulls the sandbox image, and results land in `strix_runs/`.
+
+### Honest limitation
+
+The package still declares "Development Status :: 3 - Alpha" in `pyproject.toml`, and the repo had 494 open issues when I checked. Point it only at code and hosts you own. An agent that sends live attack traffic to the wrong staging URL is a much worse day than a false positive.
+
+## NVIDIA SkillSpector
+
+### What it does
+
+[SkillSpector](https://github.com/NVIDIA/SkillSpector) is the odd one out: it audits the skills themselves. It scans a skill directory, `SKILL.md`, zip or Git repo for prompt injection, data exfiltration, overbroad permissions and supply-chain risks before you install it. Static checks run by default; LLM semantic analysis is optional.
+
+### Who it is for
+
+Anyone installing skills from the internet, which after reading this post includes you.
+
+### Facts
+
+- Stars: 20,539 on GitHub when I checked
+- Latest release: v2.13.0 (October 16, 2026)
+- Licence: Apache 2.0
+- Price: free
+- README claim: in a 31,132 skill research subset, 26.1% of skills contained vulnerabilities and 5.2% showed likely malicious intent.
+
+### Try it
+
+```bash
+git clone https://github.com/NVIDIA/SkillSpector.git
+cd SkillSpector
+uv venv .venv && source .venv/bin/activate
+make install
+skillspector scan https://github.com/cloudflare/security-audit-skill
+```
+
+Add `--format sarif --output report.sarif` to feed GitHub code scanning.
+
+### Honest limitation
+
+There is no one-line `pip install` in the docs; you clone and build. Static scanners also have a ceiling: in a June 3 post, [The sorry state of skill distribution](https://blog.trailofbits.com/2026/06/03/the-sorry-state-of-skill-distribution/), Trail of Bits bypassed several skill scanners (not SkillSpector) in under an hour per skill. Treat a clean report as one signal, not a pass. v2.13.0 also disabled the Codex CLI analysis provider because its read-only sandbox could reach host secrets, so Codex users need another provider for the LLM pass.
+
+## Side by side
+
+| Tool | Type | Static or dynamic | Licence | Stars (Oct 22) | Cost |
+| --- | --- | --- | --- | --- | --- |
+| Cloudflare security-audit | Agent skill | Static, source-first | MIT | 37,977 | Your agent's tokens |
+| Codex Security | CLI + SDK | Static + validation | Apache 2.0 | 11,161 | ChatGPT paid plans |
+| Trail of Bits Skills | Plugin marketplace | Static, per task | CC BY-SA 4.0 | 7,668 | Your agent's tokens |
+| Strix | Agent team in Docker | Dynamic, PoC-backed | Apache 2.0 | 70,840 | Your LLM key |
+| SkillSpector | Skill scanner | Static + optional LLM | Apache 2.0 | 20,539 | Free |
+
+## Which one I would run first
+
+1. Run SkillSpector on any skill before you install it. That includes the ones in this post.
+2. Install Cloudflare's skill and ask for one full audit of a small repo you know well. You will learn fast whether its `confirmed` findings match your instincts.
+3. Add Trail of Bits' `differential-review` to your PR routine, so new code gets checked while it is still small.
+4. Use Codex Security instead of step 2 if your team already pays for ChatGPT Business or Enterprise and wants a CI gate.
+5. Bring in Strix last, against a local or staging build, once you want proof that a bug is exploitable.
+
+What I would skip: running two source auditors on the same repo and merging the output by hand. You double the token bill and the triage, which is the very bottleneck Anthropic described.
+
+## FAQ
+
+### What is an AI security audit for a coding agent?
+
+It is a workflow where your coding agent reads the codebase like a security reviewer: map trust boundaries, hunt for bugs, then verify each candidate. The good tools write structured findings with evidence instead of a chat reply. Cloudflare's skill and Codex Security both follow this shape.
+
+### Are AI security audit tools for coding agents better than SAST?
+
+They catch different things. SAST tools like Snyk Code match known patterns quickly and cheaply, while agent audits can reason about business logic and auth flows across files. Most teams should keep SAST in CI and add an agent audit before releases.
+
+### How do these tools reduce false positives?
+
+They separate finding from proving. Cloudflare hands every candidate to a fresh verifier that did not hunt it, Codex Security tries to validate findings in an isolated environment, and Strix only reports what its proof of concept confirms. The 40 line script above shows the same split.
+
+### Is Codex Security free?
+
+The CLI and SDK code is Apache 2.0, but scans that use OpenAI inference need Codex Security access. OpenAI lists it as a research preview for ChatGPT Enterprise, Edu, Business and Pro, and the Cloud version uses token-based billing.
+
+### Are agent skills safe to install?
+
+Not by default. NVIDIA's SkillSpector research found vulnerabilities in 26.1% of 31,132 skills it analysed, and Trail of Bits reports skills with backdoors and malicious hooks. Scan a skill and read its hooks before you install it.
+
+## How this ties to ai.dosa.dev
+
+All four installable tools already sit in the AI Code Review & Security category: [Cloudflare security-audit](/tools/security-audit), [Codex Security](/tools/codex-security), [Strix](/tools/strix) and [SkillSpector](/tools/skillspector). Nearby you will find [PentAGI](/tools/pentagi) for self-hosted pentesting and [Open Code Review](/tools/open-code-review) for everyday PR review.
+
+If you are running these audits through Claude Code or Codex, pair them with an isolated runtime from our post on [open source sandboxes for AI coding agents](/blog/open-source-sandboxes-for-ai-coding-agents), and see [agent skills libraries for coding agents](/blog/agent-skills-libraries-for-coding-agents) for how skills install in the first place.
+
+Happy Testing!
+
+Which would you trust more on your own repo: a source auditor that argues a bug is real, or a pentest agent that has to prove it?
