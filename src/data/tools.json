@@ -1546,5 +1546,9 @@
   {
     "companyName": "Ephemeral AI Lab",
     "toolName": "LayerFS"
+  },
+  {
+    "companyName": "Aident AI",
+    "toolName": "Open-CUAK"
   }
 ]

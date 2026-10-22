@@ -1122,6 +1122,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "open-cuak",
+    "name": "Open-CUAK",
+    "company": "Aident AI",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
