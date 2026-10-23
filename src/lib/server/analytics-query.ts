@@ -24,6 +24,7 @@ export interface FunnelViewModel {
     outbound: Array<[string, number]>;
     badgeReferrals: Array<[string, number]>;
     adPrompt: { closed: number; shown: number; opened: number; completed: number };
+    oneTap: { prompted: number; started: number; completed: number };
 }
 
 const INTERVALS: Record<FunnelRange, string> = {
@@ -64,17 +65,23 @@ export function buildFunnelViewModel(rows: FunnelEventRow[]): FunnelViewModel {
     let started = 0;
     let completed = 0;
     const adPrompt = { closed: 0, shown: 0, opened: 0, completed: 0 };
+    const oneTap = { prompted: 0, started: 0, completed: 0 };
 
     for (const row of rows) {
         const count = Number(row.n) || 0;
+        // One Tap skips the modal, so it is reported on its own rather than inflating modal conversion.
+        const viaModal = row.trigger !== 'one_tap';
         if (row.event === EVENTS.SIGNIN_MODAL_SHOWN) shown += count;
+        if (row.event === EVENTS.ONE_TAP_PROMPTED) oneTap.prompted += count;
+        if (!viaModal && row.event === EVENTS.SIGNIN_STARTED) oneTap.started += count;
+        if (!viaModal && row.event === EVENTS.SIGNIN_COMPLETED) oneTap.completed += count;
         if (row.event === EVENTS.SIGNIN_STARTED) {
-            started += count;
+            if (viaModal) started += count;
             const provider = providers.get(row.provider);
             if (provider) provider.started += count;
         }
         if (row.event === EVENTS.SIGNIN_COMPLETED) {
-            completed += count;
+            if (viaModal) completed += count;
             const provider = providers.get(row.provider);
             if (provider) provider.completed += count;
             if (row.trigger) {
@@ -110,6 +117,7 @@ export function buildFunnelViewModel(rows: FunnelEventRow[]): FunnelViewModel {
         outbound: Array.from(outbound).sort((a, b) => b[1] - a[1]).slice(0, 20),
         badgeReferrals: Array.from(badgeReferrals).sort((a, b) => b[1] - a[1]).slice(0, 20),
         adPrompt,
+        oneTap,
     };
 }
 

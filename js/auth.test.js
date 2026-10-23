@@ -2,7 +2,7 @@ import { afterEach, describe, expect, test } from 'bun:test';
 import { EVENTS } from '../src/lib/analytics-events.js';
 import { analytics } from './analytics-client.js';
 import { authAttribution } from './auth-attribution.js';
-import { AuthManager } from './auth.js';
+import { AuthManager, isOneTapCredential } from './auth.js';
 
 function flushMicrotasks(times = 3) {
     let pending = Promise.resolve();
@@ -202,6 +202,60 @@ describe('session mutation ordering', () => {
             global.fetch = originalFetch;
             analytics.track = originalTrack;
             authAttribution.current = originalCurrent;
+        }
+    });
+});
+
+describe('Google One Tap', () => {
+    test('detects One Tap credentials from select_by', () => {
+        expect(isOneTapCredential({ select_by: 'user_1tap' })).toBe(true);
+        expect(isOneTapCredential({ select_by: 'fedcm' })).toBe(true);
+        expect(isOneTapCredential({ select_by: 'btn' })).toBe(false);
+        expect(isOneTapCredential({ select_by: 'btn_confirm' })).toBe(false);
+        expect(isOneTapCredential({})).toBe(false);
+    });
+
+    test('attributes a One Tap credential to the one_tap trigger', async () => {
+        const events = [];
+        const originalTrack = analytics.track;
+        analytics.track = (event, fields) => events.push({ event, fields });
+        let triggerAtSession = '';
+        try {
+            const manager = new AuthManager({
+                createGoogle: async () => {
+                    triggerAtSession = authAttribution.current();
+                    return { id: 'google:1', provider: 'google' };
+                },
+            });
+            await manager._handleGoogleCredential({ credential: 'token', select_by: 'user_1tap' });
+
+            expect(triggerAtSession).toBe('one_tap');
+            expect(events[0]).toEqual({ event: EVENTS.SIGNIN_STARTED, fields: { provider: 'google', trigger: 'one_tap' } });
+        } finally {
+            analytics.track = originalTrack;
+            authAttribution.clear();
+        }
+    });
+
+    test('tracks the prompt only when Google is ready and the visitor is signed out', () => {
+        const events = [];
+        const originalTrack = analytics.track;
+        analytics.track = (event, fields) => events.push({ event, fields });
+        let prompts = 0;
+        global.window = { google: { accounts: { id: { prompt: () => { prompts += 1; } } } } };
+        try {
+            const manager = new AuthManager();
+            expect(manager.showOneTap()).toBe(false);
+            manager.isGoogleInitialized = true;
+            manager.user = { id: 'google:1' };
+            expect(manager.showOneTap()).toBe(false);
+            manager.user = null;
+            expect(manager.showOneTap()).toBe(true);
+
+            expect(prompts).toBe(1);
+            expect(events).toEqual([{ event: EVENTS.ONE_TAP_PROMPTED, fields: { trigger: 'one_tap' } }]);
+        } finally {
+            analytics.track = originalTrack;
         }
     });
 });

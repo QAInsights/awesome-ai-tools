@@ -23,7 +23,7 @@ const subjectPolicies = {
     },
 };
 
-export const AUTH_TRIGGERS = Object.freeze(['sidebar', 'favorite_heart', 'follow_bell', 'zap_btn', 'ad_close', 'stack_add', 'news_cta', 'browse_gate']);
+export const AUTH_TRIGGERS = Object.freeze(['sidebar', 'favorite_heart', 'follow_bell', 'zap_btn', 'ad_close', 'stack_add', 'news_cta', 'browse_gate', 'one_tap']);
 export const AD_STYLES = Object.freeze(['stickybox', 'fixedfooter']);
 export const BROWSE_GATE_SURFACES = Object.freeze(['wall', 'nudge']);
 export const OUTBOUND_TRIGGERS = Object.freeze(['tool_card', 'tool_detail', 'comparison', 'category', 'unknown']);
@@ -57,6 +57,7 @@ export const EVENTS = Object.freeze({
     AD_PROMPT_DISMISSED: 'ad_prompt_dismissed',
     BROWSE_GATE_SHOWN: 'browse_gate_shown',
     BROWSE_GATE_DISMISSED: 'browse_gate_dismissed',
+    ONE_TAP_PROMPTED: 'one_tap_prompted',
     VISIT: 'visit',
 });
 
@@ -85,6 +86,7 @@ export const EVENT_CATALOG = Object.freeze({
     [EVENTS.AD_PROMPT_DISMISSED]: { client: true, triggers: AD_STYLES, subject: subjectPolicies.none },
     [EVENTS.BROWSE_GATE_SHOWN]: { client: true, triggers: BROWSE_GATE_SURFACES, subject: subjectPolicies.none },
     [EVENTS.BROWSE_GATE_DISMISSED]: { client: true, triggers: BROWSE_GATE_SURFACES, subject: subjectPolicies.none },
+    [EVENTS.ONE_TAP_PROMPTED]: { client: true, triggers: ['one_tap'], subject: subjectPolicies.none },
     // One per browser session: trigger = ?ref= source, subject = external referrer host.
     [EVENTS.VISIT]: { client: true, triggers: REF_SOURCES, subject: subjectPolicies.host },
 });

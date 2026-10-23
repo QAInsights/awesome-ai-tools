@@ -40,6 +40,23 @@ describe('funnel view model', () => {
         expect(model.badgeReferrals).toEqual([['cursor', 3], ['(home)', 1]]);
         expect(model.adPrompt).toEqual({ closed: 12, shown: 7, opened: 2, completed: 1 });
     });
+
+    test('reports One Tap separately from the modal funnel', () => {
+        const model = buildFunnelViewModel([
+            { event: 'signin_modal_shown', trigger: 'zap_btn', subject: '', provider: '', n: 10 },
+            { event: 'signin_started', trigger: 'zap_btn', subject: '', provider: 'google', n: 5 },
+            { event: 'signin_completed', trigger: 'zap_btn', subject: '', provider: 'google', n: 4 },
+            { event: 'one_tap_prompted', trigger: 'one_tap', subject: '', provider: '', n: 40 },
+            { event: 'signin_started', trigger: 'one_tap', subject: '', provider: 'google', n: 6 },
+            { event: 'signin_completed', trigger: 'one_tap', subject: '', provider: 'google', n: 5 },
+        ]);
+
+        expect(model.oneTap).toEqual({ prompted: 40, started: 6, completed: 5 });
+        expect(model.started).toBe(5);
+        expect(model.completed).toBe(4);
+        expect(model.providers.find((row: { provider: string }) => row.provider === 'google')).toMatchObject({ started: 11, completed: 9 });
+        expect(model.triggers.find((row: { trigger: string }) => row.trigger === 'one_tap')).toMatchObject({ completed: 5 });
+    });
 });
 
 describe('growth baseline', () => {

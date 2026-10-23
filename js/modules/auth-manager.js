@@ -12,6 +12,13 @@ export function getSignInModalOrder(emailFirst) {
         : ['oauthSignInGroup', 'emailOauthDivider', 'emailSignInFlow'];
 }
 
+const ONE_TAP_SKIPPED_PATHS = ['/admin', '/settings', '/unsubscribe'];
+
+export function shouldOfferOneTap({ pathname = '', signedIn = false, modalOpen = false } = {}) {
+    if (signedIn || modalOpen) return false;
+    return !ONE_TAP_SKIPPED_PATHS.some(path => pathname === path || pathname.startsWith(`${path}/`));
+}
+
 export function initAuthManager(callbacks) {
     const { onStateChange, collapsedSidebar } = callbacks;
     let newsSubscribeGeneration = 0;
@@ -312,6 +319,14 @@ export function initAuthManager(callbacks) {
 
             // Initial UI update
             session.subscribe(handleAuthStateChange);
+
+            if (shouldOfferOneTap({
+                pathname: location.pathname,
+                signedIn: auth.isAuthenticated(),
+                modalOpen: Boolean(signInModal && !signInModal.classList.contains('hidden')),
+            })) {
+                auth.showOneTap();
+            }
         } catch (error) {
             console.error('Auth initialization failed:', error);
         }
