@@ -137,7 +137,7 @@ export function initStackMatcherUI({ catalog = {}, switchPairs = [] } = {}) {
         <span class="sm-pill sm-pill-seat">${esc(sel.seatLabel)}</span>
       </div>
       <p class="sm-why">${esc(sel.whyItFits)}</p>
-      ${sel.relaxed ? `<div class="sm-relaxed">Loosened the ${esc(sel.relaxed)} filter — no exact match in the catalog</div>` : ''}
+      ${sel.relaxed ? `<div class="sm-relaxed">Loosened the ${esc(sel.relaxed)} filter: no exact match in the catalog</div>` : ''}
       <div class="sm-swaps">
         <span class="sm-swaps-label">Also fits:</span>
         ${alts}
@@ -258,7 +258,7 @@ export function initStackMatcherUI({ catalog = {}, switchPairs = [] } = {}) {
 
   function promptSignIn() {
     stashPending();
-    setStatus("Sign in to save this stack — we'll finish saving when you're back.", { sticky: true });
+    setStatus("Sign in to save this stack. We'll finish saving when you're back.", { sticky: true });
     authAttribution.open('stack_add');
   }
 
@@ -325,7 +325,7 @@ export function initStackMatcherUI({ catalog = {}, switchPairs = [] } = {}) {
       await navigator.clipboard.writeText(formatRecommendedStackMarkdown(lastRec, window.location.origin));
       setStatus('Markdown copied to clipboard.');
     } catch {
-      setStatus('Copy failed — select the summary text instead.');
+      setStatus('Copy failed. Select the summary text instead.');
     }
   });
 
@@ -335,7 +335,7 @@ export function initStackMatcherUI({ catalog = {}, switchPairs = [] } = {}) {
       await navigator.clipboard.writeText(url);
       setStatus('Share link copied to clipboard.');
     } catch {
-      setStatus('Copy failed — copy the address bar instead.');
+      setStatus('Copy failed. Copy the address bar instead.');
     }
   });
 

@@ -230,7 +230,7 @@ describe('news-subscribe', () => {
 
         expect(res.status).toBe('error');
         expect(storage.getItem(NEWS_SUBSCRIBE_PENDING_KEY)).toBe('1');
-        expect(labelEl.textContent).toBe('Could not save — try again');
+        expect(labelEl.textContent).toBe('Could not save. Try again');
     });
 
     test('clearPendingNewsSubscribe removes pending intent when sign-in modal is dismissed', () => {

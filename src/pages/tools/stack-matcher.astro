@@ -23,7 +23,7 @@ const switchPairs = switchGuides.map(g => ({ slug: g.slug, from: g.from, to: g.t
 
 const SLOT_EXPLAINERS: Record<string, string> = {
   primary: 'Hard-filtered to tools native to your environment; full AI IDEs outrank plugins for GUI editors, and only free-tier or open-source tools survive a $0 budget.',
-  companion: 'Prefers a complementary form factor — a terminal agent next to a GUI editor — and boosts tools built for your privacy model (BYOK or local).',
+  companion: 'Prefers a complementary form factor (a terminal agent next to a GUI editor) and boosts tools built for your privacy model (BYOK or local).',
   quality: 'Environment-agnostic PR review, security, and testing tools scored on workflow fit, with seat cost taken from the live catalog pricing.',
 };
 
@@ -36,7 +36,7 @@ const jsonLd = JSON.stringify({
       name: 'AI Coding Stack Matcher',
       url: 'https://ai.dosa.dev/tools/stack-matcher',
       description:
-        'Interactive 4-question quiz that recommends a 3-tool AI coding stack — primary editor or agent, companion agent, and review/QA — with cost estimates, rules config export, and 1-click save to My Stacks. 100% client-side.',
+        'Interactive 4-question quiz that recommends a 3-tool AI coding stack: primary editor or agent, companion agent, and review/QA, with cost estimates, rules config export, and 1-click save to My Stacks. 100% client-side.',
       applicationCategory: 'DeveloperApplication',
       operatingSystem: 'Any',
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
@@ -57,7 +57,7 @@ const jsonLd = JSON.stringify({
           name: 'How does the Stack Matcher pick tools?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Each tool in the catalog has a matching profile (environments, privacy model, workflow strengths, seat pricing). The matcher hard-filters tools that cannot fit your answers — e.g. local-only privacy or a $0 budget — then scores the survivors and picks the strongest candidate for each of the three slots.',
+            text: 'Each tool in the catalog has a matching profile (environments, privacy model, workflow strengths, seat pricing). The matcher hard-filters tools that cannot fit your answers (for example local-only privacy or a $0 budget), then scores the survivors and picks the strongest candidate for each of the three slots.',
           },
         },
         {
@@ -65,7 +65,7 @@ const jsonLd = JSON.stringify({
           name: 'Does the matcher upload anything to a server?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'No. Matching runs entirely in your browser — your answers never leave the page. The only server call happens if you choose to save the recommended stack to My Stacks, which requires signing in.',
+            text: 'No. Matching runs entirely in your browser, so your answers never leave the page. The only server call happens if you choose to save the recommended stack to My Stacks, which requires signing in.',
           },
         },
         {
@@ -73,7 +73,7 @@ const jsonLd = JSON.stringify({
           name: 'Can I swap one of the recommended tools?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Yes. Every slot shows up to three runner-up alternatives — click any of them to swap it in, or reset the slot to the natural top pick. The URL updates so you can share the customized stack.',
+            text: 'Yes. Every slot shows up to three runner-up alternatives. Click any of them to swap it in, or reset the slot to the natural top pick. The URL updates so you can share the customized stack.',
           },
         },
       ],
@@ -90,8 +90,8 @@ const jsonLd = JSON.stringify({
 ---
 
 <DashboardLayout
-  title="AI Coding Stack Matcher — Build Your Cursor, Claude Code & Review Stack | ai.dosa.dev"
-  description="Answer 4 questions and get a matched 3-tool AI coding stack: primary environment, companion agent, and review/QA — with seat cost estimates and 1-click save to My Stacks."
+  title="AI Coding Stack Matcher: Build Your Cursor, Claude Code & Review Stack | ai.dosa.dev"
+  description="Answer 4 questions and get a matched 3-tool AI coding stack: primary environment, companion agent, and review/QA, with seat cost estimates and 1-click save to My Stacks."
   canonical="https://ai.dosa.dev/tools/stack-matcher"
   activeNav="stack-matcher"
 >
@@ -114,8 +114,8 @@ const jsonLd = JSON.stringify({
             AI Coding Stack Matcher
           </h1>
           <p class="text-[#a3a3a3] text-sm leading-relaxed mt-1.5 max-w-[68ch]">
-            Answer four questions about how you work and get a matched 3-tool stack —
-            a primary environment, a companion agent, and a review layer — with monthly cost estimates.
+            Answer four questions about how you work and get a matched 3-tool stack:
+            a primary environment, a companion agent, and a review layer, with monthly cost estimates.
           </p>
         </div>
         <div class="flex flex-wrap items-center gap-2.5 shrink-0">
@@ -168,7 +168,7 @@ const jsonLd = JSON.stringify({
         <aside class="lg:col-span-5 lg:sticky lg:top-6 flex flex-col gap-5">
           <section class="sm-panel sm-panel-featured">
             <div class="sm-label text-[#d6b77a]">Matched Stack</div>
-            <h2 id="smTitle" class="text-xl md:text-2xl font-semibold tracking-tight text-[#f4f4f2] mt-1.5">—</h2>
+            <h2 id="smTitle" class="text-xl md:text-2xl font-semibold tracking-tight text-[#f4f4f2] mt-1.5">…</h2>
             <div id="smAnswerChips" class="flex flex-wrap gap-1.5 mt-2.5"></div>
             <div id="smEstimate" class="text-2xl md:text-3xl font-medium tracking-tight font-mono text-[#e2c48a] mt-4">$0/mo</div>
             <p id="smSummary" class="text-xs text-[#a3a3a3] leading-relaxed mt-2"></p>

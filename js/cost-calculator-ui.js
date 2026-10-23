@@ -161,7 +161,7 @@ export function initCostCalculatorUI(catalog) {
         const optionsHtml = tool.plans
           .map(
             p =>
-              `<option value="${esc(p.name)}" ${p.name === sel.planName ? 'selected' : ''}>${esc(p.name)} — ${esc(p.price)}${esc(p.unit)}</option>`,
+              `<option value="${esc(p.name)}" ${p.name === sel.planName ? 'selected' : ''}>${esc(p.name)}: ${esc(p.price)}${esc(p.unit)}</option>`,
           )
           .join('');
         return `<div class="cc-selected-row">

@@ -52,7 +52,7 @@ export function inferProfile(entry) {
     base: 3,
     nativeTo: [],
     rules: null,
-    why: entry.description || `${entry.name} — ${entry.categoryShort}`,
+    why: entry.description || `${entry.name}: ${entry.categoryShort}`,
   };
 }
 
@@ -347,7 +347,7 @@ export function recommendStack(rawAnswers, context = {}, overrides = {}) {
   }
 
   const title = `${WORKFLOW_TITLE[answers.workflow]} ${EDITOR_TITLE[answers.editor]} Stack`;
-  const summary = `${primary.selected.name} + ${companion.selected.name} + ${quality.selected.name} — matched for ${optionLabel('budget', answers.budget)} budget, ${optionLabel('privacy', answers.privacy)}, ${optionLabel('workflow', answers.workflow).toLowerCase()}. Built with the ai.dosa.dev Stack Matcher.`;
+  const summary = `${primary.selected.name} + ${companion.selected.name} + ${quality.selected.name}: matched for ${optionLabel('budget', answers.budget)} budget, ${optionLabel('privacy', answers.privacy)}, ${optionLabel('workflow', answers.workflow).toLowerCase()}. Built with the ai.dosa.dev Stack Matcher.`;
 
   const preset = answers.workflow === 'agentic' ? 'agentic' : answers.workflow === 'review' ? 'light' : 'daily';
   const seatTokens = slots
