@@ -23,6 +23,17 @@ function stripEmoji(value) {
     .trim();
 }
 
+const PLACEHOLDER_LINK = /\[GitHub\]\((?!https?:\/\/)[^)]*\)|_No response_/;
+const placeholderRows = readFileSync(README_PATH, 'utf-8')
+  .split('\n')
+  .map((line, i) => ({ line, number: i + 1 }))
+  .filter(({ line }) => line.startsWith('|') && PLACEHOLDER_LINK.test(line));
+if (placeholderRows.length > 0) {
+  console.error('README.md has issue-form placeholders in catalog rows (GitHub links must be http(s) URLs):');
+  for (const { number, line } of placeholderRows) console.error(`- line ${number}: ${line.slice(0, 120)}`);
+  process.exit(1);
+}
+
 function buildCatalog() {
   const markdown = readFileSync(README_PATH, 'utf-8');
   const tools = parseMarkdown(markdown);
