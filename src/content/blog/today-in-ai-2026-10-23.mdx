@@ -1,0 +1,78 @@
+---
+title: "OpenAI's Decisions API goes wide as $30B round nears"
+description: "OpenAI opens its Decisions API to all customers and lines up up to $30B at a $1.25T valuation, while Google launches Agent Compute Engine for agents."
+pubDate: 2026-10-23
+tags: ["news","today-in-ai","openai","funding","agents","infrastructure","copyright"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-10-23 UTC.
+
+OpenAI shipped a fast classifier API and is closing a record private round, while Google and NVIDIA pushed new plumbing for agents and local models.
+
+## OpenAI opens Decisions API to all customers
+
+**What happened:** OpenAI made its Decisions API model generally available on Thursday, after announcing it at its September 29 developer day. The public version adds voice and visual modalities, and OpenAI says it cut latency from one to three seconds down to 100 to 180 milliseconds.
+
+**Why it matters:** If a classifier can answer in about 150ms, builders can swap out full LLM calls in routing and selection steps and cut both latency and cost.
+
+[Source: TechCrunch](<https://techcrunch.com/2026/10/22/openai-makes-its-jev-competitor-widely-available-as-decision-model-competition-heats-up/>)
+
+## OpenAI nears up to $30B raise at $1.25T valuation
+
+**What happened:** OpenAI is close to finalizing a round of up to $30 billion at a $1.25 trillion pre-money valuation, led by investors from the UAE and Coatue, CNBC reported. The company is also negotiating a commercial deal for more computing capacity from the UAE and aims to secure signatures by the end of next week.
+
+**Why it matters:** A round this size, positioned as a bridge to an IPO, tells builders where OpenAI's compute budget is heading and who it will answer to next.
+
+[Source: CNBC](<https://www.cnbc.com/2026/10/22/openai-funding-round-uae-investors.html>)
+
+## Google launches Agent Compute Engine for Gemini agents
+
+**What happened:** At AGNTCon + MCPCon, Google Cloud announced Agent Compute Engine, a service that gives each Gemini agent its own hardware-isolated microVM with container-speed startup and no credentials inside the sandbox. It already powers Gemini for work tasks and will be available in preview in the coming months.
+
+**Why it matters:** Running many concurrent agents safely has meant building your own sandboxing; a managed microVM per agent removes that work if you are on Google Cloud.
+
+[Source: Google Cloud](<https://cloud.google.com/blog/topics/ai-infrastructure/introducing-agent-compute-engine-and-expanded-agent-governance>)
+
+## DGX Spark clusters scale to eight nodes and 1TB memory
+
+**What happened:** NVIDIA said DGX Spark now supports official eight-node clusters, scaling unified memory to 1TB and running the full 753B GLM 5.3 locally. Its RoCEnante backend delivered a 4.43x decode speedup at eight nodes, and decode throughput rose from about 12 to 52 tokens per second with Qwen3.8-27B.
+
+**Why it matters:** Desk-side clusters can now hold models that previously needed a datacenter, which changes what a small team can run without renting GPUs.
+
+[Source: NVIDIA](<https://developer.nvidia.com/blog/running-frontier-class-ai-models-across-8-nvidia-dgx-spark-nodes/>)
+
+## Stripe to buy OpenRouter for more than $8B
+
+**What happened:** Stripe has agreed to acquire AI model-routing platform OpenRouter in a deal valued by sources at more than eight billion dollars, according to a report citing Reuters. The same report says Google entered a custom-chip partnership with Marvell that includes up to twelve billion dollars in share purchases.
+
+**Why it matters:** OpenRouter is the routing layer many apps use to switch between models, so a payments company owning it puts billing and model choice under one roof.
+
+[Source: CNNBC](<https://cnnbc.com/stripe-and-google-commit-billions-to-expand-artificial-intelligence-infrastructure>)
+
+## Uber rolls ChatGPT Work agent out to 30, 000 employees
+
+**What happened:** Uber expanded OpenAI's ChatGPT Work agent company-wide to more than 30, 000 employees after a 1, 000-person pilot, making GPT-6.1 Sol the default model while its engineers stay on Codex, according to AI Chat Daily.
+
+**Why it matters:** A rollout at this scale is a live test of whether an always-on work agent holds up outside a pilot, and of keeping coding tools separate from general agents.
+
+[Source: AI Chat Daily](<https://www.aichatdaily.com/ai-business>)
+
+## Third Circuit rejects fair use for AI training on Westlaw
+
+**What happened:** The Third Circuit affirmed that ROSS Intelligence's use of 2, 243 Westlaw headnotes to train its legal research tool was not fair use, in a September 29 ruling. The panel found the use commercial and minimally transformative and said a licensing market for AI training data counts under factor four.
+
+**Why it matters:** For teams training on licensed editorial content, the ruling makes a data license the safer path and raises the cost of copying source material instead.
+
+[Source: PerspireIP](<https://www.perspireip.com/news/third-circuit-ross-intelligence-ai-training-fair-use-westlaw-headnotes/>)
+
+## Sources
+
+- [TechCrunch](<https://techcrunch.com/2026/10/22/openai-makes-its-jev-competitor-widely-available-as-decision-model-competition-heats-up/>)
+- [CNBC](<https://www.cnbc.com/2026/10/22/openai-funding-round-uae-investors.html>)
+- [Google Cloud](<https://cloud.google.com/blog/topics/ai-infrastructure/introducing-agent-compute-engine-and-expanded-agent-governance>)
+- [NVIDIA](<https://developer.nvidia.com/blog/running-frontier-class-ai-models-across-8-nvidia-dgx-spark-nodes/>)
+- [CNNBC](<https://cnnbc.com/stripe-and-google-commit-billions-to-expand-artificial-intelligence-infrastructure>)
+- [AI Chat Daily](<https://www.aichatdaily.com/ai-business>)
+- [PerspireIP](<https://www.perspireip.com/news/third-circuit-ross-intelligence-ai-training-fair-use-westlaw-headnotes/>)
