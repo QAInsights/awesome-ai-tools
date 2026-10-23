@@ -1392,6 +1392,12 @@
     "category": "AI Testing & Quality Assurance"
   },
   {
+    "slug": "promptfoo",
+    "name": "Promptfoo",
+    "company": "Promptfoo (part of OpenAI)",
+    "category": "AI Testing & Quality Assurance"
+  },
+  {
     "slug": "claude",
     "name": "Claude",
     "company": "Anthropic",
@@ -1614,6 +1620,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "pandacode",
+    "name": "PandaCode",
+    "company": "AICodeKing",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "fractal-os",
     "name": "Fractal OS",
     "company": "Nubler Digital",
@@ -1737,6 +1749,18 @@
     "slug": "orcareplay",
     "name": "OrcaReplay",
     "company": "Continuum AI",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "agentplay",
+    "name": "agentplay",
+    "company": "Entelligence AI",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "scrawl",
+    "name": "Scrawl",
+    "company": "Kit Langton",
     "category": "Developer Productivity & Workflow"
   },
   {

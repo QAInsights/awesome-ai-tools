@@ -1562,5 +1562,21 @@
   {
     "companyName": "Seth Hobson",
     "toolName": "wshobson Agents"
+  },
+  {
+    "companyName": "Promptfoo (part of OpenAI)",
+    "toolName": "Promptfoo"
+  },
+  {
+    "companyName": "AICodeKing",
+    "toolName": "PandaCode"
+  },
+  {
+    "companyName": "Entelligence AI",
+    "toolName": "agentplay"
+  },
+  {
+    "companyName": "Kit Langton",
+    "toolName": "Scrawl"
   }
 ]
