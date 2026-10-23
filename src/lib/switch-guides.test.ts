@@ -4,6 +4,9 @@ import {
     TOOL_RULES_PROFILE,
     buildMigrationSteps,
     buildSwitchFaqs,
+    buildSwitchHubFaqs,
+    rulesPort,
+    SWITCH_PILOT_STEPS,
     computeCostDelta,
     getResolvedSwitchGuides,
     getReverseGuide,
@@ -197,5 +200,34 @@ describe('indexing', () => {
         }
         const indexable = resolved.length - noindexed.length;
         expect(indexable, `noindexed switch guides:\n${noindexed.join('\n')}`).toBeGreaterThanOrEqual(18);
+    });
+});
+
+describe('switch hub', () => {
+    const guides = getResolvedSwitchGuides();
+
+    test('rulesPort classifies every guide and counts add up in the hub FAQ', () => {
+        const kinds = guides.map(g => rulesPort(g).kind);
+        for (const g of guides) {
+            const port = rulesPort(g);
+            if (port.kind === 'convert') expect(g.converterHref).toBeTruthy();
+            if (port.kind === 'copy') expect(g.fromProfile?.format).toBe(g.toProfile?.format);
+        }
+        const faq = buildSwitchHubFaqs(guides).find(f => f.q.includes('rewrite my rules'));
+        expect(faq?.a).toContain(`Of the ${guides.length} guides, ${kinds.filter(k => k === 'convert').length} let the Rules Converter`);
+        expect(faq?.a).not.toMatch(/\b0 (let|read|need)\b/);
+    });
+
+    test('hub FAQs and pilot steps carry no em dashes', () => {
+        const text = [...buildSwitchHubFaqs(guides).flatMap(f => [f.q, f.a]), ...SWITCH_PILOT_STEPS.flatMap(s => [s.name, s.text])].join(' ');
+        expect(text).not.toContain('\u2014');
+        expect(SWITCH_PILOT_STEPS).toHaveLength(4);
+    });
+
+    test('biggest-saving FAQ names the cheapest switch', () => {
+        const cheapest = guides.filter(g => g.costDelta.kind === 'cheaper').sort((a, b) => a.costDelta.annualDeltaTeam10 - b.costDelta.annualDeltaTeam10)[0];
+        const faq = buildSwitchHubFaqs(guides).find(f => f.q.startsWith('Which switch saves'));
+        if (cheapest) expect(faq?.a.startsWith(`${cheapest.fromTool.name} to ${cheapest.toTool.name}`)).toBe(true);
+        else expect(faq).toBeUndefined();
     });
 });

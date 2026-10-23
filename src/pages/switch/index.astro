@@ -7,17 +7,24 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
-import { getResolvedSwitchGuides, type ResolvedSwitchGuide } from '../../lib/switch-guides';
+import { getResolvedSwitchGuides, rulesPort, buildSwitchHubFaqs, SWITCH_PILOT_STEPS, type ResolvedSwitchGuide } from '../../lib/switch-guides';
+import { formatDate } from '../../lib/tools';
 import { getIndexingDecisions } from '../../lib/indexing';
 import FolioStyles from '../../components/folio/FolioStyles.astro';
 import FolioTitle from '../../components/folio/FolioTitle.astro';
+import FolioFaq from '../../components/folio/FolioFaq.astro';
 import FolioScroll from '../../components/folio/FolioScroll.astro';
 
 const decisions = getIndexingDecisions();
 const guides = getResolvedSwitchGuides();
 const indexable = guides.filter(g => decisions.get(`/switch/${g.slug}`)?.indexable);
 const pageUrl = 'https://ai.dosa.dev/switch';
-const description = `${guides.length} directional migration guides between AI coding tools: config file mapping, a 4-step checklist and the seat cost delta for each switch.`;
+const description = `${guides.length} migration playbooks for moving between Copilot, Cursor, Claude Code, Devin and BYOK tools: rules file mapping, seat cost delta and a 1-week pilot checklist.`;
+const faqs = buildSwitchHubFaqs(guides);
+const lastUpdated = guides.map(g => g.lastUpdated).filter((d): d is string => Boolean(d) && !isNaN(new Date(d!).getTime())).sort((a, b) => new Date(a).getTime() - new Date(b).getTime()).at(-1) ?? null;
+const lastUpdatedLabel = formatDate(lastUpdated);
+const groupId = (group: string) => group.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const pilotText = ['1-week pilot checklist (ai.dosa.dev/switch)', ...SWITCH_PILOT_STEPS.map((s, i) => `${i + 1}. ${s.name}: ${s.text}`)].join('\n');
 
 // Group guides, preserving data-file order
 const groups = new Map<string, ResolvedSwitchGuide[]>();
@@ -39,6 +46,7 @@ const jsonLd = JSON.stringify({
             "name": "Switch Guides - AI Coding Tool Migrations",
             "description": description,
             "inLanguage": "en",
+            ...(lastUpdated ? { "dateModified": lastUpdated } : {}),
             "isPartOf": { "@type": "WebSite", "@id": "https://ai.dosa.dev/#website", "url": "https://ai.dosa.dev", "name": "ai.dosa.dev - Awesome AI Tools" },
         },
         {
@@ -49,6 +57,28 @@ const jsonLd = JSON.stringify({
                 "position": i + 1,
                 "name": `Switch from ${g.fromTool.name} to ${g.toTool.name}`,
                 "url": `https://ai.dosa.dev/switch/${g.slug}`
+            }))
+        },
+        {
+            "@type": "HowTo",
+            "@id": `${pageUrl}#pilot`,
+            "name": "Run a 1-week pilot before switching AI coding tools",
+            "totalTime": "P7D",
+            "step": SWITCH_PILOT_STEPS.map((s, i) => ({
+                "@type": "HowToStep",
+                "position": i + 1,
+                "name": s.name,
+                "text": s.text,
+                ...(s.url ? { "url": `https://ai.dosa.dev${s.url}` } : {})
+            }))
+        },
+        {
+            "@type": "FAQPage",
+            "@id": `${pageUrl}#faq`,
+            "mainEntity": faqs.map(f => ({
+                "@type": "Question",
+                "name": f.q,
+                "acceptedAnswer": { "@type": "Answer", "text": f.a }
             }))
         },
         {
@@ -63,9 +93,9 @@ const jsonLd = JSON.stringify({
 ---
 
 <BaseLayout
-    title="Switch Guides (2026): Migrate Between AI Coding Tools | ai.dosa.dev"
+    title={`Switch Guides 2026: ${guides.length} Migration Playbooks for AI Coding Tools | ai.dosa.dev`}
     description={description}
-    keywords="switch AI coding tools, migrate Cursor to Claude Code, Copilot to Cursor migration, AI IDE migration guide"
+    keywords="switch AI coding tools, AI coding tool migration, migrate Cursor to Claude Code, Copilot to Cursor migration, AI IDE migration guide, AI coding tool pilot checklist"
     canonical={pageUrl}
     jsonLd={jsonLd}
 >
@@ -82,16 +112,20 @@ const jsonLd = JSON.stringify({
                                 <a href="/">Home</a><span>/</span>
                                 <span class="here">Switch</span>
                             </nav>
-                            <span class="fo-status"><span>{guides.length} guides</span></span>
+                            <span class="fo-status"><span>{guides.length} guides{lastUpdatedLabel && ` · Updated ${lastUpdatedLabel}`}</span></span>
                         </div>
                         <div class="fo-rule"></div>
                     </div>
                     <div>
-                        <FolioTitle parts={[{ text: 'Switch Guides' }, { text: 'From → To', plain: true }]} size="md" />
+                        <FolioTitle parts={[{ text: 'Switch Guides' }, { text: 'From → To', plain: true }]} size="md" label={`Switch Guides: ${guides.length} Migration Playbooks for AI Coding Tools`} />
                         <div class="fo-intro">
                             <p class="fo-lead fo-fade" style="--d:.55s">
-                                Directional migration guides: each one maps your config files between tools, walks a 4-step pilot checklist, prices the seat delta for a 10-dev team and lists what you gain and give up.
+                                For engineering leads and dev teams: {guides.length} directional playbooks that map your rules files between tools, price the seat delta for a 10-dev team, list what you gain and give up, and end in a 1-week pilot you can run before reallocating a single license.
                             </p>
+                            <div class="fo-cta fo-fade" style="--d:.7s">
+                                <a class="fo-btn" href="#pilot">Start a 1-week pilot <i aria-hidden="true">→</i></a>
+                                <a class="fo-link" href="#how-to-use">How to use this page</a>
+                            </div>
                         </div>
                     </div>
                 </header>
@@ -102,26 +136,36 @@ const jsonLd = JSON.stringify({
 
                 <div class="fo-track">
                     <div>
-                        <b>Convert your rules file first</b>
-                        <p>CLAUDE.md, .cursor/rules, .windsurfrules, AGENTS.md, Copilot instructions and .clinerules - translated client-side, nothing leaves your browser.</p>
+                        <b>Rules Converter</b>
+                        <p>Translate CLAUDE.md, .cursor/rules, .windsurfrules, AGENTS.md, Copilot instructions and .clinerules between formats. Runs in your browser; no code or tokens leave your machine.</p>
                     </div>
                     <div>
-                        <a class="fo-btn" href="/tools/rules-converter">Rules Converter <i aria-hidden="true">→</i></a>
+                        <a class="fo-btn" href="/tools/rules-converter">Try it now <i aria-hidden="true">→</i></a>
                     </div>
                 </div>
                 <div class="fo-track" style="border-bottom:1px solid var(--rule)">
                     <div>
-                        <b>Price the seat delta</b>
-                        <p>Model seat + token costs for your whole team before reallocating licenses.</p>
+                        <b>Cost Calculator</b>
+                        <p>Estimate seat and token costs for your whole team before reallocating licenses.</p>
                     </div>
                     <div>
-                        <a class="fo-btn" href="/tools/cost-calculator">Cost Calculator <i aria-hidden="true">→</i></a>
+                        <a class="fo-btn" href="/tools/cost-calculator">Try it now <i aria-hidden="true">→</i></a>
                     </div>
                 </div>
 
+                <section class="fo-sec" id="how-to-use" aria-label="How to use this page">
+                    <h2 class="fo-label"><em>00</em>How to use</h2>
+                    <div class="fo-body">
+                        <p class="fo-text sm">Pick your current tool below, scan the seat delta and how each rules file carries over, open the guide for the full tradeoffs, then convert your rules file, price the switch for your team and run the 1-week pilot.</p>
+                        <ul class="fo-tags sw-jump">
+                            {[...groups.keys()].map(group => <li data-jump={groupId(group)}><a href={`#${groupId(group)}`}>{group}</a></li>)}
+                        </ul>
+                    </div>
+                </section>
+
                 {[...groups.entries()].map(([group, list], gi) => (
-                    <section class="fo-sec" data-group aria-label={`${group} migration guides`}>
-                        <h2 class="fo-label"><em>{String(gi + 1).padStart(2, '0')}</em>{group}</h2>
+                    <section class="fo-sec" id={groupId(group)} data-group aria-label={`${group} migration guides`}>
+                        <h2 class="fo-label"><em>{String(gi + 1).padStart(2, '0')}</em><a class="sw-anchor" href={`#${groupId(group)}`} title={`Link to ${group}`}>{group}<span aria-hidden="true">#</span></a></h2>
                         <div class="fo-body">
                             {list.map(g => (
                                 <div class="fo-rank" data-text={`${g.fromTool.name} ${g.toTool.name} ${g.from} ${g.to}`.toLowerCase()}>
@@ -129,6 +173,12 @@ const jsonLd = JSON.stringify({
                                     <div>
                                         <h3><a href={`/switch/${g.slug}`}>{g.fromTool.name} → {g.toTool.name}</a></h3>
                                         <p>{g.primaryReason}</p>
+                                        <p class="sw-meta">
+                                            <span class:list={['sw-port', `is-${rulesPort(g).kind}`]}>{rulesPort(g).label}</span>
+                                            {(g.costDelta.kind === 'cheaper' || g.costDelta.kind === 'pricier') && (
+                                                <span>{g.costDelta.kind === 'cheaper' ? '−' : '+'}${new Intl.NumberFormat('en-US').format(Math.abs(g.costDelta.annualDeltaTeam10))}/yr for 10 devs</span>
+                                            )}
+                                        </p>
                                     </div>
                                     <span class="pr">{g.costDelta.label}</span>
                                 </div>
@@ -136,6 +186,30 @@ const jsonLd = JSON.stringify({
                         </div>
                     </section>
                 ))}
+
+                <section class="fo-sec" id="pilot" aria-label="1-week pilot checklist">
+                    <h2 class="fo-label"><em>{String(groups.size + 1).padStart(2, '0')}</em>1-week pilot</h2>
+                    <div class="fo-body">
+                        <p class="fo-text sm">Every guide ends the same way: prove the new tool on real work for one sprint before you cancel a seat.</p>
+                        <ol class="fo-list sw-steps">
+                            {SWITCH_PILOT_STEPS.map((s, i) => (
+                                <li>
+                                    <span>{String(i + 1).padStart(2, '0')}</span>
+                                    <p><b>{s.url ? <a href={s.url}>{s.name}</a> : s.name}</b>{s.text}</p>
+                                </li>
+                            ))}
+                        </ol>
+                        <div class="sw-copy">
+                            <button type="button" class="fo-btn" id="swCopyPilot" data-text={pilotText}>Copy checklist</button>
+                            <span id="swCopyStatus" role="status" aria-live="polite"></span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="fo-sec" id="faq" aria-label="Frequently asked questions">
+                    <h2 class="fo-label"><em>{String(groups.size + 2).padStart(2, '0')}</em>FAQ</h2>
+                    <FolioFaq faqs={faqs} />
+                </section>
 
                 <div class="fo-notes">
                     <span>Migration guides are generated from our enriched tool data. Verify pricing and features with each vendor before switching.</span>
@@ -151,6 +225,25 @@ const jsonLd = JSON.stringify({
         .sw-search { width: 100%; max-width: 420px; height: 46px; padding: 0 18px; margin: 24px 0 8px; background: #0a0a0a; border: 1px solid var(--rule); border-radius: 999px; color: var(--ink); font-size: 15px; }
         .sw-search:focus { outline: none; border-color: var(--dim); }
         .sw-search::placeholder { color: var(--mute); }
+        .sw-search:focus-visible, .fo-btn:focus-visible, .fo-link:focus-visible, .sw-anchor:focus-visible, .fo-rank h3 a:focus-visible, .fo-tags a:focus-visible, .fo-faq summary:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+        .fo-sec[id] { scroll-margin-top: 96px; }
+        .sw-jump { margin-top: 28px; }
+        .sw-anchor { color: inherit; text-decoration: none; }
+        .sw-anchor span { margin-left: 8px; color: var(--dim); opacity: 0; transition: opacity .3s; }
+        .sw-anchor:hover span, .sw-anchor:focus-visible span { opacity: 1; }
+        .fo-rank p.sw-meta { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 10px; font-size: 14px; color: var(--mute); }
+        .sw-port::before { content: ''; display: inline-block; width: 6px; height: 6px; margin-right: 8px; border-radius: 999px; background: var(--dim); vertical-align: middle; }
+        .sw-port.is-convert::before { background: var(--gold); }
+        .sw-port.is-copy::before { background: var(--ink); }
+        .sw-steps { margin-top: 40px; }
+        .sw-steps li { align-items: start; }
+        .sw-steps li p { font-size: 17px; line-height: 1.6; color: #cfcfcc; }
+        .sw-steps li p b { display: block; font-size: 22px; font-weight: 500; letter-spacing: -.02em; color: var(--ink); margin-bottom: 8px; }
+        .sw-steps li p b a { text-decoration: none; border-bottom: 1px solid var(--dim); }
+        .sw-steps li:hover p { transform: none; }
+        .sw-copy { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 32px; }
+        .sw-copy button { border: 0; cursor: pointer; }
+        #swCopyStatus { font-size: 14px; color: var(--mute); }
     </style>
     <script>
         const input = document.getElementById('swSearch');
@@ -162,7 +255,19 @@ const jsonLd = JSON.stringify({
             document.querySelectorAll<HTMLElement>('.fo-sec[data-group]').forEach(sec => {
                 const visible = Array.from(sec.querySelectorAll<HTMLElement>('.fo-rank[data-text]')).some(r => r.style.display !== 'none');
                 sec.style.display = visible ? '' : 'none';
+                const jump = document.querySelector<HTMLElement>(`.sw-jump [data-jump="${sec.id}"]`);
+                if (jump) jump.style.display = visible ? '' : 'none';
             });
+        });
+        const copyBtn = document.getElementById('swCopyPilot');
+        const copyStatus = document.getElementById('swCopyStatus');
+        copyBtn?.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(copyBtn.dataset.text ?? '');
+                if (copyStatus) copyStatus.textContent = 'Checklist copied to your clipboard.';
+            } catch {
+                if (copyStatus) copyStatus.textContent = 'Copy failed. Select the steps above instead.';
+            }
         });
     </script>
     <script src="/dist/app.js" type="module" defer></script>
