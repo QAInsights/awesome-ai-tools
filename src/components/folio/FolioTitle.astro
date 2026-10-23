@@ -9,10 +9,13 @@ interface Part {
 interface Props {
     parts: Part[];
     size?: TitleSize;
+    /** Accessible/SEO heading text when it should differ from the visible words. */
+    label?: string;
 }
 
-const { parts, size = 'xl' } = Astro.props;
-const label = parts.map(p => p.text).join(' ');
+const { parts, size = 'xl', label: labelOverride } = Astro.props;
+const visible = parts.map(p => p.text).join(' ');
+const label = labelOverride ?? visible;
 const words = parts.flatMap(p => p.text.split(/\s+/).filter(Boolean).map(w => ({ w, plain: Boolean(p.plain) })));
 let offset = 0;
 const rendered = words.map(({ w, plain }) => {
@@ -21,7 +24,7 @@ const rendered = words.map(({ w, plain }) => {
     return { chars: [...w], plain, start };
 });
 ---
-<h1 class="fo-name" aria-label={label} style={`--fs:${titleFontSize(label, size)}`}><span class="fo-wrap">{rendered.map((r, wi) => (
+<h1 class="fo-name" aria-label={label} style={`--fs:${titleFontSize(visible, size)}`}><span class="fo-wrap">{rendered.map((r, wi) => (
     <><span class="fo-word" aria-hidden="true">{r.chars.map((c, ci) => <span class={r.plain ? 'ch plain' : 'ch fo-grad'} style={`--i:${r.start + ci}`}>{c}</span>)}</span>{wi < rendered.length - 1 && ' '}</>
 ))}</span></h1>
 

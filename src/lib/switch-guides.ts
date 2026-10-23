@@ -461,3 +461,47 @@ export function switchGuideMarkdown(g: ResolvedSwitchGuide): string {
     lines.push(`- Cost calculator: ${SITE}${g.costDelta.calculatorHref}`, '');
     return lines.join('\n');
 }
+
+export type RulesPort = 'convert' | 'copy' | 'manual';
+
+/** How a guide's rules file carries over: Rules Converter, plain copy, or by hand. */
+export function rulesPort(g: ResolvedSwitchGuide): { kind: RulesPort; label: string } {
+    if (g.converterHref && g.fromProfile && g.toProfile) return { kind: 'convert', label: `Convert ${g.fromProfile.path} to ${g.toProfile.path}` };
+    if (g.fromProfile && g.toProfile) return { kind: 'copy', label: `Copy ${g.fromProfile.path} as-is` };
+    return { kind: 'manual', label: 'Port rules by hand' };
+}
+
+/** The shared 1-week pilot checklist on the /switch hub (also its HowTo JSON-LD). */
+export const SWITCH_PILOT_STEPS: MigrationStep[] = [
+    { name: 'Pick a migration and read the tradeoffs', text: 'Choose the guide for your current tool and destination, then read what you gain and what you give up before touching any config.' },
+    { name: 'Run the Rules Converter on a sample repo', text: 'Translate your repo-level rules file to the destination format in the browser and commit it on a branch of one representative repo.', url: '/tools/rules-converter' },
+    { name: 'Price the switch for your team size', text: 'Model seat and token spend for your whole team in the Cost Calculator so the license decision is made on numbers, not list prices.', url: '/tools/cost-calculator' },
+    { name: 'Run both tools for one sprint and compare', text: 'Keep the current tool active while the new one handles fresh tasks, run your usual tests and reviews, and cancel seats only after velocity holds.' },
+];
+
+/** Hub-level FAQs for /switch, computed from the resolved guides. */
+export function buildSwitchHubFaqs(guides: ResolvedSwitchGuide[]): { q: string; a: string }[] {
+    const ports = guides.map(rulesPort);
+    const count = (k: RulesPort) => ports.filter(p => p.kind === k).length;
+    const cheapest = guides
+        .filter(g => g.costDelta.kind === 'cheaper')
+        .sort((a, b) => a.costDelta.annualDeltaTeam10 - b.costDelta.annualDeltaTeam10)[0];
+    const byok = guides.filter(g => g.costDelta.kind === 'byok').length;
+    const portPhrases: [RulesPort, string][] = [
+        ['convert', 'let the Rules Converter translate the file for you'],
+        ['copy', 'read the same format on both sides, so you copy it as-is'],
+        ['manual', 'need the rules carried over by hand'],
+    ];
+    const parts = portPhrases.filter(([k]) => count(k) > 0).map(([k, phrase]) => `${count(k)} ${phrase}`);
+    const rulesBreakdown = parts.length > 1 ? `${parts.slice(0, -1).join(', ')} and ${parts.at(-1)}` : parts[0] ?? '';
+    const faqs = [
+        { q: 'How long does an AI coding tool migration pilot take?', a: 'Plan for one week, or one sprint. Convert your rules file, price the switch for your team, then run the current and new tool side by side on real tasks and cancel the old seats only after velocity holds.' },
+        { q: 'Do I need to rewrite my rules file when switching tools?', a: `Usually not. Of the ${guides.length} guides, ${rulesBreakdown}.` },
+        { q: 'Does the Rules Converter upload my code or rules?', a: 'No. The Rules Converter runs entirely in your browser; no files, code or tokens leave your machine.' },
+        { q: 'How is the cost delta on each guide calculated?', a: `Each guide compares the entry paid plan of both tools per seat per month and multiplies the difference by 120 for a 10-developer team over a year. Open-source and bring-your-own-key destinations (${byok} guides) are priced on their free path, so the cost moves to API tokens instead of seats.` },
+    ];
+    if (cheapest) {
+        faqs.push({ q: 'Which switch saves the most on seat cost?', a: `${cheapest.fromTool.name} to ${cheapest.toTool.name}: ${cheapest.costDelta.summary} Verify current pricing with both vendors before reallocating licenses.` });
+    }
+    return faqs;
+}
