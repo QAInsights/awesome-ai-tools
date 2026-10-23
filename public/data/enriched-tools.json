@@ -10708,5 +10708,121 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-22"
+  },
+  {
+    "slug": "promptfoo",
+    "name": "Promptfoo",
+    "company": "Promptfoo (part of OpenAI)",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; install via npm, Homebrew or pip, or run with `npx promptfoo@latest`. You pay your own model provider API costs. Promptfoo joined OpenAI in March 2026 and states it remains open source and MIT-licensed; enterprise offerings are not priced in the repository.",
+    "description": "Promptfoo is an open-source CLI and library for evaluating and red-teaming LLM-based applications and agents. You declare test cases and assertions, compare prompts and models side by side, run automated red teaming and vulnerability scans against agents and RAG pipelines, and wire the checks into CI/CD and pull request code scanning.",
+    "keyFeatures": [
+      "Declarative evals with assertions, run via `promptfoo eval` and inspected in a local web viewer (`promptfoo view`)",
+      "Side-by-side model comparison across OpenAI, Anthropic, Azure, Bedrock, Ollama and many other providers",
+      "Red teaming and vulnerability scanning for LLM apps, agents and RAG pipelines",
+      "CI/CD integration for automated regression checks",
+      "Code scanning that reviews pull requests for LLM-related security and compliance issues",
+      "Install with npm, Homebrew or pip, or run without installing via `npx promptfoo@latest`"
+    ],
+    "bestFor": "Developers and AI teams shipping LLM features or agents who want repeatable evals, model comparisons and security red teaming in local runs and CI.",
+    "notIdealFor": "People looking for a coding agent or test generator for ordinary application code; Promptfoo tests LLM behaviour and requires writing eval configs and supplying provider API keys.",
+    "recentUpdates": "Released 0.125.0 on October 23, 2026, adding new assertion types (ROUGE-L/ROUGE-S, trace span filters), eval safe mode and stability reporting, and making the Claude Agent and Codex SDK providers opt-in; the repository has 26K+ GitHub stars and appeared on GitHub Trending (TypeScript) on October 23, 2026. Promptfoo announced it was joining OpenAI on March 9, 2026.",
+    "verdict": "The most widely adopted open-source toolkit for LLM evals and red teaming, actively released and now backed by OpenAI while staying MIT-licensed; a default choice for testing prompts and agents in CI.",
+    "tags": [
+      "LLM Evaluation",
+      "Red Teaming",
+      "AI Testing",
+      "CI/CD",
+      "Security",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-23"
+  },
+  {
+    "slug": "pandacode",
+    "name": "PandaCode",
+    "company": "AICodeKing",
+    "pricing": "free",
+    "pricingDetail": "Free and open source under the PandaCode License (MIT plus a requirement that public or commercial forks credit PandaCode); no account or license key. You use your own coding-agent CLI subscriptions or API keys, and any cloud sandbox providers you connect bill you directly.",
+    "description": "PandaCode is a small native desktop workspace for coding agents, built with Tauri 2, Rust and SQLite. It runs the coding CLIs you already use, such as Claude Code, Codex, OpenCode, GitHub Copilot CLI, Antigravity, Grok Build and Pi, side by side with your projects, Git, a terminal and a browser in one window.",
+    "keyFeatures": [
+      "Runs Claude Code, Codex, Kimi Code, OpenCode, Copilot CLI, Antigravity, Grok Build, Cline, Pi and others, with per-task harness, model and effort",
+      "Parallel tasks with a Pending/In progress/Review/Completed task board and per-task Git worktrees",
+      "Agent teams with an architect and up to three workers mixing harnesses and models",
+      "Cloud agents on your own Daytona, E2B, Modal, AWS, Cloudflare, Google Cloud or Vercel Sandbox account",
+      "Embedded browser, diffs for every turn, GitHub PR and issue view, and iOS/Android simulator tools",
+      "Bots that put an agent behind Telegram, Slack, Discord, WhatsApp or a local web chat"
+    ],
+    "bestFor": "Developers juggling several coding-agent CLIs who want one lightweight native app for parallel tasks, worktrees, reviews and remote or cloud runs.",
+    "notIdealFor": "Teams wanting a mature, vendor-supported product; PandaCode is days old, ships multiple releases a day and is mostly written by a single maintainer.",
+    "recentUpdates": "Created on October 18, 2026 by AICodeKing, an AI-focused YouTube creator; it passed 550 GitHub stars and 100 forks within five days and shipped v0.3.30 through v0.3.32 on October 23, 2026.",
+    "verdict": "A feature-rich, telemetry-free agent workspace that supports an unusually wide range of harnesses; promising, but very new and changing quickly.",
+    "tags": [
+      "Agent Workspace",
+      "Coding Agents",
+      "Desktop App",
+      "Git Worktrees",
+      "Multi-Agent",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-23"
+  },
+  {
+    "slug": "agentplay",
+    "name": "agentplay",
+    "company": "Entelligence AI",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 license; run it with `uvx agentplay`, `pipx run agentplay` or `pip install agentplay`. No account or API key is required.",
+    "description": "agentplay is a local, open-source replay viewer for coding-agent sessions. It finds the Claude Code, Codex, Cursor, GitHub Copilot, OpenCode and Kiro transcripts already on your machine and turns each into a redacted map and playable timeline of what the agent read, edited, ran, retried and shipped.",
+    "keyFeatures": [
+      "One-command start with `uvx agentplay`, which discovers local agent sessions and opens a viewer on 127.0.0.1",
+      "Radial session map of files, tools, MCP servers, subagents and models touched",
+      "Replay timeline showing failed commands, retries, context-window fill and produced PRs or commits",
+      "Supports Claude Code (with subagent lanes), Codex, Cursor, Copilot CLI and VS Code, OpenCode and Kiro",
+      "Redacted map documents that omit prompt text, tool outputs, file contents and command arguments",
+      "No telemetry or uploads; the only network call is an optional email signup that can be disabled"
+    ],
+    "bestFor": "Developers and team leads who want to audit or debug what a coding agent actually did in a session, or share a sanitized session map with others.",
+    "notIdealFor": "Teams wanting centralized, real-time observability across many machines; agentplay reads local transcripts on one machine, and fidelity for non-Claude agents is limited to the main lane.",
+    "recentUpdates": "Open-sourced by Entelligence AI on October 14, 2026 and published to PyPI (version 0.2.3 in the repository); it reached about 300 GitHub stars within ten days, with commits continuing on October 23, 2026.",
+    "verdict": "A privacy-conscious, zero-setup way to see inside coding-agent sessions across the major harnesses; useful today, though still early.",
+    "tags": [
+      "Agent Observability",
+      "Session Replay",
+      "Coding Agents",
+      "Claude Code",
+      "Developer Tools",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-23"
+  },
+  {
+    "slug": "scrawl",
+    "name": "Scrawl",
+    "company": "Kit Langton",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; download the DMG or install with `brew install --cask kitlangton/tap/scrawl`. Windows and Linux builds are free previews.",
+    "description": "Scrawl is a screen-capture tool for showing a coding agent a problem instead of describing it. You press a shortcut, talk, click around and draw on screen, and Scrawl packs the recording, voice and marks into a compact bundle an agent can read: an annotated contact sheet, keyframes, a time-aligned transcript and a structured manifest.",
+    "keyFeatures": [
+      "One shortcut (`⌥⇧S`) to record an area, window, screen or cabled iPhone with voice and on-screen drawing",
+      "Agent-ready bundle: `contact-sheet.png`, full-resolution keyframes, `summary.md` transcript/timeline and `scrawl.json`",
+      "Agent skill for Claude Code, OpenCode, Codex and others via `bunx skills add kitlangton/scrawl`",
+      "`scrawl` CLI to zoom into moments, pull frame ranges, inspect marks and export shareable MP4s",
+      "Direct hand-off of captures into an OpenCode session with `scrawl send`",
+      "Native Rust/GPUI app for Apple silicon Macs, with Windows and Linux previews"
+    ],
+    "bestFor": "Developers who regularly explain UI bugs or visual behaviour to coding agents and want to replace long text descriptions with narrated, annotated captures.",
+    "notIdealFor": "Windows or Linux users who need a signed, stable build, or teams wanting general-purpose screen recording; the full experience targets macOS 15+ on Apple silicon.",
+    "recentUpdates": "Published on October 14, 2026 and passed 700 GitHub stars and 18 contributors within nine days; v0.3.13 and new Linux preview builds shipped on October 22, 2026.",
+    "verdict": "A clever, well-crafted bridge between what you see and what your agent can read, from a respected developer; best on macOS today.",
+    "tags": [
+      "Screen Capture",
+      "Coding Agents",
+      "Agent Skills",
+      "Developer Tools",
+      "macOS",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-23"
   }
 ]
