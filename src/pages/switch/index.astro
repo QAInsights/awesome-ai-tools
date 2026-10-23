@@ -158,7 +158,7 @@ const jsonLd = JSON.stringify({
                     <div class="fo-body">
                         <p class="fo-text sm">Pick your current tool below, scan the seat delta and how each rules file carries over, open the guide for the full tradeoffs, then convert your rules file, price the switch for your team and run the 1-week pilot.</p>
                         <ul class="fo-tags sw-jump">
-                            {[...groups.keys()].map(group => <li><a href={`#${groupId(group)}`}>{group}</a></li>)}
+                            {[...groups.keys()].map(group => <li data-jump={groupId(group)}><a href={`#${groupId(group)}`}>{group}</a></li>)}
                         </ul>
                     </div>
                 </section>
@@ -255,6 +255,8 @@ const jsonLd = JSON.stringify({
             document.querySelectorAll<HTMLElement>('.fo-sec[data-group]').forEach(sec => {
                 const visible = Array.from(sec.querySelectorAll<HTMLElement>('.fo-rank[data-text]')).some(r => r.style.display !== 'none');
                 sec.style.display = visible ? '' : 'none';
+                const jump = document.querySelector<HTMLElement>(`.sw-jump [data-jump="${sec.id}"]`);
+                if (jump) jump.style.display = visible ? '' : 'none';
             });
         });
         const copyBtn = document.getElementById('swCopyPilot');
