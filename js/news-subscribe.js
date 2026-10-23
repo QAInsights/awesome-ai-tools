@@ -6,7 +6,7 @@ import { authAttribution } from './auth-attribution.js';
 export const NEWS_SUBSCRIBE_PENDING_KEY = 'aat_news_subscribe_pending';
 
 const UNVERIFIED_EMAIL_STATUS =
-    'Preference saved — your account does not have a verified email address, so emails will not send until verified in Settings';
+    'Preference saved. Your account does not have a verified email address, so emails will not send until verified in Settings';
 
 const defaultPrefsApi = {
     async getPrefs() {
@@ -166,7 +166,7 @@ export async function handleNewsSubscribeClick(button, {
                 attribution.open('news_cta');
                 return { status: 'unauthenticated' };
             }
-            setButtonLabel(button, 'Could not save — try again');
+            setButtonLabel(button, 'Could not save. Try again');
             clearRollbackTimer();
             rollbackTimerId = setTimeout(async () => {
                 rollbackTimerId = null;
@@ -245,7 +245,7 @@ export async function syncNewsSubscribe(user, {
         return { status: prefs.newsEnabled ? 'subscribed' : 'unsubscribed', prefs };
     } catch {
         if (activePending && isCurrent()) {
-            buttons.forEach(button => setButtonLabel(button, 'Could not save — try again'));
+            buttons.forEach(button => setButtonLabel(button, 'Could not save. Try again'));
         }
         return { status: 'error' };
     }

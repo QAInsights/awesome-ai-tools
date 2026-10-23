@@ -11,7 +11,7 @@ const compact = new Intl.NumberFormat('en', { notation: 'compact', maximumFracti
 const shortDate = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', timeZone: 'UTC' });
 
 export function formatCompact(value) {
-    return Number.isFinite(value) ? compact.format(value) : '—';
+    return Number.isFinite(value) ? compact.format(value) : 'n/a';
 }
 
 export function formatDate(isoDate) {
@@ -197,7 +197,7 @@ export function initReachDashboard(root, data) {
             text('[data-kpi-total]', formatCompact(summary.total));
             text('[data-kpi-average]', formatCompact(Math.round(summary.average)));
             text('[data-kpi-change]', summary.change === null
-                ? '—'
+                ? 'n/a'
                 : `${summary.change >= 0 ? '+' : ''}${summary.change.toFixed(1)}%`);
             const change = root.querySelector('[data-kpi-change]');
             change?.classList.toggle('text-emerald-400', (summary.change ?? 0) > 0);
@@ -221,7 +221,7 @@ export function initReachDashboard(root, data) {
             const points = historyWindow(history, days);
             const first = points[0];
             const last = points.at(-1);
-            text('[data-stars-total]', last ? last.stars.toLocaleString('en') : '—');
+            text('[data-stars-total]', last ? last.stars.toLocaleString('en') : 'n/a');
             text('[data-stars-delta]', first && last ? `${last.stars - first.stars >= 0 ? '+' : ''}${last.stars - first.stars} since ${formatDate(first.date)}` : '');
             renderChart(
                 root.querySelector('[data-stars-chart]'),
