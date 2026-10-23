@@ -26,7 +26,7 @@ const toolsJson = safeJsonForScript(getAllTools().map(tool => ({
         <div id="editorSignedOut" class="hidden border border-[#222] bg-white/[0.02] rounded-xl p-7">
             <h1 class="text-lg font-semibold mb-2">Sign in to edit your stacks</h1>
             <p class="text-[#a3a3a3] text-[14px] mb-5">Your stacks are private and synced to your account.</p>
-            <a href="/?signin=1" data-auth-trigger="favorite_heart" class="inline-flex items-center py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 transition-colors">Sign in</a>
+            <a href="/?signin=1" data-auth-trigger="stack_add" class="inline-flex items-center py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 transition-colors">Sign in</a>
         </div>
         <div id="editorMissing" class="hidden border border-[#222] bg-white/[0.02] rounded-xl p-7">
             <h1 class="text-lg font-semibold mb-2">Stack not found</h1>

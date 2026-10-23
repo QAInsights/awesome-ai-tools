@@ -22,7 +22,7 @@ const SIGN_IN_COPY = Object.freeze({
     },
     stack_add: {
         headline: 'Save your AI stack',
-        benefits: ["We'll finish saving this stack when you're back", 'Edit and share it from your Stacks page', FULL_INDEX],
+        benefits: ['Keep every stack on your Stacks page', 'Edit, fork and share stacks by link', FULL_INDEX],
     },
     browse_gate: {
         headline: 'Unlock the full index',
