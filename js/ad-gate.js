@@ -75,7 +75,7 @@ export function buildAdPrompt(doc, { style, onDismiss }) {
     card.append(top);
 
     card.append(el(doc, 'p', 'text-[14px] font-semibold mt-2', 'Rather browse without ads?'));
-    card.append(el(doc, 'p', 'text-[12.5px] text-ink-secondary leading-relaxed mt-1', 'Signed-in members never see ads. It is free with GitHub or Google, and your favorites, follows and Zaps come with you.'));
+    card.append(el(doc, 'p', 'text-[12.5px] text-ink-secondary leading-relaxed mt-1', 'Signed-in members never see ads. It is free with Google, GitHub or email, and your favorites, follows and Zaps come with you.'));
 
     const actions = el(doc, 'div', 'flex items-center justify-between gap-3 mt-3');
     const later = el(doc, 'button', 'font-mono text-[11px] text-ink-muted hover:text-ink-secondary transition-colors', 'Not now');

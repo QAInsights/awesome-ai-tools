@@ -4,6 +4,7 @@ import { authAttribution } from '../auth-attribution.js';
 import { auth } from '../auth.js';
 import { bindAuthSession } from '../auth-session-binding.js';
 import { clearPendingNewsSubscribe, syncNewsSubscribe } from '../news-subscribe.js';
+import { getSignInCopy } from '../signin-copy.js';
 
 export function getSignInModalOrder(emailFirst) {
     return emailFirst
@@ -117,9 +118,17 @@ export function initAuthManager(callbacks) {
                 setEmailError('');
             }
 
+            function applySignInCopy(trigger) {
+                const { headline, benefits } = getSignInCopy(trigger);
+                if (signInHeadline) signInHeadline.textContent = headline;
+                signInBenefits?.querySelectorAll('[data-signin-benefit]').forEach((node, i) => {
+                    node.textContent = benefits[i] ?? '';
+                });
+            }
+
             function resetModalLayout() {
                 resetEmailFlow();
-                if (signInHeadline) signInHeadline.textContent = 'Track your AI stack';
+                applySignInCopy('sidebar');
                 emailSubcopy?.classList.add('hidden');
                 signInBenefits?.classList.remove('hidden');
                 if (signInMethods && oauthGroup && emailDivider && emailFlow) {
@@ -140,6 +149,7 @@ export function initAuthManager(callbacks) {
                 const emailFirst = trigger === 'follow_bell' || trigger === 'news_cta';
                 if (!emailFirst) {
                     resetModalLayout();
+                    applySignInCopy(trigger);
                     return;
                 }
                 if (signInHeadline) {

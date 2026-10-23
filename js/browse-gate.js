@@ -120,7 +120,7 @@ export function buildGateCard(doc, { total, limit, onSignIn }) {
 
     card.append(el(doc, 'p',
         'font-mono text-[11px] text-[#525252] m-0',
-        'GitHub or Google · free forever · no subscription'));
+        'Google, GitHub or email · free forever · no subscription'));
 
     return card;
 }
@@ -145,7 +145,7 @@ export function buildGateNudge(doc, { total, limit, onSignIn, onDismiss }) {
 
     card.append(el(doc, 'p', 'text-[14px] font-semibold mt-2 m-0', `${limit} of ${total} tools shown`));
     card.append(el(doc, 'p', 'text-[12.5px] text-[#a3a3a3] leading-relaxed mt-1 m-0',
-        'Members browse the full index ad-free. Free with GitHub or Google, and your favorites, follows and Zaps come with you.'));
+        'Members browse the full index ad-free. Free with Google, GitHub or email, and your favorites, follows and Zaps come with you.'));
 
     const actions = el(doc, 'div', 'flex items-center justify-between gap-3 mt-3');
     const later = el(doc, 'button', 'font-mono text-[11px] text-[#737373] hover:text-[#a3a3a3] transition-colors', 'Not now');
