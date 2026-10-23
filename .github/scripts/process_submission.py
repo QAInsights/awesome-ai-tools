@@ -26,7 +26,7 @@ def load_issue_data() -> dict:
 
 def update_readme(tool_name: str, company: str, url: str, category: str,
                   desc: str, github_url: str) -> None:
-    if github_url and github_url.lower() not in ("", "none"):
+    if github_url.lower().startswith(("https://", "http://")):
         desc = f"{desc}; [GitHub]({github_url})"
     desc = desc.replace("\n", " ").replace("\r", "")
 
