@@ -29,6 +29,7 @@ import FolioStyles from '../../components/folio/FolioStyles.astro';
 import FolioTitle from '../../components/folio/FolioTitle.astro';
 import FolioFaq from '../../components/folio/FolioFaq.astro';
 import FolioScroll from '../../components/folio/FolioScroll.astro';
+import NewsSubscribeCta from '../../components/NewsSubscribeCta.astro';
 
 export async function getStaticPaths() {
     return getResolvedSwitchGuides().map(guide => ({
@@ -291,6 +292,9 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                         </div>
                     </nav>
                 )}
+
+                <NewsSubscribeCta subject="switch" class="fo-brief" />
+
 
                 <div class="fo-notes">
                     <span>Migration guides are generated from our enriched tool data. Verify pricing and features with each vendor before switching.</span>

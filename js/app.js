@@ -5,6 +5,7 @@
 
 import './add-to-stack.js';
 import { initializeStackShare } from './stack-share.js';
+import { initializeNewsSubscribe } from './news-subscribe.js';
 import { initRenderer, renderTools, hydrateGrid, setFavoriteContext, setVotingContext, refreshVotingButtons } from './renderer.js';
 import { authAttribution } from './auth-attribution.js';
 import { CollapsedSidebar } from './collapsed-sidebar.js';
@@ -17,6 +18,7 @@ import { sortTools } from './sorting.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     initializeStackShare();
+    initializeNewsSubscribe();
     initGlobalSearch();
     initGradientSelection();
     const grid = document.getElementById('toolGrid');

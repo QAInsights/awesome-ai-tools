@@ -12,6 +12,7 @@ import { getIndexingDecisions } from '../../lib/indexing';
 import FolioStyles from '../../components/folio/FolioStyles.astro';
 import FolioTitle from '../../components/folio/FolioTitle.astro';
 import FolioScroll from '../../components/folio/FolioScroll.astro';
+import NewsSubscribeCta from '../../components/NewsSubscribeCta.astro';
 
 const decisions = getIndexingDecisions();
 const pages = getBestPages().filter(p => decisions.get(`/best/${p.facet.slug}`)?.indexable);
@@ -106,6 +107,9 @@ const jsonLd = JSON.stringify({
                         ))}
                     </div>
                 </section>
+
+                <NewsSubscribeCta subject="best-hub" class="fo-brief" />
+
 
                 <div class="fo-notes">
                     <span>Rankings are rebuilt monthly from the directory's reviews. Verify details on each vendor's website.</span>

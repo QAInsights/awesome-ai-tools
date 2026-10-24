@@ -14,6 +14,7 @@ import FolioStyles from '../../components/folio/FolioStyles.astro';
 import FolioTitle from '../../components/folio/FolioTitle.astro';
 import FolioFaq from '../../components/folio/FolioFaq.astro';
 import FolioScroll from '../../components/folio/FolioScroll.astro';
+import NewsSubscribeCta from '../../components/NewsSubscribeCta.astro';
 
 const decisions = getIndexingDecisions();
 const guides = getResolvedSwitchGuides();
@@ -210,6 +211,9 @@ const jsonLd = JSON.stringify({
                     <h2 class="fo-label"><em>{String(groups.size + 2).padStart(2, '0')}</em>FAQ</h2>
                     <FolioFaq faqs={faqs} />
                 </section>
+
+                <NewsSubscribeCta subject="switch-hub" class="fo-brief" />
+
 
                 <div class="fo-notes">
                     <span>Migration guides are generated from our enriched tool data. Verify pricing and features with each vendor before switching.</span>
