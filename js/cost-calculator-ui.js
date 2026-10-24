@@ -10,6 +10,7 @@ import {
   formatStackSummaryText, formatUsd, loadModelsPricing, parseCalculatorStateFromUrl,
   mergeCalculatorViewSearch, parseCalculatorViewFromUrl, sliderToTeamSize, teamSizeToSlider,
 } from './cost-calculator.js';
+import { initToolEmail } from './tool-email.js';
 
 const POPULAR_TOOL_SLUGS = [
   'cursor', 'github-copilot', 'claude-code', 'windsurf', 'devin',
@@ -478,6 +479,15 @@ export function initCostCalculatorUI(catalog) {
       els.shareBtn.textContent = 'Link Copied!';
       setTimeout(() => (els.shareBtn.textContent = orig), 2000);
     } catch {}
+  });
+
+  initToolEmail({
+    button: byId('emailCalcBtn'),
+    statusEl: byId('emailCalcStatus'),
+    kind: 'cost-calculator',
+    getPayload: () => lastBreakdown
+      ? { content: formatStackSummaryText(lastBreakdown, state.usage), search: buildCalculatorUrlSearch(state) }
+      : null,
   });
 
   function updateCacheBadge(res) {

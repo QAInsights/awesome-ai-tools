@@ -86,7 +86,9 @@ const jsonLd = JSON.stringify({
         </div>
         <div id="costTabActions" class="flex flex-wrap items-center gap-2.5 shrink-0">
           <button id="copySummaryBtn" type="button" class="cc-action-btn">Copy Summary</button>
+          <button id="emailCalcBtn" type="button" class="cc-action-btn">Email me this</button>
           <button id="shareCalcBtn" type="button" class="cc-action-btn cc-action-btn-primary">Share Stack</button>
+          <p id="emailCalcStatus" class="sr-only" role="status" aria-live="polite"></p>
         </div>
       </header>
 
@@ -348,6 +350,7 @@ const jsonLd = JSON.stringify({
   .cc-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em; color: #a3a3a3; font-weight: 600; }
   .cc-action-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 999px; font-size: 12px; font-family: 'JetBrains Mono', monospace; color: #dcdcd9; background: #111; border: 1px solid #2c2c2b; cursor: pointer; transition: all 0.2s; }
   .cc-action-btn:hover { color: #fff; border-color: #4c4030; background: #191612; }
+  .cc-action-btn:disabled { opacity: .6; cursor: progress; }
   .cc-action-btn-primary { background: #f4f4f2; color: #000; border-color: #f4f4f2; font-weight: 500; }
   .cc-action-btn-primary:hover { background: #fff; color: #000; border-color: #fff; }
   .cc-cycle-btn { padding: 5px 11px; font-size: 11px; font-family: 'JetBrains Mono', monospace; border-radius: 6px; color: #737373; border: 1px solid transparent; cursor: pointer; transition: background-color 0.15s, color 0.15s, border-color 0.15s; }

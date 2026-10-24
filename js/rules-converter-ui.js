@@ -14,6 +14,7 @@ import {
   parseConverterUrlState,
   parseRulesDocument,
 } from './rules-converter.js';
+import { initToolEmail } from './tool-email.js';
 
 export function initRulesConverterUI() {
   const urlState = parseConverterUrlState(window.location.search);
@@ -255,6 +256,13 @@ export function initRulesConverterUI() {
       els.shareBtn.textContent = 'Link Copied!';
       setTimeout(() => (els.shareBtn.textContent = orig), 2000);
     } catch {}
+  });
+
+  initToolEmail({
+    button: byId('emailOutputBtn'),
+    statusEl: byId('emailOutputStatus'),
+    kind: 'rules-converter',
+    getPayload: () => ({ content: els.outputText?.value ?? '', search: buildConverterUrlSearch(state) }),
   });
 
   // Initialize

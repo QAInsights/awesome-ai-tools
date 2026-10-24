@@ -101,7 +101,9 @@ const jsonLd = JSON.stringify({
           </p>
         </div>
         <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+          <button id="emailOutputBtn" type="button" class="rc-action-btn">Email me this</button>
           <button id="shareLinkBtn" type="button" class="rc-action-btn rc-action-btn-primary">Share Config</button>
+          <p id="emailOutputStatus" class="sr-only" role="status" aria-live="polite"></p>
         </div>
       </header>
 
@@ -236,6 +238,8 @@ const jsonLd = JSON.stringify({
   .rc-badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.12em; background: #211c16; border: 1px solid #4c4030; color: #e2c48a; }
   .rc-badge-sub { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.12em; background: #141414; border: 1px solid #2a2a2a; color: #8b8b88; }
   .rc-action-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 15px; border-radius: 999px; font-size: 12px; font-family: 'JetBrains Mono', monospace; color: #dcdcd9; background: #111; border: 1px solid #2c2c2b; cursor: pointer; transition: all 0.2s; }
+  .rc-action-btn:hover { color: #fff; border-color: #4c4030; background: #191612; }
+  .rc-action-btn:disabled { opacity: .6; cursor: progress; }
   .rc-action-btn-primary { background: #f4f4f2; color: #000; border-color: #f4f4f2; font-weight: 500; }
   .rc-action-btn-primary:hover { background: #fff; border-color: #fff; }
   .rc-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 8px; font-size: 11px; font-family: 'JetBrains Mono', monospace; background: #111; border: 1px solid #262626; color: #a3a3a3; cursor: pointer; transition: all 0.15s; }
