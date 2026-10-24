@@ -10613,6 +10613,34 @@
     "lastUpdated": "2026-10-21"
   },
   {
+    "slug": "system-one-api",
+    "name": "System One API",
+    "company": "Ziyu Li / System One",
+    "pricing": "freemium",
+    "pricingDetail": "The open-source TypeScript SDK (@system-one-ai/core, MIT-licensed, no runtime dependencies) is free to use without an account, but the hosted System One API runs on prepaid credits: 100 free credits on signup, then packs of 5,000 credits for $5.99, 20,000 for $19.99, and 120,000 for $99.99, with no recurring subscription.",
+    "description": "System One is a typed decision API and TypeScript SDK that lets applications send a shared state plus named questions and receive structured Choice, Score, and Noul (yes/no probability) answers, with the app retaining control of actions.",
+    "keyFeatures": [
+      "Three decision primitives: Choice (up to 255 options), Score (2–10 ordered levels), and Noul (P(true) 0–1)",
+      "TypeScript SDK with typed choice(), score(), and booleanQuestion() helpers",
+      "Multiple hosted models (Jev, Clef Flash, Clef) with per-question, per-block credit pricing",
+      "Idempotency keys and refunds for failed inferences",
+      "Clairic extract() for structured field extraction",
+      "Coding-agent skill installable via npx skills for Cursor, Claude Code, and Codex"
+    ],
+    "bestFor": "Developers and agent builders who need fast, low-cost, typed classification, routing, or scoring decisions inside application code rather than free-text generation.",
+    "notIdealFor": "Teams wanting a general-purpose chat or generative LLM, or those needing a mature, widely adopted ecosystem—the SDK is early-stage with only a few GitHub stars and hosted usage requires prepaid credits.",
+    "recentUpdates": "Core 0.8.0 (published 2026-10-21) added Clairic extract({ state, fields }); adapter-system-one 0.7.0 posts extract requests to /systemone with default model clairic. Jev released 2026-09-18 and Clef Flash 2026-10-01. Jev opened to all users on 2026-09-20 after its 2026-09-15 launch.",
+    "verdict": "System One offers a clean, typed decision interface with a genuinely free MIT-licensed SDK and transparent credit pricing, well suited to routing and classification in agent workflows. However, it is a young project with a tiny community footprint, and the hosted API's value depends on whether its specialized decision models outperform simpler alternatives for your use case.",
+    "tags": [
+      "decision-api",
+      "typescript-sdk",
+      "classification",
+      "agent-workflows",
+      "structured-output"
+    ],
+    "lastUpdated": "2026-10-24"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
