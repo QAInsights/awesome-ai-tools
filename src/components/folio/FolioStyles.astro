@@ -34,6 +34,8 @@
     .tool-detail-intro { row-gap: 32px; }
     .tool-detail-intro .fo-cta { grid-column: 1 / -1; position: relative; z-index: 10; flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: flex-end; }
     .tool-detail-intro .fo-save { max-width: 100%; flex-wrap: wrap; }
+    .fo-follow-note { flex: 0 0 100%; margin: 0; font-size: 13px; line-height: 1.5; color: var(--mute); text-align: right; text-wrap: balance; }
+    .fo-cta:has(.follow-btn.followed) .fo-follow-note { display: none; }
     .fo-btn { display: inline-flex; align-items: center; gap: 10px; height: 46px; padding: 0 22px; border-radius: 999px; background: var(--ink); color: #000 !important; font-size: 14px; font-weight: 500; white-space: nowrap; transition: transform .5s var(--ease), background .3s; }
     .fo-btn:hover { transform: translateY(-2px); background: #fff; }
     .fo-btn i { display: inline-block; transition: transform .5s var(--ease); font-style: normal; }
@@ -155,6 +157,7 @@
         .fo-intro { padding: 24px 0 36px; }
     }
     @media (max-width: 600px) {
+        .fo-follow-note { text-align: left; }
         .fo { padding: 0 18px 64px; }
         .fo-hero { padding-top: 20px; }
         .fo-top { font-size: 12px; gap: 16px; }
