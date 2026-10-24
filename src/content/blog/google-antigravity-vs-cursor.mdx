@@ -1,0 +1,112 @@
+---
+title: "Google Antigravity vs Cursor (2026): Agents, Pricing, Permissions, and Which to Pick"
+description: "Google Antigravity and Cursor compared on surfaces, models, pricing, permissions, rules files, and cloud agents, with every fact checked against official docs in October 2026."
+pubDate: 2026-10-24
+tags: ["antigravity", "cursor", "comparison", "ai-ide", "agents", "google"]
+featured: true
+---
+
+[Google Antigravity](/tools/antigravity) and [Cursor](/tools/cursor) both promise the same thing: you describe the work, agents do it, and you review the result. Both have changed a lot in 2026. Antigravity grew from an IDE into a family of products with a desktop app, CLI, editor extensions, and an SDK. Cursor is now sold as part of The X Subscription, alongside Grok and X. If you last compared them a few months ago, most of what you remember is out of date. Here is where they stand in October 2026, checked against each product's own docs.
+
+## The Short Answer
+
+- **Pick Antigravity** if you want a generous free tier, Gemini plus Claude models in one place, editor extensions for VS Code, JetBrains, Visual Studio, Zed, and Xcode, or your company already buys through Google Cloud.
+- **Pick Cursor** if you want the most mature agent inside an editor, cloud agents that run in their own VMs, built-in AI code review with Bugbot, and access to models from OpenAI, Anthropic, Google, and others at API list price.
+
+The plan you choose matters more than usual here. Cursor's $8 Plus plan only includes Grok models. Third-party models start at Premium ($30/month).
+
+## At a Glance
+
+| Category | Google Antigravity | Cursor |
+| --- | --- | --- |
+| Maker | Google | Anysphere |
+| Surfaces | Antigravity App (desktop), CLI, IDE, extensions for VS Code, JetBrains, Visual Studio, Zed, Xcode, Python SDK | Desktop editor, CLI (`agent`), cloud agents, mobile, Slack |
+| Models | Gemini 4 Argon, Gemini 3.x Flash and Pro, Claude Sonnet and Opus 5.5, GPT-OSS 120B | Cursor models (including Composer 2.5) and Grok, plus OpenAI, Anthropic, Google, and others on Premium and up |
+| Free plan | $0: agent models, unlimited Tab completions and Command requests, basic weekly limits | $0: limited agent and Chat requests |
+| Paid individual plans | Google AI Pro and Google AI Ultra, with an AI credit pool for overages | Plus $8, Premium $30, Super $100, Ultra $200 per month |
+| Teams | Via Google Cloud: Gemini Enterprise Standard/Plus from $30/seat/month, or $0-seat pay-as-you-go | Teams from $30/user/month, Enterprise custom |
+| Project instructions | AGENTS.md, GEMINI.md, or `.agents/rules/` in any folder | `.cursor/rules/*.mdc`, or AGENTS.md in the root and subfolders |
+| Approvals | Presets: Review, Default, Auto (Preview), Turbo, plus Deny/Ask/Allow lists | Run modes: Auto-review, Allowlist, Run Everything |
+| Sandbox | Terminal sandbox on by default (Linux namespaces, macOS Seatbelt) | Shell commands sandboxed in Auto-review, optional in Allowlist |
+| Parallel work | Subagents, Teamwork agent teams (preview), Remote Control | Projects with a coordinator agent, unlimited cloud agents in parallel |
+
+## Google Antigravity: Many Surfaces, Strong Free Tier
+
+The first thing to understand is that "Antigravity" is no longer one app. According to the [official overview](https://antigravity.google/docs/overview), the old Agent Manager grew into a standalone desktop command center, the **Antigravity App**. It sits alongside a terminal client (the **CLI**), the **Antigravity IDE**, **editor extensions**, and a Python **SDK** for building your own agents. That means you don't have to switch editors to try it. If your team lives in JetBrains or Xcode, the extension brings the same agents into that editor.
+
+On models, Antigravity gives you Google's own lineup and some partners. The [model docs](https://antigravity.google/docs/models) list Gemini 4 Argon (paid Google AI Pro, or on trial), Gemini 3.8, 3.7, and 3.6 Flash, Gemini 3.1 Pro, Claude Sonnet 5.5 and Opus 5.5 (Thinking), and GPT-OSS 120B. You can switch models at any time and pick a thinking level of Low, Medium, or High.
+
+Safety is handled with a [permission engine](https://antigravity.google/docs/permissions) that sorts every sensitive action into Deny, Ask, or Allow. On top of that there are four presets:
+
+1. **Review**: no sandbox, always asks before terminal commands, workspace-only file access.
+2. **Default**: terminal commands run in the sandbox without asking, and ask before running outside it.
+3. **Auto (Preview)**: like Default, but commands outside the sandbox are checked automatically.
+4. **Turbo**: no sandbox, unrestricted commands, full filesystem access. Use it only on throwaway machines.
+
+The [terminal sandbox](https://antigravity.google/docs/sandbox) is on by default. On Linux it uses kernel namespaces and cuts off networking. On macOS it uses Seatbelt profiles through `sandbox-exec`.
+
+For project instructions, Antigravity reads [AGENTS.md or GEMINI.md](https://antigravity.google/docs/rules), or a `.agents/rules/` folder, in any subfolder of the project. It walks up the tree from the file it's editing, so a backend folder can have its own rules. Around that you get skills, hooks, plugins, MCP, custom subagents, and slash commands like `/plan`, `/browser`, `/goal`, and `/boost` for deeper reasoning.
+
+## Cursor: The Mature Editor Agent, Now Inside The X Subscription
+
+[Cursor's docs](https://cursor.com/docs/models-and-pricing) say Cursor is now sold as part of The X Subscription, one subscription for Grok, Cursor, and X. Paid plans include a weekly usage pool shared between Grok and Cursor. Third-party models aren't included. On Premium and above you can use them at API list price, paid from prepaid credit. If you're still on the older Pro, Pro+, or Ultra plans, those are legacy plans and keep working as they are.
+
+The core is the [Agent](https://cursor.com/docs/agent/overview), opened with Cmd+I in the side pane. It searches your codebase and the web, edits files, and runs terminal commands, with no limit on tool calls per task. For bigger work there are two more options:
+
+- **[Plan Mode](https://cursor.com/docs/agent/plan-mode)** (Shift+Tab) researches the codebase, asks clarifying questions, and writes a plan you can edit before any code is written.
+- **Projects** use a coordinator agent that plans the work and hands it to other agents.
+
+Where Cursor really pulls ahead is [cloud agents](https://cursor.com/docs/cloud-agent). They run in isolated VMs with full development environments: cloned repos, installed dependencies, secrets, and network access. You can run as many as you want in parallel without your laptop staying online. They can build and test the software, control a desktop and browser, use MCP servers, and work across several repos at once. Cloud agents, Bugbot code reviews, and code hosting via Origin start at the Premium plan.
+
+Approvals are controlled by [run modes](https://cursor.com/docs/agent/security/run-modes). **Auto-review** is the one Cursor recommends for most people. It runs allowlisted calls right away, sandboxes shell commands when it can, and sends everything else to a classifier for review. **Allowlist** only runs what you've approved. **Run Everything** runs every tool call automatically.
+
+Rules live in `.cursor/rules` as `.mdc` files with frontmatter. Cursor also reads a plain [AGENTS.md](https://cursor.com/docs/rules) in the project root and in subfolders. There's also a [CLI](https://cursor.com/docs/cli/overview) (`curl https://cursor.com/install -fsS | bash`, then run `agent`) with a print mode for scripts and CI.
+
+## Pricing, Side by Side
+
+**Antigravity**, from the [pricing page](https://antigravity.google/pricing):
+- **Individual ($0/month):** access to a variety of agent models, unlimited Tab completions, unlimited Command requests, and basic weekly rate limits.
+- **Google AI Pro and Google AI Ultra:** higher rate limits and a flexible AI credit pool. Once you hit the baseline quota, you choose whether purchased credits are used for overages.
+- **Business via Google Cloud:** API access with consumption-based pricing, Gemini Enterprise Standard/Plus from $30 per seat per month, or a pay-as-you-go plan with a $0 seat fee.
+
+**Cursor**, from the [pricing page](https://cursor.com/pricing):
+- **Free ($0):** limited agent and Chat requests.
+- **Plus ($8/month):** base usage, Grok models only.
+- **Premium ($30/month):** 4x Plus usage, third-party models at API list price, cloud agents, automations, and Bugbot.
+- **Super ($100/month):** 15x Plus.
+- **Ultra ($200/month):** 50x Plus.
+- **Teams ($30+/user/month):** pooled usage, SSO, and admin controls.
+
+On cost alone, Antigravity's free tier goes further, especially for Tab completions. Cursor's real starting price, if you want Claude or GPT models, is $30. Run your own numbers in our [Cost Calculator](/tools/cost-calculator).
+
+## Which One Should You Pick?
+
+- **You want to try agentic coding without paying:** Antigravity's free Individual plan.
+- **You want to stay in JetBrains, Visual Studio, Zed, or Xcode:** Antigravity's extensions.
+- **You want agents that keep working after you close your laptop:** Cursor's cloud agents (Premium and up).
+- **You want AI code review on every pull request:** Cursor with Bugbot.
+- **Your company buys AI through Google Cloud:** Antigravity through Gemini Enterprise.
+- **You want Claude and GPT models alongside the editor's own models:** both work. On Cursor that means Premium or higher.
+
+Switching between them is mostly about your rules. Our [Rules Converter](/tools/rules-converter) moves project instructions between formats in your browser.
+
+## FAQ
+
+**Is Google Antigravity free?** Yes. The Individual plan is $0/month with access to agent models, unlimited Tab completions and Command requests, and basic weekly rate limits. Google AI Pro and Ultra raise the limits.
+
+**Does Cursor's $8 plan include Claude or GPT?** No. Plus includes Grok models only. Third-party models from OpenAI, Anthropic, Google, and others start at Premium ($30/month) and are billed at API list price from prepaid credit.
+
+**Can I use Antigravity inside VS Code or JetBrains?** Yes. Antigravity has official extensions for VS Code, JetBrains IDEs, Visual Studio, Zed, and Xcode, as well as its own App, IDE, and CLI.
+
+**Do both support AGENTS.md?** Yes. Antigravity reads AGENTS.md or GEMINI.md in any project folder. Cursor reads AGENTS.md in the project root and subfolders, alongside `.cursor/rules`.
+
+**Which is safer by default?** Both sandbox terminal commands in their recommended modes. Antigravity's Default preset runs commands in its sandbox and asks before leaving it. Cursor's Auto-review sandboxes shell commands where it can and sends the rest to a classifier. Avoid Turbo and Run Everything outside disposable environments.
+
+## Sources
+
+All facts were checked on October 24, 2026. Prices and plans change often, so confirm on the official pages before you buy:
+
+- Google Antigravity: [overview](https://antigravity.google/docs/overview), [models](https://antigravity.google/docs/models), [permissions](https://antigravity.google/docs/permissions), [terminal sandbox](https://antigravity.google/docs/sandbox), [rules](https://antigravity.google/docs/rules), [pricing](https://antigravity.google/pricing)
+- Cursor: [models and pricing](https://cursor.com/docs/models-and-pricing), [pricing](https://cursor.com/pricing), [Agent](https://cursor.com/docs/agent/overview), [Plan Mode](https://cursor.com/docs/agent/plan-mode), [cloud agents](https://cursor.com/docs/cloud-agent), [run modes](https://cursor.com/docs/agent/security/run-modes), [rules](https://cursor.com/docs/rules), [CLI](https://cursor.com/docs/cli/overview)
+
+*See the head-to-head page for [Cursor vs Google Antigravity](/compare/cursor-vs-antigravity), the full lists of [Google Antigravity alternatives](/tools/antigravity/alternatives) and [Cursor alternatives](/tools/cursor/alternatives), our [Cursor deep dive](/blog/cursor-deep-dive), and [Cursor vs GitHub Copilot](/blog/cursor-vs-github-copilot).*
