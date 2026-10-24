@@ -352,7 +352,7 @@
     "name": "Superset",
     "company": "Superset Inc.",
     "pricing": "freemium",
-    "pricingDetail": "Free for 1 user including desktop app, CLI, and local workspaces. Pro is $20/month ($15/month billed yearly) per user for unlimited users, remote access, automations, and integrations. Enterprise plans with SSO, SCIM, and audit logs are available with custom pricing.",
+    "pricingDetail": "Free for 1 user including desktop app, CLI, and local workspaces. Pro is $20/month ($16/month billed yearly) per user for unlimited users, remote access, automations, and integrations. Enterprise plans with SSO, SCIM, and audit logs are available with custom pricing.",
     "description": "Superset is an agentic, terminal-first IDE designed to orchestrate multiple AI coding agents in parallel by assigning each task its own isolated Git worktree. It acts as an orchestration layer for existing CLI-based agents, allowing developers to manage concurrent sessions, terminals, and diff reviews within a single unified workspace.",
     "keyFeatures": [
       "Parallel agent orchestration in isolated Git worktrees",
