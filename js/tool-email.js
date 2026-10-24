@@ -36,7 +36,7 @@ const defaultApi = {
     },
 };
 
-const DAILY_LIMIT_DETAIL = 'You can email up to 20 results a day. Try again tomorrow.';
+const DAILY_LIMIT_DETAIL = 'You can email up to 20 results a day. The limit resets at 00:00 UTC.';
 
 export function statusForResponse(status, data = {}) {
     if (status >= 200 && status < 300) return 'sent';
