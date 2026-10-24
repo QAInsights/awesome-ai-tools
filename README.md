@@ -92,6 +92,7 @@ Full standalone editors built from the ground up with AI at the core.
 | **[Voidleap Code](https://voidleap.com/)** | Voidleap | Voidleap Code is an agentic IDE designed for token-efficient software development. Mix model providers without locking into one, and track usage through a built-in dashboard. |
 | **[Helicon](https://helicon.sh)** | Harjot Singh Rana | Free, open-source (MIT) desktop app and VS Code extension for Meta's Muse Code CLI: threads from every project in one sidebar, inline diffs, one-at-a-time approvals and per-thread usage costs. Unofficial, not affiliated with Meta.; [GitHub](https://github.com/HarjjotSinghh/helicon) |
 | **[maki](https://github.com/tontinton/maki)** | Tony Solomonik | An efficient AI coding agent extendable by neovim-like Lua plugins. |
+| **[Unstoppable AI](https://unstoppable.ai/)** | Unstoppable AI | Unstoppable AI is an agent IDE that brings Claude Code, Codex and Cursor together with your existing subscriptions. It supports parallel agents and multi-agent workflows, with a terminal and browser organized around each task. |
 
 
 ---

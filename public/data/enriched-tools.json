@@ -1510,6 +1510,35 @@
     "lastUpdated": "2026-10-15"
   },
   {
+    "slug": "unstoppable-ai",
+    "name": "Unstoppable AI",
+    "company": "Unstoppable AI",
+    "pricing": "freemium",
+    "pricingDetail": "Free tier includes unlimited local workspaces and parallel agents, bring-your-own Claude or Codex subscription, and 25 AI credits daily. Pro is $19/month with 100 credits, Business is $29/user/month with 150 credits and team features, and Enterprise is $49/user/month.",
+    "description": "Unstoppable AI is an agentic development environment that orchestrates Claude Code, Codex, Cursor, and other CLI agents in parallel across isolated git worktrees, with an embedded terminal, browser, editor, and PR tracking per task.",
+    "keyFeatures": [
+      "Bring your own Claude Code, Codex, Cursor, or other CLI agent subscriptions",
+      "Parallel agents in isolated git worktrees across multiple repositories",
+      "Embedded terminal, Chromium browser, and file editor per workspace",
+      "Automations and hooks for triage, tests, and PR reviews",
+      "Cross-model code review (e.g., Claude and Codex reviewing each other)",
+      "Remote Control and mobile app for monitoring agents on the go",
+      "Team dashboards for usage, cost, and permission controls"
+    ],
+    "bestFor": "Development teams that already pay for Claude Code or Codex subscriptions and want to run many agents in parallel with orchestration, review, and cost visibility.",
+    "notIdealFor": "Solo developers seeking a traditional autocomplete-centric editor or those unwilling to bring their own model subscriptions, since the tool is built around orchestration rather than inline coding assistance.",
+    "recentUpdates": "Unstoppable.ai launched August 5, 2026 alongside the existing domains business, introducing the desktop app and web workflows. A blog post on September 1, 2026 detailed the multi-agent coding, verification, and independent review workflow.",
+    "verdict": "Unstoppable offers a compelling orchestration layer for teams already invested in Claude Code or Codex, with strong parallelism, review, and cost controls. However, it depends on external subscriptions and targets multi-agent workflows rather than replacing a conventional AI editor.",
+    "tags": [
+      "agent IDE",
+      "multi-agent orchestration",
+      "parallel agents",
+      "Claude Code",
+      "Codex"
+    ],
+    "lastUpdated": "2026-10-24"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -5086,6 +5115,64 @@
     "lastUpdated": "2026-10-21"
   },
   {
+    "slug": "omnara",
+    "name": "Omnara",
+    "company": "Omnara (YC S25)",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 license when self-hosted; you bring your own model provider credentials and machines or sandbox providers. A hosted Omnara Cloud (app.omnara.com) is also offered; its pricing is not published in the repository.",
+    "description": "Omnara is an open-source managed agent platform and a self-hostable alternative to Claude Managed Agents and OpenAI's Agents API. You define an agent in a small YAML config, launch it through a REST API, TypeScript SDK or CLI, and Omnara runs the durable agent loop with tools, secrets, permissions and event streaming on any model and any machine.",
+    "keyFeatures": [
+      "Agents defined in YAML and launched via REST API, `@omnara/sdk` TypeScript SDK, `npx omnara` CLI or the web dashboard",
+      "Durable agents whose state is stored in Postgres, so they survive restarts and cost nothing while idle",
+      "Machines from managed sandbox pools (including an E2B provider) or your own laptop, VM or container",
+      "Model-agnostic: OpenAI, Anthropic, OpenRouter or self-hosted model providers",
+      "Secrets, permissions and RBAC handled by the platform",
+      "Stateless workers plus message and event-stream APIs for chatting with agents"
+    ],
+    "bestFor": "Developers and platform teams building internal bots, code review agents or in-product agents who want a self-hosted, model-agnostic alternative to vendor-hosted managed agent APIs.",
+    "notIdealFor": "Individuals who just want an interactive coding agent in their editor or terminal; Omnara is agent infrastructure, and self-hosting requires running the server, Postgres and your own model and machine providers.",
+    "recentUpdates": "Relaunched as an open-source managed agent platform with a Show HN on October 21, 2026; omnarad v0.2.9 (October 21, 2026) added an E2B machine pool provider, with daily commits continuing on October 22, 2026. The company previously launched on HN (YC S25) with a remote-control app for Claude Code and Codex.",
+    "verdict": "A credible, actively developed open-source take on managed agents from a YC-backed team, with a clean YAML/API model and bring-your-own models and machines; still early, so expect APIs to keep moving.",
+    "tags": [
+      "AI Agents",
+      "Managed Agents",
+      "Agent Infrastructure",
+      "Self-Hosted",
+      "Open Source",
+      "Sandboxes"
+    ],
+    "lastUpdated": "2026-10-22"
+  },
+  {
+    "slug": "scion",
+    "name": "Scion",
+    "company": "Google Cloud Platform",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 license; you supply your own coding-agent harness subscriptions or model credentials and container or cloud infrastructure (Docker, Podman, Apple Container, Kubernetes or Cloud Run).",
+    "description": "Scion is an open-source, experimental orchestration platform from Google Cloud Platform for teams of AI agents and the people working with them. It runs harnesses such as Claude Code, Antigravity, Codex and OpenCode as independent containerized agents with their own roles, configuration and credentials, letting them delegate tasks, share findings and work in parallel locally or on cloud infrastructure.",
+    "keyFeatures": [
+      "Runs Claude Code, Antigravity, Codex and OpenCode as independent agent processes with per-agent configuration and credentials",
+      "Shared workspaces or separate Git worktrees and clones per agent",
+      "Agent roles, delegation, and group and direct messaging between agents",
+      "`scion` CLI plus a Workstation web UI with an onboarding wizard",
+      "Local, Workstation, single-node hosted and HA hosted Hub modes on Docker, Podman, Apple Container, Kubernetes or Cloud Run",
+      "Templates, a versioned Skill Bank and an A2A bridge to other agent systems"
+    ],
+    "bestFor": "Engineers and teams experimenting with multi-agent collaboration patterns who want to orchestrate several off-the-shelf coding agents in isolated containers, from a laptop up to a shared hosted Hub.",
+    "notIdealFor": "Teams that need a stable, supported product; Scion is pre-1.0, its APIs and configuration change between releases, and it is not an officially supported Google product.",
+    "recentUpdates": "Open-sourced in April 2026 (covered by InfoQ); the repository publishes nightly builds (latest nightly-20261022) and receives daily commits, with Homebrew installation via the community homebrew-scion tap and Workstation, hosted Hub and Kubernetes runtimes in active use.",
+    "verdict": "A serious, fast-moving testbed for multi-agent orchestration backed by Google Cloud engineers, with broad harness and runtime support; best treated as an experimental platform rather than production infrastructure.",
+    "tags": [
+      "AI Agents",
+      "Multi-Agent",
+      "Orchestration",
+      "Open Source",
+      "Containers",
+      "Claude Code"
+    ],
+    "lastUpdated": "2026-10-22"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -6224,6 +6311,35 @@
     "lastUpdated": "2026-10-20"
   },
   {
+    "slug": "promptfoo",
+    "name": "Promptfoo",
+    "company": "Promptfoo (part of OpenAI)",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; install via npm, Homebrew or pip, or run with `npx promptfoo@latest`. You pay your own model provider API costs. Promptfoo joined OpenAI in March 2026 and states it remains open source and MIT-licensed; enterprise offerings are not priced in the repository.",
+    "description": "Promptfoo is an open-source CLI and library for evaluating and red-teaming LLM-based applications and agents. You declare test cases and assertions, compare prompts and models side by side, run automated red teaming and vulnerability scans against agents and RAG pipelines, and wire the checks into CI/CD and pull request code scanning.",
+    "keyFeatures": [
+      "Declarative evals with assertions, run via `promptfoo eval` and inspected in a local web viewer (`promptfoo view`)",
+      "Side-by-side model comparison across OpenAI, Anthropic, Azure, Bedrock, Ollama and many other providers",
+      "Red teaming and vulnerability scanning for LLM apps, agents and RAG pipelines",
+      "CI/CD integration for automated regression checks",
+      "Code scanning that reviews pull requests for LLM-related security and compliance issues",
+      "Install with npm, Homebrew or pip, or run without installing via `npx promptfoo@latest`"
+    ],
+    "bestFor": "Developers and AI teams shipping LLM features or agents who want repeatable evals, model comparisons and security red teaming in local runs and CI.",
+    "notIdealFor": "People looking for a coding agent or test generator for ordinary application code; Promptfoo tests LLM behaviour and requires writing eval configs and supplying provider API keys.",
+    "recentUpdates": "Released 0.125.0 on October 23, 2026, adding new assertion types (ROUGE-L/ROUGE-S, trace span filters), eval safe mode and stability reporting, and making the Claude Agent and Codex SDK providers opt-in; the repository has 26K+ GitHub stars and appeared on GitHub Trending (TypeScript) on October 23, 2026. Promptfoo announced it was joining OpenAI on March 9, 2026.",
+    "verdict": "The most widely adopted open-source toolkit for LLM evals and red teaming, actively released and now backed by OpenAI while staying MIT-licensed; a default choice for testing prompts and agents in CI.",
+    "tags": [
+      "LLM Evaluation",
+      "Red Teaming",
+      "AI Testing",
+      "CI/CD",
+      "Security",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-23"
+  },
+  {
     "slug": "claude",
     "name": "Claude",
     "company": "Anthropic",
@@ -7151,6 +7267,35 @@
     "lastUpdated": "2026-10-15"
   },
   {
+    "slug": "wshobson-agents",
+    "name": "wshobson Agents",
+    "company": "Seth Hobson",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; requires a supported coding tool (Claude Code, Codex CLI, Cursor, OpenCode, Antigravity CLI, GitHub Copilot or Pi) and its own subscription or model access.",
+    "description": "wshobson Agents is an open-source, multi-harness plugin marketplace that packages agents, skills and commands for AI coding tools. One Markdown source is adapted for Claude Code, OpenAI Codex CLI, Cursor, OpenCode, Antigravity CLI, GitHub Copilot and Pi, covering language stacks, code review, testing, infrastructure, security and other development work.",
+    "keyFeatures": [
+      "94 plugins with 202 agents, 185 skills and 105 commands from a shared Markdown source",
+      "Native marketplace install for Claude Code (`/plugin marketplace add wshobson/agents`), Codex CLI and Cursor",
+      "Generated installs for OpenCode, Antigravity CLI, GitHub Copilot and Pi via make targets",
+      "Skills-only installation with `npx skills add` or `gh skill`",
+      "Plugins for Python, JavaScript/TypeScript, code review, testing, infrastructure and security workflows",
+      "Capability matrix documenting model mappings, tool permissions and hooks per harness"
+    ],
+    "bestFor": "Developers using Claude Code, Codex or other agent harnesses who want a large, ready-made library of specialized subagents, skills and commands instead of writing their own.",
+    "notIdealFor": "Teams that want a small, tightly curated set of agent instructions or a standalone tool; it is a content collection whose quality varies by plugin and which depends on your harness's plugin support.",
+    "recentUpdates": "Expanded from a Claude Code subagent collection (July 2025) into a multi-harness marketplace; it has 41K+ GitHub stars and 4.4K+ forks, with October 2026 commits (latest October 17, 2026) fixing developer-essentials and documentation plugins.",
+    "verdict": "One of the most widely adopted open-source agent/skill libraries, now portable across most major coding harnesses; a useful starting point, though you will want to review and trim plugins for your own workflow.",
+    "tags": [
+      "Agent Skills",
+      "Plugins",
+      "Subagents",
+      "Claude Code",
+      "Codex",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-22"
+  },
+  {
     "slug": "director",
     "name": "Director",
     "company": "Director Support",
@@ -7202,6 +7347,35 @@
       "macOS"
     ],
     "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "pandacode",
+    "name": "PandaCode",
+    "company": "AICodeKing",
+    "pricing": "free",
+    "pricingDetail": "Free and open source under the PandaCode License (MIT plus a requirement that public or commercial forks credit PandaCode); no account or license key. You use your own coding-agent CLI subscriptions or API keys, and any cloud sandbox providers you connect bill you directly.",
+    "description": "PandaCode is a small native desktop workspace for coding agents, built with Tauri 2, Rust and SQLite. It runs the coding CLIs you already use, such as Claude Code, Codex, OpenCode, GitHub Copilot CLI, Antigravity, Grok Build and Pi, side by side with your projects, Git, a terminal and a browser in one window.",
+    "keyFeatures": [
+      "Runs Claude Code, Codex, Kimi Code, OpenCode, Copilot CLI, Antigravity, Grok Build, Cline, Pi and others, with per-task harness, model and effort",
+      "Parallel tasks with a Pending/In progress/Review/Completed task board and per-task Git worktrees",
+      "Agent teams with an architect and up to three workers mixing harnesses and models",
+      "Cloud agents on your own Daytona, E2B, Modal, AWS, Cloudflare, Google Cloud or Vercel Sandbox account",
+      "Embedded browser, diffs for every turn, GitHub PR and issue view, and iOS/Android simulator tools",
+      "Bots that put an agent behind Telegram, Slack, Discord, WhatsApp or a local web chat"
+    ],
+    "bestFor": "Developers juggling several coding-agent CLIs who want one lightweight native app for parallel tasks, worktrees, reviews and remote or cloud runs.",
+    "notIdealFor": "Teams wanting a mature, vendor-supported product; PandaCode is days old, ships multiple releases a day and is mostly written by a single maintainer.",
+    "recentUpdates": "Created on October 18, 2026 by AICodeKing, an AI-focused YouTube creator; it passed 550 GitHub stars and 100 forks within five days and shipped v0.3.30 through v0.3.32 on October 23, 2026.",
+    "verdict": "A feature-rich, telemetry-free agent workspace that supports an unusually wide range of harnesses; promising, but very new and changing quickly.",
+    "tags": [
+      "Agent Workspace",
+      "Coding Agents",
+      "Desktop App",
+      "Git Worktrees",
+      "Multi-Agent",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-23"
   },
   {
     "slug": "fractal-os",
@@ -7765,6 +7939,64 @@
       "Observability"
     ],
     "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "agentplay",
+    "name": "agentplay",
+    "company": "Entelligence AI",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 license; run it with `uvx agentplay`, `pipx run agentplay` or `pip install agentplay`. No account or API key is required.",
+    "description": "agentplay is a local, open-source replay viewer for coding-agent sessions. It finds the Claude Code, Codex, Cursor, GitHub Copilot, OpenCode and Kiro transcripts already on your machine and turns each into a redacted map and playable timeline of what the agent read, edited, ran, retried and shipped.",
+    "keyFeatures": [
+      "One-command start with `uvx agentplay`, which discovers local agent sessions and opens a viewer on 127.0.0.1",
+      "Radial session map of files, tools, MCP servers, subagents and models touched",
+      "Replay timeline showing failed commands, retries, context-window fill and produced PRs or commits",
+      "Supports Claude Code (with subagent lanes), Codex, Cursor, Copilot CLI and VS Code, OpenCode and Kiro",
+      "Redacted map documents that omit prompt text, tool outputs, file contents and command arguments",
+      "No telemetry or uploads; the only network call is an optional email signup that can be disabled"
+    ],
+    "bestFor": "Developers and team leads who want to audit or debug what a coding agent actually did in a session, or share a sanitized session map with others.",
+    "notIdealFor": "Teams wanting centralized, real-time observability across many machines; agentplay reads local transcripts on one machine, and fidelity for non-Claude agents is limited to the main lane.",
+    "recentUpdates": "Open-sourced by Entelligence AI on October 14, 2026 and published to PyPI (version 0.2.3 in the repository); it reached about 300 GitHub stars within ten days, with commits continuing on October 23, 2026.",
+    "verdict": "A privacy-conscious, zero-setup way to see inside coding-agent sessions across the major harnesses; useful today, though still early.",
+    "tags": [
+      "Agent Observability",
+      "Session Replay",
+      "Coding Agents",
+      "Claude Code",
+      "Developer Tools",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-23"
+  },
+  {
+    "slug": "scrawl",
+    "name": "Scrawl",
+    "company": "Kit Langton",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; download the DMG or install with `brew install --cask kitlangton/tap/scrawl`. Windows and Linux builds are free previews.",
+    "description": "Scrawl is a screen-capture tool for showing a coding agent a problem instead of describing it. You press a shortcut, talk, click around and draw on screen, and Scrawl packs the recording, voice and marks into a compact bundle an agent can read: an annotated contact sheet, keyframes, a time-aligned transcript and a structured manifest.",
+    "keyFeatures": [
+      "One shortcut (`⌥⇧S`) to record an area, window, screen or cabled iPhone with voice and on-screen drawing",
+      "Agent-ready bundle: `contact-sheet.png`, full-resolution keyframes, `summary.md` transcript/timeline and `scrawl.json`",
+      "Agent skill for Claude Code, OpenCode, Codex and others via `bunx skills add kitlangton/scrawl`",
+      "`scrawl` CLI to zoom into moments, pull frame ranges, inspect marks and export shareable MP4s",
+      "Direct hand-off of captures into an OpenCode session with `scrawl send`",
+      "Native Rust/GPUI app for Apple silicon Macs, with Windows and Linux previews"
+    ],
+    "bestFor": "Developers who regularly explain UI bugs or visual behaviour to coding agents and want to replace long text descriptions with narrated, annotated captures.",
+    "notIdealFor": "Windows or Linux users who need a signed, stable build, or teams wanting general-purpose screen recording; the full experience targets macOS 15+ on Apple silicon.",
+    "recentUpdates": "Published on October 14, 2026 and passed 700 GitHub stars and 18 contributors within nine days; v0.3.13 and new Linux preview builds shipped on October 22, 2026.",
+    "verdict": "A clever, well-crafted bridge between what you see and what your agent can read, from a respected developer; best on macOS today.",
+    "tags": [
+      "Screen Capture",
+      "Coding Agents",
+      "Agent Skills",
+      "Developer Tools",
+      "macOS",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-23"
   },
   {
     "slug": "magic-patterns",
@@ -10621,208 +10853,5 @@
       "Generative Design"
     ],
     "lastUpdated": "2026-10-15"
-  },
-  {
-    "slug": "omnara",
-    "name": "Omnara",
-    "company": "Omnara (YC S25)",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under the Apache-2.0 license when self-hosted; you bring your own model provider credentials and machines or sandbox providers. A hosted Omnara Cloud (app.omnara.com) is also offered; its pricing is not published in the repository.",
-    "description": "Omnara is an open-source managed agent platform and a self-hostable alternative to Claude Managed Agents and OpenAI's Agents API. You define an agent in a small YAML config, launch it through a REST API, TypeScript SDK or CLI, and Omnara runs the durable agent loop with tools, secrets, permissions and event streaming on any model and any machine.",
-    "keyFeatures": [
-      "Agents defined in YAML and launched via REST API, `@omnara/sdk` TypeScript SDK, `npx omnara` CLI or the web dashboard",
-      "Durable agents whose state is stored in Postgres, so they survive restarts and cost nothing while idle",
-      "Machines from managed sandbox pools (including an E2B provider) or your own laptop, VM or container",
-      "Model-agnostic: OpenAI, Anthropic, OpenRouter or self-hosted model providers",
-      "Secrets, permissions and RBAC handled by the platform",
-      "Stateless workers plus message and event-stream APIs for chatting with agents"
-    ],
-    "bestFor": "Developers and platform teams building internal bots, code review agents or in-product agents who want a self-hosted, model-agnostic alternative to vendor-hosted managed agent APIs.",
-    "notIdealFor": "Individuals who just want an interactive coding agent in their editor or terminal; Omnara is agent infrastructure, and self-hosting requires running the server, Postgres and your own model and machine providers.",
-    "recentUpdates": "Relaunched as an open-source managed agent platform with a Show HN on October 21, 2026; omnarad v0.2.9 (October 21, 2026) added an E2B machine pool provider, with daily commits continuing on October 22, 2026. The company previously launched on HN (YC S25) with a remote-control app for Claude Code and Codex.",
-    "verdict": "A credible, actively developed open-source take on managed agents from a YC-backed team, with a clean YAML/API model and bring-your-own models and machines; still early, so expect APIs to keep moving.",
-    "tags": [
-      "AI Agents",
-      "Managed Agents",
-      "Agent Infrastructure",
-      "Self-Hosted",
-      "Open Source",
-      "Sandboxes"
-    ],
-    "lastUpdated": "2026-10-22"
-  },
-  {
-    "slug": "scion",
-    "name": "Scion",
-    "company": "Google Cloud Platform",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under the Apache-2.0 license; you supply your own coding-agent harness subscriptions or model credentials and container or cloud infrastructure (Docker, Podman, Apple Container, Kubernetes or Cloud Run).",
-    "description": "Scion is an open-source, experimental orchestration platform from Google Cloud Platform for teams of AI agents and the people working with them. It runs harnesses such as Claude Code, Antigravity, Codex and OpenCode as independent containerized agents with their own roles, configuration and credentials, letting them delegate tasks, share findings and work in parallel locally or on cloud infrastructure.",
-    "keyFeatures": [
-      "Runs Claude Code, Antigravity, Codex and OpenCode as independent agent processes with per-agent configuration and credentials",
-      "Shared workspaces or separate Git worktrees and clones per agent",
-      "Agent roles, delegation, and group and direct messaging between agents",
-      "`scion` CLI plus a Workstation web UI with an onboarding wizard",
-      "Local, Workstation, single-node hosted and HA hosted Hub modes on Docker, Podman, Apple Container, Kubernetes or Cloud Run",
-      "Templates, a versioned Skill Bank and an A2A bridge to other agent systems"
-    ],
-    "bestFor": "Engineers and teams experimenting with multi-agent collaboration patterns who want to orchestrate several off-the-shelf coding agents in isolated containers, from a laptop up to a shared hosted Hub.",
-    "notIdealFor": "Teams that need a stable, supported product; Scion is pre-1.0, its APIs and configuration change between releases, and it is not an officially supported Google product.",
-    "recentUpdates": "Open-sourced in April 2026 (covered by InfoQ); the repository publishes nightly builds (latest nightly-20261022) and receives daily commits, with Homebrew installation via the community homebrew-scion tap and Workstation, hosted Hub and Kubernetes runtimes in active use.",
-    "verdict": "A serious, fast-moving testbed for multi-agent orchestration backed by Google Cloud engineers, with broad harness and runtime support; best treated as an experimental platform rather than production infrastructure.",
-    "tags": [
-      "AI Agents",
-      "Multi-Agent",
-      "Orchestration",
-      "Open Source",
-      "Containers",
-      "Claude Code"
-    ],
-    "lastUpdated": "2026-10-22"
-  },
-  {
-    "slug": "wshobson-agents",
-    "name": "wshobson Agents",
-    "company": "Seth Hobson",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under the MIT license; requires a supported coding tool (Claude Code, Codex CLI, Cursor, OpenCode, Antigravity CLI, GitHub Copilot or Pi) and its own subscription or model access.",
-    "description": "wshobson Agents is an open-source, multi-harness plugin marketplace that packages agents, skills and commands for AI coding tools. One Markdown source is adapted for Claude Code, OpenAI Codex CLI, Cursor, OpenCode, Antigravity CLI, GitHub Copilot and Pi, covering language stacks, code review, testing, infrastructure, security and other development work.",
-    "keyFeatures": [
-      "94 plugins with 202 agents, 185 skills and 105 commands from a shared Markdown source",
-      "Native marketplace install for Claude Code (`/plugin marketplace add wshobson/agents`), Codex CLI and Cursor",
-      "Generated installs for OpenCode, Antigravity CLI, GitHub Copilot and Pi via make targets",
-      "Skills-only installation with `npx skills add` or `gh skill`",
-      "Plugins for Python, JavaScript/TypeScript, code review, testing, infrastructure and security workflows",
-      "Capability matrix documenting model mappings, tool permissions and hooks per harness"
-    ],
-    "bestFor": "Developers using Claude Code, Codex or other agent harnesses who want a large, ready-made library of specialized subagents, skills and commands instead of writing their own.",
-    "notIdealFor": "Teams that want a small, tightly curated set of agent instructions or a standalone tool; it is a content collection whose quality varies by plugin and which depends on your harness's plugin support.",
-    "recentUpdates": "Expanded from a Claude Code subagent collection (July 2025) into a multi-harness marketplace; it has 41K+ GitHub stars and 4.4K+ forks, with October 2026 commits (latest October 17, 2026) fixing developer-essentials and documentation plugins.",
-    "verdict": "One of the most widely adopted open-source agent/skill libraries, now portable across most major coding harnesses; a useful starting point, though you will want to review and trim plugins for your own workflow.",
-    "tags": [
-      "Agent Skills",
-      "Plugins",
-      "Subagents",
-      "Claude Code",
-      "Codex",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-22"
-  },
-  {
-    "slug": "promptfoo",
-    "name": "Promptfoo",
-    "company": "Promptfoo (part of OpenAI)",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under the MIT license; install via npm, Homebrew or pip, or run with `npx promptfoo@latest`. You pay your own model provider API costs. Promptfoo joined OpenAI in March 2026 and states it remains open source and MIT-licensed; enterprise offerings are not priced in the repository.",
-    "description": "Promptfoo is an open-source CLI and library for evaluating and red-teaming LLM-based applications and agents. You declare test cases and assertions, compare prompts and models side by side, run automated red teaming and vulnerability scans against agents and RAG pipelines, and wire the checks into CI/CD and pull request code scanning.",
-    "keyFeatures": [
-      "Declarative evals with assertions, run via `promptfoo eval` and inspected in a local web viewer (`promptfoo view`)",
-      "Side-by-side model comparison across OpenAI, Anthropic, Azure, Bedrock, Ollama and many other providers",
-      "Red teaming and vulnerability scanning for LLM apps, agents and RAG pipelines",
-      "CI/CD integration for automated regression checks",
-      "Code scanning that reviews pull requests for LLM-related security and compliance issues",
-      "Install with npm, Homebrew or pip, or run without installing via `npx promptfoo@latest`"
-    ],
-    "bestFor": "Developers and AI teams shipping LLM features or agents who want repeatable evals, model comparisons and security red teaming in local runs and CI.",
-    "notIdealFor": "People looking for a coding agent or test generator for ordinary application code; Promptfoo tests LLM behaviour and requires writing eval configs and supplying provider API keys.",
-    "recentUpdates": "Released 0.125.0 on October 23, 2026, adding new assertion types (ROUGE-L/ROUGE-S, trace span filters), eval safe mode and stability reporting, and making the Claude Agent and Codex SDK providers opt-in; the repository has 26K+ GitHub stars and appeared on GitHub Trending (TypeScript) on October 23, 2026. Promptfoo announced it was joining OpenAI on March 9, 2026.",
-    "verdict": "The most widely adopted open-source toolkit for LLM evals and red teaming, actively released and now backed by OpenAI while staying MIT-licensed; a default choice for testing prompts and agents in CI.",
-    "tags": [
-      "LLM Evaluation",
-      "Red Teaming",
-      "AI Testing",
-      "CI/CD",
-      "Security",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-23"
-  },
-  {
-    "slug": "pandacode",
-    "name": "PandaCode",
-    "company": "AICodeKing",
-    "pricing": "free",
-    "pricingDetail": "Free and open source under the PandaCode License (MIT plus a requirement that public or commercial forks credit PandaCode); no account or license key. You use your own coding-agent CLI subscriptions or API keys, and any cloud sandbox providers you connect bill you directly.",
-    "description": "PandaCode is a small native desktop workspace for coding agents, built with Tauri 2, Rust and SQLite. It runs the coding CLIs you already use, such as Claude Code, Codex, OpenCode, GitHub Copilot CLI, Antigravity, Grok Build and Pi, side by side with your projects, Git, a terminal and a browser in one window.",
-    "keyFeatures": [
-      "Runs Claude Code, Codex, Kimi Code, OpenCode, Copilot CLI, Antigravity, Grok Build, Cline, Pi and others, with per-task harness, model and effort",
-      "Parallel tasks with a Pending/In progress/Review/Completed task board and per-task Git worktrees",
-      "Agent teams with an architect and up to three workers mixing harnesses and models",
-      "Cloud agents on your own Daytona, E2B, Modal, AWS, Cloudflare, Google Cloud or Vercel Sandbox account",
-      "Embedded browser, diffs for every turn, GitHub PR and issue view, and iOS/Android simulator tools",
-      "Bots that put an agent behind Telegram, Slack, Discord, WhatsApp or a local web chat"
-    ],
-    "bestFor": "Developers juggling several coding-agent CLIs who want one lightweight native app for parallel tasks, worktrees, reviews and remote or cloud runs.",
-    "notIdealFor": "Teams wanting a mature, vendor-supported product; PandaCode is days old, ships multiple releases a day and is mostly written by a single maintainer.",
-    "recentUpdates": "Created on October 18, 2026 by AICodeKing, an AI-focused YouTube creator; it passed 550 GitHub stars and 100 forks within five days and shipped v0.3.30 through v0.3.32 on October 23, 2026.",
-    "verdict": "A feature-rich, telemetry-free agent workspace that supports an unusually wide range of harnesses; promising, but very new and changing quickly.",
-    "tags": [
-      "Agent Workspace",
-      "Coding Agents",
-      "Desktop App",
-      "Git Worktrees",
-      "Multi-Agent",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-23"
-  },
-  {
-    "slug": "agentplay",
-    "name": "agentplay",
-    "company": "Entelligence AI",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under the Apache-2.0 license; run it with `uvx agentplay`, `pipx run agentplay` or `pip install agentplay`. No account or API key is required.",
-    "description": "agentplay is a local, open-source replay viewer for coding-agent sessions. It finds the Claude Code, Codex, Cursor, GitHub Copilot, OpenCode and Kiro transcripts already on your machine and turns each into a redacted map and playable timeline of what the agent read, edited, ran, retried and shipped.",
-    "keyFeatures": [
-      "One-command start with `uvx agentplay`, which discovers local agent sessions and opens a viewer on 127.0.0.1",
-      "Radial session map of files, tools, MCP servers, subagents and models touched",
-      "Replay timeline showing failed commands, retries, context-window fill and produced PRs or commits",
-      "Supports Claude Code (with subagent lanes), Codex, Cursor, Copilot CLI and VS Code, OpenCode and Kiro",
-      "Redacted map documents that omit prompt text, tool outputs, file contents and command arguments",
-      "No telemetry or uploads; the only network call is an optional email signup that can be disabled"
-    ],
-    "bestFor": "Developers and team leads who want to audit or debug what a coding agent actually did in a session, or share a sanitized session map with others.",
-    "notIdealFor": "Teams wanting centralized, real-time observability across many machines; agentplay reads local transcripts on one machine, and fidelity for non-Claude agents is limited to the main lane.",
-    "recentUpdates": "Open-sourced by Entelligence AI on October 14, 2026 and published to PyPI (version 0.2.3 in the repository); it reached about 300 GitHub stars within ten days, with commits continuing on October 23, 2026.",
-    "verdict": "A privacy-conscious, zero-setup way to see inside coding-agent sessions across the major harnesses; useful today, though still early.",
-    "tags": [
-      "Agent Observability",
-      "Session Replay",
-      "Coding Agents",
-      "Claude Code",
-      "Developer Tools",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-23"
-  },
-  {
-    "slug": "scrawl",
-    "name": "Scrawl",
-    "company": "Kit Langton",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under the MIT license; download the DMG or install with `brew install --cask kitlangton/tap/scrawl`. Windows and Linux builds are free previews.",
-    "description": "Scrawl is a screen-capture tool for showing a coding agent a problem instead of describing it. You press a shortcut, talk, click around and draw on screen, and Scrawl packs the recording, voice and marks into a compact bundle an agent can read: an annotated contact sheet, keyframes, a time-aligned transcript and a structured manifest.",
-    "keyFeatures": [
-      "One shortcut (`⌥⇧S`) to record an area, window, screen or cabled iPhone with voice and on-screen drawing",
-      "Agent-ready bundle: `contact-sheet.png`, full-resolution keyframes, `summary.md` transcript/timeline and `scrawl.json`",
-      "Agent skill for Claude Code, OpenCode, Codex and others via `bunx skills add kitlangton/scrawl`",
-      "`scrawl` CLI to zoom into moments, pull frame ranges, inspect marks and export shareable MP4s",
-      "Direct hand-off of captures into an OpenCode session with `scrawl send`",
-      "Native Rust/GPUI app for Apple silicon Macs, with Windows and Linux previews"
-    ],
-    "bestFor": "Developers who regularly explain UI bugs or visual behaviour to coding agents and want to replace long text descriptions with narrated, annotated captures.",
-    "notIdealFor": "Windows or Linux users who need a signed, stable build, or teams wanting general-purpose screen recording; the full experience targets macOS 15+ on Apple silicon.",
-    "recentUpdates": "Published on October 14, 2026 and passed 700 GitHub stars and 18 contributors within nine days; v0.3.13 and new Linux preview builds shipped on October 22, 2026.",
-    "verdict": "A clever, well-crafted bridge between what you see and what your agent can read, from a respected developer; best on macOS today.",
-    "tags": [
-      "Screen Capture",
-      "Coding Agents",
-      "Agent Skills",
-      "Developer Tools",
-      "macOS",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-23"
   }
 ]
