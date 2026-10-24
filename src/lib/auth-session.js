@@ -11,6 +11,7 @@ export const AUTH_RETURN_PATHS = Object.freeze([
     '/tools/stack-matcher',
     '/tools/token-counter',
     '/tools/hallucination-scorer',
+    '/tools/rules-converter',
 ]);
 
 const authReturnPaths = new Set(AUTH_RETURN_PATHS);

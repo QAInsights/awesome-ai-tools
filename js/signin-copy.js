@@ -24,6 +24,10 @@ const SIGN_IN_COPY = Object.freeze({
         headline: 'Save your AI stack',
         benefits: ['Keep every stack on your Stacks page', 'Edit, fork and share stacks by link', FULL_INDEX],
     },
+    tool_email: {
+        headline: 'Email this result to yourself',
+        benefits: ['Sent to your inbox as soon as you sign in', 'A link in the email reopens the same setup', FULL_INDEX],
+    },
     browse_gate: {
         headline: 'Unlock the full index',
         benefits: ['Browse every tool, not just the free preview', 'No ads anywhere on the site', FOLLOW],
