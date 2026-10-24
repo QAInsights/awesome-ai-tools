@@ -23,6 +23,7 @@ import FolioTitle from '../../components/folio/FolioTitle.astro';
 import FolioPlans from '../../components/folio/FolioPlans.astro';
 import FolioFaq from '../../components/folio/FolioFaq.astro';
 import FolioScroll from '../../components/folio/FolioScroll.astro';
+import NewsSubscribeCta from '../../components/NewsSubscribeCta.astro';
 import { buildToolFaqs } from '../../lib/tool-faqs';
 import { buildToolReview, buildToolSeo } from '../../lib/tool-seo';
 import { blogPostsLinkingTo } from '../../lib/alternatives';
@@ -453,6 +454,9 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                         <span class="fo-k" style="margin:0">{entry ? `From ${priceMain} ${priceUnit}` : priceMain}</span>
                     </footer>
                 )}
+
+                <NewsSubscribeCta subject="tool" class="fo-brief" />
+
 
                 <div class="fo-notes">
                     <span>Content on this page is AI-generated. Please verify details with the vendor's website for accuracy.</span>

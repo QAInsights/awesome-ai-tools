@@ -14,6 +14,7 @@ import FolioTitle from '../../../components/folio/FolioTitle.astro';
 import FolioPlans from '../../../components/folio/FolioPlans.astro';
 import FolioFaq from '../../../components/folio/FolioFaq.astro';
 import FolioScroll from '../../../components/folio/FolioScroll.astro';
+import NewsSubscribeCta from '../../../components/NewsSubscribeCta.astro';
 import { entryLabel, priceSummary } from '../../../lib/folio';
 import { addOutboundUtmParams } from '../../../lib/outbound-utm.js';
 import { formatDate, getAlternativesFor, getCategorySlug, type Tool } from '../../../lib/tools';
@@ -261,6 +262,9 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                         <span class="fo-k" style="margin:0">{price.entry ? `From ${price.main} ${price.unit}` : price.main}</span>
                     </footer>
                 )}
+
+                <NewsSubscribeCta subject="tool-pricing" class="fo-brief" />
+
 
                 <div class="fo-notes">
                     <span>Content on this page is AI-generated. Please verify details with the vendor's website for accuracy.</span>

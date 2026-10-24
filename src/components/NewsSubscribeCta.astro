@@ -3,12 +3,14 @@ interface Props {
   isNewsPost?: boolean;
   subject?: string;
   compact?: boolean;
+  class?: string;
 }
 
 const {
   isNewsPost = false,
   subject = 'today-in-ai',
   compact = false,
+  class: className,
 } = Astro.props;
 
 const eyebrow = isNewsPost ? 'Daily AI Brief' : 'Stay in the Loop';
@@ -17,7 +19,7 @@ const heading = isNewsPost
   : 'Get the daily AI brief for builders';
 const copy = isNewsPost
   ? 'One-click email subscription for model releases, tooling updates, and funding moves, delivered when a new edition lands.'
-  : 'Receive our daily Today in AI brief and new deep-dive posts by email. Unsubscribe in one click anytime.';
+  : 'Receive our daily Today in AI brief and new deep-dive posts by email. Unsubscribe anytime.';
 ---
 
 <aside
@@ -25,6 +27,7 @@ const copy = isNewsPost
   class:list={[
     'rounded-xl border border-[#262626] bg-gradient-to-br from-[#141414] via-[#101010] to-[#0c181b] relative overflow-hidden',
     compact ? 'p-4 sm:p-5' : 'p-5 sm:p-6 mt-10',
+    className,
   ]}
 >
   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

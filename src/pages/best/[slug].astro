@@ -19,6 +19,7 @@ import FolioStyles from '../../components/folio/FolioStyles.astro';
 import FolioTitle from '../../components/folio/FolioTitle.astro';
 import FolioFaq from '../../components/folio/FolioFaq.astro';
 import FolioScroll from '../../components/folio/FolioScroll.astro';
+import NewsSubscribeCta from '../../components/NewsSubscribeCta.astro';
 
 export async function getStaticPaths() {
     return getBestPages().map(page => ({
@@ -291,6 +292,9 @@ const num = () => String(++n).padStart(2, '0');
                         </ul>
                     </div>
                 </nav>
+
+                <NewsSubscribeCta subject="best" class="fo-brief" />
+
 
                 <div class="fo-notes">
                     <span>Rankings are rebuilt monthly from the directory's reviews. Verify details on each vendor's website.</span>
