@@ -53,6 +53,7 @@ const result = await build({
         './js/blog.js',
         './js/site-analytics.js',
         './js/onboarding.js',
+        './js/one-tap.js',
         './js/ad-gate.js',
         './js/browse-gate.js',
         './js/advertise-dashboard.js',

@@ -6,6 +6,12 @@ import { sessionClient } from './session-client.js';
 
 const LOOPBACK_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]', '::1']);
 
+/** Google sets `select_by` to `btn*` for the rendered button; anything else came from One Tap. */
+export function isOneTapCredential(response) {
+    const selectBy = typeof response?.select_by === 'string' ? response.select_by : '';
+    return selectBy !== '' && !selectBy.startsWith('btn');
+}
+
 export class AuthManager {
     constructor(sessions = sessionClient) {
         this.sessions = sessions;
@@ -77,6 +83,9 @@ export class AuthManager {
                 callback: this._handleGoogleCredential.bind(this),
                 auto_select: false,
                 cancel_on_tap_outside: true,
+                use_fedcm_for_prompt: true,
+                itp_support: true,
+                context: 'signin',
             });
             this.isGoogleInitialized = true;
         } catch (error) {
@@ -121,6 +130,10 @@ export class AuthManager {
     }
 
     async _handleGoogleCredential(response) {
+        if (isOneTapCredential(response)) {
+            authAttribution.setPending('one_tap');
+            authAttribution.begin('one_tap');
+        }
         analytics.track(EVENTS.SIGNIN_STARTED, { provider: 'google', trigger: authAttribution.current() });
         try {
             return await this._queueSessionMutation(async () => {
@@ -315,8 +328,10 @@ export class AuthManager {
     }
 
     showOneTap() {
-        if (!this.isGoogleInitialized || this.user) return;
+        if (!this.isGoogleInitialized || this.user) return false;
+        analytics.track(EVENTS.ONE_TAP_PROMPTED, { trigger: 'one_tap' });
         window.google.accounts.id.prompt();
+        return true;
     }
 }
 
