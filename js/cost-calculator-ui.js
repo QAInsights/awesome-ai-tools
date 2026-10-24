@@ -23,8 +23,7 @@ const esc = str =>
 export function initCostCalculatorUI(catalog) {
   const paidCatalog = catalog.filter(t => Array.isArray(t.plans) && t.plans.length > 0);
   const state = parseCalculatorStateFromUrl(window.location.search);
-  // Always start Negotiated / Commit Discount at 0% (List Price) by default on load
-  state.discountPercent = 0;
+  // Discount starts at list price unless a shared or emailed link carries one.
 
   state.selectedSeats = state.selectedSeats.filter(s => paidCatalog.some(t => t.slug === s.slug));
   if (!state.seatsExplicit && state.selectedSeats.length === 0 && paidCatalog.length > 0) {
