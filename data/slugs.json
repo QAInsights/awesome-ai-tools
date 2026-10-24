@@ -948,6 +948,12 @@
     "category": "AI-Native Terminals"
   },
   {
+    "slug": "corgi",
+    "name": "Corgi",
+    "company": "Tal Shiri (tals)",
+    "category": "AI-Native Terminals"
+  },
+  {
     "slug": "jules",
     "name": "Jules",
     "company": "Google",
