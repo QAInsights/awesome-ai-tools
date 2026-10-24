@@ -28,7 +28,10 @@ export async function reserveToolEmailSend(
     `).bind(userId, day, limit).first<{ count: number }>();
     if (!row) return false;
     if (Number(row.count) === 1) {
-        await db.prepare('DELETE FROM tool_email_daily_counts WHERE user_id = ?1 AND day < ?2').bind(userId, day).run();
+        await db.prepare('DELETE FROM tool_email_daily_counts WHERE user_id = ?1 AND day < ?2')
+            .bind(userId, day)
+            .run()
+            .catch(() => {});
     }
     return true;
 }

@@ -82,6 +82,18 @@ describe('email sender', () => {
         expect(fetchMock).not.toHaveBeenCalled();
     });
 
+    test('treats an accepted send with an unreadable body as sent', async () => {
+        fetchMock = mock(async () => new Response('', { status: 200 }));
+        globalThis.fetch = fetchMock as unknown as typeof fetch;
+        const { sendEmail } = await import(`./email.ts?empty=${Date.now()}`);
+        await expect(sendEmail({
+            to: 'ada@example.com',
+            subject: 'Updates',
+            html: '',
+            text: '',
+        })).resolves.toEqual({ messageId: null, dryRun: false });
+    });
+
     test('rejects non-successful Resend responses with a truncated body', async () => {
         fetchMock = mock(async () => new Response('invalid request', { status: 422 }));
         globalThis.fetch = fetchMock as unknown as typeof fetch;

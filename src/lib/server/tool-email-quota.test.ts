@@ -68,6 +68,20 @@ describe('tool email daily quota', () => {
         expect(await reserveToolEmailSend(d1, 'github:1', NOON, 1)).toBe(true);
     });
 
+    test('a failed old-row cleanup keeps the reservation', async () => {
+        const { sqlite, d1 } = migratedDatabase();
+        const flakyCleanup = {
+            prepare(sql: string) {
+                if (sql.startsWith('DELETE')) {
+                    return { bind: () => ({ run: async () => { throw new Error('D1 unavailable'); } }) };
+                }
+                return d1.prepare(sql);
+            },
+        } as unknown as Database;
+        expect(await reserveToolEmailSend(flakyCleanup, 'github:1', NOON)).toBe(true);
+        expect(countFor(sqlite, '2026-10-24')).toBe(1);
+    });
+
     test('rows are removed with the account', async () => {
         const { sqlite, d1 } = migratedDatabase();
         await reserveToolEmailSend(d1, 'github:1', NOON);
