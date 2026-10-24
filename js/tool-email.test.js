@@ -52,6 +52,7 @@ describe('statusForResponse', () => {
         expect(statusForResponse(401)).toBe('signin');
         expect(statusForResponse(409)).toBe('unverified');
         expect(statusForResponse(429)).toBe('limited');
+        expect(statusForResponse(429, { error: 'daily_limit' })).toBe('daily');
         expect(statusForResponse(503)).toBe('failed');
     });
 });
