@@ -1,0 +1,97 @@
+---
+title: "OpenCode vs Claude Code vs Codex CLI: Which Terminal Coding Agent Should You Use in 2026?"
+description: "OpenCode, Claude Code, and Codex CLI compared on license, model choice, pricing, permissions, and automation, with facts checked against each tool's official docs in October 2026."
+pubDate: 2026-10-24
+tags: ["opencode", "claude-code", "codex-cli", "comparison", "terminal", "cli", "open-source"]
+featured: true
+---
+
+If you search for an OpenCode alternative, you end up looking at the other two names on this page, and the reverse is true too. People searching for a Claude Code or Codex CLI alternative keep running into [OpenCode](/tools/opencode). All three are terminal-first coding agents. You give them a task, they read the repo, edit files, run commands, and ask before doing anything risky. The real differences are who owns the model, who you pay, and how much the agent can do on its own. Let's get into it with facts, not vibes.
+
+## The Short Answer
+
+- **[OpenCode](/tools/opencode)**: open source (MIT), works with any model. You bring your own keys, sign in with an existing ChatGPT or GitHub Copilot plan, or use its own Zen and Go model plans. It's the one to pick if you never want to be locked to a single lab.
+- **[Claude Code](/tools/claude-code)**: Anthropic's agent, closed source, built around Claude models. It has the richest extension system of the three (CLAUDE.md, skills, subagents, hooks, plugins) and the most permission modes.
+- **[Codex CLI](/tools/codex-cli)**: OpenAI's agent, open source (Apache-2.0), built around GPT models. It has the strictest sandbox by default and a clean `codex exec` path for scripts and CI.
+
+If you already pay for Claude or ChatGPT, start with the agent from that lab. If you want one tool that works with every model, start with OpenCode.
+
+## At a Glance
+
+| Category | OpenCode | Claude Code | Codex CLI |
+| --- | --- | --- | --- |
+| Maker | Anomaly | Anthropic | OpenAI |
+| License | MIT | Proprietary (Anthropic Commercial Terms) | Apache-2.0 |
+| GitHub stars (Oct 2026) | 220K+ | 153K+ | 130K+ |
+| Models | 75+ providers via Models.dev, including local models | Claude models; also via Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry | OpenAI models (GPT-6.1 Sol and GPT-6 Luna on Plus) |
+| Sign-in options | API keys, ChatGPT Plus/Pro, GitHub Copilot, OpenCode Zen or Go | Claude subscription or Anthropic Console account | ChatGPT sign-in or API key |
+| Surfaces | Terminal, desktop app, IDE extension (web app in V2) | Terminal, VS Code, JetBrains, desktop app, web | Terminal, IDE extension, web, iOS, desktop app |
+| Project instructions | Rules and instructions files | CLAUDE.md or AGENTS.md | AGENTS.md |
+| Safety model | Configurable permissions and policies | Five permission modes, from `default` to `bypassPermissions` | OS-enforced sandbox plus approval policy, network off by default |
+| Scripting and CI | CLI, SDK and server API | GitHub Actions, Agent SDK | `codex exec`, API key auth for CI |
+| Entry price | Free (pay your model provider), Go $10/mo | Claude Pro $20/mo | ChatGPT Plus $20/mo for CLI access |
+
+## OpenCode: The Model-Agnostic Option
+
+OpenCode's pitch is simple: an open-source agent that doesn't care whose model you use. The official site lists 75+ LLM providers through Models.dev, local models included. You can also log in with a ChatGPT Plus or Pro account or a GitHub Copilot account, which is handy if your company already pays for Copilot and you want a terminal agent on top of it.
+
+What I like most is that the agent costs nothing. OpenCode itself is free, and it ships with a few free models you can use without an account. If you'd rather not juggle provider keys, there are two paid options from the same team. **Zen** is pay-as-you-go access to popular coding models. **OpenCode Go** is a $10/month plan (Go Plus is $40/month) with curated, cheaper models tested for agentic coding. Go also works with other agents, not just OpenCode.
+
+A few things to know before you install:
+
+1. **V1 and V2 both exist right now.** OpenCode 2 is available (`curl -fsSL https://opencode.ai/v2/install | bash`, or `npm install -g @opencode/cli`), while V1 is still getting releases (v1.19.4 shipped on October 22, 2026). Both use the `opencode` command and can't be installed side by side under the default name, so read the "Migrate from V1" page first.
+2. **Multi-session is built in.** You can start several agents in parallel on the same project.
+3. **Privacy.** OpenCode says it doesn't store your code or context. The exception is when you use its free models.
+
+The tradeoff is that you assemble the stack yourself. Quality depends on the model you plug in, and you'll spend some time on config.
+
+## Claude Code: The Deepest Extension System
+
+[Claude Code](/tools/claude-code) runs in the terminal, VS Code, JetBrains, a desktop app, and the browser. Most surfaces need a Claude subscription or an Anthropic Console account. The terminal CLI, VS Code, and JetBrains can also run through Amazon Bedrock, Google Cloud's Agent Platform (formerly Vertex AI), or Microsoft Foundry, which matters if your company buys AI through a cloud provider.
+
+Where Claude Code pulls ahead is customization. Per-project memory lives in CLAUDE.md (AGENTS.md is read as well), and on top of that you get skills, subagents, hooks, MCP servers, and plugins. If you want the agent to run your formatter after every edit or block writes to a folder, hooks do that without any prompt tricks.
+
+Permissions are the other big piece. There are five modes:
+
+- `default` (Manual): asks before most edits, commands, and network calls.
+- `acceptEdits`: file edits and common filesystem commands go through without a prompt.
+- `plan`: reads and explores before changing anything.
+- `auto`: runs everything, with background safety checks. It's the default starting mode for interactive sessions from v2.1.283.
+- `bypassPermissions`: skips all checks. The docs say to use it only in isolated containers and VMs.
+
+Pricing: Claude Pro is $20/month ($17/month billed annually) and includes Claude Code. Max starts at $100/month for 5x Pro usage, and $200/month gets you 20x. The catch is that the CLI is closed source, so you can't fork it or audit the agent loop.
+
+## Codex CLI: The Strictest Sandbox
+
+[Codex CLI](/tools/codex-cli) is OpenAI's open-source terminal agent (Apache-2.0, written in Rust). Install it with `curl -fsSL https://chatgpt.com/codex/install.sh | sh`, `npm install -g @openai/codex`, or Homebrew. Then run `codex` in a project and sign in with ChatGPT or an API key.
+
+Its safety model is the most conservative of the three. Two settings decide what it can do. **Sandbox mode** limits what commands can touch technically, typically the current workspace. The **approval policy** decides when Codex has to stop and ask you. Locally, the sandbox is enforced by the operating system, and network access is off by default. For a fully read-only session, run `codex --sandbox read-only --ask-for-approval on-request`.
+
+For automation, `codex exec` runs non-interactively from scripts and pipelines, and OpenAI recommends API key auth for shared environments like CI. Project guidance goes in AGENTS.md, and there are skills, plugins, subagents, and MCP support too.
+
+Pricing needs a careful read. ChatGPT Free ($0) and Go ($8/month) include Codex only in the desktop app, and that's still rolling out. The CLI starts at **Plus ($20/month)**, which also covers Codex on the web, in the IDE extension, and on iOS, with GPT-6.1 Sol and GPT-6 Luna. Pro starts at $100/month, with tiers at $100, $200, and $500, and Ultrafast mode is on the $500 tier. Also note that GPT-5.5 was retired from Codex for ChatGPT sign-in on October 14, 2026. API key sessions weren't affected.
+
+## Which One Should You Pick?
+
+- **You want one agent for every model, including local ones:** OpenCode.
+- **You already pay for GitHub Copilot or ChatGPT and want a terminal agent on top:** OpenCode (log in with either) or Codex CLI (ChatGPT Plus and up).
+- **You live in Claude and want hooks, subagents, and fine-grained permission modes:** Claude Code.
+- **Your company buys models through AWS, Google Cloud, or Azure:** Claude Code through Bedrock, Agent Platform, or Foundry.
+- **You care most about a locked-down default sandbox and scripted runs in CI:** Codex CLI.
+- **You need to read or fork the agent's source:** OpenCode or Codex CLI. Claude Code is closed source.
+
+Switching later is cheaper than it looks. Most of your setup is project instructions, and our [Rules Converter](/tools/rules-converter) turns a CLAUDE.md into an AGENTS.md (and the other way) in the browser. To check what a team would pay per month, plug the plans into the [Cost Calculator](/tools/cost-calculator).
+
+## FAQ
+
+**Is OpenCode free?** Yes. OpenCode is MIT-licensed and free to use, and it includes some free models. You pay only for the model provider you connect, or for the optional OpenCode Go ($10/month) or Go Plus ($40/month) plans.
+
+**Can OpenCode use Claude models?** Yes. OpenCode works with providers such as Anthropic, OpenAI, and xAI through your own API keys, and it can sign in with ChatGPT Plus/Pro or GitHub Copilot accounts.
+
+**Is Claude Code open source?** No. The Claude Code repository is "All rights reserved" and use is governed by Anthropic's Commercial Terms. OpenCode (MIT) and Codex CLI (Apache-2.0) are open source.
+
+**Does Codex CLI come with the free ChatGPT plan?** Not the CLI. Free and Go include Codex in the desktop app (subject to rollout), and the CLI starts at the Plus plan. You can also run the CLI with an API key and pay per token.
+
+**Which has the safest defaults?** Codex CLI. It runs inside an OS-enforced sandbox with network access off by default and asks for approval before leaving the sandbox. Claude Code's Manual mode also asks before edits and commands, but auto mode is now the default starting mode for interactive sessions.
+
+*See the head-to-head pages for [Claude Code vs OpenCode](/compare/claude-code-vs-opencode), [Codex CLI vs OpenCode](/compare/codex-cli-vs-opencode), and [Claude Code vs Codex CLI](/compare/claude-code-vs-codex-cli), the full lists of [OpenCode alternatives](/tools/opencode/alternatives), [Claude Code alternatives](/tools/claude-code/alternatives), and [Codex CLI alternatives](/tools/codex-cli/alternatives), and our [AI coding CLIs roundup](/blog/best-ai-coding-clis) for Gemini CLI and Aider.*
