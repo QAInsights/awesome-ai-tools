@@ -1,0 +1,110 @@
+---
+title: "OpenChamber vs Superset vs Orca (2026): Which Agent Workspace Should You Run?"
+description: "OpenChamber, Superset, and Orca compared on agents, platforms, licenses, pricing, remote access, mobile, and review tools, with every fact checked against official docs in October 2026."
+pubDate: 2026-10-24
+tags: ["openchamber", "superset", "orca", "comparison", "parallel-agents", "git-worktree", "open-source"]
+featured: true
+---
+
+A year ago, running a coding agent meant one terminal, one branch, and a lot of waiting. Now the interesting question is how you supervise several of them at once. [OpenChamber](/tools/openchamber), [Superset](/tools/superset), and [Orca](/tools/orca) are three of the most searched answers to that question, and they look similar at first glance: each gives agents their own Git worktree, shows you the diffs, and lets you check in from your phone. Under the hood they make very different bets. OpenChamber goes deep on one agent, OpenCode. Superset is a polished commercial workspace with paid cloud hours. Orca is a free, MIT-licensed desktop IDE that runs almost any CLI agent you throw at it.
+
+I read each project's official site, docs, pricing page, and GitHub repository on October 24, 2026. Every claim below links to the page it came from, and there is a dated Sources list at the end.
+
+## The Short Answer
+
+- **Pick OpenChamber** if you already use [OpenCode](/tools/opencode) and want the best interface for it: a desktop app, a web app, a VS Code extension, and phone access over an end-to-end encrypted relay, all free under MIT.
+- **Pick Superset** if you want a commercial product with a team plan, event-driven automations from GitHub, Slack, Linear, or Sentry, and hosted cloud workspaces, and you are happy on macOS or Linux.
+- **Pick Orca** if you want to run Claude Code, Codex, OpenCode, Cursor CLI, and others side by side on macOS, Windows, or Linux, at no cost, with SSH and on-demand VMs when your laptop is not enough.
+
+The biggest single difference is agent choice. Superset and Orca orchestrate many different CLI agents. OpenChamber is built on OpenCode, so you get many models through OpenCode's providers but one agent harness.
+
+## At a Glance
+
+| Category | OpenChamber | Superset | Orca |
+| --- | --- | --- | --- |
+| Maker | OpenChamber (independent, not affiliated with the OpenCode team) | Superset, San Francisco | Stably AI |
+| License | MIT | Elastic License 2.0 (source-available, not OSI open source) | MIT |
+| Agents | OpenCode, with the models it supports | Any CLI agent, including Claude Code, OpenCode, and Codex | Claude Code, Codex, OpenCode, Cursor CLI, and other CLI agents |
+| Desktop platforms | macOS, Windows, Linux | macOS, Linux (experimental AppImage), no Windows yet | macOS, Windows, Linux |
+| Other surfaces | Web app and PWA, VS Code extension, mobile beta | CLI, TypeScript SDK, MCP server, iPhone and iPad app | CLI, skills and MCP, iOS and Android companion |
+| Isolation | Optional worktree and branch per run | Git worktree and branch per task | Git worktree, terminal, and browser tab per task |
+| Remote work | Any machine you control, reached over LAN or Private Relay | Remote hosts through the Superset relay (Pro), cloud workspaces (Team and up) | SSH, a self-hosted Orca server, or an on-demand VM |
+| Price | Free; you pay your model provider | Free for 1 user; Pro $20, Team $60, Ultra $200 per user per month | Free; bring your own subscriptions and keys |
+| GitHub stars (Oct 24, 2026) | About 12.1K | About 15.5K | About 104.6K |
+
+## OpenChamber: The Best Seat for OpenCode
+
+[OpenChamber describes itself](https://openchamber.dev/llms.txt) as an open-source agentic development environment built on OpenCode. The design is an "instance" that runs on your Mac, Linux box, Windows PC, or server. The instance runs the agents and keeps every session, and every other surface connects to it. That is why it feels different from the other two: you can start a session on your desktop and pick up the same session from a browser or phone.
+
+The surfaces are broad for a free project. The [desktop app](https://openchamber.dev/download/) ships for macOS, Windows, and Linux and bundles the matching OpenCode CLI. A web app and PWA are served by the `openchamber` CLI, which you can password-protect with `--ui-password`. There is a VS Code extension on the Marketplace and on Open VSX for Cursor, Windsurf, and Trae. Mobile apps are in public beta through TestFlight and an Android APK, and a phone pairs with an instance by scanning a one-time QR code. Remote access goes over [Private Relay](https://openchamber.dev/), which is end-to-end encrypted and needs no open port.
+
+Two features stand out for parallel work. **Multi-run** sends one prompt to several models at once, optionally with a separate worktree and branch for each run, and then lets you keep the best result or fuse the answers into one. The **Changes Walkthrough** reorders a large diff into the order it makes sense, explains each step in a sentence, and marks the key change. If you review a lot of AI-written code, that second feature saves real time.
+
+The trade-off is that OpenChamber is tied to OpenCode. If your team has standardized on Claude Code or Codex as the harness, it is the wrong tool. If you want a deeper look at that choice first, read [OpenCode vs Claude Code vs Codex CLI](/blog/opencode-vs-claude-code-vs-codex-cli). OpenChamber also states that it does not collect project names, paths, prompts, code, diffs, or session content.
+
+## Superset: The Commercial Workspace With Cloud Hours
+
+[Superset](https://superset.sh/llms.txt) is a desktop workspace for orchestrating any CLI coding agent. Each task gets its own Git worktree and branch. Superset is upfront that worktrees separate working files but do not sandbox processes or prevent merge conflicts, which is honest and worth remembering for all three tools. Next to the agent terminals, the app has a Changes pane that commits, pushes, and opens pull requests, a pull request pane with checks and review threads, a file editor, an in-app browser, and a Design Mode that lets you click an element on a page and send it to an agent.
+
+Superset is the most "product" of the three. It has a CLI, a TypeScript SDK, and an MCP server for programmatic control. On Pro, **automations** start agent sessions on a schedule or from events such as a GitHub pull request, a Slack message, a Linear issue, a Sentry issue, a Notion or Microsoft Teams event, or a webhook, with run history and retries. **Remote access** lets you add another machine as a host through the Superset relay. There is also an iPhone and iPad app for checking on agents and reviewing diffs.
+
+The limits are the platform and the license. Desktop support is macOS and Linux, with Linux still an experimental AppImage and no Windows build yet. The code is public on GitHub under the Elastic License 2.0, which is source-available rather than OSI-approved open source. The homepage also notes that [Superset is getting a new name soon](https://superset.sh/), so expect the branding to change. One more thing that trips people up in search: this Superset is unrelated to Apache Superset, the business intelligence tool.
+
+## Orca: The Free, Multi-Agent IDE Everyone Is Starring
+
+[Orca](https://www.onorca.dev/) calls itself "the agent development environment." The [docs](https://www.onorca.dev/docs) describe a desktop IDE for running multiple AI coding agents side by side, where every task gets its own Git worktree, its own agent terminal, and its own browser tab. You can fan work out across Claude Code, Codex, OpenCode, Cursor CLI, and others without stashing or juggling branches. It runs on macOS, Windows, and Linux, and a mobile companion is available on the App Store and as an Android APK.
+
+The feature list is long. The docs cover session restore, agent hibernation, usage and rate-limit tracking, a native chat UI, a diff viewer with AI diff annotations, a per-worktree browser with Design Mode, an Orca CLI and skills registry with MCP, scheduled automations, computer use, and worktree checkpoints. For remote work, you can run agents over SSH, on a self-hosted Orca server, or in an on-demand VM, without leaving the IDE. There is even a recipe in the docs for racing three agents on the same task.
+
+Orca is MIT-licensed and does not host models, so you bring your own Claude, ChatGPT, or API subscriptions. That makes it the cheapest way to try a multi-agent workflow. It is also moving fast: the [GitHub repo](https://github.com/stablyai/orca) had passed 100K stars and shipped v1.4.239 on October 24, 2026. Fast releases are great for features, but pin a version if your team needs a stable setup.
+
+## Pricing, Side by Side
+
+| Plan | OpenChamber | Superset | Orca |
+| --- | --- | --- | --- |
+| Free | Everything, MIT | 1 user, local workspaces, desktop app, CLI | Everything, MIT |
+| Individual or team paid | None | Pro: $20/user/month, or $16 billed yearly. Adds remote access, automations, Linear, Slack, and mobile | None |
+| Heavier use | None | Team: $60/user/month ($54 yearly), cloud workspaces (beta) with 150 hours per seat. Ultra: $200/user/month with 500 hours | None |
+| Enterprise | None | Custom: SAML SSO, SCIM, audit logs, SOC 2 Type II report, SLA | None |
+| Model costs | Your OpenCode providers | Your agent subscriptions; Superset does not proxy model calls | Your agent subscriptions and keys |
+
+Superset prices are from its [pricing page](https://superset.sh/pricing). For all three, the real bill is the agents. Running three Claude Code sessions in parallel burns through limits about three times faster, so check your plan with the [AI Cost Calculator](/tools/cost-calculator) before you scale up.
+
+## Which One Should You Pick?
+
+1. **You live in OpenCode:** OpenChamber. Nothing else gives OpenCode a desktop, web, editor, and phone interface on the same session.
+2. **You want many different agents, free:** Orca. It runs the widest set of CLI agents and costs nothing.
+3. **You are on Windows:** OpenChamber or Orca. Superset has no Windows build yet.
+4. **You want agents triggered by GitHub, Slack, Linear, or Sentry, with team billing:** Superset Pro or Team.
+5. **You want hosted machines without running your own:** Superset Team or Ultra for cloud workspace hours, or Orca with an on-demand VM.
+6. **You need an OSI-approved license:** OpenChamber or Orca, both MIT.
+
+Whichever you pick, keep your agent instructions in one place. If you move between Cursor rules, CLAUDE.md, and AGENTS.md, the [Rules Converter](/tools/rules-converter) translates between them.
+
+## FAQ
+
+**Are OpenChamber, Superset, and Orca free?**
+OpenChamber and Orca are free and MIT-licensed. Superset has a free plan for one user, and paid plans from $20 per user per month for teams, remote access, and automations. In all three cases, you still pay for your models or agent subscriptions.
+
+**Which one runs Claude Code?**
+Superset and Orca both run Claude Code alongside other CLI agents. OpenChamber is built on OpenCode, so it runs OpenCode, which can use Anthropic models through OpenCode's providers.
+
+**Do worktrees make parallel agents safe?**
+They keep each agent's files separate, but they do not sandbox processes or prevent merge conflicts. You still review and merge each branch like a pull request. Our guide to [running multiple coding agents in parallel](/blog/run-multiple-coding-agents-in-parallel) shows what happens when two branches touch neighboring lines.
+
+**Can I use them from my phone?**
+Yes. OpenChamber has iOS and Android apps in public beta that pair by QR code. Superset has an iPhone and iPad app on the Pro plan. Orca has a mobile companion for iOS and Android.
+
+**Is Superset the same as Apache Superset?**
+No. Superset at superset.sh is a coding agent workspace. Apache Superset is an unrelated business intelligence tool.
+
+**What else should I look at?**
+See the [OpenChamber vs Superset comparison](/compare/openchamber-vs-superset), or browse [OpenChamber alternatives](/tools/openchamber/alternatives), [Superset alternatives](/tools/superset/alternatives), and [Orca alternatives](/tools/orca/alternatives).
+
+## Sources
+
+All facts were checked on October 24, 2026. These products ship updates almost daily, so confirm on the official pages before you decide:
+
+- OpenChamber: [website](https://openchamber.dev/), [product facts (llms.txt)](https://openchamber.dev/llms.txt), [downloads](https://openchamber.dev/download/), [GitHub repository](https://github.com/openchamber/openchamber)
+- Superset: [website](https://superset.sh/), [pricing](https://superset.sh/pricing), [product facts (llms.txt)](https://superset.sh/llms.txt), [GitHub repository](https://github.com/superset-sh/superset)
+- Orca: [website](https://www.onorca.dev/), [documentation](https://www.onorca.dev/docs), [GitHub repository](https://github.com/stablyai/orca)
