@@ -1586,5 +1586,21 @@
   {
     "companyName": "Ziyu Li / System One",
     "toolName": "System One API"
+  },
+  {
+    "companyName": "ZSeven-W",
+    "toolName": "OpenPencil"
+  },
+  {
+    "companyName": "Together AI",
+    "toolName": "Hallmark"
+  },
+  {
+    "companyName": "leepokai",
+    "toolName": "Codync"
+  },
+  {
+    "companyName": "Respan (YC W24)",
+    "toolName": "Respan Gateway"
   }
 ]

@@ -1236,6 +1236,12 @@
     "category": "Browser-Based & App Builders"
   },
   {
+    "slug": "openpencil",
+    "name": "OpenPencil",
+    "company": "ZSeven-W",
+    "category": "Browser-Based & App Builders"
+  },
+  {
     "slug": "coderabbit",
     "name": "CodeRabbit",
     "company": "CodeRabbit",
@@ -2349,6 +2355,24 @@
     "slug": "system-one-api",
     "name": "System One API",
     "company": "Ziyu Li / System One",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "hallmark",
+    "name": "Hallmark",
+    "company": "Together AI",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "codync",
+    "name": "Codync",
+    "company": "leepokai",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "respan-gateway",
+    "name": "Respan Gateway",
+    "company": "Respan (YC W24)",
     "category": "Developer Productivity & Workflow"
   },
   {
