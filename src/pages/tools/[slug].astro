@@ -291,6 +291,9 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                                         <span data-follow-label>Follow</span>
                                     </button>
                                 </div>
+                                {enriched && (
+                                    <p class="fo-follow-note">Follow {displayName} to get an email when its listing changes, such as new pricing or features. One digest a day at most, and you can unsubscribe anytime.</p>
+                                )}
                             </div>
                         </div>
                         <div class="fo-facts">
