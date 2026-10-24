@@ -70,6 +70,14 @@ function clearPending(storage) {
     } catch {}
 }
 
+function resolveSessionStorage() {
+    try {
+        return globalThis.sessionStorage ?? null;
+    } catch {
+        return null;
+    }
+}
+
 export function initToolEmail({
     button,
     statusEl = null,
@@ -79,7 +87,7 @@ export function initToolEmail({
     attribution = authAttribution,
     analyticsClient = analytics,
     api = defaultApi,
-    storage = globalThis.sessionStorage,
+    storage = resolveSessionStorage(),
     now = () => Date.now(),
     schedule = (fn, ms) => setTimeout(fn, ms),
     cancel = id => clearTimeout(id),
