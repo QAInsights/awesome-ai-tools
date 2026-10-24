@@ -79,7 +79,7 @@ export async function sendEmail(message: OutboundEmail): Promise<EmailSendResult
         const body = (await response.text()).slice(0, 200);
         throw new Error(`Resend send failed (${response.status})${body ? `: ${body}` : ''}`);
     }
-    const result = await response.json() as { id?: string | null };
+    const result = await response.json().catch(() => ({})) as { id?: string | null };
     return { messageId: result.id ?? null, dryRun: false };
 }
 

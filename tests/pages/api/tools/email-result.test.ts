@@ -3,12 +3,22 @@ import { beforeEach, describe, expect, mock, test } from 'bun:test';
 let hasSession = false;
 let emailVerified = 1;
 let limiterSuccess = true;
+let dailyAllowed = true;
+let sendFails = false;
+const quotaSql: string[] = [];
 const sent: { to: string; subject: string; html: string; text: string }[] = [];
 
 const database = {
-    prepare() {
+    prepare(sql: string) {
         return {
             bind() {
+                if (sql.includes('tool_email_daily_counts')) {
+                    quotaSql.push(sql.trim().split(/\s+/)[0]!);
+                    return {
+                        first: async () => dailyAllowed ? { count: 2 } : null,
+                        run: async () => ({ success: true, meta: { changes: 1 } }),
+                    };
+                }
                 return {
                     first: async () => hasSession ? {
                         id: 'github:1',
@@ -37,6 +47,7 @@ mock.module('cloudflare:workers', () => ({
 }));
 mock.module('../../../../src/lib/server/email', () => ({
     sendEmail: async (message: { to: string; subject: string; html: string; text: string }) => {
+        if (sendFails) throw new Error('provider down');
         sent.push(message);
         return { messageId: 'm1', dryRun: false };
     },
@@ -50,6 +61,9 @@ beforeEach(() => {
     hasSession = true;
     emailVerified = 1;
     limiterSuccess = true;
+    dailyAllowed = true;
+    sendFails = false;
+    quotaSql.splice(0);
     sent.splice(0);
 });
 
@@ -93,6 +107,23 @@ describe('POST /api/tools/email-result', () => {
         expect(response.status).toBe(409);
         expect(await response.json()).toEqual({ error: 'email_unverified' });
         expect(sent).toHaveLength(0);
+    });
+
+    test('enforces the daily cap with a Retry-After until the next UTC day', async () => {
+        dailyAllowed = false;
+        const response = await post(validBody);
+        expect(response.status).toBe(429);
+        expect(await response.json()).toEqual({ error: 'daily_limit' });
+        const retryAfter = Number(response.headers.get('Retry-After'));
+        expect(retryAfter).toBeGreaterThan(0);
+        expect(retryAfter).toBeLessThanOrEqual(24 * 60 * 60);
+        expect(sent).toHaveLength(0);
+    });
+
+    test('gives the daily slot back when the provider fails', async () => {
+        sendFails = true;
+        expect((await post(validBody)).status).toBe(503);
+        expect(quotaSql).toEqual(['INSERT', 'UPDATE']);
     });
 
     test('rate limits per member', async () => {

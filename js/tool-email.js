@@ -15,6 +15,7 @@ export const TOOL_EMAIL_LABELS = Object.freeze({
     signin: 'Sign in to email this',
     unverified: 'No verified email on account',
     limited: 'Try again in a minute',
+    daily: 'Daily limit reached',
     failed: 'Could not send, try again',
     empty: 'Nothing to email yet',
 });
@@ -35,11 +36,13 @@ const defaultApi = {
     },
 };
 
-export function statusForResponse(status) {
+const DAILY_LIMIT_DETAIL = 'You can email up to 20 results a day. The limit resets at 00:00 UTC.';
+
+export function statusForResponse(status, data = {}) {
     if (status >= 200 && status < 300) return 'sent';
     if (status === 401) return 'signin';
     if (status === 409) return 'unverified';
-    if (status === 429) return 'limited';
+    if (status === 429) return data?.error === 'daily_limit' ? 'daily' : 'limited';
     return 'failed';
 }
 
@@ -117,9 +120,10 @@ export function initToolEmail({
         show('sending');
         try {
             const { status, data } = await api.send(payload);
-            const state = statusForResponse(status);
+            const state = statusForResponse(status, data);
             if (state === 'signin') return promptSignIn(payload);
-            show(state, state === 'sent' && data?.email ? `Sent to ${data.email}` : '');
+            const detail = state === 'sent' && data?.email ? `Sent to ${data.email}` : state === 'daily' ? DAILY_LIMIT_DETAIL : '';
+            show(state, detail);
             return state;
         } catch {
             show('failed');

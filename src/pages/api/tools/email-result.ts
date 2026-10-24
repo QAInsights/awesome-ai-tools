@@ -8,9 +8,24 @@ import { isAllowedMutationRequest } from '../../../lib/server/request-security';
 import { getCookieSessionUser } from '../../../lib/server/route-auth';
 import { getSiteOrigin, getToolEmailLimiter, requireDatabase } from '../../../lib/server/runtime-env';
 import { privateJson, privateJsonError } from '../../../lib/server/stack-api-response';
+import {
+    releaseToolEmailSend,
+    reserveToolEmailSend,
+    secondsUntilNextUtcDay,
+} from '../../../lib/server/tool-email-quota';
 import { validateToolEmailInput } from '../../../lib/server/tool-result-email';
 
 export const prerender = false;
+
+function dailyLimitResponse(now: number): Response {
+    return Response.json({ error: 'daily_limit' }, {
+        status: 429,
+        headers: {
+            'Cache-Control': 'private, no-store',
+            'Retry-After': String(secondsUntilNextUtcDay(now)),
+        },
+    });
+}
 
 export const POST: APIRoute = async ({ request, cookies }) => {
     if (!isAllowedMutationRequest(request, import.meta.env.DEV)) {
@@ -33,6 +48,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         if (!user.email || !user.emailVerified) return privateJsonError('email_unverified', 409);
         const limited = await enforceRateLimit(getToolEmailLimiter(), user.id);
         if (limited) return limited;
+        const now = Date.now();
+        if (!(await reserveToolEmailSend(db, user.id, now))) return dailyLimitResponse(now);
 
         const { kind, search, content } = validation.value;
         const siteOrigin = getSiteOrigin();
@@ -43,7 +60,12 @@ export const POST: APIRoute = async ({ request, cookies }) => {
             resultUrl: `${siteOrigin}/tools/${kind}${search}`,
             siteOrigin,
         });
-        await sendEmail({ to: user.email, ...message });
+        try {
+            await sendEmail({ to: user.email, ...message });
+        } catch (error) {
+            await releaseToolEmailSend(db, user.id, now).catch(() => {});
+            throw error;
+        }
         trackRequest(request, EVENTS.TOOL_RESULT_EMAILED, { userId: user.id, subject: kind });
         return privateJson({ sent: true, email: user.email });
     } catch (error) {
