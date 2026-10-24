@@ -10989,5 +10989,32 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-24"
+  },
+  {
+    "slug": "corgi",
+    "name": "Corgi",
+    "company": "Tal Shiri (tals)",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; agents run on your existing Claude, ChatGPT or other provider accounts.",
+    "description": "Corgi is a terminal multiplexer for humans and AI coding agents, powered by Ghostty and inspired by Herdr. It notices Claude Code, Codex, Pi and OpenCode running in its panes, shows what each agent is doing and which ones need you, and keeps agents and processes running in the background when you detach.",
+    "keyFeatures": [
+      "Per-agent status (working, needs you, done) with activity summaries and subagent tracking",
+      "Context, token and rate-limit usage per agent, plus multi-account launching",
+      "Detach and reattach like tmux, with resume after a crash or reboot",
+      "F1 shortcut to jump to the next agent with unread output",
+      "Scriptable corgi CLI (list, tab/pane commands, send, read, --json) that agents can learn via corgi --skill"
+    ],
+    "bestFor": "Developers who run several terminal coding agents in parallel on macOS or Linux and want tmux-style persistence with agent awareness built in.",
+    "notIdealFor": "Intel Mac or native Windows users, and anyone who wants a GUI agent workspace rather than a terminal-based one.",
+    "recentUpdates": "Announced on Show HN in October 2026; the project was licensed under MIT on October 24, 2026 and receives frequent updates to its viewer, themes and CLI.",
+    "verdict": "A young but thoughtfully designed agent multiplexer that adds strong ergonomics on top of the Herdr model, worth a look for heavy terminal-agent users.",
+    "tags": [
+      "terminal",
+      "ai-coding",
+      "developer-tools",
+      "agent-management",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-24"
   }
 ]
