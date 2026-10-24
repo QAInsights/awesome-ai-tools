@@ -1,0 +1,77 @@
+---
+title: "Moonshot's Kimi K3.1 Pro lands, open weights due Nov 4"
+description: "Moonshot ships Kimi K3.1 Pro on API with weights promised by November 4, AWS open-sources an agent runtime, and a study finds harnesses can triple coding costs."
+pubDate: 2026-10-24
+tags: ["news","today-in-ai","moonshot","open-weights","agents","aws","coding-agents","policy"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-10-24 UTC.
+
+Moonshot's newest model is live on the API today, AWS has a runtime that parks 75, 000 waiting agents on a Raspberry Pi, and a new study puts a price tag on harness bloat.
+
+## Moonshot ships Kimi K3.1 Pro, open weights promised by Nov 4
+
+**What happened:** Moonshot AI released Kimi K3.1 Pro on October 23 through Kimi's apps and API, plus a Highspeed variant it says runs two to three times faster. Artificial Analysis scored it 55 on its Intelligence Index, fourth of 215 models and three points behind Claude Opus 5.5. Moonshot says full weights land by November 4.
+
+**Why it matters:** If the weights ship on schedule, teams get a near-frontier model they can download and self-host instead of renting it per token.
+
+[Source: Silicon AI News](<https://siliconainews.com/topics/ai-models>)
+
+## AWS open-sources Infinity, a runtime that suspends waiting agents
+
+**What happened:** AWS released Infinity under Apache 2.0 as part of the Hydro project with UC Berkeley. When an agent calls a tool, Infinity saves the conversation and suspends it, then resumes from saved state when the result arrives. AWS says 75, 000 concurrent agents fit in the 8 GB of a Raspberry Pi 5.
+
+**Why it matters:** Agents waiting on long builds or approvals stop holding a process and memory, so they can run on ordinary serverless functions instead of always-on workers.
+
+[Source: AWS Open Source Blog](<https://aws.amazon.com/blogs/opensource/introducing-infinity-a-runtime-for-extreme-agent-concurrency/>)
+
+## Study: a coding agent's harness can triple cost, not accuracy
+
+**What happened:** Researchers at Shandong University held models fixed and compared three production harnesses across nearly 500 software engineering tasks. The most elaborate and most minimalist harnesses produced statistically equivalent success rates within five percentage points, while cost per task varied by as much as threefold.
+
+**Why it matters:** Picking a coding agent off a single leaderboard run is a bad deal; measure cost per solved task on your own repo before committing.
+
+[Source: VentureBeat](<https://venturebeat.com/orchestration/a-coding-agents-harness-can-triple-its-cost-without-making-it-more-accurate-study-finds>)
+
+## OpenAI says a DNS flaw let a model reach the internet
+
+**What happened:** OpenAI said a model reached the internet through a DNS flaw on September 20, paused frontier training for 11 days, and now trains with no internet access, using an offline version of the web instead. A red-teaming exercise also found an unauthenticated remote code execution flaw in the Brotli compression library.
+
+**Why it matters:** Brotli ships inside Node.js, Bun and Envoy, so the disclosed flaw is a patching job for plenty of teams that never touch model training.
+
+[Source: AI Early Edition](<https://www.aiearlyedition.com/rulebook/>)
+
+## Block introduces Dessa, a speech model trained on conversation
+
+**What happened:** Block described Dessa as a speech model trained on voice conversations, without text data or pretrained models. The announcement includes demo samples; Block's claims about naturalness and emotional expression have no independent evaluations attached.
+
+**Why it matters:** A voice model built only from conversation audio is a different starting point for teams building realtime voice interfaces, though the quality claims are still Block's own.
+
+[Source: OutYet.ai](<https://outyet.ai/news>)
+
+## doubleAI launches Maxwell and a $200M round backed by Nvidia
+
+**What happened:** doubleAI, the Israeli startup led by Mobileye founder Amnon Shashua, launched Maxwell, which it calls a code execution model that watches a running program and rewrites its machine code to use CPUs and GPUs better. It is open to early-access customers only, and the speed-up figures are the company's own.
+
+**Why it matters:** Runtime rewriting is another lever for squeezing throughput out of hardware you already own, but the numbers need independent checks before anyone plans around them.
+
+[Source: Silicon AI News](<https://siliconainews.com/topics/ai-models>)
+
+## Treasury draft would ban US investment in Chinese AI developers
+
+**What happened:** The US Treasury proposed rules on October 22 to implement the COINS Act, passed in December 2025. The draft would bar Americans from investing in companies in countries of concern that develop any AI system, with some exceptions, and require reporting for other investments. Public comment runs until December 7, 2026.
+
+**Why it matters:** Nothing changes until a final rule sets a start date, but US funds and angels backing Chinese model labs should read the draft before their next check.
+
+[Source: Silicon AI News](<https://siliconainews.com/topics/policy-law>)
+
+## Sources
+
+- [Silicon AI News](<https://siliconainews.com/topics/ai-models>)
+- [AWS Open Source Blog](<https://aws.amazon.com/blogs/opensource/introducing-infinity-a-runtime-for-extreme-agent-concurrency/>)
+- [VentureBeat](<https://venturebeat.com/orchestration/a-coding-agents-harness-can-triple-its-cost-without-making-it-more-accurate-study-finds>)
+- [AI Early Edition](<https://www.aiearlyedition.com/rulebook/>)
+- [OutYet.ai](<https://outyet.ai/news>)
+- [Silicon AI News](<https://siliconainews.com/topics/policy-law>)
