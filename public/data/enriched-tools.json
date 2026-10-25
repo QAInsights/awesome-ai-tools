@@ -4268,6 +4268,33 @@
     "lastUpdated": "2026-10-15"
   },
   {
+    "slug": "corgi",
+    "name": "Corgi",
+    "company": "Tal Shiri (tals)",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; agents run on your existing Claude, ChatGPT or other provider accounts.",
+    "description": "Corgi is a terminal multiplexer for humans and AI coding agents, powered by Ghostty and inspired by Herdr. It notices Claude Code, Codex, Pi and OpenCode running in its panes, shows what each agent is doing and which ones need you, and keeps agents and processes running in the background when you detach.",
+    "keyFeatures": [
+      "Per-agent status (working, needs you, done) with activity summaries and subagent tracking",
+      "Context, token and rate-limit usage per agent, plus multi-account launching",
+      "Detach and reattach like tmux, with resume after a crash or reboot",
+      "F1 shortcut to jump to the next agent with unread output",
+      "Scriptable corgi CLI (list, tab/pane commands, send, read, --json) that agents can learn via corgi --skill"
+    ],
+    "bestFor": "Developers who run several terminal coding agents in parallel on macOS or Linux and want tmux-style persistence with agent awareness built in.",
+    "notIdealFor": "Intel Mac or native Windows users, and anyone who wants a GUI agent workspace rather than a terminal-based one.",
+    "recentUpdates": "Announced on Show HN in October 2026; the project was licensed under MIT on October 24, 2026 and receives frequent updates to its viewer, themes and CLI.",
+    "verdict": "A young but thoughtfully designed agent multiplexer that adds strong ergonomics on top of the Herdr model, worth a look for heavy terminal-agent users.",
+    "tags": [
+      "terminal",
+      "ai-coding",
+      "developer-tools",
+      "agent-management",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-24"
+  },
+  {
     "slug": "jules",
     "name": "Jules",
     "company": "Google",
@@ -5173,6 +5200,35 @@
     "lastUpdated": "2026-10-22"
   },
   {
+    "slug": "zozo-hq",
+    "name": "Zozo HQ",
+    "company": "Roundhouse Labs Inc.",
+    "pricing": "freemium",
+    "pricingDetail": "Free Local Stack runs on your own Mac or Linux with your own model runtime; hosted plans are $40 (Standard), $50 (Plus) and $60 (Pro) USD per month before tax, with model/inference usage billed separately and no inference markup. A 14-day money-back guarantee and a Founding Price Lock for early subscribers are offered.",
+    "description": "Zozo HQ is a hosted coding-agent harness that watches GitHub Issues (or matched Jira Cloud + Bitbucket Cloud projects), auto-dispatches dependency-ready labeled issues into isolated git worktrees, and drives Claude Code, Codex or OpenCode via OpenRouter to open pull requests that close the issue.",
+    "keyFeatures": [
+      "Auto-dispatch of labeled, dependency-ready issues in priority order when a slot is free",
+      "Isolated git worktree per attempt with an append-only execution journal for review and recovery",
+      "Pauses and posts clarifying questions as issue comments, resuming the same thread and worktree on answer",
+      "Opens pull requests that close the issue; optional per-project auto-merge only after tested commit is verified against current base",
+      "Dedicated VM per customer on every hosted plan, so nothing on your side must stay awake",
+      "Per-project credentials for billing client usage separately",
+      "Runs Claude Code, Codex or OpenCode via OpenRouter (runtime must be installed)"
+    ],
+    "bestFor": "Developers and small teams who already use Claude Code, Codex or OpenCode and want to label a backlog in the evening and review agent-authored pull requests in the morning.",
+    "notIdealFor": "Teams needing GitHub + Jira combinations, Atlassian Server/Data Center, or Atlassian prototyping, and anyone unwilling to install and pay for a separate model runtime.",
+    "recentUpdates": "Atlassian projects (Jira Cloud + Bitbucket Cloud) support announced via zozohq.com/announcements/atlassian-projects; listed on AgentScout and Agents.NET in October 2026; Terms of Service last updated 2026-10-03.",
+    "verdict": "Zozo's auto-dispatch, isolated worktrees and clarification gates offer a genuinely hands-off path from issue to pull request, with transparent flat hosting pricing and no inference markup. It is still early-stage with no user ratings yet, requires a separately installed and billed runtime, and supports only specific GitHub or matched Jira/Bitbucket setups.",
+    "tags": [
+      "autonomous-agents",
+      "coding-agent-harness",
+      "pull-request-automation",
+      "github",
+      "jira-bitbucket"
+    ],
+    "lastUpdated": "2026-10-25"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -5577,6 +5633,33 @@
       "Code Generator"
     ],
     "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "openpencil",
+    "name": "OpenPencil",
+    "company": "ZSeven-W",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; AI features use your own model provider keys or locally installed coding-agent CLIs.",
+    "description": "OpenPencil is an open-source, AI-native vector design tool where prompts turn into UI directly on a live canvas. Concurrent agent teams build different page sections in parallel, designs are stored as Git-friendly JSON .op files, and a built-in MCP server lets terminal coding agents read, create and modify designs.",
+    "keyFeatures": [
+      "Concurrent Agent Teams that decompose a page into sections and stream them in parallel",
+      "Built-in MCP server with one-click install into Claude Code, Codex, OpenCode, Kiro and Copilot CLI",
+      "Design-as-code: human-readable, diffable JSON .op files with design variables as CSS custom properties",
+      "Multi-platform code export to React + Tailwind, HTML/CSS, Vue, Svelte, Flutter, SwiftUI, Jetpack Compose and React Native",
+      "Desktop app for macOS, Windows and Linux plus an op CLI"
+    ],
+    "bestFor": "Developers and design engineers who want to generate and iterate on UI with AI agents and export it straight to front-end or mobile code, without a proprietary design file format.",
+    "notIdealFor": "Teams standardized on Figma's collaboration features or anyone who wants a hosted, zero-install browser app builder that also produces backend code.",
+    "recentUpdates": "Releases in the v0.8 series (August 2026) with continued active development on GitHub, including the op CLI, web SDK viewers, slide decks and a Chrome web-capture extension.",
+    "verdict": "A promising open-source bridge between AI-generated design and production code, notable for its parallel agent teams and MCP integration with mainstream coding agents.",
+    "tags": [
+      "App Builders",
+      "UI/UX Design",
+      "Design-to-Code",
+      "MCP",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-24"
   },
   {
     "slug": "coderabbit",
@@ -10641,6 +10724,87 @@
     "lastUpdated": "2026-10-24"
   },
   {
+    "slug": "hallmark",
+    "name": "Hallmark",
+    "company": "Together AI",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source; installed as an agent skill with no account or paid tier, running on your existing coding agent's model access.",
+    "description": "Hallmark is a design skill for Claude Code, Codex, Cursor and OpenCode that aims to stop AI-built web pages from looking machine-made. It picks themes from a catalog of 48, builds each page around what the visitor came to do, and lints the result in a real browser against common AI-design tells before a fresh-context reviewer has the final say.",
+    "keyFeatures": [
+      "48 material-style themes, plus a custom mode that designs from the prompt alone",
+      "sloplint browser checks at eight widths against tiered Floor, Reflex and Finish gates",
+      "Fresh-context subagent review of every build",
+      "/hallmark redesign and /hallmark audit commands for existing pages",
+      "Installs via npx skills add or as a Claude Code plugin, with an optional edit-time hook"
+    ],
+    "bestFor": "Developers using AI coding agents to build landing pages and marketing sites who want distinctive, accessible output instead of generic AI-generated layouts.",
+    "notIdealFor": "Teams that already enforce a strict in-house design system, or projects that need application UI and component libraries rather than self-contained pages.",
+    "recentUpdates": "Version 2 added 48 themes, job-driven page layouts, custom mode, automatic screenshots of real products, a library of openly licensed photos, and redesign/audit commands.",
+    "verdict": "A popular, opinionated design guardrail for coding agents that pairs taste with automated browser checks, making it a strong complement to agent-driven frontend work.",
+    "tags": [
+      "Developer Productivity",
+      "AI Coding",
+      "UI/UX Design",
+      "Agent Skills",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-24"
+  },
+  {
+    "slug": "codync",
+    "name": "Codync",
+    "company": "leepokai",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 license with no paid tier; you only pay your coding agent's provider through the plan or key you already have.",
+    "description": "Codync turns the coding agents installed on your computer into persistent, named bots that you message from an iPhone, a desktop app or a terminal. A Rust host speaks the Agent Client Protocol to Claude Code, Codex, Cursor, Gemini, Copilot, OpenCode and about 40 more agents, keeps transcripts, and notifies you when a bot finishes or needs approval.",
+    "keyFeatures": [
+      "Works with ~40 coding agents from the ACP registry, auto-detecting installed harnesses",
+      "Group chats and bot-to-bot help through a built-in team MCP server",
+      "Native iPhone app with approvals, push notifications, widgets, voice calls and remote screen",
+      "Electron desktop app for macOS, Windows and Linux plus a terminal UI over SSH",
+      "Free end-to-end encrypted Cloudflare relay, with direct connections on the same network"
+    ],
+    "bestFor": "Developers who run several coding agents locally and want to delegate, approve and monitor them from their phone or another machine without a VPN.",
+    "notIdealFor": "Teams looking for cloud-hosted agents that keep working when the host computer is off, or Android users who need a native mobile client.",
+    "recentUpdates": "Frequent releases, with v2.24.0 published in October 2026; v2.7.0 moved macOS and Linux to a single Electron desktop app.",
+    "verdict": "A capable, free remote-control layer for local coding agents that stands out for its broad ACP agent support and polished iPhone experience.",
+    "tags": [
+      "Developer Productivity",
+      "AI Agents",
+      "Remote Access",
+      "Mobile",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-24"
+  },
+  {
+    "slug": "respan-gateway",
+    "name": "Respan Gateway",
+    "company": "Respan (YC W24)",
+    "pricing": "open-source",
+    "pricingDetail": "Self-hosted gateway is free and open source, dual-licensed MIT or Apache-2.0; Respan also offers a managed gateway and tracing platform.",
+    "description": "Respan Gateway is a single Rust binary that sits between your code and AI APIs. Point an existing OpenAI, Anthropic or Gemini SDK at it and it can call any configured model, translating streaming, tools and reasoning, while also exposing MCP tools, traffic control and a live log of every request.",
+    "keyFeatures": [
+      "Cross-format translation between OpenAI Chat Completions/Responses, Anthropic Messages and Gemini APIs",
+      "MCP servers and built-in tools (search, browsing, code sandboxes, memory) usable from any chat request",
+      "Routing, fallback, retries and hedged requests across providers",
+      "Plugin system for guardrails, PII masking, pricing and custom logic",
+      "Live request log with cost, latency and tokens, plus optional tracing in Respan"
+    ],
+    "bestFor": "Developers and platform teams building agents who want one self-hosted endpoint to swap models and providers without changing SDKs.",
+    "notIdealFor": "Individuals who just want a hosted multi-model API with consolidated billing, or teams unwilling to operate their own gateway.",
+    "recentUpdates": "Open-sourced in October 2026 with v0.1.0 and v0.2.0 releases, published on crates.io and PyPI, and launched on Hacker News.",
+    "verdict": "A fast, well-featured open-source AI gateway whose MCP tool support and API translation make it a solid fit for agent and developer tooling stacks.",
+    "tags": [
+      "Developer Productivity",
+      "AI Gateway",
+      "LLM Routing",
+      "MCP",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-24"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
@@ -10881,140 +11045,5 @@
       "Generative Design"
     ],
     "lastUpdated": "2026-10-15"
-  },
-  {
-    "slug": "openpencil",
-    "name": "OpenPencil",
-    "company": "ZSeven-W",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under the MIT license; AI features use your own model provider keys or locally installed coding-agent CLIs.",
-    "description": "OpenPencil is an open-source, AI-native vector design tool where prompts turn into UI directly on a live canvas. Concurrent agent teams build different page sections in parallel, designs are stored as Git-friendly JSON .op files, and a built-in MCP server lets terminal coding agents read, create and modify designs.",
-    "keyFeatures": [
-      "Concurrent Agent Teams that decompose a page into sections and stream them in parallel",
-      "Built-in MCP server with one-click install into Claude Code, Codex, OpenCode, Kiro and Copilot CLI",
-      "Design-as-code: human-readable, diffable JSON .op files with design variables as CSS custom properties",
-      "Multi-platform code export to React + Tailwind, HTML/CSS, Vue, Svelte, Flutter, SwiftUI, Jetpack Compose and React Native",
-      "Desktop app for macOS, Windows and Linux plus an op CLI"
-    ],
-    "bestFor": "Developers and design engineers who want to generate and iterate on UI with AI agents and export it straight to front-end or mobile code, without a proprietary design file format.",
-    "notIdealFor": "Teams standardized on Figma's collaboration features or anyone who wants a hosted, zero-install browser app builder that also produces backend code.",
-    "recentUpdates": "Releases in the v0.8 series (August 2026) with continued active development on GitHub, including the op CLI, web SDK viewers, slide decks and a Chrome web-capture extension.",
-    "verdict": "A promising open-source bridge between AI-generated design and production code, notable for its parallel agent teams and MCP integration with mainstream coding agents.",
-    "tags": [
-      "App Builders",
-      "UI/UX Design",
-      "Design-to-Code",
-      "MCP",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-24"
-  },
-  {
-    "slug": "hallmark",
-    "name": "Hallmark",
-    "company": "Together AI",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source; installed as an agent skill with no account or paid tier, running on your existing coding agent's model access.",
-    "description": "Hallmark is a design skill for Claude Code, Codex, Cursor and OpenCode that aims to stop AI-built web pages from looking machine-made. It picks themes from a catalog of 48, builds each page around what the visitor came to do, and lints the result in a real browser against common AI-design tells before a fresh-context reviewer has the final say.",
-    "keyFeatures": [
-      "48 material-style themes, plus a custom mode that designs from the prompt alone",
-      "sloplint browser checks at eight widths against tiered Floor, Reflex and Finish gates",
-      "Fresh-context subagent review of every build",
-      "/hallmark redesign and /hallmark audit commands for existing pages",
-      "Installs via npx skills add or as a Claude Code plugin, with an optional edit-time hook"
-    ],
-    "bestFor": "Developers using AI coding agents to build landing pages and marketing sites who want distinctive, accessible output instead of generic AI-generated layouts.",
-    "notIdealFor": "Teams that already enforce a strict in-house design system, or projects that need application UI and component libraries rather than self-contained pages.",
-    "recentUpdates": "Version 2 added 48 themes, job-driven page layouts, custom mode, automatic screenshots of real products, a library of openly licensed photos, and redesign/audit commands.",
-    "verdict": "A popular, opinionated design guardrail for coding agents that pairs taste with automated browser checks, making it a strong complement to agent-driven frontend work.",
-    "tags": [
-      "Developer Productivity",
-      "AI Coding",
-      "UI/UX Design",
-      "Agent Skills",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-24"
-  },
-  {
-    "slug": "codync",
-    "name": "Codync",
-    "company": "leepokai",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under the Apache-2.0 license with no paid tier; you only pay your coding agent's provider through the plan or key you already have.",
-    "description": "Codync turns the coding agents installed on your computer into persistent, named bots that you message from an iPhone, a desktop app or a terminal. A Rust host speaks the Agent Client Protocol to Claude Code, Codex, Cursor, Gemini, Copilot, OpenCode and about 40 more agents, keeps transcripts, and notifies you when a bot finishes or needs approval.",
-    "keyFeatures": [
-      "Works with ~40 coding agents from the ACP registry, auto-detecting installed harnesses",
-      "Group chats and bot-to-bot help through a built-in team MCP server",
-      "Native iPhone app with approvals, push notifications, widgets, voice calls and remote screen",
-      "Electron desktop app for macOS, Windows and Linux plus a terminal UI over SSH",
-      "Free end-to-end encrypted Cloudflare relay, with direct connections on the same network"
-    ],
-    "bestFor": "Developers who run several coding agents locally and want to delegate, approve and monitor them from their phone or another machine without a VPN.",
-    "notIdealFor": "Teams looking for cloud-hosted agents that keep working when the host computer is off, or Android users who need a native mobile client.",
-    "recentUpdates": "Frequent releases, with v2.24.0 published in October 2026; v2.7.0 moved macOS and Linux to a single Electron desktop app.",
-    "verdict": "A capable, free remote-control layer for local coding agents that stands out for its broad ACP agent support and polished iPhone experience.",
-    "tags": [
-      "Developer Productivity",
-      "AI Agents",
-      "Remote Access",
-      "Mobile",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-24"
-  },
-  {
-    "slug": "respan-gateway",
-    "name": "Respan Gateway",
-    "company": "Respan (YC W24)",
-    "pricing": "open-source",
-    "pricingDetail": "Self-hosted gateway is free and open source, dual-licensed MIT or Apache-2.0; Respan also offers a managed gateway and tracing platform.",
-    "description": "Respan Gateway is a single Rust binary that sits between your code and AI APIs. Point an existing OpenAI, Anthropic or Gemini SDK at it and it can call any configured model, translating streaming, tools and reasoning, while also exposing MCP tools, traffic control and a live log of every request.",
-    "keyFeatures": [
-      "Cross-format translation between OpenAI Chat Completions/Responses, Anthropic Messages and Gemini APIs",
-      "MCP servers and built-in tools (search, browsing, code sandboxes, memory) usable from any chat request",
-      "Routing, fallback, retries and hedged requests across providers",
-      "Plugin system for guardrails, PII masking, pricing and custom logic",
-      "Live request log with cost, latency and tokens, plus optional tracing in Respan"
-    ],
-    "bestFor": "Developers and platform teams building agents who want one self-hosted endpoint to swap models and providers without changing SDKs.",
-    "notIdealFor": "Individuals who just want a hosted multi-model API with consolidated billing, or teams unwilling to operate their own gateway.",
-    "recentUpdates": "Open-sourced in October 2026 with v0.1.0 and v0.2.0 releases, published on crates.io and PyPI, and launched on Hacker News.",
-    "verdict": "A fast, well-featured open-source AI gateway whose MCP tool support and API translation make it a solid fit for agent and developer tooling stacks.",
-    "tags": [
-      "Developer Productivity",
-      "AI Gateway",
-      "LLM Routing",
-      "MCP",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-24"
-  },
-  {
-    "slug": "corgi",
-    "name": "Corgi",
-    "company": "Tal Shiri (tals)",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under the MIT license; agents run on your existing Claude, ChatGPT or other provider accounts.",
-    "description": "Corgi is a terminal multiplexer for humans and AI coding agents, powered by Ghostty and inspired by Herdr. It notices Claude Code, Codex, Pi and OpenCode running in its panes, shows what each agent is doing and which ones need you, and keeps agents and processes running in the background when you detach.",
-    "keyFeatures": [
-      "Per-agent status (working, needs you, done) with activity summaries and subagent tracking",
-      "Context, token and rate-limit usage per agent, plus multi-account launching",
-      "Detach and reattach like tmux, with resume after a crash or reboot",
-      "F1 shortcut to jump to the next agent with unread output",
-      "Scriptable corgi CLI (list, tab/pane commands, send, read, --json) that agents can learn via corgi --skill"
-    ],
-    "bestFor": "Developers who run several terminal coding agents in parallel on macOS or Linux and want tmux-style persistence with agent awareness built in.",
-    "notIdealFor": "Intel Mac or native Windows users, and anyone who wants a GUI agent workspace rather than a terminal-based one.",
-    "recentUpdates": "Announced on Show HN in October 2026; the project was licensed under MIT on October 24, 2026 and receives frequent updates to its viewer, themes and CLI.",
-    "verdict": "A young but thoughtfully designed agent multiplexer that adds strong ergonomics on top of the Herdr model, worth a look for heavy terminal-agent users.",
-    "tags": [
-      "terminal",
-      "ai-coding",
-      "developer-tools",
-      "agent-management",
-      "open-source"
-    ],
-    "lastUpdated": "2026-10-24"
   }
 ]
