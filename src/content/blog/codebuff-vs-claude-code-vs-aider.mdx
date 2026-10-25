@@ -1,0 +1,113 @@
+---
+title: "Codebuff vs Claude Code vs Aider (2026): Which Terminal Coding Agent Fits Your Workflow?"
+description: "Codebuff, Claude Code, and Aider compared on agents, models, pricing, git handling, permissions, and licensing, with every fact checked against official docs and pricing pages in October 2026."
+pubDate: 2026-10-25
+tags: ["codebuff", "claude-code", "aider", "comparison", "terminal", "coding-agents", "open-source"]
+featured: true
+---
+
+All three of these tools live in your terminal, read your repository, and change code when you ask. That is where the similarity ends. [Codebuff](/tools/codebuff) splits every request across a team of specialized subagents and sells usage through credits or a subscription. [Claude Code](/tools/claude-code) is Anthropic's own agent, bundled with Claude plans and built around a detailed permission system. [Aider](/tools/aider) is the open-source veteran: you bring any model you like, and every edit lands in git as a commit you can undo.
+
+I read each tool's official docs, pricing page, and GitHub repository on October 25, 2026. Every claim below links to the page it came from, and there is a dated Sources list at the end. Two things changed recently that most comparisons have not caught up with yet, so I flag them as we go: Codebuff's GitHub repository now leads with its free sister product, Freebuff, and Codebuff no longer lets you plug in a Claude subscription.
+
+## The Short Answer
+
+- **Pick Claude Code** if you already pay for Claude Pro or Max, want the most capable first-party Claude agent, and value fine-grained permission modes, subagents, hooks, and enterprise options like Amazon Bedrock and Google Cloud.
+- **Pick Codebuff** if you want a multi-agent harness that gathers context in parallel, reviews its own changes on every prompt, and offers a TypeScript SDK for custom agents, and you are comfortable paying per credit or on a Codebuff subscription.
+- **Pick Aider** if you want a free, Apache-2.0 tool that works with almost any model, including local ones, and treats git as the safety net for every change.
+
+The biggest single difference is who chooses the model. Claude Code runs Claude. Codebuff chooses a mix of models for you. Aider lets you choose everything.
+
+## At a Glance
+
+| Category | Codebuff | Claude Code | Aider |
+| --- | --- | --- | --- |
+| Maker | Codebuff (also makes Freebuff) | Anthropic | Aider AI, with community contributors |
+| License | Apache-2.0 | Proprietary (Anthropic Commercial Terms) | Apache-2.0 |
+| Install | `npm install -g codebuff` | Native installer, Homebrew, WinGet, or Linux package managers | `aider-install` via pip, or a curl or PowerShell one-liner |
+| Models | Chosen per task: Claude Opus orchestrator, plus GPT and Gemini subagents | Claude models | Almost any LLM, cloud or local |
+| Agent design | Orchestrator with parallel subagents and automatic review | One agent with optional custom subagents | One chat loop with code, ask, and architect modes |
+| Safety net | Code review per prompt, optional Docker isolation | Permission modes, rules, and a Bash sandbox | Automatic git commits with `/undo` |
+| Price | 1 cent per credit, or Strong plans at $100, $200, or $500 per month | Included in Claude Pro ($20/month), Max (from $100/month), Team, and Enterprise, or billed per API token | Free; you pay your model provider |
+| GitHub stars (Oct 25, 2026) | About 13.7K | About 153K | About 49.7K |
+
+## Codebuff: A Team of Agents Behind One Prompt
+
+[Codebuff's docs](https://codebuff.com/docs/tips/what-makes-codebuff-unique) describe it as an open-source coding agent that coordinates specialized subagents instead of using one model for everything. When you type a request, an orchestrator (the docs call it "Buffy") hands work to file pickers, code searchers, a thinker, an editor, and a reviewer. File discovery is the interesting part. Codebuff parses your codebase into a compact tree of directories, files, and symbols, has a fast model pick up to 12 relevant files, summarizes them, and then lets the main agent read them all at once. That is why it tends to start editing sooner than an agent that greps one file at a time.
+
+You switch between [four modes](https://codebuff.com/docs/tips/modes) with Shift+Tab or `/mode:` commands. **Default** uses a Claude Opus model, runs one editing pass, and reviews the result with typechecks and tests. **Max** spawns several editor agents with different strategies in parallel and lets a selector pick the best one, which costs more but shines on large refactors. **Plan** writes a spec without touching files. **Lite** switches to a cheaper, faster GPT model. One small caution: the modes page lists Claude Opus 5 as the orchestrator, while the [models page](https://codebuff.com/docs/advanced/what-models) and the FAQ still say Opus 4.7, so check the picker in your own session.
+
+Codebuff reads `knowledge.md`, `AGENTS.md`, or `CLAUDE.md` for project instructions, and `/init` generates a [knowledge file](https://codebuff.com/docs/tips/knowledge-files) for you. It respects `.gitignore` and a `.codebuffignore` file, and the [FAQ](https://codebuff.com/docs/help/faq) suggests running it in Docker against a scoped copy of your code if you want isolation. For automation, there is a [TypeScript SDK](https://codebuff.com/docs/advanced/sdk) and a framework for building your own agents.
+
+Codebuff publishes speed claims against Claude Code, including one feature that took 19 minutes 37 seconds in Claude Code and 6 minutes 45 seconds in Codebuff. Those numbers come from Codebuff's own tests, so treat them as a vendor claim and time a task on your own repository before you decide.
+
+Two recent changes matter. First, the [FAQ](https://codebuff.com/docs/help/faq) says connecting your Claude Pro or Max subscription is deprecated and scheduled for removal, after at least one user reported their Anthropic account was disabled following heavy use through Codebuff. Codebuff now points people to its own Strong subscription instead. Second, the [GitHub repository](https://github.com/CodebuffAI/freebuff) now redirects to Freebuff, a free, ad-supported family of products (CLI, desktop, web, cloud, and chat) built on Codebuff's agent framework. Freebuff mostly uses models such as GLM, DeepSeek, and MiMo, while paid Codebuff modes use Claude and GPT. If you searched for "free Codebuff", Freebuff is the product you were looking for, with the ad and data-use trade-offs its privacy notice describes.
+
+## Claude Code: Anthropic's Agent, With the Deepest Controls
+
+[Claude Code](https://code.claude.com/docs/en/overview.md) is Anthropic's agentic coding tool. It reads your codebase, edits files, runs commands, and connects to your tools, and it now runs in the terminal, in VS Code and JetBrains, in a desktop app, and in the browser. The [quickstart](https://code.claude.com/docs/en/quickstart.md) installs it with a single native installer on macOS, Linux, WSL, and Windows, or through Homebrew and WinGet. It is the most actively shipped of the three: the [GitHub repository](https://github.com/anthropics/claude-code) tagged v2.1.310 on October 23, 2026.
+
+Where Claude Code pulls ahead is control. [Permission modes](https://code.claude.com/docs/en/permission-modes.md) let you decide how much it does without asking. Manual mode asks before most edits and commands, `acceptEdits` approves file edits, `plan` explores without changing anything, and `auto` lets a second model review actions so you are not clicking "yes" all day. Since v2.1.283, auto mode is the default for interactive terminal and VS Code sessions. On top of that you get allow and deny rules, a Bash sandbox, [custom subagents](https://code.claude.com/docs/en/sub-agents.md), hooks, MCP servers, plugins, and [project memory](https://code.claude.com/docs/en/memory.md) through `CLAUDE.md` or `AGENTS.md`. For CI and scripts, `claude -p` runs headless, and GitHub Actions support is built in.
+
+The trade-offs are model choice and licensing. Claude Code runs Claude models, either through a Claude plan, an Anthropic Console API key, or [enterprise providers](https://code.claude.com/docs/en/third-party-integrations.md) such as Amazon Bedrock, Google Cloud's Agent Platform, and Microsoft Foundry. Its code is visible on GitHub, but the license reserves all rights to Anthropic, so it is not open source in the way Codebuff and Aider are. If you want to compare it with other terminal agents, our [OpenCode vs Claude Code vs Codex CLI](/blog/opencode-vs-claude-code-vs-codex-cli) post covers that ground.
+
+## Aider: Git-Native Pair Programming With Any Model
+
+[Aider](https://aider.chat/) calls itself AI pair programming in your terminal, and it has earned the "veteran" label: about 49.7K GitHub stars and 6.8 million installs from PyPI, according to its [README](https://github.com/Aider-AI/aider). Its signature feature is [git integration](https://aider.chat/docs/git.html). Aider commits every edit with a descriptive Conventional Commits message, commits your own uncommitted changes first so the two never mix, and gives you `/undo`, `/diff`, and `/commit` inside the chat. Reviewing Aider's work feels like reviewing a series of small pull requests.
+
+Aider builds a [repository map](https://aider.chat/docs/repomap.html) of your most important classes and functions and sends it with each request, which helps it make sense of larger codebases without stuffing every file into context. It has four [chat modes](https://aider.chat/docs/usage/modes.html): `code` edits files, `ask` discusses without editing, `architect` lets one model plan and a second model write the edits, and `help` answers questions about Aider itself. With [`--watch-files`](https://aider.chat/docs/usage/watch.html), you can stay in your editor and leave comments ending in `AI!` or `AI?` for Aider to act on. It can also [run your linter and tests](https://aider.chat/docs/usage/lint-test.html) after each change and fix what they report.
+
+Model freedom is the main reason people choose Aider. The [LLM docs](https://aider.chat/docs/llms.html) cover OpenAI, Anthropic, Gemini, DeepSeek, xAI, Azure, Bedrock, Vertex AI, OpenRouter, [GitHub Copilot](https://aider.chat/docs/llms/github.html), and local models through [Ollama](https://aider.chat/docs/llms/ollama.html) or LM Studio. With a local model, your only cost is electricity.
+
+The caveat is pace. Aider's last tagged GitHub release is v0.86.0 from August 2025, the latest [PyPI package](https://pypi.org/project/aider-chat/) is 0.86.2 from February 2026, and the most recent commit on the main branch is from May 2026. The [release notes](https://aider.chat/HISTORY.html) on main add newer Claude, GPT, and Gemini models, so it still works with current frontier models, but it moves far more slowly than the other two. Aider also asks you to add files to the chat yourself more often than Codebuff or Claude Code, which pick their own context.
+
+## Pricing, Side by Side
+
+| Plan | Codebuff | Claude Code | Aider |
+| --- | --- | --- | --- |
+| Free | No free Codebuff plan; Freebuff is the free, ad-supported option | Not included in the Claude Free plan | Free software; free models through OpenRouter or local models |
+| Pay as you go | 1 cent per credit, with credits used by task complexity | Anthropic API tokens through a Console account | Your provider's API rates |
+| Subscription | Strong: $100/month (1x usage), $200/month (2.5x), $500/month (7x) | Pro $20/month ($17/month billed yearly), Max from $100/month with 5x or 20x Pro usage | None |
+| Teams | Not listed on the pricing page | Team and Enterprise plans with SSO, admin controls, and spend limits | Not applicable |
+
+Codebuff prices are from its [pricing page](https://www.codebuff.com/pricing) and Claude plan prices are from [Claude's pricing page](https://claude.com/pricing). On the API, Anthropic's own [cost guide](https://code.claude.com/docs/en/costs.md) puts the average enterprise deployment at about $13 per developer per active day and $150 to $250 per developer per month. Aider has no price of its own, so your bill depends entirely on the model you pick. Before you commit to any of them, plug your expected usage into the [AI Cost Calculator](/tools/cost-calculator).
+
+## Which One Should You Pick?
+
+1. **You already pay for Claude Pro or Max:** Claude Code. The subscription covers it, and Codebuff no longer accepts a Claude subscription.
+2. **You want the agent to find context and review itself, with little babysitting:** Codebuff, ideally on a large task in Max mode.
+3. **You want to use DeepSeek, Gemini, GPT, a local model, or whatever is cheapest this month:** Aider.
+4. **You want to spend nothing:** Aider with a free or local model, or Freebuff if you accept ads.
+5. **You need enterprise controls, Bedrock, or Google Cloud:** Claude Code.
+6. **You want every AI change as a separate git commit:** Aider. Committing each edit automatically is its default behavior.
+7. **You want to script custom agents in TypeScript:** Codebuff's SDK, or Claude Code's [Agent SDK](https://code.claude.com/docs/en/headless.md) if you prefer Claude.
+
+Whichever you pick, keep your project instructions portable. Codebuff and Claude Code both read `AGENTS.md` and `CLAUDE.md`, Aider can load a [conventions file](https://aider.chat/docs/usage/conventions.html) on every run, and the [Rules Converter](/tools/rules-converter) translates between Cursor rules, CLAUDE.md, AGENTS.md, and other formats.
+
+## FAQ
+
+**Is Codebuff open source?**
+Yes. Codebuff's FAQ says it is Apache-2.0. The GitHub repository it points to now redirects to `CodebuffAI/freebuff`, which holds the Freebuff products and the Codebuff agent framework they are built on.
+
+**Can I use my Claude subscription with Codebuff?**
+Not for much longer. Codebuff's FAQ says subscription connection is deprecated and will be removed, and recommends its own Strong plans instead.
+
+**Is Aider still maintained?**
+It still receives commits and model updates, but releases have slowed. The latest PyPI release is from February 2026 and the latest main-branch commit is from May 2026, so check the repository before you standardize a team on it.
+
+**Can Claude Code use non-Claude models?**
+Claude Code is built for Claude models, through Anthropic or through Bedrock, Google Cloud, or Microsoft Foundry. Anthropic's [LLM gateway docs](https://code.claude.com/docs/en/llm-gateway.md) say non-Claude models are not supported through gateways in Claude Code, so if you want other models in the same workflow, Aider or Codebuff is the better fit.
+
+**Which is cheapest?**
+Aider with a local or free model costs nothing beyond your hardware. Freebuff is free with ads. Among the paid options, Claude Pro at $20 a month is the cheapest way in, while Codebuff's subscriptions start at $100.
+
+**What else should I look at?**
+See the [Claude Code vs Aider comparison](/compare/claude-code-vs-aider), our roundup of the [best AI coding CLIs](/blog/best-ai-coding-clis), the [best AI coding agents for the terminal](/best/ai-coding-agents-for-terminal), or browse [Codebuff alternatives](/tools/codebuff/alternatives), [Claude Code alternatives](/tools/claude-code/alternatives), and [Aider alternatives](/tools/aider/alternatives).
+
+## Sources
+
+All facts were checked on October 25, 2026. These tools change often, so confirm on the official pages before you decide:
+
+- Codebuff: [website](https://www.codebuff.com/), [pricing](https://www.codebuff.com/pricing), [quick start](https://codebuff.com/docs/help/quick-start), [modes](https://codebuff.com/docs/tips/modes), [models](https://codebuff.com/docs/advanced/what-models), [what makes Codebuff unique](https://codebuff.com/docs/tips/what-makes-codebuff-unique), [FAQ](https://codebuff.com/docs/help/faq), [GitHub repository (now Freebuff)](https://github.com/CodebuffAI/freebuff), [Freebuff CLI](https://freebuff.com/cli)
+- Claude Code: [overview](https://code.claude.com/docs/en/overview.md), [quickstart](https://code.claude.com/docs/en/quickstart.md), [permission modes](https://code.claude.com/docs/en/permission-modes.md), [costs](https://code.claude.com/docs/en/costs.md), [enterprise deployment](https://code.claude.com/docs/en/third-party-integrations.md), [Claude pricing](https://claude.com/pricing), [GitHub repository](https://github.com/anthropics/claude-code)
+- Aider: [website](https://aider.chat/), [installation](https://aider.chat/docs/install.html), [git integration](https://aider.chat/docs/git.html), [chat modes](https://aider.chat/docs/usage/modes.html), [connecting to LLMs](https://aider.chat/docs/llms.html), [release history](https://aider.chat/HISTORY.html), [PyPI package](https://pypi.org/project/aider-chat/), [GitHub repository](https://github.com/Aider-AI/aider)
