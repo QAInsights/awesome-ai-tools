@@ -49,6 +49,14 @@ describe('extractPlans', () => {
             .toEqual([expect.objectContaining({ name: 'Pro', price: '$10', unit: '/mo/user' })]);
     });
 
+    test('reads usage-multiplier tier names such as "Strong 2.5x"', () => {
+        expect(extractPlans('Subscribe to Strong 1x ($100/month), Strong 2.5x ($200/month) or Strong 7x ($500/month).')).toEqual([
+            { name: 'Strong 1x', price: '$100', unit: '/mo', note: '' },
+            { name: 'Strong 2.5x', price: '$200', unit: '/mo', note: '' },
+            { name: 'Strong 7x', price: '$500', unit: '/mo', note: '' },
+        ]);
+    });
+
     test('ignores lead-in words and prose without plans', () => {
         expect(extractPlans('Starting at $10/month for everyone.')).toEqual([]);
         expect(extractPlans('Free and open-source under the MIT License.')).toEqual([]);
