@@ -2698,8 +2698,8 @@
     "slug": "codebuff",
     "name": "Codebuff",
     "company": "Codebuff",
-    "pricing": "freemium",
-    "pricingDetail": "Offers a usage-based model with paid plans starting at $100/mo, as well as an ad-supported free tier that allows users to earn credits by viewing impressions.",
+    "pricing": "open-source",
+    "pricingDetail": "Pay as you go at 1 cent per credit, with credits consumed by task complexity, or subscribe to Codebuff Strong at $100/month (1x usage), $200/month (2.5x usage) or $500/month (7x usage). Enterprise plans with custom pricing are available for organizations. There is no free Codebuff plan; the free, ad-supported option is now the separate Freebuff product.",
     "description": "Codebuff is an open-source AI coding agent that orchestrates specialized sub-agents to perform complex codebase tasks. Unlike traditional single-model tools, it uses parallel agents for file discovery, reasoning, editing, and autonomous code review.",
     "keyFeatures": [
       "Multi-agent architecture with parallel execution",
@@ -2719,7 +2719,7 @@
       "Open Source",
       "CLI"
     ],
-    "lastUpdated": "2026-10-15"
+    "lastUpdated": "2026-10-25"
   },
   {
     "slug": "openclaw",
