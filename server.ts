@@ -48,16 +48,33 @@ async function resolveFile(pathname: string): Promise<Response> {
     return new Response('Not Found', { status: 404 });
 }
 
+// In-memory store for valid OAuth state tokens (CSRF protection)
+const pendingOAuthStates = new Set<string>();
+
 const server = serve({
     port: PORT,
     async fetch(request) {
         const url = new URL(request.url);
         let pathname = url.pathname;
 
+        // --- GitHub OAuth Login Initiation ---
+        if (pathname === '/api/auth/github/login') {
+            const state = crypto.randomUUID();
+            pendingOAuthStates.add(state);
+            setTimeout(() => pendingOAuthStates.delete(state), 600_000);
+            const authUrl = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&state=${state}&scope=read:user,user:email`;
+            return new Response(null, { status: 302, headers: { Location: authUrl } });
+        }
+
         // --- GitHub OAuth Local Handler ---
         if (pathname === '/api/auth/github') {
             const code = url.searchParams.get('code');
             const state = url.searchParams.get('state');
+
+            if (!state || !pendingOAuthStates.has(state)) {
+                return new Response('Invalid or missing state parameter', { status: 400 });
+            }
+            pendingOAuthStates.delete(state);
 
             if (!code) {
                 return new Response('No code provided', { status: 400 });
