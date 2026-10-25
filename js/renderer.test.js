@@ -312,7 +312,7 @@ describe('renderer', () => {
 
         refreshVotingButtons();
 
-        expect(voteButton.outerHTML).toContain('Sign in to vote!');
+        expect(voteButton.outerHTML).toContain('Sign in free to zap');
         expect(voteButton.outerHTML).toContain('7');
         expect(voteButton.outerHTML).toContain('data-tool-name="Windsurf"');
     });
