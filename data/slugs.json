@@ -342,6 +342,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "thinkrail",
+    "name": "ThinkRail",
+    "company": "JetBrains",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -1149,6 +1155,12 @@
     "slug": "scion",
     "name": "Scion",
     "company": "Google Cloud Platform",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "cindy",
+    "name": "Cindy",
+    "company": "XD Inc.",
     "category": "Autonomous & Async Agents"
   },
   {

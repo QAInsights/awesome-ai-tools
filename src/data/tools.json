@@ -1610,5 +1610,13 @@
   {
     "companyName": "Roundhouse Labs Inc.",
     "toolName": "Zozo HQ"
+  },
+  {
+    "companyName": "JetBrains",
+    "toolName": "ThinkRail"
+  },
+  {
+    "companyName": "XD Inc.",
+    "toolName": "Cindy"
   }
 ]

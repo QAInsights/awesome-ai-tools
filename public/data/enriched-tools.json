@@ -11045,5 +11045,59 @@
       "Generative Design"
     ],
     "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "thinkrail",
+    "name": "ThinkRail",
+    "company": "JetBrains",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 license; no ThinkRail account, you bring JetBrains AI or any provider configured through pi.",
+    "description": "ThinkRail is an open-source agentic IDE from the JetBrains InnovationHub built around the pi coding agent. Each workspace is an isolated git worktree with its own branch, editor tabs, terminals and concurrent agent chats, and a graph of living SPEC.md files gives the agent durable project knowledge across sessions.",
+    "keyFeatures": [
+      "Isolated git-worktree workspaces with parallel pi chats, per-session models and live token and cost readouts",
+      "Monaco editor tabs, Files tree with git change marks, terminals, diffs and anchored review comments sent to chat",
+      "Living SPEC.md spec graph the agent reads and maintains through dedicated spec tools",
+      "Reuses existing Agent Skills and connects MCP servers with approval prompts and OAuth sign-in",
+      "Publish, push, open and merge GitHub pull requests with CI checks via your own gh CLI"
+    ],
+    "bestFor": "Developers who want a lightweight, real IDE around a terminal coding agent with parallel worktree workspaces and persistent project specs.",
+    "notIdealFor": "Intel Mac desktop users and teams that want a polished, extension-rich IDE today; full extension support is still on the roadmap.",
+    "recentUpdates": "Trending on GitHub and discussed on Hacker News in October 2026; v0.2.0 shipped on October 18, 2026 with v0.3.0 nightly builds following.",
+    "verdict": "An early but serious JetBrains bet on spec-driven agentic coding that pairs pi with a genuine editor and worktree isolation, worth trying for pi users.",
+    "tags": [
+      "ide",
+      "ai-coding",
+      "agent-management",
+      "developer-tools",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-25"
+  },
+  {
+    "slug": "cindy",
+    "name": "Cindy",
+    "company": "XD Inc.",
+    "pricing": "freemium",
+    "pricingDetail": "Apache-2.0 client is free with your own API keys, existing Claude Code, Codex or Pi coding plans, or local models; an optional managed model service starts with a $20/month Plus plan.",
+    "description": "Cindy is an open-source AI agent for desktop and mobile that runs on your own machine and wraps the Claude Code, Codex and Pi harnesses behind one interface. Models and harnesses can switch mid-task while memory, skills and tools stay continuous, and the agent can drive your browser, computer and phone or take work from IM and schedules.",
+    "keyFeatures": [
+      "Mix Claude Code, Codex and Pi harnesses with any model and switch mid-task without losing context",
+      "Plan, execute in parallel and review one task with agents on different harness and model combinations",
+      "Shared memory, reusable skills, MCP tools and scheduled automations across harnesses",
+      "Drives the browser, computer and Android phone, plus SSH and remote servers",
+      "Integrations with Slack, Feishu, GitHub, Jira, GitLab, Confluence and Google Workspace"
+    ],
+    "bestFor": "Developers and power users who already pay for Claude Code or Codex and want one local agent app that orchestrates multiple harnesses with shared memory.",
+    "notIdealFor": "Teams that need a fully self-hosted backend today, since the hosted service backend is not part of the open-source repo, or users who only want a single CLI agent.",
+    "recentUpdates": "Trending on GitHub in October 2026 with near-daily releases (v0.1.115 on October 23, 2026) and a Team and Enterprise waitlist.",
+    "verdict": "A fast-moving, well-adopted multi-harness agent client that makes Claude Code and Codex usable from one desktop and mobile app.",
+    "tags": [
+      "agent",
+      "ai-coding",
+      "agent-management",
+      "desktop-app",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-25"
   }
 ]
