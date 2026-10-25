@@ -1,0 +1,132 @@
+---
+title: "Atomic Agent vs Nanocoder vs Goose vs Zero (2026): Local-First Coding Agents Compared"
+description: "Atomic Agent, Nanocoder, Goose, and Zero compared on local models, setup, approvals, sandboxing, telemetry, and licensing, with every fact checked against official docs and repositories in October 2026."
+pubDate: 2026-10-25
+tags: ["atomic-agent", "nanocoder", "goose", "zero", "comparison", "local-first", "local-models", "open-source", "terminal"]
+featured: true
+---
+
+"Local-first" has become one of the most stretched labels in AI tooling. Some tools mean the model runs on your laptop. Others mean only that your sessions sit on your disk while every prompt still goes to a cloud API. Both are reasonable designs, but they protect very different things, and the difference matters the moment you work on a codebase you are not allowed to ship to a third party.
+
+This post compares four open-source agents that people search for under that label: [Atomic Agent](/tools/atomic-agent), [Nanocoder](/tools/nanocoder), [Goose](/tools/goose), and [Zero](/tools/zero). I read each project's official site, docs, and GitHub repository on October 25, 2026. Every claim links to the page it came from, and there is a dated Sources list at the end.
+
+## The Short Answer
+
+- **Pick Atomic Agent** if you want a model running on your own machine by default, with no account and no API key, and you are happy to run Developer Preview software. It is the only one of the four that ships and manages its own local inference backend.
+- **Pick Nanocoder** if you want a community-built terminal coding agent with no paid tiers and no telemetry, and you want to choose per session between Ollama on your laptop and a cloud provider.
+- **Pick Goose** if you want the most mature project of the four, with a desktop app and a CLI, MCP extensions, reusable recipes, and foundation governance, and you accept that it works best with a strong cloud model.
+- **Pick Zero** if you care most about safety boundaries and automation: workspace-scoped writes, permission-gated shell and network access, OS-level sandboxing, and a headless `zero exec` mode built for CI.
+
+The key distinction: Atomic Agent is local by default. The other three are local-capable. They keep your sessions and tooling on your machine, but the model is whatever provider you point them at.
+
+## At a Glance
+
+| Category | Atomic Agent | Nanocoder | Goose | Zero |
+| --- | --- | --- | --- | --- |
+| Maker | AtomicBot | Nano Collective (community, not for profit) | Agentic AI Foundation (AAIF) | Twigpine |
+| License | MIT | MIT | Apache 2.0 | MIT |
+| Default model | Local llama.cpp server, default `qwen-3.5-4b` | None until you configure a provider | None until you configure a provider | None until you configure a provider |
+| Local runners | Managed llama.cpp, external llama-server, Ollama, LM Studio, vLLM | Ollama or any OpenAI-compatible server | Ollama, LM Studio, Docker Model Runner, and others | Ollama, LM Studio, Atomic Chat, compatible endpoints |
+| Interfaces | CLI, full-screen TUI, desktop app | Terminal (fullscreen or inline), VS Code extension | Desktop app and CLI | Terminal TUI and headless `zero exec` |
+| Approvals | Approval gates on risky actions | Five modes: normal, auto-accept, yolo, plan, architect | Four modes: autonomous, manual, smart, chat only | Permission policy plus OS-level sandbox |
+| Extensibility | MCP client, skills, scheduled tasks | MCP, skills, subagents, hooks | MCP extensions, recipes | MCP, skills, plugins, hooks, subagents |
+| Latest release | v0.6.11, October 24, 2026 | v1.31.0, September 26, 2026 | v1.56.0, October 23, 2026 | v0.11.0, October 16, 2026 |
+| Price | Free | Free | Free | Free |
+
+All four are free to download. What you pay depends on where the model runs: nothing beyond hardware and electricity for a local model, or your provider's per-token rates if you connect a cloud API.
+
+## Atomic Agent: Local by Default
+
+[Atomic Agent](https://atomicagent.io/) is the strictest interpretation of local-first in this group. According to its [official overview](https://atomicagent.io/llms.txt), the agent talks by default to a local `llama-server` on `127.0.0.1`, so inference, memory, sessions, and tasks stay on your disk. You do not need an account, an API key, or a token budget to get started. In managed mode it downloads and runs TurboQuant, AtomicBot's own [llama.cpp build with a quantized KV cache](https://github.com/AtomicBot-ai/atomic-llama-cpp-turboquant), which is how it fits long sessions on small models.
+
+Installation is a single command on macOS or Linux (`curl -fsSL https://atomicagent.io/install | sh`) or a PowerShell one-liner on Windows, as shown in the [quickstart](https://atomicagent.io/docs/getting-started/quickstart/). There is also a [desktop app](https://atomicagent.io/download/) that shares its setup folder, `~/.atomic-agent`, with the terminal version. The [model docs](https://atomicagent.io/docs/features/models/) describe a catalog of Qwen, Gemma 4, Nemotron, and Muse models, a picker that recommends a model sized to your RAM, and support for your own Hugging Face GGUF files.
+
+Its main engineering choice is how it handles tool calls. Each inference returns one JSON array of tool calls constrained by a GBNF grammar, so a small local model cannot produce a malformed call. The runtime then executes the calls, compresses the results, and stores state in SQLite rather than letting the prompt grow, as the [FAQ](https://atomicagent.io/docs/reference/faq/) explains. The [README](https://github.com/AtomicBot-ai/atomic-agent) lists browser, filesystem, shell, and git tools, and says dangerous actions are routed through approvals while independent read-only calls run in parallel. A mode called [Fusion](https://atomicagent.io/docs/features/fusion/) splits a task between two providers, for example a cloud model that plans and reviews with local models doing the work.
+
+Two caveats. First, this is a Developer Preview, and the platform list has gaps: the FAQ says there is no Intel Mac build, and the terminal version is x64 only on Windows. Second, "local" does not mean "silent". The FAQ lists what can leave your machine, including analytics that you can switch off with `"analytics": { "enabled": false }` in `config.json`, the update check, and model downloads. Atomic Agent also publishes a GAIA Level 1 result against Hermes (69.8% versus 58.5% on 53 tasks). That is AtomicBot's own benchmark, so treat it as a vendor claim until someone reproduces it.
+
+## Nanocoder: The Community Terminal Agent
+
+[Nanocoder](https://github.com/Nano-Collective/nanocoder) is built by the [Nano Collective](https://nanocollective.org), and its README states the philosophy directly: no paid tiers, no telemetry, and no closed-source features. You install it with `npm install -g @nanocollective/nanocoder`, or through Homebrew or Nix flakes. The models are your choice: local models through Ollama, or any OpenAI-compatible API such as OpenRouter, Requesty, Anthropic, and Google.
+
+Nanocoder's most practical feature is its set of [development modes](https://github.com/Nano-Collective/nanocoder/blob/main/docs/features/development-modes.md), cycled with Shift+Tab:
+
+1. **Normal** asks before every tool call that can change something.
+2. **Auto-accept** asks only before risky calls such as bash, `git_commit`, and file deletes or overwrites.
+3. **Yolo** asks for nothing.
+4. **Plan** cannot change anything; you review a proposal before any work happens.
+5. **Architect** lets the turn run, then you review the result with a one-keypress undo.
+
+One detail is easy to miss: interactive sessions start in normal mode, but non-interactive `run` invocations default to auto-accept. If you script Nanocoder, set `--mode` explicitly.
+
+Beyond modes, the [docs folder](https://github.com/Nano-Collective/nanocoder/tree/main/docs/features) covers skills, subagents, hooks, checkpointing, the Agent Client Protocol for editors like Zed, and a VS Code extension. Nanocoder is a good fit if you want something lighter than Goose, more conventional than Atomic Agent, and governed by people who have publicly ruled out monetization.
+
+## Goose: The Mature, Extensible Option
+
+[Goose](https://goose-docs.ai/) is the most established project here, with more than 55,000 GitHub stars at the time of writing. It began at Block and is now developed under the Agentic AI Foundation, with the code at [aaif-goose/goose](https://github.com/aaif-goose/goose) under Apache 2.0. It ships as both a [desktop app and a CLI](https://goose-docs.ai/docs/getting-started/installation) for macOS, Linux, and Windows, and installs with a curl script or `brew install --cask block-goose`.
+
+Goose's strength is reach. Extensions are MCP servers, so connecting GitHub, a database, or Slack works the same way as any other MCP setup, and [recipes](https://goose-docs.ai/llms.txt) package a task into a reusable, shareable template. The [permission system](https://goose-docs.ai/docs/guides/managing-tools/goose-permissions) has four modes: Completely Autonomous, Manual Approval, Smart Approval (risk-based, approving low-risk actions and flagging the rest), and Chat Only.
+
+Goose supports local runners as first-class [providers](https://goose-docs.ai/docs/getting-started/providers), including Ollama, LM Studio, and Docker Model Runner. The same page is honest about the trade-off: Goose relies heavily on tool calling and "currently works best with Claude 4 models". In practice, Goose is local-first in the sense that it runs on your machine with full access to your environment, but you will get its best results from a strong hosted model. If your requirement is that no code ever leaves the laptop, test your chosen local model carefully before you commit.
+
+## Zero: Safety Boundaries and Automation
+
+[Zero](https://zero.twigpine.com) is a terminal coding agent from Twigpine. The repository moved from `gitlawb/zero` to [Twigpine/zero](https://github.com/Twigpine/zero), and the npm package moved from `@gitlawb/zero` to `@twigpine/zero`. If you installed the old package, the README explains how to switch; your config and sessions are kept. Zero is MIT-licensed and supports more than 25 providers, including Ollama, LM Studio, and Atomic Chat for local models.
+
+What sets Zero apart is its [safety model](https://github.com/Twigpine/zero#safety-model). Workspace reads are allowed by default. File writes are limited to the workspace unless you grant another directory with `--add-dir`. Shell commands, network access, destructive commands, and elevated actions are permission-gated, and unsafe or autonomous modes are explicit opt-ins. On Linux, native sandboxing uses Bubblewrap. Sessions are stored on disk, searchable, and resumable, the TUI can fork them, and the README says Zero never uploads them as telemetry.
+
+The other differentiator is `zero exec`, a scriptable headless mode with text, JSON, and stream-JSON output, isolated worktrees, spec-first runs, and exit codes for CI. The [architecture guide](https://github.com/Twigpine/zero/blob/main/docs/HOW_ZERO_WORKS.md) shows every tool call passing through tool filters, the permission mode, and the sandbox policy before it runs. If you want an agent that you can safely run unattended in a pipeline, Zero is the most deliberate design of the four.
+
+## A Note on Aider and OpenCode
+
+Two popular agents also run happily against local models, and they deserve a mention. [Aider](/tools/aider) has a dedicated [Ollama guide](https://aider.chat/docs/llms/ollama.html) with an important warning: Ollama uses a 2k context window by default and silently discards anything beyond it. Aider sets a larger window for you, but if you use Ollama with any other agent, check that setting first, because it is the most common reason local models seem much worse than they really are. [OpenCode](/tools/opencode) also connects to local providers; I compared it with Claude Code and Codex CLI in [OpenCode vs Claude Code vs Codex CLI](/blog/opencode-vs-claude-code-vs-codex-cli).
+
+## Costs and Hardware
+
+| | Atomic Agent | Nanocoder | Goose | Zero |
+| --- | --- | --- | --- | --- |
+| Software | Free, MIT | Free, MIT | Free, Apache 2.0 | Free, MIT |
+| Paid tiers | None | None, by policy | None | None |
+| Cost with a local model | Hardware and electricity | Hardware and electricity | Hardware and electricity | Hardware and electricity |
+| Cost with a cloud model | Provider's per-token rates | Provider's per-token rates | Provider's per-token rates | Provider's per-token rates |
+
+The real cost of local-first is hardware. Atomic Agent's FAQ says its default `qwen-3.5-4b` model needs a few GB of disk and enough memory to load, uses Metal, Vulkan, or CUDA when available, and budgets 75% of unified memory on macOS. Small models like that are good at tool routing and repetitive work, but they are not a replacement for a frontier model on a hard refactor. If you plan to mix local and cloud models, our [Cost Calculator](/tools/cost-calculator) estimates what the cloud part will cost per month.
+
+## Which One Should You Pick?
+
+1. **Your code must never leave the machine:** Atomic Agent. Local inference is the default, not an option you configure, and the FAQ spells out what does leave your machine.
+2. **You want a free terminal agent and to switch between local and cloud models:** Nanocoder. The five development modes are the clearest approval model here.
+3. **You want a desktop app, MCP extensions, and a large community:** Goose. Pair it with a strong model and use Smart Approval.
+4. **You run agents in CI or want hard safety limits:** Zero. Workspace-scoped writes, the sandbox, and `zero exec` are built for this.
+5. **You already use Aider or OpenCode:** keep them and point them at a local model. Just fix the Ollama context window first.
+
+Whichever you pick, your project rules carry over. Our [Rules Converter](/tools/rules-converter) translates instruction files between agent formats, so you do not have to rewrite your conventions for each tool.
+
+## FAQ
+
+**Which of these runs completely offline?**
+Atomic Agent comes closest by default, because it starts and manages its own llama.cpp server. Its FAQ still lists things that use the network, such as the update check, model downloads, and analytics, which you can disable. Nanocoder, Goose, and Zero can work offline too, but only once you point them at a local runner such as Ollama or LM Studio.
+
+**Are local models good enough for real coding work?**
+For navigation, small edits, and repetitive tasks, often yes. For large refactors, a frontier model is still clearly stronger, and Goose's own docs say it works best with Claude 4 models. Atomic Agent's Fusion mode and Nanocoder's per-session provider choice are practical ways to mix the two.
+
+**Is Zero the same project as Gitlawb Zero?**
+Yes. The repository moved from `gitlawb/zero` to `Twigpine/zero`, and the npm package moved from `@gitlawb/zero` to `@twigpine/zero`. The README explains the move, and your config, sessions, and logins are kept.
+
+**Which one is the most mature?**
+Goose, by release history and community size: it is on v1.56.0 with more than 55,000 GitHub stars. Atomic Agent describes itself as a Developer Preview, and Zero is still on 0.x releases.
+
+**Do any of them collect telemetry?**
+Nanocoder says it has no telemetry, and Zero says it never uploads sessions as telemetry. Atomic Agent's FAQ lists analytics among the things that can leave your machine and shows how to turn them off. Check each tool's settings before using it on sensitive code.
+
+For more options, see the [best AI coding agents for the terminal](/best/ai-coding-agents-for-terminal), [self-hosted AI coding tools](/best/self-hosted-ai-coding-tools), [open-source AI coding tools](/best/open-source-ai-coding-tools), and [free AI coding tools](/best/free-ai-coding-tools). You can also browse alternatives to [Goose](/tools/goose/alternatives) and [Aider](/tools/aider/alternatives), compare [Claude Code vs Aider](/compare/claude-code-vs-aider), or read our roundups of [the best AI coding CLIs](/blog/best-ai-coding-clis) and [open-source sandboxes for coding agents](/blog/open-source-sandboxes-for-ai-coding-agents).
+
+## Sources
+
+All sources checked on October 25, 2026.
+
+- Atomic Agent: [website](https://atomicagent.io/), [overview](https://atomicagent.io/llms.txt), [quickstart](https://atomicagent.io/docs/getting-started/quickstart/), [FAQ](https://atomicagent.io/docs/reference/faq/), [local models](https://atomicagent.io/docs/features/models/), [Fusion](https://atomicagent.io/docs/features/fusion/), [download](https://atomicagent.io/download/), [GitHub](https://github.com/AtomicBot-ai/atomic-agent), [TurboQuant](https://github.com/AtomicBot-ai/atomic-llama-cpp-turboquant)
+- Nanocoder: [GitHub](https://github.com/Nano-Collective/nanocoder), [development modes](https://github.com/Nano-Collective/nanocoder/blob/main/docs/features/development-modes.md), [feature docs](https://github.com/Nano-Collective/nanocoder/tree/main/docs/features), [Nano Collective](https://nanocollective.org)
+- Goose: [docs](https://goose-docs.ai/), [overview](https://goose-docs.ai/llms.txt), [installation](https://goose-docs.ai/docs/getting-started/installation), [providers](https://goose-docs.ai/docs/getting-started/providers), [permission modes](https://goose-docs.ai/docs/guides/managing-tools/goose-permissions), [GitHub](https://github.com/aaif-goose/goose)
+- Zero: [website](https://zero.twigpine.com), [GitHub](https://github.com/Twigpine/zero), [safety model](https://github.com/Twigpine/zero#safety-model), [architecture](https://github.com/Twigpine/zero/blob/main/docs/HOW_ZERO_WORKS.md)
+- Aider: [Ollama guide](https://aider.chat/docs/llms/ollama.html)
