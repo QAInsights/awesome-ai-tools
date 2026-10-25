@@ -26,6 +26,12 @@ describe('facetScore', () => {
         expect(facetScore(FACET, tool('d', { description: 'Works in JetBrains.', keyFeatures: ['JetBrains plugin'] }))).toBe(4);
         expect(facetScore(FACET, tool('e', { description: 'Nothing relevant.', pricing: 'paid' }))).toBe(0);
     });
+
+    test('matches hand-picked slugs', () => {
+        const picks: BestFacet = { ...FACET, include: { slugs: ['gem'] } };
+        expect(facetScore(picks, tool('gem', {}))).toBe(4);
+        expect(facetScore(picks, tool('other', {}))).toBe(0);
+    });
 });
 
 describe('rankFacetTools', () => {
@@ -86,9 +92,17 @@ describe('best-of pages', () => {
         for (const f of facets) {
             expect(f.slug).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/);
             for (const field of [f.title, f.short, f.keyword, f.intro, f.criteria]) expect(field.trim().length).toBeGreaterThan(0);
-            const { pricing = [], categories = [], patterns = [] } = f.include;
-            expect(pricing.length + categories.length + patterns.length).toBeGreaterThan(0);
+            const { pricing = [], categories = [], patterns = [], slugs = [] } = f.include;
+            expect(pricing.length + categories.length + patterns.length + slugs.length).toBeGreaterThan(0);
             for (const p of patterns) expect(() => new RegExp(p, 'i')).not.toThrow();
+        }
+    });
+
+    test('every hand-picked slug is an enriched catalog tool', () => {
+        const pages = new Map(getBestPages().map(p => [p.facet.slug, p]));
+        for (const f of getBestFacets()) {
+            const listed = new Set(pages.get(f.slug)?.tools.map(t => t.slug));
+            for (const slug of f.include.slugs ?? []) expect(listed.has(slug)).toBe(true);
         }
     });
 
