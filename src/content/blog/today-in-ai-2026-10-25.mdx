@@ -1,0 +1,77 @@
+---
+title: "Microsoft ships Agensh, a 1, 024-agent coding harness"
+description: "Microsoft open-sources a leaderless agent harness, Gemini 4 Argon patches Google's ADK, KRAFTON ships Raon-1 mini, and Reservoir sues Suno and Anthropic."
+pubDate: 2026-10-25
+tags: ["news","today-in-ai","agents","microsoft","google","open-weights","copyright","coding-agents"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-10-25 UTC.
+
+Microsoft drops the orchestrator, Google lets a model loose on its own codebase, and a music publisher files two nine-figure copyright suits.
+
+## Microsoft open-sources Agensh, a harness with no lead agent
+
+**What happened:** Microsoft Research released Agensh, a decentralized harness where each worker claims its own sub-task, shares findings and merges code into a shared Git repo. The team scaled it from 1 to 1, 024 agents on ProgramBench, using 16 nodes at 64 agents each.
+
+**Why it matters:** It gives teams a reference design for fanning coding agents out across many machines without building a central scheduler, and the paper reports where scaling stopped paying off.
+
+[Source: MarkTechPost](<https://www.marktechpost.com/2026/10/24/microsoft-agensh-multi-agent-harness-1024-agents/>)
+
+## Gemini 4 Argon spends 11 hours optimizing Google's own ADK
+
+**What happened:** Google says an 11-hour unattended run of Gemini 4 Argon on its Agent Development Kit produced two accepted optimizations: about 40% less in-memory session-preparation overhead in long sessions and 21% faster cold package imports. Four other proposed changes were rejected on review.
+
+**Why it matters:** The writeup shows the scaffolding that made it work, repo-specific skill files and a goal prompt, which is more reusable than the two patches themselves.
+
+[Source: InfoQ](<https://www.infoq.com/news/2026/10/google-argon-optimizes-adk/>)
+
+## KRAFTON releases Raon-1 mini, a 28.8B MoE under Apache 2.0
+
+**What happened:** KRAFTON AI released Raon-1 mini preview, a Mixture-of-Experts model trained from scratch with 28.8B total and 4.3B active parameters, 262, 144-token context and an Apache 2.0 license. It ships with a speculative decoding draft model that KRAFTON says reaches up to 2.18x higher output throughput on a single NVIDIA B300.
+
+**Why it matters:** A permissively licensed long-context MoE with a matching draft model gives self-hosters a drop-in option that does not need a cluster to serve.
+
+[Source: TPS](<https://tpsreport.news/news>)
+
+## Reservoir seeks nearly $340M from Suno and Anthropic
+
+**What happened:** Music publisher Reservoir filed two suits on October 21 in the Northern District of California, seeking about $186.4 million from Suno and $151.4 million from Anthropic in statutory damages over 1, 050 and 853 compositions respectively. Named works include Madonna's "Papa Don't Preach" and Johnny Cash's "Ring of Fire".
+
+**Why it matters:** The complaints target training data and seek injunctions plus destruction of copies, so anyone training on scraped catalogs should expect licensing demands to arrive with a number attached.
+
+[Source: Law Commentary](<https://www.lawcommentary.com/articles/suno-anthropic-reservoir-ai-copyright-lawsuits>)
+
+## Cognition open-sources a Devin plugin to patch RCE flaws
+
+**What happened:** Cognition released the Devin Vulnerability Fixes plugin, three MIT-licensed agent skills that inventory, patch and test PHP, Node.js and self-managed GitLab deployments hit by this week's critical RCE flaws, then open one PR per repo.
+
+**Why it matters:** It is a concrete template for wiring an agent into incident response, and the MIT license means you can fork the skills for your own stack.
+
+[Source: TPS](<https://tpsreport.news/news>)
+
+## Codex CLI 0.164.0 adds enterprise MCP sign-in
+
+**What happened:** Codex CLI 0.164.0 adds enterprise MCP authentication options and preserves thread settings when a session is resumed.
+
+**Why it matters:** Teams running Codex behind corporate identity providers can now authenticate MCP servers without a side channel, and resumed sessions stop losing their configuration.
+
+[Source: AI Industry Today](<https://aiindustrytoday.com/topic/models/>)
+
+## Meta buys Sundial to put natural-language queries on enterprise data
+
+**What happened:** Meta acquired analytics startup Sundial, confirmed October 23. Sundial's technology and staff join Meta's Data Analytics Tooling &amp; Agents organization under chief data officer Alex Schultz, and the company is expected to stop serving external customers. Terms were not disclosed.
+
+**Why it matters:** One less independent vendor for natural-language analytics means teams building on Sundial's tooling should plan a migration.
+
+[Source: InfotechLead](<https://infotechlead.com/analytics/tech-ma-deals-meta-sundial-ai-rivian-third-dimension-ai-qualcomm-akeana-99141>)
+
+## Sources
+
+- [MarkTechPost](<https://www.marktechpost.com/2026/10/24/microsoft-agensh-multi-agent-harness-1024-agents/>)
+- [InfoQ](<https://www.infoq.com/news/2026/10/google-argon-optimizes-adk/>)
+- [TPS](<https://tpsreport.news/news>)
+- [Law Commentary](<https://www.lawcommentary.com/articles/suno-anthropic-reservoir-ai-copyright-lawsuits>)
+- [AI Industry Today](<https://aiindustrytoday.com/topic/models/>)
+- [InfotechLead](<https://infotechlead.com/analytics/tech-ma-deals-meta-sundial-ai-rivian-third-dimension-ai-qualcomm-akeana-99141>)
