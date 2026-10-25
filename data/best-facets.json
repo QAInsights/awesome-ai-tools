@@ -184,7 +184,7 @@
     "short": "Hidden gems",
     "keyword": "underrated AI coding tools",
     "intro": "The tools everyone already knows dominate every list, so the most interesting work in AI-assisted development often goes unnoticed. These are small, actively maintained projects that solve one real problem unusually well: keeping agent sessions alive in tmux, compressing context for marathon sessions, replaying exactly what an agent did, sandboxing agents on real projects, or approving them from your phone. None of them has a big marketing budget or a famous parent company, and most are free or open source, which makes them cheap to try and easy to drop into a workflow you already have.",
-    "criteria": "Hand-picked by the editors in October 2026 from the directory's reviews: each tool had commits in the past month, had fewer than 3,000 GitHub stars when picked, had no head-to-head comparison page on the site yet, and does something its better-known rivals don't.",
+    "criteria": "Hand-picked by the editors in October 2026 from the directory's reviews: each tool had commits in the past month, had fewer than 3,000 GitHub stars when picked, had not yet been covered by one of the site's editorial head-to-head comparisons, and does something its better-known rivals don't.",
     "include": {
       "slugs": ["workmux", "codenotch", "billion-context", "nanocoder", "gortex", "zero", "kodus", "maki", "agent-deck", "agent-qa", "codync", "coop", "scrawl", "graphicle", "agentplay", "neckbeard", "looptroop", "corgi"]
     }
