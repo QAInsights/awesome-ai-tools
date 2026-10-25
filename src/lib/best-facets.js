@@ -10,6 +10,7 @@
  * @property {string[]} [pricing] Enriched pricing values that match.
  * @property {string[]} [categories] README categories (emoji stripped) that match.
  * @property {string[]} [patterns] Case-insensitive regex sources tested against the tool's text fields.
+ * @property {string[]} [slugs] Hand-picked tool slugs that match (editorial collections).
  */
 
 /**
@@ -42,6 +43,7 @@ export const FIELD_WEIGHTS = {
 };
 export const CATEGORY_WEIGHT = 4;
 export const PRICING_WEIGHT = 2;
+export const PICK_WEIGHT = 4;
 export const MAX_RANKED = 25;
 
 /** @param {string} category */
@@ -73,8 +75,9 @@ function fieldTexts(tool) {
  * @param {FacetTool} tool
  */
 export function facetScore(facet, tool) {
-    const { pricing = [], categories = [], patterns = [] } = facet.include;
+    const { pricing = [], categories = [], patterns = [], slugs = [] } = facet.include;
     let score = 0;
+    if (slugs.includes(tool.slug)) score += PICK_WEIGHT;
     const toolPricing = (tool.enriched?.pricing ?? '').toLowerCase();
     if (toolPricing && pricing.includes(toolPricing)) score += PRICING_WEIGHT;
     if (categories.includes(cleanCategory(tool.category))) score += CATEGORY_WEIGHT;
