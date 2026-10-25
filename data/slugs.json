@@ -1164,6 +1164,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "zozo-hq",
+    "name": "Zozo HQ",
+    "company": "Roundhouse Labs Inc.",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
