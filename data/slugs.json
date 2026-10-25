@@ -1170,6 +1170,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "agensh",
+    "name": "Agensh",
+    "company": "Microsoft",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
