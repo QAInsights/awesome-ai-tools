@@ -18,7 +18,7 @@ export interface PricingBreakdown {
     points: PricingSegment[][];
 }
 
-const NAME = String.raw`[A-Z][\w+]*(?:\s+(?:\d+x|[A-Z][\w+]*))?`;
+const NAME = String.raw`[A-Z][\w+]*(?:\s+(?:\d+(?:\.\d+)?x|[A-Z][\w+]*))?`;
 const AMOUNT = String.raw`\$\d+(?:,\d{3})*(?:\.\d+)?`;
 const PRICE = String.raw`${AMOUNT}(?:\s*[-\u2013]\s*${AMOUNT})?`;
 const UNIT = String.raw`(?:\s+per\s+[a-z]+(?:\s*\/\s*[a-z]+|\s+per\s+[a-z]+)*|(?:\s*\/\s*[a-z]+)+)?`;

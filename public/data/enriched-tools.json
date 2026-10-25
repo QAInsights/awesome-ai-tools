@@ -2698,8 +2698,8 @@
     "slug": "codebuff",
     "name": "Codebuff",
     "company": "Codebuff",
-    "pricing": "open-source",
-    "pricingDetail": "Pay as you go at 1 cent per credit, with credits consumed by task complexity, or subscribe to Codebuff Strong at $100/month (1x usage), $200/month (2.5x usage) or $500/month (7x usage). Enterprise plans with custom pricing are available for organizations. There is no free Codebuff plan; the free, ad-supported option is now the separate Freebuff product.",
+    "pricing": "paid",
+    "pricingDetail": "Pay as you go at 1 cent per credit, with credits consumed by task complexity, or subscribe to Strong 1x ($100/month), Strong 2.5x ($200/month) or Strong 7x ($500/month), where the multiplier is usage relative to the base plan. Enterprise plans with custom pricing are available for organizations. There is no free Codebuff plan; the free, ad-supported option is now the separate Freebuff product.",
     "description": "Codebuff is an open-source AI coding agent that orchestrates specialized sub-agents to perform complex codebase tasks. Unlike traditional single-model tools, it uses parallel agents for file discovery, reasoning, editing, and autonomous code review.",
     "keyFeatures": [
       "Multi-agent architecture with parallel execution",
@@ -2710,7 +2710,7 @@
     ],
     "bestFor": "Developers requiring complex, codebase-wide refactoring or structural changes that benefit from autonomous planning and multi-agent verification.",
     "notIdealFor": "Simple single-file edits where the overhead of a multi-agent orchestration might be overkill compared to lighter, single-model alternatives.",
-    "recentUpdates": "The project open-sourced its agent framework and released an SDK, shifting to a multi-agent abstraction that improves performance and reliability over legacy monolithic implementations.",
+    "recentUpdates": "Codebuff moved its free, ad-supported tier into a separate product called Freebuff. Codebuff itself is now paid: 1 cent per credit, or Strong subscriptions from $100/month. Connecting a Claude Pro or Max subscription is deprecated.",
     "verdict": "A highly efficient, agent-driven coding tool that excels at large-scale refactoring and autonomous development workflows, offering a more automated experience than standard chat-based coding assistants.",
     "tags": [
       "AI",
