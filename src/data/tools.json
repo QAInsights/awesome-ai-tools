@@ -1606,5 +1606,13 @@
   {
     "companyName": "Tal Shiri (tals)",
     "toolName": "Corgi"
+  },
+  {
+    "companyName": "JetBrains",
+    "toolName": "ThinkRail"
+  },
+  {
+    "companyName": "XD Inc.",
+    "toolName": "Cindy"
   }
 ]
