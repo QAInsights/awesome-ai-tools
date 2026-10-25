@@ -11099,5 +11099,34 @@
       "open-source"
     ],
     "lastUpdated": "2026-10-25"
+  },
+  {
+    "slug": "agensh",
+    "name": "Agensh",
+    "company": "Microsoft",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; you supply GitHub Copilot access for the worker sessions plus a Linux host with Docker to run the team.",
+    "description": "Agensh is an open-source multi-agent harness from Microsoft researchers in which a team of coding agents organizes itself without a central orchestrator. Each agent gathers context, claims a sub-task, acts, verifies the result and merges progress asynchronously, with a Gitea instance as the shared workspace, Mattermost for messaging and a shared context service adapted from DeLM. The released setup runs every worker on GitHub Copilot's agent loop through native ACP sessions.",
+    "keyFeatures": [
+      "Self-organized cooperation loop: agents discover and claim sub-tasks, share findings, verify results and merge progress without a central orchestrator",
+      "Shared Gitea workspace, Mattermost messaging and a shared context and work-claim board service",
+      "Workers built on GitHub Copilot's agentic loop through native ACP sessions",
+      "Single-node team launcher using Docker Compose plus a standalone single-agent baseline",
+      "Reproduction guide, experiment launch scripts and ProgramBench scoring tools",
+      "Scaled to 1,024 concurrent agents in the authors' experiments"
+    ],
+    "bestFor": "Researchers and platform engineers studying how large teams of coding agents coordinate, and anyone who wants to reproduce or extend the Agensh ProgramBench experiments on their own hardware.",
+    "notIdealFor": "Developers looking for an everyday coding assistant; the release is a research harness that needs Linux with Docker Engine, Compose v2, systemd, cgroup v2 and passwordless sudo, and its defaults run long, token-heavy six-hour tasks.",
+    "recentUpdates": "Open-sourced in October 2026 (release v1.0) with the harness, launch scripts and a reproduction guide, following the September 2026 arXiv preprint. The authors report that on the five hardest ProgramBench tasks the mean test-pass rate rose from 19.31% with 1 agent to 28.78% with 128 agents; these are the authors' own results.",
+    "verdict": "A rare open, reproducible look at agent teams at the scale of hundreds of workers, worth studying for anyone designing multi-agent coding systems, but a research release rather than a product you install for daily work.",
+    "tags": [
+      "AI Agents",
+      "Multi-Agent",
+      "Open Source",
+      "Research",
+      "GitHub Copilot",
+      "Self-Hosted"
+    ],
+    "lastUpdated": "2026-10-25"
   }
 ]
