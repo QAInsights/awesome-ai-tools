@@ -8,7 +8,7 @@ featured: true
 
 All three of these tools live in your terminal, read your repository, and change code when you ask. That is where the similarity ends. [Codebuff](/tools/codebuff) splits every request across a team of specialized subagents and sells usage through credits or a subscription. [Claude Code](/tools/claude-code) is Anthropic's own agent, bundled with Claude plans and built around a detailed permission system. [Aider](/tools/aider) is the open-source veteran: you bring any model you like, and every edit lands in git as a commit you can undo.
 
-I read each tool's official docs, pricing page, and GitHub repository on October 25, 2026. Every claim below links to the page it came from, and there is a dated Sources list at the end. Two things changed recently that most comparisons have not caught up with yet, so I flag them as we go: Codebuff's GitHub repository now leads with its free sister product, Freebuff, and Codebuff no longer lets you plug in a Claude subscription.
+I read each tool's official docs, pricing page, and GitHub repository on October 25, 2026. Every claim below links to the page it came from, and there is a dated Sources list at the end. Two things changed recently that most comparisons have not caught up with yet, so I flag them as we go: Codebuff's GitHub repository now leads with its free sister product, Freebuff, and Codebuff has deprecated plugging in a Claude subscription.
 
 ## The Short Answer
 
@@ -74,7 +74,7 @@ Codebuff prices are from its [pricing page](https://www.codebuff.com/pricing) an
 
 ## Which One Should You Pick?
 
-1. **You already pay for Claude Pro or Max:** Claude Code. The subscription covers it, and Codebuff no longer accepts a Claude subscription.
+1. **You already pay for Claude Pro or Max:** Claude Code. The subscription covers it, and Codebuff has deprecated connecting a Claude subscription, so do not plan around that option.
 2. **You want the agent to find context and review itself, with little babysitting:** Codebuff, ideally on a large task in Max mode.
 3. **You want to use DeepSeek, Gemini, GPT, a local model, or whatever is cheapest this month:** Aider.
 4. **You want to spend nothing:** Aider with a free or local model, or Freebuff if you accept ads.
@@ -90,7 +90,7 @@ Whichever you pick, keep your project instructions portable. Codebuff and Claude
 Yes. Codebuff's FAQ says it is Apache-2.0. The GitHub repository it points to now redirects to `CodebuffAI/freebuff`, which holds the Freebuff products and the Codebuff agent framework they are built on.
 
 **Can I use my Claude subscription with Codebuff?**
-Not for much longer. Codebuff's FAQ says subscription connection is deprecated and will be removed, and recommends its own Strong plans instead.
+Do not count on it. Codebuff's FAQ says connecting a Claude subscription is deprecated and scheduled for removal on March 1, without naming the year, so check the FAQ before you rely on an existing connection. Codebuff recommends its own Strong plans instead.
 
 **Is Aider still maintained?**
 It still receives commits and model updates, but releases have slowed. The latest PyPI release is from February 2026 and the latest main-branch commit is from May 2026, so check the repository before you standardize a team on it.
