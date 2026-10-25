@@ -3749,7 +3749,7 @@
   {
     "slug": "zero",
     "name": "Zero",
-    "company": "Gitlawb",
+    "company": "Twigpine",
     "pricing": "open-source",
     "pricingDetail": "MIT licensed; free to use with your own API keys (Bring Your Own Key).",
     "description": "Zero is a terminal-based AI coding agent designed for local ownership, privacy, and full control over your development environment. It features durable local sessions, OS-level sandboxing for permissions, and support for over 25 model providers or local models.",
