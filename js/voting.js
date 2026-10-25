@@ -64,16 +64,6 @@ export async function initVoting() {
         if (!auth.isAuthenticated()) {
             analytics.track(EVENTS.GATE_BLOCKED, { trigger: 'zap_btn', subject: toolId });
             authAttribution.open('zap_btn');
-            const countEl = btn.querySelector('.zap-count');
-            const originalTip = btn.dataset.tip;
-            btn.dataset.tip = "Sign in to vote!";
-            countEl.textContent = "Login";
-            countEl.style.color = "#a78bfa";
-            setTimeout(() => {
-                countEl.textContent = zapCounts[toolId]?.toLocaleString() || '0';
-                countEl.style.color = "";
-                btn.dataset.tip = originalTip;
-            }, 2000);
             return;
         }
 
@@ -120,7 +110,7 @@ async function waitForTurnstileToken(timeoutMs = 3000) {
 
 const ZAP_ERROR_MESSAGES = {
     400: { tip: "You have already zapped this tool!", label: "Zap'd", color: "#a3a3a3" },
-    401: { tip: "Sign in to vote!", label: "Login", color: "#a78bfa" },
+    401: { tip: "Sign in free to zap", label: null, color: "" },
     429: { tip: "You are voting too fast! Please slow down.", label: "Wait", color: "#ef4444" },
 };
 const ZAP_ERROR_DEFAULT = { tip: "Security check failed. Please refresh and try again.", label: "Failed", color: "#ef4444" };
@@ -134,7 +124,7 @@ function rollbackZap(btn, toolId, { tip, label, color }) {
     const originalTip = btn.dataset.tip;
 
     btn.dataset.tip = tip;
-    countEl.textContent = label;
+    countEl.textContent = label ?? zapCounts[toolId].toLocaleString();
     countEl.style.color = color;
 
     setTimeout(() => {

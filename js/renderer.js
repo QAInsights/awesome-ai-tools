@@ -113,7 +113,7 @@ function createZapButtonHtml(toolId, toolName, voteCount) {
     }
 
     return `
-                <button class="zap-btn sm row" data-tip="Sign in to vote!"
+                <button class="zap-btn sm row" data-tip="Sign in free to zap"
                     data-tool-id="${safeId}"
                     data-tool-name="${safeName}">
                     <svg class="zap-icon" viewBox="0 0 24 24" fill="none" >

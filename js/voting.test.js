@@ -262,6 +262,19 @@ describe('voting', () => {
             window.cfTokenValue = '';
         });
 
+        test('signed-out click opens sign-in and keeps the count visible', async () => {
+            const btn = makeBtn('cursor');
+            auth.user = null;
+
+            click(btn);
+            await flush();
+
+            expect(fetchCalls.some(call => call.url === '/api/v1/vote')).toBe(false);
+            expect(btn.countEl.textContent).toBe('5');
+            expect(btn.dataset.tip).toBe('Zap!');
+            expect(authOpenCalls).toEqual(['zap_btn']);
+        });
+
         test('posts { tool_id, cf_token } to the same-origin vote endpoint', async () => {
             const btn = makeBtn('cursor');
             mockFetchResponse = { ok: true, status: 200 };
@@ -302,7 +315,7 @@ describe('voting', () => {
 
             expect(getVoteCount('cursor')).toBe(5);
             expect(btn.classes.has('zapped')).toBe(false);
-            expect(btn.countEl.textContent).toBe('Login');
+            expect(btn.countEl.textContent).toBe('5');
             expect(authOpenCalls).toEqual(['zap_btn']);
         });
     });
