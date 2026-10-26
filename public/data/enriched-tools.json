@@ -11209,5 +11209,34 @@
       "open-source"
     ],
     "lastUpdated": "2026-10-26"
+  },
+  {
+    "slug": "hob",
+    "name": "Hob",
+    "company": "Frigade",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license, with no account, subscription or usage limits; models run on your own hardware (Apple silicon Mac, Windows or Linux with 8 GB of memory or more).",
+    "description": "Hob is an open-source desktop AI assistant from Frigade that aims to match the file-aware, tool-using experience of Claude and ChatGPT while running open-weight models entirely on your computer. It checks your hardware, downloads the best model it can run well through llama.cpp (Metal on Mac, CUDA or Vulkan elsewhere), and then works on your files and project folders, runs sandboxed Python, reads PDFs and images, and searches the web through a metasearch engine that also runs locally.",
+    "keyFeatures": [
+      "Hardware-aware setup that picks and downloads a model for you: Gemma 4 E4B Compact, E4B or 26B depending on memory, or gpt-oss 120B on workstations",
+      "Works on attached files and on folders grouped into projects with their own instructions",
+      "Sandboxed Python with pandas, numpy, openpyxl, python-docx, pypdf and Pillow, plus any PyPI package it needs",
+      "Reads PDFs (including scans), fills in PDF forms on Mac, and understands photos and screenshots with a small Qwen3-VL model",
+      "Interactive charts, on-device dictation and web search through a local metasearch engine",
+      "Approval before folder changes, Undo for every task, and plugins for Agent Skills, Python tools and MCP connectors"
+    ],
+    "bestFor": "Developers and privacy-conscious users who want a capable, file-aware AI assistant that runs local open-weight models with zero setup, no account and no telemetry.",
+    "notIdealFor": "Teams that need frontier hosted models or shared workspaces, and Intel Macs or machines with less than 8 GB of memory; it is a general assistant rather than a dedicated coding agent, and the project only went public in October 2026.",
+    "recentUpdates": "Open-sourced in October 2026, with v0.2.0 and v0.2.1 shipping on GitHub for Mac, Windows and Linux; installed copies download new versions and install them on quit.",
+    "verdict": "One of the most approachable ways to get a Claude-style desktop assistant running fully on your own hardware, though local model quality still trails the big hosted models.",
+    "tags": [
+      "AI Assistant",
+      "Local AI",
+      "Open Source",
+      "Privacy",
+      "Desktop App",
+      "MCP"
+    ],
+    "lastUpdated": "2026-10-26"
   }
 ]
