@@ -1,0 +1,95 @@
+---
+/** Stack Duo: the first ten tools of a public stack on a 3D foldable phone (js/stack-duo.js). */
+import type { VisibleStackItem } from '../lib/stack-public-view';
+
+interface Props {
+    title: string;
+    displayName: string;
+    username: string;
+    updated: string;
+    pageUrl: string;
+    items: VisibleStackItem[];
+}
+
+const { title, displayName, username, updated, pageUrl, items } = Astro.props;
+const MAX_DUO_TOOLS = 10;
+const tools = items.slice(0, MAX_DUO_TOOLS).map(({ item, tool }) => ({
+    slug: tool.slug,
+    name: tool.enriched?.name ?? tool.name,
+    company: tool.enriched?.company ?? tool.company,
+    purpose: item.purpose || tool.categoryShort,
+}));
+const config = {
+    title,
+    displayName,
+    username,
+    updated,
+    count: items.length,
+    more: Math.max(0, items.length - tools.length),
+    tools,
+};
+const shareText = `My AI stack on ai.dosa.dev: ${title}`;
+const xUrl = `https://x.com/intent/post?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(pageUrl)}`;
+const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
+---
+
+{tools.length > 0 && (
+    <section class="sd" data-stack-duo aria-label={`${title} on a foldable phone`}>
+        <script is:inline type="application/json" set:html={JSON.stringify(config).replace(/</g, '\\u003c')} />
+        <div
+            class="sd-stage"
+            data-sd-stage
+            tabindex="0"
+            role="button"
+            aria-pressed="false"
+            aria-label={`${title}: ${tools.length} tools on a foldable phone. Press Space to open or fold it.`}
+        ></div>
+        <div class="sd-ctrl">
+            <p class="sd-hint">Tap to open · drag to turn it around</p>
+            <label class="sd-slider">
+                <span>Closed</span>
+                <input type="range" min="0" max="1000" value="0" data-sd-slider aria-label="Move slider to open and close" />
+                <span>Open</span>
+            </label>
+            <div class="sd-cta">
+                <button type="button" class="fo-btn" data-sd-toggle><span data-sd-label>Open stack</span> <i aria-hidden="true">→</i></button>
+                <button type="button" class="sd-pill" data-sd-copy={pageUrl}><span>Copy link</span></button>
+                <a class="sd-pill" href={xUrl} target="_blank" rel="noopener noreferrer">Post on X</a>
+                <a class="sd-pill" href={linkedInUrl} target="_blank" rel="noopener noreferrer">Share on LinkedIn</a>
+            </div>
+        </div>
+    </section>
+)}
+
+<style>
+    .sd { padding: 24px 0 72px; border-top: 1px solid var(--rule, #1d1d1c); }
+    .sd-stage {
+        position: relative; width: 100%; height: min(72vh, 680px); min-height: 440px;
+        cursor: grab; outline: none; touch-action: pan-y; opacity: 0; transition: opacity 1s cubic-bezier(.16, 1, .3, 1);
+    }
+    .sd.is-ready .sd-stage { opacity: 1; }
+    .sd-stage:active { cursor: grabbing; }
+    .sd-stage:focus-visible { box-shadow: 0 0 0 2px #c8a96a; border-radius: 16px; }
+    .sd-stage :global(canvas) { display: block; }
+    .sd.is-static .sd-stage, .sd.is-static .sd-hint, .sd.is-static .sd-slider, .sd.is-static [data-sd-toggle] { display: none; }
+    .sd-ctrl { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+    .sd-hint { margin: 0; font-size: 13px; color: #8b8b88; }
+    .sd-slider { display: flex; align-items: center; gap: 14px; font-size: 13px; color: #8b8b88; }
+    .sd-slider input {
+        -webkit-appearance: none; appearance: none; width: 240px; height: 4px; border-radius: 9px;
+        background: linear-gradient(90deg, #f4f4f2 var(--fill, 0%), #2c2c2b 0);
+    }
+    .sd-slider input::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; border-radius: 50%; background: #f4f4f2; box-shadow: 0 2px 10px rgba(0, 0, 0, .5); cursor: grab; }
+    .sd-slider input::-moz-range-thumb { width: 28px; height: 28px; border: 0; border-radius: 50%; background: #f4f4f2; cursor: grab; }
+    .sd-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .sd-pill {
+        display: inline-flex; align-items: center; height: 46px; padding: 0 20px; border-radius: 999px;
+        font-size: 14px; color: #f4f4f2; box-shadow: inset 0 0 0 1px #333; transition: box-shadow .3s, transform .5s cubic-bezier(.16, 1, .3, 1);
+    }
+    .sd-pill:hover { box-shadow: inset 0 0 0 1px #777; transform: translateY(-2px); }
+    @media (max-width: 600px) {
+        .sd-stage { height: 64vh; min-height: 420px; }
+        .sd-slider input { width: 180px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .sd-stage { transition: none; } }
+</style>
