@@ -102,7 +102,9 @@ export function mountStackDuo(section) {
     const leftCount = Math.ceil(tools.length / 2);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5));
+    // Full resolution when still so screen text stays sharp; a lighter ratio while folding or dragging.
+    const stillDpr = Math.min(devicePixelRatio || 1, 2), motionDpr = Math.min(stillDpr, 1.5);
+    renderer.setPixelRatio(stillDpr);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.NeutralToneMapping;
     host.appendChild(renderer.domElement);
@@ -391,12 +393,19 @@ export function mountStackDuo(section) {
             k = from + (target - from) * easeIO(x);
             if (x >= 1) k = target;
         }
-        if (k === target && !down && !scrubbing && Math.abs(yaw - dragYaw) < 1e-3 && Math.abs(pitch - dragPitch) < 1e-3 && frame % 2 === 1) {
+        const still = k === target && !down && !scrubbing && Math.abs(yaw - dragYaw) < 1e-3 && Math.abs(pitch - dragPitch) < 1e-3;
+        const dpr = still ? stillDpr : motionDpr;
+        if (renderer.getPixelRatio() !== dpr) renderer.setPixelRatio(dpr);
+        else if (still && frame % 2 === 1) {
             frame++;
             requestAnimationFrame(loop);
             return;
         }
-        if (!down && now / 1000 - lastInteract > 1.4) { dragYaw *= 0.94; dragPitch *= 0.94; }
+        if (!down && now / 1000 - lastInteract > 1.4) {
+            dragYaw *= 0.94; dragPitch *= 0.94;
+            if (Math.abs(dragYaw) < 2e-3 && Math.abs(dragPitch) < 2e-3) { dragYaw = dragPitch = 0; }
+            if (Math.abs(yaw - dragYaw) < 1e-3 && Math.abs(pitch - dragPitch) < 1e-3) { yaw = dragYaw; pitch = dragPitch; }
+        }
         yaw += (dragYaw - yaw) * 0.12; pitch += (dragPitch - pitch) * 0.12;
         frameCamera(pose(k, t));
         if (dirtyCover) { drawCover(); dirtyCover = false; }
