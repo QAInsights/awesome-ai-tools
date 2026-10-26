@@ -1176,6 +1176,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "openbot",
+    "name": "OpenBot",
+    "company": "Nightly Labs",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1395,6 +1401,12 @@
     "slug": "heydeer",
     "name": "HeyDeer",
     "company": "ETOILEE PTE. LTD. (submitted by HeyDeer's maintainer)",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "farol",
+    "name": "farol",
+    "company": "Winnin",
     "category": "AI Code Review & Security"
   },
   {
@@ -2403,6 +2415,12 @@
     "slug": "respan-gateway",
     "name": "Respan Gateway",
     "company": "Respan (YC W24)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "android-skills",
+    "name": "Android Skills",
+    "company": "Google",
     "category": "Developer Productivity & Workflow"
   },
   {

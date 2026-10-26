@@ -11128,5 +11128,86 @@
       "Self-Hosted"
     ],
     "lastUpdated": "2026-10-25"
+  },
+  {
+    "slug": "openbot",
+    "name": "OpenBot",
+    "company": "Nightly Labs",
+    "pricing": "free",
+    "pricingDetail": "Source-available under the PolyForm Noncommercial License 1.0.0: free to use, modify and distribute for noncommercial purposes; commercial use requires a separate license from the copyright owner. Model usage is billed by each provider you connect.",
+    "description": "OpenBot is a local-first desktop workspace for persistent AI teammates. Every agent gets its own workspace, conversation and task queue backed by an independent Codex, Claude Code, Grok, OpenCode, Gemini, Cursor or Cline session, and agents can message each other, transfer files and control an embedded browser from one app.",
+    "keyFeatures": [
+      "Persistent agents backed by Codex, Claude Code, Grok CLI, OpenCode, Gemini, Cursor CLI or Cline CLI via ACP, plus custom OpenAI-compatible endpoints and local Ollama or LM Studio servers",
+      "Crash-safe FIFO task queues with pause, resume and cancellation, and automatic context compaction per agent",
+      "Agent-to-agent messages, managed file transfers and shared channel chats with explicit delegation and reassign controls",
+      "Persistent embedded browser agents can open and control, plus optional Computer Use on macOS, Windows and Linux",
+      "Desktop apps for macOS, Windows and Linux, an iPhone app, and a headless Linux server or Docker image for always-on agents"
+    ],
+    "bestFor": "Developers who already use several coding-agent CLIs and want long-lived, named agents with their own workspaces and queues that can collaborate in one desktop app.",
+    "notIdealFor": "Commercial teams that cannot obtain a separate license, or anyone who needs per-action approvals today, since agents run with full access after the first-launch consent in this development preview.",
+    "recentUpdates": "Trending on GitHub in October 2026 with near-daily releases; v0.51.0 shipped on October 26, 2026.",
+    "verdict": "A fast-moving, ambitious multi-agent workspace that turns existing coding-agent CLIs into persistent collaborating teammates, best tried on trusted tasks while it is in preview.",
+    "tags": [
+      "agent",
+      "agent-management",
+      "multi-agent",
+      "desktop-app",
+      "local-first"
+    ],
+    "lastUpdated": "2026-10-26"
+  },
+  {
+    "slug": "farol",
+    "name": "farol",
+    "company": "Winnin",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; no account or hosted service, it runs locally or in your own CI runner.",
+    "description": "farol is a CLI and GitHub Action that runs after your AI code review and tells the person who approves a pull request how risky the merge is and where the risk lives. It uses the real compilers to trace what the change reaches and produces a deterministic risk score, verdict and file ranking.",
+    "keyFeatures": [
+      "Declaration graph built with the TypeScript type checker, go/types and Python ast to list every page, endpoint, RPC method, job and script a change reaches",
+      "Deterministic verdict (fast track, quick review, careful review) and a 0-100 risk score from reach, diff coverage, security findings, contract breaks and dependency changes",
+      "Contract-break detection for GraphQL, FastAPI, Go handlers and gRPC, with the services that call each endpoint",
+      "Interactive HTML report and PR comments with full and since-last-push incremental reports",
+      "Fails closed as unknown, never executes or uploads your code and never blocks a merge"
+    ],
+    "bestFor": "Teams merging a high volume of agent-written pull requests in TypeScript, Go or Python who want human review attention focused on the riskiest changes.",
+    "notIdealFor": "Projects in languages other than TypeScript, Go and Python, or teams looking for an AI reviewer that comments on individual lines, which farol is designed to complement rather than replace.",
+    "recentUpdates": "Launched as a Show HN in October 2026; v0.2.0 on October 26, 2026 turned the HTML report into a review workbench.",
+    "verdict": "A thoughtful, deterministic complement to AI code review that makes the human approval step in agentic workflows faster and safer.",
+    "tags": [
+      "code-review",
+      "pull-requests",
+      "github-actions",
+      "static-analysis",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-26"
+  },
+  {
+    "slug": "android-skills",
+    "name": "Android Skills",
+    "company": "Google",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 license; works with your existing coding agent and model provider.",
+    "description": "Android Skills is the Android team's official library of Agent Skills that ground coding agents in developer.android.com best practices. It targets workflows where evaluations show LLMs underperform, such as AGP upgrades, Compose migrations, R8 analysis and platform-specific integrations.",
+    "keyFeatures": [
+      "30+ modular SKILL.md skills following the open Agent Skills standard",
+      "Covers AGP 9 upgrades, XML-to-Compose migration, Navigation 3, edge-to-edge, R8 analysis and ANR audits",
+      "Guidance for CameraX, Media3 Cast, Play Billing, Credential Manager, intent and permission security",
+      "Form-factor skills for Wear OS, TV, cars, XR glasses and on-device AI with LiteRT and ML Kit GenAI",
+      "Install via android skills add in Android CLI for all detected agents, or as a Claude Code or Codex plugin marketplace"
+    ],
+    "bestFor": "Android developers using Gemini, Antigravity, Claude Code, Codex or other skill-aware agents who want official, up-to-date platform guidance applied automatically.",
+    "notIdealFor": "Developers outside the Android ecosystem or those wanting a standalone coding agent, since this is a skills library rather than an agent itself; public contributions are not accepted.",
+    "recentUpdates": "Trending on GitHub in October 2026 with frequent skill updates; plugin version v1.0.17 published on October 23, 2026.",
+    "verdict": "The authoritative way to make AI coding agents follow current Android best practices, and an easy install for any Android team already using agents.",
+    "tags": [
+      "agent-skills",
+      "android",
+      "mobile-development",
+      "ai-coding",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-26"
   }
 ]

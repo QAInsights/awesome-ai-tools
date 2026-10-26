@@ -1622,5 +1622,17 @@
   {
     "companyName": "Microsoft",
     "toolName": "Agensh"
+  },
+  {
+    "companyName": "Nightly Labs",
+    "toolName": "OpenBot"
+  },
+  {
+    "companyName": "Winnin",
+    "toolName": "farol"
+  },
+  {
+    "companyName": "Google",
+    "toolName": "Android Skills"
   }
 ]
