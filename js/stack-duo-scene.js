@@ -416,7 +416,10 @@ export function mountStackDuo(section) {
         host.setAttribute('aria-pressed', String(target > 0.5));
         renderer.render(scene, camera);
         const settled = reduce && k === target && Math.abs(yaw - dragYaw) < 1e-3 && Math.abs(dragYaw) < 1e-3 && Math.abs(dragPitch) < 1e-3;
-        if (settled) { running = false; return; }
+        if (settled) {
+            if (renderer.getPixelRatio() !== stillDpr) { renderer.setPixelRatio(stillDpr); renderer.render(scene, camera); }
+            running = false; return;
+        }
         requestAnimationFrame(loop);
     }
 
