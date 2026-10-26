@@ -56,12 +56,14 @@ export async function initializeStacksPage({ authManager = auth, root = document
             const updated = stack.updatedAt
                 ? new Date(stack.updatedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
                 : '—';
+            const editUrl = `/stacks/edit?id=${encodeURIComponent(stack.id)}`;
+            const titleUrl = stack.isPublic && stack.publicUrl ? stack.publicUrl : editUrl;
             card.className = 'border border-[#222] bg-white/[0.02] rounded-xl p-5 transition-colors hover:border-[#333]';
             card.innerHTML = `
                 <div class="flex items-start justify-between gap-4 flex-wrap">
                     <div class="min-w-0">
                         <div class="flex items-center gap-3 flex-wrap">
-                            <h2 class="text-lg font-semibold">${escapeHtml(stack.title)}</h2>
+                            <h2 class="text-lg font-semibold"><a href="${escapeHtml(titleUrl)}" class="hover:underline underline-offset-4 decoration-[#555]">${escapeHtml(stack.title)}</a></h2>
                             ${publicBadge}
                         </div>
                         <p class="text-[12px] text-[#737373] mt-1 font-mono">/${escapeHtml(stack.slug)}</p>
@@ -73,7 +75,7 @@ export async function initializeStacksPage({ authManager = auth, root = document
                     <span class="text-[12px] text-[#737373]">Updated ${escapeHtml(updated)}</span>
                     <div class="flex items-center gap-2">
                         ${stack.isPublic && stack.publicUrl ? `<button type="button" data-copy-url="${escapeHtml(stack.publicUrl)}" class="py-1.5 px-3 border border-[#333] rounded-md text-[12px] text-[#a3a3a3] hover:text-white hover:border-[#555]">Copy public link</button>` : ''}
-                        <a href="/stacks/edit?id=${encodeURIComponent(stack.id)}" class="py-1.5 px-3 bg-white text-black rounded-md text-[12px] font-semibold hover:bg-gray-200">Edit</a>
+                        <a href="${escapeHtml(editUrl)}" class="py-1.5 px-3 bg-white text-black rounded-md text-[12px] font-semibold hover:bg-gray-200">Edit</a>
                     </div>
                 </div>
                 <p data-copy-status role="status" class="text-[11px] text-[#a3a3a3] mt-2"></p>`;

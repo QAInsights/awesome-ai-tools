@@ -71,6 +71,7 @@ describe('stacks page', () => {
         expect(card.innerHTML).not.toContain(payload);
         expect(card.innerHTML).toContain('Public');
         expect(card.innerHTML).toContain('Copy public link');
+        expect(card.innerHTML).toContain('<a href="/u/test-user/daily-stack"');
 
         elements.newStackTitle.value = 'My new stack';
         elements.newStackDescription.value = 'A short description';
