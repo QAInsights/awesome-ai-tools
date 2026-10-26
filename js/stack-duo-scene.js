@@ -102,7 +102,7 @@ export function mountStackDuo(section) {
     const leftCount = Math.ceil(tools.length / 2);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.NeutralToneMapping;
     host.appendChild(renderer.domElement);
@@ -110,6 +110,7 @@ export function mountStackDuo(section) {
     const scene = new THREE.Scene();
     const pmrem = new THREE.PMREMGenerator(renderer);
     scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.03).texture;
+    pmrem.dispose();
     const camera = new THREE.PerspectiveCamera(26, 1, 0.1, 100);
     const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(-3, 4, 5);
     const rim = new THREE.DirectionalLight(0xc8d8ff, 2.2); rim.position.set(4, 1.5, -3);
@@ -149,7 +150,7 @@ export function mountStackDuo(section) {
     const range = (a, b) => (a === b ? String(a).padStart(2, '0') : `${String(a).padStart(2, '0')} – ${String(b).padStart(2, '0')}`);
     const today = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: 'numeric' }).format(new Date());
 
-    function drawCover(t) {
+    function drawCover() {
         const c = cover.getContext('2d'), w = CW, h = CH;
         c.setTransform(TS, 0, 0, TS, 0, 0);
         aurora(c, w, h);
@@ -166,12 +167,12 @@ export function mountStackDuo(section) {
         c.fillStyle = GOLD; c.fillText(fit(c, data.title || toolWord(data.count || tools.length), w - pad * 2, 500, 40, 30), pad, 880);
         const s = 118, gap = 26;
         for (let i = 0; i < tools.length; i++) {
-            const bob = reduce ? 0 : Math.sin(t * 1.6 + i * 0.7) * 5;
+            const bob = 0;
             drawIcon(c, i, pad + (i % 5) * (s + gap), 980 + Math.floor(i / 5) * (s + gap) + bob, s);
         }
         const pw = 400, ph = 104, px = pad, py = h - 190;
         c.fillStyle = 'rgba(255,255,255,.09)'; rr(c, px, py, pw, ph, ph / 2); c.fill();
-        const pulse = reduce ? 0.5 : (t * 0.6) % 1;
+        const pulse = 0.5;
         c.fillStyle = `rgba(200,169,106,${0.5 * (1 - pulse)})`; c.beginPath(); c.arc(px + 58, py + ph / 2, 14 + pulse * 26, 0, 7); c.fill();
         c.fillStyle = GOLD; c.beginPath(); c.arc(px + 58, py + ph / 2, 13, 0, 7); c.fill();
         c.fillStyle = INK; c.font = F(500, 42); c.fillText('Tap to open', px + 100, py + ph / 2 + 15);
@@ -269,7 +270,7 @@ export function mountStackDuo(section) {
     const glassBlack = new THREE.MeshPhysicalMaterial({ color: 0x020203, roughness: 0.06, clearcoat: 1, clearcoatRoughness: 0.03, envMapIntensity: 0.6 });
     const backGlass = new THREE.MeshPhysicalMaterial({ color: 0x2a3446, metalness: 0.3, roughness: 0.55, clearcoat: 0.6, clearcoatRoughness: 0.4, envMapIntensity: 0.9 });
     const lensMat = new THREE.MeshPhysicalMaterial({ color: 0x05060a, metalness: 0.2, roughness: 0.05, clearcoat: 1, envMapIntensity: 1.4 });
-    const screenMat = tex => new THREE.MeshPhysicalMaterial({ color: 0x000000, emissive: 0xffffff, emissiveMap: tex, roughness: 0.07, clearcoat: 1, clearcoatRoughness: 0.04, envMapIntensity: 0.22 });
+    const screenMat = tex => new THREE.MeshStandardMaterial({ color: 0x000000, emissive: 0xffffff, emissiveMap: tex, roughness: 0.08, metalness: 0, envMapIntensity: 0.22 });
 
     const root = new THREE.Group(), upright = new THREE.Group(), device = new THREE.Group();
     scene.add(root); root.add(upright); upright.add(device);
@@ -285,9 +286,9 @@ export function mountStackDuo(section) {
     add(rightPivot, faceGeo(0, sy0, W - BZ, sy1, 0, SR, 0.5, 1), innerMat, m => { m.position.z = z0; });
     add(leftPivot, faceGeo(-W + BZ, sy0, 0, sy1, SR, 0, 0, 0.5), innerMat, m => { m.position.z = z0; });
     const flip = (x, z) => m => { m.rotation.y = Math.PI; m.position.set(x, 0, z); };
-    add(leftPivot, faceGeo(-W + e, -H / 2 + e, -e, H / 2 - e, R - e, R * 0.55), glassBlack, flip(-W, -T - z0 / 2));
+    add(leftPivot, faceGeo(-W + e, -H / 2 + e, -e, H / 2 - e, HR, R - e), glassBlack, flip(-W, -T - z0 / 2));
     add(leftPivot, faceGeo(-W + BZ, sy0, -BZ, sy1, SR, SR * 0.7), screenMat(coverTex), flip(-W, -T - z0));
-    add(rightPivot, faceGeo(BZ * 0.4, -H / 2 + BZ * 0.4, W - BZ * 0.4, H / 2 - BZ * 0.4, HR, R - BZ * 0.4), backGlass, flip(W, -T - z0 / 2));
+    add(rightPivot, faceGeo(BZ * 0.4, -H / 2 + BZ * 0.4, W - BZ * 0.4, H / 2 - BZ * 0.4, R - BZ * 0.4, HR), backGlass, flip(W, -T - z0 / 2));
     const plateauGeo = new THREE.ExtrudeGeometry(shapeRR(0, 0, 0.6, 0.27, 0.135, 0.135), { depth: 0.012, bevelEnabled: true, bevelSize: 0.008, bevelThickness: 0.008, bevelSegments: 5, curveSegments: 32 });
     add(rightPivot, plateauGeo, titaniumDark, m => { m.rotation.y = Math.PI; m.position.set(0.72, H / 2 - 0.37, -T - 0.002); });
     const camY = H / 2 - 0.235;
@@ -390,11 +391,16 @@ export function mountStackDuo(section) {
             k = from + (target - from) * easeIO(x);
             if (x >= 1) k = target;
         }
+        if (k === target && !down && !scrubbing && Math.abs(yaw - dragYaw) < 1e-3 && Math.abs(pitch - dragPitch) < 1e-3 && frame % 2 === 1) {
+            frame++;
+            requestAnimationFrame(loop);
+            return;
+        }
         if (!down && now / 1000 - lastInteract > 1.4) { dragYaw *= 0.94; dragPitch *= 0.94; }
         yaw += (dragYaw - yaw) * 0.12; pitch += (dragPitch - pitch) * 0.12;
         frameCamera(pose(k, t));
-        if (dirtyCover || (k < 0.995 && frame % 3 === 0)) { drawCover(t); dirtyCover = false; }
-        if (k !== lastK || dirtyInner) { drawInner(k); lastK = k; dirtyInner = false; }
+        if (dirtyCover) { drawCover(); dirtyCover = false; }
+        if (dirtyInner || (k !== lastK && (Math.abs(k - lastK) >= 0.04 || k === target))) { drawInner(k); lastK = k; dirtyInner = false; }
         frame++;
         if (slider) { slider.value = String(Math.round(k * 1000)); slider.style.setProperty('--fill', `${k * 100}%`); }
         if (toggleLabel) toggleLabel.textContent = target > 0.5 ? 'Fold it' : 'Open stack';
@@ -406,9 +412,10 @@ export function mountStackDuo(section) {
     }
 
     resize();
-    drawCover(0); drawInner(0);
-    return document.fonts.load(F(600, 40)).catch(() => {}).then(() => {
-        dirtyInner = true; drawCover(0);
+    drawCover(); drawInner(0);
+    return document.fonts.load(F(600, 40)).catch(() => {}).then(async () => {
+        drawCover(); drawInner(k); dirtyInner = false; lastK = k;
+        try { await renderer.compileAsync(scene, camera); } catch {}
         section.classList.add('is-ready');
         wake();
     });
