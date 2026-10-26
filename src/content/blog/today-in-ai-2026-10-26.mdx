@@ -1,0 +1,67 @@
+---
+title: "SpaceX closes $40B GPU debt as TorchTPU lands"
+description: "SpaceX locks $40B in debt for GPUs due in 2027, Google and Meta open-source TorchTPU, and Nvidia releases Flora to label robot video for 72 cents an hour."
+pubDate: 2026-10-26
+tags: ["news","today-in-ai","chips","pytorch","spacex","nvidia","copyright","pricing"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-10-26 UTC.
+
+Chip money and chip plumbing dominate the day: a $40B debt close, a native PyTorch backend for TPUs, and a cheap robot video labeler.
+
+## SpaceX closes $40B debt financing for AI GPUs
+
+**What happened:** Musk said on X that SpaceX closed $40 billion in debt financing for GPUs expected in the first and second quarters of 2027, mostly callable debt. Bloomberg reported the raise was for Nvidia chips, structured through a special purpose vehicle to keep it off the balance sheet.
+
+**Why it matters:** A GPU order that size landing in H1 2027 is a signal on where compute supply and rental pricing head for anyone planning training runs next year.
+
+[Source: CNBC](<https://www.cnbc.com/2026/10/26/spacex-closes-40-billion-debt-deal-for-ai-chips-elon-musk-.html>)
+
+## Google and Meta open-source TorchTPU for native PyTorch on TPUs
+
+**What happened:** At PyTorch Conference North America 2026 in San Jose, Google and Meta open-sourced TorchTPU, a native PyTorch backend for TPUs that replaces PyTorch/XLA. The pitch is porting a model by changing model.to("cuda") to model.to("tpu"); Meta plans to move larger LLM workloads onto TPUs.
+
+**Why it matters:** If the one-line device swap holds, TPUs become a real second target for PyTorch training code that was written for CUDA, though peak performance still needs tuning.
+
+[Source: InfoQ](<https://www.infoq.com/news/2026/10/google-meta-torchtpu/>)
+
+## Nvidia open-sources Flora to label robot video for 72 cents an hour
+
+**What happened:** Nvidia released Flora, an open data engine that labels robot training video with action descriptions, step ratings and success judgments. Nvidia estimates about 72 cents per hour of video versus roughly $88.50 with GPT-6 Astra, figures that are its own projections.
+
+**Why it matters:** Robot learning teams can generate labeled training data at a fraction of API cost, which lowers the entry price for building manipulation datasets.
+
+[Source: AI Agent News](<https://aiagentnews.io/topics/infrastructure>)
+
+## Google open-sources ML Drift GPU engine for on-device inference
+
+**What happened:** Google released ML Drift under Apache 2.0, a cross-platform GPU compute engine for on-device AI and ML inference. It is the core GPU acceleration engine behind LiteRT, and Google will stop updating the legacy TensorFlow Lite GPU delegate.
+
+**Why it matters:** Mobile and edge developers on LiteRT should plan a migration path, since the old GPU delegate stops getting updates.
+
+[Source: AI Agent News](<https://aiagentnews.io/topics/infrastructure>)
+
+## EU opens targeted consultation on copyright rules for generative AI
+
+**What happened:** The European Commission launched a targeted consultation on EU copyright law to support its review of the 2019 Digital Single Market Directive and inform possible changes covering generative AI. It follows a European Parliament resolution in March and a Commission call for evidence in May.
+
+**Why it matters:** Training data and output licensing rules for the EU market could shift, and the consultation is the channel where builders can put their position on record.
+
+[Source: Mondaq](<https://www.mondaq.com/copyright/1859242/eu-consults-on-copyright-landscape-in-the-age-of-generative-ai>)
+
+## OpenAI reportedly wins Anthropic customers with cuts up to 90 percent
+
+**What happened:** According to a report from The Information, OpenAI is winning large Anthropic customers including Rippling, Replit and DataCamp with steep price cuts of up to 90 percent. Rippling said OpenAI's share of its coding workload rose sharply while Anthropic's fell.
+
+**Why it matters:** Model pricing is negotiable at volume right now, so teams with real token spend have leverage to renegotiate contracts.
+
+[Source: AI Agent News](<https://aiagentnews.io/topics/infrastructure>)
+
+## Sources
+
+- [CNBC](<https://www.cnbc.com/2026/10/26/spacex-closes-40-billion-debt-deal-for-ai-chips-elon-musk-.html>)
+- [InfoQ](<https://www.infoq.com/news/2026/10/google-meta-torchtpu/>)
+- [AI Agent News](<https://aiagentnews.io/topics/infrastructure>)
+- [Mondaq](<https://www.mondaq.com/copyright/1859242/eu-consults-on-copyright-landscape-in-the-age-of-generative-ai>)
