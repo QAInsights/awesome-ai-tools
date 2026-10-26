@@ -121,7 +121,7 @@ export function mountStackDuo(section) {
         const im = new Image();
         im.decoding = 'async';
         im.src = `/api/tool-icon/${encodeURIComponent(t.slug)}`;
-        im.onload = im.onerror = () => { dirtyInner = true; };
+        im.onload = im.onerror = () => { dirtyInner = dirtyCover = true; wake(); };
         return im;
     });
     const drawIcon = (c, i, x, y, s) => {
@@ -136,8 +136,10 @@ export function mountStackDuo(section) {
         }
         c.restore();
     };
-    const inner = document.createElement('canvas'); inner.width = IW; inner.height = IH;
-    const cover = document.createElement('canvas'); cover.width = CW; cover.height = CH;
+    // Layout is drawn in IW/IH units; the backing canvases shrink to fit the GPU's texture limit.
+    const TS = Math.min(1, renderer.capabilities.maxTextureSize / Math.max(IW, IH));
+    const inner = document.createElement('canvas'); inner.width = Math.floor(IW * TS); inner.height = Math.floor(IH * TS);
+    const cover = document.createElement('canvas'); cover.width = Math.floor(CW * TS); cover.height = Math.floor(CH * TS);
     const innerTex = new THREE.CanvasTexture(inner), coverTex = new THREE.CanvasTexture(cover);
     for (const t of [innerTex, coverTex]) { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = renderer.capabilities.getMaxAnisotropy(); }
 
@@ -149,6 +151,7 @@ export function mountStackDuo(section) {
 
     function drawCover(t) {
         const c = cover.getContext('2d'), w = CW, h = CH;
+        c.setTransform(TS, 0, 0, TS, 0, 0);
         aurora(c, w, h);
         const pad = 70, railX = w - 150;
         c.fillStyle = '#000'; c.beginPath(); c.arc(railX + 47, 92, 34, 0, 7); c.fill();
@@ -231,7 +234,7 @@ export function mountStackDuo(section) {
     // Held upright on narrow screens: the fold runs across the middle, tools 1-5 above it and the rest below.
     function drawInnerPortrait(c, k) {
         const w = IH, h = IW, half = h / 2, pad = 70;
-        c.setTransform(0, 1, -1, 0, IW, 0);
+        c.setTransform(0, TS, -TS, 0, IW * TS, 0);
         aurora(c, w, h);
         c.fillStyle = '#ececea'; c.font = F(600, 44); c.fillText('9:41', pad, 100);
         statusIcons(c, w - 70, 66, 42);
@@ -247,10 +250,11 @@ export function mountStackDuo(section) {
         c.fillStyle = RULE; c.fillRect(pad, botB, w - pad * 2, 2);
         footerRight(c, pad, w - pad, botB + 86, 44);
         c.fillStyle = 'rgba(255,255,255,.55)'; rr(c, w / 2 - 170, h - 34, 340, 12, 6); c.fill();
-        c.setTransform(1, 0, 0, 1, 0, 0);
+        c.setTransform(TS, 0, 0, TS, 0, 0);
     }
     function drawInner(k) {
         const c = inner.getContext('2d');
+        c.setTransform(TS, 0, 0, TS, 0, 0);
         if (portrait) drawInnerPortrait(c, k); else drawInnerLandscape(c, k);
         const crease = Math.min(1, (1 - k) * 3), cx = IW / 2;
         const cg = c.createLinearGradient(cx - 90, 0, cx + 90, 0);
@@ -306,7 +310,7 @@ export function mountStackDuo(section) {
     shadow.rotation.x = glow.rotation.x = -Math.PI / 2;
 
     // ---------- pose and camera ----------
-    let k = 0, target = 0, from = 0, t0 = 0, dur = 1, portrait = false, dirtyInner = true;
+    let k = 0, target = 0, from = 0, t0 = 0, dur = 1, portrait = false, dirtyInner = true, dirtyCover = false;
     let yaw = 0, pitch = 0, dragYaw = 0, dragPitch = 0, lastInteract = -9;
     function pose(k, t) {
         const fold = Math.PI * (1 - k);
@@ -389,7 +393,7 @@ export function mountStackDuo(section) {
         if (!down && now / 1000 - lastInteract > 1.4) { dragYaw *= 0.94; dragPitch *= 0.94; }
         yaw += (dragYaw - yaw) * 0.12; pitch += (dragPitch - pitch) * 0.12;
         frameCamera(pose(k, t));
-        if (k < 0.995 && frame % 3 === 0) drawCover(t);
+        if (dirtyCover || (k < 0.995 && frame % 3 === 0)) { drawCover(t); dirtyCover = false; }
         if (k !== lastK || dirtyInner) { drawInner(k); lastK = k; dirtyInner = false; }
         frame++;
         if (slider) { slider.value = String(Math.round(k * 1000)); slider.style.setProperty('--fill', `${k * 100}%`); }
