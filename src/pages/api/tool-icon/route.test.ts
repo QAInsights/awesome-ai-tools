@@ -68,7 +68,7 @@ describe('tool icon route', () => {
         const response = await requestIcon('cursor');
 
         expect(response.status).toBe(404);
-        expect(response.headers.get('cache-control')).toBe('public, max-age=3600');
+        expect(response.headers.get('cache-control')).toBe('no-store');
     });
 
     test('returns 404 when the upstream fetch throws', async () => {
@@ -79,6 +79,6 @@ describe('tool icon route', () => {
         const response = await requestIcon('cursor');
 
         expect(response.status).toBe(404);
-        expect(response.headers.get('cache-control')).toBe('public, max-age=3600');
+        expect(response.headers.get('cache-control')).toBe('no-store');
     });
 });
