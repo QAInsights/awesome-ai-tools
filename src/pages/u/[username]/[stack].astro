@@ -4,6 +4,7 @@ import SiteHeader from '../../../components/SiteHeader.astro';
 import FolioStyles from '../../../components/folio/FolioStyles.astro';
 import FolioTitle from '../../../components/folio/FolioTitle.astro';
 import FolioScroll from '../../../components/folio/FolioScroll.astro';
+import StackDuo from '../../../components/StackDuo.astro';
 import { formatDate, getToolBySlug } from '../../../lib/tools';
 import { entryLabel } from '../../../lib/folio';
 import { hasAlternativesPage, hasPricingPage } from '../../../lib/compare';
@@ -159,6 +160,17 @@ const embedSnippets = stack && !isPrivate
                         </div>
                     </header>
 
+                    {!isPrivate && (
+                        <StackDuo
+                            title={stack.title}
+                            displayName={displayName}
+                            username={username}
+                            updated={formatDate(updatedIso)}
+                            pageUrl={pageUrl}
+                            items={visibleItems}
+                        />
+                    )}
+
                     <section class="fo-sec" id="the-stack" aria-labelledby="stack-heading">
                         <h2 class="fo-label" id="stack-heading"><em>01</em>The stack</h2>
                         <div class="fo-body">
@@ -238,4 +250,5 @@ const embedSnippets = stack && !isPrivate
     <FolioStyles />
     <FolioScroll />
     <script src="/dist/app.js" type="module" defer></script>
+    {stack && !isPrivate && visibleItems.length > 0 && <script is:inline src="/dist/stack-duo.js" type="module" defer></script>}
 </BaseLayout>
