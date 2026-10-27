@@ -11238,5 +11238,89 @@
       "MCP"
     ],
     "lastUpdated": "2026-10-26"
+  },
+  {
+    "slug": "autoswarm",
+    "name": "AutoSwarm",
+    "company": "HKUDS",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; you bring your own installed agent CLIs and pay their subscription or API costs.",
+    "description": "AutoSwarm is an open-source multi-agent coordinator from the HKU Data Intelligence Lab (HKUDS) that turns the coding and general agents already installed on your machine into one coordinated team. It installs as a skill into the agent you already use, then selects agents by capability, shares context and memory between them, runs subtasks in parallel and verifies and synthesizes the results.",
+    "keyFeatures": [
+      "Coordinates Codex, Claude Code, OpenCode, Cursor, GitHub Copilot CLI, Muse Code, CodeBuddy, Hermes, nanobot, DeepSeek Harness and Grok Build",
+      "Installs as a skill/plug-in so any supported agent can be the entry point (`autoswarm setup --host <agent>`)",
+      "Capability-based agent selection with shared context and memory across agents",
+      "Parallel subtask execution with result verification and synthesis",
+      "`autoswarm doctor --probe` checks that each provider actually responds and can resume natively",
+      "Reuses existing models, credentials and proxy settings on Windows, macOS and Linux"
+    ],
+    "bestFor": "Developers who already run several coding agents and want one task fanned out across them without manually switching interfaces and copying context.",
+    "notIdealFor": "Users with a single agent or no local agent CLIs, and teams that need a mature, stable orchestration product; it is a research-led project with no tagged releases yet.",
+    "recentUpdates": "Released publicly in 2026 with the accompanying arXiv paper \"AutoSwarm: Automating Agent Swarms\" (2610.33048); trending on GitHub in late October 2026 with roughly 2,000 stars and daily commits.",
+    "verdict": "A promising, research-backed way to make your existing agents work as one team, best suited to power users comfortable with an early-stage tool.",
+    "tags": [
+      "Autonomous Agents",
+      "Multi-Agent",
+      "Orchestration",
+      "Open Source",
+      "Agent Skills"
+    ],
+    "lastUpdated": "2026-10-27"
+  },
+  {
+    "slug": "no-mistakes",
+    "name": "no-mistakes",
+    "company": "kunchenguid",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; the pipeline runs on your own coding agent CLI, so you pay only that agent's subscription or API usage.",
+    "description": "no-mistakes is a local git proxy that sits in front of your real remote and gates every push with an AI-driven validation pipeline. Pushing to the no-mistakes remote spins up a disposable worktree, runs review, test, docs and lint steps with your coding agent, and only forwards the branch and opens a clean pull request once every check passes.",
+    "keyFeatures": [
+      "`git push no-mistakes` gate that runs review → test → docs → lint → push → PR → CI in an isolated worktree without disturbing your checkout",
+      "Agent-agnostic: Claude Code, Codex, Grok, Rovo Dev, OpenCode, Pi, Copilot, Antigravity, or Cursor/Devin via ACP, with ordered fallbacks",
+      "Safe mechanical fixes applied automatically; findings that touch intent are escalated to approve, fix or skip in a TUI",
+      "`/no-mistakes` agent skill and a non-interactive `axi` interface so coding agents can gate their own work",
+      "Opens the PR with a generated body, watches CI and auto-repairs failures through a guarded force-push path",
+      "Runs on macOS, Linux and Windows, with fork-contribution support"
+    ],
+    "bestFor": "Developers shipping agent-written code who want every branch reviewed, tested and cleaned up locally before a PR is ever opened.",
+    "notIdealFor": "Teams that want a hosted PR review bot or do not use a supported coding agent CLI; every gate spends agent tokens.",
+    "recentUpdates": "Ships near-daily releases, with v1.101.0, v1.102.0 and v1.102.1 published October 25-27, 2026; trending on GitHub with about 9,000 stars.",
+    "verdict": "A well-maintained pre-push quality gate that turns any coding agent into a reviewer and fixer before code reaches your team.",
+    "tags": [
+      "code-review",
+      "git",
+      "ci",
+      "coding-agents",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-27"
+  },
+  {
+    "slug": "entire",
+    "name": "Entire",
+    "company": "Entire",
+    "pricing": "freemium",
+    "pricingDetail": "The `entire` CLI is open source (MIT) and captures agent session checkpoints in any Git repository without an account; hosted use on entire.com is billed for agents, with a $100 signup credit.",
+    "description": "Entire is a Git forge built for agent–human collaboration, from former GitHub CEO Thomas Dohmke's startup. Its open-source CLI links every agent session to the commits it produced, hosts or mirrors repositories across regions, and replaces diff-only review with Trails that agents score on every push.",
+    "keyFeatures": [
+      "`entire enable` hooks Claude Code, Codex, Cursor, Copilot CLI, OpenCode, Antigravity, Factory Droid, Pi and more to save checkpoints (prompts, transcript, files touched) as git refs",
+      "Hybrid semantic and keyword `entire search` over checkpoints, commits and sessions, with compact JSON output for agents",
+      "Git hosting on Entire or GitHub mirrors (pushes still go to GitHub) replicated across regions",
+      "Trails: a heads-up display per change with per-repo eval runners for risk, confidence, drift, security and review",
+      "Optional entire-graph code map and entire-brain project memory, plus a plugin system",
+      "Best-effort secret redaction and options to keep transcripts in a separate private repo or local only"
+    ],
+    "bestFor": "Teams where agents write much of the code and reviewers need the prompts, transcripts and evals behind each change, not just the diff.",
+    "notIdealFor": "Public repositories that cannot risk exposing session transcripts, or teams that want to stay entirely on GitHub's review flow; the hosted forge and Trails are new as of October 2026.",
+    "recentUpdates": "On October 26, 2026 Entire announced its Git forge for agent–human collaboration with Trails and distributed hosting; the CLI ships nightly builds (v0.12.3 nightlies on October 26-27, 2026) and has over 5,000 GitHub stars.",
+    "verdict": "The most ambitious attempt yet to rebuild the Git forge around agent sessions, and its open-source checkpoint capture is useful even without the hosted platform.",
+    "tags": [
+      "Git",
+      "Code Review",
+      "Agent Sessions",
+      "Developer Productivity",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-27"
   }
 ]

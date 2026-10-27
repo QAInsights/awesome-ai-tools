@@ -1182,6 +1182,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "autoswarm",
+    "name": "AutoSwarm",
+    "company": "HKUDS",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1407,6 +1413,12 @@
     "slug": "farol",
     "name": "farol",
     "company": "Winnin",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "no-mistakes",
+    "name": "no-mistakes",
+    "company": "kunchenguid",
     "category": "AI Code Review & Security"
   },
   {
@@ -2427,6 +2439,12 @@
     "slug": "android-skills",
     "name": "Android Skills",
     "company": "Google",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "entire",
+    "name": "Entire",
+    "company": "Entire",
     "category": "Developer Productivity & Workflow"
   },
   {
