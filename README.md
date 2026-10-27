@@ -557,3 +557,4 @@ Agentic tools and runtimes that bring AI to hardware design and local/edge infer
 
 > [!NOTE]
 > Some links in this guide are referral links (e.g., Emergent.sh). Using them helps support the ongoing maintenance of this curated list at no additional cost to you.
+- [Ideoy](https://ideoy.ai) - AI meme video remakes from one selfie (one selfie → this week's viral templates → MiniMax H3 → 9:16).
