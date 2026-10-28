@@ -2454,6 +2454,24 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "expo-skills",
+    "name": "Expo Skills",
+    "company": "Expo",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "sandbox-runtime-srt",
+    "name": "Sandbox Runtime (srt)",
+    "company": "Anthropic",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "cc-skills-golang",
+    "name": "cc-skills-golang",
+    "company": "Samuel Berthe (samber)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
