@@ -1,0 +1,78 @@
+---
+title: "Genie 4 adds sound to Google's world model"
+description: "Google DeepMind previews Genie 4 with native audio, Nvidia and AMD put $4B into Meta, and Recursive ships Flint, a 40B coding model for laptops."
+pubDate: 2026-10-28
+tags: ["news","today-in-ai","google-deepmind","world-models","nvidia","meta","open-weight","coding-agents"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-10-28 UTC.
+
+Google's world model learns to talk, Nvidia buys a slice of its biggest customer, and a 40B coding model claims laptop speeds.
+
+## Google DeepMind previews Genie 4 with native audio
+
+**What happened:** Google DeepMind announced Genie 4, a natively multimodal world model that generates music, ambient noise and interactive dialogue alongside the simulation. It is a research preview for trusted testers, with Google AI Ultra subscribers and Gemini API and AI Studio partners next. No date or price given.
+
+**Why it matters:** Builders waiting on Genie 4 cannot plan around it yet: access is waitlist only, and no outside party has tested the audio or scene coherence claims.
+
+[Source: Google DeepMind](<https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/>)
+
+## Nvidia and AMD put $4B into Meta's $95B raise
+
+**What happened:** Nvidia said it will buy $3 billion of Meta's equity offering and AMD $1 billion, after Meta announced plans to raise $95 billion for AI infrastructure. Nvidia added that Meta will expand Vera Rubin and Vera CPU deployment and deepen work on its Muse agent platform.
+
+**Why it matters:** Meta's Muse models get more compute and closer tuning with Nvidia, so agent builders on Meta's stack should expect the hardware and model roadmaps to move together.
+
+[Source: CNBC](<https://www.cnbc.com/2026/10/27/nvidia-invest-meta.html>)
+
+## Recursive ships Flint, a 40B coding model for laptops
+
+**What happened:** Recursive Superintelligence released Flint, an open-weight model with 39.8 billion parameters and 2.5 billion active per token, built for local code inference. The company claims more than 125 tokens per second on Apple Silicon laptops.
+
+**Why it matters:** If the speed claim holds, agentic coding can run on a developer's own machine with no API bill, though the throughput figure is the company's own.
+
+[Source: Inferama](<https://www.inferama.com/en/news/models>)
+
+## Liquid AI releases LFM3 multimodal model family
+
+**What happened:** Liquid AI introduced LFM3, a family of text, vision, audio and decision models built from a shared foundation. The company says weights are available and each model can be fine-tuned on a single GPU; the performance figures are its own evaluations.
+
+**Why it matters:** Single-GPU fine-tuning puts a multimodal stack within reach of small teams, but treat the published benchmarks as vendor numbers until someone reproduces them.
+
+[Source: Inferama](<https://www.inferama.com/en/news/infrastructure>)
+
+## ChipAgents extends its design platform to analog chips
+
+**What happened:** ChipAgents expanded its agentic platform across digital and analog chip design on its IC-star engine, citing more than 200 semiconductor enterprise deployments. It is also expanding a collaboration with NVIDIA to fine-tune Nemotron open models for chip design.
+
+**Why it matters:** Chip design agents are moving from digital-only demos to analog workflows, where simulation feedback loops are harder to automate and the tooling gap was widest.
+
+[Source: ChipAgents](<https://chipagents.ai/newsroom/chipagents-ic-star-full-stack-agentic-ai>)
+
+## Claude Code migrations to TPUs fail 76% of attempts
+
+**What happened:** Researchers used Claude Code to migrate ten PyTorch projects from Nvidia GPUs to Google Cloud TPUs. Eight met the project-goal criterion, but 53 of 70 execution attempts failed, and 26 of those failures raised no error at all.
+
+**Why it matters:** Silent failures are the dangerous kind: an agent can report a successful port while quietly changing how the model trains, so verify numerics, not just that it runs.
+
+[Source: ArXivSignals](<https://arxivsignals.io/papers/2610.34422>)
+
+## Yale research computing hosts coding agents locally
+
+**What happened:** Yale's Center for Research Computing added sandboxed Claude Code and a local-coding-agents module covering Claude Code, Codex, GitHub Copilot CLI and Pi, running a locally hosted Qwen 3.8 Flash Next model with a 262K-token context window and no token limit or charges. A new Slurm partition runs agent jobs up to 7 days.
+
+**Why it matters:** It is a working template for institutions that want agentic coding without per-token bills or sending code off campus.
+
+[Source: Yale Center for Research Computing](<https://research.computing.yale.edu/posts/2026-10-27-expanded-ai-and-coding-agent-support-on-ycrc-clusters>)
+
+## Sources
+
+- [Google DeepMind](<https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/>)
+- [CNBC](<https://www.cnbc.com/2026/10/27/nvidia-invest-meta.html>)
+- [Inferama](<https://www.inferama.com/en/news/models>)
+- [Inferama](<https://www.inferama.com/en/news/infrastructure>)
+- [ChipAgents](<https://chipagents.ai/newsroom/chipagents-ic-star-full-stack-agentic-ai>)
+- [ArXivSignals](<https://arxivsignals.io/papers/2610.34422>)
+- [Yale Center for Research Computing](<https://research.computing.yale.edu/posts/2026-10-27-expanded-ai-and-coding-agent-support-on-ycrc-clusters>)
