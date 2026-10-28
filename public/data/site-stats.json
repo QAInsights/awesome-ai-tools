@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-10-27T06:08:45.466Z",
+  "generatedAt": "2026-10-28T06:46:38.171Z",
   "traffic": {
     "last30": {
-      "pageViews": 11500,
-      "visits": 8100
+      "pageViews": 11840,
+      "visits": 8430
     },
     "lifetime": {
-      "pageViews": 13700,
-      "visits": 7400,
-      "since": "2026-04-26T06:10:02Z"
+      "pageViews": 13690,
+      "visits": 7520,
+      "since": "2026-04-27T06:48:03Z"
     }
   },
   "github": {
@@ -18,7 +18,7 @@
   "detail": {
     "coverage": {
       "from": "2026-04-18",
-      "to": "2026-10-26"
+      "to": "2026-10-27"
     },
     "daily": [
       {
@@ -1123,6 +1123,12 @@
         "pageViews": 586,
         "visits": 408,
         "sampleInterval": 1.0173611111111112
+      },
+      {
+        "date": "2026-10-27",
+        "pageViews": 510,
+        "visits": 386,
+        "sampleInterval": 1
       }
     ],
     "breakdowns": {
@@ -1130,135 +1136,120 @@
         "pages": [
           {
             "label": "/",
-            "pageViews": 280,
-            "visits": 150
+            "pageViews": 281,
+            "visits": 119
           },
           {
             "label": "/tools/cost-calculator",
-            "pageViews": 170,
-            "visits": 0
-          },
-          {
-            "label": "/badge",
-            "pageViews": 140,
-            "visits": 140
+            "pageViews": 278,
+            "visits": 9
           },
           {
             "label": "/blog/today-in-ai-2026-10-25",
-            "pageViews": 90,
-            "visits": 90
+            "pageViews": 83,
+            "visits": 80
+          },
+          {
+            "label": "/badge",
+            "pageViews": 73,
+            "visits": 71
           },
           {
             "label": "/tools/stack-matcher",
-            "pageViews": 50,
-            "visits": 0
-          },
-          {
-            "label": "/news",
-            "pageViews": 40,
-            "visits": 20
-          },
-          {
-            "label": "/best",
-            "pageViews": 40,
-            "visits": 10
-          },
-          {
-            "label": "/tools/agenttrace",
-            "pageViews": 40,
-            "visits": 10
-          },
-          {
-            "label": "/best/ai-devops-sre-tools",
-            "pageViews": 30,
-            "visits": 30
-          },
-          {
-            "label": "/best/free-ai-coding-tools",
-            "pageViews": 30,
-            "visits": 30
+            "pageViews": 61,
+            "visits": 6
           },
           {
             "label": "/blog/today-in-ai-2026-10-22",
-            "pageViews": 30,
-            "visits": 30
+            "pageViews": 45,
+            "visits": 42
           },
           {
-            "label": "/blog/today-in-ai-2026-10-26",
-            "pageViews": 30,
-            "visits": 30
+            "label": "/tools/agenttrace",
+            "pageViews": 32,
+            "visits": 4
           },
           {
-            "label": "/tools/cline",
-            "pageViews": 30,
-            "visits": 30
+            "label": "/best/ai-devops-sre-tools",
+            "pageViews": 31,
+            "visits": 31
           },
           {
-            "label": "/tools/coucou/alternatives",
+            "label": "/blog/today-in-ai-2026-10-23",
             "pageViews": 30,
-            "visits": 30
+            "visits": 27
           },
           {
-            "label": "/tools/cubesandbox",
-            "pageViews": 30,
-            "visits": 30
+            "label": "/tools/rea/alternatives",
+            "pageViews": 29,
+            "visits": 29
           },
           {
-            "label": "/admin/funnel",
-            "pageViews": 30,
-            "visits": 10
+            "label": "/blog/code-knowledge-graph-tools-ai-coding-agents",
+            "pageViews": 27,
+            "visits": 21
+          },
+          {
+            "label": "/tools/openchamber/alternatives",
+            "pageViews": 23,
+            "visits": 23
+          },
+          {
+            "label": "/tools/billion-context",
+            "pageViews": 23,
+            "visits": 22
           }
         ],
         "referrers": [
           {
             "label": "Direct / none",
-            "pageViews": 2315,
-            "visits": 2315
+            "pageViews": 2195,
+            "visits": 2195
           },
           {
             "label": "ai.dosa.dev",
-            "pageViews": 1014,
+            "pageViews": 1028,
             "visits": 0
           },
           {
             "label": "www.google.com",
-            "pageViews": 566,
-            "visits": 566
+            "pageViews": 589,
+            "visits": 589
           },
           {
             "label": "www.linkedin.com",
-            "pageViews": 30,
-            "visits": 30
+            "pageViews": 32,
+            "visits": 32
           },
           {
             "label": "t.co",
-            "pageViews": 15,
-            "visits": 15
+            "pageViews": 14,
+            "visits": 14
           },
           {
             "label": "www.google.com.hk",
-            "pageViews": 10,
-            "visits": 10
-          },
-          {
-            "label": "duckduckgo.com",
-            "pageViews": 6,
-            "visits": 6
+            "pageViews": 14,
+            "visits": 14
           },
           {
             "label": "www.bing.com",
-            "pageViews": 6,
-            "visits": 6
+            "pageViews": 8,
+            "visits": 8
           },
           {
             "label": "com.linkedin.android",
-            "pageViews": 4,
-            "visits": 4
+            "pageViews": 5,
+            "visits": 5
           },
           {
-            "label": "114.114.114.114",
-            "pageViews": 2,
-            "visits": 2
+            "label": "duckduckgo.com",
+            "pageViews": 5,
+            "visits": 5
+          },
+          {
+            "label": "www.perplexity.ai",
+            "pageViews": 3,
+            "visits": 3
           },
           {
             "label": "dosa.dev",
@@ -1269,43 +1260,38 @@
         "countries": [
           {
             "label": "SG",
-            "pageViews": 1290,
-            "visits": 1286
+            "pageViews": 1154,
+            "visits": 1151
           },
           {
             "label": "US",
-            "pageViews": 1113,
-            "visits": 511
+            "pageViews": 1083,
+            "visits": 514
           },
           {
             "label": "CN",
-            "pageViews": 482,
-            "visits": 470
+            "pageViews": 488,
+            "visits": 465
           },
           {
             "label": "IN",
-            "pageViews": 266,
-            "visits": 117
-          },
-          {
-            "label": "GB",
-            "pageViews": 50,
-            "visits": 31
+            "pageViews": 303,
+            "visits": 134
           },
           {
             "label": "DE",
-            "pageViews": 43,
-            "visits": 35
+            "pageViews": 53,
+            "visits": 39
+          },
+          {
+            "label": "KR",
+            "pageViews": 47,
+            "visits": 23
           },
           {
             "label": "BR",
-            "pageViews": 42,
-            "visits": 34
-          },
-          {
-            "label": "ID",
-            "pageViews": 41,
-            "visits": 27
+            "pageViews": 46,
+            "visits": 32
           },
           {
             "label": "NO",
@@ -1313,36 +1299,36 @@
             "visits": 10
           },
           {
-            "label": "KR",
+            "label": "NL",
             "pageViews": 36,
-            "visits": 16
+            "visits": 28
           },
           {
-            "label": "NL",
-            "pageViews": 32,
+            "label": "ID",
+            "pageViews": 36,
             "visits": 25
           },
           {
-            "label": "AU",
-            "pageViews": 32,
-            "visits": 22
+            "label": "JP",
+            "pageViews": 33,
+            "visits": 32
           }
         ],
         "devices": [
           {
             "label": "desktop",
-            "pageViews": 3290,
-            "visits": 2590
+            "pageViews": 3470,
+            "visits": 2522
           },
           {
             "label": "mobile",
-            "pageViews": 520,
-            "visits": 430
+            "pageViews": 429,
+            "visits": 352
           },
           {
             "label": "tablet",
-            "pageViews": 60,
-            "visits": 30
+            "pageViews": 12,
+            "visits": 9
           }
         ]
       },
@@ -1350,8 +1336,8 @@
         "pages": [
           {
             "label": "/",
-            "pageViews": 1820,
-            "visits": 750
+            "pageViews": 1830,
+            "visits": 770
           },
           {
             "label": "/badge",
@@ -1384,12 +1370,7 @@
             "visits": 30
           },
           {
-            "label": "/tools/command-code",
-            "pageViews": 100,
-            "visits": 100
-          },
-          {
-            "label": "/tools/opencode/alternatives",
+            "label": "/blog/today-in-ai-2026-10-25",
             "pageViews": 100,
             "visits": 100
           },
@@ -1404,17 +1385,22 @@
             "visits": 30
           },
           {
-            "label": "/blog/today-in-ai-2026-10-25",
+            "label": "/tools/command-code",
             "pageViews": 90,
             "visits": 90
           },
           {
-            "label": "/tools/deepseek-harness",
-            "pageViews": 70,
-            "visits": 70
+            "label": "/tools/opencode/alternatives",
+            "pageViews": 90,
+            "visits": 90
           },
           {
             "label": "/tools/z-code",
+            "pageViews": 80,
+            "visits": 80
+          },
+          {
+            "label": "/tools/deepseek-harness",
             "pageViews": 70,
             "visits": 70
           },
@@ -1427,8 +1413,8 @@
         "referrers": [
           {
             "label": "Direct / none",
-            "pageViews": 6580,
-            "visits": 6580
+            "pageViews": 6750,
+            "visits": 6750
           },
           {
             "label": "ai.dosa.dev",
@@ -1437,23 +1423,23 @@
           },
           {
             "label": "www.google.com",
-            "pageViews": 1070,
-            "visits": 1070
+            "pageViews": 1150,
+            "visits": 1150
           },
           {
             "label": "www.linkedin.com",
-            "pageViews": 110,
-            "visits": 110
+            "pageViews": 120,
+            "visits": 120
+          },
+          {
+            "label": "com.linkedin.android",
+            "pageViews": 50,
+            "visits": 50
           },
           {
             "label": "github.com",
             "pageViews": 50,
             "visits": 50
-          },
-          {
-            "label": "com.linkedin.android",
-            "pageViews": 40,
-            "visits": 40
           },
           {
             "label": "t.co",
@@ -1471,12 +1457,12 @@
             "visits": 30
           },
           {
-            "label": "www.perplexity.ai",
+            "label": "www.google.com.hk",
             "pageViews": 10,
             "visits": 10
           },
           {
-            "label": "yandex.com",
+            "label": "www.perplexity.ai",
             "pageViews": 10,
             "visits": 10
           }
@@ -1484,23 +1470,23 @@
         "countries": [
           {
             "label": "US",
-            "pageViews": 4520,
-            "visits": 2320
+            "pageViews": 4500,
+            "visits": 2290
           },
           {
             "label": "SG",
-            "pageViews": 2900,
-            "visits": 2880
+            "pageViews": 3010,
+            "visits": 2990
           },
           {
             "label": "CN",
-            "pageViews": 1090,
-            "visits": 1090
+            "pageViews": 1130,
+            "visits": 1130
           },
           {
             "label": "IN",
-            "pageViews": 520,
-            "visits": 280
+            "pageViews": 580,
+            "visits": 310
           },
           {
             "label": "CA",
@@ -1509,18 +1495,18 @@
           },
           {
             "label": "TR",
-            "pageViews": 190,
-            "visits": 70
+            "pageViews": 180,
+            "visits": 60
+          },
+          {
+            "label": "GB",
+            "pageViews": 150,
+            "visits": 50
           },
           {
             "label": "UA",
             "pageViews": 150,
             "visits": 30
-          },
-          {
-            "label": "GB",
-            "pageViews": 140,
-            "visits": 40
           },
           {
             "label": "NL",
@@ -1529,30 +1515,35 @@
           },
           {
             "label": "BR",
-            "pageViews": 120,
-            "visits": 100
+            "pageViews": 130,
+            "visits": 110
           },
           {
             "label": "AU",
-            "pageViews": 90,
+            "pageViews": 100,
+            "visits": 80
+          },
+          {
+            "label": "DE",
+            "pageViews": 80,
             "visits": 70
           },
           {
             "label": "ID",
-            "pageViews": 60,
-            "visits": 60
+            "pageViews": 70,
+            "visits": 70
           }
         ],
         "devices": [
           {
             "label": "desktop",
-            "pageViews": 9980,
-            "visits": 6990
+            "pageViews": 10230,
+            "visits": 7230
           },
           {
             "label": "mobile",
-            "pageViews": 1320,
-            "visits": 960
+            "pageViews": 1350,
+            "visits": 1000
           },
           {
             "label": "tablet",
@@ -1565,105 +1556,95 @@
         "pages": [
           {
             "label": "/",
-            "pageViews": 3570,
-            "visits": 1640
+            "pageViews": 3700,
+            "visits": 1400
           },
           {
             "label": "/badge",
-            "pageViews": 420,
+            "pageViews": 400,
             "visits": 400
           },
           {
-            "label": "/tools/cost-calculator",
-            "pageViews": 250,
+            "label": "/settings",
+            "pageViews": 400,
             "visits": 0
           },
           {
-            "label": "/news",
-            "pageViews": 210,
-            "visits": 40
-          },
-          {
-            "label": "/tools/cursor",
-            "pageViews": 200,
-            "visits": 60
-          },
-          {
-            "label": "/tools/command-code",
-            "pageViews": 170,
-            "visits": 170
-          },
-          {
             "label": "/tools/token-counter",
-            "pageViews": 170,
-            "visits": 50
-          },
-          {
-            "label": "/tools/hallucination-scorer",
-            "pageViews": 170,
-            "visits": 40
-          },
-          {
-            "label": "/tools/emergentsh",
-            "pageViews": 150,
-            "visits": 150
-          },
-          {
-            "label": "/tools/opencode/alternatives",
-            "pageViews": 150,
-            "visits": 150
-          },
-          {
-            "label": "/blog",
-            "pageViews": 150,
-            "visits": 30
-          },
-          {
-            "label": "/best/free-ai-coding-tools",
-            "pageViews": 130,
-            "visits": 130
-          },
-          {
-            "label": "/tools/z-code",
-            "pageViews": 120,
-            "visits": 110
-          },
-          {
-            "label": "/category/qa-testing",
-            "pageViews": 110,
-            "visits": 110
+            "pageViews": 400,
+            "visits": 0
           },
           {
             "label": "/tools/jcode",
-            "pageViews": 110,
-            "visits": 90
+            "pageViews": 300,
+            "visits": 300
           },
           {
-            "label": "/blog/today-in-ai-2026-10-25",
-            "pageViews": 90,
-            "visits": 90
+            "label": "/advertise",
+            "pageViews": 300,
+            "visits": 0
+          },
+          {
+            "label": "/blog/today-in-ai-2026-10-16",
+            "pageViews": 200,
+            "visits": 200
+          },
+          {
+            "label": "/tools/kimi-code",
+            "pageViews": 200,
+            "visits": 200
+          },
+          {
+            "label": "/tools/openclaw",
+            "pageViews": 200,
+            "visits": 200
+          },
+          {
+            "label": "/tools/toprank",
+            "pageViews": 200,
+            "visits": 200
+          },
+          {
+            "label": "/tools/vercel-agent",
+            "pageViews": 200,
+            "visits": 200
+          },
+          {
+            "label": "/blog/open-source-jev-alternatives",
+            "pageViews": 200,
+            "visits": 100
+          },
+          {
+            "label": "/category/ai-ides",
+            "pageViews": 200,
+            "visits": 100
+          },
+          {
+            "label": "/best/free-ai-coding-tools",
+            "pageViews": 100,
+            "visits": 100
           }
         ],
         "referrers": [
           {
             "label": "Direct / none",
-            "pageViews": 8880,
-            "visits": 8880
+            "pageViews": 9130,
+            "visits": 9130
           },
           {
             "label": "ai.dosa.dev",
-            "pageViews": 5520,
+            "pageViews": 5570,
             "visits": 0
           },
           {
             "label": "www.google.com",
-            "pageViews": 1400,
-            "visits": 1400
+            "pageViews": 1510,
+            "visits": 1510
           },
           {
             "label": "www.linkedin.com",
-            "pageViews": 130,
-            "visits": 130
+            "pageViews": 140,
+            "visits": 140
           },
           {
             "label": "t.co",
@@ -1672,8 +1653,8 @@
           },
           {
             "label": "com.linkedin.android",
-            "pageViews": 70,
-            "visits": 70
+            "pageViews": 80,
+            "visits": 80
           },
           {
             "label": "github.com",
@@ -1704,28 +1685,28 @@
         "countries": [
           {
             "label": "US",
-            "pageViews": 7290,
-            "visits": 3770
+            "pageViews": 7340,
+            "visits": 3800
           },
           {
             "label": "SG",
-            "pageViews": 2960,
-            "visits": 2940
+            "pageViews": 3090,
+            "visits": 3070
           },
           {
             "label": "CN",
-            "pageViews": 1470,
-            "visits": 1470
+            "pageViews": 1520,
+            "visits": 1520
           },
           {
             "label": "IN",
-            "pageViews": 980,
-            "visits": 480
+            "pageViews": 1040,
+            "visits": 510
           },
           {
             "label": "CA",
-            "pageViews": 230,
-            "visits": 110
+            "pageViews": 240,
+            "visits": 120
           },
           {
             "label": "TR",
@@ -1733,46 +1714,41 @@
             "visits": 90
           },
           {
+            "label": "BR",
+            "pageViews": 200,
+            "visits": 150
+          },
+          {
             "label": "NL",
             "pageViews": 190,
             "visits": 170
           },
           {
-            "label": "BR",
-            "pageViews": 190,
+            "label": "JP",
+            "pageViews": 180,
             "visits": 140
           },
           {
-            "label": "JP",
-            "pageViews": 160,
-            "visits": 120
-          },
-          {
-            "label": "GB",
-            "pageViews": 160,
-            "visits": 50
+            "label": "DE",
+            "pageViews": 170,
+            "visits": 110
           },
           {
             "label": "AU",
-            "pageViews": 140,
-            "visits": 100
-          },
-          {
-            "label": "ID",
-            "pageViews": 120,
-            "visits": 100
+            "pageViews": 150,
+            "visits": 110
           }
         ],
         "devices": [
           {
             "label": "desktop",
-            "pageViews": 14130,
-            "visits": 9250
+            "pageViews": 14530,
+            "visits": 9600
           },
           {
             "label": "mobile",
-            "pageViews": 2190,
-            "visits": 1580
+            "pageViews": 2230,
+            "visits": 1620
           },
           {
             "label": "tablet",
@@ -1936,6 +1912,11 @@
     },
     {
       "date": "2026-10-27",
+      "stars": 27,
+      "forks": 35
+    },
+    {
+      "date": "2026-10-28",
       "stars": 27,
       "forks": 35
     }
