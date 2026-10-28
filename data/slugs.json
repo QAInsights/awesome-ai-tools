@@ -2448,6 +2448,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "selan",
+    "name": "Selan",
+    "company": "Selan UAB (submitted by the Selan team with AI assistance)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",

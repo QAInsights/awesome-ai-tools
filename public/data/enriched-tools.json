@@ -1539,6 +1539,33 @@
     "lastUpdated": "2026-10-24"
   },
   {
+    "slug": "thinkrail",
+    "name": "ThinkRail",
+    "company": "JetBrains",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 license; no ThinkRail account, you bring JetBrains AI or any provider configured through pi.",
+    "description": "ThinkRail is an open-source agentic IDE from the JetBrains InnovationHub built around the pi coding agent. Each workspace is an isolated git worktree with its own branch, editor tabs, terminals and concurrent agent chats, and a graph of living SPEC.md files gives the agent durable project knowledge across sessions.",
+    "keyFeatures": [
+      "Isolated git-worktree workspaces with parallel pi chats, per-session models and live token and cost readouts",
+      "Monaco editor tabs, Files tree with git change marks, terminals, diffs and anchored review comments sent to chat",
+      "Living SPEC.md spec graph the agent reads and maintains through dedicated spec tools",
+      "Reuses existing Agent Skills and connects MCP servers with approval prompts and OAuth sign-in",
+      "Publish, push, open and merge GitHub pull requests with CI checks via your own gh CLI"
+    ],
+    "bestFor": "Developers who want a lightweight, real IDE around a terminal coding agent with parallel worktree workspaces and persistent project specs.",
+    "notIdealFor": "Intel Mac desktop users and teams that want a polished, extension-rich IDE today; full extension support is still on the roadmap.",
+    "recentUpdates": "Trending on GitHub and discussed on Hacker News in October 2026; v0.2.0 shipped on October 18, 2026 with v0.3.0 nightly builds following.",
+    "verdict": "An early but serious JetBrains bet on spec-driven agentic coding that pairs pi with a genuine editor and worktree isolation, worth trying for pi users.",
+    "tags": [
+      "ide",
+      "ai-coding",
+      "agent-management",
+      "developer-tools",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-25"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -5200,6 +5227,33 @@
     "lastUpdated": "2026-10-22"
   },
   {
+    "slug": "cindy",
+    "name": "Cindy",
+    "company": "XD Inc.",
+    "pricing": "freemium",
+    "pricingDetail": "Apache-2.0 client is free with your own API keys, existing Claude Code, Codex or Pi coding plans, or local models; an optional managed model service starts with a $20/month Plus plan.",
+    "description": "Cindy is an open-source AI agent for desktop and mobile that runs on your own machine and wraps the Claude Code, Codex and Pi harnesses behind one interface. Models and harnesses can switch mid-task while memory, skills and tools stay continuous, and the agent can drive your browser, computer and phone or take work from IM and schedules.",
+    "keyFeatures": [
+      "Mix Claude Code, Codex and Pi harnesses with any model and switch mid-task without losing context",
+      "Plan, execute in parallel and review one task with agents on different harness and model combinations",
+      "Shared memory, reusable skills, MCP tools and scheduled automations across harnesses",
+      "Drives the browser, computer and Android phone, plus SSH and remote servers",
+      "Integrations with Slack, Feishu, GitHub, Jira, GitLab, Confluence and Google Workspace"
+    ],
+    "bestFor": "Developers and power users who already pay for Claude Code or Codex and want one local agent app that orchestrates multiple harnesses with shared memory.",
+    "notIdealFor": "Teams that need a fully self-hosted backend today, since the hosted service backend is not part of the open-source repo, or users who only want a single CLI agent.",
+    "recentUpdates": "Trending on GitHub in October 2026 with near-daily releases (v0.1.115 on October 23, 2026) and a Team and Enterprise waitlist.",
+    "verdict": "A fast-moving, well-adopted multi-harness agent client that makes Claude Code and Codex usable from one desktop and mobile app.",
+    "tags": [
+      "agent",
+      "ai-coding",
+      "agent-management",
+      "desktop-app",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-25"
+  },
+  {
     "slug": "zozo-hq",
     "name": "Zozo HQ",
     "company": "Roundhouse Labs Inc.",
@@ -5227,6 +5281,90 @@
       "jira-bitbucket"
     ],
     "lastUpdated": "2026-10-25"
+  },
+  {
+    "slug": "agensh",
+    "name": "Agensh",
+    "company": "Microsoft",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; you supply GitHub Copilot access for the worker sessions plus a Linux host with Docker to run the team.",
+    "description": "Agensh is an open-source multi-agent harness from Microsoft researchers in which a team of coding agents organizes itself without a central orchestrator. Each agent gathers context, claims a sub-task, acts, verifies the result and merges progress asynchronously, with a Gitea instance as the shared workspace, Mattermost for messaging and a shared context service adapted from DeLM. The released setup runs every worker on GitHub Copilot's agent loop through native ACP sessions.",
+    "keyFeatures": [
+      "Self-organized cooperation loop: agents discover and claim sub-tasks, share findings, verify results and merge progress without a central orchestrator",
+      "Shared Gitea workspace, Mattermost messaging and a shared context and work-claim board service",
+      "Workers built on GitHub Copilot's agentic loop through native ACP sessions",
+      "Single-node team launcher using Docker Compose plus a standalone single-agent baseline",
+      "Reproduction guide, experiment launch scripts and ProgramBench scoring tools",
+      "Scaled to 1,024 concurrent agents in the authors' experiments"
+    ],
+    "bestFor": "Researchers and platform engineers studying how large teams of coding agents coordinate, and anyone who wants to reproduce or extend the Agensh ProgramBench experiments on their own hardware.",
+    "notIdealFor": "Developers looking for an everyday coding assistant; the release is a research harness that needs Linux with Docker Engine, Compose v2, systemd, cgroup v2 and passwordless sudo, and its defaults run long, token-heavy six-hour tasks.",
+    "recentUpdates": "Open-sourced in October 2026 (release v1.0) with the harness, launch scripts and a reproduction guide, following the September 2026 arXiv preprint. The authors report that on the five hardest ProgramBench tasks the mean test-pass rate rose from 19.31% with 1 agent to 28.78% with 128 agents; these are the authors' own results.",
+    "verdict": "A rare open, reproducible look at agent teams at the scale of hundreds of workers, worth studying for anyone designing multi-agent coding systems, but a research release rather than a product you install for daily work.",
+    "tags": [
+      "AI Agents",
+      "Multi-Agent",
+      "Open Source",
+      "Research",
+      "GitHub Copilot",
+      "Self-Hosted"
+    ],
+    "lastUpdated": "2026-10-25"
+  },
+  {
+    "slug": "openbot",
+    "name": "OpenBot",
+    "company": "Nightly Labs",
+    "pricing": "free",
+    "pricingDetail": "Source-available under the PolyForm Noncommercial License 1.0.0: free to use, modify and distribute for noncommercial purposes; commercial use requires a separate license from the copyright owner. Model usage is billed by each provider you connect.",
+    "description": "OpenBot is a local-first desktop workspace for persistent AI teammates. Every agent gets its own workspace, conversation and task queue backed by an independent Codex, Claude Code, Grok, OpenCode, Gemini, Cursor or Cline session, and agents can message each other, transfer files and control an embedded browser from one app.",
+    "keyFeatures": [
+      "Persistent agents backed by Codex, Claude Code, Grok CLI, OpenCode, Gemini, Cursor CLI or Cline CLI via ACP, plus custom OpenAI-compatible endpoints and local Ollama or LM Studio servers",
+      "Crash-safe FIFO task queues with pause, resume and cancellation, and automatic context compaction per agent",
+      "Agent-to-agent messages, managed file transfers and shared channel chats with explicit delegation and reassign controls",
+      "Persistent embedded browser agents can open and control, plus optional Computer Use on macOS, Windows and Linux",
+      "Desktop apps for macOS, Windows and Linux, an iPhone app, and a headless Linux server or Docker image for always-on agents"
+    ],
+    "bestFor": "Developers who already use several coding-agent CLIs and want long-lived, named agents with their own workspaces and queues that can collaborate in one desktop app.",
+    "notIdealFor": "Commercial teams that cannot obtain a separate license, or anyone who needs per-action approvals today, since agents run with full access after the first-launch consent in this development preview.",
+    "recentUpdates": "Trending on GitHub in October 2026 with near-daily releases; v0.51.0 shipped on October 26, 2026.",
+    "verdict": "A fast-moving, ambitious multi-agent workspace that turns existing coding-agent CLIs into persistent collaborating teammates, best tried on trusted tasks while it is in preview.",
+    "tags": [
+      "agent",
+      "agent-management",
+      "multi-agent",
+      "desktop-app",
+      "local-first"
+    ],
+    "lastUpdated": "2026-10-26"
+  },
+  {
+    "slug": "autoswarm",
+    "name": "AutoSwarm",
+    "company": "HKUDS",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; you bring your own installed agent CLIs and pay their subscription or API costs.",
+    "description": "AutoSwarm is an open-source multi-agent coordinator from the HKU Data Intelligence Lab (HKUDS) that turns the coding and general agents already installed on your machine into one coordinated team. It installs as a skill into the agent you already use, then selects agents by capability, shares context and memory between them, runs subtasks in parallel and verifies and synthesizes the results.",
+    "keyFeatures": [
+      "Coordinates Codex, Claude Code, OpenCode, Cursor, GitHub Copilot CLI, Muse Code, CodeBuddy, Hermes, nanobot, DeepSeek Harness and Grok Build",
+      "Installs as a skill/plug-in so any supported agent can be the entry point (`autoswarm setup --host <agent>`)",
+      "Capability-based agent selection with shared context and memory across agents",
+      "Parallel subtask execution with result verification and synthesis",
+      "`autoswarm doctor --probe` checks that each provider actually responds and can resume natively",
+      "Reuses existing models, credentials and proxy settings on Windows, macOS and Linux"
+    ],
+    "bestFor": "Developers who already run several coding agents and want one task fanned out across them without manually switching interfaces and copying context.",
+    "notIdealFor": "Users with a single agent or no local agent CLIs, and teams that need a mature, stable orchestration product; it is a research-led project with no tagged releases yet.",
+    "recentUpdates": "Released publicly in 2026 with the accompanying arXiv paper \"AutoSwarm: Automating Agent Swarms\" (2610.33048); trending on GitHub in late October 2026 with roughly 2,000 stars and daily commits.",
+    "verdict": "A promising, research-backed way to make your existing agents work as one team, best suited to power users comfortable with an early-stage tool.",
+    "tags": [
+      "Autonomous Agents",
+      "Multi-Agent",
+      "Orchestration",
+      "Open Source",
+      "Agent Skills"
+    ],
+    "lastUpdated": "2026-10-27"
   },
   {
     "slug": "boltnew",
@@ -6229,6 +6367,61 @@
     "lastUpdated": "2026-10-15"
   },
   {
+    "slug": "farol",
+    "name": "farol",
+    "company": "Winnin",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; no account or hosted service, it runs locally or in your own CI runner.",
+    "description": "farol is a CLI and GitHub Action that runs after your AI code review and tells the person who approves a pull request how risky the merge is and where the risk lives. It uses the real compilers to trace what the change reaches and produces a deterministic risk score, verdict and file ranking.",
+    "keyFeatures": [
+      "Declaration graph built with the TypeScript type checker, go/types and Python ast to list every page, endpoint, RPC method, job and script a change reaches",
+      "Deterministic verdict (fast track, quick review, careful review) and a 0-100 risk score from reach, diff coverage, security findings, contract breaks and dependency changes",
+      "Contract-break detection for GraphQL, FastAPI, Go handlers and gRPC, with the services that call each endpoint",
+      "Interactive HTML report and PR comments with full and since-last-push incremental reports",
+      "Fails closed as unknown, never executes or uploads your code and never blocks a merge"
+    ],
+    "bestFor": "Teams merging a high volume of agent-written pull requests in TypeScript, Go or Python who want human review attention focused on the riskiest changes.",
+    "notIdealFor": "Projects in languages other than TypeScript, Go and Python, or teams looking for an AI reviewer that comments on individual lines, which farol is designed to complement rather than replace.",
+    "recentUpdates": "Launched as a Show HN in October 2026; v0.2.0 on October 26, 2026 turned the HTML report into a review workbench.",
+    "verdict": "A thoughtful, deterministic complement to AI code review that makes the human approval step in agentic workflows faster and safer.",
+    "tags": [
+      "code-review",
+      "pull-requests",
+      "github-actions",
+      "static-analysis",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-26"
+  },
+  {
+    "slug": "no-mistakes",
+    "name": "no-mistakes",
+    "company": "kunchenguid",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; the pipeline runs on your own coding agent CLI, so you pay only that agent's subscription or API usage.",
+    "description": "no-mistakes is a local git proxy that sits in front of your real remote and gates every push with an AI-driven validation pipeline. Pushing to the no-mistakes remote spins up a disposable worktree, runs review, test, docs and lint steps with your coding agent, and only forwards the branch and opens a clean pull request once every check passes.",
+    "keyFeatures": [
+      "`git push no-mistakes` gate that runs review → test → docs → lint → push → PR → CI in an isolated worktree without disturbing your checkout",
+      "Agent-agnostic: Claude Code, Codex, Grok, Rovo Dev, OpenCode, Pi, Copilot, Antigravity, or Cursor/Devin via ACP, with ordered fallbacks",
+      "Safe mechanical fixes applied automatically; findings that touch intent are escalated to approve, fix or skip in a TUI",
+      "`/no-mistakes` agent skill and a non-interactive `axi` interface so coding agents can gate their own work",
+      "Opens the PR with a generated body, watches CI and auto-repairs failures through a guarded force-push path",
+      "Runs on macOS, Linux and Windows, with fork-contribution support"
+    ],
+    "bestFor": "Developers shipping agent-written code who want every branch reviewed, tested and cleaned up locally before a PR is ever opened.",
+    "notIdealFor": "Teams that want a hosted PR review bot or do not use a supported coding agent CLI; every gate spends agent tokens.",
+    "recentUpdates": "Ships near-daily releases, with v1.101.0, v1.102.0 and v1.102.1 published October 25-27, 2026; trending on GitHub with about 9,000 stars.",
+    "verdict": "A well-maintained pre-push quality gate that turns any coding agent into a reviewer and fixer before code reaches your team.",
+    "tags": [
+      "code-review",
+      "git",
+      "ci",
+      "coding-agents",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-27"
+  },
+  {
     "slug": "gitauto",
     "name": "GitAuto",
     "company": "GitAuto, Inc.",
@@ -6610,6 +6803,35 @@
       "privacy"
     ],
     "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "hob",
+    "name": "Hob",
+    "company": "Frigade",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license, with no account, subscription or usage limits; models run on your own hardware (Apple silicon Mac, Windows or Linux with 8 GB of memory or more).",
+    "description": "Hob is an open-source desktop AI assistant from Frigade that aims to match the file-aware, tool-using experience of Claude and ChatGPT while running open-weight models entirely on your computer. It checks your hardware, downloads the best model it can run well through llama.cpp (Metal on Mac, CUDA or Vulkan elsewhere), and then works on your files and project folders, runs sandboxed Python, reads PDFs and images, and searches the web through a metasearch engine that also runs locally.",
+    "keyFeatures": [
+      "Hardware-aware setup that picks and downloads a model for you: Gemma 4 E4B Compact, E4B or 26B depending on memory, or gpt-oss 120B on workstations",
+      "Works on attached files and on folders grouped into projects with their own instructions",
+      "Sandboxed Python with pandas, numpy, openpyxl, python-docx, pypdf and Pillow, plus any PyPI package it needs",
+      "Reads PDFs (including scans), fills in PDF forms on Mac, and understands photos and screenshots with a small Qwen3-VL model",
+      "Interactive charts, on-device dictation and web search through a local metasearch engine",
+      "Approval before folder changes, Undo for every task, and plugins for Agent Skills, Python tools and MCP connectors"
+    ],
+    "bestFor": "Developers and privacy-conscious users who want a capable, file-aware AI assistant that runs local open-weight models with zero setup, no account and no telemetry.",
+    "notIdealFor": "Teams that need frontier hosted models or shared workspaces, and Intel Macs or machines with less than 8 GB of memory; it is a general assistant rather than a dedicated coding agent, and the project only went public in October 2026.",
+    "recentUpdates": "Open-sourced in October 2026, with v0.2.0 and v0.2.1 shipping on GitHub for Mac, Windows and Linux; installed copies download new versions and install them on quit.",
+    "verdict": "One of the most approachable ways to get a Claude-style desktop assistant running fully on your own hardware, though local model quality still trails the big hosted models.",
+    "tags": [
+      "AI Assistant",
+      "Local AI",
+      "Open Source",
+      "Privacy",
+      "Desktop App",
+      "MCP"
+    ],
+    "lastUpdated": "2026-10-26"
   },
   {
     "slug": "greptile",
@@ -10805,6 +11027,90 @@
     "lastUpdated": "2026-10-24"
   },
   {
+    "slug": "android-skills",
+    "name": "Android Skills",
+    "company": "Google",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 license; works with your existing coding agent and model provider.",
+    "description": "Android Skills is the Android team's official library of Agent Skills that ground coding agents in developer.android.com best practices. It targets workflows where evaluations show LLMs underperform, such as AGP upgrades, Compose migrations, R8 analysis and platform-specific integrations.",
+    "keyFeatures": [
+      "30+ modular SKILL.md skills following the open Agent Skills standard",
+      "Covers AGP 9 upgrades, XML-to-Compose migration, Navigation 3, edge-to-edge, R8 analysis and ANR audits",
+      "Guidance for CameraX, Media3 Cast, Play Billing, Credential Manager, intent and permission security",
+      "Form-factor skills for Wear OS, TV, cars, XR glasses and on-device AI with LiteRT and ML Kit GenAI",
+      "Install via android skills add in Android CLI for all detected agents, or as a Claude Code or Codex plugin marketplace"
+    ],
+    "bestFor": "Android developers using Gemini, Antigravity, Claude Code, Codex or other skill-aware agents who want official, up-to-date platform guidance applied automatically.",
+    "notIdealFor": "Developers outside the Android ecosystem or those wanting a standalone coding agent, since this is a skills library rather than an agent itself; public contributions are not accepted.",
+    "recentUpdates": "Trending on GitHub in October 2026 with frequent skill updates; plugin version v1.0.17 published on October 23, 2026.",
+    "verdict": "The authoritative way to make AI coding agents follow current Android best practices, and an easy install for any Android team already using agents.",
+    "tags": [
+      "agent-skills",
+      "android",
+      "mobile-development",
+      "ai-coding",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-26"
+  },
+  {
+    "slug": "entire",
+    "name": "Entire",
+    "company": "Entire",
+    "pricing": "freemium",
+    "pricingDetail": "The `entire` CLI is open source (MIT) and captures agent session checkpoints in any Git repository without an account; hosted use on entire.com is billed for agents, with a $100 signup credit.",
+    "description": "Entire is a Git forge built for agent–human collaboration, from former GitHub CEO Thomas Dohmke's startup. Its open-source CLI links every agent session to the commits it produced, hosts or mirrors repositories across regions, and replaces diff-only review with Trails that agents score on every push.",
+    "keyFeatures": [
+      "`entire enable` hooks Claude Code, Codex, Cursor, Copilot CLI, OpenCode, Antigravity, Factory Droid, Pi and more to save checkpoints (prompts, transcript, files touched) as git refs",
+      "Hybrid semantic and keyword `entire search` over checkpoints, commits and sessions, with compact JSON output for agents",
+      "Git hosting on Entire or GitHub mirrors (pushes still go to GitHub) replicated across regions",
+      "Trails: a heads-up display per change with per-repo eval runners for risk, confidence, drift, security and review",
+      "Optional entire-graph code map and entire-brain project memory, plus a plugin system",
+      "Best-effort secret redaction and options to keep transcripts in a separate private repo or local only"
+    ],
+    "bestFor": "Teams where agents write much of the code and reviewers need the prompts, transcripts and evals behind each change, not just the diff.",
+    "notIdealFor": "Public repositories that cannot risk exposing session transcripts, or teams that want to stay entirely on GitHub's review flow; the hosted forge and Trails are new as of October 2026.",
+    "recentUpdates": "On October 26, 2026 Entire announced its Git forge for agent–human collaboration with Trails and distributed hosting; the CLI ships nightly builds (v0.12.3 nightlies on October 26-27, 2026) and has over 5,000 GitHub stars.",
+    "verdict": "The most ambitious attempt yet to rebuild the Git forge around agent sessions, and its open-source checkpoint capture is useful even without the hosted platform.",
+    "tags": [
+      "Git",
+      "Code Review",
+      "Agent Sessions",
+      "Developer Productivity",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-27"
+  },
+  {
+    "slug": "selan",
+    "name": "Selan",
+    "company": "Selan UAB (submitted by the Selan team with AI assistance)",
+    "pricing": "freemium",
+    "pricingDetail": "Free plan covers up to 3 seats (people only, no CI tokens, no card needed). Paid plans are sized by seats: Team €29/month up to 10 seats, Growth €79/month up to 25 seats, Business €149/month up to 50 seats, plus custom Enterprise; model usage bills directly to your own provider accounts. Paid subscriptions are currently limited to EU/EEA organisations.",
+    "description": "Selan is a management gateway that sits between your developers' AI coding tools (Claude Code, Codex, Claude Desktop, OpenCode) and the model providers you already have accounts with. It signs people in, routes each request to the right credential, logs who ran what at what cost, enforces per-person spend limits, and can redact secrets before requests reach the provider.",
+    "keyFeatures": [
+      "Per-person spend tracking and limits by day, week or month, with every request logged by who ran it and its cost",
+      "One sign-in across Claude, GPT, Vertex, OpenRouter and other connected accounts, with provider keys kept off laptops and CI secrets",
+      "Optional secret scanning/redaction that swaps recognized credentials out in flight before they reach the model",
+      "CI support via named Selan tokens (SELAN_TOKEN) and headless `selan agent-run` for unattended Claude Code agents",
+      "Plugin marketplace distribution and verified connectors (GitHub, GitLab, Linear, Jira, Sentry, Notion, Figma, Stripe) for Claude",
+      "Single binary install for macOS, Linux and Windows; built and hosted in the EU"
+    ],
+    "bestFor": "Engineering teams running Claude Code and Codex on company accounts that need visibility into AI spend, per-person budget caps, and to keep provider keys and secrets off developer laptops and CI.",
+    "notIdealFor": "Individual developers or very small teams wanting a free standalone tool, non-EU/EEA organisations (paid plans currently EU/EEA only), or teams requiring model inference pinned to EU regions, since Selan connects Vertex on the Global location.",
+    "recentUpdates": "In early access as of the September 2026 terms update; paid subscriptions currently limited to EU/EEA organisations, with paid consumer subscriptions not yet available. Reactor (overnight micro agents) is offered via early access.",
+    "verdict": "Selan addresses a real governance gap for teams adopting Claude Code and Codex, combining spend attribution, per-person limits, key isolation and optional secret redaction in one EU-hosted gateway. It is early access with rough edges, EU/EEA-only paid plans, and no EU-pinned inference yet, so teams with strict data-residency needs should weigh alternatives.",
+    "tags": [
+      "AI gateway",
+      "Claude Code",
+      "Codex",
+      "spend management",
+      "secrets redaction",
+      "EU hosting"
+    ],
+    "lastUpdated": "2026-10-28"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
@@ -11045,282 +11351,5 @@
       "Generative Design"
     ],
     "lastUpdated": "2026-10-15"
-  },
-  {
-    "slug": "thinkrail",
-    "name": "ThinkRail",
-    "company": "JetBrains",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under the Apache-2.0 license; no ThinkRail account, you bring JetBrains AI or any provider configured through pi.",
-    "description": "ThinkRail is an open-source agentic IDE from the JetBrains InnovationHub built around the pi coding agent. Each workspace is an isolated git worktree with its own branch, editor tabs, terminals and concurrent agent chats, and a graph of living SPEC.md files gives the agent durable project knowledge across sessions.",
-    "keyFeatures": [
-      "Isolated git-worktree workspaces with parallel pi chats, per-session models and live token and cost readouts",
-      "Monaco editor tabs, Files tree with git change marks, terminals, diffs and anchored review comments sent to chat",
-      "Living SPEC.md spec graph the agent reads and maintains through dedicated spec tools",
-      "Reuses existing Agent Skills and connects MCP servers with approval prompts and OAuth sign-in",
-      "Publish, push, open and merge GitHub pull requests with CI checks via your own gh CLI"
-    ],
-    "bestFor": "Developers who want a lightweight, real IDE around a terminal coding agent with parallel worktree workspaces and persistent project specs.",
-    "notIdealFor": "Intel Mac desktop users and teams that want a polished, extension-rich IDE today; full extension support is still on the roadmap.",
-    "recentUpdates": "Trending on GitHub and discussed on Hacker News in October 2026; v0.2.0 shipped on October 18, 2026 with v0.3.0 nightly builds following.",
-    "verdict": "An early but serious JetBrains bet on spec-driven agentic coding that pairs pi with a genuine editor and worktree isolation, worth trying for pi users.",
-    "tags": [
-      "ide",
-      "ai-coding",
-      "agent-management",
-      "developer-tools",
-      "open-source"
-    ],
-    "lastUpdated": "2026-10-25"
-  },
-  {
-    "slug": "cindy",
-    "name": "Cindy",
-    "company": "XD Inc.",
-    "pricing": "freemium",
-    "pricingDetail": "Apache-2.0 client is free with your own API keys, existing Claude Code, Codex or Pi coding plans, or local models; an optional managed model service starts with a $20/month Plus plan.",
-    "description": "Cindy is an open-source AI agent for desktop and mobile that runs on your own machine and wraps the Claude Code, Codex and Pi harnesses behind one interface. Models and harnesses can switch mid-task while memory, skills and tools stay continuous, and the agent can drive your browser, computer and phone or take work from IM and schedules.",
-    "keyFeatures": [
-      "Mix Claude Code, Codex and Pi harnesses with any model and switch mid-task without losing context",
-      "Plan, execute in parallel and review one task with agents on different harness and model combinations",
-      "Shared memory, reusable skills, MCP tools and scheduled automations across harnesses",
-      "Drives the browser, computer and Android phone, plus SSH and remote servers",
-      "Integrations with Slack, Feishu, GitHub, Jira, GitLab, Confluence and Google Workspace"
-    ],
-    "bestFor": "Developers and power users who already pay for Claude Code or Codex and want one local agent app that orchestrates multiple harnesses with shared memory.",
-    "notIdealFor": "Teams that need a fully self-hosted backend today, since the hosted service backend is not part of the open-source repo, or users who only want a single CLI agent.",
-    "recentUpdates": "Trending on GitHub in October 2026 with near-daily releases (v0.1.115 on October 23, 2026) and a Team and Enterprise waitlist.",
-    "verdict": "A fast-moving, well-adopted multi-harness agent client that makes Claude Code and Codex usable from one desktop and mobile app.",
-    "tags": [
-      "agent",
-      "ai-coding",
-      "agent-management",
-      "desktop-app",
-      "open-source"
-    ],
-    "lastUpdated": "2026-10-25"
-  },
-  {
-    "slug": "agensh",
-    "name": "Agensh",
-    "company": "Microsoft",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under the MIT license; you supply GitHub Copilot access for the worker sessions plus a Linux host with Docker to run the team.",
-    "description": "Agensh is an open-source multi-agent harness from Microsoft researchers in which a team of coding agents organizes itself without a central orchestrator. Each agent gathers context, claims a sub-task, acts, verifies the result and merges progress asynchronously, with a Gitea instance as the shared workspace, Mattermost for messaging and a shared context service adapted from DeLM. The released setup runs every worker on GitHub Copilot's agent loop through native ACP sessions.",
-    "keyFeatures": [
-      "Self-organized cooperation loop: agents discover and claim sub-tasks, share findings, verify results and merge progress without a central orchestrator",
-      "Shared Gitea workspace, Mattermost messaging and a shared context and work-claim board service",
-      "Workers built on GitHub Copilot's agentic loop through native ACP sessions",
-      "Single-node team launcher using Docker Compose plus a standalone single-agent baseline",
-      "Reproduction guide, experiment launch scripts and ProgramBench scoring tools",
-      "Scaled to 1,024 concurrent agents in the authors' experiments"
-    ],
-    "bestFor": "Researchers and platform engineers studying how large teams of coding agents coordinate, and anyone who wants to reproduce or extend the Agensh ProgramBench experiments on their own hardware.",
-    "notIdealFor": "Developers looking for an everyday coding assistant; the release is a research harness that needs Linux with Docker Engine, Compose v2, systemd, cgroup v2 and passwordless sudo, and its defaults run long, token-heavy six-hour tasks.",
-    "recentUpdates": "Open-sourced in October 2026 (release v1.0) with the harness, launch scripts and a reproduction guide, following the September 2026 arXiv preprint. The authors report that on the five hardest ProgramBench tasks the mean test-pass rate rose from 19.31% with 1 agent to 28.78% with 128 agents; these are the authors' own results.",
-    "verdict": "A rare open, reproducible look at agent teams at the scale of hundreds of workers, worth studying for anyone designing multi-agent coding systems, but a research release rather than a product you install for daily work.",
-    "tags": [
-      "AI Agents",
-      "Multi-Agent",
-      "Open Source",
-      "Research",
-      "GitHub Copilot",
-      "Self-Hosted"
-    ],
-    "lastUpdated": "2026-10-25"
-  },
-  {
-    "slug": "openbot",
-    "name": "OpenBot",
-    "company": "Nightly Labs",
-    "pricing": "free",
-    "pricingDetail": "Source-available under the PolyForm Noncommercial License 1.0.0: free to use, modify and distribute for noncommercial purposes; commercial use requires a separate license from the copyright owner. Model usage is billed by each provider you connect.",
-    "description": "OpenBot is a local-first desktop workspace for persistent AI teammates. Every agent gets its own workspace, conversation and task queue backed by an independent Codex, Claude Code, Grok, OpenCode, Gemini, Cursor or Cline session, and agents can message each other, transfer files and control an embedded browser from one app.",
-    "keyFeatures": [
-      "Persistent agents backed by Codex, Claude Code, Grok CLI, OpenCode, Gemini, Cursor CLI or Cline CLI via ACP, plus custom OpenAI-compatible endpoints and local Ollama or LM Studio servers",
-      "Crash-safe FIFO task queues with pause, resume and cancellation, and automatic context compaction per agent",
-      "Agent-to-agent messages, managed file transfers and shared channel chats with explicit delegation and reassign controls",
-      "Persistent embedded browser agents can open and control, plus optional Computer Use on macOS, Windows and Linux",
-      "Desktop apps for macOS, Windows and Linux, an iPhone app, and a headless Linux server or Docker image for always-on agents"
-    ],
-    "bestFor": "Developers who already use several coding-agent CLIs and want long-lived, named agents with their own workspaces and queues that can collaborate in one desktop app.",
-    "notIdealFor": "Commercial teams that cannot obtain a separate license, or anyone who needs per-action approvals today, since agents run with full access after the first-launch consent in this development preview.",
-    "recentUpdates": "Trending on GitHub in October 2026 with near-daily releases; v0.51.0 shipped on October 26, 2026.",
-    "verdict": "A fast-moving, ambitious multi-agent workspace that turns existing coding-agent CLIs into persistent collaborating teammates, best tried on trusted tasks while it is in preview.",
-    "tags": [
-      "agent",
-      "agent-management",
-      "multi-agent",
-      "desktop-app",
-      "local-first"
-    ],
-    "lastUpdated": "2026-10-26"
-  },
-  {
-    "slug": "farol",
-    "name": "farol",
-    "company": "Winnin",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under the MIT license; no account or hosted service, it runs locally or in your own CI runner.",
-    "description": "farol is a CLI and GitHub Action that runs after your AI code review and tells the person who approves a pull request how risky the merge is and where the risk lives. It uses the real compilers to trace what the change reaches and produces a deterministic risk score, verdict and file ranking.",
-    "keyFeatures": [
-      "Declaration graph built with the TypeScript type checker, go/types and Python ast to list every page, endpoint, RPC method, job and script a change reaches",
-      "Deterministic verdict (fast track, quick review, careful review) and a 0-100 risk score from reach, diff coverage, security findings, contract breaks and dependency changes",
-      "Contract-break detection for GraphQL, FastAPI, Go handlers and gRPC, with the services that call each endpoint",
-      "Interactive HTML report and PR comments with full and since-last-push incremental reports",
-      "Fails closed as unknown, never executes or uploads your code and never blocks a merge"
-    ],
-    "bestFor": "Teams merging a high volume of agent-written pull requests in TypeScript, Go or Python who want human review attention focused on the riskiest changes.",
-    "notIdealFor": "Projects in languages other than TypeScript, Go and Python, or teams looking for an AI reviewer that comments on individual lines, which farol is designed to complement rather than replace.",
-    "recentUpdates": "Launched as a Show HN in October 2026; v0.2.0 on October 26, 2026 turned the HTML report into a review workbench.",
-    "verdict": "A thoughtful, deterministic complement to AI code review that makes the human approval step in agentic workflows faster and safer.",
-    "tags": [
-      "code-review",
-      "pull-requests",
-      "github-actions",
-      "static-analysis",
-      "open-source"
-    ],
-    "lastUpdated": "2026-10-26"
-  },
-  {
-    "slug": "android-skills",
-    "name": "Android Skills",
-    "company": "Google",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under the Apache-2.0 license; works with your existing coding agent and model provider.",
-    "description": "Android Skills is the Android team's official library of Agent Skills that ground coding agents in developer.android.com best practices. It targets workflows where evaluations show LLMs underperform, such as AGP upgrades, Compose migrations, R8 analysis and platform-specific integrations.",
-    "keyFeatures": [
-      "30+ modular SKILL.md skills following the open Agent Skills standard",
-      "Covers AGP 9 upgrades, XML-to-Compose migration, Navigation 3, edge-to-edge, R8 analysis and ANR audits",
-      "Guidance for CameraX, Media3 Cast, Play Billing, Credential Manager, intent and permission security",
-      "Form-factor skills for Wear OS, TV, cars, XR glasses and on-device AI with LiteRT and ML Kit GenAI",
-      "Install via android skills add in Android CLI for all detected agents, or as a Claude Code or Codex plugin marketplace"
-    ],
-    "bestFor": "Android developers using Gemini, Antigravity, Claude Code, Codex or other skill-aware agents who want official, up-to-date platform guidance applied automatically.",
-    "notIdealFor": "Developers outside the Android ecosystem or those wanting a standalone coding agent, since this is a skills library rather than an agent itself; public contributions are not accepted.",
-    "recentUpdates": "Trending on GitHub in October 2026 with frequent skill updates; plugin version v1.0.17 published on October 23, 2026.",
-    "verdict": "The authoritative way to make AI coding agents follow current Android best practices, and an easy install for any Android team already using agents.",
-    "tags": [
-      "agent-skills",
-      "android",
-      "mobile-development",
-      "ai-coding",
-      "open-source"
-    ],
-    "lastUpdated": "2026-10-26"
-  },
-  {
-    "slug": "hob",
-    "name": "Hob",
-    "company": "Frigade",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under the MIT license, with no account, subscription or usage limits; models run on your own hardware (Apple silicon Mac, Windows or Linux with 8 GB of memory or more).",
-    "description": "Hob is an open-source desktop AI assistant from Frigade that aims to match the file-aware, tool-using experience of Claude and ChatGPT while running open-weight models entirely on your computer. It checks your hardware, downloads the best model it can run well through llama.cpp (Metal on Mac, CUDA or Vulkan elsewhere), and then works on your files and project folders, runs sandboxed Python, reads PDFs and images, and searches the web through a metasearch engine that also runs locally.",
-    "keyFeatures": [
-      "Hardware-aware setup that picks and downloads a model for you: Gemma 4 E4B Compact, E4B or 26B depending on memory, or gpt-oss 120B on workstations",
-      "Works on attached files and on folders grouped into projects with their own instructions",
-      "Sandboxed Python with pandas, numpy, openpyxl, python-docx, pypdf and Pillow, plus any PyPI package it needs",
-      "Reads PDFs (including scans), fills in PDF forms on Mac, and understands photos and screenshots with a small Qwen3-VL model",
-      "Interactive charts, on-device dictation and web search through a local metasearch engine",
-      "Approval before folder changes, Undo for every task, and plugins for Agent Skills, Python tools and MCP connectors"
-    ],
-    "bestFor": "Developers and privacy-conscious users who want a capable, file-aware AI assistant that runs local open-weight models with zero setup, no account and no telemetry.",
-    "notIdealFor": "Teams that need frontier hosted models or shared workspaces, and Intel Macs or machines with less than 8 GB of memory; it is a general assistant rather than a dedicated coding agent, and the project only went public in October 2026.",
-    "recentUpdates": "Open-sourced in October 2026, with v0.2.0 and v0.2.1 shipping on GitHub for Mac, Windows and Linux; installed copies download new versions and install them on quit.",
-    "verdict": "One of the most approachable ways to get a Claude-style desktop assistant running fully on your own hardware, though local model quality still trails the big hosted models.",
-    "tags": [
-      "AI Assistant",
-      "Local AI",
-      "Open Source",
-      "Privacy",
-      "Desktop App",
-      "MCP"
-    ],
-    "lastUpdated": "2026-10-26"
-  },
-  {
-    "slug": "autoswarm",
-    "name": "AutoSwarm",
-    "company": "HKUDS",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under the MIT license; you bring your own installed agent CLIs and pay their subscription or API costs.",
-    "description": "AutoSwarm is an open-source multi-agent coordinator from the HKU Data Intelligence Lab (HKUDS) that turns the coding and general agents already installed on your machine into one coordinated team. It installs as a skill into the agent you already use, then selects agents by capability, shares context and memory between them, runs subtasks in parallel and verifies and synthesizes the results.",
-    "keyFeatures": [
-      "Coordinates Codex, Claude Code, OpenCode, Cursor, GitHub Copilot CLI, Muse Code, CodeBuddy, Hermes, nanobot, DeepSeek Harness and Grok Build",
-      "Installs as a skill/plug-in so any supported agent can be the entry point (`autoswarm setup --host <agent>`)",
-      "Capability-based agent selection with shared context and memory across agents",
-      "Parallel subtask execution with result verification and synthesis",
-      "`autoswarm doctor --probe` checks that each provider actually responds and can resume natively",
-      "Reuses existing models, credentials and proxy settings on Windows, macOS and Linux"
-    ],
-    "bestFor": "Developers who already run several coding agents and want one task fanned out across them without manually switching interfaces and copying context.",
-    "notIdealFor": "Users with a single agent or no local agent CLIs, and teams that need a mature, stable orchestration product; it is a research-led project with no tagged releases yet.",
-    "recentUpdates": "Released publicly in 2026 with the accompanying arXiv paper \"AutoSwarm: Automating Agent Swarms\" (2610.33048); trending on GitHub in late October 2026 with roughly 2,000 stars and daily commits.",
-    "verdict": "A promising, research-backed way to make your existing agents work as one team, best suited to power users comfortable with an early-stage tool.",
-    "tags": [
-      "Autonomous Agents",
-      "Multi-Agent",
-      "Orchestration",
-      "Open Source",
-      "Agent Skills"
-    ],
-    "lastUpdated": "2026-10-27"
-  },
-  {
-    "slug": "no-mistakes",
-    "name": "no-mistakes",
-    "company": "kunchenguid",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under the MIT license; the pipeline runs on your own coding agent CLI, so you pay only that agent's subscription or API usage.",
-    "description": "no-mistakes is a local git proxy that sits in front of your real remote and gates every push with an AI-driven validation pipeline. Pushing to the no-mistakes remote spins up a disposable worktree, runs review, test, docs and lint steps with your coding agent, and only forwards the branch and opens a clean pull request once every check passes.",
-    "keyFeatures": [
-      "`git push no-mistakes` gate that runs review → test → docs → lint → push → PR → CI in an isolated worktree without disturbing your checkout",
-      "Agent-agnostic: Claude Code, Codex, Grok, Rovo Dev, OpenCode, Pi, Copilot, Antigravity, or Cursor/Devin via ACP, with ordered fallbacks",
-      "Safe mechanical fixes applied automatically; findings that touch intent are escalated to approve, fix or skip in a TUI",
-      "`/no-mistakes` agent skill and a non-interactive `axi` interface so coding agents can gate their own work",
-      "Opens the PR with a generated body, watches CI and auto-repairs failures through a guarded force-push path",
-      "Runs on macOS, Linux and Windows, with fork-contribution support"
-    ],
-    "bestFor": "Developers shipping agent-written code who want every branch reviewed, tested and cleaned up locally before a PR is ever opened.",
-    "notIdealFor": "Teams that want a hosted PR review bot or do not use a supported coding agent CLI; every gate spends agent tokens.",
-    "recentUpdates": "Ships near-daily releases, with v1.101.0, v1.102.0 and v1.102.1 published October 25-27, 2026; trending on GitHub with about 9,000 stars.",
-    "verdict": "A well-maintained pre-push quality gate that turns any coding agent into a reviewer and fixer before code reaches your team.",
-    "tags": [
-      "code-review",
-      "git",
-      "ci",
-      "coding-agents",
-      "open-source"
-    ],
-    "lastUpdated": "2026-10-27"
-  },
-  {
-    "slug": "entire",
-    "name": "Entire",
-    "company": "Entire",
-    "pricing": "freemium",
-    "pricingDetail": "The `entire` CLI is open source (MIT) and captures agent session checkpoints in any Git repository without an account; hosted use on entire.com is billed for agents, with a $100 signup credit.",
-    "description": "Entire is a Git forge built for agent–human collaboration, from former GitHub CEO Thomas Dohmke's startup. Its open-source CLI links every agent session to the commits it produced, hosts or mirrors repositories across regions, and replaces diff-only review with Trails that agents score on every push.",
-    "keyFeatures": [
-      "`entire enable` hooks Claude Code, Codex, Cursor, Copilot CLI, OpenCode, Antigravity, Factory Droid, Pi and more to save checkpoints (prompts, transcript, files touched) as git refs",
-      "Hybrid semantic and keyword `entire search` over checkpoints, commits and sessions, with compact JSON output for agents",
-      "Git hosting on Entire or GitHub mirrors (pushes still go to GitHub) replicated across regions",
-      "Trails: a heads-up display per change with per-repo eval runners for risk, confidence, drift, security and review",
-      "Optional entire-graph code map and entire-brain project memory, plus a plugin system",
-      "Best-effort secret redaction and options to keep transcripts in a separate private repo or local only"
-    ],
-    "bestFor": "Teams where agents write much of the code and reviewers need the prompts, transcripts and evals behind each change, not just the diff.",
-    "notIdealFor": "Public repositories that cannot risk exposing session transcripts, or teams that want to stay entirely on GitHub's review flow; the hosted forge and Trails are new as of October 2026.",
-    "recentUpdates": "On October 26, 2026 Entire announced its Git forge for agent–human collaboration with Trails and distributed hosting; the CLI ships nightly builds (v0.12.3 nightlies on October 26-27, 2026) and has over 5,000 GitHub stars.",
-    "verdict": "The most ambitious attempt yet to rebuild the Git forge around agent sessions, and its open-source checkpoint capture is useful even without the hosted platform.",
-    "tags": [
-      "Git",
-      "Code Review",
-      "Agent Sessions",
-      "Developer Productivity",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-27"
   }
 ]
