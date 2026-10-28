@@ -1654,5 +1654,17 @@
   {
     "companyName": "Selan UAB (submitted by the Selan team with AI assistance)",
     "toolName": "Selan"
+  },
+  {
+    "companyName": "Expo",
+    "toolName": "Expo Skills"
+  },
+  {
+    "companyName": "Anthropic",
+    "toolName": "Sandbox Runtime (srt)"
+  },
+  {
+    "companyName": "Samuel Berthe (samber)",
+    "toolName": "cc-skills-golang"
   }
 ]

@@ -11111,6 +11111,87 @@
     "lastUpdated": "2026-10-28"
   },
   {
+    "slug": "expo-skills",
+    "name": "Expo Skills",
+    "company": "Expo",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; framework skills cover the free Expo SDK, while skills for EAS Build, Submit, Hosting, Update, Observe and remote simulators rely on paid Expo Application Services plans and are labelled as such.",
+    "description": "Expo Skills is the Expo team's official library of Agent Skills that teach coding agents how to build, deploy, upgrade and debug Expo and React Native apps correctly. Skills load on demand from task context, with Expo docs, Expo CLI and EAS CLI remaining the source of truth.",
+    "keyFeatures": [
+      "20+ SKILL.md skills behind an expo-overview router skill",
+      "Framework skills for Expo Router, animations, native UI, @expo/ui, data fetching, DOM components, native modules, brownfield and SDK upgrades",
+      "Clearly labelled paid EAS skills for app-store builds and submission, Hosting, Workflows, Update, Observe and remote simulators",
+      "Install via npx skills add expo/skills, or as the expo plugin in the official Claude Code and OpenAI-curated Codex marketplaces",
+      "Works with Cursor, Copilot, Gemini, OpenCode and other skill-aware agents, and pairs with the Expo MCP server"
+    ],
+    "bestFor": "React Native and Expo developers using Claude Code, Codex, Cursor or other skill-aware agents who want official, current Expo and EAS guidance applied automatically.",
+    "notIdealFor": "Developers outside the Expo/React Native ecosystem or those wanting a standalone coding agent, since this is a skills library rather than an agent itself.",
+    "recentUpdates": "Trending on GitHub in late October 2026 with active updates, including EAS Observe skill additions on October 26, 2026 and a Codex migration to the Agent Plugins manifest on October 23, 2026.",
+    "verdict": "The authoritative way to make AI coding agents follow current Expo and EAS practices, and a quick install for any Expo team already using agents.",
+    "tags": [
+      "agent-skills",
+      "expo",
+      "react-native",
+      "mobile-development",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-28"
+  },
+  {
+    "slug": "sandbox-runtime-srt",
+    "name": "Sandbox Runtime (srt)",
+    "company": "Anthropic",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 license, distributed on npm as @anthropic-ai/sandbox-runtime.",
+    "description": "Sandbox Runtime (srt) is Anthropic's lightweight OS-level sandbox, developed for Claude Code, that restricts the filesystem and network access of agents, local MCP servers, bash commands and arbitrary processes without a container. It is a research preview usable as a CLI or a library.",
+    "keyFeatures": [
+      "Wrap any command with srt to enforce filesystem, network and Unix-socket restrictions",
+      "Deny-by-default network allowlists enforced through built-in HTTP and SOCKS5 proxies",
+      "Read and write path rules configured in ~/.srt-settings.json",
+      "Native primitives: sandbox-exec on macOS, bubblewrap on Linux, a dedicated user plus Windows Filtering Platform rules on Windows",
+      "Drop-in sandboxing for MCP servers in .mcp.json and real-time violation monitoring on macOS"
+    ],
+    "bestFor": "Developers and platform teams who want to run coding agents, MCP servers or untrusted scripts with tight filesystem and network limits on their own machines.",
+    "notIdealFor": "Teams needing hardened multi-tenant isolation or production guarantees, since it is a beta research preview rather than a VM or container sandbox.",
+    "recentUpdates": "Actively released, with v0.0.81 published on October 20, 2026, and trending on GitHub in late October 2026.",
+    "verdict": "A simple, container-free way to put guardrails around agents and MCP servers, backed by the same approach Anthropic uses in Claude Code.",
+    "tags": [
+      "sandboxing",
+      "security",
+      "ai-agents",
+      "mcp",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-28"
+  },
+  {
+    "slug": "cc-skills-golang",
+    "name": "cc-skills-golang",
+    "company": "Samuel Berthe (samber)",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; works with your existing coding agent and model provider.",
+    "description": "cc-skills-golang is a collection of Go-specific Agent Skills for production-ready Golang projects from Samuel Berthe, author of samber/lo. The skills were bootstrapped from real Go commits and then edited, tested and reviewed by a human, and are designed as atomic units that cross-reference each other.",
+    "keyFeatures": [
+      "40+ Go skills covering code style, naming, error handling, safety, concurrency, testing, benchmarks, performance, observability and security",
+      "Library skills for gRPC, GraphQL, Swagger, Cobra, Viper, Wire, Dig, Fx, testify and samber/* packages",
+      "Published per-skill token weights and measured error-rate gaps",
+      "Install with npx skills add samber/cc-skills-golang, as a Claude Code plugin or as a Gemini CLI extension",
+      "Works with Cursor, Copilot, Codex, OpenCode, Antigravity and other skill-aware agents"
+    ],
+    "bestFor": "Go developers using Claude Code, Codex, Cursor or other skill-aware agents who want idiomatic, production-grade Go conventions applied automatically.",
+    "notIdealFor": "Projects outside Go or teams wanting a standalone coding agent, since this is a skills library rather than an agent; general dev-workflow skills live in a separate samber/cc-skills repository.",
+    "recentUpdates": "v2.0.0 released on August 20, 2026, with ongoing commits through October 2026 and a spot on GitHub's weekly trending list in late October 2026.",
+    "verdict": "One of the most thorough Go skill packs for coding agents, with measured impact per skill and a well-known Go maintainer behind it.",
+    "tags": [
+      "agent-skills",
+      "golang",
+      "ai-coding",
+      "best-practices",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-28"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
