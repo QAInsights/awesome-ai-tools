@@ -1,6 +1,7 @@
 import { env } from 'cloudflare:workers';
-import { normalizeEventFields } from '../analytics-events.js';
+import { EVENT_CATALOG, normalizeEventFields } from '../analytics-events.js';
 import { getRequestContext } from './request-context';
+import { capturePostHog } from './posthog';
 
 export interface EventFields {
     anonId?: string;
@@ -62,6 +63,8 @@ export function track(event: string, fields: EventFields = {}): void {
         const point = buildDataPoint(event, normalized);
         if (import.meta.env.DEV) console.debug('[Analytics]', point);
         env.ANALYTICS?.writeDataPoint(point);
+        const definition = EVENT_CATALOG[event as keyof typeof EVENT_CATALOG];
+        if (definition?.client === false) capturePostHog(event, normalized);
     } catch {}
 }
 

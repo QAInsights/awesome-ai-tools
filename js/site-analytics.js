@@ -1,6 +1,7 @@
 import { EVENTS, REF_SOURCES } from '../src/lib/analytics-events.js';
 import { analytics } from './analytics-client.js';
 import { authAttribution } from './auth-attribution.js';
+import { initPostHog } from './posthog.js';
 
 function currentToolSlug() {
     const match = window.location.pathname.match(/^\/tools\/([^/]+)\/?$/);
@@ -45,6 +46,8 @@ function isNewSession() {
 }
 
 if (typeof window !== 'undefined') {
+    initPostHog();
+
     if (isNewSession()) {
         analytics.track(EVENTS.VISIT, visitEvent(document.referrer, window.location.search, window.location.hostname));
     }

@@ -51,6 +51,7 @@
     "jose": "6.2.9",
     "mdast-util-to-string": "^4.0.0",
     "obscenity": "0.4.6",
+    "posthog-js": "1.438.7",
     "reading-time": "^1.5.0",
     "three": "0.169.0"
   }

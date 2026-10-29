@@ -2,6 +2,7 @@ import { EVENTS } from '../src/lib/analytics-events.js';
 import { resolveAuthReturnPath } from '../src/lib/auth-session.js';
 import { analytics } from './analytics-client.js';
 import { authAttribution } from './auth-attribution.js';
+import { identifyUser, resetUser } from './posthog.js';
 import { sessionClient } from './session-client.js';
 
 const LOOPBACK_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]', '::1']);
@@ -317,6 +318,8 @@ export class AuthManager {
     }
 
     _notifyAuthChange(event, error = null) {
+        if ((event === 'signin' || event === 'session_restored') && this.user) identifyUser(this.user);
+        if (event === 'signout') resetUser();
         this.authListeners.forEach(callback => {
             try {
                 callback({ event, user: this.user, error });

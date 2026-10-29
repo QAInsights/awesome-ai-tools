@@ -12,6 +12,7 @@ mock.module('cloudflare:workers', () => ({
             },
         },
     },
+    waitUntil() {},
 }));
 
 const { EVENTS } = await import('../analytics-events.js');
