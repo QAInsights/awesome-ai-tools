@@ -1,0 +1,117 @@
+---
+title: "CoderPlan vs Apertis vs Weave Router vs Otari: API Gateways for Claude Code Compared (2026)"
+description: "Four ways to put an API gateway in front of Claude Code, Codex CLI, and other coding agents: CoderPlan, Apertis, Weave Router, and Otari compared on pricing, models, self-hosting, and setup, checked against official docs in October 2026."
+pubDate: 2026-10-29
+tags: ["claude-code", "api-gateway", "llm-router", "coderplan", "apertis", "weave-router", "otari", "comparison"]
+featured: true
+---
+
+Sooner or later, every heavy [Claude Code](/tools/claude-code) user asks the same question: can I point this at something other than my Anthropic login? Maybe you want pay-as-you-go billing instead of a subscription window, one key that works across Claude Code, [Codex CLI](/tools/codex-cli), and Cursor, a router that sends easy turns to cheaper models, or a company gateway that keeps provider keys off developer laptops. All of these are "API gateways," but they solve very different problems.
+
+This guide compares four that people search for most on this site: [CoderPlan](/tools/coderplan), [Apertis](/tools/apertis), [Weave Router](/tools/weave-router), and [Otari](/tools/otari). I read each product's official site, docs, pricing page, and GitHub repository on October 24, 2026, and every claim links to the page it came from.
+
+## How a Gateway Plugs Into Claude Code
+
+Claude Code's own [LLM gateway docs](https://code.claude.com/docs/en/llm-gateway.md) explain the mechanics. You set `ANTHROPIC_BASE_URL` to the gateway and give Claude Code a gateway credential through `ANTHROPIC_AUTH_TOKEN` (a bearer token), `ANTHROPIC_API_KEY` (an `x-api-key` header), or an `apiKeyHelper`, as described in the [connection guide](https://code.claude.com/docs/en/llm-gateway-connect.md). Three details from those docs matter before you pick anything:
+
+1. **A gateway credential replaces your subscription.** While it is active, requests do not use your claude.ai login, and your subscription's usage limits do not apply. You pay whatever the gateway charges instead.
+2. **Setting only the base URL is not enough.** Without a gateway credential, requests still go through the gateway, but your saved claude.ai login stays the active credential, so its limits and billing still apply.
+3. **Anthropic does not support non-Claude models through a gateway.** The docs state that Anthropic "doesn't support routing Claude Code to non-Claude models through any gateway," and that it does not endorse, maintain, or audit third-party gateway products. Some tools below do route other models into Claude Code. That can work, but you are on your own when a feature breaks.
+
+## The Short Answer
+
+- **Pick CoderPlan** if you are an individual developer, especially in China, who wants pay-as-you-go credit that never expires and a one-line base URL for Claude Code, Codex CLI, Gemini CLI, and Cursor.
+- **Pick Apertis** if you want a hosted gateway with fixed monthly quotas, 350+ models, virtual keys, budgets, and a trust center you can show your security team.
+- **Pick Weave Router** if your goal is a lower bill: it scores each request and sends it to the cheapest model likely to succeed, and it is Apache-2.0 if you want to self-host.
+- **Pick Otari** if your company wants to run its own gateway, keep provider keys server-side, and enforce budgets per user, built by Mozilla.ai and Apache-2.0 licensed.
+
+## At a Glance
+
+| Category | CoderPlan | Apertis | Weave Router | Otari |
+| --- | --- | --- | --- | --- |
+| Maker | CoderPlan | STIMA AI LLC | Weave | Mozilla.ai |
+| What it is | Hosted pay-as-you-go API access and billing layer | Hosted model gateway with routing, budgets, and failover | Cost-aware model router for coding agents | Self-hosted LLM gateway |
+| Open source | No | No | Yes, Apache-2.0 | Yes, Apache-2.0 |
+| Self-host | No, hosted only | No, hosted (Team Gateway pilots on request) | Yes (`--local`), or managed | Yes (Docker), plus optional hosted control plane |
+| API formats | Anthropic-style and OpenAI-compatible (`/v1`) | OpenAI-compatible plus Anthropic Messages | Anthropic, OpenAI, and Gemini-compatible | OpenAI and Anthropic-compatible |
+| Models | Claude, GPT, Gemini, Grok, MiniMax, and more | 350+ models from 30+ providers | A pool including Claude, GPT, DeepSeek, GLM, and Gemini | 40+ providers through any-llm |
+| Pricing | Pay-as-you-go credit, never expires | Lite $12, Pro $25, Plus $60, Max $200 per month, or pay-as-you-go | 5% of routed spend, Code Max $10/month, Code Boost $100/month | Free to self-host; you pay providers |
+| Best for | Individuals who want metered billing | Teams that want a hosted, governed gateway | Cutting cost per task | Companies that want to own the gateway |
+
+## CoderPlan: Metered Billing for Individual Developers
+
+[CoderPlan's llms.txt](https://coderplan.ai/llms.txt) describes it as a third-party API access and billing layer for AI coding tools, aimed mainly at developers in China. It is just as clear about what it is not: not a browser or system proxy, not a shared account pool, and not a promise of fixed monthly subscription access. You buy credit, it never expires, and every call shows tokens, cache savings, and cost.
+
+Setup for Claude Code is two variables, per the [Claude Code setup doc](https://coderplan.ai/docs/setup/claude-code): `ANTHROPIC_BASE_URL=https://api.coderplan.ai` (without `/v1`) and `ANTHROPIC_AUTH_TOKEN` set to your CoderPlan `sk-` key. There are matching guides for Codex CLI, Gemini CLI, Cursor, Cline, Continue, Aider, OpenClaw, and Hermes Agent.
+
+Pricing deserves a careful read. The [machine-readable price list](https://coderplan.ai/pricing.md) quotes a base price per million tokens and then a multiplier per usage group. On the day I checked, Claude models used through the `claudecode` group carried a 1.5x multiplier, while GPT models in the `codex` group carried 0.35x. Some newer models are billed by a usage-dependent expression rather than a flat rate. Run your real workload for a day and compare the bill with your current plan before you move a team over.
+
+## Apertis: A Hosted Gateway With Quotas and Governance
+
+[Apertis](https://apertis.ai/llms.txt) positions itself as model supply and delivery infrastructure for AI agents. The core features are virtual keys, budgets, model policy, routing health, and failover, behind an OpenAI-compatible API with an Anthropic Messages endpoint as well. Its catalog lists 350+ models from 30+ providers, including OpenAI, Anthropic, Google, DeepSeek, and China-region providers.
+
+The [homepage facts](https://apertis.ai/homepage.md) list subscription tiers of Lite at $12, Pro at $25, Plus at $60, and Max at $200 per month, each with a defined quota, plus pay-as-you-go top-ups. On the [subscribe page](https://apertis.ai/subscribe), quarterly billing lowers the monthly rate, for example Lite at $11 per month for 600 quotas and Max at $180 per month for 3,000 quotas. Apertis says Claude Code, OpenCode, Cursor, Cline, Kilo Code, and Hermes Agent can connect when the installed version supports a custom OpenAI-compatible or Anthropic endpoint.
+
+What sets it apart from CoderPlan is the governance layer: a [Trust Center](https://apertis.ai/trust) with security controls and subprocessors, and a request form for a DPA or HIPAA BAA. If a procurement team will ask questions, Apertis has more answers ready.
+
+## Weave Router: Route Each Turn to the Cheapest Model That Works
+
+[Weave Router](https://weaveos.com/products/router) is a different idea. Instead of one endpoint for one model, it scores every agent request and sends it to the cheapest model in its pool that is likely to succeed, escalating to a frontier model when a task looks hard. It is cache-aware, so it avoids switching models mid-session in a way that throws away an expensive prompt cache. It can also use the flat-rate subscriptions you already pay for first, which Weave describes as "Claude inside Codex. GPT inside Claude Code." Remember the Anthropic note above: non-Claude models inside Claude Code are not supported by Anthropic.
+
+Setup is one command. The [GitHub README](https://github.com/weave-os/router) shows `npx @weave-os/router` with flags such as `--claude`, `--codex`, and `--opencode`, `--scope project` to commit per-repo settings, and `--local` to point at a self-hosted router on `localhost:8080`. The code is Apache-2.0 and had about 5.6K stars on October 24, 2026.
+
+The managed service charges 5% of routed spend. Code Max is $10 per month and routes across open-source models only, Code Boost is $100 per month and adds OpenAI and Anthropic models, and Enterprise runs on-prem at custom pricing. Weave publishes a benchmark where the router scores 62.1% on Terminal-Bench 4.0 at about half the cost of a single frontier model. That is a vendor benchmark, so treat it as a starting point and measure your own tasks.
+
+## Otari: Run Your Own Gateway
+
+[Otari](https://github.com/mozilla-ai/otari) is Mozilla.ai's open-source gateway, Apache-2.0 licensed and built on its any-llm library. It sits between your applications and model providers. It authenticates requests, resolves provider credentials, checks budgets before dispatch, and records usage afterwards. You get one OpenAI- and Anthropic-compatible endpoint for 40+ providers, and the provider keys never leave the gateway.
+
+You run it yourself with Docker and your own database, and the [gateway docs](https://otari.ai/docs/gateway) cover configuration. Otari issues revocable virtual keys scoped by user, workspace, and model, which maps neatly onto Anthropic's recommended rollout: one provider credential on the gateway, one gateway credential per developer, distributed through managed settings. The trade-off is the one Anthropic's docs warn about: the gateway becomes infrastructure you operate, and it must keep up with new Claude Code features as they ship.
+
+## Pricing, Side by Side
+
+| Plan | CoderPlan | Apertis | Weave Router | Otari |
+| --- | --- | --- | --- | --- |
+| Free | Signup trial credit may be offered | No-cost model routes listed in the catalog | Self-host free (Apache-2.0) | Self-host free (Apache-2.0) |
+| Pay as you go | Base price per 1M tokens x group multiplier | Credit top-ups, no minimum spend | 5% of routed spend | Provider prices only |
+| Subscriptions | None | Lite $12, Pro $25, Plus $60, Max $200 per month (lower billed quarterly) | Code Max $10, Code Boost $100 per month | None |
+| Enterprise | Not listed | Team Gateway pilots, DPA and HIPAA BAA on request | On-prem, custom | Hybrid mode with the hosted otari.ai control plane |
+
+To compare any of these against a straight Claude or ChatGPT subscription, plug your usage into the [AI Cost Calculator](/tools/cost-calculator).
+
+## Which One Should You Pick?
+
+1. **You are one developer and hate subscription windows:** CoderPlan, as long as the group multipliers work out for the models you use.
+2. **You manage a team and need budgets, keys, and a security story without running servers:** Apertis.
+3. **Your bill is the problem:** Weave Router. Start with the self-hosted version and measure task success before you trust the savings.
+4. **Your company wants full control and no third party in the request path:** Otari.
+5. **You only use Claude models and want Anthropic support:** use a gateway as a pass-through to Claude only, or stay on your subscription. Routing other models into Claude Code is unsupported.
+
+Switching gateways is easy because they all speak the same API formats. Switching agents is harder, so keep your project instructions portable with the [Rules Converter](/tools/rules-converter).
+
+## FAQ
+
+**Can I use my Claude Pro or Max subscription through a gateway?**
+Not as a credential. Claude Code's docs say that while a gateway credential is active, requests do not carry your claude.ai login and the subscription limits do not apply. You are billed by the gateway instead.
+
+**Is it safe to send my code through a third-party gateway?**
+Every prompt and file the agent reads passes through it. Read the provider's privacy policy and data retention terms first. Self-hosting Otari or Weave Router keeps the request path inside your own infrastructure.
+
+**Does Anthropic support these gateways?**
+Anthropic says any gateway that exposes a supported API format works, but it does not endorse, maintain, or audit third-party gateway products, and it does not support non-Claude models in Claude Code.
+
+**Which gateways also work with Codex CLI?**
+CoderPlan has a Codex CLI guide, Weave Router has a `--codex` setup flag, and Apertis and Otari both expose OpenAI-compatible endpoints.
+
+**What should I read next?**
+If you are still choosing the agent itself, read [OpenCode vs Claude Code vs Codex CLI](/blog/opencode-vs-claude-code-vs-codex-cli). For more options, see [CoderPlan alternatives](/tools/coderplan/alternatives) and [Claude Code alternatives](/tools/claude-code/alternatives).
+
+## Sources
+
+All facts were checked on October 24, 2026. Prices and model lists change often, so confirm on the official pages before you buy:
+
+- Claude Code: [LLM gateways](https://code.claude.com/docs/en/llm-gateway.md), [connect Claude Code to a gateway](https://code.claude.com/docs/en/llm-gateway-connect.md)
+- CoderPlan: [llms.txt](https://coderplan.ai/llms.txt), [Claude Code setup](https://coderplan.ai/docs/setup/claude-code), [pricing](https://coderplan.ai/pricing.md)
+- Apertis: [llms.txt](https://apertis.ai/llms.txt), [homepage facts](https://apertis.ai/homepage.md), [subscription plans](https://apertis.ai/subscribe), [Trust Center](https://apertis.ai/trust)
+- Weave Router: [product page](https://weaveos.com/products/router), [GitHub repository](https://github.com/weave-os/router)
+- Otari: [GitHub repository](https://github.com/mozilla-ai/otari), [gateway docs](https://otari.ai/docs/gateway)
