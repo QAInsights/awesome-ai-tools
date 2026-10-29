@@ -11252,6 +11252,33 @@
     "lastUpdated": "2026-10-29"
   },
   {
+    "slug": "skill-recorder",
+    "name": "Skill Recorder",
+    "company": "Microsoft",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; analysis and skill generation run through GitHub Copilot, so a GitHub account with Copilot access (free or paid Copilot plan) is required.",
+    "description": "Skill Recorder is Microsoft's open-source desktop app that records you doing a task once and turns the session into a reusable skill an AI agent can repeat. It captures screen activity, app switches, visited pages, an optional recorded terminal and narration, then uses the GitHub Copilot CLI to reconstruct the intent and steps and build a SKILL.md Skill or a scheduled Automation.",
+    "keyFeatures": [
+      "Record a work session with a global hotkey, including optional narration and a session-scoped recorded terminal",
+      "GitHub Copilot reconstructs one overall intent plus an editable, ordered list of steps",
+      "Generates a reusable SKILL.md Skill or a scheduled/triggered Automation from an approved analysis",
+      "Generated procedures prefer native agent tools like the gh CLI or web_fetch and generalize from a single example",
+      "Read-only Review SKILL.md preview before adding to Microsoft Autopilots like Scout, Copilot Cowork or Copilot Studio, or exporting"
+    ],
+    "bestFor": "Developers and power users who want to teach agents repeatable workflows by demonstration instead of hand-writing SKILL.md files, especially in the GitHub Copilot and Microsoft Copilot ecosystem.",
+    "notIdealFor": "Linux users, people without GitHub Copilot access, or teams that cannot send recorded session details to GitHub's cloud for analysis.",
+    "recentUpdates": "Trending on GitHub in late October 2026 with 5,500+ stars; v0.7.0 (September 21, 2026) added an optional read-only Review SKILL.md preview, with commits continuing through October 24, 2026.",
+    "verdict": "A practical record-once, reuse-forever bridge between human demonstrations and agent skills, backed by Microsoft and Copilot.",
+    "tags": [
+      "agent-skills",
+      "github-copilot",
+      "automation",
+      "workflow-recording",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-29"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
