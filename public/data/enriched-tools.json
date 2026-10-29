@@ -1567,6 +1567,35 @@
     "lastUpdated": "2026-10-25"
   },
   {
+    "slug": "volt",
+    "name": "Volt",
+    "company": "LeulAria",
+    "pricing": "open-source",
+    "pricingDetail": "MIT-licensed and free while in public beta; Volt does not sell tokens—users bring their own subscriptions (Claude Code, Codex, Cursor, etc.) or connect local models like Ollama.",
+    "description": "Volt is an open-source agentic development workspace built on the real VS Code core, unifying chats, code, Git, a browser, and a terminal in one window so AI coding agents work alongside you.",
+    "keyFeatures": [
+      "Built on VS Code core with extensions, themes, keybindings, language servers, and debuggers carrying over",
+      "Runs Claude Code, Codex, OpenCode, Cursor, Grok, and other agents, plus local models via Ollama, LM Studio, vLLM, and gateways",
+      "Orchestrator and subagents with parallel agent runs, each tracking its own model, status, and runtime",
+      "Git checkpoints and hunk-level review of agent edits, with per-turn file change visibility",
+      "Skills, plugins, and MCP servers discoverable and addable in one click",
+      "Automations triggered on schedules, webhooks, or events from GitHub, GitLab, Slack, Linear, Jira, or Sentry",
+      "Usage insights tracking tokens and spend per day, cache share, and per-model cost"
+    ],
+    "bestFor": "Developers who want a Cursor-style agentic IDE that is open-source, VS Code-compatible, and lets them bring their own model subscriptions or local models.",
+    "notIdealFor": "Users needing a stable, code-signed production release or those who want a vendor-managed token plan rather than bringing their own subscriptions.",
+    "recentUpdates": "Public beta v0.0.1 currently available for macOS, Windows, and Linux, with Stable, Beta, and Nightly channels installing side by side; builds are not yet code-signed.",
+    "verdict": "Volt offers a compelling open-source, VS Code-based agentic workspace with strong multi-agent orchestration, review tooling, and bring-your-own-model flexibility. It is still early-stage (public beta, unsigned builds, small GitHub community), so expect rough edges and rapid changes.",
+    "tags": [
+      "agentic IDE",
+      "VS Code",
+      "open-source",
+      "AI agents",
+      "MCP"
+    ],
+    "lastUpdated": "2026-10-29"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
