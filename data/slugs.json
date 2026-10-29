@@ -348,12 +348,6 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
-    "slug": "minimax-code-minimax",
-    "name": "MiniMax Code",
-    "company": "MiniMax",
-    "category": "AI-Native IDEs & Editors"
-  },
-  {
     "slug": "volt",
     "name": "Volt",
     "company": "LeulAria",
@@ -2493,6 +2487,12 @@
     "slug": "skill-recorder",
     "name": "Skill Recorder",
     "company": "Microsoft",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "mcode-stack",
+    "name": "MCode Stack",
+    "company": "MiniMax",
     "category": "Developer Productivity & Workflow"
   },
   {

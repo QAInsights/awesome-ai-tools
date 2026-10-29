@@ -11279,6 +11279,33 @@
     "lastUpdated": "2026-10-29"
   },
   {
+    "slug": "mcode-stack",
+    "name": "MCode Stack",
+    "company": "MiniMax",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; the skills run inside MiniMax Code, Claude Code, Codex or other skill-aware agents, which bring their own model costs.",
+    "description": "MCode Stack is MiniMax's open-source repository of the workflows, skills and checklists the MiniMax Code team actually uses to build MiniMax Code. Each team member's stack is a plugin package of SKILL.md skills that encode engineering habits for agentic coding, from context budgeting and subagent splitting to independent review, and pairs with the MCode Engineering Notes article series.",
+    "keyFeatures": [
+      "Per-engineer stacks (ronny, jiachen) shipped as installable plugin packages",
+      "Skills for planning and splitting work: subagent-split-check, engineering-small-prs, engineering-change-descriptions",
+      "Context and long-session skills: tool-budget-audit, context-tax-audit, long-session-check, handoff-doc, long-command-check",
+      "Review and experiment skills: independent-review, engineering-code-review, harness-experiment, trajectory-review",
+      "Installs as a plugin marketplace in MiniMax Code, Claude Code and Codex, or by copying skills into ~/.agents/skills/"
+    ],
+    "bestFor": "Developers using MiniMax Code, Claude Code or Codex who want battle-tested, team-authored skills for keeping AI-written code reviewable and agent context lean.",
+    "notIdealFor": "Anyone looking for a standalone coding agent or IDE, since this is a skills and workflow collection rather than an agent itself.",
+    "recentUpdates": "Published on October 28, 2026 with 390+ stars in its first days; October 29, 2026 updates made each stack a one-command Claude Code and Codex install and renumbered the Engineering Notes companions.",
+    "verdict": "A rare look at how an AI coding-agent team works with its own agent, packaged as reusable skills that are useful well beyond MiniMax Code.",
+    "tags": [
+      "agent-skills",
+      "minimax",
+      "claude-code",
+      "codex",
+      "open-source"
+    ],
+    "lastUpdated": "2026-10-29"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
