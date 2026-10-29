@@ -29,6 +29,7 @@ mock.module('cloudflare:workers', () => ({
             writeDataPoint: (point: { indexes: string[]; blobs: string[] }) => points.push(point),
         },
     },
+    waitUntil() {},
 }));
 mock.module('../../../../src/lib/server/favorites-repository', () => ({
     addFavorite: async (_db: unknown, _userId: string, slug: string) => {

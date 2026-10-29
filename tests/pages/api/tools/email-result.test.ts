@@ -44,6 +44,7 @@ mock.module('cloudflare:workers', () => ({
         SITE_ORIGIN: 'https://ai.dosa.dev',
         TOOL_EMAIL_LIMITER: { limit: async () => ({ success: limiterSuccess }) },
     },
+    waitUntil() {},
 }));
 mock.module('../../../../src/lib/server/email', () => ({
     sendEmail: async (message: { to: string; subject: string; html: string; text: string }) => {

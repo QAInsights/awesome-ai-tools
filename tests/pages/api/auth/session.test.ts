@@ -26,6 +26,7 @@ mock.module('cloudflare:workers', () => ({
         GITHUB_CLIENT_ID: 'github-client-id',
         GITHUB_CLIENT_SECRET: 'github-client-secret',
     },
+    waitUntil() {},
 }));
 
 const importId = Date.now();
