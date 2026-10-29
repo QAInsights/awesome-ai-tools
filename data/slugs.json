@@ -2484,6 +2484,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "skill-recorder",
+    "name": "Skill Recorder",
+    "company": "Microsoft",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
