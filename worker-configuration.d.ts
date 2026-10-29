@@ -11,6 +11,8 @@ interface __BaseEnv_Env {
 	CF_ACCOUNT_ID: "79a56f7656f972b064b9d4ec3662b8d0";
 	ADMIN_USER_IDS: "github:2826376,github:local-staging-tester" | "github:2826376";
 	ANALYTICS_DATASET: "aat_events_staging" | "aat_events";
+	POSTHOG_KEY: "phc_xMqkgkigZL6vzxSdDm9wwDPmZKniHvUNTqyaGYkK2x2F";
+	POSTHOG_HOST: "https://us.i.posthog.com";
 	EMAIL_DRY_RUN?: "1";
 	GOOGLE_CLIENT_ID: string;
 	GITHUB_CLIENT_ID: string;
@@ -47,5 +49,5 @@ type StringifyValues<EnvType extends Record<string, unknown>> = {
 	[Binding in keyof EnvType]: EnvType[Binding] extends string ? EnvType[Binding] : string;
 };
 declare namespace NodeJS {
-	interface ProcessEnv extends StringifyValues<Pick<Cloudflare.Env, "CF_ACCOUNT_ID" | "ADMIN_USER_IDS" | "ANALYTICS_DATASET" | "EMAIL_DRY_RUN" | "GOOGLE_CLIENT_ID" | "GITHUB_CLIENT_ID" | "GITHUB_CLIENT_SECRET" | "CF_ANALYTICS_TOKEN" | "RESEND_API_KEY">> {}
+	interface ProcessEnv extends StringifyValues<Pick<Cloudflare.Env, "CF_ACCOUNT_ID" | "ADMIN_USER_IDS" | "ANALYTICS_DATASET" | "POSTHOG_KEY" | "POSTHOG_HOST" | "EMAIL_DRY_RUN" | "GOOGLE_CLIENT_ID" | "GITHUB_CLIENT_ID" | "GITHUB_CLIENT_SECRET" | "CF_ANALYTICS_TOKEN" | "RESEND_API_KEY">> {}
 }

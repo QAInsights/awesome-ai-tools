@@ -24,6 +24,7 @@ loadEnvLocal();
 // Read from the active environment or fallback for local
 const enableVoting = process.env.ENABLE_VOTING || 'true';
 const cfSiteKey = process.env.CF_SITEKEY || '1x00000000000000000000AA';
+const posthogKey = process.env.POSTHOG_KEY || 'phc_xMqkgkigZL6vzxSdDm9wwDPmZKniHvUNTqyaGYkK2x2F';
 // NOTE: Only the client_id is injected — client_secret stays in Worker secrets
 const githubClientId = process.env.GITHUB_CLIENT_ID || '';
 
@@ -73,6 +74,7 @@ const result = await build({
     define: {
         'process.env.ENABLE_VOTING': JSON.stringify(enableVoting),
         'process.env.CF_SITEKEY': JSON.stringify(cfSiteKey),
+        'process.env.POSTHOG_KEY': JSON.stringify(posthogKey),
         'process.env.GITHUB_CLIENT_ID': JSON.stringify(githubClientId),
     }
 });

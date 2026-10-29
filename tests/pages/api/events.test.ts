@@ -25,6 +25,7 @@ mock.module('cloudflare:workers', () => ({
         },
         ANALYTICS: { writeDataPoint: (point: { indexes: string[]; blobs: string[] }) => points.push(point) },
     },
+    waitUntil() {},
 }));
 
 const { POST } = await import(`../../../src/pages/api/events.ts?test=${Date.now()}`);
