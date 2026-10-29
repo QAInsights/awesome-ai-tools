@@ -11193,6 +11193,36 @@
     "lastUpdated": "2026-10-28"
   },
   {
+    "slug": "sqwakie",
+    "name": "Sqwakie",
+    "company": "Alex Carney",
+    "pricing": "freemium",
+    "pricingDetail": "Free for up to 2 people and 4 machines with unlimited agents, plus a 14-day Team trial with no card required. Paid plans are per person, with agents free; exact paid tier prices are not published in the results.",
+    "description": "Sqwakie is a coordination layer that puts every Claude Code and Codex session across a team's machines on one live dashboard, letting agents message each other peer-to-peer and work shared kanban boards. Machines connect directly via Sqwakie Direct (QUIC/iroh) or Tailscale, with an encrypted relay fallback and no central Sqwakie server.",
+    "keyFeatures": [
+      "Live dashboard of every agent's state (working, waiting, stuck, idle) with sub-agent rows",
+      "Peer-to-peer agent messaging via CLI or MCP tools (walkie_ask, walkie_inbox, walkie_answer, walkie_post, walkie_read)",
+      "Project kanban boards whose cards agents can start, review and finish, with a Data Room per project",
+      "Sqwakie Direct: no VPN, account or open port; signed, append-only replicated team log with encrypted relay fallback",
+      "Talkie orchestrator that imports projects from Linear, GitHub or repos and keeps boards current",
+      "Per-machine pages showing agents, memory, load, temperature, GPU and pending asks",
+      "Usage tracking for Claude, Codex and Kimi plans, with Codex resets from the dashboard"
+    ],
+    "bestFor": "Small teams running Claude Code and Codex agents across multiple laptops and build boxes who need shared visibility and agent-to-agent coordination.",
+    "notIdealFor": "Solo developers (Claude Code's own cross-session messaging may suffice) and Windows or Intel Mac users, since native Windows and Intel Macs aren't covered by the pre-release.",
+    "recentUpdates": "v0.2.0-pre.21 pre-release is the current installer version; listings and launch posts appeared around October 17-23, 2026, including an openai/codex discussion and a protocol writeup on the signed replicated log.",
+    "verdict": "Sqwakie offers a genuinely distinctive peer-to-peer design with no central server, strong agent messaging and board features, and a generous free tier for two people. However, it is an early pre-release with limited platform support, a small community, and a source-available (not OSI open source) license.",
+    "tags": [
+      "AI agents",
+      "Claude Code",
+      "Codex",
+      "MCP",
+      "team coordination",
+      "peer-to-peer"
+    ],
+    "lastUpdated": "2026-10-29"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
