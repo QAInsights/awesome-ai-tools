@@ -354,6 +354,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "volt",
+    "name": "Volt",
+    "company": "LeulAria",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
