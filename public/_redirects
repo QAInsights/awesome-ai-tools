@@ -1,6 +1,7 @@
 /sitemap.xml /sitemap-index.xml 301
 /tools/windsurf /tools/devin 301
 /tools/devin-cognition /tools/devin 301
+/tools/minimax-code-minimax /tools/mcode-stack 301
 /compare/cursor-vs-windsurf /compare/cursor-vs-devin 301
 /compare/windsurf-vs-trae /compare/devin-vs-trae 301
 /compare/windsurf-vs-zed /compare/devin-vs-zed 301
