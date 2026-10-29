@@ -348,6 +348,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "minimax-code-minimax",
+    "name": "MiniMax Code",
+    "company": "MiniMax",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
