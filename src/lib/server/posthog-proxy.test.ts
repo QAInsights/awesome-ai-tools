@@ -1,5 +1,10 @@
 import { describe, expect, test } from 'bun:test';
-import { filterPostHogHeaders, filterPostHogResponseHeaders, posthogUpstreamUrl } from './posthog-proxy';
+import {
+    filterPostHogHeaders,
+    filterPostHogResponseHeaders,
+    posthogUpstreamUrl,
+    readBodyWithLimit,
+} from './posthog-proxy';
 
 describe('PostHog ingest proxy helpers', () => {
     test('maps static assets to the US asset host and preserves the query string', () => {
@@ -40,5 +45,45 @@ describe('PostHog ingest proxy helpers', () => {
 
         expect(forwarded.get('set-cookie')).toBeNull();
         expect(forwarded.get('content-type')).toBe('application/json');
+    });
+
+    test('rejects a declared body length over the limit without reading the body', async () => {
+        const request = {
+            headers: new Headers({ 'Content-Length': '11' }),
+            body: { getReader() { throw new Error('body should not be read'); } },
+        } as unknown as Request;
+
+        expect(await readBodyWithLimit(request, 10)).toBeNull();
+    });
+
+    test('cancels a streamed body that exceeds the limit', async () => {
+        let cancelled = false;
+        const body = new ReadableStream<Uint8Array>({
+            start(controller) {
+                controller.enqueue(new Uint8Array([1, 2, 3, 4, 5, 6]));
+                controller.enqueue(new Uint8Array([7, 8, 9, 10, 11, 12]));
+            },
+            cancel() { cancelled = true; },
+        });
+        const request = { headers: new Headers(), body } as Request;
+
+        expect(await readBodyWithLimit(request, 10)).toBeNull();
+        expect(cancelled).toBe(true);
+    });
+
+    test('round-trips a normal streamed body byte-for-byte', async () => {
+        const expected = new Uint8Array([0, 1, 2, 127, 128, 255]);
+        const body = new ReadableStream<Uint8Array>({
+            start(controller) {
+                controller.enqueue(expected.slice(0, 2));
+                controller.enqueue(expected.slice(2));
+                controller.close();
+            },
+        });
+        const request = { headers: new Headers(), body } as Request;
+
+        const actual = await readBodyWithLimit(request, 10);
+
+        expect(Array.from(new Uint8Array(actual!))).toEqual(Array.from(expected));
     });
 });

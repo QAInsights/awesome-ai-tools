@@ -2,7 +2,7 @@ import { describe, expect, test } from 'bun:test';
 import { createPostHogClient } from './posthog.js';
 
 function createHarness(overrides = {}) {
-    const state = { calls: [], idleCallbacks: [], loadCallbacks: [], sdkLoads: 0 };
+    const state = { calls: [], idleCallbacks: [], loadCallbacks: [], timers: [], sdkLoads: 0 };
     const posthog = {
         init(key, options) {
             state.calls.push(['init', key, options]);
@@ -26,6 +26,7 @@ function createHarness(overrides = {}) {
             },
         },
         scheduleIdle: callback => state.idleCallbacks.push(callback),
+        setTimeoutFn: (callback, delay) => state.timers.push({ callback, delay }),
         ...overrides,
     });
     return { client, posthog, state };
@@ -91,6 +92,51 @@ describe('PostHog client', () => {
             session_recording: { maskAllInputs: true, maskTextSelector: '[data-ph-mask]' },
             capture_exceptions: true,
         });
+    });
+
+    test('retries a rejected SDK load and replays queued calls exactly once', async () => {
+        let harness;
+        harness = createHarness({
+            loadSdk: async () => {
+                harness.state.sdkLoads += 1;
+                if (harness.state.sdkLoads === 1) throw new Error('temporary load failure');
+                return { default: harness.posthog };
+            },
+        });
+        harness.client.capture('queued-event', { value: 1 });
+
+        await loadClient(harness);
+        expect(harness.state.timers.map(timer => timer.delay)).toEqual([5_000]);
+
+        harness.state.timers[0].callback();
+        await Promise.resolve();
+
+        expect(harness.state.sdkLoads).toBe(2);
+        expect(harness.state.calls.filter(call => call[0] === 'capture')).toEqual([
+            ['capture', 'queued-event', { value: 1 }],
+        ]);
+    });
+
+    test('stops after two retries when every SDK load rejects', async () => {
+        let harness;
+        harness = createHarness({
+            loadSdk: async () => {
+                harness.state.sdkLoads += 1;
+                throw new Error('SDK unavailable');
+            },
+        });
+        harness.client.capture('queued-event');
+
+        await loadClient(harness);
+        harness.state.timers[0].callback();
+        await Promise.resolve();
+        harness.state.timers[1].callback();
+        await Promise.resolve();
+
+        expect(harness.state.sdkLoads).toBe(3);
+        expect(harness.state.timers.map(timer => timer.delay)).toEqual([5_000, 15_000]);
+        expect(() => harness.client.capture('still-safe')).not.toThrow();
+        expect(() => harness.client.resetUser()).not.toThrow();
     });
 
     test('caps queued calls at 50 and keeps replay order', async () => {

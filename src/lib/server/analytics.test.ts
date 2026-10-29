@@ -1,24 +1,35 @@
 import { afterAll, describe, expect, mock, test } from 'bun:test';
 
 const points: unknown[] = [];
+const waitUntilPromises: Promise<unknown>[] = [];
+const fetchCalls: Array<[RequestInfo | URL, RequestInit?]> = [];
 let shouldThrow = false;
-mock.module('cloudflare:workers', () => ({
-    env: {
-        CF_VERSION_METADATA: { id: 'version-123' },
-        ANALYTICS: {
-            writeDataPoint(point: unknown) {
-                if (shouldThrow) throw new Error('unavailable');
-                points.push(point);
-            },
+const originalFetch = globalThis.fetch;
+
+const env = {
+    CF_VERSION_METADATA: { id: 'version-123' },
+    POSTHOG_KEY: 'phc-test-key',
+    POSTHOG_HOST: 'https://posthog.example',
+    ANALYTICS: {
+        writeDataPoint(point: unknown) {
+            if (shouldThrow) throw new Error('unavailable');
+            points.push(point);
         },
     },
-    waitUntil() {},
+};
+
+mock.module('cloudflare:workers', () => ({
+    env,
+    waitUntil(promise: Promise<unknown>) { waitUntilPromises.push(promise); },
 }));
 
 const { EVENTS } = await import('../analytics-events.js');
 const { buildDataPoint, track } = await import(`./analytics.ts?test=${Date.now()}`);
 
-afterAll(() => mock.restore());
+afterAll(() => {
+    globalThis.fetch = originalFetch;
+    mock.restore();
+});
 
 describe('analytics event schema', () => {
     test('keeps the positional Analytics Engine schema stable', () => {
@@ -60,5 +71,34 @@ describe('analytics event schema', () => {
         shouldThrow = true;
         expect(() => track(EVENTS.AUTH_ERROR)).not.toThrow();
         shouldThrow = false;
+    });
+
+    test('mirrors server events when the Analytics Engine write throws', async () => {
+        waitUntilPromises.length = 0;
+        fetchCalls.length = 0;
+        globalThis.fetch = ((...args: [RequestInfo | URL, RequestInit?]) => {
+            fetchCalls.push(args);
+            return Promise.resolve(new Response(null, { status: 200 }));
+        }) as typeof fetch;
+        shouldThrow = true;
+
+        try {
+            expect(() => track(EVENTS.FAVORITE_ADDED, {
+                userId: 'github:42',
+                trigger: 'favorite_heart',
+                subject: 'cursor',
+            })).not.toThrow();
+            await Promise.all(waitUntilPromises);
+
+            expect(fetchCalls).toHaveLength(1);
+            const [, options] = fetchCalls[0]!;
+            expect(JSON.parse(String(options?.body))).toMatchObject({
+                event: EVENTS.FAVORITE_ADDED,
+                distinct_id: 'github:42',
+            });
+        } finally {
+            shouldThrow = false;
+            globalThis.fetch = originalFetch;
+        }
     });
 });

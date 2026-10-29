@@ -1,5 +1,6 @@
 const MAX_QUEUE_SIZE = 50;
 const ENABLED_HOSTNAMES = new Set(['ai.dosa.dev', 'www.ai.dosa.dev']);
+const RETRY_DELAYS_MS = [5_000, 15_000];
 
 function defaultScheduleIdle(callback, windowLike) {
     const idleCallback = windowLike?.requestIdleCallback?.bind(windowLike)
@@ -15,6 +16,7 @@ export function createPostHogClient({
     posthogInstance = null,
     windowLike = globalThis.window,
     scheduleIdle = callback => defaultScheduleIdle(callback, windowLike),
+    setTimeoutFn = globalThis.setTimeout,
 } = {}) {
     const enabled = ENABLED_HOSTNAMES.has(hostname) && typeof key === 'string' && key.trim() !== '';
     let posthog = null;
@@ -22,6 +24,7 @@ export function createPostHogClient({
     let initializationRequested = false;
     let initializationScheduled = false;
     let ready = false;
+    let retryCount = 0;
     let queue = [];
 
     function invoke(method, args) {
@@ -49,13 +52,26 @@ export function createPostHogClient({
         if (queue.length > MAX_QUEUE_SIZE) queue.shift();
     }
 
+    function retryInitialization() {
+        initialized = false;
+        const delay = RETRY_DELAYS_MS[retryCount];
+        if (delay === undefined) return;
+        retryCount += 1;
+        try {
+            setTimeoutFn(() => { void initialize(); }, delay);
+        } catch {}
+    }
+
     async function initialize() {
         if (!enabled || initialized) return;
         initialized = true;
         try {
             const sdk = posthogInstance ? null : await loadSdk();
             posthog = posthogInstance ?? sdk?.default ?? sdk?.posthog ?? sdk;
-            if (!posthog || typeof posthog.init !== 'function') return;
+            if (!posthog || typeof posthog.init !== 'function') {
+                retryInitialization();
+                return;
+            }
             posthog.init(key, {
                 api_host: '/ingest',
                 ui_host: 'https://us.posthog.com',
@@ -69,7 +85,9 @@ export function createPostHogClient({
                 capture_exceptions: true,
                 loaded: instance => markReady(instance),
             });
-        } catch {}
+        } catch {
+            retryInitialization();
+        }
     }
 
     function scheduleInitialization() {
