@@ -461,27 +461,28 @@
     "name": "MiniMax Code",
     "company": "MiniMax",
     "pricing": "freemium",
-    "pricingDetail": "Operates on a credit-based system; users can earn free points via daily check-ins or subscribe to M Plan tiers for professional quotas and access to the full model lineup.",
-    "description": "MiniMax Code is an AI-native desktop agent application designed to handle both software development and everyday office tasks by connecting to local files, tools, and browsers. It features a dual-mode interface, Coding and Work, allowing users to switch between development environments and productivity workflows like documentation, research, and data organization.",
+    "pricingDetail": "The open-source CLI (mcode) is free under MIT and works with your own Anthropic- or OpenAI-compatible model keys, while MiniMax's hosted models require an M Plan subscription at roughly $22, $55, or $132/month (Go/Explore/Build, or Plus/Max/Ultra) with token quotas on rolling 5-hour and weekly windows that do not carry over.",
+    "description": "MiniMax Code is a coding agent available as an open-source MIT-licensed terminal CLI (mcode), plus closed-source desktop, web, and mobile apps, powered by MiniMax M-series models with up to a 1M-token context. It builds, tests, and iterates on code from a prompt, with agent teams, persistent memory, and scheduled tasks in the desktop app.",
     "keyFeatures": [
-      "Coding and Work dual-mode interface",
-      "Local-cloud collaboration and task handoff",
-      "Built-in browser for web previews and debugging",
-      "Remote control via mobile app",
-      "Scheduled recurring task automation"
+      "Open-source MIT terminal agent (mcode) with interactive TUI, headless `mcode exec` JSON mode, and ACP server for editors",
+      "MiniMax M3 model with 1M-token context and multimodal text, image, and video support",
+      "Bring-your-own-model support via Anthropic-shaped and OpenAI-shaped providers",
+      "Desktop app with Agent Team, persistent memory, scheduled tasks, built-in browser, and phone control",
+      "Cross-platform install without admin rights on macOS, Windows, Linux, and WSL; npm install option",
+      "Shares M Plan quota across MiniMax Code and other tools via Subscription Key"
     ],
-    "bestFor": "Developers requiring an AI agent that integrates deeply with local project folders, terminal sessions, and development workflows while also supporting research and document creation.",
-    "notIdealFor": "Users seeking a simple, web-only chat interface without the need for local file system access, terminal operations, or persistent workspace context.",
-    "recentUpdates": "Recent updates include the debut of the M3.1-Flash-Preview text model, a redesigned interface, the introduction of M Plan subscriptions, and an open-source CLI (v0.4.12+).",
-    "verdict": "MiniMax Code is a powerful, integrated agentic environment that excels at bridging the gap between local development and cloud-based task automation, making it a robust choice for power users who want a unified workspace for both coding and office productivity.",
+    "bestFor": "Developers and technical teams who want a terminal-first coding agent they can inspect and extend, or who want long-context agentic coding on a single subscription covering text, image, and video models.",
+    "notIdealFor": "Users wanting a fully open-source stack end to end, since the desktop app is closed source, and anyone needing a free hosted-model tier, as no $0 plan is published.",
+    "recentUpdates": "CLI released September 18, 2026 (v0.4.12, installs `mcode` and `mcode-tools`); mcode terminal agent open-sourced under MIT on September 18, 2026; MiniMax Code Mini App announced; M3.1 Flash model launched (2026-10-19); M3.1-Flash-Preview retired in favor of M3.1-Flash.",
+    "verdict": "MiniMax Code pairs a genuinely open, flexible CLI with a capable 1M-token M3 model and a broad multimodal subscription, making it a strong value for long-context agentic work. The closed-source desktop half, quota windows that don't roll over, and the absence of a free hosted tier are the main trade-offs.",
     "tags": [
-      "AI Agent",
-      "IDE",
-      "Coding Assistant",
-      "Productivity",
-      "CLI"
+      "coding-agent",
+      "CLI",
+      "open-source",
+      "MiniMax M3",
+      "long-context"
     ],
-    "lastUpdated": "2026-10-15"
+    "lastUpdated": "2026-10-29"
   },
   {
     "slug": "meta-muse",
