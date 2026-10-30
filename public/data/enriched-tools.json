@@ -5830,6 +5830,35 @@
     "lastUpdated": "2026-10-24"
   },
   {
+    "slug": "appwizzy",
+    "name": "AppWizzy",
+    "company": "AppWizzy",
+    "pricing": "freemium",
+    "pricingDetail": "Free plan gives 5 credits/month (non-accumulative) for testing and personal use; paid plans start around $20/month with 25 accumulative credits (1 credit ≈ $1), plus Enterprise custom pricing. Costs split into AI token usage, per-active-day VM hosting, and optional template licenses.",
+    "description": "AppWizzy is an AI-powered vibe-coding platform that provisions a private development VM with Codex installed, letting users build, run, and host full-stack web apps through natural-language chat while retaining source code and terminal access.",
+    "keyFeatures": [
+      "Private dev VM with Codex installed and persistent workspace",
+      "AI edits your repo with streamed stdout/stderr and file changes; accept, revert, or iterate",
+      "Supports PHP, Python, Node.js/Next.js, Postgres, and MySQL stacks",
+      "Git-native workflow with history, rollback, and source code ownership",
+      "Production hosting with daily VM billing and dev/stable environments",
+      "Ready-made templates (SaaS, CRM, E-commerce, Admin, Portal, Landing)",
+      "Collaboration, private apps, and refundable bad-AI edits on paid plans"
+    ],
+    "bestFor": "Developers, founders, and agencies who want AI-assisted speed but need real infrastructure, backend, databases, and full code ownership for production apps.",
+    "notIdealFor": "Non-technical users wanting a purely no-code toy builder, or anyone on a tight budget, since AI tokens, hosting days, and template licenses are billed separately and can add up.",
+    "recentUpdates": "Launched on Product Hunt around June 2026 (with a 20% launch promo); debuted as a standalone platform in October 2025 after spinning out of Flatlogic; secured investment from Mutatio Ventures and Eagle Travis in August 2025 and appointed Kevin McKeand as Strategic Advisor.",
+    "verdict": "AppWizzy stands out by pairing AI chat-driven building with a real VM, databases, and code ownership, making it more production-oriented than typical vibe-coding tools. However, its credit-based billing across AI, hosting, and templates requires careful cost management, and the platform is still early with no user reviews yet.",
+    "tags": [
+      "AI app builder",
+      "vibe coding",
+      "full-stack",
+      "VM hosting",
+      "developer tools"
+    ],
+    "lastUpdated": "2026-10-30"
+  },
+  {
     "slug": "coderabbit",
     "name": "CodeRabbit",
     "company": "CodeRabbit",
