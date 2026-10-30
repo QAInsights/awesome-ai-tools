@@ -1290,6 +1290,12 @@
     "category": "Browser-Based & App Builders"
   },
   {
+    "slug": "appwizzy",
+    "name": "AppWizzy",
+    "company": "AppWizzy",
+    "category": "Browser-Based & App Builders"
+  },
+  {
     "slug": "coderabbit",
     "name": "CodeRabbit",
     "company": "CodeRabbit",
