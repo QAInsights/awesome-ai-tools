@@ -1434,6 +1434,12 @@
     "category": "AI Code Review & Security"
   },
   {
+    "slug": "sphinx",
+    "name": "Sphinx",
+    "company": "parthh01",
+    "category": "AI Code Review & Security"
+  },
+  {
     "slug": "gitauto",
     "name": "GitAuto",
     "company": "GitAuto",
@@ -1473,6 +1479,12 @@
     "slug": "promptfoo",
     "name": "Promptfoo",
     "company": "Promptfoo (part of OpenAI)",
+    "category": "AI Testing & Quality Assurance"
+  },
+  {
+    "slug": "reticle",
+    "name": "Reticle",
+    "company": "Reticle Labs",
     "category": "AI Testing & Quality Assurance"
   },
   {
@@ -2301,6 +2313,12 @@
     "slug": "moli",
     "name": "Moli",
     "company": "Lexmount",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "lightpanda",
+    "name": "Lightpanda",
+    "company": "Lightpanda",
     "category": "Developer Productivity & Workflow"
   },
   {
