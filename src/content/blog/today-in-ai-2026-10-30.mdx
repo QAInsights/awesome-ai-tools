@@ -1,0 +1,78 @@
+---
+title: "GitHub adds 4M CPU cores as AI code floods its repos"
+description: "GitHub's bill for AI-generated code, Nvidia's open 40-language transcription model, Mistral's trillion-parameter weights, and Arm's Copilot CLI push."
+pubDate: 2026-10-30
+tags: ["news","today-in-ai","github","nvidia","mistral","agents","cloudflare","open-weights"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-10-30 UTC.
+
+GitHub published the numbers behind the agent-written code surge, Nvidia shipped an open transcription model, and Mistral put trillion-parameter weights on the shelf.
+
+## GitHub added 4M CPU cores to absorb AI-written code
+
+**What happened:** GitHub's technical report says it added 4 million CPU cores, 160PB of storage and 50 Tb/s of networking this year as commits grew sixfold to 7.4 billion in September. Over 40% of pull requests were started by an agent, up from 17% in March.
+
+**Why it matters:** Agent traffic is now the load your CI, review queues and repo tooling have to survive, not a side channel, so budget runners and storage for it.
+
+[Source: Tom's Hardware](<https://www.tomshardware.com/software/github-report-highlights-massive-influx-of-ai-generated-code-sixfold-increase-in-activity-over-one-year-required-extra-4-million-cpu-cores-and-160pb-of-storage>)
+
+## Nvidia open-sources Nemotron 3.5 Transcribe for 40 languages
+
+**What happened:** Nvidia released Nemotron 3.5 Transcribe on Hugging Face on October 28, an open-weight model that transcribes 40 languages, translates 31 to or from English and separates up to eight speakers. Nvidia also published Granary v2, labels for 463, 062 hours of speech.
+
+**Why it matters:** Teams with private recordings can run transcription on their own hardware instead of shipping audio to a cloud API.
+
+[Source: Silicon AI News](<https://siliconainews.com/topics/ai-models>)
+
+## Mistral releases weights for a trillion-parameter model
+
+**What happened:** TechCrunch's October 29 index lists Mistral releasing the weights for its trillion-parameter model, aimed at cybersecurity. No license terms or benchmark figures appear in the supplied text.
+
+**Why it matters:** A downloadable model at that scale gives security teams an option to self-host instead of renting frontier inference.
+
+[Source: TechCrunch](<https://techcrunch.com/2026/10/29/>)
+
+## Arm and GitHub put Copilot CLI on native Arm compute
+
+**What happened:** Arm says developers can now run GitHub Copilot CLI on organization-controlled Arm compute, steer sessions remotely from another device, and validate pull requests with CI on Arm64 runners. The goal is catching architecture-specific problems before code reaches Arm hardware.
+
+**Why it matters:** If you ship to Arm laptops, cloud instances or devices, agents can now build and test on the target architecture instead of an x86 box.
+
+[Source: Arm](<https://newsroom.arm.com/blog/arm-github-accelerate-agentic-ai-development>)
+
+## Microsoft Research open-sources Agensh agent harness
+
+**What happened:** Microsoft Research released Agensh, an MIT-licensed multi-agent coding harness with no central orchestrator, per TheNextGenTechInsider citing Marktechpost. It runs on Linux with Docker Compose, scales to 1, 024 agents across 16 nodes, and a 32-agent run on GPT-6.1-sol hit a 79.59% pandoc pass rate.
+
+**Why it matters:** An MIT-licensed harness that scales past a thousand workers is a free starting point for parallel code generation without building your own scheduler.
+
+[Source: TheNextGenTechInsider](<https://www.thenextgentechinsider.com/pulse/microsoft-research-open-sources-agensh-decentralized-multi-agent-coding-harness>)
+
+## Cloudflare Agents SDK 0.32.0 breaks skill loading
+
+**What happened:** Cloudflare's agents@0.32.0, dated October 29, loads Agent Skills from Workspace files, R2 or code, checks SKILL.md against the Agent Skills spec, and replaces SkillRegistry with loadSkillCatalog() and createSkillTools(). It also adds an experimental OpenTelemetry registration hook.
+
+**Why it matters:** Anyone on the Agents SDK has to migrate skill registration before upgrading, and gets experimental tracing spans in return.
+
+[Source: Agentic Weekly](<https://theagenticweekly.com/>)
+
+## Thrive Holdings buys ADT for $15.3B enterprise value
+
+**What happened:** Thrive Holdings, the Thrive Capital spinout with OpenAI as partner and investor, acquired ADT at $10 per share, about $7.6 billion in equity and a $15.3 billion enterprise value. OpenAI supplies models and forward-deployed engineers to Thrive's companies.
+
+**Why it matters:** It is a template for how OpenAI-adjacent capital pushes models into non-software industries, which means more integration work outside tech.
+
+[Source: TechCrunch](<https://techcrunch.com/2026/10/29/openai-backed-thrive-holdings-acquires-adt/>)
+
+## Sources
+
+- [Tom's Hardware](<https://www.tomshardware.com/software/github-report-highlights-massive-influx-of-ai-generated-code-sixfold-increase-in-activity-over-one-year-required-extra-4-million-cpu-cores-and-160pb-of-storage>)
+- [Silicon AI News](<https://siliconainews.com/topics/ai-models>)
+- [TechCrunch](<https://techcrunch.com/2026/10/29/>)
+- [Arm](<https://newsroom.arm.com/blog/arm-github-accelerate-agentic-ai-development>)
+- [TheNextGenTechInsider](<https://www.thenextgentechinsider.com/pulse/microsoft-research-open-sources-agensh-decentralized-multi-agent-coding-harness>)
+- [Agentic Weekly](<https://theagenticweekly.com/>)
+- [TechCrunch](<https://techcrunch.com/2026/10/29/openai-backed-thrive-holdings-acquires-adt/>)
