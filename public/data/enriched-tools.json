@@ -11685,5 +11685,113 @@
       "Generative Design"
     ],
     "lastUpdated": "2026-10-15"
+  },
+  {
+    "slug": "pr-agent",
+    "name": "PR-Agent",
+    "company": "PR-Agent community (donated by Qodo)",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; self-host it as a GitHub Action, CLI, Docker container or webhook app. You pay your chosen LLM provider directly for tokens.",
+    "description": "PR-Agent is an open-source AI pull-request reviewer that Qodo donated to the community. It posts PR descriptions, reviews, code suggestions and answers as PR comments, using a single LLM call per tool and a compression strategy so large diffs still fit, and runs on your own infrastructure and model keys across the major Git hosts.",
+    "keyFeatures": [
+      "/describe, /review, /improve and /ask PR commands plus /similar_issue on issues",
+      "Single LLM call per tool (~30 seconds) with PR compression for large changesets",
+      "GitHub, GitLab, Bitbucket, Azure DevOps and Gitea support",
+      "Runs as a GitHub Action, CLI (pip install \"pr-agent[github]\"), Docker image or self-hosted webhook",
+      "OpenAI, Anthropic, Gemini, DeepSeek, Mistral, Ollama and any LiteLLM-reachable model, with TOML-configurable prompts"
+    ],
+    "bestFor": "Teams that want a self-hosted, model-agnostic AI PR reviewer wired into CI on their own keys and Git provider.",
+    "notIdealFor": "Teams wanting a managed, context-aware review platform with codebase-wide indexing and dashboards, which is what Qodo's hosted product targets; /help_docs is temporarily disabled since v0.36.1.",
+    "recentUpdates": "Now maintained in the community-owned The-PR-Agent GitHub org with docs at docs.pr-agent.ai; v0.49.0 shipped on October 25, 2026, following v0.48.0 (October 16) and v0.47.0 (October 2).",
+    "verdict": "The long-standing open-source baseline for AI PR review: cheap, configurable and provider-agnostic, now with an independent community home.",
+    "tags": [
+      "code-review",
+      "pull-requests",
+      "github-action",
+      "cli",
+      "self-hosted"
+    ],
+    "lastUpdated": "2026-10-31"
+  },
+  {
+    "slug": "oh-my-claudecode",
+    "name": "oh-my-claudecode",
+    "company": "Yeachan Heo",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license. Requires a Claude Code subscription or Anthropic API key; optional Codex, Gemini, Antigravity, Grok or Cursor workers use their own plans.",
+    "description": "oh-my-claudecode (OMC) is a multi-agent orchestration layer for Claude Code. It adds autopilot, Ralph persistence loops and a staged Team pipeline over 19 specialised agents, and can spawn real Codex, Gemini, Antigravity, Grok, Cursor or Claude CLI workers in tmux panes for parallel or cross-model work.",
+    "keyFeatures": [
+      "Team mode staged pipeline: plan, PRD, execute, verify and fix loop",
+      "/autopilot, /ralph, /deep-interview and configurable autopilot stage profiles",
+      "omc team N:codex|gemini|antigravity|grok|cursor|claude tmux CLI workers",
+      "/ask codex and /ask antigravity cross-model advisors",
+      "HUD statusline, custom project and user skills, installable via the Claude Code plugin marketplace or npm"
+    ],
+    "bestFor": "Claude Code users who want ready-made multi-agent workflows and parallel workers across several coding-agent CLIs without building their own harness.",
+    "notIdealFor": "Users on other primary agents (the sibling oh-my-codex targets Codex CLI), small single-file edits, or tight token budgets, since multi-agent runs consume noticeably more usage.",
+    "recentUpdates": "Very active: v5.7.21 through v5.7.23 shipped between October 30 and October 31, 2026, and the repository was trending on GitHub this week.",
+    "verdict": "A popular, fast-moving orchestration add-on that turns Claude Code into a coordinated agent team, best for users comfortable with its many modes.",
+    "tags": [
+      "claude-code",
+      "multi-agent",
+      "orchestration",
+      "plugin",
+      "agentic-coding"
+    ],
+    "lastUpdated": "2026-10-31"
+  },
+  {
+    "slug": "mempalace",
+    "name": "MemPalace",
+    "company": "MemPalace",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; runs locally with no API calls required. Optional LLM reranking uses whichever model provider you configure.",
+    "description": "MemPalace is a local-first memory system for AI agents that stores conversation history verbatim and retrieves it with scoped semantic search. Content is organised into wings, rooms and drawers over a pluggable vector backend, exposed to coding agents through an MCP server with auto-save hooks for Claude Code, Codex CLI and Cursor.",
+    "keyFeatures": [
+      "Verbatim storage with scoped semantic search (wings, rooms, drawers) over a pluggable backend, ChromaDB by default",
+      "47 MCP tools including a temporal knowledge graph, agent diaries and logstream handoffs",
+      "Auto-save hooks for Claude Code, Codex CLI and Cursor, plus mempalace mine to backfill transcripts",
+      "Install via uv tool install mempalace, npx skills add MemPalace/mempalace, pipx or a multi-arch Docker image",
+      "Reproducible benchmarks: 96.6% raw R@5 on LongMemEval with no LLM"
+    ],
+    "bestFor": "Developers who want private, local long-term memory across coding-agent sessions without sending transcripts to a cloud memory service.",
+    "notIdealFor": "Native Android/Termux setups or users who want summarised, curated team knowledge bases; independent reviewers have questioned some of its earlier headline benchmark claims, so evaluate on your own data.",
+    "recentUpdates": "v3.11.0 released on October 14, 2026 after v3.10.0 (September 16); the project warns that its only official sources are the GitHub repo, PyPI package and mempalaceofficial.com.",
+    "verdict": "A widely adopted, fully local agent memory layer with unusually transparent, reproducible benchmarks and broad coding-agent integration.",
+    "tags": [
+      "memory",
+      "mcp",
+      "local-first",
+      "claude-code",
+      "agentic-ai"
+    ],
+    "lastUpdated": "2026-10-31"
+  },
+  {
+    "slug": "openmausbot",
+    "name": "OpenMausBot",
+    "company": "Milind Soni",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 license. Bots run on your existing Claude, Codex or Grok CLI logins and subscriptions; cloud desktops are provided through boat.dev and app connections through Composio.",
+    "description": "OpenMausBot is an open-source, local-first desktop chat app for a team of AI bots, built as an independent alternative to Grok Bot. Each bot is a real Claude Code, Codex or Grok CLI agent with its own model, personality, connected apps and computer, and risky actions surface as approval cards in the chat.",
+    "keyFeatures": [
+      "Bring-your-own agents on locally installed claude, codex and grok CLIs",
+      "Per-bot cloud Linux desktop, isolated Local VM or opt-in host control on macOS and Ubuntu Xorg",
+      "Permission broker that turns shell commands and file edits into Allow/Deny cards",
+      "500+ app connections via Composio, channels with separate transcripts and rosters, team import from one Markdown file",
+      "Stdio MCP server and openmausbot run CLI for Claude Desktop, Cursor and scripted runs"
+    ],
+    "bestFor": "Developers who already pay for Claude Code, Codex or Grok and want several persistent, sandboxed agents they can chat with and supervise from one desktop app.",
+    "notIdealFor": "Users who need a mature, stable product (it is pre-1.0 with near-daily releases), Ubuntu Wayland host control (currently disabled), or a fully offline setup without third-party cloud desktops.",
+    "recentUpdates": "Trending on GitHub this week with daily releases; v0.1.135 shipped on October 31, 2026.",
+    "verdict": "A fast-growing open alternative to closed personal-agent products that puts real coding-agent CLIs behind a familiar messaging UI with sensible approval controls.",
+    "tags": [
+      "agent",
+      "multi-agent",
+      "desktop-app",
+      "local-first",
+      "computer-use"
+    ],
+    "lastUpdated": "2026-10-31"
   }
 ]

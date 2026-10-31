@@ -1188,6 +1188,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "openmausbot",
+    "name": "OpenMausBot",
+    "company": "Milind Soni",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "autoswarm",
     "name": "AutoSwarm",
     "company": "HKUDS",
@@ -1443,6 +1449,12 @@
     "slug": "sphinx",
     "name": "Sphinx",
     "company": "parthh01",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "pr-agent",
+    "name": "PR-Agent",
+    "company": "PR-Agent community (donated by Qodo)",
     "category": "AI Code Review & Security"
   },
   {
@@ -2058,9 +2070,21 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "mempalace",
+    "name": "MemPalace",
+    "company": "MemPalace",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "oh-my-openagent",
     "name": "Oh My OpenAgent",
     "company": "Sisyphus Labs (code-yeongyu)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "oh-my-claudecode",
+    "name": "oh-my-claudecode",
+    "company": "Yeachan Heo",
     "category": "Developer Productivity & Workflow"
   },
   {
