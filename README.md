@@ -293,6 +293,7 @@ AI tools that generate full apps or UIs from natural language, no local setup re
 | **[Modaal](https://modaal.dev/)** | Modaal | Mac app that builds native iOS and Android apps in SwiftUI and Jetpack Compose with the AI coding agent you already pay for, from a spec you approve before code is written. |
 | **[OpenPencil](https://op.zseven.tech)** | ZSeven-W | Open-source (MIT) AI-native vector design tool (desktop app for macOS/Windows/Linux plus `op` CLI): prompt-to-UI on a live canvas where concurrent "agent teams" build page sections in parallel, Git-friendly JSON `.op` design files, and code export to React + Tailwind, HTML/CSS, Vue, Svelte, Flutter, SwiftUI, Jetpack Compose and React Native; a built-in MCP server installs into Claude Code, Codex, OpenCode, Kiro or Copilot CLI so terminal agents can read and edit designs; [GitHub](https://github.com/ZSeven-W/openpencil) |
 | **[AppWizzy](https://appwizzy.com/)** | AppWizzy | AI-powered web app builder with a dedicated development VM, live previews, Git integration, and support for PHP, Python, and Node.js stacks. It lets developers build and edit applications through natural-language instructions while retaining access to the code and terminal. |
+| **[Massvai](https://massvai.com)** | Massvai | AI full-stack app builder that turns a prompt into a working Next.js app with frontend, backend and database. |
 
 ---
 
