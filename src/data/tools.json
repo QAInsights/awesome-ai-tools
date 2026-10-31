@@ -1702,5 +1702,21 @@
   {
     "companyName": "Massvai",
     "toolName": "Massvai"
+  },
+  {
+    "companyName": "PR-Agent community (donated by Qodo)",
+    "toolName": "PR-Agent"
+  },
+  {
+    "companyName": "Yeachan Heo",
+    "toolName": "oh-my-claudecode"
+  },
+  {
+    "companyName": "MemPalace",
+    "toolName": "MemPalace"
+  },
+  {
+    "companyName": "Milind Soni",
+    "toolName": "OpenMausBot"
   }
 ]
