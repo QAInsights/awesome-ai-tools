@@ -5859,6 +5859,35 @@
     "lastUpdated": "2026-10-30"
   },
   {
+    "slug": "massvai",
+    "name": "Massvai",
+    "company": "Massvai",
+    "pricing": "freemium",
+    "pricingDetail": "Free tier with 100 welcome credits, no card required; Builder at $25/month (1,500 credits/month) and Pro at $49/month (4,000 credits/month), with 20% off yearly. Usage is billed in credits that track agent work rather than messages.",
+    "description": "Massvai is an AI full-stack app builder that turns a plain-language prompt or reference screenshot into a working Next.js 15, TypeScript and Tailwind CSS project with live preview. It wires Supabase auth and database flows, supports Stripe-ready billing UI, syncs to GitHub and deploys to Vercel, with full code export.",
+    "keyFeatures": [
+      "Prompt-to-app generation with a durable agent that plans before building",
+      "Live HMR preview with multi-step chat edits and screenshot/file references",
+      "Supabase authentication, database schemas and backend API routes",
+      "GitHub sync and one-click Vercel deployment",
+      "Full code export with no vendor lock-in",
+      "Stripe-ready payments integration",
+      "Available as a web app and macOS desktop app"
+    ],
+    "bestFor": "Founders, indie hackers, product teams and agencies who want to go from a prompt to an exportable Next.js + Supabase app with GitHub sync and Vercel deploy.",
+    "notIdealFor": "Teams on non-Next.js stacks, those needing native mobile apps, or Windows desktop users, since the stack is limited to Next.js, Supabase and Vercel and the Windows app is not yet available.",
+    "recentUpdates": "Listed with a launch date of October 21, 2026 and directory checks in late October 2026; pricing explainer blog post published July 20, 2026. No specific version releases were reported in the results.",
+    "verdict": "Massvai generates real, exportable Next.js and TypeScript code with a clear path from prompt to GitHub and Vercel, backed by a free tier. However, it is locked to the Next.js/Supabase/Vercel stack, credit-based billing makes monthly costs hard to predict, and the macOS download appears unsigned with no named company behind the site.",
+    "tags": [
+      "AI app builder",
+      "Next.js",
+      "Supabase",
+      "Vercel",
+      "full-stack"
+    ],
+    "lastUpdated": "2026-10-31"
+  },
+  {
     "slug": "coderabbit",
     "name": "CodeRabbit",
     "company": "CodeRabbit",
@@ -6481,6 +6510,33 @@
     "lastUpdated": "2026-10-27"
   },
   {
+    "slug": "sphinx",
+    "name": "Sphinx",
+    "company": "parthh01",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT License; reviewer model calls run on your own Claude Code or Codex plan, OpenRouter key, or OpenAI-compatible endpoint.",
+    "description": "Sphinx is an open-source Git hook for agent-assisted development that pauses pushes to protected branches and quizzes you on what the change actually does. A separate reviewer model reads the commit through read-only Git tools, without seeing the agent conversation, and asks open-book questions about behavior, failure modes, and invariants before the push continues.",
+    "keyFeatures": [
+      "Pre-push understanding check on protected branches (main/master by default)",
+      "Independent reviewer model that never sees the coding agent's conversation",
+      "Follow-up scenarios and explanations when an answer misses",
+      "Works with Claude Code, Codex, Cursor, OpenCode, Pi, or plain Git",
+      "Reviewer runs on Claude Code/Codex plans, OpenRouter, or any OpenAI-compatible endpoint"
+    ],
+    "bestFor": "Developers and teams shipping agent-written code who want to make sure a human understands each change before it reaches shared or production branches.",
+    "notIdealFor": "Teams needing an enforceable security or compliance gate, native Windows users, or workflows where blocking git push for minutes is unacceptable.",
+    "recentUpdates": "First public release (v0.1) published on npm as sphinx-understand in mid-October 2026, followed by a Show HN launch on October 18, 2026 that reached 250+ points.",
+    "verdict": "A thoughtful, low-friction checkpoint that targets comprehension debt from AI coding agents; useful as practice and discipline, though by its own admission not a security control.",
+    "tags": [
+      "Code Review",
+      "Git Hooks",
+      "AI Agents",
+      "Developer Education",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-10-30"
+  },
+  {
     "slug": "gitauto",
     "name": "GitAuto",
     "company": "GitAuto, Inc.",
@@ -6673,6 +6729,33 @@
       "Open Source"
     ],
     "lastUpdated": "2026-10-23"
+  },
+  {
+    "slug": "reticle",
+    "name": "Reticle",
+    "company": "Reticle Labs",
+    "pricing": "freemium",
+    "pricingDetail": "The SDK and MCP server are open source under Apache-2.0; the optional hosted platform (Harness explorer, PR preview testing, dashboard) offers free credits for new accounts.",
+    "description": "Reticle is a verification layer for AI coding agents. A dev-only SDK runs inside your web or desktop app and exposes DOM, network, console, routing, and state-store data to agents over MCP, so an agent can perform an action and receive a pass, fail, or cannot-tell verdict backed by evidence and the source line to fix.",
+    "keyFeatures": [
+      "Evidence-backed verdicts (yes/no/unknown) instead of screenshots",
+      "Reads network responses, console, React renders, and stores like Redux, Zustand, TanStack Query, and Pinia",
+      "Saved flows replay deterministically without an AI model",
+      "reticle gate CI check for changes touching verified flows",
+      "MCP integration with Claude Code, Cursor, Codex, Windsurf, VS Code, and Gemini CLI"
+    ],
+    "bestFor": "Teams using coding agents on React, Next.js, Vue, Svelte, Angular, Electron, or Tauri apps who want agents to prove a change works in the running app before declaring it done.",
+    "notIdealFor": "Backend-only or non-web projects, and teams that need a traditional authored end-to-end suite as their sole release gate.",
+    "recentUpdates": "Released v3.9.0 on 2026-10-29 following v3.8.x updates earlier in the week; the project was showcased on Show HN in October 2026.",
+    "verdict": "A well-targeted inner-loop tool that addresses the 'agent says done but it is broken' problem with deterministic, evidence-based checks, complementing rather than replacing Playwright.",
+    "tags": [
+      "AI Testing",
+      "Verification",
+      "MCP",
+      "AI Agents",
+      "Web Development"
+    ],
+    "lastUpdated": "2026-10-30"
   },
   {
     "slug": "claude",
@@ -10414,6 +10497,33 @@
     "lastUpdated": "2026-10-15"
   },
   {
+    "slug": "lightpanda",
+    "name": "Lightpanda",
+    "company": "Lightpanda",
+    "pricing": "freemium",
+    "pricingDetail": "The browser is open source under AGPL-3.0 and free to self-host; Lightpanda Cloud offers a managed, paid hosted option.",
+    "description": "Lightpanda is a headless browser built from scratch in Zig for AI agents, crawling, and automation. It executes JavaScript with V8 against an in-memory DOM but skips graphical rendering, and it exposes CDP, WebDriver, an MCP server, and a built-in natural-language agent mode.",
+    "keyFeatures": [
+      "Drop-in CDP and WebDriver support for Puppeteer, Playwright, Selenium, and chromedp",
+      "Native MCP server for AI applications and coding agents",
+      "fetch command that outputs HTML, Markdown, or a semantic tree",
+      "lightpanda agent for plain-English browsing with LLM-free PandaScript export",
+      "Low memory and fast startup compared with headless Chrome"
+    ],
+    "bestFor": "AI agent builders and data teams running large-scale browsing, scraping, or web interaction workloads where headless Chrome is too heavy.",
+    "notIdealFor": "Tasks needing real pixel rendering, screenshots, visual layout fidelity, or full Chrome web-compatibility parity.",
+    "recentUpdates": "Lightpanda 1.0 left beta on 2026-10-02 with 1.7M+ passing Web Platform Tests subtests and CORS enforced by default; 1.0.1 and 1.0.2 followed in October 2026.",
+    "verdict": "A mature, production-ready lightweight browser engine for agents and automation, offering big resource savings over Chromium when you do not need rendered pixels.",
+    "tags": [
+      "Headless Browser",
+      "AI Agents",
+      "Browser Automation",
+      "MCP",
+      "Zig"
+    ],
+    "lastUpdated": "2026-10-30"
+  },
+  {
     "slug": "free-claude-code",
     "name": "Free Claude Code",
     "company": "Ali Khokhar (Alishahryar1)",
@@ -11575,86 +11685,5 @@
       "Generative Design"
     ],
     "lastUpdated": "2026-10-15"
-  },
-  {
-    "slug": "sphinx",
-    "name": "Sphinx",
-    "company": "parthh01",
-    "pricing": "open-source",
-    "pricingDetail": "Free and open source under the MIT License; reviewer model calls run on your own Claude Code or Codex plan, OpenRouter key, or OpenAI-compatible endpoint.",
-    "description": "Sphinx is an open-source Git hook for agent-assisted development that pauses pushes to protected branches and quizzes you on what the change actually does. A separate reviewer model reads the commit through read-only Git tools, without seeing the agent conversation, and asks open-book questions about behavior, failure modes, and invariants before the push continues.",
-    "keyFeatures": [
-      "Pre-push understanding check on protected branches (main/master by default)",
-      "Independent reviewer model that never sees the coding agent's conversation",
-      "Follow-up scenarios and explanations when an answer misses",
-      "Works with Claude Code, Codex, Cursor, OpenCode, Pi, or plain Git",
-      "Reviewer runs on Claude Code/Codex plans, OpenRouter, or any OpenAI-compatible endpoint"
-    ],
-    "bestFor": "Developers and teams shipping agent-written code who want to make sure a human understands each change before it reaches shared or production branches.",
-    "notIdealFor": "Teams needing an enforceable security or compliance gate, native Windows users, or workflows where blocking git push for minutes is unacceptable.",
-    "recentUpdates": "First public release (v0.1) published on npm as sphinx-understand in mid-October 2026, followed by a Show HN launch on October 18, 2026 that reached 250+ points.",
-    "verdict": "A thoughtful, low-friction checkpoint that targets comprehension debt from AI coding agents; useful as practice and discipline, though by its own admission not a security control.",
-    "tags": [
-      "Code Review",
-      "Git Hooks",
-      "AI Agents",
-      "Developer Education",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-10-30"
-  },
-  {
-    "slug": "reticle",
-    "name": "Reticle",
-    "company": "Reticle Labs",
-    "pricing": "freemium",
-    "pricingDetail": "The SDK and MCP server are open source under Apache-2.0; the optional hosted platform (Harness explorer, PR preview testing, dashboard) offers free credits for new accounts.",
-    "description": "Reticle is a verification layer for AI coding agents. A dev-only SDK runs inside your web or desktop app and exposes DOM, network, console, routing, and state-store data to agents over MCP, so an agent can perform an action and receive a pass, fail, or cannot-tell verdict backed by evidence and the source line to fix.",
-    "keyFeatures": [
-      "Evidence-backed verdicts (yes/no/unknown) instead of screenshots",
-      "Reads network responses, console, React renders, and stores like Redux, Zustand, TanStack Query, and Pinia",
-      "Saved flows replay deterministically without an AI model",
-      "reticle gate CI check for changes touching verified flows",
-      "MCP integration with Claude Code, Cursor, Codex, Windsurf, VS Code, and Gemini CLI"
-    ],
-    "bestFor": "Teams using coding agents on React, Next.js, Vue, Svelte, Angular, Electron, or Tauri apps who want agents to prove a change works in the running app before declaring it done.",
-    "notIdealFor": "Backend-only or non-web projects, and teams that need a traditional authored end-to-end suite as their sole release gate.",
-    "recentUpdates": "Released v3.9.0 on 2026-10-29 following v3.8.x updates earlier in the week; the project was showcased on Show HN in October 2026.",
-    "verdict": "A well-targeted inner-loop tool that addresses the 'agent says done but it is broken' problem with deterministic, evidence-based checks, complementing rather than replacing Playwright.",
-    "tags": [
-      "AI Testing",
-      "Verification",
-      "MCP",
-      "AI Agents",
-      "Web Development"
-    ],
-    "lastUpdated": "2026-10-30"
-  },
-  {
-    "slug": "lightpanda",
-    "name": "Lightpanda",
-    "company": "Lightpanda",
-    "pricing": "freemium",
-    "pricingDetail": "The browser is open source under AGPL-3.0 and free to self-host; Lightpanda Cloud offers a managed, paid hosted option.",
-    "description": "Lightpanda is a headless browser built from scratch in Zig for AI agents, crawling, and automation. It executes JavaScript with V8 against an in-memory DOM but skips graphical rendering, and it exposes CDP, WebDriver, an MCP server, and a built-in natural-language agent mode.",
-    "keyFeatures": [
-      "Drop-in CDP and WebDriver support for Puppeteer, Playwright, Selenium, and chromedp",
-      "Native MCP server for AI applications and coding agents",
-      "fetch command that outputs HTML, Markdown, or a semantic tree",
-      "lightpanda agent for plain-English browsing with LLM-free PandaScript export",
-      "Low memory and fast startup compared with headless Chrome"
-    ],
-    "bestFor": "AI agent builders and data teams running large-scale browsing, scraping, or web interaction workloads where headless Chrome is too heavy.",
-    "notIdealFor": "Tasks needing real pixel rendering, screenshots, visual layout fidelity, or full Chrome web-compatibility parity.",
-    "recentUpdates": "Lightpanda 1.0 left beta on 2026-10-02 with 1.7M+ passing Web Platform Tests subtests and CORS enforced by default; 1.0.1 and 1.0.2 followed in October 2026.",
-    "verdict": "A mature, production-ready lightweight browser engine for agents and automation, offering big resource savings over Chromium when you do not need rendered pixels.",
-    "tags": [
-      "Headless Browser",
-      "AI Agents",
-      "Browser Automation",
-      "MCP",
-      "Zig"
-    ],
-    "lastUpdated": "2026-10-30"
   }
 ]
