@@ -2580,6 +2580,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "callmemcp",
+    "name": "CallMeMCP",
+    "company": "Serdar Oztetik (Oztetik Solutions)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
