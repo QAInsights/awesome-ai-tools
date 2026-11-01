@@ -11742,8 +11742,8 @@
     "slug": "nodeterm",
     "name": "nodeterm",
     "company": "Enes Kirca",
-    "pricing": "free",
-    "pricingDetail": "nodeterm is free to download and use. The source is published under the Business Source License 1.1 (each version converts to MIT four years after release), which permits production use but not offering it as a competing hosted or commercial product. Agent CLIs and their model plans are paid separately.",
+    "pricing": "freemium",
+    "pricingDetail": "The desktop app is free to download and use, including 5 relay bridges per month for off-network phone or peer connections. nodeterm Pro (subscription, also purchasable in the iOS app) removes the relay cap and unlocks Team Access for sharing a canvas with teammates by the seat. Source is published under the Business Source License 1.1 (each version converts to MIT after four years); agent CLIs and model plans are paid separately.",
     "description": "nodeterm is a node-based terminal manager for running many AI coding agents at once. Terminals and agent sessions live as draggable nodes on an infinite canvas backed by tmux, and every project can also be viewed as a kanban board of live sessions.",
     "keyFeatures": [
       "tmux-backed terminal and agent nodes on a pan/zoom canvas that survive app restarts",
@@ -11788,6 +11788,33 @@
       "Claude Code",
       "Agent Skills",
       "Game Development",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-01"
+  },
+  {
+    "slug": "agent-desktop",
+    "name": "agent-desktop",
+    "company": "Vercel Labs",
+    "pricing": "open-source",
+    "pricingDetail": "agent-desktop is free and open-source under the Apache-2.0 license, with no paid tiers; you pay only for the AI agent or model that drives it.",
+    "description": "agent-desktop is a Rust CLI and C library that gives AI agents computer use on desktop apps by reading the operating system's accessibility tree instead of matching pixels. Each snapshot returns JSON with a ref for every actionable element, and the agent acts on refs and snapshots again to verify.",
+    "keyFeatures": [
+      "Accessibility-tree snapshots with snapshot-scoped refs for every actionable element",
+      "Headless ref actions (click, type, set-value, scroll, select) that do not move the pointer or steal focus",
+      "Stale-ref detection and structured errors that say when a retry is safe",
+      "App, window, notification and clipboard management across macOS, Windows and Linux",
+      "Version-matched agent skills and an FFI library for in-process use"
+    ],
+    "bestFor": "Developers building or running AI agents that need to operate native desktop applications reliably on macOS, Windows or Linux.",
+    "notIdealFor": "Apps that expose little or no accessibility information, Wayland-only Linux setups needing full mouse and window control, or teams wanting a hosted computer-use service.",
+    "recentUpdates": "Version 1.0.0 shipped on 2026-10-28 after the project moved under Vercel Labs, followed by v1.0.1 (automatic release publishing) and v1.0.2 on 2026-10-30, which improved the macOS permission guide and npm launcher messaging.",
+    "verdict": "A well-engineered, cross-platform computer-use layer that trades pixel guessing for structured accessibility data, making desktop automation by agents far more dependable.",
+    "tags": [
+      "Developer Productivity & Workflow",
+      "Computer Use",
+      "Desktop Automation",
+      "AI Agents",
       "Open Source"
     ],
     "lastUpdated": "2026-11-01"

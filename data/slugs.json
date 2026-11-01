@@ -2316,6 +2316,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "agent-desktop",
+    "name": "agent-desktop",
+    "company": "Vercel Labs",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "bmad-method",
     "name": "BMAD Method",
     "company": "BMad Code",

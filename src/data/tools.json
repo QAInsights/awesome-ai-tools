@@ -1730,5 +1730,9 @@
   {
     "companyName": "Donchitos",
     "toolName": "Claude Code Game Studios"
+  },
+  {
+    "companyName": "Vercel Labs",
+    "toolName": "agent-desktop"
   }
 ]
