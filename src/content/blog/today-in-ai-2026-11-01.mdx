@@ -1,0 +1,76 @@
+---
+title: "Mistral opens Le Chonk weights as Stripe moves on OpenRouter"
+description: "Mistral releases weights for its trillion-parameter Large 4, Stripe reportedly agrees to buy OpenRouter, and Anthropic widens its Claude text watermark."
+pubDate: 2026-11-01
+tags: ["news","today-in-ai","mistral","open-weights","stripe","anthropic","agents","benchmarks"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-11-01 UTC.
+
+Open weights, a reported routing acquisition, and a watermark that API users can dodge with one parameter change.
+
+## Mistral opens the weights of its trillion-parameter Large 4
+
+**What happened:** Mistral released the weights of Mistral Large 4 (Le Chonk), a 1-trillion-parameter natively multimodal model, after a public preview. The company says three weeks of extra reinforcement learning pushed it to the top of open-weight coding benchmarks and improved reasoning efficiency.
+
+**Why it matters:** Teams that need to self-host a frontier-class coding model now have a downloadable option instead of an API dependency.
+
+[Source: Mistral](<https://mistral.ai/news/mistral-large-4-oss/>)
+
+## Stripe reportedly agrees to buy OpenRouter for over $8B
+
+**What happened:** Stripe has agreed to acquire AI model-routing platform OpenRouter in a deal valued by sources at more than eight billion dollars, according to a report. The same report says Google struck a custom-chip partnership with Marvell that includes up to twelve billion dollars in share purchases.
+
+**Why it matters:** OpenRouter sits in front of many teams' model calls, so a payments company owning the router changes who sets the terms for multi-model routing.
+
+[Source: CNNBC](<https://cnnbc.com/stripe-and-google-commit-billions-to-expand-artificial-intelligence-infrastructure>)
+
+## Anthropic adds text watermark to four more Claude models
+
+**What happened:** Anthropic is extending its text watermark to four more Claude models, including Claude Opus 4.6 and Claude Sonnet 4.6, ahead of the EU AI Act's December deadline. On those two older models, changing a single sampling parameter lets API users avoid the mark.
+
+**Why it matters:** If you ship Claude output into regulated markets, check which models carry the watermark and whether your sampling settings strip it.
+
+[Source: AI Agent News](<https://aiagentnews.io/topics/infrastructure>)
+
+## OpenAI to train on Daybreak Blue session data from November 29
+
+**What happened:** OpenAI says it will use Daybreak Blue cybersecurity session data to train its models starting November 29, data previously excluded from training even for users who had model improvement turned off. After backlash, the company sent a second email promising a separate opt-out.
+
+**Why it matters:** Security teams feeding incident data into Daybreak Blue should confirm the opt-out before the November 29 cutoff.
+
+[Source: AI Agent News](<https://aiagentnews.io/topics/infrastructure>)
+
+## Artificial Analysis ships Intelligence Index v5 with private tests
+
+**What happened:** Artificial Analysis released the fifth edition of its Intelligence Index, adding two evaluations and updating three others, with 60% of the score based on private tests or held-out answers. It ranks Claude Opus 5.5 first and puts the gap to the best open-weights model at 12 points.
+
+**Why it matters:** Model comparisons built on this index now lean mostly on unseen questions, so treat the rankings as a starting filter, not a procurement decision.
+
+[Source: Inferama](<https://www.inferama.com/en/news/models>)
+
+## Scale Labs tests coding agents on drug discovery tasks
+
+**What happened:** Scale Labs evaluated Claude Code (Opus 4.7), Codex (GPT-5.5) and Gemini CLI (Gemini 3.1 Pro) on 66 expert-curated biomedical tasks in a shared tool environment. At least one agent solved about two-thirds of the tasks, and the ones that defeated all three were the longest pipelines.
+
+**Why it matters:** Long multi-step tool chains remain where agents break, so budget for checkpoints and human review on anything past a few dozen steps.
+
+[Source: Scale Labs](<https://labs.scale.com/blog/coding-agents-drug-discovery>)
+
+## Snorkel AI gives every pull request its own database branch
+
+**What happened:** Snorkel AI now gives each open pull request its own Lakebase Postgres branch, a writable copy of production data ready in under a minute instead of more than 30. Branches are copy-on-write and expire through TTL, so about 100 concurrent PR databases on a roughly 2.5 TB dataset add only the storage their changes need.
+
+**Why it matters:** Agent-written PRs can be tested against realistic data without a shared staging database or a long provisioning wait.
+
+[Source: AI Agent News](<https://aiagentnews.io/topics/infrastructure>)
+
+## Sources
+
+- [Mistral](<https://mistral.ai/news/mistral-large-4-oss/>)
+- [CNNBC](<https://cnnbc.com/stripe-and-google-commit-billions-to-expand-artificial-intelligence-infrastructure>)
+- [AI Agent News](<https://aiagentnews.io/topics/infrastructure>)
+- [Inferama](<https://www.inferama.com/en/news/models>)
+- [Scale Labs](<https://labs.scale.com/blog/coding-agents-drug-discovery>)
