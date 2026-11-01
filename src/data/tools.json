@@ -1742,5 +1742,9 @@
   {
     "companyName": "Serdar Oztetik (Oztetik Solutions)",
     "toolName": "CallMeMCP"
+  },
+  {
+    "companyName": "DeepSeek",
+    "toolName": "dsh-superagent"
   }
 ]
