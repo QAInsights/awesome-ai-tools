@@ -11710,5 +11710,113 @@
       "Hardware"
     ],
     "lastUpdated": "2026-11-01"
+  },
+  {
+    "slug": "serena",
+    "name": "Serena",
+    "company": "Oraios AI",
+    "pricing": "open-source",
+    "pricingDetail": "Serena is free and open-source (GPL-3.0-or-later for the application, MIT for the bundled SolidLSP layer) when used with its default language-server backend. An optional JetBrains plugin backend is a paid add-on with a free trial; model usage is billed by whichever AI client you connect.",
+    "description": "Serena is an MCP server and toolkit that gives AI coding agents IDE-like, symbol-level code retrieval and editing. Instead of reading files line by line or grepping, agents can look up symbols, follow references and perform cross-file refactors through language servers or a JetBrains IDE backend.",
+    "keyFeatures": [
+      "Symbol-level find, reference lookup, rename, move and replace-body tools exposed over MCP",
+      "Language-server backend supporting 40+ programming languages",
+      "Optional paid JetBrains plugin backend that reuses the IDE's code analysis",
+      "REPL-based code-execution agent interface introduced in v2",
+      "Works with Claude Code, Codex, OpenCode, Gemini CLI, Cursor, VS Code and JetBrains assistants and Claude Desktop"
+    ],
+    "bestFor": "Developers running coding agents on large or multi-language codebases who want reliable semantic navigation and refactoring instead of text-based edits.",
+    "notIdealFor": "Small scripts or single-file projects where built-in agent file tools are sufficient, or teams that cannot install uv and language-server dependencies locally.",
+    "recentUpdates": "Serena v2.0.0 (2026-10-13) introduced the REPL-based agent interface, and v2.1.0 (2026-10-19) restored Claude Desktop chat-mode compatibility, fixed the MCP registry manifest and added a dashboard welcome pane.",
+    "verdict": "A mature, widely adopted MCP toolkit that meaningfully upgrades what coding agents can do with code structure, best suited to developers working in large codebases.",
+    "tags": [
+      "AI Codebase Knowledge & Generation",
+      "MCP",
+      "Language Server",
+      "Coding Agents",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-01"
+  },
+  {
+    "slug": "nodeterm",
+    "name": "nodeterm",
+    "company": "Enes Kirca",
+    "pricing": "freemium",
+    "pricingDetail": "The desktop app is free to download and use, including 5 relay bridges per month for off-network phone or peer connections. nodeterm Pro (subscription, also purchasable in the iOS app) removes the relay cap and unlocks Team Access for sharing a canvas with teammates by the seat. Source is published under the Business Source License 1.1 (each version converts to MIT after four years); agent CLIs and model plans are paid separately.",
+    "description": "nodeterm is a node-based terminal manager for running many AI coding agents at once. Terminals and agent sessions live as draggable nodes on an infinite canvas backed by tmux, and every project can also be viewed as a kanban board of live sessions.",
+    "keyFeatures": [
+      "tmux-backed terminal and agent nodes on a pan/zoom canvas that survive app restarts",
+      "Hook-driven RUNNING / NEEDS YOU status badges, subagent cards and context meters",
+      "Agent nodes for Claude Code, Codex, Antigravity, Gemini, GitHub Copilot, opencode, Grok, Cursor and custom CLIs",
+      "Kanban board view, git worktree groups, Monaco editor, diff and whiteboard nodes",
+      "iOS companion over an E2E-encrypted relay and a self-hosted browser Server Edition"
+    ],
+    "bestFor": "Developers who juggle several parallel coding-agent sessions and prefer a spatial, visual workspace over stacked terminal tabs.",
+    "notIdealFor": "Users who want a lightweight keyboard-only terminal, or Windows users who need signed installers and session continuity today, since Windows support is still an unsigned beta.",
+    "recentUpdates": "Version 0.4.5 (2026-10-24) made Antigravity a full agent with context links and canvas control and added Excalidraw whiteboard nodes; version 0.4.4 (2026-10-17) brought the core experience to Windows as an unsigned beta and added simulator nodes.",
+    "verdict": "A fast-moving, feature-rich agent workspace whose canvas and kanban views make parallel agent sessions easier to track, provided its source-available license fits your use.",
+    "tags": [
+      "AI-Native Terminals",
+      "Terminal Multiplexer",
+      "Agent Orchestration",
+      "Coding Agents",
+      "Desktop App"
+    ],
+    "lastUpdated": "2026-11-01"
+  },
+  {
+    "slug": "claude-code-game-studios",
+    "name": "Claude Code Game Studios",
+    "company": "Donchitos",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license; users pay only for their Claude Code subscription or Anthropic API usage.",
+    "description": "Claude Code Game Studios is a project template that structures a Claude Code session like a game studio. It ships a hierarchy of specialized subagents, slash-command skills, validation hooks, path-scoped coding rules and design-document templates that guide a game from brief to tested build.",
+    "keyFeatures": [
+      "49 subagents organized as directors, department leads and specialists",
+      "74 slash-command skills covering design, epics, stories, development and QA",
+      "15 hooks validating commits, pushes, assets and design documents",
+      "14 path-scoped coding rules and 62 templates for GDDs, ADRs and sprint plans",
+      "Configurable modes.rigor setting with Godot, Unity and Unreal engine references"
+    ],
+    "bestFor": "Solo developers and small teams building games with Claude Code who want structured design, review and QA workflows rather than an unstructured chat session.",
+    "notIdealFor": "Developers not using Claude Code, non-game projects, or users who want generated art and audio assets rather than process and code guidance.",
+    "recentUpdates": "Version 1.2.0 (2026-10-19) rebuilt the core story skills around shared helper scripts, added a read guard for large design docs, moved engine references to Godot 4.7 and Unreal Engine 5.8, and removed blanket shell-command pre-approval from skills.",
+    "verdict": "A popular, thoroughly documented Claude Code configuration that brings real studio process to AI-assisted game development, at the cost of extra documentation overhead on higher rigor settings.",
+    "tags": [
+      "Developer Productivity & Workflow",
+      "Claude Code",
+      "Agent Skills",
+      "Game Development",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-01"
+  },
+  {
+    "slug": "agent-desktop",
+    "name": "agent-desktop",
+    "company": "Vercel Labs",
+    "pricing": "open-source",
+    "pricingDetail": "agent-desktop is free and open-source under the Apache-2.0 license, with no paid tiers; you pay only for the AI agent or model that drives it.",
+    "description": "agent-desktop is a Rust CLI and C library that gives AI agents computer use on desktop apps by reading the operating system's accessibility tree instead of matching pixels. Each snapshot returns JSON with a ref for every actionable element, and the agent acts on refs and snapshots again to verify.",
+    "keyFeatures": [
+      "Accessibility-tree snapshots with snapshot-scoped refs for every actionable element",
+      "Headless ref actions (click, type, set-value, scroll, select) that do not move the pointer or steal focus",
+      "Stale-ref detection and structured errors that say when a retry is safe",
+      "App, window, notification and clipboard management across macOS, Windows and Linux",
+      "Version-matched agent skills and an FFI library for in-process use"
+    ],
+    "bestFor": "Developers building or running AI agents that need to operate native desktop applications reliably on macOS, Windows or Linux.",
+    "notIdealFor": "Apps that expose little or no accessibility information, Wayland-only Linux setups needing full mouse and window control, or teams wanting a hosted computer-use service.",
+    "recentUpdates": "Version 1.0.0 shipped on 2026-10-28 after the project moved under Vercel Labs, followed by v1.0.1 (automatic release publishing) and v1.0.2 on 2026-10-30, which improved the macOS permission guide and npm launcher messaging.",
+    "verdict": "A well-engineered, cross-platform computer-use layer that trades pixel guessing for structured accessibility data, making desktop automation by agents far more dependable.",
+    "tags": [
+      "Developer Productivity & Workflow",
+      "Computer Use",
+      "Desktop Automation",
+      "AI Agents",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-01"
   }
 ]
