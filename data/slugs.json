@@ -1206,6 +1206,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "lemon-code",
+    "name": "Lemon Code",
+    "company": "Specific Labs",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
