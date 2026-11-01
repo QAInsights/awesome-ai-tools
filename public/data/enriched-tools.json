@@ -11604,6 +11604,35 @@
     "lastUpdated": "2026-11-01"
   },
   {
+    "slug": "callmemcp",
+    "name": "CallMeMCP",
+    "company": "Serdar Oztetik (Oztetik Solutions)",
+    "pricing": "paid",
+    "pricingDetail": "The iPhone/Android app is a subscription: $4.99 per week with a 3-day trial for new accounts, or $24.99 per year. The hosted MCP server itself requires no account, API key, or OAuth; the phone number routes calls.",
+    "description": "A hosted MCP server plus phone app that lets coding agents (Claude Code, Codex, Cursor, ChatGPT, Grok, and other MCP clients) ring or text the developer's real phone, read a question aloud, and return the spoken reply as text to the agent.",
+    "keyFeatures": [
+      "Hosted remote MCP server at https://callmemcp.com/mcp with no API key or OAuth",
+      "Real phone calls via iPhone CallKit (lock screen, AirPods, speaker/mute) and full-screen Android calls",
+      "Spoken answers transcribed back to the agent as text",
+      "One-way texts plus typed replies, with a thread per agent session",
+      "Reads out up to 2,000 characters (~2 minutes of speech) per call",
+      "Six tools: setup, call, poll_result, text, wait_for_reply, set_thread_title",
+      "Privacy: random 10-digit number, calls not recorded, only transcripts kept, deletable"
+    ],
+    "bestFor": "Developers running long unattended agent sessions who need to approve decisions or answer questions while away from the keyboard.",
+    "notIdealFor": "Those wanting a free tool, a conversational voice assistant, or a fully audited/verified plugin—security scans flagged high findings and publisher ownership is unverified.",
+    "recentUpdates": "Plugin v1.0.1 updated Oct 30, 2026; MCP registry entry first seen Sep 3, 2026 with 3 versions and 4 small-print changes (worst graded medium) as of Oct 18, 2026; Cursor HQ coverage Oct 14, 2026; last GitHub push Oct 29, 2026.",
+    "verdict": "A focused, easy-to-set-up way to keep long agent runs moving by reaching you by phone, with sensible privacy defaults. However, it is subscription-only, iOS/Android app dependent, and carries unresolved high-severity scan findings and unverified publisher ownership.",
+    "tags": [
+      "MCP",
+      "human-in-the-loop",
+      "phone-calls",
+      "voice-input",
+      "developer-productivity"
+    ],
+    "lastUpdated": "2026-11-01"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
