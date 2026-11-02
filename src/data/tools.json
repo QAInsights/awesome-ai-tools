@@ -1746,5 +1746,9 @@
   {
     "companyName": "DeepSeek",
     "toolName": "dsh-superagent"
+  },
+  {
+    "companyName": "Andrej Karpathy",
+    "toolName": "nanochat"
   }
 ]

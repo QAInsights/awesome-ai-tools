@@ -11902,5 +11902,32 @@
       "Open Source"
     ],
     "lastUpdated": "2026-11-01"
+  },
+  {
+    "slug": "nanochat",
+    "name": "nanochat",
+    "company": "Andrej Karpathy",
+    "pricing": "open-source",
+    "pricingDetail": "nanochat is free and open-source under the MIT license. The only cost is GPU compute: the reference GPT-2-grade speedrun takes about 2 hours on an 8xH100 node (roughly $48 at ~$3 per GPU-hour, or closer to $15 on spot instances), while small experiments can run on a single GPU, CPU or Apple Silicon.",
+    "description": "nanochat is Andrej Karpathy's minimal, hackable harness for training a ChatGPT-style LLM from scratch on a single GPU node. It covers the full pipeline (tokenization, pretraining, supervised finetuning, reinforcement learning, evaluation and inference) in a small PyTorch codebase, and you can talk to the resulting model over a CLI or web UI.",
+    "keyFeatures": [
+      "End-to-end pipeline: tokenizer, pretraining, SFT, RL, evaluation and KV-cache inference in one small codebase",
+      "Single --depth dial that derives width, heads, learning rates, training horizon and weight decay for compute-optimal models",
+      "runs/speedrun.sh trains a GPT-2-grade model in about 2 hours on an 8xH100 node",
+      "Public time-to-GPT-2 leaderboard measured by the DCLM CORE score",
+      "Built-in evals (CORE, ARC, GSM8K, HumanEval, MMLU), a Python tool-use sandbox and CPU/MPS support for small runs"
+    ],
+    "bestFor": "Developers, researchers and students who want to understand or experiment with every stage of LLM training using a readable codebase and a modest GPU budget.",
+    "notIdealFor": "Anyone wanting a production-quality assistant or coding model: the resulting models are small and hallucinate freely, and serious runs need multi-GPU H100 or A100 hardware.",
+    "recentUpdates": "The 2026 work focused on pretraining speed: the time-to-GPT-2 record fell from about 3.04 hours (January) to 1.65 hours (March) through fp8, larger batches, the NVIDIA ClimbMix dataset and agent-driven autoresearch rounds. July 2026 commits added inference benchmarking (scripts/infer_bench.py), tests, a unified optimizer implementation and a hardened execution sandbox.",
+    "verdict": "The clearest hands-on reference for how a modern chat LLM is built end to end, best used as a learning and research harness rather than a model to deploy.",
+    "tags": [
+      "Hardware & Edge AI",
+      "LLM Training",
+      "PyTorch",
+      "Education",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-01"
   }
 ]

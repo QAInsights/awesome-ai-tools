@@ -2644,5 +2644,11 @@
     "name": "text-to-cad",
     "company": "earthtojake",
     "category": "Hardware & Edge AI"
+  },
+  {
+    "slug": "nanochat",
+    "name": "nanochat",
+    "company": "Andrej Karpathy",
+    "category": "Hardware & Edge AI"
   }
 ]
