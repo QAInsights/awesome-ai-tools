@@ -1750,5 +1750,21 @@
   {
     "companyName": "Andrej Karpathy",
     "toolName": "nanochat"
+  },
+  {
+    "companyName": "Chris Wellons (skeeto)",
+    "toolName": "Prospero"
+  },
+  {
+    "companyName": "Jakub Krehel",
+    "toolName": "Interfaces Skills"
+  },
+  {
+    "companyName": "JustVugg",
+    "toolName": "colibri"
+  },
+  {
+    "companyName": "FlashML",
+    "toolName": "FreeToken"
   }
 ]

@@ -354,6 +354,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "prospero",
+    "name": "Prospero",
+    "company": "Chris Wellons (skeeto)",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -2592,6 +2598,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "interfaces-skills",
+    "name": "Interfaces Skills",
+    "company": "Jakub Krehel",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
@@ -2649,6 +2661,18 @@
     "slug": "nanochat",
     "name": "nanochat",
     "company": "Andrej Karpathy",
+    "category": "Hardware & Edge AI"
+  },
+  {
+    "slug": "colibri",
+    "name": "colibri",
+    "company": "JustVugg",
+    "category": "Hardware & Edge AI"
+  },
+  {
+    "slug": "freetoken",
+    "name": "FreeToken",
+    "company": "FlashML",
     "category": "Hardware & Edge AI"
   }
 ]
