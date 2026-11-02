@@ -11931,5 +11931,113 @@
       "Open Source"
     ],
     "lastUpdated": "2026-11-01"
+  },
+  {
+    "slug": "prospero",
+    "name": "Prospero",
+    "company": "Chris Wellons (skeeto)",
+    "pricing": "open-source",
+    "pricingDetail": "Prospero is free, public-domain software (Unlicense) with prebuilt binaries for Windows, macOS and Linux. It ships with no provider configured, so model costs depend on the endpoint you connect: a local llama.cpp or vLLM server is free to run, while hosted OpenAI-compatible or Anthropic APIs bill per token on your own key.",
+    "description": "Prospero is a native GUI AI coding harness written in C++ with Dear ImGui that connects to local or remote model providers and lets agents drive your computer to develop software. It runs as a single executable with no daemon, keeps working through intermittent errors while unattended, and can also run headless, over ssh or in the background.",
+    "keyFeatures": [
+      "Single native C++ executable for Windows, macOS and Linux with a dockable, idle-free ImGui interface",
+      "OpenAI Chat Completions and Anthropic Messages API support, including extended thinking and prompt caching",
+      "Sessions with subagents, todo lists, plans and background jobs",
+      "Desktop control so the agent can see and drive the screen to build and test native GUI apps",
+      "One prospero.ini for endpoints, models, roles, skills, MCP servers and web search, with keys read only from env: or file: references"
+    ],
+    "bestFor": "Developers who want a lean, local-first coding harness that works with self-hosted models or any compatible API and can develop and test native desktop applications.",
+    "notIdealFor": "Teams that want a managed, preconfigured cloud agent or deep IDE integration, since Prospero ships unconfigured and is a very young project with rapid breaking changes.",
+    "recentUpdates": "First published in October 2026 and announced on Chris Wellons's nullprogram.com blog on October 31, 2026 (205 points on Hacker News). Releases v0.9.0 (October 30), v0.10.0 (November 1) and v0.11.0 (November 2, 2026) shipped binaries for Linux x86_64/aarch64, macOS arm64 and Windows x86_64, with recent commits tightening approvals for included web URLs and MCP servers.",
+    "verdict": "A refreshingly small, dependency-light alternative to Electron-based agent apps that stands out for native desktop control and provider neutrality, best suited to hands-on developers comfortable configuring their own endpoints.",
+    "tags": [
+      "AI-Native IDE",
+      "Agent Harness",
+      "Native GUI",
+      "Open Source",
+      "Local Models"
+    ],
+    "lastUpdated": "2026-11-02"
+  },
+  {
+    "slug": "interfaces-skills",
+    "name": "Interfaces Skills",
+    "company": "Jakub Krehel",
+    "pricing": "open-source",
+    "pricingDetail": "The skills are free and open-source under the MIT license. Running them only costs whatever your AI coding agent subscription or API usage already costs.",
+    "description": "Interfaces Skills is a collection of agent skills from design engineer Jakub Krehel that help AI coding agents review and build better user interfaces. The skills cover UI polish, typography, color systems, accessibility, layout and product writing, plus user-invoked workflows for reviewing changes, explaining existing interfaces and stress-testing components.",
+    "keyFeatures": [
+      "better-interface returns one ranked report across accessibility, layout, writing, typography, color and UI polish",
+      "Focused skills for UI polish, typography, colors, WCAG 2.2 accessibility, layout and interface copy",
+      "interface-review checks a branch, pull request or uncommitted change for interface regressions",
+      "break, state-machine and variant render components under every scenario, state or variant on throwaway pages",
+      "Install via npx skills add jakubkrehel/skills or as a Claude Code plugin marketplace"
+    ],
+    "bestFor": "Frontend and design engineers using Claude Code, Codex, Cursor or similar agents who want opinionated, detailed guidance to raise the visual and accessibility quality of generated UI.",
+    "notIdealFor": "Backend-focused work or teams that already enforce a strict in-house design system and only need a deterministic linter rather than prompt-based review.",
+    "recentUpdates": "Version 1.17.0 (October 25, 2026) enhanced the teardown viewer, and commits continued into November 2026; the repository passed 10,000 GitHub stars and appeared on GitHub's weekly trending list in early November 2026.",
+    "verdict": "One of the most thorough UI-quality skill packs for coding agents, grounded in its author's published design-engineering writing and easy to drop into existing agent setups.",
+    "tags": [
+      "Agent Skills",
+      "UI Design",
+      "Accessibility",
+      "Claude Code",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-02"
+  },
+  {
+    "slug": "colibri",
+    "name": "colibri",
+    "company": "JustVugg",
+    "pricing": "free",
+    "pricingDetail": "colibri is free and open-source under the Apache-2.0 license with no paid tiers; the project accepts optional donations. You only need your own hardware (8 GB RAM minimum, 16 GB or more recommended, plus disk space for model weights).",
+    "description": "colibri is a pure-C inference engine that runs very large mixture-of-experts open models on ordinary computers by keeping the always-active weights in RAM and streaming experts from disk as the model needs them. A one-step setup recommends a model for your machine, builds or downloads the engine and serves OpenAI- and Anthropic-compatible endpoints that coding agents can use.",
+    "keyFeatures": [
+      "Expert streaming from disk so hundreds-of-billions-parameter MoE models run in modest RAM",
+      "CPU, Vulkan and CUDA backends with an optional GPU",
+      "Runs published GGUF files as-is, from IQ1_S to Q8_0, F16, BF16 and MXFP4",
+      "OpenAI-compatible /v1 and Anthropic-compatible endpoints for coding agents",
+      "One-step start-here setup with hardware profiling, model recommendation, resumable downloads and a coli ui dashboard"
+    ],
+    "bestFor": "Developers who want to run frontier-scale open MoE models such as GLM, DeepSeek, Kimi or Qwen locally for private coding-agent work without buying datacenter GPUs.",
+    "notIdealFor": "Latency-sensitive production serving or dense models, since streaming experts from disk trades speed for memory and throughput depends heavily on disk and RAM bandwidth.",
+    "recentUpdates": "v2.1.0 (October 31, 2026) added native GGUF support on every engine, Mistral-Large-4, Muse Spark Open, Flint and LFM3-VL, CUDA device chains, speculative decoding via MTP heads, 262k-token contexts for Qwen3.8-Flash-Next and a new chat UI; v2.0.0 shipped October 6, 2026.",
+    "verdict": "An impressively compact way to run giant open MoE models on consumer hardware, with agent-ready APIs that make it a practical local backend for coding agents if you can accept disk-bound speeds.",
+    "tags": [
+      "Hardware & Edge AI",
+      "Inference Engine",
+      "Local LLM",
+      "Open Source",
+      "Mixture of Experts"
+    ],
+    "lastUpdated": "2026-11-02"
+  },
+  {
+    "slug": "freetoken",
+    "name": "FreeToken",
+    "company": "FlashML",
+    "pricing": "free",
+    "pricingDetail": "FreeToken is free and open-source under the Apache-2.0 license, including the Windows and Linux desktop app. There are no paid tiers; you supply your own NVIDIA RTX 30, 40 or 50 series GPU and host memory.",
+    "description": "FreeToken is an edge-native mixture-of-experts serving engine for running frontier-scale open-weight models on personal hardware. It treats GPUs, CPUs, host memory and interconnects as one elastic inference platform and exposes Anthropic- and OpenAI-compatible APIs for coding and tool-calling agents.",
+    "keyFeatures": [
+      "Bandwidth-adaptive CPU-GPU co-execution with double-buffered prefill streaming and global LRU expert caching",
+      "Semantic anchor checkpoints so agentic context edits avoid recomputing KV and recurrent state",
+      "Runtime VRAM rebalancing between expert cache and KV memory without restarts",
+      "Support for DeepSeek-V4-Flash, Qwen3.6, GLM-5.2, gpt-oss and GGUF checkpoints in MXFP4, NVFP4, FP8 and BF16",
+      "Anthropic- and OpenAI-compatible APIs for Codex, Claude Code, OpenCode and OpenClaw, via a desktop app or uv/pip CLI"
+    ],
+    "bestFor": "Developers with an NVIDIA gaming or workstation GPU who want to run 100B-300B-class open MoE models locally as a fast backend for coding agents.",
+    "notIdealFor": "Apple Silicon, AMD or CPU-only users, and anyone who needs a mature, long-stable serving stack, since the project targets NVIDIA RTX hardware and is at version 0.2.",
+    "recentUpdates": "v0.2.0 (October 21, 2026) and v0.2.1 (October 26, 2026) added image input from llama.cpp mmproj files, DeepSeek-V4 and Qwen3-VL GGUF architectures, Flint support and host-RAM embedding tables; a November 2, 2026 commit added gpt-oss GGUF serving. The accompanying arXiv paper (2608.16157) describes the design.",
+    "verdict": "A research-backed, fast-moving local MoE server that brings datacenter-style serving techniques to consumer NVIDIA GPUs and is a strong local backend for agent workloads.",
+    "tags": [
+      "Hardware & Edge AI",
+      "Inference Engine",
+      "Local LLM",
+      "Open Source",
+      "Mixture of Experts"
+    ],
+    "lastUpdated": "2026-11-02"
   }
 ]
