@@ -4,7 +4,7 @@
     "name": "Cursor",
     "company": "Anysphere",
     "pricing": "freemium",
-    "pricingDetail": "Offers a Free tier with limited usage, alongside paid subscriptions (Plus, Premium, Super, Ultra) ranging from $8/month to $200/month as part of The X Subscription. Third-party models on Premium and above are billed at API list price from prepaid credit.",
+    "pricingDetail": "Free tier available. Paid plans (The X Subscription) start at $8/month (Plus), with Premium ($30/mo), Super ($100/mo), and Ultra ($200/mo) tiers. Teams plans are available at $30+ per seat/month.",
     "description": "Cursor is an AI-native code editor forked from VS Code that integrates agentic workflows, codebase-wide search, and terminal execution. It allows developers to build, debug, and review code using autonomous agents that understand project context and support multi-file modifications.",
     "keyFeatures": [
       "AI-powered multi-line code completion (Tab)",
@@ -462,7 +462,7 @@
     "name": "MiniMax Code",
     "company": "MiniMax",
     "pricing": "freemium",
-    "pricingDetail": "Offers a subscription-based M Plan (succeeding the previous Token Plan) with various tiers starting at $20/month. Tiers provide shared multimodal quotas, with higher levels offering increased concurrency and video generation allowances.",
+    "pricingDetail": "The open-source CLI (mcode) is free under MIT and works with your own Anthropic- or OpenAI-compatible model keys, while MiniMax's hosted models require an M Plan subscription at roughly $22, $55, or $132/month (Go/Explore/Build, or Plus/Max/Ultra) with token quotas on rolling 5-hour and weekly windows that do not carry over.",
     "description": "MiniMax Code is an AI-native desktop agent application for macOS and Windows that assists with software development, automation, and general office workflows. It features dual modes—Coding and Work—allowing users to interact with local files, terminal sessions, and browser tools while leveraging advanced multimodal models.",
     "keyFeatures": [
       "Local project workspace integration with terminal and file system access",
@@ -840,7 +840,7 @@
     "name": "OneCLI",
     "company": "OneCLI",
     "pricing": "freemium",
-    "pricingDetail": "Offers a free plan with $5 in AI credits and 500 integration calls per month; paid plans include Team ($149-$499/mo) and Scale ($499-$1,999/mo), with custom pricing for Enterprise.",
+    "pricingDetail": "Offers a free forever plan including $5 AI model credits and 500 integration calls per month. Paid plans include Team ($149/mo) and Scale ($499/mo), with custom enterprise options available. Bring-your-own-key (BYOC) pricing is also available for reduced monthly costs.",
     "description": "OneCLI is an open-source platform that secures AI agents by running them in isolated sandboxes and routing their requests through a gateway that enforces policies and injects credentials. It allows teams to manage multi-agent workflows while ensuring secrets are never directly exposed to the agent environments.",
     "keyFeatures": [
       "Transparent credential injection via secure gateway",
@@ -1218,7 +1218,7 @@
     "name": "Step Code",
     "company": "StepFun",
     "pricing": "freemium",
-    "pricingDetail": "Step Code is open-source, but it uses the Step Plan subscription service (ranging from $6.99/mo for 400M credits to $99/mo for 40,000M credits) or a pay-as-you-go Open Platform API key.",
+    "pricingDetail": "Offers a monthly subscription service called Step Plan with four tiers ranging from $6.99/mo (Flash Mini, 400M credits) to $99/mo (Flash Max, 40,000M credits), as well as pay-as-you-go access via Open Platform API keys.",
     "description": "Step Code is an open-source terminal coding agent that automates software development tasks such as reading code, executing shell commands, and managing autonomous workflows. It is highly optimized for token efficiency when used with StepFun models and features native multi-agent orchestration.",
     "keyFeatures": [
       "Autonomous long-running task delegation via /goal",
@@ -1830,7 +1830,9 @@
       "LLM",
       "Autocomplete"
     ],
-    "lastUpdated": "2026-11-01"
+    "lastUpdated": "2026-11-01",
+    "status": "discontinued",
+    "successor": "cursor"
   },
   {
     "slug": "augment-code",
@@ -2024,7 +2026,7 @@
     "name": "Replit Agent",
     "company": "Replit",
     "pricing": "freemium",
-    "pricingDetail": "Offers a Free Mode with usage allowances and paid tiers (Core at $18/month and Pro at $90/month, billed annually) that provide additional monthly credits and access to more powerful models. Effort-based pricing applies to complex builds, and managed AI integrations are billed at public API rates.",
+    "pricingDetail": "Offers a Free Mode with usage limits included in subscriptions, plus usage-based billing for Power and Max modes using Replit credits. Monthly plans start at $18/month (billed annually) for Core, with higher tiers like Pro offering more credits and limits.",
     "description": "Replit Agent is an AI-powered software development tool that transforms natural language prompts into fully functional applications by handling environment setup, coding, testing, and deployment. It serves as an integrated partner that can manage complex, multi-file projects and automate workflows directly within the browser-based Replit IDE.",
     "keyFeatures": [
       "Conversational app building from plain language prompts",
@@ -2506,7 +2508,7 @@
     "name": "Claude Code",
     "company": "Anthropic",
     "pricing": "freemium",
-    "pricingDetail": "Available via subscription plans (Pro, Max, Team, Enterprise) with token-based usage caps, or via pay-as-you-go API usage through the Anthropic Console.",
+    "pricingDetail": "Included in Claude Pro ($20/mo), Max 5x ($100/mo), and Max 20x ($200/mo) subscription plans. API users are billed based on standard token consumption.",
     "description": "Claude Code is an agentic coding assistant that operates directly in your terminal, IDE, or browser to help build features, fix bugs, and automate complex development tasks. It analyzes your entire codebase, executes shell commands, manages files, and integrates with development tools to perform long-running, multi-step engineering work.",
     "keyFeatures": [
       "Agentic loop for autonomous context gathering, execution, and verification",
@@ -2749,7 +2751,7 @@
     "name": "Codebuff",
     "company": "Codebuff",
     "pricing": "freemium",
-    "pricingDetail": "Offers a usage-based model where users purchase credits to pay per task, alongside a free tier providing 500 credits per month. Optional ad-supported usage is available where impressions earn credits.",
+    "pricingDetail": "Pay as you go at 1 cent per credit, with credits consumed by task complexity, or subscribe to Strong 1x ($100/month), Strong 2.5x ($200/month) or Strong 7x ($500/month), where the multiplier is usage relative to the base plan. Enterprise plans with custom pricing are available for organizations. There is no free Codebuff plan; the free, ad-supported option is now the separate Freebuff product.",
     "description": "Codebuff is an open-source AI coding agent that runs directly in the terminal, utilizing a multi-agent orchestration framework to handle file discovery, code generation, and automated review. It is designed to be faster and more efficient than standard coding agents by parallelizing tasks across specialized sub-agents.",
     "keyFeatures": [
       "Parallel multi-strategy agent architecture",
@@ -2803,7 +2805,7 @@
     "name": "Command Code",
     "company": "Command Code",
     "pricing": "freemium",
-    "pricingDetail": "Plans range from a $1/month Go plan to $100+/month Max plans, with a Provider API plan at $15/month and custom Enterprise options. Most plans include a monthly processing fee, and all subscriptions (except the entry-level Go tier) include API access. Unused top-up credits roll over and never expire.",
+    "pricingDetail": "Plans start at $1/month (Go), with paid tiers including GOAT ($10/mo), Pro ($20/mo), and Max ($100-$200/mo). All plans (except Go) include API access, and users can purchase on-demand credits that never expire.",
     "description": "Command Code is a terminal-based coding agent engineered specifically to optimize performance with open-source models through advanced tool-call repair and high cache-hit rates. It functions as an interactive coding partner that learns user preferences via a proprietary neuro-symbolic taste engine while supporting complex workflows like background task execution and persistent memory.",
     "keyFeatures": [
       "Tool-call repair and validation for all models",
@@ -2883,7 +2885,7 @@
     "name": "Kiro CLI",
     "company": "AWS",
     "pricing": "freemium",
-    "pricingDetail": "Kiro CLI pricing is included in the standard Kiro pricing tiers, which offer multiple levels to support varying developer needs including add-on credits and overages.",
+    "pricingDetail": "Offers a perpetual free tier with 50 credits, with paid tiers starting at $20/month (Pro), $40/month (Pro+), $100/month (Pro Max), and $200/month (Power).",
     "description": "Kiro CLI is a terminal-based interface that connects developers directly to Kiro's AI agents to perform coding, debugging, and workflow automation tasks. It supports both local and cloud-based sessions, allowing developers to maintain context across environments and automate repetitive tasks via intelligent hooks and agents.",
     "keyFeatures": [
       "Interactive terminal-based AI chat with context awareness",
@@ -3366,7 +3368,7 @@
     "name": "OpenCode",
     "company": "Anomaly",
     "pricing": "freemium",
-    "pricingDetail": "The OpenCode agent is 100% free and open source. Optional costs apply for the 'Go' subscription (starting at $10/month) or 'Zen' pay-as-you-go model access. Users can also connect their own third-party AI provider subscriptions or use local models at no extra cost.",
+    "pricingDetail": "The OpenCode core is open source and free to use. Users pay for individual model usage via their own API keys or by subscribing to the optional OpenCode Go ($10/month) or Go Plus ($40/month) plans for access to curated open-source models.",
     "description": "OpenCode is an open-source AI coding agent that assists with writing and running code through terminal, desktop, and IDE interfaces. It provides a flexible environment where users can connect various LLM providers, including local models and existing paid subscriptions like GitHub Copilot.",
     "keyFeatures": [
       "Support for 75+ LLM providers and local models",
@@ -3447,7 +3449,7 @@
     "name": "AI Prompt Architect",
     "company": "MC Conversions Ltd",
     "pricing": "freemium",
-    "pricingDetail": "Operates on a credit-based system. Offers a free tier with static credits, alongside paid subscription tiers (Pro at $12.99/month, Enterprise at $18.99/month) and one-time credit pack purchases starting at $4.99. Users access a 50% discount on agentic integrations via CLI or MCP.",
+    "pricingDetail": "Offers a free tier with limited credits. Paid plans include Starter (£4.99 one-time), Pro (£9.99/mo starting price), and Enterprise, alongside a one-time Starter Architect pack ($6.99) and credit packs for non-subscribers.",
     "description": "AI Prompt Architect is a professional prompt engineering platform that utilizes the STCO (System, Task, Context, Output) framework to help developers and teams build production-grade AI prompts. It provides a visual builder, security scanning, and IDE-integrated tools to turn ad-hoc prompting into a disciplined, repeatable engineering process.",
     "keyFeatures": [
       "STCO-based visual drag-and-drop prompt builder",
@@ -4179,7 +4181,7 @@
     "name": "Warp",
     "company": "Warp",
     "pricing": "freemium",
-    "pricingDetail": "Free plan includes core terminal features with pay-as-you-go AI; Build plan is $20/month with 1,500 AI credits and extra collaboration features; Business and Enterprise plans offer per-seat pricing, SSO, and custom controls.",
+    "pricingDetail": "Offers a free tier with core terminal features and limited AI usage. Paid plans include Build ($20/month) and Business, with optional pay-as-you-go credit reloads and support for Bring Your Own Key (BYOK) on all plans.",
     "description": "Warp is an agentic development environment and modern terminal that integrates AI directly into the command line to support coding, debugging, and software factory workflows. It allows developers to execute multi-step tasks using natural language, manage agentic workflows, and collaborate through shared terminal sessions and cloud-based drives.",
     "keyFeatures": [
       "Agentic development environment with multi-model support (Claude, GPT, Gemini, etc.)",
@@ -5179,7 +5181,7 @@
     "name": "Open-CUAK",
     "company": "Aident AI",
     "pricing": "open-source",
-    "pricingDetail": "Open-CUAK is free and open-source (self-hosted via Homebrew or Docker); Aident also offers a separate managed platform (Aident Loadout) with a free tier and paid plans ranging from $12 to $120 per month.",
+    "pricingDetail": "Open-CUAK itself is free and open-source (self-hosted via Homebrew or Docker); Aident's separate hosted platform has a free tier with 300 credits/month and paid plans from $12/mo (Basic) up to $120/mo (Max) billed annually, plus custom Enterprise.",
     "description": "Open-CUAK is an open-source, self-hostable kit designed for managing computer-use automation agents at scale. It allows users to run vision-based browser automation workflows locally while maintaining privacy and control.",
     "keyFeatures": [
       "Local execution of vision-based browser automation",
@@ -5747,7 +5749,7 @@
     "name": "Ploy",
     "company": "Ploy",
     "pricing": "freemium",
-    "pricingDetail": "Free tier with 500 daily/2,000 total credits; Starter at $50/month; Pro at $300/month; Enterprise with custom pricing.",
+    "pricingDetail": "Offers a free tier with 500 credits per day and 2,000 maximum. Paid plans include Starter ($50/mo), Pro ($300/mo), and custom-priced Enterprise tiers.",
     "description": "Ploy is an AI-powered marketing platform that integrates website building, SEO/AEO optimization, and visitor analytics into a continuous automation loop. It allows teams to build and maintain sites using chat-based agents that operate on a modern stack of Astro, React, and Tailwind CSS.",
     "keyFeatures": [
       "Chat-based AI agent for site building and design",
@@ -5937,7 +5939,7 @@
     "name": "CodeRabbit",
     "company": "CodeRabbit",
     "pricing": "freemium",
-    "pricingDetail": "Offers plans starting at $24/user/month (Essentials) to $72/user/month (Advanced) when billed annually, plus a contact-based Enterprise tier. Usage-based pricing is available for reviews exceeding plan limits at $0.25 per file, and on-demand agents are billed at $0.40 per minute.",
+    "pricingDetail": "Subscription-based with four tiers: Essentials ($30/mo or $24/yr), Team ($60/mo or $48/yr), Advanced ($90/mo), and Enterprise (custom). A usage-based add-on is available for over-limit reviews, and separate metered pricing applies to CodeRabbit Agent usage.",
     "description": "CodeRabbit is an AI-powered platform designed to provide governance and control for agentic development workflows. It offers automated code reviews, security scanning, and triage features that help engineering teams manage high volumes of AI-generated code.",
     "keyFeatures": [
       "Agentic code reviews across PR, CLI, and IDE environments",
@@ -6206,7 +6208,7 @@
     "name": "Graphite",
     "company": "Graphite",
     "pricing": "freemium",
-    "pricingDetail": "Offers a free Hobby plan for personal projects and three paid tiers: Starter at $20/seat/month, Team at $40/seat/month (both billed annually), and a custom-priced Enterprise plan.",
+    "pricingDetail": "Offers a free Hobby plan for personal projects, and paid tiers including Starter ($20/seat/month billed annually) and Team ($40/seat/month billed annually), with custom Enterprise pricing.",
     "description": "Graphite is an AI-powered code review platform designed to help development teams ship high-quality code faster through stacked pull requests and automated agentic workflows. It integrates directly with GitHub to provide codebase-aware AI reviews, chat capabilities, and a stack-aware merge queue.",
     "keyFeatures": [
       "Graphite Agent for AI-powered code review and conversational chat",
@@ -6856,7 +6858,7 @@
     "name": "ChatGPT",
     "company": "OpenAI",
     "pricing": "freemium",
-    "pricingDetail": "Offers a free tier and tiered subscription plans including Go, Plus, and Pro (with varying usage levels), alongside Business and Enterprise plans with per-user monthly or annual pricing.",
+    "pricingDetail": "Free tier available. Subscription plans include Go, Plus, Pro ($100/month or $200/month), Business, and Enterprise, with varying levels of access to models like GPT-6, GPT-6 Astra, and higher usage allowances.",
     "description": "ChatGPT is a conversational AI assistant designed to handle research, creative writing, data analysis, and professional work tasks. It integrates specialized capabilities like Codex for software engineering and ChatGPT Work for multi-step tasks across connected applications.",
     "keyFeatures": [
       "Advanced reasoning models including GPT-6 and GPT-6.1",
@@ -7102,7 +7104,7 @@
     "name": "Remio",
     "company": "Remio",
     "pricing": "freemium",
-    "pricingDetail": "Offers a free tier with 500 AI credits/month. Paid subscription tiers (Pro, Plus, Max) range from $13.90 to $139 per month based on credit volume. A dedicated BYOK (Bring Your Own Key) plan is available for $14.90/month, allowing users to connect their own API keys for enhanced privacy and cost control.",
+    "pricingDetail": "Offers a free tier with 500 AI credits/mo and paid plans including Pro ($13.9/mo), Plus ($42/mo), and Max ($139/mo) with higher credit limits. A BYOK (Bring Your Own Key) plan is available for $14.9/mo, allowing users to connect their own API keys for enhanced privacy and cost control.",
     "description": "Remio is an AI-powered personal knowledge management system designed to act as a second brain for knowledge workers. It aggregates information from local files, meetings, emails, and web research to provide context-aware AI assistance, including summarization, document drafting, and task execution.",
     "keyFeatures": [
       "Context-aware AI chat with source citations",
@@ -8452,7 +8454,7 @@
     "name": "QwenCloud Token Plan",
     "company": "Alibaba Cloud",
     "pricing": "freemium",
-    "pricingDetail": "Offers tiered subscription plans for Personal ($6-$80/month) and Team ($20-$200/seat/month) editions, all using a unified Credits system. Pay-as-you-go billing is also available as a separate, non-subscription alternative.",
+    "pricingDetail": "Personal Edition tiers range from $6 to $68/month (limited-time pricing); Team Edition seats range from $20 to $200/seat/month. Additional capacity is available via $15/pack (Personal) or $700/pack (Team) Credit Packs.",
     "description": "QwenCloud Token Plan is a unified AI subscription service that provides access to a suite of text, multimodal, and harness tools through a single credit-based balance. It is specifically designed to integrate with mainstream AI coding assistants and agent tools via custom API keys.",
     "keyFeatures": [
       "Unified Credits-based billing for multiple model types",
@@ -9396,7 +9398,7 @@
     "name": "Claude-Mem",
     "company": "thedotmack",
     "pricing": "freemium",
-    "pricingDetail": "The local engine is open source and free. CMEM Pro offers hosted observation and cloud sync for $30/month after a 30-day free trial. TeamBrain is available for teams, with pricing negotiated via pilot.",
+    "pricingDetail": "The core engine is free and open-source. CMEM Pro offers hosted observation and cloud sync, starting at $30/month (Heavy at $70/month; Max at $100/month), with a 30-day free trial.",
     "description": "Claude-Mem is a persistent memory compression system that captures tool usage, file activity, and agent observations to maintain context continuity across Claude Code sessions. It features a local worker service that generates semantic summaries and provides a web-based dashboard called My Work to track request progress and project history.",
     "keyFeatures": [
       "Persistent memory for context continuity across sessions",
@@ -10099,7 +10101,7 @@
     "name": "Weave Router",
     "company": "Weave",
     "pricing": "freemium",
-    "pricingDetail": "Offers a $10/month Code Max plan (open-source models) and a $100/month Code Boost plan (full model roster including OpenAI and Anthropic). Enterprise custom pricing is available for on-prem deployments. Users on the managed service can also utilize a prepaid credit model where a margin is applied on top-ups.",
+    "pricingDetail": "Offers a managed service with a pay-as-you-go model (5% of routed spend) and two subscription tiers: Code Max ($10/month including $50 in credits) and Code Boost ($100/month including $200 in credits). Self-hosted deployments use your own provider keys.",
     "description": "Weave Router is an intelligent proxy for coding agents that evaluates each request to dynamically route it to the most cost-effective model capable of handling the task. It operates as a drop-in endpoint for tools like Claude Code, Codex, and Cursor to significantly reduce inference costs while maintaining frontier-level quality.",
     "keyFeatures": [
       "Complexity-based routing using trained scorers",
@@ -10612,7 +10614,7 @@
     "name": "Reqode",
     "company": "Almware Ltd.",
     "pricing": "freemium",
-    "pricingDetail": "Offers a free Startup plan for up to 3 users and 3 projects. Paid Cloud plans include Cloud Starter at $9 per user/month and Cloud Pro at $19 per user/month, with higher-tier features and included AI credits. Self-hosted instances are available for $3,000 per instance/year.",
+    "pricingDetail": "Offers a Startup tier for up to 3 users and projects. Paid cloud plans include Cloud Starter ($9/user/month) and Cloud Pro ($19/user/month), which adds included AI credits and priority support. Self-hosted instances are available for $3,000/year.",
     "description": "Reqode is an AI-assisted requirements management system designed to maintain product intent as structured, connected knowledge for long-lived codebases. It provides a central source of truth that helps teams delegate features to AI coding agents while verifying implementation against specifications and architecture.",
     "keyFeatures": [
       "Structured product model for requirements, APIs, and data entities",
@@ -11691,7 +11693,7 @@
     "name": "JetBrains IDEs",
     "company": "JetBrains",
     "pricing": "freemium",
-    "pricingDetail": "Offers AI Free, AI Pro, AI Ultimate, and AI Enterprise tiers. AI Free is included with IDE licenses but excludes certain products like IntelliJ IDEA without an Ultimate subscription. AI Pro and Ultimate provide increased quotas, and AI Pro is included with All Products Pack and dotUltimate subscriptions.",
+    "pricingDetail": "Includes an AI Free tier with limited cloud credits and unlimited code completion/local models, plus paid AI Pro ($20/month) and AI Ultimate ($60/month) tiers offering higher monthly quotas of AI credits. Enterprise options are available for organizations.",
     "description": "JetBrains IDEs provide integrated AI features and support for third-party coding agents to assist with code generation, refactoring, and project-wide analysis. The platform includes native AI Assistant capabilities and the newly introduced JetBrains Air, which allows developers to run and manage various AI agents directly within their coding environment.",
     "keyFeatures": [
       "AI-powered code completion and next edit suggestions",
