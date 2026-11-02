@@ -4,7 +4,7 @@
     "name": "Cursor",
     "company": "Anysphere",
     "pricing": "freemium",
-    "pricingDetail": "Offers a Free tier with limited usage, alongside paid subscriptions (Plus, Premium, Super, Ultra) ranging from $8/month to $200/month as part of The X Subscription. Third-party models on Premium and above are billed at API list price from prepaid credit.",
+    "pricingDetail": "Free tier available. Paid plans (The X Subscription) start at $8/month (Plus), with Premium ($30/mo), Super ($100/mo), and Ultra ($200/mo) tiers. Teams plans are available at $30+ per seat/month.",
     "description": "Cursor is an AI-native code editor forked from VS Code that integrates agentic workflows, codebase-wide search, and terminal execution. It allows developers to build, debug, and review code using autonomous agents that understand project context and support multi-file modifications.",
     "keyFeatures": [
       "AI-powered multi-line code completion (Tab)",
@@ -1830,7 +1830,9 @@
       "LLM",
       "Autocomplete"
     ],
-    "lastUpdated": "2026-11-01"
+    "lastUpdated": "2026-11-01",
+    "status": "discontinued",
+    "successor": "cursor"
   },
   {
     "slug": "augment-code",
@@ -2506,7 +2508,7 @@
     "name": "Claude Code",
     "company": "Anthropic",
     "pricing": "freemium",
-    "pricingDetail": "Available via subscription plans (Pro, Max, Team, Enterprise) with token-based usage caps, or via pay-as-you-go API usage through the Anthropic Console.",
+    "pricingDetail": "Included in Claude Pro ($20/mo), Max 5x ($100/mo), and Max 20x ($200/mo) subscription plans. API users are billed based on standard token consumption.",
     "description": "Claude Code is an agentic coding assistant that operates directly in your terminal, IDE, or browser to help build features, fix bugs, and automate complex development tasks. It analyzes your entire codebase, executes shell commands, manages files, and integrates with development tools to perform long-running, multi-step engineering work.",
     "keyFeatures": [
       "Agentic loop for autonomous context gathering, execution, and verification",
@@ -2883,7 +2885,7 @@
     "name": "Kiro CLI",
     "company": "AWS",
     "pricing": "freemium",
-    "pricingDetail": "Kiro CLI pricing is included in the standard Kiro pricing tiers, which offer multiple levels to support varying developer needs including add-on credits and overages.",
+    "pricingDetail": "Offers a perpetual free tier with 50 credits, with paid tiers starting at $20/month (Pro), $40/month (Pro+), $100/month (Pro Max), and $200/month (Power).",
     "description": "Kiro CLI is a terminal-based interface that connects developers directly to Kiro's AI agents to perform coding, debugging, and workflow automation tasks. It supports both local and cloud-based sessions, allowing developers to maintain context across environments and automate repetitive tasks via intelligent hooks and agents.",
     "keyFeatures": [
       "Interactive terminal-based AI chat with context awareness",
@@ -3366,7 +3368,7 @@
     "name": "OpenCode",
     "company": "Anomaly",
     "pricing": "freemium",
-    "pricingDetail": "The OpenCode agent is 100% free and open source. Optional costs apply for the 'Go' subscription (starting at $10/month) or 'Zen' pay-as-you-go model access. Users can also connect their own third-party AI provider subscriptions or use local models at no extra cost.",
+    "pricingDetail": "The OpenCode core is open source and free to use. Users pay for individual model usage via their own API keys or by subscribing to the optional OpenCode Go ($10/month) or Go Plus ($40/month) plans for access to curated open-source models.",
     "description": "OpenCode is an open-source AI coding agent that assists with writing and running code through terminal, desktop, and IDE interfaces. It provides a flexible environment where users can connect various LLM providers, including local models and existing paid subscriptions like GitHub Copilot.",
     "keyFeatures": [
       "Support for 75+ LLM providers and local models",
@@ -5179,7 +5181,7 @@
     "name": "Open-CUAK",
     "company": "Aident AI",
     "pricing": "open-source",
-    "pricingDetail": "Open-CUAK is free and open-source (self-hosted via Homebrew or Docker); Aident also offers a separate managed platform (Aident Loadout) with a free tier and paid plans ranging from $12 to $120 per month.",
+    "pricingDetail": "Open-CUAK itself is free and open-source (self-hosted via Homebrew or Docker); Aident's separate hosted platform has a free tier with 300 credits/month and paid plans from $12/mo (Basic) up to $120/mo (Max) billed annually, plus custom Enterprise.",
     "description": "Open-CUAK is an open-source, self-hostable kit designed for managing computer-use automation agents at scale. It allows users to run vision-based browser automation workflows locally while maintaining privacy and control.",
     "keyFeatures": [
       "Local execution of vision-based browser automation",
@@ -6856,7 +6858,7 @@
     "name": "ChatGPT",
     "company": "OpenAI",
     "pricing": "freemium",
-    "pricingDetail": "Offers a free tier and tiered subscription plans including Go, Plus, and Pro (with varying usage levels), alongside Business and Enterprise plans with per-user monthly or annual pricing.",
+    "pricingDetail": "Free tier available. Subscription plans include Go, Plus, Pro ($100/month or $200/month), Business, and Enterprise, with varying levels of access to models like GPT-6, GPT-6 Astra, and higher usage allowances.",
     "description": "ChatGPT is a conversational AI assistant designed to handle research, creative writing, data analysis, and professional work tasks. It integrates specialized capabilities like Codex for software engineering and ChatGPT Work for multi-step tasks across connected applications.",
     "keyFeatures": [
       "Advanced reasoning models including GPT-6 and GPT-6.1",
@@ -7102,7 +7104,7 @@
     "name": "Remio",
     "company": "Remio",
     "pricing": "freemium",
-    "pricingDetail": "Offers a free tier with 500 AI credits/month. Paid subscription tiers (Pro, Plus, Max) range from $13.90 to $139 per month based on credit volume. A dedicated BYOK (Bring Your Own Key) plan is available for $14.90/month, allowing users to connect their own API keys for enhanced privacy and cost control.",
+    "pricingDetail": "Offers a free tier with 500 AI credits/mo and paid plans including Pro ($13.9/mo), Plus ($42/mo), and Max ($139/mo) with higher credit limits. A BYOK (Bring Your Own Key) plan is available for $14.9/mo, allowing users to connect their own API keys for enhanced privacy and cost control.",
     "description": "Remio is an AI-powered personal knowledge management system designed to act as a second brain for knowledge workers. It aggregates information from local files, meetings, emails, and web research to provide context-aware AI assistance, including summarization, document drafting, and task execution.",
     "keyFeatures": [
       "Context-aware AI chat with source citations",
@@ -9396,7 +9398,7 @@
     "name": "Claude-Mem",
     "company": "thedotmack",
     "pricing": "freemium",
-    "pricingDetail": "The local engine is open source and free. CMEM Pro offers hosted observation and cloud sync for $30/month after a 30-day free trial. TeamBrain is available for teams, with pricing negotiated via pilot.",
+    "pricingDetail": "The core engine is free and open-source. CMEM Pro offers hosted observation and cloud sync, starting at $30/month (Heavy at $70/month; Max at $100/month), with a 30-day free trial.",
     "description": "Claude-Mem is a persistent memory compression system that captures tool usage, file activity, and agent observations to maintain context continuity across Claude Code sessions. It features a local worker service that generates semantic summaries and provides a web-based dashboard called My Work to track request progress and project history.",
     "keyFeatures": [
       "Persistent memory for context continuity across sessions",
@@ -10099,7 +10101,7 @@
     "name": "Weave Router",
     "company": "Weave",
     "pricing": "freemium",
-    "pricingDetail": "Offers a $10/month Code Max plan (open-source models) and a $100/month Code Boost plan (full model roster including OpenAI and Anthropic). Enterprise custom pricing is available for on-prem deployments. Users on the managed service can also utilize a prepaid credit model where a margin is applied on top-ups.",
+    "pricingDetail": "Offers a managed service with a pay-as-you-go model (5% of routed spend) and two subscription tiers: Code Max ($10/month including $50 in credits) and Code Boost ($100/month including $200 in credits). Self-hosted deployments use your own provider keys.",
     "description": "Weave Router is an intelligent proxy for coding agents that evaluates each request to dynamically route it to the most cost-effective model capable of handling the task. It operates as a drop-in endpoint for tools like Claude Code, Codex, and Cursor to significantly reduce inference costs while maintaining frontier-level quality.",
     "keyFeatures": [
       "Complexity-based routing using trained scorers",
@@ -11691,7 +11693,7 @@
     "name": "JetBrains IDEs",
     "company": "JetBrains",
     "pricing": "freemium",
-    "pricingDetail": "Offers AI Free, AI Pro, AI Ultimate, and AI Enterprise tiers. AI Free is included with IDE licenses but excludes certain products like IntelliJ IDEA without an Ultimate subscription. AI Pro and Ultimate provide increased quotas, and AI Pro is included with All Products Pack and dotUltimate subscriptions.",
+    "pricingDetail": "Includes an AI Free tier with limited cloud credits and unlimited code completion/local models, plus paid AI Pro ($20/month) and AI Ultimate ($60/month) tiers offering higher monthly quotas of AI credits. Enterprise options are available for organizations.",
     "description": "JetBrains IDEs provide integrated AI features and support for third-party coding agents to assist with code generation, refactoring, and project-wide analysis. The platform includes native AI Assistant capabilities and the newly introduced JetBrains Air, which allows developers to run and manage various AI agents directly within their coding environment.",
     "keyFeatures": [
       "AI-powered code completion and next edit suggestions",
