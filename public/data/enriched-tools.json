@@ -12039,5 +12039,86 @@
       "Mixture of Experts"
     ],
     "lastUpdated": "2026-11-02"
+  },
+  {
+    "slug": "memdoor",
+    "name": "Memdoor",
+    "company": "Memdoor (guregodevo)",
+    "pricing": "open-source",
+    "pricingDetail": "Memdoor is free and open-source under the Apache-2.0 license, distributed as a single binary with no account required. You bring your own provider key (OpenRouter, Anthropic, OpenAI, Gemini and others), a ChatGPT Plus/Pro plan, or a local model at no cost; model usage is billed by your provider.",
+    "description": "Memdoor is a terminal coding agent and deterministic workflow runner shipped as one static Go binary. The agent reads files, edits code and runs checks, while YAML workflows coordinate parallel, check-gated steps with approval gates so repeatable work can run by hand, from CI or on a local schedule with cloud or local models.",
+    "keyFeatures": [
+      "YAML workflows with parallel steps, check-gated completion, approval gates and resume from the failed step",
+      "Bring-your-own-key, ChatGPT plan or local models via Ollama, llama.cpp, LM Studio and vLLM",
+      "Headless `memdoor run` with JSON output and documented exit codes for scripts and CI",
+      "ACP server for Zed, JetBrains and VS Code plus ssh gateways and encrypted `/remote` phone sessions",
+      "GitHub Action with built-in pr-review, security-review, write-tests, fix-tests and pr-triage workflows"
+    ],
+    "bestFor": "Developers who want a scriptable, model-agnostic coding agent that can run repeatable, verified workflows locally, over ssh or in CI, including on small open-weight models.",
+    "notIdealFor": "Teams that want a polished GUI IDE or a managed SaaS agent with hosted infrastructure and enterprise support, since Memdoor is a single-maintainer terminal tool.",
+    "recentUpdates": "Releases v1.784.0 through v1.786.0 shipped on November 2, 2026. On October 31, 2026 its published team-solve workflow, five Qwen3.8-27B agents rebuilt from the GVS5H harness, scored a mean 9.8 of 10 against Fable 5's 8.0 on LiveCodeBench Hard problems and reached 458 points on Hacker News.",
+    "verdict": "A fast-moving, open-source agent that stands out for treating workflows as deterministic, check-verified pipelines and for making small local models competitive on coding tasks.",
+    "tags": [
+      "Terminal & CLI Agents",
+      "CLI",
+      "Workflows",
+      "Open Source",
+      "Local LLM"
+    ],
+    "lastUpdated": "2026-11-03"
+  },
+  {
+    "slug": "sandcastle",
+    "name": "Sandcastle",
+    "company": "AI Hero (Matt Pocock)",
+    "pricing": "open-source",
+    "pricingDetail": "Sandcastle is free and open-source under the MIT license, published on npm as `@ai-hero/sandcastle`. You pay separately for the coding agents and models you run and for any cloud sandbox provider (E2B, Modal, Daytona, Vercel or Fly.io Sprites) you choose.",
+    "description": "Sandcastle is a TypeScript library and CLI from Matt Pocock's AI Hero for orchestrating AI coding agents in isolated sandboxes. A single `sandcastle.run()` call starts an agent on its own branch, sandboxes it with a chosen provider, and merges the commits back, making it easy to run parallel AFK agents and review pipelines.",
+    "keyFeatures": [
+      "`sandcastle.run()` API that sandboxes an agent, applies a branch strategy and merges commits back",
+      "Agent providers for Claude Code, Codex, Copilot, Cursor, OpenCode and Pi",
+      "Native Bubblewrap and Seatbelt sandboxes plus Docker, Podman, E2B, Modal, Daytona, Vercel and Sprites providers",
+      "`sandcastle init` templates for simple loops, parallel planners and review pipelines",
+      "Hooks, iterations, structured output, agent session resume and run logs"
+    ],
+    "bestFor": "TypeScript developers who want to script parallel, unattended coding-agent runs with real isolation and git-based merge-back in their own repos or CI.",
+    "notIdealFor": "Developers looking for a GUI agent manager or a hosted agent service, since Sandcastle is a pre-1.0 library that requires writing orchestration code.",
+    "recentUpdates": "v0.13.0 (November 2, 2026) made native Bubblewrap and Seatbelt sandboxes the documented default and extended session resume to more agents; v0.14.0 the same day added an E2B isolated sandbox provider. The repository passed 8,800 GitHub stars and appeared on GitHub's weekly trending list.",
+    "verdict": "A well-designed, provider-agnostic building block for running many sandboxed coding agents in parallel, backed by an active maintainer and fast-growing adoption.",
+    "tags": [
+      "Autonomous & Async Agents",
+      "Sandboxing",
+      "TypeScript",
+      "Agent Orchestration",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-03"
+  },
+  {
+    "slug": "momentic",
+    "name": "Momentic",
+    "company": "Momentic (YC W24)",
+    "pricing": "paid",
+    "pricingDetail": "Momentic is a commercial hosted platform. At its November 2026 launch every new signup received $250 in Mo agent spend; paid plans add higher infrastructure capacity and included usage with top-up options. The `momentic` CLI is installed from npm and requires a dashboard API key.",
+    "description": "Momentic is an AI QA platform whose agent harness, Mo, autonomously plans, explores and bug-bashes user flows in web, iOS and Android apps. It forks large product areas into parallel sub-agents with their own hosted browsers or devices and also supports natural-language end-to-end tests driven from a CLI and coding-agent skills.",
+    "keyFeatures": [
+      "Self-organizing agent graph that forks parallel sub-agents, each with its own browser or device",
+      "Planner and locator agents that resolve plain-English targets from screenshots and page structure",
+      "Tunnel for testing local apps and private sites with hosted agents at scale",
+      "PR testing on Vercel and Cloudflare deploy previews",
+      "`momentic` CLI, agent skills and MCP servers to write, run and repair tests from coding agents"
+    ],
+    "bestFor": "Product and engineering teams shipping web or mobile apps who want autonomous exploratory QA and low-maintenance natural-language end-to-end tests instead of brittle Playwright or Selenium scripts.",
+    "notIdealFor": "Teams that require a fully self-hosted or bring-your-own-model setup, or want to avoid usage-based costs, since Mo runs on Momentic's hosted infrastructure.",
+    "recentUpdates": "Launched Mo on Hacker News on November 2, 2026 (Launch HN, 158 points) alongside QA-Bench, a benchmark of 1,396 labeled bugs where Mo found 269 bugs at 19.3% recall versus 6.2% for Codex; CLI v3.68.0 shipped the same day.",
+    "verdict": "A strong, benchmark-backed option for agentic QA that targets recall over precision, best suited to teams comfortable with a hosted, usage-priced service.",
+    "tags": [
+      "AI Testing & Quality Assurance",
+      "Testing",
+      "QA",
+      "End-to-End",
+      "Mobile"
+    ],
+    "lastUpdated": "2026-11-03"
   }
 ]
