@@ -12045,7 +12045,7 @@
     "name": "Memdoor",
     "company": "Memdoor (guregodevo)",
     "pricing": "freemium",
-    "pricingDetail": "The Memdoor agent, decision model and workflows are free and open-source under Apache-2.0, with no account required. Pro costs $10 a month and adds end-to-end-encrypted remote control from your phone plus workflow state kept on memdoor.ai so workflows can depend on each other across machines. Every model call runs on your own provider key, ChatGPT plan or a local model.",
+    "pricingDetail": "The Memdoor agent, decision model and workflows are free and open-source under Apache-2.0, with no account required. Pro ($10/month) adds end-to-end-encrypted remote control from your phone plus workflow state kept on memdoor.ai so workflows can depend on each other across machines. Every model call runs on your own provider key, ChatGPT plan or a local model.",
     "description": "Memdoor is a terminal coding agent and deterministic workflow runner shipped as one static Go binary. The agent reads files, edits code and runs checks, while YAML workflows coordinate parallel, check-gated steps with approval gates so repeatable work can run by hand, from CI or on a local schedule with cloud or local models.",
     "keyFeatures": [
       "YAML workflows with parallel steps, check-gated completion, approval gates and resume from the failed step",
@@ -12099,7 +12099,7 @@
     "name": "Momentic",
     "company": "Momentic (YC W24)",
     "pricing": "freemium",
-    "pricingDetail": "Momentic has a Free plan ($0 forever) with 2,000 credits a month for steps and hosting, all core features and AI test authoring, and 30-day results retention, no credit card required. Pay-as-you-go costs $125 a month plus usage, with 10,000 credits a month, extra credits with no hard cap, 5 Android emulators, 5 iOS simulators and 5 phone numbers for SMS/OTP testing. Enterprise is custom-priced and adds SAML SSO, SCIM, audit logs, SLAs and a dedicated account manager.",
+    "pricingDetail": "Momentic has three plans. Free ($0 forever) includes 2,000 credits a month for steps and hosting, all core features and AI test authoring, and 30-day results retention, with no credit card required. Pay-as-you-go costs $125/month (PAYG) plus usage and includes 10,000 credits a month, extra credits with no hard cap, 5 Android emulators, 5 iOS simulators and 5 phone numbers for SMS/OTP testing. Enterprise is custom-priced and adds SAML SSO, SCIM, audit logs, SLAs and a dedicated account manager.",
     "description": "Momentic is an AI QA platform whose agent harness, Mo, autonomously plans, explores and bug-bashes user flows in web, iOS and Android apps. It forks large product areas into parallel sub-agents with their own hosted browsers or devices and also supports natural-language end-to-end tests driven from a CLI and coding-agent skills.",
     "keyFeatures": [
       "Self-organizing agent graph that forks parallel sub-agents, each with its own browser or device",
