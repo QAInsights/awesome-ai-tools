@@ -105,11 +105,12 @@ describe('cost delta', () => {
         const codex = bySlug.get('cursor-to-codex-cli')?.costDelta;
         expect(codex?.kind).toBe('unlisted');
         expect(codex?.summary).toContain('no fixed per-seat price');
-        expect(codex?.summary).toContain('Included in ChatGPT plans');
+        expect(codex?.summary).toMatch(/Included in ChatGPT\b/);
         expect(codex?.calculatorHref).toMatch(/^\/tools\/cost-calculator\?team=10&seats=cursor:/);
 
         expect(bySlug.get('cursor-to-antigravity')?.costDelta.kind).toBe('unlisted');
-        expect(bySlug.get('github-copilot-to-supermaven')?.costDelta.kind).toBe('same');
+        expect(bySlug.get('github-copilot-to-supermaven')?.costDelta.kind).toBe('unlisted');
+        expect(bySlug.get('devin-to-claude-code')?.costDelta.kind).toBe('same');
     });
 
     test('firstSentence does not cut at a decimal point in the price', () => {
