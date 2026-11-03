@@ -1766,5 +1766,17 @@
   {
     "companyName": "FlashML",
     "toolName": "FreeToken"
+  },
+  {
+    "companyName": "Memdoor (guregodevo)",
+    "toolName": "Memdoor"
+  },
+  {
+    "companyName": "AI Hero (Matt Pocock)",
+    "toolName": "Sandcastle"
+  },
+  {
+    "companyName": "Momentic (YC W24)",
+    "toolName": "Momentic"
   }
 ]

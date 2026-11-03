@@ -936,6 +936,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "memdoor",
+    "name": "Memdoor",
+    "company": "Memdoor (guregodevo)",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
@@ -1221,6 +1227,12 @@
     "slug": "dsh-superagent",
     "name": "dsh-superagent",
     "company": "DeepSeek",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "sandcastle",
+    "name": "Sandcastle",
+    "company": "AI Hero (Matt Pocock)",
     "category": "Autonomous & Async Agents"
   },
   {
@@ -1527,6 +1539,12 @@
     "slug": "reticle",
     "name": "Reticle",
     "company": "Reticle Labs",
+    "category": "AI Testing & Quality Assurance"
+  },
+  {
+    "slug": "momentic",
+    "name": "Momentic",
+    "company": "Momentic (YC W24)",
     "category": "AI Testing & Quality Assurance"
   },
   {
