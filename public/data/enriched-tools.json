@@ -12149,5 +12149,34 @@
       "Mixture of Experts"
     ],
     "lastUpdated": "2026-11-02"
+  },
+  {
+    "slug": "floorplan",
+    "name": "Floorplan",
+    "company": "Hayden Smith",
+    "pricing": "free",
+    "pricingDetail": "Free and open-source (MIT). Runs on your existing Claude Code or Codex plan with no API keys and no paid tier.",
+    "description": "Open-source Claude Code and Codex plugin that has your coding agent read a codebase (one repo or several) and draw a local, interactive, plain-English map of its parts, files, endpoints, screens and outside services, with an Ask bar, recent-change highlights and a security-focused Health check.",
+    "keyFeatures": [
+      "Zoomable map from whole app down to files and endpoints",
+      "Matches frontend web requests to server endpoints, even across repos",
+      "Ask the map: answers with a mini-map and step-by-step walkthrough",
+      "Recent work view highlights what the agent just changed and why",
+      "Health check for leaked keys, open Supabase/Firebase rules, fakeable Stripe webhooks and unauthenticated endpoints",
+      "Blueprints that plan an unbuilt app from a PRD or spec",
+      "Runs locally with zero dependencies; exports a single HTML file"
+    ],
+    "bestFor": "Builders and teams using Claude Code or Codex who want a plain-English architecture map of an AI-built app, faster onboarding, and a quick check for common security mistakes.",
+    "notIdealFor": "Developers who need function-level knowledge graphs of very large codebases, formal security audits, or support for agents other than Claude Code and Codex.",
+    "recentUpdates": "v0.6.3 (Nov 2, 2026) added route-table endpoints, full Fastify and Django endpoint prefixes and a parsing fix; v0.6.0-0.6.2 added AI-app Health checks and far fewer false alarms with a Not a problem button.",
+    "verdict": "A fast-moving, privacy-friendly way to see how an agent-built app fits together; its Health check is a useful first pass, not an audit, and it is limited to Claude Code and Codex for now.",
+    "tags": [
+      "codebase-visualization",
+      "claude-code",
+      "codex",
+      "architecture",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-04"
   }
 ]
