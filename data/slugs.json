@@ -2622,6 +2622,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "traycer",
+    "name": "Traycer",
+    "company": "Traycer",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
