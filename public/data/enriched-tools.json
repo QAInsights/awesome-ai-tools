@@ -1592,6 +1592,33 @@
     "lastUpdated": "2026-11-01"
   },
   {
+    "slug": "prospero",
+    "name": "Prospero",
+    "company": "Chris Wellons (skeeto)",
+    "pricing": "open-source",
+    "pricingDetail": "Prospero is free, public-domain software (Unlicense) with prebuilt binaries for Windows, macOS and Linux. It ships with no provider configured, so model costs depend on the endpoint you connect: a local llama.cpp or vLLM server is free to run, while hosted OpenAI-compatible or Anthropic APIs bill per token on your own key.",
+    "description": "Prospero is a native GUI AI coding harness written in C++ with Dear ImGui that connects to local or remote model providers and lets agents drive your computer to develop software. It runs as a single executable with no daemon, keeps working through intermittent errors while unattended, and can also run headless, over ssh or in the background.",
+    "keyFeatures": [
+      "Single native C++ executable for Windows, macOS and Linux with a dockable, idle-free ImGui interface",
+      "OpenAI Chat Completions and Anthropic Messages API support, including extended thinking and prompt caching",
+      "Sessions with subagents, todo lists, plans and background jobs",
+      "Desktop control so the agent can see and drive the screen to build and test native GUI apps",
+      "One prospero.ini for endpoints, models, roles, skills, MCP servers and web search, with keys read only from env: or file: references"
+    ],
+    "bestFor": "Developers who want a lean, local-first coding harness that works with self-hosted models or any compatible API and can develop and test native desktop applications.",
+    "notIdealFor": "Teams that want a managed, preconfigured cloud agent or deep IDE integration, since Prospero ships unconfigured and is a very young project with rapid breaking changes.",
+    "recentUpdates": "First published in October 2026 and announced on Chris Wellons's nullprogram.com blog on October 31, 2026 (205 points on Hacker News). Releases v0.9.0 (October 30), v0.10.0 (November 1) and v0.11.0 (November 2, 2026) shipped binaries for Linux x86_64/aarch64, macOS arm64 and Windows x86_64, with recent commits tightening approvals for included web URLs and MCP servers.",
+    "verdict": "A refreshingly small, dependency-light alternative to Electron-based agent apps that stands out for native desktop control and provider neutrality, best suited to hands-on developers comfortable configuring their own endpoints.",
+    "tags": [
+      "AI-Native IDE",
+      "Agent Harness",
+      "Native GUI",
+      "Open Source",
+      "Local Models"
+    ],
+    "lastUpdated": "2026-11-02"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -4177,6 +4204,33 @@
     "lastUpdated": "2026-11-01"
   },
   {
+    "slug": "memdoor",
+    "name": "Memdoor",
+    "company": "Memdoor (guregodevo)",
+    "pricing": "freemium",
+    "pricingDetail": "The Memdoor agent, decision model and workflows are free and open-source under Apache-2.0, with no account required. Pro ($10/month) adds end-to-end-encrypted remote control from your phone plus workflow state kept on memdoor.ai so workflows can depend on each other across machines. Every model call runs on your own provider key, ChatGPT plan or a local model.",
+    "description": "Memdoor is a terminal coding agent and deterministic workflow runner shipped as one static Go binary. The agent reads files, edits code and runs checks, while YAML workflows coordinate parallel, check-gated steps with approval gates so repeatable work can run by hand, from CI or on a local schedule with cloud or local models.",
+    "keyFeatures": [
+      "YAML workflows with parallel steps, check-gated completion, approval gates and resume from the failed step",
+      "Bring-your-own-key, ChatGPT plan or local models via Ollama, llama.cpp, LM Studio and vLLM",
+      "Headless `memdoor run` with JSON output and documented exit codes for scripts and CI",
+      "ACP server for Zed, JetBrains and VS Code, ssh gateways, and end-to-end-encrypted phone remote control on the $10/month Pro plan",
+      "GitHub Action with built-in pr-review, security-review, write-tests, fix-tests and pr-triage workflows"
+    ],
+    "bestFor": "Developers who want a scriptable, model-agnostic coding agent that can run repeatable, verified workflows locally, over ssh or in CI, including on small open-weight models.",
+    "notIdealFor": "Teams that want a polished GUI IDE or a managed SaaS agent with hosted infrastructure and enterprise support, since Memdoor is a single-maintainer terminal tool.",
+    "recentUpdates": "Releases v1.784.0 through v1.786.0 shipped on November 2, 2026. On October 31, 2026 its published team-solve workflow, five Qwen3.8-27B agents rebuilt from the GVS5H harness, scored a mean 9.8 of 10 against Fable 5's 8.0 on LiveCodeBench Hard problems and reached 458 points on Hacker News.",
+    "verdict": "A fast-moving, open-source agent that stands out for treating workflows as deterministic, check-verified pipelines and for making small local models competitive on coding tasks.",
+    "tags": [
+      "Terminal & CLI Agents",
+      "CLI",
+      "Workflows",
+      "Open Source",
+      "Local LLM"
+    ],
+    "lastUpdated": "2026-11-03"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
@@ -5446,6 +5500,60 @@
       "Mac app"
     ],
     "lastUpdated": "2026-11-01"
+  },
+  {
+    "slug": "dsh-superagent",
+    "name": "dsh-superagent",
+    "company": "DeepSeek",
+    "pricing": "open-source",
+    "pricingDetail": "dsh-superagent is free and open-source under the MIT license. It runs on your own machine inside DeepSeek Harness, so the only costs are the model provider you configure for DSH and any GitHub or Feishu accounts you connect.",
+    "description": "dsh-superagent is a research prototype from the DeepSeek Harness team of a proactive coding agent that serves one GitHub repository. It listens to GitHub and optionally Feishu, decides under a team-written Policy whether a request is authorized, runs each authorized request as a Ticket in its own DSH session, and replies in the original conversation, for example with a pull request.",
+    "keyFeatures": [
+      "Packaged as a DeepSeek Harness bundle that listens to GitHub issues and pull requests, with optional Feishu chat",
+      "Eval gate with allowed-sender lists, admission rules and per-Ticket Mandates that messages cannot override",
+      "Each authorized request becomes a Ticket executed in its own DSH session and working directory",
+      "Superagent web panel with Overview, Source, Trigger, Eval, Execution and Settings tabs that surfaces work needing a person",
+      "Agent-guided setup: a coding agent follows SETUP.md and asks the operator one question at a time"
+    ],
+    "bestFor": "Teams already experimenting with DeepSeek Harness who want an always-on agent that picks up authorized requests from GitHub and answers with pull requests, and who want to study DeepSeek's super-agent design.",
+    "notIdealFor": "Production use or teams wanting a supported product: DeepSeek labels it research code that may contain bugs, it covers a single repository, and it depends on alpha DSH packages plus Node.js, pnpm, tmux and the GitHub CLI.",
+    "recentUpdates": "Published on 2026-10-31 as version 0.1.0 alongside DeepSeek's article \"Exploring Super-agent Design: Towards a More Autonomous Agent System\"; it gathered more than 6,700 GitHub stars within its first day.",
+    "verdict": "A rare look at how a frontier lab runs an autonomous, attention-saving coding agent internally, worth studying and trying with DeepSeek Harness, but explicitly a prototype rather than something to depend on.",
+    "tags": [
+      "Autonomous & Async Agents",
+      "DeepSeek Harness",
+      "GitHub Automation",
+      "AI Agents",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-01"
+  },
+  {
+    "slug": "sandcastle",
+    "name": "Sandcastle",
+    "company": "AI Hero (Matt Pocock)",
+    "pricing": "open-source",
+    "pricingDetail": "Sandcastle is free and open-source under the MIT license, published on npm as `@ai-hero/sandcastle`. You pay separately for the coding agents and models you run and for any cloud sandbox provider (E2B, Modal, Daytona, Vercel or Fly.io Sprites) you choose.",
+    "description": "Sandcastle is a TypeScript library and CLI from Matt Pocock's AI Hero for orchestrating AI coding agents in isolated sandboxes. A single `sandcastle.run()` call starts an agent on its own branch, sandboxes it with a chosen provider, and merges the commits back, making it easy to run parallel AFK agents and review pipelines.",
+    "keyFeatures": [
+      "`sandcastle.run()` API that sandboxes an agent, applies a branch strategy and merges commits back",
+      "Agent providers for Claude Code, Codex, Copilot, Cursor, OpenCode and Pi",
+      "Native Bubblewrap and Seatbelt sandboxes plus Docker, Podman, E2B, Modal, Daytona, Vercel and Sprites providers",
+      "`sandcastle init` templates for simple loops, parallel planners and review pipelines",
+      "Hooks, iterations, structured output, agent session resume and run logs"
+    ],
+    "bestFor": "TypeScript developers who want to script parallel, unattended coding-agent runs with real isolation and git-based merge-back in their own repos or CI.",
+    "notIdealFor": "Developers looking for a GUI agent manager or a hosted agent service, since Sandcastle is a pre-1.0 library that requires writing orchestration code.",
+    "recentUpdates": "v0.13.0 (November 2, 2026) made native Bubblewrap and Seatbelt sandboxes the documented default and extended session resume to more agents; v0.14.0 the same day added an E2B isolated sandbox provider. The repository passed 8,800 GitHub stars, appeared on GitHub's weekly trending list, and the npm package reports about 234,000 downloads a week.",
+    "verdict": "A well-designed, provider-agnostic building block for running many sandboxed coding agents in parallel, backed by an active maintainer and fast-growing adoption.",
+    "tags": [
+      "Autonomous & Async Agents",
+      "Sandboxing",
+      "TypeScript",
+      "Agent Orchestration",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-03"
   },
   {
     "slug": "boltnew",
@@ -6825,6 +6933,33 @@
       "Automation"
     ],
     "lastUpdated": "2026-11-01"
+  },
+  {
+    "slug": "momentic",
+    "name": "Momentic",
+    "company": "Momentic (YC W24)",
+    "pricing": "freemium",
+    "pricingDetail": "Momentic has three plans. Free ($0 forever) includes 2,000 credits a month for steps and hosting, all core features and AI test authoring, and 30-day results retention, with no credit card required. Pay-as-you-go costs $125/month (PAYG) plus usage and includes 10,000 credits a month, extra credits with no hard cap, 5 Android emulators, 5 iOS simulators and 5 phone numbers for SMS/OTP testing. Enterprise is custom-priced and adds SAML SSO, SCIM, audit logs, SLAs and a dedicated account manager.",
+    "description": "Momentic is an AI QA platform whose agent harness, Mo, autonomously plans, explores and bug-bashes user flows in web, iOS and Android apps. It forks large product areas into parallel sub-agents with their own hosted browsers or devices and also supports natural-language end-to-end tests driven from a CLI and coding-agent skills.",
+    "keyFeatures": [
+      "Self-organizing agent graph that forks parallel sub-agents, each with its own browser or device",
+      "Planner and locator agents that resolve plain-English targets from screenshots and page structure",
+      "Run tests on local browsers, simulators and emulators, in CI, or on Momentic-hosted infrastructure with a tunnel to private apps",
+      "PR testing on Vercel and Cloudflare deploy previews",
+      "`momentic` CLI, agent skills and MCP servers to write, run and repair tests from coding agents"
+    ],
+    "bestFor": "Product and engineering teams shipping web or mobile apps who want autonomous exploratory QA and low-maintenance natural-language end-to-end tests instead of brittle Playwright or Selenium scripts.",
+    "notIdealFor": "Teams that need bring-your-own-model control over the agent, or that want to avoid credit-based usage pricing as test volume grows, since Mo and hosted runs are billed through Momentic credits.",
+    "recentUpdates": "Launched Mo on Hacker News on November 2, 2026 (Launch HN, 158 points) alongside QA-Bench, a benchmark of 1,396 labeled bugs where Mo found 269 bugs at 19.3% recall versus 6.2% for Codex; CLI v3.68.0 shipped the same day.",
+    "verdict": "A strong, benchmark-backed option for agentic QA that targets recall over precision, best suited to teams comfortable with a hosted, usage-priced service.",
+    "tags": [
+      "AI Testing & Quality Assurance",
+      "Testing",
+      "QA",
+      "End-to-End",
+      "Mobile"
+    ],
+    "lastUpdated": "2026-11-03"
   },
   {
     "slug": "claude",
@@ -11635,6 +11770,62 @@
     "lastUpdated": "2026-11-01"
   },
   {
+    "slug": "interfaces-skills",
+    "name": "Interfaces Skills",
+    "company": "Jakub Krehel",
+    "pricing": "open-source",
+    "pricingDetail": "The skills are free and open-source under the MIT license. Running them only costs whatever your AI coding agent subscription or API usage already costs.",
+    "description": "Interfaces Skills is a collection of agent skills from design engineer Jakub Krehel that help AI coding agents review and build better user interfaces. The skills cover UI polish, typography, color systems, accessibility, layout and product writing, plus user-invoked workflows for reviewing changes, explaining existing interfaces and stress-testing components.",
+    "keyFeatures": [
+      "better-interface returns one ranked report across accessibility, layout, writing, typography, color and UI polish",
+      "Focused skills for UI polish, typography, colors, WCAG 2.2 accessibility, layout and interface copy",
+      "interface-review checks a branch, pull request or uncommitted change for interface regressions",
+      "break, state-machine and variant render components under every scenario, state or variant on throwaway pages",
+      "Install via npx skills add jakubkrehel/skills or as a Claude Code plugin marketplace"
+    ],
+    "bestFor": "Frontend and design engineers using Claude Code, Codex, Cursor or similar agents who want opinionated, detailed guidance to raise the visual and accessibility quality of generated UI.",
+    "notIdealFor": "Backend-focused work or teams that already enforce a strict in-house design system and only need a deterministic linter rather than prompt-based review.",
+    "recentUpdates": "Version 1.17.0 (October 25, 2026) enhanced the teardown viewer, and commits continued into November 2026; the repository passed 10,000 GitHub stars and appeared on GitHub's weekly trending list in early November 2026.",
+    "verdict": "One of the most thorough UI-quality skill packs for coding agents, grounded in its author's published design-engineering writing and easy to drop into existing agent setups.",
+    "tags": [
+      "Agent Skills",
+      "UI Design",
+      "Accessibility",
+      "Claude Code",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-02"
+  },
+  {
+    "slug": "traycer",
+    "name": "Traycer",
+    "company": "Traycer",
+    "pricing": "freemium",
+    "pricingDetail": "Free for individuals with bring-your-own-agent subscriptions (no token metering); Sync team plan is $20/user/month or $16/user/month billed yearly. Optional pay-as-you-go inference credits ($1 = 1 credit, 20% markup on Traycer-provided models) and cloud sandboxes cost extra.",
+    "description": "Open-source (MIT) desktop app plus iOS/Android apps that orchestrate 22 coding agents (Claude Code, Codex, Cursor, and more) in parallel from one shared plan, each in its own git worktree, with built-in review and agent-to-agent communication.",
+    "keyFeatures": [
+      "Run 22 coding agents in parallel, each in an isolated git worktree",
+      "Bring your own subscriptions (Claude Code, Codex, Cursor, OpenRouter, Hugging Face, etc.)",
+      "Agent-to-agent communication for delegation, peer review, and handoffs",
+      "Shared context and specs across models with mid-chat model switching",
+      "Built-in skills for planning, debugging, reviewing, and ticket breakdown",
+      "Multiplayer team workspaces with comments and task sharing",
+      "Cross-device sync plus iOS/Android apps and remote hosts"
+    ],
+    "bestFor": "Developers already paying for Claude Code, Codex, or Cursor who want a spec-first planning and supervision layer to run multiple agents in parallel across Mac, Windows, and Linux.",
+    "notIdealFor": "Mac-only users wanting cloud sandboxes, scheduled routines, line-level PR review, or enterprise SSO/SCIM/SLA today, or those who prefer a single tightly integrated IDE extension.",
+    "recentUpdates": "IDE extension retired October 31, 2026, with work migrating to Traycer Desktop; Desktop app launched with worktrees, terminals, remote hosts, and agent-to-agent features; mobile apps and Sync team plan introduced; 11,000+ developers and 40,000+ tasks reported.",
+    "verdict": "Traycer offers a genuinely usable free tier that avoids double-charging for inference and adds strong multi-agent orchestration and spec-first planning. However, it lacks some enterprise controls (SSO, SCIM, SLA) and advanced PR review features found in competitors like Conductor.",
+    "tags": [
+      "agent orchestration",
+      "coding agents",
+      "open-source",
+      "developer productivity",
+      "multi-agent"
+    ],
+    "lastUpdated": "2026-11-04"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
@@ -11879,33 +12070,6 @@
     "lastUpdated": "2026-11-01"
   },
   {
-    "slug": "dsh-superagent",
-    "name": "dsh-superagent",
-    "company": "DeepSeek",
-    "pricing": "open-source",
-    "pricingDetail": "dsh-superagent is free and open-source under the MIT license. It runs on your own machine inside DeepSeek Harness, so the only costs are the model provider you configure for DSH and any GitHub or Feishu accounts you connect.",
-    "description": "dsh-superagent is a research prototype from the DeepSeek Harness team of a proactive coding agent that serves one GitHub repository. It listens to GitHub and optionally Feishu, decides under a team-written Policy whether a request is authorized, runs each authorized request as a Ticket in its own DSH session, and replies in the original conversation, for example with a pull request.",
-    "keyFeatures": [
-      "Packaged as a DeepSeek Harness bundle that listens to GitHub issues and pull requests, with optional Feishu chat",
-      "Eval gate with allowed-sender lists, admission rules and per-Ticket Mandates that messages cannot override",
-      "Each authorized request becomes a Ticket executed in its own DSH session and working directory",
-      "Superagent web panel with Overview, Source, Trigger, Eval, Execution and Settings tabs that surfaces work needing a person",
-      "Agent-guided setup: a coding agent follows SETUP.md and asks the operator one question at a time"
-    ],
-    "bestFor": "Teams already experimenting with DeepSeek Harness who want an always-on agent that picks up authorized requests from GitHub and answers with pull requests, and who want to study DeepSeek's super-agent design.",
-    "notIdealFor": "Production use or teams wanting a supported product: DeepSeek labels it research code that may contain bugs, it covers a single repository, and it depends on alpha DSH packages plus Node.js, pnpm, tmux and the GitHub CLI.",
-    "recentUpdates": "Published on 2026-10-31 as version 0.1.0 alongside DeepSeek's article \"Exploring Super-agent Design: Towards a More Autonomous Agent System\"; it gathered more than 6,700 GitHub stars within its first day.",
-    "verdict": "A rare look at how a frontier lab runs an autonomous, attention-saving coding agent internally, worth studying and trying with DeepSeek Harness, but explicitly a prototype rather than something to depend on.",
-    "tags": [
-      "Autonomous & Async Agents",
-      "DeepSeek Harness",
-      "GitHub Automation",
-      "AI Agents",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-11-01"
-  },
-  {
     "slug": "nanochat",
     "name": "nanochat",
     "company": "Andrej Karpathy",
@@ -11931,60 +12095,6 @@
       "Open Source"
     ],
     "lastUpdated": "2026-11-01"
-  },
-  {
-    "slug": "prospero",
-    "name": "Prospero",
-    "company": "Chris Wellons (skeeto)",
-    "pricing": "open-source",
-    "pricingDetail": "Prospero is free, public-domain software (Unlicense) with prebuilt binaries for Windows, macOS and Linux. It ships with no provider configured, so model costs depend on the endpoint you connect: a local llama.cpp or vLLM server is free to run, while hosted OpenAI-compatible or Anthropic APIs bill per token on your own key.",
-    "description": "Prospero is a native GUI AI coding harness written in C++ with Dear ImGui that connects to local or remote model providers and lets agents drive your computer to develop software. It runs as a single executable with no daemon, keeps working through intermittent errors while unattended, and can also run headless, over ssh or in the background.",
-    "keyFeatures": [
-      "Single native C++ executable for Windows, macOS and Linux with a dockable, idle-free ImGui interface",
-      "OpenAI Chat Completions and Anthropic Messages API support, including extended thinking and prompt caching",
-      "Sessions with subagents, todo lists, plans and background jobs",
-      "Desktop control so the agent can see and drive the screen to build and test native GUI apps",
-      "One prospero.ini for endpoints, models, roles, skills, MCP servers and web search, with keys read only from env: or file: references"
-    ],
-    "bestFor": "Developers who want a lean, local-first coding harness that works with self-hosted models or any compatible API and can develop and test native desktop applications.",
-    "notIdealFor": "Teams that want a managed, preconfigured cloud agent or deep IDE integration, since Prospero ships unconfigured and is a very young project with rapid breaking changes.",
-    "recentUpdates": "First published in October 2026 and announced on Chris Wellons's nullprogram.com blog on October 31, 2026 (205 points on Hacker News). Releases v0.9.0 (October 30), v0.10.0 (November 1) and v0.11.0 (November 2, 2026) shipped binaries for Linux x86_64/aarch64, macOS arm64 and Windows x86_64, with recent commits tightening approvals for included web URLs and MCP servers.",
-    "verdict": "A refreshingly small, dependency-light alternative to Electron-based agent apps that stands out for native desktop control and provider neutrality, best suited to hands-on developers comfortable configuring their own endpoints.",
-    "tags": [
-      "AI-Native IDE",
-      "Agent Harness",
-      "Native GUI",
-      "Open Source",
-      "Local Models"
-    ],
-    "lastUpdated": "2026-11-02"
-  },
-  {
-    "slug": "interfaces-skills",
-    "name": "Interfaces Skills",
-    "company": "Jakub Krehel",
-    "pricing": "open-source",
-    "pricingDetail": "The skills are free and open-source under the MIT license. Running them only costs whatever your AI coding agent subscription or API usage already costs.",
-    "description": "Interfaces Skills is a collection of agent skills from design engineer Jakub Krehel that help AI coding agents review and build better user interfaces. The skills cover UI polish, typography, color systems, accessibility, layout and product writing, plus user-invoked workflows for reviewing changes, explaining existing interfaces and stress-testing components.",
-    "keyFeatures": [
-      "better-interface returns one ranked report across accessibility, layout, writing, typography, color and UI polish",
-      "Focused skills for UI polish, typography, colors, WCAG 2.2 accessibility, layout and interface copy",
-      "interface-review checks a branch, pull request or uncommitted change for interface regressions",
-      "break, state-machine and variant render components under every scenario, state or variant on throwaway pages",
-      "Install via npx skills add jakubkrehel/skills or as a Claude Code plugin marketplace"
-    ],
-    "bestFor": "Frontend and design engineers using Claude Code, Codex, Cursor or similar agents who want opinionated, detailed guidance to raise the visual and accessibility quality of generated UI.",
-    "notIdealFor": "Backend-focused work or teams that already enforce a strict in-house design system and only need a deterministic linter rather than prompt-based review.",
-    "recentUpdates": "Version 1.17.0 (October 25, 2026) enhanced the teardown viewer, and commits continued into November 2026; the repository passed 10,000 GitHub stars and appeared on GitHub's weekly trending list in early November 2026.",
-    "verdict": "One of the most thorough UI-quality skill packs for coding agents, grounded in its author's published design-engineering writing and easy to drop into existing agent setups.",
-    "tags": [
-      "Agent Skills",
-      "UI Design",
-      "Accessibility",
-      "Claude Code",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-11-02"
   },
   {
     "slug": "colibri",
@@ -12039,86 +12149,5 @@
       "Mixture of Experts"
     ],
     "lastUpdated": "2026-11-02"
-  },
-  {
-    "slug": "memdoor",
-    "name": "Memdoor",
-    "company": "Memdoor (guregodevo)",
-    "pricing": "freemium",
-    "pricingDetail": "The Memdoor agent, decision model and workflows are free and open-source under Apache-2.0, with no account required. Pro ($10/month) adds end-to-end-encrypted remote control from your phone plus workflow state kept on memdoor.ai so workflows can depend on each other across machines. Every model call runs on your own provider key, ChatGPT plan or a local model.",
-    "description": "Memdoor is a terminal coding agent and deterministic workflow runner shipped as one static Go binary. The agent reads files, edits code and runs checks, while YAML workflows coordinate parallel, check-gated steps with approval gates so repeatable work can run by hand, from CI or on a local schedule with cloud or local models.",
-    "keyFeatures": [
-      "YAML workflows with parallel steps, check-gated completion, approval gates and resume from the failed step",
-      "Bring-your-own-key, ChatGPT plan or local models via Ollama, llama.cpp, LM Studio and vLLM",
-      "Headless `memdoor run` with JSON output and documented exit codes for scripts and CI",
-      "ACP server for Zed, JetBrains and VS Code, ssh gateways, and end-to-end-encrypted phone remote control on the $10/month Pro plan",
-      "GitHub Action with built-in pr-review, security-review, write-tests, fix-tests and pr-triage workflows"
-    ],
-    "bestFor": "Developers who want a scriptable, model-agnostic coding agent that can run repeatable, verified workflows locally, over ssh or in CI, including on small open-weight models.",
-    "notIdealFor": "Teams that want a polished GUI IDE or a managed SaaS agent with hosted infrastructure and enterprise support, since Memdoor is a single-maintainer terminal tool.",
-    "recentUpdates": "Releases v1.784.0 through v1.786.0 shipped on November 2, 2026. On October 31, 2026 its published team-solve workflow, five Qwen3.8-27B agents rebuilt from the GVS5H harness, scored a mean 9.8 of 10 against Fable 5's 8.0 on LiveCodeBench Hard problems and reached 458 points on Hacker News.",
-    "verdict": "A fast-moving, open-source agent that stands out for treating workflows as deterministic, check-verified pipelines and for making small local models competitive on coding tasks.",
-    "tags": [
-      "Terminal & CLI Agents",
-      "CLI",
-      "Workflows",
-      "Open Source",
-      "Local LLM"
-    ],
-    "lastUpdated": "2026-11-03"
-  },
-  {
-    "slug": "sandcastle",
-    "name": "Sandcastle",
-    "company": "AI Hero (Matt Pocock)",
-    "pricing": "open-source",
-    "pricingDetail": "Sandcastle is free and open-source under the MIT license, published on npm as `@ai-hero/sandcastle`. You pay separately for the coding agents and models you run and for any cloud sandbox provider (E2B, Modal, Daytona, Vercel or Fly.io Sprites) you choose.",
-    "description": "Sandcastle is a TypeScript library and CLI from Matt Pocock's AI Hero for orchestrating AI coding agents in isolated sandboxes. A single `sandcastle.run()` call starts an agent on its own branch, sandboxes it with a chosen provider, and merges the commits back, making it easy to run parallel AFK agents and review pipelines.",
-    "keyFeatures": [
-      "`sandcastle.run()` API that sandboxes an agent, applies a branch strategy and merges commits back",
-      "Agent providers for Claude Code, Codex, Copilot, Cursor, OpenCode and Pi",
-      "Native Bubblewrap and Seatbelt sandboxes plus Docker, Podman, E2B, Modal, Daytona, Vercel and Sprites providers",
-      "`sandcastle init` templates for simple loops, parallel planners and review pipelines",
-      "Hooks, iterations, structured output, agent session resume and run logs"
-    ],
-    "bestFor": "TypeScript developers who want to script parallel, unattended coding-agent runs with real isolation and git-based merge-back in their own repos or CI.",
-    "notIdealFor": "Developers looking for a GUI agent manager or a hosted agent service, since Sandcastle is a pre-1.0 library that requires writing orchestration code.",
-    "recentUpdates": "v0.13.0 (November 2, 2026) made native Bubblewrap and Seatbelt sandboxes the documented default and extended session resume to more agents; v0.14.0 the same day added an E2B isolated sandbox provider. The repository passed 8,800 GitHub stars, appeared on GitHub's weekly trending list, and the npm package reports about 234,000 downloads a week.",
-    "verdict": "A well-designed, provider-agnostic building block for running many sandboxed coding agents in parallel, backed by an active maintainer and fast-growing adoption.",
-    "tags": [
-      "Autonomous & Async Agents",
-      "Sandboxing",
-      "TypeScript",
-      "Agent Orchestration",
-      "Open Source"
-    ],
-    "lastUpdated": "2026-11-03"
-  },
-  {
-    "slug": "momentic",
-    "name": "Momentic",
-    "company": "Momentic (YC W24)",
-    "pricing": "freemium",
-    "pricingDetail": "Momentic has three plans. Free ($0 forever) includes 2,000 credits a month for steps and hosting, all core features and AI test authoring, and 30-day results retention, with no credit card required. Pay-as-you-go costs $125/month (PAYG) plus usage and includes 10,000 credits a month, extra credits with no hard cap, 5 Android emulators, 5 iOS simulators and 5 phone numbers for SMS/OTP testing. Enterprise is custom-priced and adds SAML SSO, SCIM, audit logs, SLAs and a dedicated account manager.",
-    "description": "Momentic is an AI QA platform whose agent harness, Mo, autonomously plans, explores and bug-bashes user flows in web, iOS and Android apps. It forks large product areas into parallel sub-agents with their own hosted browsers or devices and also supports natural-language end-to-end tests driven from a CLI and coding-agent skills.",
-    "keyFeatures": [
-      "Self-organizing agent graph that forks parallel sub-agents, each with its own browser or device",
-      "Planner and locator agents that resolve plain-English targets from screenshots and page structure",
-      "Run tests on local browsers, simulators and emulators, in CI, or on Momentic-hosted infrastructure with a tunnel to private apps",
-      "PR testing on Vercel and Cloudflare deploy previews",
-      "`momentic` CLI, agent skills and MCP servers to write, run and repair tests from coding agents"
-    ],
-    "bestFor": "Product and engineering teams shipping web or mobile apps who want autonomous exploratory QA and low-maintenance natural-language end-to-end tests instead of brittle Playwright or Selenium scripts.",
-    "notIdealFor": "Teams that need bring-your-own-model control over the agent, or that want to avoid credit-based usage pricing as test volume grows, since Mo and hosted runs are billed through Momentic credits.",
-    "recentUpdates": "Launched Mo on Hacker News on November 2, 2026 (Launch HN, 158 points) alongside QA-Bench, a benchmark of 1,396 labeled bugs where Mo found 269 bugs at 19.3% recall versus 6.2% for Codex; CLI v3.68.0 shipped the same day.",
-    "verdict": "A strong, benchmark-backed option for agentic QA that targets recall over precision, best suited to teams comfortable with a hosted, usage-priced service.",
-    "tags": [
-      "AI Testing & Quality Assurance",
-      "Testing",
-      "QA",
-      "End-to-End",
-      "Mobile"
-    ],
-    "lastUpdated": "2026-11-03"
   }
 ]
