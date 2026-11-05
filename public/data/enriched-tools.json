@@ -12265,5 +12265,34 @@
       "open-source"
     ],
     "lastUpdated": "2026-11-05"
+  },
+  {
+    "slug": "gauge",
+    "name": "Gauge",
+    "company": "Gauge",
+    "pricing": "freemium",
+    "pricingDetail": "CLI is free and open-source (MIT) and the local loop needs no Gauge account; agent usage is billed to your own provider or subscription. Hosted Gauge runs on a Gauge workspace with credits.",
+    "description": "Open-source CLI that measures and improves agent experience: it runs real coding agents against your Skills, CLIs, SDKs, MCP servers or docs in sandboxed sessions, captures where they get stuck, and lets your own coding agent test fixes before you publish.",
+    "keyFeatures": [
+      "Runs Claude Code, Codex, Pi and OpenCode in fresh Docker sessions",
+      "Normalizes agent events into consistent transcripts and structured findings",
+      "Saved evals, preference prompts and shared Markdown cases for CI",
+      "Tests unreleased CLI/SDK tarballs and working-tree Skills before publishing",
+      "Issue tracking with fix, mute, reopen and recheck commands",
+      "`gauge watch` live view of past and running sessions",
+      "Hosted mode adds automatic analysis, authenticated MCP/API and docs testing"
+    ],
+    "bestFor": "Teams shipping CLIs, SDKs, MCP servers, Skills or docs who want evidence of how coding agents actually use them and a repeatable loop to fix friction.",
+    "notIdealFor": "Developers looking for a coding assistant to write their own app code, or environments without Docker and Node.js 22.13+.",
+    "recentUpdates": "v0.28.0 (Nov 4, 2026) added hosted `--cli-rules` to stub or redirect CLI commands per run; v0.27.0 (Nov 2) added hosted setup/teardown scripts, issue fix/mute/recheck commands and `gauge watch`.",
+    "verdict": "A distinctive, fast-shipping eval loop for agent-facing products; still early with a small community, and the richer analysis lives in the paid hosted tier.",
+    "tags": [
+      "agent-experience",
+      "evals",
+      "mcp",
+      "claude-code",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-05"
   }
 ]
