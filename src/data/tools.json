@@ -1786,5 +1786,21 @@
   {
     "companyName": "Hayden Smith",
     "toolName": "Floorplan"
+  },
+  {
+    "companyName": "Microsoft",
+    "toolName": "TokenEconomizer"
+  },
+  {
+    "companyName": "Khazix",
+    "toolName": "Agent Autoloop"
+  },
+  {
+    "companyName": "Dominik Martin",
+    "toolName": "Harp"
+  },
+  {
+    "companyName": "Gauge",
+    "toolName": "Gauge"
   }
 ]

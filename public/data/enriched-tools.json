@@ -12178,5 +12178,121 @@
       "open-source"
     ],
     "lastUpdated": "2026-11-04"
+  },
+  {
+    "slug": "tokeneconomizer",
+    "name": "TokenEconomizer",
+    "company": "Microsoft",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source (Apache-2.0). Needs no API key of its own; model usage, including the plugin's own model calls, is billed to the agent plan or key you already use.",
+    "description": "Open-source cost-control plugin from Microsoft Research and UC Berkeley that learns across a repository's sessions to cut what coding agents such as Claude Code, Codex, GitHub Copilot CLI and Pi spend, without changing the agent's model or code.",
+    "keyFeatures": [
+      "Micro-skills: repo facts learned from repeated evidence are injected at session start",
+      "Tool pruning removes tools that go unused, through the agent's own settings",
+      "Failure-loop intervention spots repeated errors and nudges the agent to try another way",
+      "Every action reversible: contradicted facts are dropped and pruned tools can be restored",
+      "Plugins for Claude Code, Codex, Copilot CLI and Pi; Cursor Agent, opencode and Hermes Agent experimental",
+      "Cost counted with cache pricing, including the plugin's own model calls",
+      "Reproducible SWE-Bench and Web-Bench experiments in the repo"
+    ],
+    "bestFor": "Developers and teams who run the same coding agent on the same repositories every day and want lower token bills without switching agents or models.",
+    "notIdealFor": "One-off sessions in new repositories (savings accrue over repeated sessions), Windows users of the Cursor adapter, or anyone on agent versions outside the supported ranges.",
+    "recentUpdates": "Released Oct 2026 with the arXiv paper (2610.22732); Nov 4, 2026 commits reduced loop-guard false alarms so a productive turn is not treated as a loop and documented model-call costs.",
+    "verdict": "A credible, research-backed way to trim 18-31% off coding-agent costs on familiar repos; install is still clone-based and pinned to specific agent versions, so expect some upkeep.",
+    "tags": [
+      "cost-optimization",
+      "claude-code",
+      "codex",
+      "copilot-cli",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-05"
+  },
+  {
+    "slug": "agent-autoloop",
+    "name": "Agent Autoloop",
+    "company": "Khazix",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source (MIT). Runs locally on your machine with the CLI agents you already have; model usage is billed to your own provider account.",
+    "description": "Open-source local hub that turns command-line coding agents into a background loop: it takes work from webhooks, issue polling, cron rules or an HTTP API, dispatches it to Claude Code, Codex, ACP agents or any CLI, and only sends you a decision card when your call is needed.",
+    "keyFeatures": [
+      "Zero-dependency, event-sourced SQLite kernel (about 1,650 lines)",
+      "Agents: Claude Code, Codex, ACP, DeepSeek Harness or any prompt-in/reply-out CLI",
+      "Events from GitHub/GitLab webhooks, issue polling, cron rules and an HTTP API",
+      "Decision cards via desktop notifications, Feishu, DingTalk, WeCom, Slack or Discord",
+      "Zero-cost wait: no agent process or tokens while waiting for your answer, then the session resumes",
+      "Hop circuit breaker and `agent-autoloop why` run histories",
+      "`deliver` label pipeline: review, wait for CI, merge, wait for deploy, verify"
+    ],
+    "bestFor": "Developers on macOS or Linux who want their existing Claude Code or Codex setup to pick up issues, alerts and scheduled chores in the background with human approval only when needed.",
+    "notIdealFor": "Windows users (native support pending; WSL2 only), teams wanting a hosted dashboard, or users who need English CLI output and docs today.",
+    "recentUpdates": "v1.3.0 through v1.4.1 shipped on Nov 5, 2026, two days after the Nov 3 launch, with kernel and plugin cleanups; native Windows support is promised in issue #17.",
+    "verdict": "A thoughtfully engineered, fast-growing way to run CLI agents unattended with human-in-the-loop cards; very new and Chinese-first, so expect rough edges for English-speaking users.",
+    "tags": [
+      "background-agents",
+      "automation",
+      "claude-code",
+      "codex",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-05"
+  },
+  {
+    "slug": "harp",
+    "name": "Harp",
+    "company": "Dominik Martin",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source (AGPL-3.0). Harp adds no servers of its own; upstream Warp AI and cloud features follow Warp's own terms.",
+    "description": "Open-source, unofficial macOS fork of the Warp terminal that replaces the tab bar with a sidebar for running many Claude Code and Codex agents side by side, showing which session is working, waiting for you or done.",
+    "keyFeatures": [
+      "Sidebar rows show working, needs-you, done and background-work states per agent",
+      "Bundled Claude Code status plugin, with nothing installed into ~/.claude",
+      "Codex status read from the agent's terminal title and session logs",
+      "Named tab groups that persist through tmux integration",
+      "Limit rings for Claude and Codex plan usage, extensible via a JSON file",
+      "Signed DMG with background self-updates from GitHub releases",
+      "Runs next to Warp with its own bundle id and ~/.harp settings"
+    ],
+    "bestFor": "macOS developers who already like Warp and juggle several Claude Code or Codex sessions, wanting to see at a glance which agent needs attention.",
+    "notIdealFor": "Linux or Windows users, people who want an officially supported Warp build, or agents other than Claude Code and Codex.",
+    "recentUpdates": "v0.1.7 and v0.1.8 (Oct 29, 2026) turned agent status on out of the box for Claude Code and Codex and show when Codex is waiting on you.",
+    "verdict": "A focused, polished take on agent-aware tabs for Warp fans on macOS; young and single-maintainer, so treat it as an early unofficial fork.",
+    "tags": [
+      "terminal",
+      "agent-management",
+      "claude-code",
+      "codex",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-05"
+  },
+  {
+    "slug": "gauge",
+    "name": "Gauge",
+    "company": "Gauge",
+    "pricing": "freemium",
+    "pricingDetail": "CLI is free and open-source (MIT) and the local loop needs no Gauge account; agent usage is billed to your own provider or subscription. Hosted Gauge runs on a Gauge workspace with credits.",
+    "description": "Open-source CLI that measures and improves agent experience: it runs real coding agents against your Skills, CLIs, SDKs, MCP servers or docs in sandboxed sessions, captures where they get stuck, and lets your own coding agent test fixes before you publish.",
+    "keyFeatures": [
+      "Runs Claude Code, Codex, Pi and OpenCode in fresh Docker sessions",
+      "Normalizes agent events into consistent transcripts and structured findings",
+      "Saved evals, preference prompts and shared Markdown cases for CI",
+      "Tests unreleased CLI/SDK tarballs and working-tree Skills before publishing",
+      "Issue tracking with fix, mute, reopen and recheck commands",
+      "`gauge watch` live view of past and running sessions",
+      "Hosted mode adds automatic analysis, authenticated MCP/API and docs testing"
+    ],
+    "bestFor": "Teams shipping CLIs, SDKs, MCP servers, Skills or docs who want evidence of how coding agents actually use them and a repeatable loop to fix friction.",
+    "notIdealFor": "Developers looking for a coding assistant to write their own app code, or environments without Docker and Node.js 22.13+.",
+    "recentUpdates": "v0.28.0 (Nov 4, 2026) added hosted `--cli-rules` to stub or redirect CLI commands per run; v0.27.0 (Nov 2) added hosted setup/teardown scripts, issue fix/mute/recheck commands and `gauge watch`.",
+    "verdict": "A distinctive, fast-shipping eval loop for agent-facing products; still early with a small community, and the richer analysis lives in the paid hosted tier.",
+    "tags": [
+      "agent-experience",
+      "evals",
+      "mcp",
+      "claude-code",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-05"
   }
 ]
