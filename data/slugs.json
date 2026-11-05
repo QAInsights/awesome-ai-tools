@@ -984,6 +984,12 @@
     "category": "AI-Native Terminals"
   },
   {
+    "slug": "harp",
+    "name": "Harp",
+    "company": "Dominik Martin",
+    "category": "AI-Native Terminals"
+  },
+  {
     "slug": "jules",
     "name": "Jules",
     "company": "Google",
@@ -1233,6 +1239,12 @@
     "slug": "sandcastle",
     "name": "Sandcastle",
     "company": "AI Hero (Matt Pocock)",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "agent-autoloop",
+    "name": "Agent Autoloop",
+    "company": "Khazix",
     "category": "Autonomous & Async Agents"
   },
   {
@@ -2631,6 +2643,12 @@
     "slug": "traycer",
     "name": "Traycer",
     "company": "Traycer",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "tokeneconomizer",
+    "name": "TokenEconomizer",
+    "company": "Microsoft",
     "category": "Developer Productivity & Workflow"
   },
   {
