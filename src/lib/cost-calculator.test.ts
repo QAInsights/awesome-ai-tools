@@ -62,6 +62,29 @@ const SAMPLE_TOOLS: ToolSeedLike[] = [
 ];
 
 describe('cost-calculator engine', () => {
+  test('keeps unavailable current tools priced but never suggests them as savings picks after serialization', () => {
+    for (const status of ['discontinued', 'winding-down', ' WINDING-DOWN ']) {
+      const tools = SAMPLE_TOOLS.map(tool => ({
+        ...tool,
+        enriched: { ...tool.enriched, ...(tool.slug === 'windsurf' || tool.slug === 'void' ? { status } : {}) },
+      }));
+      const catalog = JSON.parse(JSON.stringify(buildCalculatorToolCatalog(tools)));
+      expect(catalog.find((t: { slug: string }) => t.slug === 'windsurf').recommendationEligible).toBe(false);
+      expect(catalog.find((t: { slug: string }) => t.slug === 'void').recommendationEligible).toBe(false);
+
+      const params = {
+        catalog, models: [], selectedModels: [], teamSize: 1,
+        billingCycle: 'monthly' as const, usage: WORKLOAD_PRESETS.daily,
+      };
+      const current = calculateStackCost({ ...params, selectedSeats: [{ slug: 'windsurf', planName: 'Pro' }] });
+      expect(current.seatMonthlyTotal).toBe(15);
+      expect(current.lineItems.some(item => item.id === 'windsurf:Pro')).toBe(true);
+      const savings = calculateStackCost({ ...params, selectedSeats: [{ slug: 'cursor', planName: 'Business' }] });
+      expect(savings.alternatives).toEqual([]);
+      expect(calculateStackCost({ ...params, selectedSeats: [] }).alternatives).toEqual([]);
+    }
+  });
+
   test('normalizes monthly and annual plan amounts and per-seat detection', () => {
     expect(planMonthlyAmount({ price: '$20', unit: '/mo' })).toBe(20);
     expect(planMonthlyAmount({ price: '$120', unit: '/yr' })).toBe(10);
