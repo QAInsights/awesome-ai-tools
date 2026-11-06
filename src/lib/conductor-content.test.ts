@@ -1,11 +1,43 @@
 import { describe, expect, test } from 'bun:test';
 import { readFileSync } from 'node:fs';
-import { getToolBySlug } from './tools';
+import { getAllTools, getAlternativesFor, getToolBySlug } from './tools';
 import { blogPostsLinkingTo } from './alternatives';
+import { isRecommendationCandidate } from './tool-availability.js';
+import { facetScore, rankFacetTools, type BestFacet } from './best-facets.js';
+import { generateCandidates } from './compare-candidates';
 
 const body = readFileSync(new URL('../content/blog/conductor-alternatives.mdx', import.meta.url), 'utf8');
 
 describe('Conductor migration content', () => {
+    test('unavailable tools are excluded from recommendations but remain addressable', () => {
+        const conductor = getToolBySlug('conductor')!;
+        const superset = getToolBySlug('superset')!;
+        expect(conductor).toBeDefined();
+        expect(getAlternativesFor(conductor).some(t => t.slug === superset.slug)).toBe(true);
+        for (const tool of getAllTools()) {
+            expect(getAlternativesFor(tool).every(isRecommendationCandidate)).toBe(true);
+        }
+
+        const facet: BestFacet = {
+            slug: 'parallel', title: 'Parallel', short: 'Parallel', keyword: 'Parallel',
+            intro: '', criteria: '', include: { slugs: ['conductor', 'superset'] },
+        };
+        expect(facetScore(facet, conductor)).toBe(0);
+        expect(rankFacetTools(facet, [conductor, superset]).map(t => t.slug)).toEqual(['superset']);
+        expect(generateCandidates([conductor, superset], [], {
+            priorityPairs: [['conductor', 'superset']],
+        })).toEqual([]);
+
+        for (const status of ['discontinued', 'winding-down', ' WINDING-DOWN ']) {
+            const unavailable = { ...superset, enriched: { ...superset.enriched!, status } };
+            expect(isRecommendationCandidate(unavailable)).toBe(false);
+            expect(rankFacetTools(facet, [unavailable])).toEqual([]);
+        }
+        expect(isRecommendationCandidate({ enriched: null })).toBe(true);
+        expect(isRecommendationCandidate({})).toBe(true);
+        expect(isRecommendationCandidate({ enriched: { status: 'active' } })).toBe(true);
+    });
+
     test('catalog preserves the service timeline without marking the local app discontinued', () => {
         const tool = getToolBySlug('conductor');
         expect(tool?.company).toBe('Melty Labs (Meta)');
