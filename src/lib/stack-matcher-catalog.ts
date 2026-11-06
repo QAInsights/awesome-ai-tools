@@ -10,6 +10,7 @@
 import { buildCalculatorToolCatalog } from './cost-calculator';
 import { CATEGORY_SLOT_DEFAULTS, CURATED_SLUGS } from '../../js/stack-matcher-data.js';
 import type { Tool } from './tools';
+import { isRecommendationCandidate } from './tool-availability.js';
 
 export interface StackMatcherPlan {
     name: string;
@@ -57,7 +58,7 @@ export function buildStackMatcherCatalog(
 
     for (const tool of tools) {
         if (!SLOT_CATEGORIES[tool.categoryShort] && !curated.has(tool.slug)) continue;
-        if ((tool.enriched?.status ?? '').toLowerCase() === 'discontinued') continue;
+        if (!isRecommendationCandidate(tool)) continue;
 
         const enriched = tool.enriched;
         const calculatorEntry = calculatorBySlug.get(tool.slug);

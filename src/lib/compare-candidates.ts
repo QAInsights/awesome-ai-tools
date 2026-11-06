@@ -12,6 +12,7 @@
 import { INDEXING_RULES, missingFields } from './indexing';
 import type { Comparison } from './compare';
 import type { Tool } from './tools';
+import { isRecommendationCandidate } from './tool-availability.js';
 
 export const MIN_SHARED_TAGS = 2;
 export const GENERIC_TAG_SHARE = 0.1;
@@ -103,7 +104,7 @@ export function generateCandidates(
     const { priorityPairs = [], priorityTools = [], reservedSlugs = new Set<string>(), maxPerTool = Infinity, limit = Infinity } = options;
     const taken = new Set(existing.map(c => pairKey(c.a, c.b)));
     const labels = groupLabels(tools, existing);
-    const eligible = tools.filter(t => isComparable(t) && !reservedSlugs.has(t.slug));
+    const eligible = tools.filter(t => isRecommendationCandidate(t) && isComparable(t) && !reservedSlugs.has(t.slug));
     const tags = new Map(eligible.map(t => [t.slug, toolTags(t)]));
 
     const df = new Map<string, number>();

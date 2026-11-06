@@ -9,6 +9,7 @@
 import readmeMarkdown from '../../README.md?raw';
 import enrichedToolsJson from '../../public/data/enriched-tools.json';
 import { stripEnrichedCitations } from './enrichment-citations.js';
+import { isRecommendationCandidate } from './tool-availability.js';
 
 export interface ToolSeed {
     slug: string;
@@ -264,7 +265,7 @@ export function getCategories(): string[] {
  */
 export function getAlternativesFor(tool: Tool): Tool[] {
     return getAllTools()
-        .filter(t => t.category === tool.category && t.slug !== tool.slug)
+        .filter(t => t.category === tool.category && t.slug !== tool.slug && isRecommendationCandidate(t))
         .sort((a, b) => Number(b.enriched !== null) - Number(a.enriched !== null));
 }
 

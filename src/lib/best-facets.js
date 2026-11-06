@@ -5,6 +5,8 @@
  * can rank the same tools under Node when computing sitemap lastmod.
  */
 
+import { isRecommendationCandidate } from './tool-availability.js';
+
 /**
  * @typedef {object} FacetCondition
  * @property {string[]} [pricing] Enriched pricing values that match.
@@ -29,7 +31,7 @@
  * @property {string} slug
  * @property {string} name
  * @property {string} category
- * @property {{ name?: string, description?: string, pricing?: string, pricingDetail?: string, keyFeatures?: string[], bestFor?: string, tags?: string[], lastUpdated?: string } | null} enriched
+ * @property {{ name?: string, description?: string, pricing?: string, pricingDetail?: string, keyFeatures?: string[], bestFor?: string, tags?: string[], lastUpdated?: string, status?: string } | null} enriched
  */
 
 /** Weight of a pattern match per text field: where a term appears says how central it is to the tool. */
@@ -75,6 +77,7 @@ function fieldTexts(tool) {
  * @param {FacetTool} tool
  */
 export function facetScore(facet, tool) {
+    if (!isRecommendationCandidate(tool)) return 0;
     const { pricing = [], categories = [], patterns = [], slugs = [] } = facet.include;
     let score = 0;
     if (slugs.includes(tool.slug)) score += PICK_WEIGHT;

@@ -37,8 +37,9 @@ describe('stack-matcher catalog', () => {
     expect(catalog['aider']!.localHint).toBe(true);
   });
 
-  test('excludes discontinued tools', () => {
+  test('excludes discontinued and winding-down tools', () => {
     expect(catalog['continue']).toBeUndefined();
+    expect(catalog['conductor']).toBeUndefined();
   });
 
   test('plans are recurring per-seat units only', () => {
