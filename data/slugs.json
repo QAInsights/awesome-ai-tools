@@ -360,6 +360,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "kandev",
+    "name": "Kandev",
+    "company": "kdlbs",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
@@ -1506,6 +1512,12 @@
     "category": "AI Code Review & Security"
   },
   {
+    "slug": "stroq",
+    "name": "Stroq",
+    "company": "Agybay Gibatollayev",
+    "category": "AI Code Review & Security"
+  },
+  {
     "slug": "gitauto",
     "name": "GitAuto",
     "company": "GitAuto",
@@ -1731,6 +1743,12 @@
     "slug": "floorplan",
     "name": "Floorplan",
     "company": "Hayden Smith",
+    "category": "AI Codebase Knowledge & Generation"
+  },
+  {
+    "slug": "figma-console-mcp",
+    "name": "Figma Console MCP",
+    "company": "Southleft",
     "category": "AI Codebase Knowledge & Generation"
   },
   {
@@ -2655,6 +2673,12 @@
     "slug": "tokeneconomizer",
     "name": "TokenEconomizer",
     "company": "Microsoft",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "unslop",
+    "name": "unslop",
+    "company": "Damir Sokolovsky",
     "category": "Developer Productivity & Workflow"
   },
   {
