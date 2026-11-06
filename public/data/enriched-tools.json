@@ -12294,5 +12294,121 @@
       "open-source"
     ],
     "lastUpdated": "2026-11-05"
+  },
+  {
+    "slug": "kandev",
+    "name": "Kandev",
+    "company": "kdlbs",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source (AGPL-3.0); self-host it locally or on your own servers. Agent usage is billed to your own provider subscriptions or API keys.",
+    "description": "Open-source, self-hostable kanban board and development environment that runs many coding agents in parallel, chains them into multi-step workflows with review gates, and puts their output in one IDE-like review workspace.",
+    "keyFeatures": [
+      "Kanban and pipeline views with drag-and-drop tasks and workflow automation",
+      "20+ agents via ACP or TUI passthrough: Claude Code, Codex, GitHub Copilot, Gemini CLI, Amp, OpenCode, Cursor, Devin, Kiro, Grok and more",
+      "Agentic workflows that mix agents per step, e.g. plan, implement and review",
+      "Integrated workspace with file tree, LSP editor, terminal, browser preview and git changes",
+      "Git worktree isolation per task, including multi-repository tasks",
+      "Local, Docker, Kubernetes, SSH and sprites.dev executors",
+      "Schedule and webhook automations plus GitHub, GitLab, Jira, Linear, Sentry and Azure DevOps integrations"
+    ],
+    "bestFor": "Power users and teams who run several coding agents at once and want a self-hosted board with review gates and per-task worktrees instead of juggling terminal tabs.",
+    "notIdealFor": "Developers who want a single hosted agent with no setup, or users who need signed desktop installers today.",
+    "recentUpdates": "v0.99.0 (Nov 5, 2026) and v0.99.1 (Nov 6) continued near-daily releases, adding Copilot compaction counts from native events and continuing failed turns after capacity and command errors; a plugin SDK (pluginsdk/v0.1.0) shipped on Nov 5.",
+    "verdict": "One of the most complete open-source agent orchestration boards, shipping fast with a broad agent and executor matrix; pre-1.0 and its desktop builds are still unsigned.",
+    "tags": [
+      "agent-orchestration",
+      "kanban",
+      "parallel-agents",
+      "self-hosted",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-06"
+  },
+  {
+    "slug": "stroq",
+    "name": "Stroq",
+    "company": "Agybay Gibatollayev",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source (Apache-2.0). Runs locally via `npx @stroq/cli` with no account and no telemetry.",
+    "description": "Open-source local security layer for AI coding agents that audits past Claude Code, Codex and Cursor sessions for injected commands and leaked keys, and installs pre-tool-call hooks that block or question risky actions next time.",
+    "keyFeatures": [
+      "`stroq` card summarizing 30 days of agent sessions: commands that came from text the agent read and keys that left the machine",
+      "`stroq sent` traces where each known credential went, printing key names, never values",
+      "`stroq replay` checks past sessions against the policy without installing hooks",
+      "Native hooks for Claude Code, Cursor, Codex, Copilot CLI, Windsurf and Antigravity, plus an OpenClaw plugin and stdio MCP proxy",
+      "Denies curl-pipe-to-shell and secret-carrying outbound calls; asks when a command repeats text the agent read",
+      "Local console on 127.0.0.1 with Check, Live, Agents, Rules and Skills & MCP screens",
+      "`stroq attack` replays 36 known attacks against your policy in a sandbox"
+    ],
+    "bestFor": "Developers running Claude Code, Codex or Cursor locally who want to see whether prompt-injected content drove their agent's commands and to guard future sessions without a cloud service.",
+    "notIdealFor": "Teams needing a true sandbox or centrally managed enterprise policy; matching is text-level and only sees what each agent's hooks expose.",
+    "recentUpdates": "v0.30.0 (Nov 5, 2026) added the `stroq` session card, detection of tasks slipped into data the agent reads, and a five-screen console; it was posted to Hacker News as a Show HN the same day.",
+    "verdict": "A thoughtful, privacy-first audit and guard for agent sessions with clear documented limits; young and single-maintainer, but shipping weekly.",
+    "tags": [
+      "security",
+      "prompt-injection",
+      "claude-code",
+      "codex",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-06"
+  },
+  {
+    "slug": "figma-console-mcp",
+    "name": "Figma Console MCP",
+    "company": "Southleft",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source (MIT). Requires a Figma account and personal access token; Remote SSE and Cloud Mode are hosted by Southleft at no charge.",
+    "description": "Open-source, design-system-focused MCP server that connects Claude Code, Codex, Cursor and other AI clients to Figma in both directions: extracting tokens and components, writing designs, and running design-code parity and accessibility checks.",
+    "keyFeatures": [
+      "Up to 130 tools locally via `npx -y figma-console-mcp@latest` (105 in Cloud Mode)",
+      "Design creation and editing through a Figma Desktop Bridge plugin",
+      "Bidirectional token sync with DTCG JSON and nine other formats",
+      "Deterministic design-code parity, WCAG accessibility and design-system health audits",
+      "Codebase-to-design-system extraction into DTCG tokens with provenance",
+      "Version history diffs, changelogs and component docs",
+      "Remote SSE (read-only) and Cloud Mode for web clients such as Claude.ai, v0 and Replit"
+    ],
+    "bestFor": "Design engineers and front-end teams who want coding agents to read and write their Figma design system and keep code and design in sync.",
+    "notIdealFor": "Teams not using Figma, or users who want write access without installing Figma Desktop and its bridge plugin.",
+    "recentUpdates": "v1.46.0 (Oct 29, 2026) added shader tools, one-call auto layout and CSS-style grid layout, OKLCH and Display P3 colors, and text wrap and variable-font axes; v1.45 added Motion animation and video export.",
+    "verdict": "The most feature-rich open-source Figma MCP for agent-driven design-system work, actively maintained by an agency; the full tool set depends on the desktop bridge plugin.",
+    "tags": [
+      "mcp",
+      "figma",
+      "design-systems",
+      "design-to-code",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-06"
+  },
+  {
+    "slug": "unslop",
+    "name": "unslop",
+    "company": "Damir Sokolovsky",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open (CC-BY-4.0) for any use, including commercial, with attribution. A paid done-for-you service from the author is offered separately.",
+    "description": "Agent skill for Claude Code and Codex that audits vibecoded, AI-looking UI for slop and redesigns it pass by pass into an interface with its own character, in whatever stack the screen is built with.",
+    "keyFeatures": [
+      "`/unslop` in Claude Code and `$unslop` in Codex, with a one-line Codex skill-installer install",
+      "Audit that lists every sign of slop and where it lives",
+      "Proposes a design direction from your product before editing",
+      "Ordered passes: spacing, color, icons, copy, type, layout, details, visuals and motion",
+      "Works with Next.js, React, Vue, Svelte, Tailwind or plain HTML/CSS, or a live site via Playwright snapshot",
+      "Optional hero visuals through an image MCP server, after asking",
+      "Sub-10-second story video of the screen unslopping itself (Playwright and ffmpeg)"
+    ],
+    "bestFor": "Developers shipping agent-built dashboards, apps or landing pages who want a designer-style redline pass without leaving Claude Code or Codex.",
+    "notIdealFor": "Teams with an established design system and designers, or agents other than Claude Code and Codex.",
+    "recentUpdates": "Released at the end of October 2026; on Nov 1, 2026 it added Codex support with a one-line skill-installer install and fixes for Playwright snapshot setup and responsive images.",
+    "verdict": "A popular, opinionated design-cleanup skill that fills a real gap in agent-built UIs; very new and single-author, so results depend on the agent following a long skill.",
+    "tags": [
+      "agent-skills",
+      "ui-design",
+      "claude-code",
+      "codex",
+      "frontend"
+    ],
+    "lastUpdated": "2026-11-06"
   }
 ]
