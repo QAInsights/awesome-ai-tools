@@ -11,6 +11,7 @@
 
 import { buildPricingBreakdown, pricingSignals, type PricingPlan } from './pricing-breakdown';
 import type { NormalizedModelPricing } from './models-pricing';
+import { isRecommendationCandidate } from './tool-availability.js';
 
 export type WorkloadPresetId = 'light' | 'daily' | 'agentic' | 'custom';
 export type BillingCycle = 'monthly' | 'annual';
@@ -77,6 +78,7 @@ export interface CalculatorToolItem {
   freeTier: boolean;
   openSource: boolean;
   byokFriendly: boolean;
+  recommendationEligible: boolean;
   plans: CalculatorPlanOption[];
   entryMonthly: number;
   url: string;
@@ -90,6 +92,7 @@ export interface ToolSeedLike {
   categoryShort: string;
   url: string;
   enriched?: {
+    status?: string;
     pricing?: string;
     pricingDetail?: string;
   } | null;
@@ -201,6 +204,7 @@ export function buildCalculatorToolCatalog(tools: ReadonlyArray<ToolSeedLike>): 
       freeTier,
       openSource,
       byokFriendly,
+      recommendationEligible: isRecommendationCandidate(tool),
       plans: paidPlans,
       entryMonthly: paidPlans[0]?.monthlyAmount ?? 0,
       url: tool.url,
@@ -372,6 +376,7 @@ function buildSavingsAlternatives(ctx: {
   const suggestions: SavingsAlternative[] = [];
   const selectedSlugs = new Set(ctx.selectedSeats.map(s => s.slug));
   const toolBySlug = new Map(ctx.catalog.map(t => [t.slug, t]));
+  const recommendationCandidates = ctx.catalog.filter(t => t.recommendationEligible !== false);
 
   for (const sel of ctx.selectedSeats) {
     const tool = toolBySlug.get(sel.slug);
@@ -382,7 +387,7 @@ function buildSavingsAlternatives(ctx: {
     const currentTeamMonthly = plan.perSeat ? plan.monthlyAmount * ctx.teamSize : plan.monthlyAmount;
 
     // 1. Cheaper paid peer in same category
-    const cheaperPeer = ctx.catalog
+    const cheaperPeer = recommendationCandidates
       .filter(
         c =>
           c.categoryShort === tool.categoryShort &&
@@ -412,7 +417,7 @@ function buildSavingsAlternatives(ctx: {
     }
 
     // 2. Open-source / Free BYOK alternative in same category
-    const ossPeer = ctx.catalog.find(
+    const ossPeer = recommendationCandidates.find(
       c => c.categoryShort === tool.categoryShort && !selectedSlugs.has(c.slug) && c.openSource,
     );
     if (ossPeer && currentTeamMonthly >= 15) {
