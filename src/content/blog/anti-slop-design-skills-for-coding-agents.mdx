@@ -1,0 +1,289 @@
+---
+title: "Anti-Slop Design Skills for Coding Agents: Impeccable, Hallmark, Taste Skill, Interfaces Skills and frontend-design"
+description: "Compare 5 anti-slop design skills for coding agents: Impeccable, Hallmark, Taste Skill, Interfaces Skills and frontend-design. Installs, licences, limits."
+pubDate: 2026-11-05
+tags: ["design", "frontend", "agent-skills", "claude-code", "codex", "open-source", "roundup", "impeccable", "hallmark", "taste-skill", "interfaces-skills", "frontend-design"]
+---
+
+In this blog post, we will see why anti-slop design skills for coding agents took over GitHub Trending this week, what each of the five main ones actually does, and a 40 line script that shows what a "slop linter" checks under the hood. Every version, licence and star count below was checked on November 5, 2026.
+
+## Table of Contents
+
+1. [The short answer](#the-short-answer)
+2. [Why design skills are trending this week](#why-design-skills-are-trending-this-week)
+3. [What a slop linter checks, in 40 lines of Python](#what-a-slop-linter-checks-in-40-lines-of-python)
+4. [Impeccable](#impeccable)
+5. [Hallmark](#hallmark)
+6. [Taste Skill](#taste-skill)
+7. [Interfaces Skills](#interfaces-skills)
+8. [Anthropic frontend-design](#anthropic-frontend-design)
+9. [Side by side](#side-by-side)
+10. [Which one I would install first](#which-one-i-would-install-first)
+11. [FAQ](#faq)
+12. [How this ties to ai.dosa.dev](#how-this-ties-to-aidosadev)
+
+## The short answer
+
+Anti-slop design skills are folders of instructions, and often scripts, that a coding agent loads before it builds UI. They ban the default look (Inter, purple gradients, card grids) and many lint the result. Start with Impeccable for existing apps, Hallmark or Taste Skill for new marketing pages, and Interfaces Skills for reviews.
+
+## Why design skills are trending this week
+
+Four of the top twelve repositories on GitHub's weekly trending list for October 30 to November 5 are design skills for coding agents:
+
+- **Impeccable:** about 103,300 stars, up roughly 10,900 in the week.
+- **Hallmark:** about 48,300 stars, up roughly 7,600. Together AI announced a ground-up v2 rebuild on October 22.
+- **Taste Skill:** about 110,000 stars, up roughly 5,900, with v2.5.0 tagged on November 4.
+- **Interfaces Skills** (`jakubkrehel/skills`): about 10,900 stars, up roughly 1,900, ranked eighth for the week.
+
+Hallmark also has a Hacker News thread, and the `skills` CLI from Vercel Labs that most of these install through shipped v1.7.5 and v1.7.6 on November 2 and 3. So that is GitHub Trending, release notes, Hacker News and the installer's own changelog all pointing at one problem: agents ship working UI that everyone can tell was generated.
+
+Anthropic's own `frontend-design` skill names the pattern: "a big number with a small label, supporting stats, and a gradient accent is the default treatment." Ask five agents for a landing page and you get the same hero, the same three feature cards and the same violet-to-blue gradient.
+
+## What a slop linter checks, in 40 lines of Python
+
+Before the tools, here is the core idea with the Python standard library only. The page below has every tell people complain about: Inter, a tracked-caps "eyebrow" label, gradient headline text and grey text on purple.
+
+```html
+<!doctype html>
+<html><head><style>
+body { font-family: Inter, sans-serif; }
+.eyebrow { text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; }
+h1 { background: linear-gradient(90deg, #8b5cf6, #3b82f6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.muted { color: #9ca3af; background: #6d28d9; }
+</style></head><body>
+<p class="eyebrow">Introducing</p>
+<h1>Ship faster with AI</h1>
+<p class="muted">The all-in-one platform for modern teams.</p>
+</body></html>
+```
+
+And a tiny checker with four pattern rules plus a real WCAG contrast calculation:
+
+```python
+import re
+import sys
+
+RULES = {
+    "generic-font": r"font-family:\s*['\"]?(Inter|Roboto|Arial)\b",
+    "gradient-text": r"background-clip:\s*text",
+    "purple-blue-gradient": r"linear-gradient\([^)]*#(8b5cf6|7c3aed|6d28d9)[^)]*#(3b82f6|2563eb)",
+    "tracked-caps-label": r"text-transform:\s*uppercase;\s*letter-spacing:\s*0\.[1-9]",
+}
+
+
+def hex_to_luminance(hex_color):
+    rgb = [int(hex_color[i:i + 2], 16) / 255 for i in (0, 2, 4)]
+    lin = [c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4 for c in rgb]
+    return 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2]
+
+
+def contrast(fg, bg):
+    a, b = sorted([hex_to_luminance(fg), hex_to_luminance(bg)], reverse=True)
+    return (a + 0.05) / (b + 0.05)
+
+
+css = open(sys.argv[1]).read()
+findings = [name for name, pattern in RULES.items() if re.search(pattern, css, re.I)]
+
+for fg, bg in re.findall(r"color:\s*#([0-9a-f]{6});\s*background:\s*#([0-9a-f]{6})", css, re.I):
+    ratio = contrast(fg, bg)
+    if ratio < 4.5:
+        findings.append(f"low-contrast ({ratio:.2f}:1, needs 4.5:1)")
+
+for finding in findings:
+    print("FAIL", finding)
+print(f"{len(findings)} findings")
+sys.exit(2 if findings else 0)
+```
+
+I ran `python3 slopcheck.py slop.html` with Python 3.12.16, and the output is as shown below:
+
+```
+FAIL generic-font
+FAIL gradient-text
+FAIL purple-blue-gradient
+FAIL tracked-caps-label
+FAIL low-contrast (2.80:1, needs 4.5:1)
+5 findings
+```
+
+It exits with code 2, the same convention Impeccable's detector uses for "findings present", so you can drop it into CI.
+
+What surprised me is how far 40 lines gets you, and how fast it stops. The contrast check is objective. The other four are just "this is what the average page looks like." A page can pass all five and still look generated, because layout sameness (hero, three cards, testimonial, CTA) is not a regex. That gap is where the real tools differ: some add more rules, some add a rendered browser check, and some add a second agent with fresh context to judge the result.
+
+## Impeccable
+
+**What it does:** Impeccable gives your agent a design vocabulary of 24 commands such as `critique`, `audit`, `polish`, `bolder`, `quieter` and `harden`, plus a deterministic detector with 62 rules that runs with no LLM and no API key. `critique` ranks fixes against usability heuristics, and `audit` ranks accessibility, performance, theming and responsive findings from P0 (blocking) to P3 (polish).
+
+**Who it is for:** Teams with an existing product UI who want the agent to fix and review, not reinvent the brand. It is also the only one here with a CI story.
+
+**Facts:** Apache 2.0, by Paul Bakaus, latest release skill-v4.8.0 (October 26, 2026), about 103,300 GitHub stars, free. Installs into Claude Code, Cursor, Codex CLI, Copilot, Gemini CLI, OpenCode, Devin and more.
+
+### Try it
+
+1. From your project root, install the skill and accept the design hook when asked:
+
+```bash
+npx impeccable install
+```
+
+2. Reload your agent and run `/impeccable init` (in Codex, `$impeccable init`). It writes a `PRODUCT.md` the other commands read.
+
+3. Run the detector without the agent, on source or on a running page:
+
+```bash
+npx impeccable detect src/
+npx impeccable detect http://localhost:3000
+npx impeccable detect --github src/
+```
+
+The last form turns each finding into a GitHub Actions annotation on the offending line, which arrived in 4.8.0.
+
+### Honest limitation
+
+The npm package is a launcher that downloads a platform engine binary. 4.8.0 added digest checks on that download, which is good, but it means a locked-down CI runner needs network access on first run. And a clean detector scan only means the 62 rules passed; the docs say so themselves and point you to `critique` for the rest.
+
+## Hallmark
+
+**What it does:** Hallmark builds new pages. It deals three themes from a catalogue of about fifty materials (paper, type, colour, surfaces), builds one idea per screen, then lints it with `sloplint` (static checks, plus a real browser at eight widths with `--render`). A cold review pass comes last. Gates come in tiers: Floor (never ships, such as contrast or a broken phone layout), Reflex (model defaults you can overrule with a reason) and Finish (craft detail).
+
+**Who it is for:** Anyone generating marketing or product pages from a prompt, especially with open models. `/hallmark redesign ./site` and `/hallmark audit ./index.html` cover existing pages, but only when you name it.
+
+**Facts:** MIT, made by Together AI (Hassan El Mghari), v2.0.0 in `package.json` announced October 22, 2026, about 48,300 GitHub stars, free, no API key needed. There are no GitHub Releases; versions live in the skill files.
+
+### Try it
+
+1. Install globally for every supported agent (Node 18 or later):
+
+```bash
+npx skills add nutlope/hallmark -g
+```
+
+2. For the browser render checks, add Puppeteer core. You also need Chrome installed:
+
+```bash
+npm i -g puppeteer-core
+```
+
+3. In Claude Code, run `/hallmark a site for a small bike repair shop that takes bookings`. In Codex, use `$hallmark`.
+
+### Honest limitation
+
+The Hacker News thread was blunt: several commenters said the README gallery still "looks like slop" and that every design skill they tried converges. Hallmark's answer is a log in `.hallmark/log.json` so consecutive builds are dealt different directions, but that only helps across your own builds, not across everyone's. Without Puppeteer and Chrome you only get the static tier of checks.
+
+## Taste Skill
+
+**What it does:** Taste Skill (`design-taste-frontend`) is art direction for websites, built from a study of 247 curated sites from One Page Love and Awwwards. A script deals three of 20 researched directions and the agent picks one, pulls real, credited pictures from open collections, then checks the page in a browser at 1440, 1024, 768 and 390 pixels. v2.5.0 rebuilt it around "company websites at the figma.com and x.ai bar" with 19 HTML product UI fragments for software pages.
+
+**Who it is for:** Developers who want a polished one-off marketing site and are willing to spend tokens on it.
+
+**Facts:** MIT, by Leonxlnx, latest release v2.5.0 (November 4, 2026), about 110,000 GitHub stars, free, no API keys. Needs Node 22 or later and Chrome, Edge or Chromium.
+
+### Try it
+
+```bash
+npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"
+```
+
+In Claude Code you can install it as a plugin instead with `/plugin marketplace add Leonxlnx/taste-skill`, then `/plugin install taste-skill@taste-skill`.
+
+### Honest limitation
+
+Cost. The README says a build takes roughly 30 to 45 minutes and "a few hundred thousand tokens." That is fine for a launch page and silly for a settings screen. It also needs network access to find pictures, so offline or air-gapped agents get a weaker result.
+
+## Interfaces Skills
+
+**What it does:** Design engineer Jakub Krehel's pack of about 20 skills. `better-interface` routes a screen through `better-accessibility` (WCAG 2.2), `better-layout`, `better-writing`, `better-typography`, `better-colors` and `better-ui`, then returns one ranked report. `interface-review` handles a branch, PR or uncommitted change and reports only what that change introduced, and `explain-interface` explains how a reference site was built.
+
+**Who it is for:** Product teams who want evidence-backed reviews rather than a new art direction. It is the opposite of Hallmark: it improves what exists.
+
+**Facts:** MIT, about 10,900 GitHub stars, last push November 2, 2026, free. skills.sh lists about 345,000 total installs across the pack.
+
+### Try it
+
+```bash
+npx skills add jakubkrehel/skills
+```
+
+Then ask your agent to "run better-interface on the checkout flow." Its own rule is "Evidence, not taste": "a density, radius or voice you merely disagree with is not a finding."
+
+### Honest limitation
+
+There is no linter or browser harness here. It is all instructions, so quality depends on your model actually opening the screens it claims to review. `interface-review` is user-invoked only, so another skill cannot chain into it automatically.
+
+## Anthropic frontend-design
+
+**What it does:** One `SKILL.md` and no scripts. It casts the agent as the design lead at a studio whose client "has already rejected proposals that felt cliché or templated", asks it to ground choices in the subject's own world, and warns that "a big number with a small label, supporting stats, and a gradient accent is the default treatment."
+
+**Who it is for:** Everyone, as a baseline. It costs almost no context and does not fight the bigger skills.
+
+**Facts:** Lives in `anthropics/skills` (about 187,600 stars, up roughly 3,000 this week). The `frontend-design` folder ships its own Apache 2.0 `LICENSE.txt`. Free. Also published as `frontend-design@claude-plugins-official`.
+
+### Try it
+
+```bash
+npx skills add anthropics/skills --skill frontend-design
+```
+
+Or, inside Claude Code, install `frontend-design` from the official plugin marketplace that Claude Code adds on first launch.
+
+### Honest limitation
+
+No verification step. It tells the agent what to avoid but never checks that it did. Pair it with a detector (Impeccable's, or the script above) if you want anything enforceable.
+
+## Side by side
+
+| Skill | Best at | Checks its own output | Licence | Stars (Nov 5) |
+|---|---|---|---|---|
+| [Impeccable](/tools/impeccable) | Fixing and reviewing existing UI, CI | 62 deterministic rules, source or URL | Apache 2.0 | ~103.3k |
+| [Hallmark](/tools/hallmark) | New pages from a prompt | `sloplint` at 8 widths plus fresh reviewer | MIT | ~48.3k |
+| [Taste Skill](/tools/taste-skill) | High-effort marketing sites | 100+ browser checks at 4 widths | MIT | ~110k |
+| [Interfaces Skills](/tools/interfaces-skills) | Ranked design reviews | No, instructions only | MIT | ~10.9k |
+| frontend-design | Cheap baseline | No | Apache 2.0 (folder) | ~187.6k (repo) |
+
+## Which one I would install first
+
+1. **I have a real app and want it to look less generated:** Impeccable, and wire `npx impeccable detect --github` into CI.
+2. **I am generating a new landing page:** Hallmark if you want speed and themes, Taste Skill if you can spend 30 to 45 minutes and the tokens.
+3. **I want design review on PRs:** Interfaces Skills with `interface-review`.
+4. **I want something today with zero risk:** frontend-design.
+
+What I would skip: installing three of these into one repo. They all try to own "build a new page", and their instructions conflict. Pick one builder, optionally one reviewer.
+
+One honest caveat on my testing: my sandbox had outbound npm and GitHub access blocked, so I ran the Python example above but could not run the installers. Every install command here is copied from each project's current README or docs, all updated within the last two weeks.
+
+## FAQ
+
+### What is AI slop in frontend design?
+
+It is the look an agent produces when nothing steers it: Inter or Roboto everywhere, purple-to-blue gradients, gradient headline text, tracked-caps labels above every heading and a grid of identical cards. Models produce it because it is the statistical average of the web pages they were trained on.
+
+### Do design skills work with Codex and Cursor, not just Claude Code?
+
+Yes. All five follow the Agent Skills `SKILL.md` format, and the `skills` CLI installs to Claude Code, Codex, Cursor, OpenCode and dozens more. In Codex you invoke them with `$name` instead of `/name`.
+
+### Are agent skills safe to install?
+
+Treat them like any dependency. Snyk's ToxicSkills study scanned 3,984 skills from ClawHub and skills.sh in February 2026 and found 36.82% had at least one security flaw and 13.4% had a critical one. Read the `SKILL.md` and any scripts before installing, and prefer well-known authors like the five here.
+
+### Can I lint AI-generated UI without an LLM?
+
+Yes. `npx impeccable detect src/` runs 62 deterministic rules with no model or API key, and Hallmark's `sloplint` script runs standalone too. The 40 line script in this post shows the same idea for a handful of rules.
+
+### Which design skill uses the fewest tokens?
+
+Anthropic's `frontend-design`, because it is a single markdown file with no scripts or browser loop. Taste Skill is at the other end, at a few hundred thousand tokens per full build by its own estimate.
+
+## How this ties to ai.dosa.dev
+
+Four of the five are already in the directory's Developer Productivity & Workflow category: [Impeccable](/tools/impeccable), [Hallmark](/tools/hallmark), [Taste Skill](/tools/taste-skill) and [Interfaces Skills](/tools/interfaces-skills). They all install through [skills.sh](/tools/skillssh), which is listed too.
+
+If you want general purpose skills rather than design ones, our [agent skills libraries roundup](/blog/agent-skills-libraries-for-coding-agents) covers Superpowers, Matt Pocock Skills and Anthropic's repo. And since every skill adds context, the [context compression tools post](/blog/context-compression-tools-for-ai-coding-agents) is a good next read.
+
+Happy Testing!
+
+Which tell gives away AI-generated UI for you first: the gradient, the font, or the three identical cards?
+
+---
+
+*Sources checked on November 5, 2026: GitHub weekly trending snapshots for October 30 to November 5 (githot.dev, gitstock.org); pbakaus/impeccable README, README.npm.md, skill-v4.8.0 release notes and impeccable.style detector docs; Nutlope/hallmark README, SKILL.md v2.0.0, usehallmark.com and Hacker News item 49058547; Leonxlnx/taste-skill README, LICENSE and v2.5.0 release notes; jakubkrehel/skills README, better-interface SKILL.md and skills.sh page; anthropics/skills frontend-design SKILL.md; vercel-labs/skills README and v1.7.5/v1.7.6 release notes; Snyk ToxicSkills report (February 5, 2026).*
