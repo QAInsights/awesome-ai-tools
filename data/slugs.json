@@ -84,6 +84,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "conductor",
+    "name": "Conductor",
+    "company": "Melty Labs (Meta)",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "archestra",
     "name": "archestra",
     "company": "Archestra Inc.",
