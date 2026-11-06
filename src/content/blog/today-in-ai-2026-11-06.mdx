@@ -1,0 +1,78 @@
+---
+title: "OpenAI ships GPT-6 Cyber, a model built to find exploits"
+description: "OpenAI releases GPT-6 Cyber for vulnerability research, Dropbox buys Tigris Data for $350M, and Google hands three agent projects to the CNCF."
+pubDate: 2026-11-06
+tags: ["news","today-in-ai","openai","security","agents","funding","google","copyright"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-11-06 UTC.
+
+A security model that hunts exploits, a $350M storage bet on agents, and Google's agent runtime going open and neutral.
+
+## OpenAI releases GPT-6 Cyber to hunt and validate exploits
+
+**What happened:** OpenAI introduced GPT-6 Cyber, a security model scoring 48.5% on ExploitGym versus 32.1% for GPT-5.6 Cyber, a 51% relative gain. OpenAI says researchers used it to develop 948 privilege escalation exploits in Linux and find 81 previously unknown high-severity Firefox vulnerabilities, which Mozilla has fixed.
+
+**Why it matters:** Security teams get a model tuned for authorized vulnerability research, and OpenAI says it stayed in scope in 99.93% of tests without its deployment prompt.
+
+[Source: OpenAI](<https://openai.com/index/introducing-gpt-6-cyber>)
+
+## Dropbox pays $350M for Tigris Data to build agent storage
+
+**What happened:** Dropbox agreed to acquire cloud company Tigris Data for $350 million, which TechCrunch reports appears to be its largest acquisition to date. The deal supports DBX Agent Cloud, a storage platform for teams building AI models and agents, with S3-compatible object storage first. Dropbox expects the deal to close in Q4 2026.
+
+**Why it matters:** S3-compatible object storage aimed at agents gives builders an alternative to AWS for the data layer under model and agent workloads.
+
+[Source: TechCrunch](<https://techcrunch.com/2026/11/05/dropbox-acquires-tigris-data-for-350m-to-bolster-its-ai-iinfrastructure/>)
+
+## Google donates Agent Substrate, gVisor and OpenRL to CNCF
+
+**What happened:** Google donated three open source projects, Agent Substrate, gVisor and OpenRL, to the CNCF after their acceptance into the CNCF Sandbox. Agent Substrate hit 1.0 and is generally available on GKE, snapshotting idle agents to storage and restoring them in under 500 milliseconds at 10x container density.
+
+**Why it matters:** Agent sandboxes now run on any Kubernetes cluster across CPUs, GPUs or TPUs, so you can stop paying for idle containers while agents wait on model turns.
+
+[Source: Google Cloud](<https://cloud.google.com/blog/products/containers-kubernetes/open-infrastructure-for-autonomous-agents-comes-to-cncf>)
+
+## Thinking Machines launches Inkling 2 Small on Tinker
+
+**What happened:** Thinking Machines Lab introduced Inkling 2 Small, a sparse mixture-of-experts model with 594 billion total parameters and 17 billion active, available through Tinker with closed weights and a 1 million token context. It intends to publish full weights under Apache 2.0 in the week after launch, pending external safety testing.
+
+**Why it matters:** Fine-tuning and sampling are available now, but anyone planning to self-host should wait for the Apache 2.0 weights and the safety testing they depend on.
+
+[Source: Unite.AI](<https://www.unite.ai/thinking-machines-lab-launches-inkling-2-small-with-open-weights-pending/>)
+
+## Microsoft Foundry Local runs Qwen3.8-27B for on-device coding
+
+**What happened:** Microsoft's Foundry Local now runs Qwen3.8-27B locally on Nvidia GPUs and connects it to GitHub Copilot. Microsoft lists scores of 73.0 on Terminal Bench 2.1, 61.7 on SWE-bench Pro, 42.3 on NL2Repo-Bench and 42.2 on DeepSWE 1.1, using ONNX Runtime with DFlash2 speculative decoding.
+
+**Why it matters:** Coding agents can run without sending code off the machine, which removes per-token cloud costs and keeps working when the connection drops.
+
+[Source: Microsoft Foundry](<https://devblogs.microsoft.com/foundry/foundry-local-agentic-coding-qwen3-8-27b/>)
+
+## Google cuts Gemini Omni 1.2 Flash video to $0.07 per second
+
+**What happened:** Google Cloud said Gemini Omni 1.2 Flash is generally available at $0.07 per second of 720p video, 30% below Gemini Omni 1.1 Flash. Generate-and-edit clips extend to 15 seconds from 10, with multi-turn conversational editing.
+
+**Why it matters:** Cheaper per-second video generation lowers the cost of putting generated clips into product demos and marketing pipelines.
+
+[Source: The Agent Times](<https://theagenttimes.com/topics/developer-tooling>)
+
+## EU court adviser backs TDM exception for training models
+
+**What happened:** Advocate General Maciej Szpunar said in a non-binding opinion for the Court of Justice of the EU that training large language models on copyright works generally infringes copyright but can fall under the text and data mining exception, assessed case by case. He said developers need a licence where rights holders opted out in machine-readable form.
+
+**Why it matters:** Teams training on scraped data in the EU should check opt-outs and keep records, since the exception turns on whether rights holders reserved their works.
+
+[Source: Pinsent Masons](<https://www.pinsentmasons.com/out-law/news/in-depth-eu-copyright-law-applies-gen-ai-offered-cjeu-adviser>)
+
+## Sources
+
+- [OpenAI](<https://openai.com/index/introducing-gpt-6-cyber>)
+- [TechCrunch](<https://techcrunch.com/2026/11/05/dropbox-acquires-tigris-data-for-350m-to-bolster-its-ai-iinfrastructure/>)
+- [Google Cloud](<https://cloud.google.com/blog/products/containers-kubernetes/open-infrastructure-for-autonomous-agents-comes-to-cncf>)
+- [Unite.AI](<https://www.unite.ai/thinking-machines-lab-launches-inkling-2-small-with-open-weights-pending/>)
+- [Microsoft Foundry](<https://devblogs.microsoft.com/foundry/foundry-local-agentic-coding-qwen3-8-27b/>)
+- [The Agent Times](<https://theagenttimes.com/topics/developer-tooling>)
+- [Pinsent Masons](<https://www.pinsentmasons.com/out-law/news/in-depth-eu-copyright-law-applies-gen-ai-offered-cjeu-adviser>)
