@@ -377,6 +377,34 @@
     "lastUpdated": "2026-11-01"
   },
   {
+    "slug": "conductor",
+    "name": "Conductor",
+    "company": "Melty Labs (Meta)",
+    "pricing": "n/a",
+    "pricingDetail": "New sign-ups, downloads and upgrades closed November 4, 2026. Existing Pro users retain Pro features for free; active Cloud subscribers will be refunded. Historical plan prices are no longer an available purchase offer.",
+    "description": "Conductor is a Mac app for running parallel Claude Code, Codex and Cursor agents in isolated Git-worktree workspaces, with a review and merge workflow. Meta acquired Conductor on November 4, 2026, and new sign-ups and downloads are closed. Cloud becomes read-only November 13 and shuts down November 20, 2026, when Cloud data deletion begins. The local app receives new models and critical fixes until early 2027, then winds down and all user data is deleted.",
+    "keyFeatures": [
+      "Parallel coding agents in isolated Git worktrees on Mac",
+      "Claude Code, Codex and Cursor support",
+      "Review and merge changes from agent workspaces",
+      "Transfer cloud workspaces and chats to local via right-click > Transfer to local",
+      "Export all data via Settings > Account > Export data"
+    ],
+    "bestFor": "Existing users exporting their data and finishing local work while planning a migration.",
+    "notIdealFor": "New users, teams starting a long-term workflow, or anyone needing Conductor Cloud after November 20, 2026.",
+    "recentUpdates": "Meta acquired Conductor on November 4, 2026. New sign-ups and downloads are closed. Cloud is read-only from November 13 and shuts down November 20, 2026, with data deletion beginning then. Local updates continue until early 2027, when the app winds down and all user data is deleted.",
+    "verdict": "Export before November 20 and evaluate a replacement now. Local access is a temporary migration window, not a long-term alternative to the closing Cloud service.",
+    "tags": [
+      "Parallel Agents",
+      "Git Worktrees",
+      "macOS",
+      "Acquired",
+      "Winding Down"
+    ],
+    "status": "winding-down",
+    "lastUpdated": "2026-11-06"
+  },
+  {
     "slug": "archestra",
     "name": "Archestra",
     "company": "Archestra Inc.",

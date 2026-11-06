@@ -1,0 +1,264 @@
+---
+title: "Conductor Alternatives After the Meta Acquisition: 6 Apps to Run Parallel Coding Agents"
+description: "Compare six Conductor alternatives after Meta's acquisition: Mac apps, worktrees, Claude Code and Codex support, export steps and shutdown dates."
+pubDate: 2026-11-06
+featured: true
+tags: ["conductor", "parallel-agents", "git-worktree", "claude-code", "codex", "open-source", "roundup"]
+---
+
+In this blog post, we will see which Conductor alternatives I would shortlist after the Meta acquisition, how to export before Cloud shuts down, and what changes when you move to another parallel-agent workspace. This follows our [earlier guide to running multiple coding agents in parallel](/blog/run-multiple-coding-agents-in-parallel), but the decision is more immediate now: preserve your work first, choose the next interface second.
+
+Facts and release links were checked on November 6, 2026. This is a source-based comparison, not a claim that I installed and benchmarked all six apps.
+
+## Table of Contents
+
+1. [The short answer](#the-short-answer)
+2. [What happened to Conductor](#what-happened-to-conductor)
+3. [How to export your Conductor data](#how-to-export-your-conductor-data)
+4. [Superset](#superset)
+5. [Orca](#orca)
+6. [Emdash](#emdash)
+7. [Paseo](#paseo)
+8. [T3 Code](#t3-code)
+9. [Kandev](#kandev)
+10. [Side-by-side comparison](#side-by-side-comparison)
+11. [Which one I would switch to](#which-one-i-would-switch-to)
+12. [Honest Pros and Cons](#honest-pros-and-cons)
+13. [FAQ](#faq)
+14. [How this ties to ai.dosa.dev](#how-this-ties-to-aidosadev)
+15. [Final Words](#final-words)
+16. [Sources](#sources)
+
+## The short answer
+
+The closest Conductor alternatives are Superset, Orca and Emdash for parallel desktop worktrees, with Paseo and T3 Code for remote access and Kandev for review-gated workflows. Export Conductor data before November 20, 2026. Existing Mac users can keep working locally for now, but the local app winds down in early 2027.
+
+## What happened to Conductor
+
+[Conductor](/tools/conductor), the Mac app from Melty Labs led by Charlie Holtz, is joining Meta. This is the parallel coding-agent app at conductor.build, not another product sharing the name. It runs Claude Code, Codex and Cursor in isolated workspaces, then lets you review and merge their changes.
+
+The [official announcement](https://www.conductor.build/announcement) is the operational source of truth. [TechCrunch](https://techcrunch.com/2026/11/04/meta-acquires-ai-coding-startup-conductor/) and [Axios](https://www.axios.com/2026/11/04/meta-acquires-ai-coding-startup-conductor) reported the acquisition on November 4.
+
+| Date | What changes | What I would do |
+| --- | --- | --- |
+| November 4, 2026 | New sign-ups and downloads closed. Existing free users cannot upgrade. Existing Pro users keep Pro features for free. | Stop treating Conductor as an option for a new teammate. |
+| November 13, 2026 | Conductor Cloud becomes read-only. Old chats remain readable and exportable, but new messages stop. Active subscribers receive refunds. | Finish active Cloud work before this date. |
+| November 20, 2026 | Cloud shuts down and Cloud user-data deletion begins. | Complete and verify exports before this date, not on it. |
+| Early 2027 | Local Conductor starts winding down. New models and critical bug fixes continue until then; the announcement says all user data will be deleted when the app shuts down. | Have a replacement workflow ready. No exact final shutdown day is published. |
+
+The [official site and changelog](https://www.conductor.build/changelog) identify 0.93.0 as the latest release. The local app is not already dead, and the acquisition does not mean you must abandon an in-progress local task today. It does mean there is a deadline for Cloud and a shorter planning horizon for the Mac app.
+
+I am not quoting the old paid-plan table as a current offer. The [pricing URL](https://www.conductor.build/pricing) now serves product information rather than a verifiable purchasable plan table, and sign-ups are closed.
+
+## How to export your Conductor data
+
+The announcement gives two distinct paths. I would use both:
+
+1. **Transfer active Cloud workspaces to the Mac.** Right-click a Cloud workspace and choose **Transfer to local**. Conductor says this transfers the workspace and its chats.
+2. **Export the complete archive.** Open **Settings > Account > Export data** to download all your Conductor data.
+3. **Check what you have.** Open the transferred workspaces, inspect uncommitted changes, and confirm the archive downloaded successfully. Keep a separate backup in a location you control.
+4. **Preserve Git work separately.** Commit or otherwise back up wanted changes and record the branches you intend to keep. A data archive is not a substitute for checking the repository itself.
+5. **Migrate one task first.** Open the repository in a replacement, create a fresh task branch, run your tests, review the diff and merge through your normal process before moving everything.
+
+Steps 1 and 2 are Conductor's documented export instructions. Steps 3 through 5 are my migration precautions. I found no documented promise that the alternatives below import Conductor chat archives or preserve its UI state, so do not assume a one-click migration. Export before November 20.
+
+## Superset
+
+[Superset](/tools/superset) is the first place I would look for the familiar Mac workflow: one task, one worktree, terminals, browser preview and a changes pane. Its official repository now calls the product **Paradev**. I am retaining the catalog's Superset name and URL here so existing directory links stay intact.
+
+**Why it fits:** The [official README](https://github.com/paradevai/paradev) explicitly supports Claude Code and Codex, with review, commit, push, pull requests, checks and merge in the app. That is closer to Conductor's entire loop than merely opening several terminals.
+
+**Verified facts:** MIT, [desktop-v2.0.5](https://github.com/paradevai/paradev/releases/tag/desktop-v2.0.5) (November 5, 2026). macOS on Apple Silicon and Intel; Linux x64 AppImage is experimental; Windows is not yet available. [Official pricing](https://paradev.com/pricing) lists free local workspaces, desktop and CLI; Pro is $20/user/month, Team $60/user/month and Ultra $200/user/month on monthly billing. Bring your own agent subscriptions.
+
+**Try it:** Use the [official desktop downloads](https://github.com/paradevai/paradev/releases/latest). The README's standalone CLI install option is:
+
+```bash
+brew install paradevai/tap/superset
+```
+
+That installs the CLI, not the desktop app. For a Conductor-like experience, start with the desktop download.
+
+**Honest limitation:** Branding and package names are in transition. Linux is experimental and there is no native Windows build. Also, as its README warns, worktrees do not sandbox processes or prevent merge conflicts.
+
+## Orca
+
+[Orca](/tools/orca) is the strongest candidate here if leaving a Mac-only workflow is part of the move.
+
+**Why it fits:** The [official repository](https://github.com/stablyai/orca) describes Claude Code and Codex running in parallel, each in its own worktree. It includes line-level diff feedback to agents, a browser, commit and PR generation, and a way to send failing checks or review comments back to an agent.
+
+**Verified facts:** MIT, [v1.4.251](https://github.com/stablyai/orca/releases/tag/v1.4.251) (November 6, 2026), macOS, Windows and Linux. The [official README's licence section](https://github.com/stablyai/orca#license) says Orca is free and open source. That does not make your coding-agent accounts or remote compute free.
+
+**Try it on Mac**, using the command from the official README:
+
+```bash
+brew install --cask stablyai/orca/orca
+```
+
+Other platforms have [official release downloads](https://github.com/stablyai/orca/releases/latest).
+
+**Honest limitation:** Remote execution introduces another machine and its credentials into your workflow. Start locally if your immediate goal is simply to replace Conductor, then decide whether remote servers and mobile access are necessary.
+
+## Emdash
+
+[Emdash](/tools/emdash) remains a close desktop substitute, but there is an important qualification: this section covers **Emdash Classic**, not the new cloud product.
+
+**Why it fits:** The [Classic repository](https://github.com/generalaction/emdash) gives each task its own Git worktree and branch, supports Claude Code and Codex, and includes diff review, pull requests, CI inspection and merging. It is a sensible fit if you want to keep a task's code, terminal and review state together.
+
+**Verified facts:** Apache-2.0, [v1.2.11](https://github.com/generalaction/emdash/releases/tag/v1.2.11) (November 6, 2026). macOS, Windows and Linux, including Linux ARM64 packages. The [official Classic page](https://emdash.com/classic) describes it as free and open source.
+
+**Try it on Mac**, from its official installation table:
+
+```bash
+brew install --cask emdash
+```
+
+Or use the [release installers](https://github.com/generalaction/emdash/releases/latest).
+
+**Honest limitation:** The official site says Classic remains available and gets fixes, but new development has moved to Emdash 2.0. After Conductor's announcement, I would explicitly weigh that maintenance direction before committing to another desktop workflow. I could not verify public 2.0 pricing, so it is not included in this comparison.
+
+## Paseo
+
+[Paseo](/tools/paseo) is my choice when the replacement needs to follow me from a Mac to a phone or a remote machine.
+
+**Why it fits:** The [official README](https://github.com/getpaseo/paseo) describes parallel agents in separate worktrees, with an editor, terminals, diffs, pull requests and a browser. Claude Code and Codex are supported. The desktop app starts its daemon automatically, while other clients connect to that same host.
+
+**Verified facts:** Apache-2.0, [v0.15.3](https://github.com/getpaseo/paseo/releases/tag/v0.15.3) (November 6, 2026). Desktop, native iOS and Android, web and CLI clients are documented. For a Mac, use the [official desktop download](https://paseo.sh/download). The [official FAQ](https://paseo.sh/#faq) says Paseo is free and open source, with your own provider credentials. I am not extending that claim to the separate Paseo Hub service.
+
+**Try a headless host**, using the README's commands:
+
+```bash
+npm install -g @getpaseo/cli
+paseo
+```
+
+For the simpler local experience, download the desktop app instead.
+
+**Honest limitation:** Remote access still needs a running host and a connectivity choice: its optional encrypted relay, a direct connection or your own tunnel. Worktrees are optional in Paseo, so deliberately enable them for parallel tasks instead of assuming every session is isolated.
+
+## T3 Code
+
+[T3 Code](/tools/t3-code) is worth considering if you prefer a common control surface over the coding-agent CLIs you already authenticate.
+
+**Why it fits:** The [official README](https://github.com/pingdotgg/t3code) lists Claude Code and Codex alongside other providers, with desktop, web and mobile clients. Its [project settings](https://github.com/pingdotgg/t3code/blob/main/docs/user/project-settings.md) document new-thread worktrees, and its [source-control guide](https://github.com/pingdotgg/t3code/blob/main/docs/user/source-control.md) covers branch comparisons, commit diffs and pull requests. I would still trial the complete review and merge loop on a small repository rather than assume it reproduces every Conductor interaction.
+
+**Verified facts:** [MIT](https://github.com/pingdotgg/t3code/blob/main/LICENSE), [v0.1.7](https://github.com/pingdotgg/t3code/releases/tag/v0.1.7) (November 4, 2026). The README documents macOS Homebrew, Windows package managers and Linux installation paths, plus native iOS and Android clients. Its [official explanation of what it sells](https://github.com/pingdotgg/t3code#wait-what-are-you-selling-me) says “Nothing”; underlying provider subscriptions remain yours.
+
+**Try it once**, directly from the official README:
+
+```bash
+npx t3@latest
+```
+
+Or install the Mac desktop cask:
+
+```bash
+brew install --cask t3-code
+```
+
+**Honest limitation:** At least one provider must already be installed and authenticated. The README warns about that prerequisite explicitly. A shared UI does not make Claude Code and Codex identical in permissions or behaviour.
+
+## Kandev
+
+[Kandev](/tools/kandev) is the option I would choose for a team that wants review gates, rather than the closest visual copy of Conductor.
+
+**Why it fits:** The [official repository](https://github.com/kdlbs/kandev) supports Claude Code and Codex, isolated worktrees and multi-step workflows. You can separate planning, implementation and review, while keeping code changes and task context in one workbench. Multi-repository tasks get per-repository branches and review grouping.
+
+**Verified facts:** AGPL-3.0, [v0.99.1](https://github.com/kdlbs/kandev/releases/tag/v0.99.1) (November 6, 2026). The README documents macOS, Linux and Windows, native or WSL. This is a self-hostable open-source option; I am not quoting a hosted subscription price because I could not verify a public plan table. Review the [licence](https://github.com/kdlbs/kandev/blob/main/LICENSE) before modifying and offering a network service.
+
+**Try it**, using its [official installation instructions](https://kandev.ai/#install):
+
+```bash
+npx kandev@latest
+```
+
+The npm path requires npm 7 or later. Homebrew and native runtime options are documented separately.
+
+**Honest limitation:** Workflow profiles, executors and review gates add configuration. For one person who wants two agent terminals and a diff, that can be more machinery than necessary. Its Codex app-server integration is also labelled experimental in the README; do not confuse that with the separate ACP integration.
+
+## Side-by-side comparison
+
+All six document Claude Code and Codex support. These are workflow differences, not benchmark results.
+
+| App | Platform or client scope | Isolation and review fit | Licence | Release checked |
+| --- | --- | --- | --- | --- |
+| [Superset](/tools/superset), now Paradev | Mac; experimental Linux | Task worktrees, changes pane, PR checks and merge | MIT | desktop-v2.0.5 |
+| [Orca](/tools/orca) | Mac, Windows, Linux | Agent worktrees, annotated diffs, commit and PR feedback | MIT | v1.4.251 |
+| [Emdash](/tools/emdash) Classic | Mac, Windows, Linux | Task worktrees, diffs, PRs, CI and merge | Apache-2.0 | v1.2.11 |
+| [Paseo](/tools/paseo) | Desktop, mobile, web, CLI | Optional worktrees, diffs and PR workflow across clients | Apache-2.0 | v0.15.3 |
+| [T3 Code](/tools/t3-code) | Mac, Windows, Linux paths; mobile and web | New-thread worktrees, commit diffs, branch comparison and PRs | MIT | v0.1.7 |
+| [Kandev](/tools/kandev) | Mac, Windows, Linux; self-hosted | Task worktrees, multi-step review gates, multi-repo changes | AGPL-3.0 | v0.99.1 |
+
+Pricing is deliberately kept in the linked per-tool sections above. A free workspace app is not free inference, and local access is not the same product as paid cloud capacity.
+
+## Which one I would switch to
+
+**For my own Mac, I would start with Superset.** The reason is the review loop: I want separate task worktrees, a visible patch, tests and PR checks before merge. Its current Paradev branding is something to explain to teammates, not a reason to rename existing catalog URLs.
+
+**If my team includes Windows or Linux users, I would start with Orca.** I would rather standardise one supported desktop workflow than make everyone adapt to a Mac-first app.
+
+**If I regularly leave agents running on another machine, I would try Paseo first.** Its daemon and full mobile client address that requirement directly. T3 Code is the other control-surface candidate I would trial against the same small task.
+
+**For an explicit plan, implement, review pipeline, I would choose Kandev.** I would keep Emdash Classic on the shortlist for its integrated review flow, but its shift toward 2.0 means I would ask about maintenance expectations first.
+
+None of those choices depends on which project has the most stars. I would migrate a single low-risk task, compare the actual diff and merge experience, then decide.
+
+## Honest Pros and Cons
+
+**Pros:** Separate worktrees make parallel changes easier to inspect. Open-source licences let you inspect the workspace layer and keep a fork if necessary. A review interface can reduce the cost of switching between agent sessions.
+
+**Cons:** Worktrees are not a security sandbox. Agents may still share credentials, databases, processes and port numbers. Two isolated branches can still produce a merge conflict. More agents also mean more usage, more tests and more review work.
+
+The acquisition is a reminder to keep repository state and backups independent of the app. An export archive preserves evidence; it does not guarantee another app can resume the same conversation. None of these tools removes the need to review generated code or obey your organisation's data policies.
+
+## FAQ
+
+### Is Conductor shutting down immediately?
+
+No. Cloud goes read-only on November 13, 2026 and shuts down on November 20. The local app keeps receiving models and critical fixes until early 2027, then starts winding down. The announcement does not give an exact final day.
+
+### Can a new user still download Conductor?
+
+The announcement says new sign-ups and app downloads closed on November 4, 2026. Do not build a new team's workflow around access that is no longer offered.
+
+### Which Conductor alternatives are closest on a Mac?
+
+Superset, Orca and Emdash Classic are the most direct desktop-worktree candidates in this shortlist. I would evaluate Superset first for its changes and PR workflow, with the caveat that its current official name is Paradev.
+
+### Can I import my Conductor chats into these apps?
+
+I could not verify a supported Conductor archive importer for these six apps. Export your archive, transfer active Cloud workspaces to local, and move repository work separately. Do not promise your team that chat history will appear in the new UI.
+
+### Do I need new Claude Code or Codex subscriptions?
+
+These apps use provider accounts or credentials rather than replacing the model provider. Check each provider's supported authentication and your organisation's terms. A free app does not include an unlimited agent allowance.
+
+### Is Emdash still being developed?
+
+The official site says Emdash Classic stays available and gets fixes, but new development has moved to Emdash 2.0. That distinction matters when choosing a long-term local desktop replacement.
+
+## How this ties to ai.dosa.dev
+
+The [Conductor catalog page](/tools/conductor) now records the acquisition and shutdown window instead of presenting it as a normal new-user recommendation. Our [parallel-agent guide](/blog/run-multiple-coding-agents-in-parallel) explains why worktrees isolate edits without solving merges.
+
+Use the linked tool pages to keep your shortlist together, then verify current plans and downloads at the primary sources before installing. This article intentionally keeps Superset and Emdash's existing catalog names, even though their official sites now distinguish Paradev and Emdash Classic.
+
+## Final Words
+
+Export first. Try one replacement on a real but low-risk task. Review the patch, run the tests and merge it before moving your whole workflow.
+
+For me, Superset on Mac, Orca across desktop operating systems and Paseo for remote access are the first three trials. Kandev makes sense when review gates are the requirement. The best Conductor alternative is the one whose output you can reliably inspect and ship, not the one that starts the most agents.
+
+Happy Testing! Which part of your Conductor workflow would be hardest to replace: workspaces, chats, or the review and merge loop?
+
+## Sources
+
+Checked November 6, 2026. Official sources are used for features, licences, installation, prices and releases; reporting supplies acquisition context.
+
+- Conductor: [announcement, timeline and export FAQ](https://www.conductor.build/announcement), [product and pricing URL](https://www.conductor.build/pricing), [changelog](https://www.conductor.build/changelog).
+- Acquisition reporting, November 4, 2026: [TechCrunch](https://techcrunch.com/2026/11/04/meta-acquires-ai-coding-startup-conductor/), [Axios](https://www.axios.com/2026/11/04/meta-acquires-ai-coding-startup-conductor).
+- Superset / Paradev: [README, platforms, licence and CLI install](https://github.com/paradevai/paradev), [official pricing](https://paradev.com/pricing), [desktop-v2.0.5 release](https://github.com/paradevai/paradev/releases/tag/desktop-v2.0.5).
+- Orca: [README, installation and MIT licence](https://github.com/stablyai/orca), [v1.4.251 release](https://github.com/stablyai/orca/releases/tag/v1.4.251).
+- Emdash: [Classic overview and free-app FAQ](https://emdash.com/classic), [maintenance direction](https://emdash.com), [README and Apache-2.0 licence](https://github.com/generalaction/emdash), [v1.2.11 release](https://github.com/generalaction/emdash/releases/tag/v1.2.11).
+- Paseo: [README and Apache-2.0 licence](https://github.com/getpaseo/paseo), [official FAQ and free-app statement](https://paseo.sh), [downloads](https://paseo.sh/download), [v0.15.3 release](https://github.com/getpaseo/paseo/releases/tag/v0.15.3).
+- T3 Code: [README, provider prerequisites and installation](https://github.com/pingdotgg/t3code), [MIT licence](https://github.com/pingdotgg/t3code/blob/main/LICENSE), [v0.1.7 release](https://github.com/pingdotgg/t3code/releases/tag/v0.1.7).
+- Kandev: [README, platforms, integrations and installation](https://github.com/kdlbs/kandev), [official site](https://kandev.ai), [AGPL-3.0 licence](https://github.com/kdlbs/kandev/blob/main/LICENSE), [v0.99.1 release](https://github.com/kdlbs/kandev/releases/tag/v0.99.1).

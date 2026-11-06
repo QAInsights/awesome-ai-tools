@@ -48,6 +48,7 @@ const { enriched } = tool;
 const displayName = enriched?.name ?? tool.name;
 const displayCompany = enriched?.company ?? tool.company;
 const isDiscontinued = (enriched?.status ?? '').toLowerCase() === 'discontinued';
+const isWindingDown = (enriched?.status ?? '').toLowerCase() === 'winding-down';
 const successor = isDiscontinued && enriched?.successor ? getToolBySlug(enriched.successor) : undefined;
 const hasSiteLink = typeof tool.url === 'string' && /^https?:\/\//i.test(tool.url);
 const displayDescription = enriched?.description ?? tool.notes;
@@ -243,10 +244,17 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                             </nav>
                             <span class="fo-status">
                                 {isDiscontinued && <span class="fo-off">Discontinued</span>}
+                                {isWindingDown && <span class="fo-off">Winding down</span>}
                                 {enriched?.lastUpdated && <span>Updated <time datetime={enriched.lastUpdated}>{updated}</time></span>}
                             </span>
                         </div>
                         <div class="fo-rule"></div>
+                        {isWindingDown && (
+                            <aside class="fo-notice fo-fade" style="--d:.2s" role="note">
+                                <span><b>Service winding down.</b> {enriched?.recentUpdates}</span>
+                                {reading[0] && <a href={`/blog/${reading[0].id}`}>Read the migration guide →</a>}
+                            </aside>
+                        )}
                         {isDiscontinued && (
                             <aside class="fo-notice fo-fade" style="--d:.2s" role="note">
                                 <span><b>No longer maintained.</b> {displayName} has been discontinued{successor ? ` and folded into ${successor.enriched?.name ?? successor.name}` : ''}.</span>
