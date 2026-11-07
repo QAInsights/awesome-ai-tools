@@ -12438,5 +12438,92 @@
       "frontend"
     ],
     "lastUpdated": "2026-11-06"
+  },
+  {
+    "slug": "rivet",
+    "name": "Rivet",
+    "company": "Rivet (YC W23)",
+    "pricing": "open-source",
+    "pricingDetail": "Open-source (Apache-2.0) and free to run locally or self-host, with S3 as the only dependency. Rivet Cloud (fully managed dedicated clusters on AWS or GCP) and BYOC (control plane in your own VPC, managed by Rivet) are managed options; see rivet.dev for their pricing.",
+    "description": "Open-source orchestrator for agentic workloads built on Rivet Actors: long-lived processes with in-memory state, a per-Actor SQLite database on S3, WebSockets and scheduling, so every agent, user, session or tenant gets its own durable process that hibernates when idle.",
+    "keyFeatures": [
+      "Rivet Actors with in-memory state, per-Actor SQLite on S3, WebSockets and cron scheduling",
+      "Hibernates idle Actors and wakes them on the next request with state intact",
+      "Durable Agents library and replaying Workflows built on Actors",
+      "agentOS sandboxing (V8 and WebAssembly) for code an agent writes, with network and filesystem controls",
+      "End-to-end typed TypeScript clients (`rivetkit`), React hooks, scoped JWTs and OpenTelemetry",
+      "`npx skills add rivet-dev/skills` lets Claude Code, Cursor or Codex scaffold a Rivet project",
+      "Self-host on Docker, Kubernetes or a VM, or use Rivet Cloud or BYOC"
+    ],
+    "bestFor": "Teams building production AI agents or multiplayer agent apps that need durable per-agent state, realtime connections and cheap idle capacity without running a VM per agent.",
+    "notIdealFor": "Developers looking for a ready-made coding assistant, or teams whose agents need a full Linux VM for every session regardless of workload.",
+    "recentUpdates": "v3.0.6 was released on Nov 6, 2026, a day after v3.0.5; Rivet launched on Hacker News as a Launch HN (YC W23) on Nov 5, 2026, pitching agent orchestration on S3.",
+    "verdict": "A well-engineered, actively shipped runtime that moves the agent loop out of the sandbox; strongest for TypeScript teams building agent products, less relevant if you only consume coding agents.",
+    "tags": [
+      "agent-infrastructure",
+      "orchestration",
+      "durable-agents",
+      "typescript",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-07"
+  },
+  {
+    "slug": "ai-dlc",
+    "name": "AI-DLC",
+    "company": "AWS (awslabs)",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source (MIT-0). Model usage is billed through whichever harness and provider you already use (for example Claude Code, Kiro, Codex or Amazon Bedrock).",
+    "description": "AI-Driven Development Life Cycle from AWS Labs: a harness-neutral workflow engine that turns coding agents into structured, auditable software delivery, with phases, stages, specialist agents, approval gates and persistent project state.",
+    "keyFeatures": [
+      "One core that runs natively in Claude Code, Kiro IDE and Kiro CLI, Codex CLI, Cursor, opencode and GitHub Copilot",
+      "Native `aidlc` command installed via `install.sh` or `install.ps1`; `aidlc config --harness <name>` and `aidlc doctor`",
+      "5 phases and 33 stages from initialization through operation",
+      "14 agents: 11 domain experts, 2 reviewers and an adaptive composer",
+      "11 workflow profiles covering features, bug fixes, infrastructure, security, proofs of concept and enterprise delivery",
+      "Human approval gates with source-bound review evidence",
+      "Audit trail, persistent state, team knowledge and learned rules"
+    ],
+    "bestFor": "Teams that want a repeatable, reviewable delivery process around AI coding agents across several harnesses, especially in AWS or Kiro environments.",
+    "notIdealFor": "Quick one-off edits or solo prototyping where approval gates and a staged lifecycle add more ceremony than value.",
+    "recentUpdates": "v2.11.3 (Nov 4, 2026) ships a native `aidlc` built with Bun 1.4.4, team Units support end to end and OpenCode 2 support; 2.11.4 preview builds followed on Nov 5 and Nov 6, adding the `kiro-v2` harness name for Kiro CLI (V2).",
+    "verdict": "A thorough, fast-moving spec-and-gates methodology from AWS that works across the major coding agents; heavier than lightweight spec tools, but strong on auditability.",
+    "tags": [
+      "spec-driven-development",
+      "workflow",
+      "coding-agents",
+      "aws",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-07"
+  },
+  {
+    "slug": "google-agent-skills",
+    "name": "Google Agent Skills",
+    "company": "Google",
+    "pricing": "free",
+    "pricingDetail": "Free and open-source (Apache-2.0). Skills are Markdown instructions; using the Google Cloud or other Google products they target is billed by those products.",
+    "description": "Google's official library of Agent Skills (SKILL.md) for Google products and technologies, led by Google Cloud, installable into coding agents with one command and bundled with Google product plugins (skills plus MCP servers) for Claude Code, Codex and Antigravity CLI.",
+    "keyFeatures": [
+      "Install with `npx skills add google/skills`, choosing skills, target agents and scope",
+      "Google Cloud recipes for auth, onboarding and foundation setup",
+      "Multi-product solution skills such as building and deploying agents, RAG on GKE and AlloyDB, and GKE inference migration",
+      "Agent Platform skills for inference, tuning, evals, model registry and prompt management",
+      "Infrastructure, databases, security, hosting, Ads and Well-Architected Framework skills",
+      "Plugin marketplace for Claude Code (`claude plugin marketplace add google/skills`), Codex and Antigravity CLI",
+      "Links sibling packs for Android, Dart, Flutter, Firestore, ADK and Google Maps"
+    ],
+    "bestFor": "Developers using Claude Code, Codex, Gemini CLI or Antigravity to build on Google Cloud who want agents to follow current, official Google guidance.",
+    "notIdealFor": "Teams that do not use Google Cloud or other Google products, since most skills target that stack.",
+    "recentUpdates": "Commits landed daily in early November 2026, including a new pathways-workload skill for debugging Pathways workloads on Cloud (Nov 6) and an updated Antigravity agent ID (Nov 7); the repository passed 23,000 GitHub stars.",
+    "verdict": "The canonical skills pack for agent work on Google Cloud; broad and actively maintained, though its value depends on how much of your stack is Google.",
+    "tags": [
+      "agent-skills",
+      "google-cloud",
+      "claude-code",
+      "codex",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-07"
   }
 ]

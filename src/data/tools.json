@@ -1822,5 +1822,17 @@
   {
     "companyName": "Damir Sokolovsky",
     "toolName": "unslop"
+  },
+  {
+    "companyName": "Rivet (YC W23)",
+    "toolName": "Rivet"
+  },
+  {
+    "companyName": "AWS (awslabs)",
+    "toolName": "AI-DLC"
+  },
+  {
+    "companyName": "Google",
+    "toolName": "Google Agent Skills"
   }
 ]

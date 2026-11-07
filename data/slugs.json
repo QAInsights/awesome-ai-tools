@@ -1122,6 +1122,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "rivet",
+    "name": "Rivet",
+    "company": "Rivet (YC W23)",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "github-agentic-workflows",
     "name": "GitHub Agentic Workflows",
     "company": "GitHub",
@@ -2112,6 +2118,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "ai-dlc",
+    "name": "AI-DLC",
+    "company": "AWS (awslabs)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "browserskill",
     "name": "BrowserSkill",
     "company": "Tencent",
@@ -2606,6 +2618,12 @@
   {
     "slug": "android-skills",
     "name": "Android Skills",
+    "company": "Google",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "google-agent-skills",
+    "name": "Google Agent Skills",
     "company": "Google",
     "category": "Developer Productivity & Workflow"
   },
