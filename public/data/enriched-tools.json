@@ -12610,5 +12610,34 @@
       "open-source"
     ],
     "lastUpdated": "2026-11-08"
+  },
+  {
+    "slug": "capy",
+    "name": "Capy",
+    "company": "Capy (YC F24, formerly Scrapybara)",
+    "pricing": "paid",
+    "pricingDetail": "Every plan includes unlimited members, and the plan sets your monthly credits and cloud machine limits. Lite costs $20/mo ($16/mo billed annually) with $20 of credits, and your first 7 days cost $1 with a verified card. Pro costs $100/mo ($80/mo annually) with $105 of credits and adds mobile builds and devices. Max runs from $200 to $1,000/mo in $100 steps with 10% bonus credits. Enterprise is custom and adds SSO/SAML and audit logging. You can bring your own API keys, or a ChatGPT (Codex), GitHub Copilot or SuperGrok subscription, on every plan.",
+    "description": "Capy runs a fleet of cloud coding agents in parallel, taking each task from plan to merged PR. You can start work from the Capy desktop app, the web UI, Slack, Linear, GitHub, triggers or cron. Each agent runs in an isolated cloud VM. Captains coordinate crews of agent threads, and a built-in review agent checks every PR.",
+    "keyFeatures": [
+      "Run hundreds of agents in parallel, each in an isolated cloud VM with snapshots and Docker-in-Docker",
+      "Captains (GA in v0.7.0) direct crews of threads that pick up work from built-in Issues",
+      "Built-in review agent runs on every PR, and you can create and review PRs inside Capy",
+      "Computer use, browser use and annotated videos for end-to-end testing, plus iOS and Android builds tested on cloud phones (Pro and Max plans)",
+      "Claude, GPT, Gemini and other models, with bring-your-own API keys or a ChatGPT (Codex), GitHub Copilot or SuperGrok subscription",
+      "Slack, Linear, GitHub and Sentry integrations, plus scheduled and triggered automations",
+      "Dock CLI (`capy dock`) runs threads headless on any macOS, Linux or Windows machine"
+    ],
+    "bestFor": "Engineering teams that want to hand off backlogs, migrations, bug triage, PR review and E2E testing to many cloud agents at once, starting work from Slack or Linear.",
+    "notIdealFor": "Developers who want a free or local-only tool, or who prefer working with one agent inside their editor instead of managing a fleet of cloud agents.",
+    "recentUpdates": "Capy 0.7.2 (Nov 1, 2026) made the Dock CLI installable on macOS, Linux and Windows. Capy 0.7.0 (Oct 31, 2026) made Captains and Issues GA, added the Dock CLI and added a context breakdown view. On Oct 28, 2026 Capy announced iOS and Android app testing on cloud phones.",
+    "verdict": "A capable platform for running many cloud agents in parallel, with strong team integrations, model flexibility and unlimited members. Usage is billed in credits, so costs grow with agent activity.",
+    "tags": [
+      "cloud-agents",
+      "parallel-agents",
+      "code-review",
+      "autonomous-agent",
+      "yc"
+    ],
+    "lastUpdated": "2026-11-08"
   }
 ]
