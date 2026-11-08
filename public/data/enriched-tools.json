@@ -12525,5 +12525,90 @@
       "open-source"
     ],
     "lastUpdated": "2026-11-07"
+  },
+  {
+    "slug": "mini-swe-agent",
+    "name": "mini-swe-agent",
+    "company": "SWE-agent (Princeton & Stanford)",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under the MIT License; you pay only for the model API calls (via litellm, OpenRouter, Portkey or a local model) and any sandbox infrastructure you run it in.",
+    "description": "mini-swe-agent is a minimal AI software engineering agent from the team behind SWE-bench and SWE-agent. The agent class is about 100 lines of Python, it uses only bash instead of a custom tool interface, and it keeps a linear message history that is also the trajectory, so it is easy to read, modify and run with any model.",
+    "keyFeatures": [
+      "About 100 lines of Python for the core agent class, built to be hacked on",
+      "Bash as the only tool, so no tool-calling API is required and any model works",
+      "Model support via litellm, OpenRouter and Portkey, including /completion and /response endpoints",
+      "Local, Docker/Podman, Singularity/Apptainer and Bubblewrap execution environments",
+      "`mini` CLI for interactive use plus batch runs over SWE-bench and a trajectory browser",
+      "Install with `uvx mini-swe-agent`, `pipx run mini-swe-agent` or `pip install mini-swe-agent`"
+    ],
+    "bestFor": "Researchers and engineers who want a small, transparent coding agent baseline for benchmarks, fine-tuning or sandboxed batch runs, and developers who want a simple bash-only agent in the terminal.",
+    "notIdealFor": "Developers who want a polished IDE experience, rich built-in tooling or a managed product with team features.",
+    "recentUpdates": "mini-swe-agent v2 is the current major version (v2.4.6 released Jul 23, 2026); the README now highlights that it powers Ramp SWE-Bench and serves as an evaluation harness for the DeepSWE benchmark, and the original SWE-agent is in maintenance mode with mini-swe-agent as its successor.",
+    "verdict": "The reference minimal coding agent: tiny, model agnostic and benchmark proven, best as a hackable baseline rather than a full daily driver.",
+    "tags": [
+      "coding-agent",
+      "cli",
+      "open-source",
+      "swe-bench",
+      "research"
+    ],
+    "lastUpdated": "2026-11-08"
+  },
+  {
+    "slug": "agent-substrate",
+    "name": "Agent Substrate",
+    "company": "Google (donated to CNCF)",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under the Apache License 2.0; you pay for your own Kubernetes cluster, compute, storage and model usage.",
+    "description": "Agent Substrate is a security-hardened, zero-trust runtime for running large numbers of sandboxed agents on standard Kubernetes. It maps many stateful actors onto a small pool of warm workers, snapshots idle actors out of memory and restores them on request, and keeps credentials outside the sandbox. Google donated it to the CNCF alongside gVisor in November 2026.",
+    "keyFeatures": [
+      "Every actor runs in a gVisor or microVM sandbox with segregated compute, network and storage",
+      "Short-lived per-actor SPIFFE identity and default-deny networking",
+      "Egress gateway (`atenet-egress`) injects credentials outside the sandbox so agents never hold API keys",
+      "Snapshots RAM and filesystem state of idle actors and resumes them in under 500 ms",
+      "10x to 30x oversubscription of stateful actors onto warm worker pods",
+      "Harness agnostic: hosts ADK, LangChain, Claude Code, Codex, Antigravity and sandboxed MCP servers",
+      "Base layer for Google AX (Agent Executor) and kagent"
+    ],
+    "bestFor": "Platform teams that need to run many untrusted, mostly idle agents or coding sandboxes on Kubernetes with strong isolation, identity and credential controls.",
+    "notIdealFor": "Individual developers or small teams without Kubernetes experience who just want to run a coding agent locally.",
+    "recentUpdates": "v1.0.0 was released on Nov 5, 2026 with a public API and configuration compatibility commitment, and on Nov 6, 2026 Google announced it is donating Agent Substrate and gVisor to the CNCF.",
+    "verdict": "A serious, production-minded isolation layer for agent fleets; heavy to operate, but one of the strongest open options for running untrusted agents at scale.",
+    "tags": [
+      "agent-infrastructure",
+      "sandboxing",
+      "kubernetes",
+      "security",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-08"
+  },
+  {
+    "slug": "gsd-core",
+    "name": "GSD Core",
+    "company": "Open GSD",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under the MIT License; it runs inside the coding agent you already use, so your only costs are that agent's subscription or API usage.",
+    "description": "GSD Core (\"Git. Ship. Done.\") is a light-weight meta-prompting, context-engineering and spec-driven development system for AI coding agents. It runs each milestone through a Discuss, Plan, Execute, Verify, Ship loop and pushes heavy research, planning and execution into fresh-context subagents to avoid context rot in the main session.",
+    "keyFeatures": [
+      "Five-step phase loop: Discuss, Plan, Execute, Verify, Ship",
+      "Heavy work runs in fresh-context subagents, executed in parallel waves",
+      "`STATE.md` and `CONTEXT.md` artifacts that survive session boundaries",
+      "Verify step walks through what was built and writes fix plans before a phase is done",
+      "One installer (`npx @opengsd/gsd-core@latest`) for Claude Code, OpenCode, Antigravity CLI, Kimi CLI, Kilo, Codex, Copilot, Cursor, Windsurf and more",
+      "`/gsd-new-project` for greenfield work and `/gsd-onboard` for existing codebases"
+    ],
+    "bestFor": "Developers running multi-phase features with a coding agent who want structured planning, verification and clean context without adopting a new IDE.",
+    "notIdealFor": "Quick one-off edits, or users who want minimal token use, since the subagent-heavy workflow trades extra tokens for quality.",
+    "recentUpdates": "v1.20.1 was released on Nov 5, 2026, two days after v1.20.0, fixing fork-probe cache handling and installer path rewriting for nested config directories across runtimes.",
+    "verdict": "A popular, actively shipped spec-driven workflow layer that works across most coding agents; worth trying if context rot is hurting long agent sessions.",
+    "tags": [
+      "spec-driven-development",
+      "context-engineering",
+      "claude-code",
+      "workflow",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-08"
   }
 ]
