@@ -1020,6 +1020,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "mini-swe-agent",
+    "name": "mini-swe-agent",
+    "company": "SWE-agent (Princeton & Stanford)",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "sweep",
     "name": "Sweep",
     "company": "Sweep",
@@ -1119,6 +1125,12 @@
     "slug": "ax",
     "name": "AX",
     "company": "Google",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "agent-substrate",
+    "name": "Agent Substrate",
+    "company": "Google (donated to CNCF)",
     "category": "Autonomous & Async Agents"
   },
   {
@@ -2121,6 +2133,12 @@
     "slug": "ai-dlc",
     "name": "AI-DLC",
     "company": "AWS (awslabs)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "gsd-core",
+    "name": "GSD Core",
+    "company": "Open GSD",
     "category": "Developer Productivity & Workflow"
   },
   {

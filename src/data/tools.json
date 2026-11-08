@@ -1836,6 +1836,18 @@
     "toolName": "Google Agent Skills"
   },
   {
+    "companyName": "SWE-agent (Princeton & Stanford)",
+    "toolName": "mini-swe-agent"
+  },
+  {
+    "companyName": "Google (donated to CNCF)",
+    "toolName": "Agent Substrate"
+  },
+  {
+    "companyName": "Open GSD",
+    "toolName": "GSD Core"
+  },
+  {
     "companyName": "Kopilot Web LLC",
     "toolName": "TimeUno"
   }
