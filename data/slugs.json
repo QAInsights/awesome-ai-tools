@@ -1278,6 +1278,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "capy",
+    "name": "Capy",
+    "company": "Capy (YC F24, formerly Scrapybara)",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
