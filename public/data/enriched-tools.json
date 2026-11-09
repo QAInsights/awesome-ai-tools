@@ -599,12 +599,13 @@
     "company": "Factory",
     "pricing": "freemium",
     "pricingDetail": "Individual plans include Pro ($20/mo), Plus ($100/mo), and Max ($200/mo) with tiered rate limits and compute access. Teams plans start at $60/mo plus $40/seat. Business and Enterprise plans use custom contract-based pricing.",
-    "description": "Factory is an agent-native software development platform that automates the full software development lifecycle from triage and planning to execution and release. It functions as a self-improving system that routes tasks to the best-suited model while integrating across IDEs, terminals, and CI/CD pipelines.",
+    "description": "Factory, now at factory.com, is an agent-native software development platform built around Droids, its coding agents. Droids run in the Factory desktop app, the Droid CLI and the Droid SDK, as cloud or local background agents, and on managed Droid Computers, with tasks routed across models and integrations for IDEs, terminals and CI/CD pipelines.",
     "keyFeatures": [
+      "Factory desktop app, Droid CLI and Droid SDK for running Droids interactively or from code",
+      "Cloud and local background agents, plus managed Droid Computers for remote runs",
       "Multi-day autonomous Missions for large-scale projects",
       "Model-independent routing across 10+ LLM providers",
       "Deployment options ranging from SaaS to on-premise and air-gapped",
-      "Integrated Droid CLI and IDE extensions for VS Code, JetBrains, and others",
       "Comprehensive enterprise governance including SSO, SCIM, and audit logging"
     ],
     "bestFor": "Engineering organizations requiring multi-day autonomous agents, strict security and compliance controls, and a multi-model deployment strategy across the entire software development lifecycle.",
@@ -618,7 +619,7 @@
       "Enterprise AI",
       "Autonomous Development"
     ],
-    "lastUpdated": "2026-10-15"
+    "lastUpdated": "2026-11-09"
   },
   {
     "slug": "ante",
