@@ -15,7 +15,7 @@
     ],
     "bestFor": "Developers building complex software who want a deep, agentic integration into their development lifecycle, specifically those comfortable using Grok and Composer models.",
     "notIdealFor": "Developers who primarily rely on Claude, GPT, or Gemini models without extra API costs, or those with strict organizational policies prohibiting code data usage for model training.",
-    "recentUpdates": "On October 20, 2026, Cursor released updates focused on delegating implementation tasks; on October 12, 2026, it was integrated into The X Subscription, transitioning to a new pricing model favoring Grok and Composer.",
+    "recentUpdates": "Cursor added voice chat with agents across the Agents Window, IDE, web and iOS on November 6, 2026, Live Apps for building and hosting internal apps from a cloud agent on November 5, 2026, and the Agent SDK for deploying custom agents to Cursor infrastructure on October 20, 2026.",
     "verdict": "Cursor is a powerful, highly integrated AI IDE that excels at agentic coding workflows, though the recent shift in pricing and data-sharing policies makes it essential for users to carefully evaluate their model preferences and privacy requirements.",
     "tags": [
       "IDE",
@@ -23,7 +23,7 @@
       "Coding Agent",
       "Developer Tools"
     ],
-    "lastUpdated": "2026-11-01"
+    "lastUpdated": "2026-11-09"
   },
   {
     "slug": "devin",
@@ -354,8 +354,8 @@
     "name": "Superset",
     "company": "Paradev",
     "pricing": "freemium",
-    "pricingDetail": "Free forever for local workspaces. Pro ($20/month or $16/month billed yearly) adds remote access, automations, and mobile support. Team ($60/month or $54/month billed yearly) and Ultra ($200/month) tiers include cloud workspace hours. Enterprise plans are custom-quoted.",
-    "description": "Superset is an agentic IDE designed to orchestrate multiple CLI-based coding agents in parallel by providing isolated Git worktrees for each task. It allows developers to manage agent terminals, diff reviews, and browser previews from a single desktop interface or via mobile.",
+    "pricingDetail": "Free for one user with local workspaces, the desktop app and the CLI. Pro costs $20 per user per month ($16 billed yearly). Team costs $60 per user per month ($54 billed yearly) and adds cloud workspaces. Ultra costs $200 per user per month and Enterprise is custom.",
+    "description": "Superset, renamed Paradev in October 2026, is an open-source (MIT) desktop app and CLI for running Claude Code, Codex and other CLI coding agents in parallel. Each task gets its own git worktree, with terminals and diff review in one window, and paid plans add cloud workspaces for teams.",
     "keyFeatures": [
       "Parallel agent orchestration in isolated Git worktrees",
       "Built-in diff viewer, terminal, and in-app browser",
@@ -365,7 +365,7 @@
     ],
     "bestFor": "Developers who want to run and manage multiple coding agents simultaneously while maintaining a single, organized review layer for their output.",
     "notIdealFor": "Users on Windows who require native application support or those who prefer a single-agent integrated environment without the overhead of Git worktree management.",
-    "recentUpdates": "In October 2026, the company announced a rebranding to Paradev, which will be finalized later in the month. Previous updates included the launch of Superset Mobile (iOS 26+) for reviewing agent progress on the go.",
+    "recentUpdates": "Superset completed its rename to Paradev in October 2026, moving to paradev.com and the ParadevAI/Paradev repository (over 16,000 GitHub stars). Desktop v2.0.6 was released on November 8, 2026.",
     "verdict": "An essential productivity tool for power users of AI coding agents, Superset excels at turning chaotic parallel sessions into an orderly, reviewable development workflow.",
     "tags": [
       "AI IDE",
@@ -374,7 +374,7 @@
       "Developer Tools",
       "Parallel Computing"
     ],
-    "lastUpdated": "2026-11-01"
+    "lastUpdated": "2026-11-09"
   },
   {
     "slug": "conductor",
@@ -12719,6 +12719,230 @@
       "Local LLM",
       "Open Source",
       "Mixture of Experts"
+    ],
+    "lastUpdated": "2026-11-09"
+  },
+  {
+    "slug": "delta",
+    "name": "Delta",
+    "company": "Zed Industries",
+    "pricing": "freemium",
+    "pricingDetail": "Personal is free and works with your own API keys or external agents such as Claude Code. Pro costs $10 per month and adds Zed-hosted models with $5 of tokens included each month and usage-based billing beyond that. The account and credits are shared with the Zed editor.",
+    "description": "Delta is a multiplayer environment for coding with agents and reviewing what they build, made by Zed Industries. Teammates and agents work in one thread, and DeltaDB records every edit together with the conversation behind it on top of your existing git repository, so reviewers can see how code came to be and comment in context.",
+    "keyFeatures": [
+      "Shared threads where several people and agents work and review together in real time",
+      "DeltaDB records every edit with its conversation and lets you revert to any edit in a thread",
+      "Comments anchored to code lines or messages that stay attached as the work evolves",
+      "Desktop apps for macOS, Linux and Windows, a web app and mobile browser access",
+      "Beta Delta CLI connects Claude Code sessions to Delta threads",
+      "Review subthreads with an isolated copy of the parent thread's worktrees"
+    ],
+    "bestFor": "Teams that want agent conversations, code changes and review in one shared place, especially those already using Zed or looking to replace pull-request-centred review with threads.",
+    "notIdealFor": "Teams that need a stable, finished product or depend on GitHub pull request workflows and CI integrations, since Delta is in public beta and some capabilities are still on the roadmap.",
+    "recentUpdates": "Delta entered public beta on September 16, 2026, after a private beta that started on August 12, 2026; Zed says it disabled pull requests on Delta's own repository and now builds Delta entirely within Delta. Pricing offers a free Personal plan and a $10 per month Pro plan shared with Zed.",
+    "verdict": "A thoughtful take on collaborative agent coding that keeps the reasoning behind every change, worth trying for teams already comfortable with Zed, with the caveat that it is still a beta.",
+    "tags": [
+      "Agent Workspace",
+      "Collaboration",
+      "Code Review",
+      "Version Control",
+      "Zed"
+    ],
+    "lastUpdated": "2026-11-09"
+  },
+  {
+    "slug": "boxesdev",
+    "name": "Boxes.dev",
+    "company": "Boxes.dev (Nick Bushak, Drew Regitsky)",
+    "pricing": "freemium",
+    "pricingDetail": "Trial is free with 20 box-hours per user. Starter costs $19 per seat per month (50 box-hours), Pro $99 per seat per month (300 box-hours) and Max $249 per seat per month (750 box-hours); extra usage is $0.40 per box-hour from prepaid credits. Enterprise is custom. Standard boxes are 4 vCPU and 8 GB RAM, billed by the second, and model usage runs on your own Codex or Claude subscription or API key.",
+    "description": "Boxes.dev gives every Claude Code or Codex agent its own Linux cloud computer, a devbox cloned from a Template box of your dev environment. You start agents from Slack, Linear, a schedule or the API, and steer them from the desktop app, web, CLI or phone while your laptop is closed.",
+    "keyFeatures": [
+      "One isolated cloud devbox per agent thread, with its own filesystem, services and ports",
+      "Template box ported from your local setup by setup agents, with snapshots for new devboxes",
+      "Port forwarding to localhost and integrated terminal access",
+      "Start agents from Slack, Linear, cron schedules or one API call",
+      "Unmodified Claude Code and Codex harnesses using your existing subscription or API key",
+      "Idle boxes sleep automatically and sleeping boxes are free"
+    ],
+    "bestFor": "Developers and small teams who run several Claude Code or Codex agents in parallel and want each one on a full cloud machine instead of local worktrees.",
+    "notIdealFor": "Teams that want an agent with its own model and harness, or developers who need agents to run on local hardware or offline.",
+    "recentUpdates": "Boxes.dev now offers plans from a free 20 box-hour trial to Max at $249 per seat per month, with prepaid credit discounts of up to 10% and help docs covering Template boxes, devbox management and the desktop app.",
+    "verdict": "A focused, well-designed way to run off-the-shelf coding agents in parallel on real cloud machines, with clear box-hour pricing.",
+    "tags": [
+      "Cloud Agents",
+      "Dev Environments",
+      "Claude Code",
+      "Codex",
+      "Autonomous Agents"
+    ],
+    "lastUpdated": "2026-11-09"
+  },
+  {
+    "slug": "hoplite",
+    "name": "Hoplite",
+    "company": "Hoplite",
+    "pricing": "freemium",
+    "pricingDetail": "Free plan at $0 with 5 concurrent cloud sessions, sandboxes up to 2 vCPU and 8 GiB, and 5 projects. Team costs $60 per seat per month or $50 per seat per month billed yearly. Enterprise is a custom annual agreement.",
+    "description": "Hoplite runs cloud coding agents that take a task from request to reviewed code. Each thread works in an isolated sandbox with your repository, runs tests, drives a browser against the app preview and opens a GitHub pull request, then keeps iterating in the same thread as review feedback arrives.",
+    "keyFeatures": [
+      "Isolated cloud sandbox per thread with your repository and project setup",
+      "Agents run tests and checks before handing work back",
+      "Browser checks against a live preview of the running app",
+      "Opens GitHub pull requests that the workspace can review and steer",
+      "Start work from Slack, Linear, iMessage or Sentry, or from schedules, GitHub CI events and webhooks",
+      "CLI for macOS and Linux and an MCP server at api.hoplite.sh/mcp"
+    ],
+    "bestFor": "Startups and product teams that want cloud agents to verify changes in the running app and return reviewable PRs with evidence.",
+    "notIdealFor": "Teams that want to run Claude Code or Codex harnesses unchanged, since Hoplite uses its own agent harness, or teams outside GitHub.",
+    "recentUpdates": "Hoplite launched on Launch YC on July 30, 2026, and has since added automations triggered by GitHub, Sentry, Linear, Slack, schedules and webhooks, plus a Slack agent that answers code questions and opens coding threads.",
+    "verdict": "A capable cloud agent product with strong verification and review tooling, best suited to GitHub teams that value product-level QA over raw code output.",
+    "tags": [
+      "Cloud Agents",
+      "Autonomous Agents",
+      "Testing",
+      "Pull Requests",
+      "yc"
+    ],
+    "lastUpdated": "2026-11-09"
+  },
+  {
+    "slug": "replicas",
+    "name": "Replicas",
+    "company": "Replicas (YC P26)",
+    "pricing": "paid",
+    "pricingDetail": "Free trial with $100 of usage and no card required. Developer costs $50 per month including $50 of usage; Team costs $200 per month and up, in $100 steps, with usage equal to the price; Enterprise is custom. Workspaces bill per minute by size, from $0.004 per minute for 2 vCPU and 8 GB included, and model usage runs on your own subscriptions or API keys.",
+    "description": "Replicas is a cloud coding-agent platform for engineering teams. It runs Claude Code, Codex, Cursor, OpenCode, Pi or Muse Code in isolated Linux VMs that clone your code and dependencies, started from Linear, Slack, GitHub, GitLab, the dashboard, automations or the API, and returns pull requests, replies and recordings.",
+    "keyFeatures": [
+      "Choice of agent harness per task: Claude Code, Codex, Cursor, OpenCode, Pi or Muse Code",
+      "Isolated Linux VM per task with configured environments, warm hooks, MCPs, skills and variables",
+      "Agents drive a desktop and browser and return screenshots and screen recordings",
+      "Reacts to PR comments, code reviews and CI failures",
+      "Previews of services running in the workspace",
+      "Automations, warm pools, API access and a mobile app"
+    ],
+    "bestFor": "Engineering teams that want background agents across several harnesses with full control over the environment each one runs in.",
+    "notIdealFor": "Individual developers who want a free tier beyond the trial, or teams that want model usage bundled into one bill.",
+    "recentUpdates": "Replicas, backed by Y Combinator (P26), now supports Claude Code, Codex, Cursor, OpenCode, Pi and Muse Code harnesses, with auto-sized workspaces and per-minute billing on Developer and Team plans.",
+    "verdict": "A flexible, harness-agnostic background agent platform with clear usage pricing and strong environment controls.",
+    "tags": [
+      "Cloud Agents",
+      "Background Agents",
+      "Autonomous Agents",
+      "Pull Requests",
+      "yc"
+    ],
+    "lastUpdated": "2026-11-09"
+  },
+  {
+    "slug": "tembo",
+    "name": "Tembo",
+    "company": "Tembo",
+    "pricing": "paid",
+    "pricingDetail": "7-day free trial of Max. Pro costs $60 per month with $90 of monthly usage for up to 5 users; Max costs $200 per month with $400 of monthly usage for up to 10 users; Enterprise is custom. The allowance covers Tembo Gateway model usage and cloud VM compute; your own keys or Claude, Codex or SuperGrok subscriptions add no inference cost.",
+    "description": "Tembo is an agent orchestration platform that runs Claude Code, Codex, Cursor, Amp, OpenCode, Pi and other agents in isolated cloud VMs with the full product stack. Sessions include a terminal, workspace files, a live computer and public preview links, and can be triggered from issue trackers, chat and monitoring tools.",
+    "keyFeatures": [
+      "Harness-agnostic orchestration of Claude Code, Codex, Cursor, Amp, OpenCode, Pi and custom agents",
+      "Isolated cloud VM per session with services, browser and graphical apps",
+      "Tembo Previews expose frontends and APIs through public links",
+      "Triggers from GitHub, Linear, Jira, Slack, Sentry, PagerDuty, schedules and webhooks",
+      "Hands-on live sessions that can be paused, shared or handed off to a background agent",
+      "BYOK for Anthropic, OpenAI and xAI, cloud BYOK for AWS Bedrock and GCP Vertex AI, and Claude, Codex or SuperGrok subscriptions"
+    ],
+    "bestFor": "Teams that want background agents to build and verify full-stack changes with running previews, triggered from the tools they already use.",
+    "notIdealFor": "Solo developers who want a free plan after the trial, or teams that only need simple code edits without full environments.",
+    "recentUpdates": "Tembo now positions itself around cloud coding agents with full environments and previews, offering Pro and Max plans with dollar-denominated usage allowances and VM compute metered by the second.",
+    "verdict": "A broad, well-integrated platform for running any coding agent in complete cloud environments, strongest for teams that need previews and many integrations.",
+    "tags": [
+      "Cloud Agents",
+      "Background Agents",
+      "Agent Orchestration",
+      "Previews",
+      "Autonomous Agents"
+    ],
+    "lastUpdated": "2026-11-09"
+  },
+  {
+    "slug": "vorflux",
+    "name": "Vorflux",
+    "company": "Vorflux (YC F26)",
+    "pricing": "paid",
+    "pricingDetail": "Pay-as-you-go from prepaid credits with no per-seat price: bring your own OpenAI, Anthropic or Google keys, buy Vorflux tokens at standard provider rates with no platform fee (launch offer), or use a Codex subscription for GPT models. Server compute costs $0.2117 per hour for 2 vCPU and 8 GiB up to $3.3868 per hour for 32 vCPU and 128 GiB, and servers stop after 1 hour idle.",
+    "description": "Vorflux is a cloud AI coding agent for teams that works from Slack. It plans each task, builds it on its own cloud machine with planner, builder, reviewer and QA sub-agents across several model providers, tests it and hands back a pull request with code, tests and evidence.",
+    "keyFeatures": [
+      "Planner, builder, reviewer and QA sub-agents across Claude, GPT and Gemini models",
+      "Runs your repos and services, such as Docker Compose stacks and test suites, on a dedicated cloud machine",
+      "Returns PRs with tests, screenshots or recordings as evidence",
+      "AutoBots with a standing role, daily and weekly budgets and their own Slack channel",
+      "PR review with merge risk scores",
+      "Scheduled and event-triggered work from connected tools"
+    ],
+    "bestFor": "Teams that want an autonomous agent working from Slack and tickets, with tested PRs and risk-scored review.",
+    "notIdealFor": "Developers who want a free plan or to steer agents in an editor, since Vorflux is billed per use and centred on Slack.",
+    "recentUpdates": "Vorflux, founded in 2026 by Prasanna Sankar with Anant Nag and Haritha Elango, is in Y Combinator's Fall 2026 batch; it launched an MCP server in October 2026 and now ships 14 AutoBot templates and PR risk scoring.",
+    "verdict": "An ambitious team-focused coding agent with strong verification and multi-model review, priced by usage with no token markup.",
+    "tags": [
+      "Cloud Agents",
+      "Autonomous Agents",
+      "Slack",
+      "Code Review",
+      "yc"
+    ],
+    "lastUpdated": "2026-11-09"
+  },
+  {
+    "slug": "open-session",
+    "name": "Open Session",
+    "company": "Tella",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under the MIT license. You self-host the server and pay only for your own hardware, sandbox providers and model subscriptions or API keys.",
+    "description": "Open Session is an open-source, self-hosted control room for coding agents built by the team at Tella. A server with a web UI and Slack, Linear, Plain and GitHub agents runs coding sessions through the Pi engine in git worktrees on your own machine or in isolated sandboxes, with multiplayer sessions and review that ends in a pull request.",
+    "keyFeatures": [
+      "Self-hosted server: checkouts, transcripts and keys stay on your hardware",
+      "Each session gets its own git worktree and branch for parallel agents",
+      "Multiplayer sessions shared as links with live presence",
+      "Sub-agents, automations from schedules, webhooks and watched channels",
+      "Worktree terminals, branch previews and PR review beside the transcript",
+      "Supports multiple Codex and Claude subscriptions and model APIs"
+    ],
+    "bestFor": "Teams that want a self-hosted, forkable agent orchestrator with Slack, Linear and GitHub intake and full control over data.",
+    "notIdealFor": "Teams that want a managed SaaS without running a server, or users who need hardened authentication out of the box, since sign-in is opt-in.",
+    "recentUpdates": "The tellahq/opensession repository, created in June 2026, is active with commits on November 9, 2026 and over 400 GitHub stars.",
+    "verdict": "A capable open-source alternative to hosted agent platforms for teams willing to run their own server.",
+    "tags": [
+      "Agent Orchestration",
+      "Self-Hosted",
+      "Open Source",
+      "Collaboration",
+      "Autonomous Agents"
+    ],
+    "lastUpdated": "2026-11-09"
+  },
+  {
+    "slug": "nuphos",
+    "name": "Nuphos",
+    "company": "Nuphos",
+    "pricing": "freemium",
+    "pricingDetail": "Free for up to 3 members and 1 environment with 7 days of audit retention. Dev costs $29 per month, Team $99 per month with unlimited members, Business $299 per month and Scale $999 per month. Model usage runs on your own Claude or ChatGPT account, and cloud computers are billed on a separate team computer plan.",
+    "description": "Nuphos is an open-source shared DevOps workspace for the coding agents a team already uses. Claude Code, Codex, OpenCode, Grok Build or Antigravity run as runtimes on a managed cloud computer or your own machine, and teammates can join live sessions, share skills, tools and memory, and operate across AWS, GCP and Kubernetes with short-lived credentials and approvals.",
+    "keyFeatures": [
+      "Runtimes for Claude Code, Codex, OpenCode, Grok Build and Antigravity that keep their native harness",
+      "Agents keep working on a cloud computer or remote machine, with desktop, iOS and CLI clients",
+      "Shared live sessions where several people steer the same agent",
+      "Team-wide skills, tools and memory",
+      "Built-in Kubernetes, Grafana, GitHub, Linear and cloud consoles with short-lived credentials",
+      "Slack and Discord bots, schedule and webhook triggers, and an audit trail"
+    ],
+    "bestFor": "DevOps and platform teams that want to run coding agents together across infrastructure with approvals and audit logs.",
+    "notIdealFor": "Solo developers who only need a local coding agent, or teams that need a mature product, since Nuphos is in early access.",
+    "recentUpdates": "Desktop v0.112.0, released on November 9, 2026, lets owners answer nested agents' questions in a Bot's chat and reduces background polling and error reports.",
+    "verdict": "A promising open-source team workspace for agent-driven operations work, still evolving quickly in early access.",
+    "tags": [
+      "Agent Workspace",
+      "DevOps",
+      "Collaboration",
+      "Open Source",
+      "Claude Code"
     ],
     "lastUpdated": "2026-11-09"
   }

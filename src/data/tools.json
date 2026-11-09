@@ -424,7 +424,7 @@
     "toolName": "toad"
   },
   {
-    "companyName": "Superset",
+    "companyName": "Paradev",
     "toolName": "Superset"
   },
   {
@@ -1862,5 +1862,37 @@
   {
     "companyName": "Synchopate",
     "toolName": "llama-modchip"
+  },
+  {
+    "companyName": "Zed Industries",
+    "toolName": "Delta"
+  },
+  {
+    "companyName": "Boxes.dev (Nick Bushak, Drew Regitsky)",
+    "toolName": "Boxes.dev"
+  },
+  {
+    "companyName": "Hoplite",
+    "toolName": "Hoplite"
+  },
+  {
+    "companyName": "Replicas (YC P26)",
+    "toolName": "Replicas"
+  },
+  {
+    "companyName": "Tembo",
+    "toolName": "Tembo"
+  },
+  {
+    "companyName": "Vorflux (YC F26)",
+    "toolName": "Vorflux"
+  },
+  {
+    "companyName": "Tella",
+    "toolName": "Open Session"
+  },
+  {
+    "companyName": "Nuphos",
+    "toolName": "Nuphos"
   }
 ]
