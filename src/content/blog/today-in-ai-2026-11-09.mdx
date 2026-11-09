@@ -1,0 +1,78 @@
+---
+title: "NVIDIA Board Opens Probe Into CEO Huang's Foreign Contacts"
+description: "NVIDIA's board investigates CEO Jensen Huang over reported foreign intelligence contact, Tencent ships Hy4, and a Third Circuit ruling on AI training data."
+pubDate: 2026-11-09
+tags: ["news","today-in-ai","nvidia","tencent","copyright","benchmarks","coding-agents","acquisitions"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-11-09 UTC.
+
+NVIDIA's board moves on its own CEO, Tencent puts computer use into Hy4, and a federal appeals court draws a line on training data.
+
+## NVIDIA board opens investigation into CEO Jensen Huang
+
+**What happened:** NVIDIA said its board is initiating an investigation into reporting that CEO Jensen Huang has been the target of a foreign intelligence effort, with independent directors and outside counsel overseeing it. Huang told the company in a memo that he had an affair, according to coverage of the memo.
+
+**Why it matters:** NVIDIA supplies the GPUs most AI builders rent or buy, so a leadership probe at the top of the supply chain is a governance risk teams should track alongside capacity plans.
+
+[Source: AI Hub](<https://aihub.com/briefing>)
+
+## Tencent ships Hy4 with visual and computer-use functions
+
+**What happened:** Tencent released the full version of Hy4, adding image and chart reasoning plus computer use through command-line and graphical interfaces, with training for Blender and CAD. It is on Tencent Cloud TokenHub, CodeBuddy and OpenRouter; weights and a system card will follow.
+
+**Why it matters:** A model that drives real applications and design software is a direct option for agent builders, but the weights are not out yet, so plan around API access for now.
+
+[Source: TNGlobal](<https://technode.global/2026/11/09/tencent-hy4-visual-computer-use/>)
+
+## Third Circuit rules Westlaw headnotes not fair use for training
+
+**What happened:** The Third Circuit affirmed Thomson Reuters' win against ROSS Intelligence, holding that Westlaw's headnotes are copyrighted and that copying them to train a competing legal research tool was not fair use. The panel set ROSS's non-generative tool apart from large language models.
+
+**Why it matters:** It is the first federal appeals ruling on training data and binds district courts in four states, so teams licensing or scraping data for models should read the opinion's limits closely.
+
+[Source: Trademark Copyright Patent Law](<https://www.trademarkcopyrightpatentlaw.com/post/third-circuit-affirms-in-thomson-reuters-v-ross-copying-westlaw-headnotes-to-train-a-competing-ai>)
+
+## CMU and USC release ServerBench for agent-built serving systems
+
+**What happened:** Researchers released ServerBench, which scores coding agents on building complete LLM serving systems under replayed real workloads, measured in dollars per dollar of GPU cost. Claude Sonnet 5.5 hit 4.87 times the vLLM baseline, but only 22 of 33 agent-built systems passed validation.
+
+**Why it matters:** It gives teams a way to test whether an agent can actually cut serving costs, and the 22 of 33 pass rate shows verification still has to be built into the loop.
+
+[Source: Automatica Press](<https://www.automaticapress.com/articles/cmu-researchers-release-serverbench-to-test-ai-driven-llm-serving-systems-mw8346bq>)
+
+## Princeton's XStack finds coding agents struggle to move code to TPUs
+
+**What happened:** Princeton posted XStack, a benchmark asking seven coding agents to port 20 real PyTorch repositories to JAX on Google TPUs and reproduce published results on a clean machine. Claude Opus 5 passed 15 of 20, GPT-5.6-sol passed 9 and DeepSeek V4.1 Flash 8, while the field passed 31 percent of attempts overall.
+
+**Why it matters:** Porting off NVIDIA hardware is exactly the task teams would hand an agent to cut GPU bills, and the results say most agents will leave you a broken migration to fix.
+
+[Source: GEroundtable](<https://geroundtable.com/coding-agents-fail-tpu-move/>)
+
+## Co-Design Bench: best coding agent finishes 26.4 percent of tasks
+
+**What happened:** Researchers from Alibaba and several Asian universities released Co-Design Bench, built from real user change requests. GPT-6 Astra, the best of ten models, fully completed 26.4 percent of tasks while meeting about 70 percent of requirements on average.
+
+**Why it matters:** If your pipeline counts an agent task as done when the model says so, this benchmark says expect human cleanup on most real change requests.
+
+[Source: AI Agent News](<https://aiagentnews.io/topics/infrastructure>)
+
+## Five9 to buy Level AI for $325M in cash
+
+**What happened:** Five9 is paying $325 million in cash for Level AI, about 47 percent of the cash it held at the end of September. Level AI's apps will be sold standalone as well as inside Five9's platform.
+
+**Why it matters:** Another AI application vendor gets absorbed by a platform incumbent, a reminder that standalone agent products increasingly get bought rather than left to compete.
+
+[Source: Aivio News](<https://aivio.news/business/>)
+
+## Sources
+
+- [AI Hub](<https://aihub.com/briefing>)
+- [TNGlobal](<https://technode.global/2026/11/09/tencent-hy4-visual-computer-use/>)
+- [Trademark Copyright Patent Law](<https://www.trademarkcopyrightpatentlaw.com/post/third-circuit-affirms-in-thomson-reuters-v-ross-copying-westlaw-headnotes-to-train-a-competing-ai>)
+- [Automatica Press](<https://www.automaticapress.com/articles/cmu-researchers-release-serverbench-to-test-ai-driven-llm-serving-systems-mw8346bq>)
+- [GEroundtable](<https://geroundtable.com/coding-agents-fail-tpu-move/>)
+- [AI Agent News](<https://aiagentnews.io/topics/infrastructure>)
+- [Aivio News](<https://aivio.news/business/>)
