@@ -12642,6 +12642,35 @@
     "lastUpdated": "2026-11-08"
   },
   {
+    "slug": "timeuno",
+    "name": "TimeUno",
+    "company": "Kopilot Web LLC",
+    "pricing": "paid",
+    "pricingDetail": "No free tier; every plan starts with a 14-day free trial requiring a card. Individual is $9.99/month ($8.33/month billed yearly at $99.90), Team is $12.99/seat/month ($10.83/seat/month billed yearly at $129.90) with a 2-seat minimum and free owners/admins, and Enterprise is a custom annual invoiced contract for 25+ seats.",
+    "description": "TimeUno is an automatic time tracker that logs your computer activity and your AI coding tools' sessions (Claude Code, Cursor, Codex CLI, and others), then builds timesheets and files hours under the right repo or project without a timer.",
+    "keyFeatures": [
+      "Automatic tracking of active apps and sites minus idle time, with no start/stop timer",
+      "Tracks AI coding tools (Claude Code, Cursor, Codex CLI, OpenCode, Copilot, Windsurf, Aider, Ollama, Gemini CLI) alongside your own hours",
+      "Auto-detects projects from package.json, Cargo.toml, go.mod, pyproject.toml or folder name",
+      "Headless agent for tracking AI sessions on remote servers over SSH",
+      "One-tap corrections that TimeUno remembers",
+      "Team dashboard for 7/30/90-day or all-time worked-time and AI-usage numbers, never screenshots",
+      "Ask Claude or Cursor about your own tracked time via integration"
+    ],
+    "bestFor": "Freelancers, indie developers and small teams who want automatic timesheets and visibility into how much time and money their AI coding tools consume.",
+    "notIdealFor": "Those wanting a free tier or no-card trial, and anyone uncomfortable with on-screen text OCR (on by default) or monitoring-sensitive workplaces.",
+    "recentUpdates": "Team plan lists Anthropic and Cursor admin connectors as coming soon; privacy policy last updated 1 November 2026 and terms 4 October 2026.",
+    "verdict": "TimeUno's standout feature is treating AI agent time as a first-class, separately tracked metric alongside human hours, with privacy-conscious design (no screenshots stored, prompts and AI answers never sent). The tradeoffs are a paid-only model with card-required trial and default-on screen text reading that may concern privacy-focused users.",
+    "tags": [
+      "time tracking",
+      "AI coding tools",
+      "developer productivity",
+      "timesheets",
+      "automatic tracking"
+    ],
+    "lastUpdated": "2026-11-08"
+  },
+  {
     "slug": "executor",
     "name": "Executor",
     "company": "Useful Software Co (Rhys Sullivan, YC)",
