@@ -12868,7 +12868,7 @@
     "name": "Vorflux",
     "company": "Vorflux (YC F26)",
     "pricing": "paid",
-    "pricingDetail": "Pay-as-you-go from prepaid credits with no per-seat price: bring your own OpenAI, Anthropic or Google keys, buy Vorflux tokens at standard provider rates with no platform fee (launch offer), or use a Codex subscription for GPT models. Server compute costs $0.2117 per hour for 2 vCPU and 8 GiB up to $3.3868 per hour for 32 vCPU and 128 GiB, and servers stop after 1 hour idle.",
+    "pricingDetail": "Pay-as-you-go from prepaid credits with no per-seat price: bring your own OpenAI, Anthropic or Google keys, buy Vorflux tokens at standard provider rates with no platform fee (launch offer), or use a Codex subscription for GPT models. Server compute is billed hourly by size, from Small ($0.2117 per hour, 2 vCPU and 8 GiB) through Medium ($0.4234 per hour), Large ($0.8468 per hour, the default) and Ultra ($1.6934 per hour) to Hyper ($3.3868 per hour, 32 vCPU and 128 GiB), and servers stop after 1 hour idle.",
     "description": "Vorflux is a cloud AI coding agent for teams that works from Slack. It plans each task, builds it on its own cloud machine with planner, builder, reviewer and QA sub-agents across several model providers, tests it and hands back a pull request with code, tests and evidence.",
     "keyFeatures": [
       "Planner, builder, reviewer and QA sub-agents across Claude, GPT and Gemini models",
