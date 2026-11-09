@@ -24,6 +24,12 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "delta",
+    "name": "Delta",
+    "company": "Zed Industries",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "pearai",
     "name": "PearAI",
     "company": "PearAI",
@@ -80,7 +86,7 @@
   {
     "slug": "superset",
     "name": "Superset",
-    "company": "Superset",
+    "company": "Paradev",
     "category": "AI-Native IDEs & Editors"
   },
   {
@@ -1281,6 +1287,48 @@
     "slug": "capy",
     "name": "Capy",
     "company": "Capy (YC F24, formerly Scrapybara)",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "boxesdev",
+    "name": "Boxes.dev",
+    "company": "Boxes.dev (Nick Bushak, Drew Regitsky)",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "hoplite",
+    "name": "Hoplite",
+    "company": "Hoplite",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "replicas",
+    "name": "Replicas",
+    "company": "Replicas (YC P26)",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "tembo",
+    "name": "Tembo",
+    "company": "Tembo",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "vorflux",
+    "name": "Vorflux",
+    "company": "Vorflux (YC F26)",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "open-session",
+    "name": "Open Session",
+    "company": "Tella",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "nuphos",
+    "name": "Nuphos",
+    "company": "Nuphos",
     "category": "Autonomous & Async Agents"
   },
   {
@@ -2736,6 +2784,18 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "executor",
+    "name": "Executor",
+    "company": "Useful Software Co (Rhys Sullivan, YC)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "astryx",
+    "name": "Astryx",
+    "company": "Meta",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
@@ -2805,6 +2865,12 @@
     "slug": "freetoken",
     "name": "FreeToken",
     "company": "FlashML",
+    "category": "Hardware & Edge AI"
+  },
+  {
+    "slug": "llama-modchip",
+    "name": "llama-modchip",
+    "company": "Synchopate",
     "category": "Hardware & Edge AI"
   }
 ]
