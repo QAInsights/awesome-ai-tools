@@ -12639,5 +12639,87 @@
       "yc"
     ],
     "lastUpdated": "2026-11-08"
+  },
+  {
+    "slug": "executor",
+    "name": "Executor",
+    "company": "Useful Software Co (Rhys Sullivan, YC)",
+    "pricing": "freemium",
+    "pricingDetail": "The CLI, desktop app and self-hosted server are MIT-licensed and free. Executor Cloud is free for up to 3 members with unlimited integrations; Team costs $15 per active member per month after a 14-day free trial and adds verified domains; Enterprise is custom and adds self-hosted or dedicated cloud deployment support, SSO/SAML, SCIM, audit logs for every tool call and dedicated support.",
+    "description": "Executor is an open-source integration layer and tool gateway for AI agents. You connect each account once, and any MCP-compatible agent (Claude Code, Codex, Cursor, ChatGPT and others) reaches those services through one MCP endpoint without seeing the credential. Since v2, integrations are apps: small TypeScript programs that wrap an OpenAPI spec, proxy a remote MCP server or call an API by hand, and can store data, serve a UI and run on schedules or webhooks.",
+    "keyFeatures": [
+      "One MCP endpoint shared by every agent, with credentials attached inside apps so agents never see API keys or OAuth tokens",
+      "Apps written in TypeScript that wrap OpenAPI specs, remote MCP servers or hand-written API calls, with stored data, their own UI and background runs",
+      "Code mode: agents get `skills` and `execute` tools and run short programs across many apps instead of single tool calls",
+      "Per-tool approvals (always, never, or only when input looks risky), answered in the MCP client, through the agent or on a browser page",
+      "Versioned deploys with rollback, plus a catalog of ready-made apps and agents that can write and deploy new ones",
+      "Hosted Executor Cloud, local CLI and desktop app, or self-hosting in one Docker container with an embedded database"
+    ],
+    "bestFor": "Developers and teams who use several coding agents and want one governed place for integrations, credentials and approval policies instead of configuring MCP servers and API keys in every client.",
+    "notIdealFor": "People who want an agent that does the work itself (Executor runs no AI), or teams that need a visual flow builder like Zapier or n8n rather than automations written as code.",
+    "recentUpdates": "Executor v2 launched on November 5, 2026, reworking the product around TypeScript apps, `skills` and `execute` code-mode tools and agent-built automations; new sign-ups moved to v2 while v1 users can opt in. Releases continue in the 2.0.0 beta line, with executor@2.0.0-beta.38 published on November 9, 2026.",
+    "verdict": "A well-designed, actively developed gateway that removes repeated integration and credential setup across agents, with a free open-source local option and simple per-member cloud pricing.",
+    "tags": [
+      "Developer Productivity",
+      "MCP",
+      "Agent Integrations",
+      "Open Source",
+      "yc"
+    ],
+    "lastUpdated": "2026-11-09"
+  },
+  {
+    "slug": "astryx",
+    "name": "Astryx",
+    "company": "Meta",
+    "pricing": "open-source",
+    "pricingDetail": "Astryx is free and open-source under the MIT license, including the core components, themes, CLI and the hosted MCP server. There are no paid tiers.",
+    "description": "Astryx is Meta's open-source React and StyleX design system, refined inside Meta for eight years across more than 13,000 apps and released in beta in June 2026. It is built for coding agents as well as people: a CLI writes agent docs into AGENTS.md or CLAUDE.md and hands agents templates and component props, and a remote MCP server lets AI tools search and read the documentation directly.",
+    "keyFeatures": [
+      "150+ accessible React 19 components, ready-to-ship templates, dark mode and token-level theming with CSS custom properties",
+      "`npx @astryxdesign/cli init --features agents` generates a component index, behavioural rules and CLI reference for your AI tool",
+      "CLI `build`, `template` and `component` commands give agents the closest page template, scaffolding and component props",
+      "Remote MCP server at astryx.atmeta.com/mcp with `search` and `get` tools for Claude Code, Cursor, Cline and other MCP clients",
+      "`swizzle` ejects a component's full source into your project, and styles can be overridden with Tailwind, CSS modules or plain CSS"
+    ],
+    "bestFor": "React teams that build internal tools or apps with coding agents and want a design system the agent can query and follow, so generated UI uses real components and tokens instead of ad hoc markup.",
+    "notIdealFor": "Projects on React versions before 19, non-React stacks, or teams that need a stable 1.0 API, since Astryx is still in beta with frequent releases.",
+    "recentUpdates": "Astryx 0.7.11 shipped on November 7, 2026 with touch-aware Popover growth animations, `delay` and `hideDelay` on DropdownMenuSubMenu, a `timezoneID` prop on Timestamp and many accessibility fixes; 0.7.10 shipped on November 6, 2026. The repository passed 19,000 GitHub stars in November 2026.",
+    "verdict": "A mature, production-tested design system that treats coding agents as first-class users through its CLI and MCP server, making it a strong base for agent-built React UI.",
+    "tags": [
+      "Developer Productivity",
+      "Design System",
+      "MCP",
+      "React",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-09"
+  },
+  {
+    "slug": "llama-modchip",
+    "name": "llama-modchip",
+    "company": "Synchopate",
+    "pricing": "free",
+    "pricingDetail": "llama-modchip is free and open-source under the Apache-2.0 license with no paid tiers. You supply your own hardware: 16 to 32 GB of RAM for 30B MoE models or 64 GB for the 284B DeepSeek-V4-Flash build.",
+    "description": "llama-modchip is a set of ggml/llama.cpp kernel patches, quantization transcoders and runtime tools for running mixture-of-experts models entirely in system RAM on CPUs, with an optional GPU for hybrid runs. Its Fractal-64 quantization fits the 284B DeepSeek-V4-Flash into 64 GB of RAM, and KV slot snapshots let coding-agent prompts restore in milliseconds, with a `modchip claude` command that wires Claude Code to the local server.",
+    "keyFeatures": [
+      "Fractal-64 and Fractal-MXFP4 quantization that fits 284B DeepSeek-V4-Flash in 64 GB RAM and 30B MoEs in 16 to 32 GB",
+      "Cache-tiled SIMD kernel patches for AVX-512, AVX2, ARM64 NEON/SVE and Apple Metal",
+      "Self-speculative n-gram drafter and `/dev/shm` KV slot snapshots for fast agent context restore",
+      "`modchip` CLI for setup, chat, web HUD, benchmarks, evals, quantization and `modchip claude` to launch Claude Code against the local 256K-context server",
+      "Hardware readiness check and a community CPU benchmark leaderboard"
+    ],
+    "bestFor": "Developers with a 64 GB desktop or workstation and no large GPU who want to run big open MoE models locally as a private backend for Claude Code and other coding agents.",
+    "notIdealFor": "Users who want stock llama.cpp, Ollama or LM Studio compatibility (Fractal-64 GGUFs need the patched binaries) or a mature, multi-maintainer project, since it launched in late October 2026.",
+    "recentUpdates": "v2.4.0 shipped on November 4, 2026 after v2.2.0 and v2.3.0 on November 2 and 3, 2026; commits on November 9, 2026 added macOS and Windows hardware detection and automatic Fractal-64 GGUF selection. The project reached the Hacker News front page in early November 2026.",
+    "verdict": "An ambitious CPU-first MoE runtime that makes very large open models usable on ordinary desktops for local agent work, best treated as an experimental fork until its patches settle.",
+    "tags": [
+      "Hardware & Edge AI",
+      "Inference Engine",
+      "Local LLM",
+      "Open Source",
+      "Mixture of Experts"
+    ],
+    "lastUpdated": "2026-11-09"
   }
 ]

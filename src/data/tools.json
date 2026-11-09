@@ -1850,5 +1850,17 @@
   {
     "companyName": "Capy (YC F24, formerly Scrapybara)",
     "toolName": "Capy"
+  },
+  {
+    "companyName": "Useful Software Co (Rhys Sullivan, YC)",
+    "toolName": "Executor"
+  },
+  {
+    "companyName": "Meta",
+    "toolName": "Astryx"
+  },
+  {
+    "companyName": "Synchopate",
+    "toolName": "llama-modchip"
   }
 ]

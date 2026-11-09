@@ -2730,6 +2730,18 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "executor",
+    "name": "Executor",
+    "company": "Useful Software Co (Rhys Sullivan, YC)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "astryx",
+    "name": "Astryx",
+    "company": "Meta",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
@@ -2799,6 +2811,12 @@
     "slug": "freetoken",
     "name": "FreeToken",
     "company": "FlashML",
+    "category": "Hardware & Edge AI"
+  },
+  {
+    "slug": "llama-modchip",
+    "name": "llama-modchip",
+    "company": "Synchopate",
     "category": "Hardware & Edge AI"
   }
 ]
