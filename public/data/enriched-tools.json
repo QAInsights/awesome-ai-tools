@@ -12645,7 +12645,7 @@
     "name": "Executor",
     "company": "Useful Software Co (Rhys Sullivan, YC)",
     "pricing": "freemium",
-    "pricingDetail": "The CLI, desktop app and self-hosted server are MIT-licensed and free. Executor Cloud is free for up to 3 members with unlimited integrations; Team costs $15 per active member per month after a 14-day free trial and adds verified domains; Enterprise is custom and adds self-hosted or dedicated cloud deployment support, SSO/SAML, SCIM, audit logs for every tool call and dedicated support.",
+    "pricingDetail": "The CLI, desktop app and self-hosted server are MIT-licensed and free. Executor Cloud is free for up to 3 members with unlimited integrations; Team costs $15 per member per month after a 14-day free trial and adds verified domains; Enterprise is custom and adds self-hosted or dedicated cloud deployment support, SSO/SAML, SCIM, audit logs for every tool call and dedicated support.",
     "description": "Executor is an open-source integration layer and tool gateway for AI agents. You connect each account once, and any MCP-compatible agent (Claude Code, Codex, Cursor, ChatGPT and others) reaches those services through one MCP endpoint without seeing the credential. Since v2, integrations are apps: small TypeScript programs that wrap an OpenAPI spec, proxy a remote MCP server or call an API by hand, and can store data, serve a UI and run on schedules or webhooks.",
     "keyFeatures": [
       "One MCP endpoint shared by every agent, with credentials attached inside apps so agents never see API keys or OAuth tokens",
