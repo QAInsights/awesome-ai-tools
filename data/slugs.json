@@ -1656,6 +1656,12 @@
     "category": "AI Testing & Quality Assurance"
   },
   {
+    "slug": "sandbox-mcp",
+    "name": "sandbox-mcp",
+    "company": "Scott Hanselman",
+    "category": "AI Testing & Quality Assurance"
+  },
+  {
     "slug": "claude",
     "name": "Claude",
     "company": "Anthropic",
@@ -2796,6 +2802,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "devvm",
+    "name": "devvm",
+    "company": "devvmhq",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
@@ -2871,6 +2883,12 @@
     "slug": "llama-modchip",
     "name": "llama-modchip",
     "company": "Synchopate",
+    "category": "Hardware & Edge AI"
+  },
+  {
+    "slug": "flide",
+    "name": "Flide",
+    "company": "OmniJev",
     "category": "Hardware & Edge AI"
   }
 ]

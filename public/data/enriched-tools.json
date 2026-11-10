@@ -12975,5 +12975,91 @@
       "Claude Code"
     ],
     "lastUpdated": "2026-11-09"
+  },
+  {
+    "slug": "devvm",
+    "name": "devvm",
+    "company": "devvmhq",
+    "pricing": "open-source",
+    "pricingDetail": "devvm is free and open-source under the MIT license with no paid tiers. It runs VMs locally on Lima, so the only cost is your own machine; coding agents inside the VM use your existing Claude, ChatGPT or provider subscriptions.",
+    "description": "devvm is an open-source Go CLI that gives each project folder its own isolated virtual machine for you or a coding agent. Running `devvm` in a folder detects the toolchains the project needs, mounts only that folder at the same path, and opens a shell in the VM where Claude Code, Codex, opencode or pi can run without touching the host.",
+    "keyFeatures": [
+      "One Lima VM per project folder, reopened on the next `devvm` run",
+      "Toolchain detection from project files such as package.json",
+      "Claude Code, Codex, opencode and pi run inside the VM with imported settings, skills and MCP servers",
+      "Allowlist network tier by default, with other network tiers available",
+      "Secrets such as GitHub and Claude Code tokens stay on the host machine",
+      "Built-in docker, nix and desktop layers plus custom layers via `devvm layer new`",
+      "`devvm doctor` checks prerequisites; releases are signed with minisign"
+    ],
+    "bestFor": "Developers on macOS or Linux who want to run coding agents in a per-project sandbox to limit the blast radius of supply chain attacks, prompt injections or rogue agent commands.",
+    "notIdealFor": "Windows users, Intel Mac users (not yet tested), or teams that need cloud-hosted sandboxes and access to many internal services across repositories.",
+    "recentUpdates": "v0.1.1-rc.2 pre-release published on November 9, 2026, days after the project's public launch on November 6, 2026, which reached 189 points on Hacker News.",
+    "verdict": "A focused, security-minded way to sandbox local coding agents per project; very new and still at release-candidate stage.",
+    "tags": [
+      "Sandbox",
+      "Coding Agents",
+      "Security",
+      "Open Source",
+      "CLI"
+    ],
+    "lastUpdated": "2026-11-10"
+  },
+  {
+    "slug": "sandbox-mcp",
+    "name": "sandbox-mcp",
+    "company": "Scott Hanselman",
+    "pricing": "open-source",
+    "pricingDetail": "sandbox-mcp is free and open-source under the MIT license. It relies on Windows Sandbox, which is built into Windows 11 Pro, Enterprise and Education (24H2 or later); Windows Home and Windows Server are not supported.",
+    "description": "sandbox-mcp gives an AI agent a fresh, disposable Windows 11 machine for testing apps. Its `sbx` CLI and optional MCP adapter boot Windows Sandbox, deploy a build, drive the UI, collect screenshots and logs, and then delete the guest, so agents can verify that software runs on a clean PC rather than only on the developer's machine.",
+    "keyFeatures": [
+      "`sbx` CLI for one-shot runs, installer tests and long-lived sessions",
+      "Optional MCP server exposing 27 tools with inline screenshots",
+      "UI Automation clicks and interactive-desktop screenshots tied to a window",
+      "Network-off guests to catch missing runtime dependencies such as VC++ redistributables",
+      "Incremental warm deployment with restart and rollback",
+      "Bounded desktop recording with HTML playback and optional MP4",
+      "Agent-led setup guide with checksum verification and consent before admin changes"
+    ],
+    "bestFor": "Windows desktop app developers who want Copilot, Claude, Cursor or other MCP-capable agents to test builds and installers on a clean Windows machine.",
+    "notIdealFor": "macOS or Linux users, Windows Home editions, or teams that need cross-platform or cloud-hosted test machines.",
+    "recentUpdates": "v1.2.0, released on November 7, 2026, added desktop recording, encrypted guest transport, warm deployment, MSIX/Appx handling and an agent-led setup guide, one day after v1.1.0.",
+    "verdict": "A practical, well-documented bridge between coding agents and Windows Sandbox for clean-machine app testing; Windows-only and very new.",
+    "tags": [
+      "MCP",
+      "Testing",
+      "Windows",
+      "Sandbox",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-10"
+  },
+  {
+    "slug": "flide",
+    "name": "Flide",
+    "company": "OmniJev",
+    "pricing": "open-source",
+    "pricingDetail": "Flide is free and open-source under the Apache-2.0 license and installs from PyPI. You run it on your own NVIDIA GPU; prebuilt kernels cover A10, A40, RTX 30, RTX 50, RTX PRO 6000, H100 and H200.",
+    "description": "Flide is an open-source inference engine for Jev-style decision models. It serves the Jev `/v1/systemone` API and uses exact state forking to read a shared state once and answer many questions on it in one pass, returning a probability for every option so agents and pipelines can make thresholded decisions.",
+    "keyFeatures": [
+      "`pip install flide` and `flide serve --model ...` start an API server",
+      "Jev `/v1/systemone` API with choice and yes/no questions and per-option probabilities",
+      "Exact state forking so each answer matches the model asked alone",
+      "Serves Qwen3.5 and Gemma 4 chat models plus OneJev, Open-Jev, pplx-decider, Clef and other decision models",
+      "LoRA adapters and image inputs for supported families",
+      "`flide verify` checks exact forking on your own model and requests"
+    ],
+    "bestFor": "Teams running Jev-style decision models for agent routing, triage, classification or LLM-as-a-judge workloads who need high throughput on their own GPUs.",
+    "notIdealFor": "Developers looking for a coding assistant, general chat or text generation serving, or anyone without an NVIDIA GPU.",
+    "recentUpdates": "Flide 0.1.12, released on November 10, 2026, added GLiDE, Nimble-v4-max and clef-flash models and precompiled kernels for RTX 50 series and RTX PRO 6000 GPUs; the project's Show HN on November 9 reached 124 points.",
+    "verdict": "A fast-moving, specialised serving engine for the Jev decision model ecosystem; its speed claims are vendor benchmarks and it is still pre-1.0.",
+    "tags": [
+      "Inference",
+      "Jev",
+      "Decision Models",
+      "Open Source",
+      "GPU"
+    ],
+    "lastUpdated": "2026-11-10"
   }
 ]

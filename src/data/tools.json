@@ -1898,5 +1898,17 @@
   {
     "companyName": "Nuphos",
     "toolName": "Nuphos"
+  },
+  {
+    "companyName": "devvmhq",
+    "toolName": "devvm"
+  },
+  {
+    "companyName": "Scott Hanselman",
+    "toolName": "sandbox-mcp"
+  },
+  {
+    "companyName": "OmniJev",
+    "toolName": "Flide"
   }
 ]
