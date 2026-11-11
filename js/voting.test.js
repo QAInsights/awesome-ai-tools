@@ -242,6 +242,31 @@ describe('voting', () => {
 
         const flush = () => new Promise(resolve => setTimeout(resolve, 20));
 
+        const captureErrorTimers = () => {
+            const originalSetTimeout = global.setTimeout;
+            const originalClearTimeout = global.clearTimeout;
+            const timers = new Map();
+            global.setTimeout = (callback, delay, ...args) => {
+                if (delay !== 3000) return originalSetTimeout(callback, delay, ...args);
+                const timer = {};
+                timers.set(timer, () => {
+                    timers.delete(timer);
+                    callback(...args);
+                });
+                return timer;
+            };
+            global.clearTimeout = timer => {
+                if (!timers.delete(timer)) originalClearTimeout(timer);
+            };
+            return {
+                timers,
+                restore: () => {
+                    global.setTimeout = originalSetTimeout;
+                    global.clearTimeout = originalClearTimeout;
+                },
+            };
+        };
+
         const authOpenCalls = [];
         const originalAuthOpen = authAttribution.open;
 
@@ -364,6 +389,63 @@ describe('voting', () => {
 
             expect(getVoteCount('cursor')).toBe(6);
             expect(btn.classes.has('zapped')).toBe(true);
+            expect(btn.dataset.tip).toBe('Zap!');
+            expect(btn.countEl.style.color).toBe('');
+        });
+
+        test('replaces an earlier failure timer and restores the original tooltip', async () => {
+            const btn = makeBtn('cursor');
+            const { timers, restore } = captureErrorTimers();
+            try {
+                mockFetchResponse = { ok: false, status: 403 };
+                click(btn);
+                await flush();
+                const firstTimer = [...timers.keys()][0];
+
+                window.cfTokenValue = 'retry-cf-token';
+                mockFetchResponse = { ok: false, status: 429 };
+                click(btn);
+                await flush();
+
+                expect(timers.size).toBe(1);
+                expect(timers.has(firstTimer)).toBe(false);
+                expect(btn.dataset.tip).toBe('You are voting too fast! Please slow down.');
+                [...timers.values()][0]();
+
+                expect(timers.size).toBe(0);
+                expect(btn.dataset.tip).toBe('Zap!');
+                expect(btn.countEl.textContent).toBe('5');
+                expect(btn.countEl.style.color).toBe('');
+            } finally {
+                restore();
+            }
+        });
+
+        test('keeps error reset timers independent for different buttons', async () => {
+            const first = makeBtn('cursor');
+            const second = makeBtn('another-tool');
+            second.dataset.tip = 'Zap another tool';
+            const { timers, restore } = captureErrorTimers();
+            try {
+                mockFetchResponse = { ok: false, status: 403 };
+                click(first);
+                await flush();
+                window.cfTokenValue = 'next-cf-token';
+                mockFetchResponse = { ok: false, status: 429 };
+                click(second);
+                await flush();
+
+                expect(timers.size).toBe(2);
+                const [resetFirst, resetSecond] = [...timers.values()];
+                resetFirst();
+                expect(first.dataset.tip).toBe('Zap!');
+                expect(second.dataset.tip).toBe('You are voting too fast! Please slow down.');
+                resetSecond();
+                expect(second.dataset.tip).toBe('Zap another tool');
+                expect(timers.size).toBe(0);
+            } finally {
+                restore();
+            }
         });
 
         test('starts the request deadline only after Turnstile supplies a token', async () => {
