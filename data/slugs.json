@@ -1722,6 +1722,36 @@
     "category": "Personal AI Agents"
   },
   {
+    "slug": "nanobot",
+    "name": "nanobot",
+    "company": "HKUDS (HKU Data Intelligence Lab)",
+    "category": "Personal AI Agents"
+  },
+  {
+    "slug": "nanoclaw",
+    "name": "NanoClaw",
+    "company": "NanoCo",
+    "category": "Personal AI Agents"
+  },
+  {
+    "slug": "zeroclaw",
+    "name": "ZeroClaw",
+    "company": "ZeroClaw Labs",
+    "category": "Personal AI Agents"
+  },
+  {
+    "slug": "picoclaw",
+    "name": "PicoClaw",
+    "company": "Sipeed",
+    "category": "Personal AI Agents"
+  },
+  {
+    "slug": "ironclaw",
+    "name": "IronClaw",
+    "company": "NEAR AI",
+    "category": "Personal AI Agents"
+  },
+  {
     "slug": "greptile",
     "name": "Greptile",
     "company": "Greptile",

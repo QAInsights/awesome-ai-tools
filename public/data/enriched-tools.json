@@ -13176,5 +13176,150 @@
       "Open Source"
     ],
     "lastUpdated": "2026-11-11"
+  },
+  {
+    "slug": "nanobot",
+    "name": "nanobot",
+    "company": "HKUDS (HKU Data Intelligence Lab)",
+    "pricing": "open-source",
+    "pricingDetail": "nanobot is free and open source under the MIT license. It does not supply a model account: you bring a supported model provider or a local model server, and any provider fees apply.",
+    "description": "nanobot is a lightweight, self-hosted personal AI agent written in Python by the HKU Data Intelligence Lab. You use it in a browser WebUI, the terminal or chat apps to work with files, remember preferences, run shell and web tools, and schedule tasks, with the model provider or local model you choose.",
+    "keyFeatures": [
+      "Browser WebUI, terminal and a long-running gateway",
+      "Chat apps including Telegram, Discord, Slack, WeChat, Feishu, Teams, email, Mattermost and Linear",
+      "Shell, web search and fetch, MCP integrations, cron and image generation",
+      "Long-term memory, long-horizon goals and scheduled automations",
+      "Multi-agent delegation",
+      "OpenAI-compatible APIs, local LLMs and fallback models",
+      "Python SDK and install via `uv tool install nanobot-ai` or pip"
+    ],
+    "bestFor": "Developers who want a small, readable personal agent they can self-host, extend in Python and reach from their chat apps.",
+    "notIdealFor": "People who want a polished hosted assistant with no setup, or who are not comfortable managing model credentials and a local service.",
+    "recentUpdates": "v0.4.1 shipped on November 6, 2026, following v0.4.0 on October 28, 2026; the repository has about 50,000 GitHub stars.",
+    "verdict": "One of the most popular open-source personal agents, with a small core and wide channel and model support.",
+    "tags": [
+      "Personal Agent",
+      "Open Source",
+      "Self-Hosted",
+      "MCP",
+      "Python"
+    ],
+    "lastUpdated": "2026-11-11"
+  },
+  {
+    "slug": "nanoclaw",
+    "name": "NanoClaw",
+    "company": "NanoCo",
+    "pricing": "open-source",
+    "pricingDetail": "NanoClaw is free and open source under the MIT license. It runs on your Anthropic credential through the Claude Agent SDK by default, so Claude usage or plan fees apply; other providers such as Codex are optional add-ons.",
+    "description": "NanoClaw is a lightweight, open-source alternative to OpenClaw from NanoCo. It keeps the codebase small enough to read, runs every agent session in its own Docker container that only sees the folders you mount, and lets you message your agent from WhatsApp, Telegram, Slack and other apps.",
+    "keyFeatures": [
+      "Each session runs in an isolated Docker container on macOS, Linux or Windows via WSL2",
+      "Built on Anthropic's Claude Agent SDK, with Codex and other providers as add-ons",
+      "WhatsApp, Telegram, Discord, Slack, Teams, iMessage, Matrix, email and more, added on demand",
+      "Per-agent memory, workspace and `CLAUDE.md`",
+      "Scheduled tasks with optional script gates",
+      "Credential gateway that keeps keys outside the agent container",
+      "Setup script `nanoclaw.sh` that uses Claude Code to recover from failed steps"
+    ],
+    "bestFor": "Developers who want an OpenClaw-style assistant they can fully read, fork and customize, with container isolation by default.",
+    "notIdealFor": "Users without Docker or an Anthropic account, or anyone who wants a ready-made app rather than a fork they customize.",
+    "recentUpdates": "v2026.10.0 is the latest stable release (October 9, 2026), and v2026.11.0-beta.1 followed on November 9, 2026; NanoCo raised a $12 million seed round in 2026.",
+    "verdict": "A small, security-minded personal agent with strong adoption and an active company behind it.",
+    "tags": [
+      "Personal Agent",
+      "Open Source",
+      "Containers",
+      "Claude Agent SDK",
+      "Self-Hosted"
+    ],
+    "lastUpdated": "2026-11-11"
+  },
+  {
+    "slug": "zeroclaw",
+    "name": "ZeroClaw",
+    "company": "ZeroClaw Labs",
+    "pricing": "open-source",
+    "pricingDetail": "ZeroClaw is free and open source under MIT or Apache-2.0, with no subscription. You bring your own provider key or run a local model through Ollama, LM Studio, llama.cpp or vLLM.",
+    "description": "ZeroClaw is a personal AI agent runtime shipped as one lightweight Rust binary. It connects to 70+ model providers and 30+ chat channels, asks before risky actions through risk profiles, and can sign every tool call with a cryptographic receipt. It runs on workstations, homelabs and small boards.",
+    "keyFeatures": [
+      "Single Rust binary for macOS, Linux, Windows and boards like Raspberry Pi",
+      "70+ LLM providers, including local Ollama, LM Studio, llama.cpp and vLLM",
+      "30+ channels such as Telegram, Discord, Signal, Matrix, Slack and email",
+      "Risk profiles that control autonomy and sandboxing",
+      "Optional HMAC-SHA256 receipts on every successful tool call",
+      "Memory backends including SQLite, Markdown, Postgres and Qdrant",
+      "Hardware access on Pi GPIO, STM32, Arduino and ESP32"
+    ],
+    "bestFor": "Developers and tinkerers who want a fast, self-hosted agent that runs on their own hardware with local or hosted models.",
+    "notIdealFor": "People who want a desktop app with a graphical setup, or a hosted service that someone else runs.",
+    "recentUpdates": "v0.8.7 shipped on October 27, 2026, after v0.8.6 on October 18, 2026; the repository has about 33,000 GitHub stars.",
+    "verdict": "A capable, very portable Rust personal agent with good safety controls and frequent releases.",
+    "tags": [
+      "Personal Agent",
+      "Open Source",
+      "Rust",
+      "Local Models",
+      "Self-Hosted"
+    ],
+    "lastUpdated": "2026-11-11"
+  },
+  {
+    "slug": "picoclaw",
+    "name": "PicoClaw",
+    "company": "Sipeed",
+    "pricing": "open-source",
+    "pricingDetail": "PicoClaw is free and open source under the MIT license. You connect your own model provider, and its fees apply.",
+    "description": "PicoClaw is an ultra-lightweight personal AI assistant from Sipeed, written from scratch in Go. It runs as one binary on cheap Linux boards, Raspberry Pi, Android phones and desktops in a few megabytes of RAM, and you chat with it through Telegram, Discord, WeChat and other platforms.",
+    "keyFeatures": [
+      "One Go binary across x86, ARM, RISC-V and LoongArch",
+      "Runs on $10 Linux boards, Raspberry Pi, Android and desktops",
+      "Chat through Telegram, Discord, WeChat, Feishu, Matrix and more",
+      "Web search, reminders, scheduling and sub-agents",
+      "MCP support and a vision pipeline",
+      "Rule-based model routing to cut API costs",
+      "Web UI and TUI launchers"
+    ],
+    "bestFor": "Makers and developers who want a personal assistant on low-power or embedded hardware.",
+    "notIdealFor": "Production deployments: the project says not to deploy it to production before v1.0.",
+    "recentUpdates": "v0.3.1 shipped on July 3, 2026, and the repository is still active with about 30,000 GitHub stars.",
+    "verdict": "An impressively small personal assistant for edge hardware, still pre-1.0.",
+    "tags": [
+      "Personal Agent",
+      "Open Source",
+      "Go",
+      "Edge AI",
+      "Self-Hosted"
+    ],
+    "lastUpdated": "2026-11-11"
+  },
+  {
+    "slug": "ironclaw",
+    "name": "IronClaw",
+    "company": "NEAR AI",
+    "pricing": "freemium",
+    "pricingDetail": "Self-hosted IronClaw is free and open source under MIT or Apache-2.0. NEAR AI Cloud also offers hosted plans that run your agent in a Trusted Execution Environment with included inference credits, up to Pro+ ($200/month) with up to 5 agent instances.",
+    "description": "IronClaw is a security-first, open-source personal AI agent from NEAR AI, written in Rust. Untrusted tools run in WASM sandboxes, credentials stay in an encrypted vault and are injected only for approved endpoints, and outbound traffic is scanned for leaked secrets. You can self-host it or deploy it on NEAR AI Cloud.",
+    "keyFeatures": [
+      "WASM sandbox for tools with capability-based permissions",
+      "Encrypted credential vault with leak detection",
+      "Prompt-injection defenses and endpoint allowlisting",
+      "Web UI, CLI, Slack and Telegram",
+      "Cron schedules, event triggers and webhook routines",
+      "MCP support and tools it builds on request",
+      "Hybrid full-text and vector memory"
+    ],
+    "bestFor": "Developers and professionals who want a personal agent with strong isolation for secrets and tools.",
+    "notIdealFor": "People who want the broadest channel and plugin ecosystem, or a no-setup desktop app.",
+    "recentUpdates": "v1.4.1 shipped on September 29, 2026, after v1.4.0 on August 28, 2026; IronClaw 1.0 launched in July 2026.",
+    "verdict": "The most security-focused option among the OpenClaw-style agents, backed by NEAR AI.",
+    "tags": [
+      "Personal Agent",
+      "Open Source",
+      "Rust",
+      "Security",
+      "Self-Hosted"
+    ],
+    "lastUpdated": "2026-11-11"
   }
 ]
