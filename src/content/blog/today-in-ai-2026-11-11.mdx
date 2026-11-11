@@ -1,0 +1,76 @@
+---
+title: "Gemini 4 Carbon goes wide, Anthropic opens IPO roadshow"
+description: "Google ships Gemini 4 Carbon to all paying developers with a /swarm agent preview, Anthropic starts its Nasdaq roadshow, and NVIDIA open-sources Agent Substrate."
+pubDate: 2026-11-11
+tags: ["news","today-in-ai","google","gemini","anthropic","ipo","agents","nvidia"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-11-11 UTC.
+
+Google's new frontier model lands on the paid API, Anthropic takes its pitch to public investors, and NVIDIA puts Kubernetes underneath long-running agents.
+
+## Gemini 4 Carbon opens to all paying developers
+
+**What happened:** Google released Gemini 4 Carbon to developers, enterprises and consumers on Nov 10, priced like Gemini 4 Argon at $2 per million input tokens and $10 per million output. Google says it ranks first on CursorBench 4.0, Perplexity's WANDR and Zapier's AutomationBench.
+
+**Why it matters:** Carbon is aimed at long multi-step coding and debugging runs, so teams can point heavy agent workloads at it without paying a premium over Argon.
+
+[Source: Google](<https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/>)
+
+## Google previews /swarm to split one prompt across agents
+
+**What happened:** Google is previewing /swarm in Google Antigravity, which turns a single prompt into a coordinated team of agents tracked in real time. Developers can assign Carbon to architecture, coordination and auditing roles while lighter models run in parallel isolated workspaces.
+
+**Why it matters:** It gives builders a built-in pattern for parallel agent orchestration instead of hand-rolling one, though it is a preview and not a stable API.
+
+[Source: Google](<https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/>)
+
+## Anthropic sets IPO range at $70 to $78 a share
+
+**What happened:** Anthropic began its IPO roadshow for a Nasdaq listing under the ticker ANT, with an updated filing setting a $70 to $78 range for 825 million Class A shares, about 801.4 million from Anthropic and 23.6 million from existing holders. At the top of the range the sale would gross roughly $64.4 billion.
+
+**Why it matters:** A public Anthropic means model pricing and API terms get judged by quarterly earnings, and the filing is the first detailed look at the lab's numbers.
+
+[Source: The Neuron](<https://www.theneuron.ai/digest/everything-that-happened-in-ai-today-wednesday-november-11-2026/>)
+
+## NVIDIA open-sources Agent Substrate for agent clusters
+
+**What happened:** NVIDIA published Agent Substrate, an open source runtime that multiplexes many agent sessions over a small pool of warm Kubernetes worker Pods, checkpointing idle sessions with full memory and filesystem state and restoring them onto any free worker. It pairs with NVIDIA Dynamo and KAI Scheduler.
+
+**Why it matters:** Long-running coding and RL agents currently waste cluster capacity while waiting on model calls; session checkpointing lets you pack far more of them per node.
+
+[Source: NVIDIA](<https://developer.nvidia.com/blog/agent-substrate-advancing-kubernetes-for-agents-at-scale/>)
+
+## Anthropic adds Sheets and Whiteboards to Claude
+
+**What happened:** Anthropic added Claude Sheets and Claude Whiteboards in beta for all paid plans, and renamed Claude Dashboards to Claude Data, now generally available. Interactive connectors were expanded so external apps open inside Claude.
+
+**Why it matters:** Claude is moving from chat window to workspace, so builders integrating via connectors should expect app surfaces inside the product rather than beside it.
+
+[Source: TPS Report](<https://tpsreport.news/>)
+
+## Kimi K3.1 Pro Highspeed hits Bedrock with 1M context
+
+**What happened:** Moonshot AI's Kimi K3.1 Pro Highspeed is now on Amazon Bedrock with a 1-million-token context window. Moonshot reports 2 to 3 times the speed of Kimi K3.1 Pro, and the model uses the same endpoint and APIs as Kimi K3 on Bedrock.
+
+**Why it matters:** It is a drop-in swap on an existing Bedrock endpoint, so teams can trade latency for cost without changing integration code.
+
+[Source: TPS Report](<https://tpsreport.news/>)
+
+## TI puts agentic AI into its CCStudio embedded toolchain
+
+**What happened:** Texas Instruments announced agentic AI capabilities across its CCStudio ecosystem, including what it calls the industry's first agentic device migration skill, which it says cuts software migration timelines from months to days. The ecosystem works inside environments including Visual Studio Code.
+
+**Why it matters:** Embedded developers get vendor-supplied context for agents working on MCU code, a rare case of agent tooling reaching beyond web and backend stacks.
+
+[Source: Texas Instruments](<https://www.prnewswire.com/news-releases/ti-redefines-embedded-development-with-agentic-ai-in-its-ccstudio-ecosystem-empowering-engineers-to-accelerate-innovation-302933587.html>)
+
+## Sources
+
+- [Google](<https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/>)
+- [The Neuron](<https://www.theneuron.ai/digest/everything-that-happened-in-ai-today-wednesday-november-11-2026/>)
+- [NVIDIA](<https://developer.nvidia.com/blog/agent-substrate-advancing-kubernetes-for-agents-at-scale/>)
+- [TPS Report](<https://tpsreport.news/>)
+- [Texas Instruments](<https://www.prnewswire.com/news-releases/ti-redefines-embedded-development-with-agentic-ai-in-its-ccstudio-ecosystem-empowering-engineers-to-accelerate-innovation-302933587.html>)
