@@ -2848,7 +2848,7 @@
     "recentUpdates": "Recent releases in October 2026 (v2026.10.9) focused on security remediations, improved database recovery, and enhanced workspace restrictions. Previous updates introduced refreshed sidebars, public conversation links, and expanded support for model providers like GPT-6 and Claude Haiku 5.5.",
     "verdict": "OpenClaw is a powerful, uncompromisingly private tool for users who want to control their AI agent's entire lifecycle and communication stack without relying on vendor-hosted cloud services.",
     "tags": [
-      "Terminal & CLI Agents",
+      "Personal Agent",
       "Self-hosted",
       "Open Source",
       "Automation",
