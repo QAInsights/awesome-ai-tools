@@ -13119,5 +13119,62 @@
       "Local Models"
     ],
     "lastUpdated": "2026-11-11"
+  },
+  {
+    "slug": "atuin",
+    "name": "Atuin",
+    "company": "Atuin",
+    "pricing": "open-source",
+    "pricingDetail": "Atuin is free and open-source under the MIT licence. History and thread sync runs on the Atuin Cloud server or a server you host yourself, and sync can be left off entirely. Atuin AI needs an Atuin Hub account (or a self-hosted backend), and its docs say usage is currently free.",
+    "description": "Atuin is an open-source shell history tool that replaces your shell's history with a searchable database and end-to-end encrypted sync across machines. It now also records your AI coding agents' sessions as threads, so you can search past Claude Code, Codex or opencode sessions from any machine and resume them in their agent.",
+    "keyFeatures": [
+      "`atuin threads enable` captures Claude Code, Codex, Copilot, Grok Build, Hermes Agent, Kiro, opencode, Pi and Amp sessions",
+      "Threads stored in the encrypted record store and synced across machines like shell history",
+      "`atuin threads search` and the `atuin resume` picker, scoped by repo, branch or directory",
+      "`atuin threads import` brings in sessions your agents already have on disk",
+      "Built-in read-only MCP server (`atuin mcp install`) for searching history, command output and threads",
+      "Atuin AI command generation and follow-up questions from an empty prompt",
+      "Self-hostable sync server, or no sync at all"
+    ],
+    "bestFor": "Developers who run several coding agents across machines and want one searchable, encrypted record of their sessions and shell history.",
+    "notIdealFor": "Users who do not want a background daemon recording agent sessions, or who work mainly in a GUI IDE agent that Atuin does not capture.",
+    "recentUpdates": "Atuin 18.24.0 (October 15, 2026) renamed AI sessions to threads; 18.24.5 (November 4, 2026) added Grok Build, Kiro CLI and Amp capture, and 18.24.6 (November 10, 2026) captures diffs of Claude Code shell edits.",
+    "verdict": "A mature, widely used shell history tool that has grown a practical cross-agent session archive; useful if you already live in the terminal.",
+    "tags": [
+      "CLI",
+      "Shell History",
+      "Agent Sessions",
+      "MCP",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-11"
+  },
+  {
+    "slug": "modern-web-guidance",
+    "name": "Modern Web Guidance",
+    "company": "Google Chrome",
+    "pricing": "free",
+    "pricingDetail": "Free and open-source under the Apache-2.0 licence. The CLI runs locally and search works offline; your coding agent's own model and token costs still apply.",
+    "description": "Modern Web Guidance is an agent skill and CLI that gives coding agents expert-curated guides on current web platform features, so they stop defaulting to legacy JavaScript patterns and heavy polyfills. It is stewarded by the Google Chrome, Microsoft Edge, Mozilla Firefox and MDN teams alongside the web development community.",
+    "keyFeatures": [
+      "203 use-case guides covering 250 web platform features",
+      "Offline `search` and `retrieve` commands that return token-efficient guides into the agent's context",
+      "`legacy-scan` maps legacy patterns in a codebase to the guide with the modern replacement",
+      "Opt-in gating for volatile, single-engine features",
+      "Installs via an interactive wizard, `npx skills`, or plugins for Claude Code, Codex, GitHub Copilot CLI, Antigravity, Grok Build and Kimi Code",
+      "Public per-agent and per-guide eval dashboard"
+    ],
+    "bestFor": "Frontend and full-stack developers using coding agents who want generated UI code to use native browser features with sensible fallbacks.",
+    "notIdealFor": "Backend-only projects, or teams that must support old browsers where the recommended modern features are not available.",
+    "recentUpdates": "Version 1.0.0, released on November 10, 2026, took the project out of preview with 203 guides, the `legacy-scan` command, a smaller embedding-plus-BM25 search (npm download down from 23.5 MB to 8.8 MB) and joint stewardship by Chrome, Edge, Firefox and MDN.",
+    "verdict": "A well-scoped, cross-browser backed skill that fixes a common weakness of coding agents on frontend work; worth installing for web projects.",
+    "tags": [
+      "Agent Skills",
+      "Frontend",
+      "Web Platform",
+      "CLI",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-11"
   }
 ]
