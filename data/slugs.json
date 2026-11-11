@@ -642,12 +642,6 @@
     "category": "Terminal & CLI Agents"
   },
   {
-    "slug": "openclaw",
-    "name": "OpenClaw",
-    "company": "OpenClaw",
-    "category": "Terminal & CLI Agents"
-  },
-  {
     "slug": "command-code",
     "name": "Command Code",
     "company": "Command Code",
@@ -1116,12 +1110,6 @@
     "category": "Autonomous & Async Agents"
   },
   {
-    "slug": "hermes-agent",
-    "name": "Hermes Agent",
-    "company": "Nous Research",
-    "category": "Autonomous & Async Agents"
-  },
-  {
     "slug": "coder",
     "name": "Coder",
     "company": "Coder",
@@ -1185,12 +1173,6 @@
     "slug": "orbi",
     "name": "Orbi",
     "company": "orbi-build (Lawrence Liu)",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "openhuman",
-    "name": "OpenHuman",
-    "company": "Tiny Humans",
     "category": "Autonomous & Async Agents"
   },
   {
@@ -1702,6 +1684,24 @@
     "name": "Odysseus",
     "company": "odysseus-dev",
     "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+  },
+  {
+    "slug": "openclaw",
+    "name": "OpenClaw",
+    "company": "OpenClaw",
+    "category": "Personal AI Agents"
+  },
+  {
+    "slug": "hermes-agent",
+    "name": "Hermes Agent",
+    "company": "Nous Research",
+    "category": "Personal AI Agents"
+  },
+  {
+    "slug": "openhuman",
+    "name": "OpenHuman",
+    "company": "Tiny Humans",
+    "category": "Personal AI Agents"
   },
   {
     "slug": "nenva",
