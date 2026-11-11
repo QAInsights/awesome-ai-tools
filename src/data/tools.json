@@ -1918,5 +1918,13 @@
   {
     "companyName": "n8n (n8n Labs)",
     "toolName": "Nod"
+  },
+  {
+    "companyName": "Atuin",
+    "toolName": "Atuin"
+  },
+  {
+    "companyName": "Google Chrome",
+    "toolName": "Modern Web Guidance"
   }
 ]
