@@ -24,6 +24,7 @@
 - [🌐 Browser-Based & App Builders](#browser-based--app-builders)
 - [🛡️ AI Code Review & Security](#ai-code-review--security)
 - [🧰 General-Purpose AI Assistants](#general-purpose-ai-assistants-with-strong-coding-capability)
+- [🙋 Personal AI Agents](#personal-ai-agents)
 - [🛠️ Developer Productivity & Workflow](#developer-productivity--workflow)
 - [🖊️ Editor Platforms with Native AI Features](#editor-platforms-with-native-ai-features)
 - [🔧 Hardware & Edge AI](#hardware--edge-ai)
@@ -291,6 +292,7 @@ Agents that operate independently on tasks, often outside your local editor.
 | **[Vorflux](https://vorflux.ai/)** | Vorflux (YC F26) | Cloud AI coding agent for teams that lives in Slack: plans a task, builds it on its own cloud machine with planner, builder, reviewer and QA sub-agents across Claude, GPT and Gemini models, runs tests, drives a browser and returns a PR with screenshots or recordings; AutoBots take ongoing responsibilities with a goal, a budget cap and their own Slack channel, PR review scores merge risk, and work runs on schedules or triggers; pay-as-you-go with your own keys, Vorflux tokens at provider cost or a Codex subscription, plus hourly server compute from $0.2117 per hour that stops after 1 hour idle |
 | **[Open Session](https://www.opensession.com/)** | Tella | Open-source (MIT), self-hosted control room for coding agents: a server with a web UI plus Slack, Linear, Plain and GitHub agents that runs sessions through the Pi engine in git worktrees on your own machine or in isolated sandboxes, with multiplayer shared sessions, sub-agents, automations from schedules and webhooks, worktree terminals, branch previews and review that ends in a PR; supports multiple Codex and Claude subscriptions and model APIs; [GitHub](https://github.com/tellahq/opensession) |
 | **[Nuphos](https://nuphos.ai/)** | Nuphos | Open-source (Apache-2.0) shared agent workspace for teams, focused on DevOps: bring Claude Code, Codex, OpenCode, Grok Build or Antigravity on your existing account, run agents on your own machine, on a remote machine or in Nuphos Cloud, invite teammates into a live session, share skills, tools and memory, and work beside Kubernetes, Grafana, GitHub, Linear and cloud consoles with short-lived credentials, approvals and an audit trail; desktop (macOS, Windows, Linux), iOS and CLI; free for 3 members, paid plans from $29 per month; [GitHub](https://github.com/nuphos/nuphos) |
+| **[Vespin](https://vespin.dev/)** | Stage Inc. | Inbox for all your coding agents (renamed from Luke on Nov 3, 2026): describe a task and Claude Code or Codex agents work on it in cloud sandboxes and open pull requests, posting a thread to your Inbox only when they need a decision, a to-do or your review; agents hand off work, message each other and split tasks into sub-tasks; Mac app plus a web app for your phone; runs on your Claude or ChatGPT plan or your own API keys, with automations from schedules, GitHub, Sentry and webhooks, a Slack integration, the `vespin` CLI and an MCP server at `vespin.dev/api/mcp` |
 
 ---
 
@@ -383,9 +385,18 @@ Not IDEs, but widely used for coding tasks via chat.
 | **[Gemini](https://gemini.google.com)** | Google | 1M token context; multimodal; strong for Google ecosystem teams |
 | **[DeepSeek](https://www.deepseek.com/)** | DeepSeek | Competitive open-weights models (V3/R1); excellent coding benchmarks |
 | **[Perplexity](https://www.perplexity.ai/)** | Perplexity | AI search engine; excellent for technical research and API discovery |
-| **[nenva](https://nenva.co)** | Anjadhe | Source-available (PolyForm Noncommercial) privacy-first personal AI assistant for macOS: email, calendar, tasks, notes, journal and investments live in its own apps and the AI comes to the data; new installs use hosted nenva cloud (zero data retention, free monthly allowance), or switch to a local open-weight model on 8 GB+ Macs, your own server or your own OpenAI/Anthropic key; free, no account; extensible via coding agents pointed at `~/nenva/apps/`; [GitHub](https://github.com/Anjadhe/Anjadhe) |
 | **[Odysseus](https://odysseusai.dev/)** | odysseus-dev | Open-source (AGPL-3.0) self-hosted AI workspace (Docker Compose) for chat and agents with local or API models, tools, MCP, files, shell, skills and memory, plus deep research, blind side-by-side model comparison, a hardware-aware model "Cookbook", an AI document editor, email triage, notes, tasks and CalDAV calendar with scheduled agent tasks; [GitHub](https://github.com/odysseus-dev/odysseus) |
+
+---
+
+## 🙋 Personal AI Agents
+AI agents that act for you across your apps, files and computer, beyond coding.
+
+| Tool | Company | Notes |
+|------|---------|-------|
+| **[nenva](https://nenva.co)** | Anjadhe | Source-available (PolyForm Noncommercial) privacy-first personal AI assistant for macOS: email, calendar, tasks, notes, journal and investments live in its own apps and the AI comes to the data; new installs use hosted nenva cloud (zero data retention, free monthly allowance), or switch to a local open-weight model on 8 GB+ Macs, your own server or your own OpenAI/Anthropic key; free, no account; extensible via coding agents pointed at `~/nenva/apps/`; [GitHub](https://github.com/Anjadhe/Anjadhe) |
 | **[Hob](https://hob.chat)** | Frigade | Open-source (MIT) desktop AI assistant for Apple silicon Macs, Windows and Linux that runs open-weight models on your own computer through llama.cpp: it checks your hardware and downloads a model that fits (Gemma 4 E4B or 26B, or gpt-oss 120B on workstations), then works on attached files and project folders, runs sandboxed Python, reads PDFs, scans and screenshots, draws charts and searches the web through a metasearch engine running locally; asks before changing anything in your folders, offers Undo for every task, needs no account and sends no telemetry, and Web access can be switched off to stay fully offline; extensible with Agent Skills, Python tools and MCP connectors; [GitHub](https://github.com/FrigadeHQ/hob) |
+| **[Nod](https://nod.n8n.io/)** | n8n (n8n Labs) | Open-source (Apache-2.0) personal agent with its own computer, released as a research preview by n8n Labs on Nov 10, 2026: a standalone desktop app (no n8n account needed) that gets its own Linux workspace and browser to work in your apps (Gmail, Calendar, Slack, Notion, Linear) and on real websites, asks before it acts for you, and runs scheduled tasks; one conversation across the app, web, Telegram and WhatsApp; bring OpenAI, Anthropic, OpenRouter, a ChatGPT Plus or Pro plan, or a local model via Ollama, LM Studio, vLLM or llama.cpp; macOS 14+, Windows 11 preview (WSL 2) or your own server; free; [GitHub](https://github.com/n8n-io/nod) |
 
 ---
 

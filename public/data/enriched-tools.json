@@ -13061,5 +13061,63 @@
       "GPU"
     ],
     "lastUpdated": "2026-11-10"
+  },
+  {
+    "slug": "vespin",
+    "name": "Vespin",
+    "company": "Stage Inc.",
+    "pricing": "unknown",
+    "pricingDetail": "Vespin does not publish pricing on its site. Agents run on your own Claude or ChatGPT plan or your own Anthropic or OpenAI API keys, and Vespin can move an agent to the next plan or key when one hits its usage limit.",
+    "description": "Vespin is an inbox for all your coding agents. You describe a task, and Claude Code or Codex agents work on it in cloud sandboxes and open pull requests. Agents post a thread to your Inbox only when they need a decision, a to-do or your review, and you answer from the Mac app or the web app on your phone.",
+    "keyFeatures": [
+      "One Inbox where agents ask for decisions, to-dos and reviews",
+      "Claude Code and Codex agents in cloud sandboxes that open pull requests",
+      "Agents hand off work, message each other and split tasks into sub-tasks",
+      "Runs on your Claude or ChatGPT plan or your own API keys, in a drag-to-order list",
+      "Automations from schedules, GitHub and Sentry events, or webhooks",
+      "Slack integration, the `vespin` CLI and an MCP server for Claude Code, Codex and Cursor",
+      "Shared preview links that wake a stopped agent sandbox"
+    ],
+    "bestFor": "Developers and small teams running several Claude Code or Codex agents who want one place to answer their questions and review their pull requests.",
+    "notIdealFor": "Teams that need published pricing, Windows or Linux desktop apps, or agents other than Claude Code and Codex.",
+    "recentUpdates": "Vespin 0.31.0, released on November 9, 2026, added several plans and API keys per harness used in order, shared previews that wake their agent, and more CLI commands; the product was renamed from Luke to Vespin in 0.25.0 on November 3, 2026.",
+    "verdict": "A thoughtful inbox-first take on managing cloud coding agents, shipping quickly; young product with no public pricing yet.",
+    "tags": [
+      "Agent Orchestration",
+      "Cloud Agents",
+      "Claude Code",
+      "Codex",
+      "MCP"
+    ],
+    "lastUpdated": "2026-11-11"
+  },
+  {
+    "slug": "nod",
+    "name": "Nod",
+    "company": "n8n (n8n Labs)",
+    "pricing": "free",
+    "pricingDetail": "Nod is free to download and open-source under the Apache-2.0 license. You connect your own AI provider or a supported ChatGPT Plus or Pro plan, and provider fees apply; a local model through Ollama or a similar server costs nothing per request. Nod shows estimated model costs in Usage.",
+    "description": "Nod is an open-source personal agent from n8n Labs that runs on your computer with its own Linux workspace and browser. It works in your connected apps and on real websites to chase invoices, prep calls or cancel trials, and asks before it acts for you. It is a standalone app and does not need an n8n account.",
+    "keyFeatures": [
+      "Private Linux workspace for files and commands, plus its own browser you can take over",
+      "Connects Gmail, Calendar, Slack, Notion, Linear and other apps",
+      "Asks before it sends, buys or otherwise acts for you",
+      "Scheduled tasks and background checks on new email and app activity",
+      "One conversation across the desktop app, web browser, Telegram and WhatsApp",
+      "30+ model providers, a ChatGPT Plus or Pro plan, or local models via Ollama, LM Studio, vLLM or llama.cpp",
+      "Runs on macOS 14+, Windows 11 in preview, or your own server for one person"
+    ],
+    "bestFor": "Individuals and solo operators who want a self-hosted agent to handle recurring admin work across their apps and websites with their chosen model.",
+    "notIdealFor": "Teams that need shared multi-user automation (n8n itself fits that better), or anyone wanting a coding assistant; it is an early research preview with breaking changes expected.",
+    "recentUpdates": "n8n Labs released Nod as a research preview on November 10, 2026, and v0.6.2 followed on November 11, 2026 with Mac Intel, Mac Apple silicon and Windows builds.",
+    "verdict": "A credible open-source personal agent from the n8n team with a strong ask-before-acting design; very early and aimed at personal work rather than coding.",
+    "tags": [
+      "Personal Agent",
+      "Computer Use",
+      "Browser Automation",
+      "Open Source",
+      "Local Models"
+    ],
+    "lastUpdated": "2026-11-11"
   }
 ]

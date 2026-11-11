@@ -55,12 +55,13 @@ export function priceSummary(pricing?: string, detail?: string): PriceSummary {
     const paid = plans.filter(p => monthly(p) > 0).sort((a, b) => monthly(a) - monthly(b));
     const entry = paid[0] ?? null;
     const freeTier = /free|open-source|freemium/i.test(pricing ?? '') || plans.some(p => monthly(p) === 0);
-    const main = entry ? entry.price : freeTier ? 'Free' : pricing ? 'Custom' : '—';
+    const listed = !!pricing && pricing.toLowerCase() !== 'unknown';
+    const main = entry ? entry.price : freeTier ? 'Free' : listed ? 'Custom' : '—';
     const unit = entry
         ? unitWords(entry.unit)
         : freeTier
             ? (/open-source/i.test(pricing ?? '') ? 'open source' : 'free to use')
-            : pricing ? 'pricing on request' : 'pricing not yet listed';
+            : listed ? 'pricing on request' : 'pricing not yet listed';
     const min = paid.length ? Math.min(...paid.map(monthly)) : 0;
     const max = paid.length ? Math.max(...paid.map(monthly)) : 0;
     const span = Math.log(max) - Math.log(min || 1);

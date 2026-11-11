@@ -1332,6 +1332,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "vespin",
+    "name": "Vespin",
+    "company": "Stage Inc.",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1692,22 +1698,28 @@
     "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
   },
   {
-    "slug": "nenva",
-    "name": "nenva",
-    "company": "Anjadhe",
-    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
-  },
-  {
     "slug": "odysseus",
     "name": "Odysseus",
     "company": "odysseus-dev",
     "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
   },
   {
+    "slug": "nenva",
+    "name": "nenva",
+    "company": "Anjadhe",
+    "category": "Personal AI Agents"
+  },
+  {
     "slug": "hob",
     "name": "Hob",
     "company": "Frigade",
-    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+    "category": "Personal AI Agents"
+  },
+  {
+    "slug": "nod",
+    "name": "Nod",
+    "company": "n8n (n8n Labs)",
+    "category": "Personal AI Agents"
   },
   {
     "slug": "greptile",
