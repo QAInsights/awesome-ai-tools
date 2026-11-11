@@ -105,8 +105,21 @@ const ZAP_ERROR_MESSAGES = {
 };
 const ZAP_ERROR_DEFAULT = { tip: "Security check failed. Please refresh and try again.", label: "Failed", color: "#ef4444" };
 const ZAP_NETWORK_ERROR = { tip: "Could not confirm your zap. Please refresh and try again.", label: "Failed", color: "#ef4444" };
+const zapErrorStates = new WeakMap();
+
+function clearZapError(btn) {
+    const state = zapErrorStates.get(btn);
+    if (!state) return;
+    clearTimeout(state.timeoutId);
+    const countEl = btn.querySelector('.zap-count');
+    countEl.textContent = getVoteCount(state.toolId).toLocaleString();
+    countEl.style.color = '';
+    btn.dataset.tip = state.originalTip;
+    zapErrorStates.delete(btn);
+}
 
 function showZapError(btn, toolId, { tip, label, color }) {
+    clearZapError(btn);
     const countEl = btn.querySelector('.zap-count');
     const originalTip = btn.dataset.tip;
 
@@ -114,11 +127,8 @@ function showZapError(btn, toolId, { tip, label, color }) {
     countEl.textContent = label ?? zapCounts[toolId].toLocaleString();
     countEl.style.color = color;
 
-    setTimeout(() => {
-        countEl.textContent = zapCounts[toolId].toLocaleString();
-        countEl.style.color = "";
-        btn.dataset.tip = originalTip;
-    }, 3000);
+    const timeoutId = setTimeout(() => clearZapError(btn), 3000);
+    zapErrorStates.set(btn, { toolId, originalTip, timeoutId });
 }
 
 async function castVote(toolId, btn) {
@@ -155,6 +165,7 @@ async function castVote(toolId, btn) {
         }
     }
 
+    clearZapError(btn);
     zapCounts[toolId]++;
     btn.querySelector('.zap-count').textContent = zapCounts[toolId].toLocaleString();
     btn.classList.add('firing');
