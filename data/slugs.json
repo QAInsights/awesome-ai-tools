@@ -1332,6 +1332,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "vespin",
+    "name": "Vespin",
+    "company": "Stage Inc.",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1707,6 +1713,12 @@
     "slug": "hob",
     "name": "Hob",
     "company": "Frigade",
+    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+  },
+  {
+    "slug": "nod",
+    "name": "Nod",
+    "company": "n8n (n8n Labs)",
     "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
   },
   {
