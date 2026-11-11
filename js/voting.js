@@ -123,9 +123,10 @@ function showZapError(btn, toolId, { tip, label, color }) {
 
 async function castVote(toolId, btn) {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    let timeoutId;
     try {
         const cfToken = await waitForTurnstileToken();
+        timeoutId = setTimeout(() => controller.abort(), 10000);
         const response = await fetch('/api/v1/vote', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

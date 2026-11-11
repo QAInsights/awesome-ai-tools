@@ -366,6 +366,40 @@ describe('voting', () => {
             expect(btn.classes.has('zapped')).toBe(true);
         });
 
+        test('starts the request deadline only after Turnstile supplies a token', async () => {
+            const btn = makeBtn('cursor');
+            const originalSetTimeout = global.setTimeout;
+            const originalSetInterval = global.setInterval;
+            const deadlines = [];
+            let pollToken;
+            window.cfTokenValue = '';
+            mockFetchResponse = { ok: true, status: 200 };
+            global.setTimeout = (callback, delay, ...args) => {
+                if (delay === 10000) deadlines.push(delay);
+                return originalSetTimeout(callback, delay, ...args);
+            };
+            global.setInterval = callback => { pollToken = callback; return 0; };
+
+            try {
+                click(btn);
+                expect(typeof pollToken).toBe('function');
+                expect(deadlines).toEqual([]);
+                expect(btn.disabled).toBe(true);
+                expect(fetchCalls.some(call => call.url === '/api/v1/vote')).toBe(false);
+
+                window.cfTokenValue = 'delayed-cf-token';
+                pollToken();
+                await flush();
+
+                expect(deadlines).toEqual([10000]);
+                expect(btn.disabled).toBe(false);
+                expect(getVoteCount('cursor')).toBe(6);
+            } finally {
+                global.setTimeout = originalSetTimeout;
+                global.setInterval = originalSetInterval;
+            }
+        });
+
         test('aborts a stalled vote request and re-enables the button', async () => {
             const btn = makeBtn('cursor');
             const originalSetTimeout = global.setTimeout;
