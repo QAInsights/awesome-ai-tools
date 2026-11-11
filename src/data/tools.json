@@ -1926,5 +1926,25 @@
   {
     "companyName": "Google Chrome",
     "toolName": "Modern Web Guidance"
+  },
+  {
+    "companyName": "HKUDS (HKU Data Intelligence Lab)",
+    "toolName": "nanobot"
+  },
+  {
+    "companyName": "NanoCo",
+    "toolName": "NanoClaw"
+  },
+  {
+    "companyName": "ZeroClaw Labs",
+    "toolName": "ZeroClaw"
+  },
+  {
+    "companyName": "Sipeed",
+    "toolName": "PicoClaw"
+  },
+  {
+    "companyName": "NEAR AI",
+    "toolName": "IronClaw"
   }
 ]
