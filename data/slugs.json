@@ -1314,6 +1314,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "obeya",
+    "name": "Obeya",
+    "company": "Daniel Sadilek",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "vespin",
     "name": "Vespin",
     "company": "Stage Inc.",
@@ -1647,6 +1653,12 @@
     "slug": "sandbox-mcp",
     "name": "sandbox-mcp",
     "company": "Scott Hanselman",
+    "category": "AI Testing & Quality Assurance"
+  },
+  {
+    "slug": "aws-emulator",
+    "name": "AWS Emulator",
+    "company": "Amazon Web Services",
     "category": "AI Testing & Quality Assurance"
   },
   {
@@ -2859,6 +2871,12 @@
     "slug": "modern-web-guidance",
     "name": "Modern Web Guidance",
     "company": "Google Chrome",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "klad",
+    "name": "klad",
+    "company": "Indicode BV",
     "category": "Developer Productivity & Workflow"
   },
   {

@@ -1946,5 +1946,17 @@
   {
     "companyName": "NEAR AI",
     "toolName": "IronClaw"
+  },
+  {
+    "companyName": "Daniel Sadilek",
+    "toolName": "Obeya"
+  },
+  {
+    "companyName": "Amazon Web Services",
+    "toolName": "AWS Emulator"
+  },
+  {
+    "companyName": "Indicode BV",
+    "toolName": "klad"
   }
 ]
