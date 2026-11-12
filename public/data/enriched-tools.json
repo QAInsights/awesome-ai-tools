@@ -13321,5 +13321,92 @@
       "Self-Hosted"
     ],
     "lastUpdated": "2026-11-11"
+  },
+  {
+    "slug": "obeya",
+    "name": "Obeya",
+    "company": "Daniel Sadilek",
+    "pricing": "open-source",
+    "pricingDetail": "Obeya is free and open-source under the MIT licence and runs locally. Its agents use the official Claude Code or Codex installation on your machine, so your own Claude or ChatGPT subscription and its usage limits apply.",
+    "description": "Obeya is a desktop workspace for directing AI coding agents on a spatial canvas. Each task is a card with its own Claude Code or Codex agent working in an isolated worktree or clone, and when the agent finishes it hands back a narrated demo that you approve or send back with feedback, by voice or text.",
+    "keyFeatures": [
+      "Infinite canvas of task and project cards, each with its own Claude Code or Codex agent",
+      "Each agent works in its own git worktree or clone, locally or on other machines over SSH",
+      "Narrated screen-recorded demos as the hand-off, with feedback pinned to a moment in the video",
+      "Approved work lands on main or goes out as a pull request on GitHub, Forgejo or Gitea",
+      "Review PR cards that read and review someone else's pull request before its code runs",
+      "Arrows between cards to sequence dependent work and queueing of colliding changes",
+      "Phone web app for reviewing demos over a private network, with English and German voice input"
+    ],
+    "bestFor": "Developers who already delegate most coding to Claude Code or Codex and want to manage many parallel agent tasks by reviewing demos instead of diffs.",
+    "notIdealFor": "Teams that want to read every line agents write, or developers who use agents other than Claude Code and Codex.",
+    "recentUpdates": "Shown on Hacker News on November 11, 2026; v0.13.0 was released on November 9, 2026, after v0.12.0 on November 5 and v0.11.0 on November 4.",
+    "verdict": "An early but actively shipped take on agent orchestration built around demo review; worth a look if you run several Claude Code or Codex agents at once.",
+    "tags": [
+      "Agent Orchestration",
+      "Desktop App",
+      "Git Worktrees",
+      "Claude Code",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-12"
+  },
+  {
+    "slug": "aws-emulator",
+    "name": "AWS Emulator",
+    "company": "Amazon Web Services",
+    "pricing": "free",
+    "pricingDetail": "AWS Emulator has no additional service fee and its source is released under CC0-1.0. You pay only for AWS resources when you deploy to AWS.",
+    "description": "AWS Emulator is a local emulator of the AWS APIs that you run on your machine, a development server or in CI. The AWS CLI, AWS SDKs and coding agents talk to it over a local HTTPS endpoint with the same API shapes and errors as AWS, so they can create resources, check results and iterate without an AWS account or a deployment.",
+    "keyFeatures": [
+      "Local HTTPS endpoint (127.0.0.1:9297) for the AWS CLI and any AWS SDK",
+      "Built from the same AWS API models as the SDKs, so requests and errors match AWS",
+      "aws-emulator agent skill installed with `aws agent-toolkit add-skill` (AWS CLI 2.35.0 or later)",
+      "Embedded mode for Rust tests with one isolated emulator per test",
+      "Per-service fidelity scores published with each release",
+      "Generates its own credentials, config and certificate on start",
+      "RPM and Debian packages on Linux, Docker on macOS and Windows"
+    ],
+    "bestFor": "Developers and coding agents that need to build and test AWS applications in a fast local loop or in CI without touching a real AWS account.",
+    "notIdealFor": "Production workloads or security testing, which AWS says the emulator is not for, and projects that rely on APIs it does not yet emulate faithfully.",
+    "recentUpdates": "Launched on November 11, 2026; AWS says the code was written entirely by autonomous AI agents, and releases ship several times a day (v1.0.336 on November 12, 2026).",
+    "verdict": "An official, free local AWS emulator with first-class coding-agent support; a strong default for agent-driven AWS development and testing.",
+    "tags": [
+      "AWS",
+      "Local Emulator",
+      "Testing",
+      "Agent Skills",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-12"
+  },
+  {
+    "slug": "klad",
+    "name": "klad",
+    "company": "Indicode BV",
+    "pricing": "free",
+    "pricingDetail": "klad is source-available, not open source. Building and using it is free for personal use and inside companies with less than 500,000 euros in revenue in their last tax year; larger companies need a bought licence per user. The drawing file format is documented under the MIT licence. Pre-built signed releases are planned and not yet available.",
+    "description": "klad is a 2D painting and animation app built for collaboration between a person and a coding agent. The agent paints through the klad command line with the same brushes, layers and timeline you use in the editor, and every stroke stays editable data, so either of you can change any stroke later instead of regenerating an image.",
+    "keyFeatures": [
+      "`klad` CLI that lets Claude Code, Codex or any command-running agent paint on the drawing you have open",
+      "Strokes, shapes and fills stored as editable data with path, pressure, brush and colour",
+      "Agent skills printed by `klad skill` and `klad skill drawing`",
+      "Pinned canvas notes and selections that the agent reads as instructions",
+      "Drawings saved as folders of plain files that diff and merge in git",
+      "23 brushes, layers, masks, a timeline with in-betweens, bones and IK",
+      "Export to PNG, sprite sheets or straight into Godot"
+    ],
+    "bestFor": "Game and app developers who want their coding agent to draft editable illustrations, sprites and animations that they can then refine by hand.",
+    "notIdealFor": "Users who need a pre-built installer today, Windows or Linux tablet pressure support, or an OSI open-source licence.",
+    "recentUpdates": "Shown on Hacker News on November 11, 2026; v0.2.0 was released on November 12, 2026, the first public version built from source.",
+    "verdict": "An inventive, early tool that gives coding agents real brushes rather than an image model; promising for agent-assisted game art.",
+    "tags": [
+      "Agent-Driven Design",
+      "CLI",
+      "Animation",
+      "Game Development",
+      "Source Available"
+    ],
+    "lastUpdated": "2026-11-12"
   }
 ]
