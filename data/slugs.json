@@ -1326,6 +1326,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "agentrun",
+    "name": "AgentRun",
+    "company": "Parcha",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1659,6 +1665,12 @@
     "slug": "aws-emulator",
     "name": "AWS Emulator",
     "company": "Amazon Web Services",
+    "category": "AI Testing & Quality Assurance"
+  },
+  {
+    "slug": "agent-device",
+    "name": "agent-device",
+    "company": "Callstack",
     "category": "AI Testing & Quality Assurance"
   },
   {
@@ -2877,6 +2889,18 @@
     "slug": "klad",
     "name": "klad",
     "company": "Indicode BV",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "elephant-goldfish-model",
+    "name": "Elephant-Goldfish Model",
+    "company": "Google",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "opencodex",
+    "name": "opencodex",
+    "company": "lidge-jun",
     "category": "Developer Productivity & Workflow"
   },
   {

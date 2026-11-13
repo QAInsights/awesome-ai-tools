@@ -1958,5 +1958,21 @@
   {
     "companyName": "Indicode BV",
     "toolName": "klad"
+  },
+  {
+    "companyName": "Parcha",
+    "toolName": "AgentRun"
+  },
+  {
+    "companyName": "Callstack",
+    "toolName": "agent-device"
+  },
+  {
+    "companyName": "Google",
+    "toolName": "Elephant-Goldfish Model"
+  },
+  {
+    "companyName": "lidge-jun",
+    "toolName": "opencodex"
   }
 ]
