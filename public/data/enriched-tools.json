@@ -13408,5 +13408,121 @@
       "Source Available"
     ],
     "lastUpdated": "2026-11-12"
+  },
+  {
+    "slug": "agentrun",
+    "name": "AgentRun",
+    "company": "Parcha",
+    "pricing": "open-source",
+    "pricingDetail": "AgentRun is free and open-source under the Apache-2.0 licence and runs on your laptop, in one container or on your own server. You bring your own model keys (OpenRouter, Anthropic or OpenAI), so model usage is billed by those providers.",
+    "description": "AgentRun is an open-source platform for running managed agents on top of a coding-agent harness such as Claude Code, Codex, OpenCode or pi. It adds self-improvement, durable execution and a control plane: agents keep notes, skills and learned workflows from each run, runs survive restarts, and one console shows approvals, failures, spend and results.",
+    "keyFeatures": [
+      "Runs agents on Claude Code, Codex, OpenCode or pi harnesses with your own model keys",
+      "Learning mode that turns each run's notes, skills and workflows into graded commits in the agent's own git folder",
+      "Durable runs that carry on after the server is killed and restarted",
+      "Per-agent Docker sandbox, Linux desktop, Android phone or browser",
+      "Approvals, spend caps and a Mission Control console for every agent",
+      "Every agent exposed as an API, with a Playground to start runs",
+      "Templates, including a code reviewer you can tune on your own pull requests"
+    ],
+    "bestFor": "Teams that run the same agent jobs repeatedly, such as code review or research tasks, and want them to get cheaper and more reliable over time on their own infrastructure.",
+    "notIdealFor": "Developers looking for an interactive coding assistant in the editor, or Windows users, since the quick start targets macOS and Linux.",
+    "recentUpdates": "Shown on Hacker News on November 12, 2026; v0.1.0-beta.36 was released on November 13, 2026, after beta.35 on November 12 and beta.34 on November 11.",
+    "verdict": "A promising open-source control plane for repeat agent work, with a distinctive learning loop; still in beta, so expect fast changes.",
+    "tags": [
+      "Agent Orchestration",
+      "Self-Hosted",
+      "Durable Execution",
+      "Claude Code",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-13"
+  },
+  {
+    "slug": "agent-device",
+    "name": "agent-device",
+    "company": "Callstack",
+    "pricing": "open-source",
+    "pricingDetail": "agent-device is free and open-source under the MIT licence. Remote device clouds such as BrowserStack or AWS Device Farm are billed by those providers, and Callstack offers team QA on request.",
+    "description": "agent-device is an open-source device layer that lets AI coding agents inspect, control, debug and verify apps on mobile, TV, web and desktop targets. Agents use a CLI, a built-in MCP server or a typed Node.js API, read token-efficient accessibility snapshots, act through refs and selectors, and save screenshots, video, logs and replay scripts as evidence.",
+    "keyFeatures": [
+      "CLI, built-in stdio MCP server and typed Node.js API over the same commands",
+      "iOS, Android and HarmonyOS simulators, emulators and physical devices, plus tvOS, Android TV, Fire TV, web, macOS and Linux",
+      "Accessibility snapshots with refs and settle diffs instead of screenshot-only reasoning",
+      "Evidence capture: screenshots, video, logs, traces, network data, crash details and React Native render profiles",
+      "`.ad` replay scripts for local runs and CI, with Maestro YAML export",
+      "Device coordination across parallel agent worktrees",
+      "Remote proxy and device clouds such as BrowserStack, AWS Device Farm, TestMu AI and Limrun"
+    ],
+    "bestFor": "Mobile and React Native teams that want Claude Code, Codex, Cursor or other agents to verify changes on real simulators and devices and attach evidence to pull requests.",
+    "notIdealFor": "Projects that only need desktop browser automation, where a browser-only agent tool is simpler, or apps with poor accessibility labels.",
+    "recentUpdates": "v0.21.37 was released on November 12, 2026, after v0.21.36 on November 2; the project trended on GitHub on November 13, 2026.",
+    "verdict": "The most complete open-source way to give coding agents hands on mobile apps; a strong pick for agent-driven mobile QA.",
+    "tags": [
+      "Mobile Testing",
+      "Device Automation",
+      "MCP Server",
+      "CLI",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-13"
+  },
+  {
+    "slug": "elephant-goldfish-model",
+    "name": "Elephant-Goldfish Model",
+    "company": "Google",
+    "pricing": "open-source",
+    "pricingDetail": "Elephant-Goldfish Model is free and open-source under the Apache-2.0 licence. It runs inside your coding agent, so that agent's own subscription or API usage applies. Google notes it is not an officially supported Google product.",
+    "description": "Elephant-Goldfish Model (EGM) is an open-source plugin for designing and reviewing software with coding agents. The Elephant holds your project context and drafts the specification, Goldfish reviewers examine the draft and its referenced source in fresh subagent contexts without the earlier conversation, and you make the trade-offs and approve the design before implementation.",
+    "keyFeatures": [
+      "Elephant drafter that keeps project context, requirements and earlier decisions",
+      "Goldfish reviewers in fresh subagent contexts that find missing assumptions and implementation risks",
+      "Five-stage design review that checks the design, its clarity, its fit with the code and its implementation plan",
+      "Brainstorm, draft, resolve and configurable review-loop skills",
+      "Bootstrap skill that writes documentation for an existing codebase",
+      "Drift report that compares checked-in documents with the current source code",
+      "Plugin installs for Claude Code, Codex CLI, Antigravity and the ChatGPT and Codex desktop apps"
+    ],
+    "bestFor": "Developers and teams who want agents to produce reviewed, approved design specifications before they write code.",
+    "notIdealFor": "Quick fixes that do not need a design document, or agents that cannot create fresh subagents, since EGM stops the review without them.",
+    "recentUpdates": "v0.1.1 was released on November 6, 2026, after v0.1.0 on October 27; Google introduced it on its Open Source Blog and the repository passed 18,000 GitHub stars by November 13, 2026.",
+    "verdict": "A well-designed, widely adopted workflow for spec-first agent development, with a clever fresh-context review step.",
+    "tags": [
+      "Agent Skills",
+      "Design Review",
+      "Specifications",
+      "Claude Code",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-13"
+  },
+  {
+    "slug": "opencodex",
+    "name": "opencodex",
+    "company": "lidge-jun",
+    "pricing": "open-source",
+    "pricingDetail": "opencodex is free and open-source under the MIT licence and runs locally or on your own server. You pay the model providers you connect, or use subscriptions and accounts you already have.",
+    "description": "opencodex is an open-source local gateway that lets Codex, Claude Code, Claude Desktop and Grok Build run on models you choose. A proxy and web dashboard on localhost manage providers, models and accounts, and managed configs or OpenAI- and Anthropic-compatible base URLs connect other coding tools such as OpenCode, Pi, Kilo and Cline.",
+    "keyFeatures": [
+      "Local proxy and web dashboard on localhost:10100 started with `ocx start`",
+      "40+ built-in providers plus any OpenAI-compatible endpoint",
+      "`ocx claude` launches Claude Code through the gateway; a dashboard switch connects Codex",
+      "Claude Desktop and Grok Build integrations",
+      "Managed configs for OpenCode, Pi, Qoder, Kilo, Cline, T3 Code and more",
+      "OpenAI- and Anthropic-compatible base URLs for any other tool",
+      "Beta desktop app for macOS, Windows and Linux and a Docker Compose remote hub"
+    ],
+    "bestFor": "Developers who like the Codex or Claude Code workflow but want to route it to other models, providers or local LLMs from one place.",
+    "notIdealFor": "Teams that must stay on first-party model access only, or that need a managed, enterprise-supported gateway.",
+    "recentUpdates": "v2.100.2 was released on November 11, 2026, after v2.100.0 and v2.100.1 on November 10; it trended on GitHub on November 13, 2026 with more than 18,000 stars.",
+    "verdict": "A popular, fast-moving way to point Codex and Claude Code at any model; a good fit if you juggle several providers.",
+    "tags": [
+      "LLM Gateway",
+      "Model Routing",
+      "Codex",
+      "Claude Code",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-13"
   }
 ]
