@@ -1332,6 +1332,18 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "lody",
+    "name": "Lody",
+    "company": "LodyAI",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "loopforge",
+    "name": "LoopForge",
+    "company": "Tencent",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1671,6 +1683,12 @@
     "slug": "agent-device",
     "name": "agent-device",
     "company": "Callstack",
+    "category": "AI Testing & Quality Assurance"
+  },
+  {
+    "slug": "skillevaluator",
+    "name": "SkillEvaluator",
+    "company": "NVIDIA",
     "category": "AI Testing & Quality Assurance"
   },
   {
