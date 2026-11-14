@@ -1974,5 +1974,17 @@
   {
     "companyName": "lidge-jun",
     "toolName": "opencodex"
+  },
+  {
+    "companyName": "LodyAI",
+    "toolName": "Lody"
+  },
+  {
+    "companyName": "Tencent",
+    "toolName": "LoopForge"
+  },
+  {
+    "companyName": "NVIDIA",
+    "toolName": "SkillEvaluator"
   }
 ]

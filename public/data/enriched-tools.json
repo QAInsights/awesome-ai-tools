@@ -13524,5 +13524,92 @@
       "Open Source"
     ],
     "lastUpdated": "2026-11-13"
+  },
+  {
+    "slug": "lody",
+    "name": "Lody",
+    "company": "LodyAI",
+    "pricing": "freemium",
+    "pricingDetail": "The Lody client, CLI and daemon are open source under the Apache-2.0 licence. The hosted workspace has Free, Plus and Enterprise plans listed on lody.ai/price. Agents run on your own machines with the subscriptions, logins and model keys already configured there, so model usage is billed by those providers.",
+    "description": "Lody is a shared workspace for the coding agents a team already uses. You connect machines with `npx lody daemon start`, bring Claude Code, Codex, Kimi, OpenCode or any ACP-compatible agent, and teammates can open the same conversation, follow its transcript and diffs, and dispatch work to any connected machine from desktop, mobile, web or the CLI.",
+    "keyFeatures": [
+      "Connect laptops, servers or cloud VMs with `npx lody daemon start`",
+      "Works with Claude Code, Codex, Kimi, OpenCode and other ACP-compatible agents on your existing logins",
+      "Shared conversations with full transcript, runtime status, files and code changes",
+      "Dispatch and approve work from desktop (macOS, Windows, Linux), iOS, Android, web or CLI",
+      "Agents can create and coordinate child conversations that run in parallel",
+      "Per-session git worktrees, per-turn diffs, line comments and pull request and CI status",
+      "In-session web preview with element-level visual annotations sent back to the agent"
+    ],
+    "bestFor": "Teams that already run Claude Code, Codex or other ACP agents on their own machines and want to share sessions, review changes together and hand off work from a phone.",
+    "notIdealFor": "Solo developers who only need a single local agent in the terminal, or teams that need fully offline operation today, since full local-first support is still in progress.",
+    "recentUpdates": "Lody OSS v0.109.0 was released on October 30, 2026, after v0.108.0 on October 24; the repository was trending on GitHub on November 14, 2026, with commits the same day.",
+    "verdict": "A polished way to turn individual coding agent sessions into shared team work across desktop and mobile, built on agents you already pay for.",
+    "tags": [
+      "Agent Workspace",
+      "Team Collaboration",
+      "ACP",
+      "Mobile",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-14"
+  },
+  {
+    "slug": "loopforge",
+    "name": "LoopForge",
+    "company": "Tencent",
+    "pricing": "open-source",
+    "pricingDetail": "LoopForge is free and open-source under the MIT licence and runs on your own infrastructure with Docker. Model usage is not included: each user brings credentials for the coding-agent CLI they pick, billed by that provider.",
+    "description": "LoopForge is a self-hosted workspace from Tencent for shipping software with coding agents. You either chat with Main Bot, which opens a Docker sandbox with your repositories and opens the pull request, or run an SOP: a versioned workflow of agent roles, scripts and human approval gates that delivers every requirement the same way.",
+    "keyFeatures": [
+      "Main Bot chat that works in on-demand Docker sandboxes and opens pull requests",
+      "Visual SOP designer with Agent, Script, Human-gate, Sub-SOP and Preview-build nodes",
+      "Ten coding-agent CLIs as executors, including CodeBuddy, Codex, Claude Code, OpenCode and Cursor CLI",
+      "Roles with their own prompt, model, rules, Skills and MCP tools",
+      "Needs review inbox, run traces, artifacts and token cost accounting",
+      "Scheduled AI tasks and an HTTP and MCP API",
+      "LoopForge Local brings the built-in workflows into Claude Code, Codex, Cursor and other hosts"
+    ],
+    "bestFor": "Engineering teams that want repeatable, reviewable delivery with coding agents on their own servers, with fixed stages, reviewers and sign-off.",
+    "notIdealFor": "Untrusted multi-tenant deployments, since sandboxes use the host Docker socket, or teams that need an English chat workbench today.",
+    "recentUpdates": "v0.3.8 was released on November 12, 2026, followed by the v0.3.9-rc.1 pre-release on November 13; the repository was trending on GitHub on November 14, 2026.",
+    "verdict": "A serious open-source take on agent delivery pipelines with human gates, best suited to teams willing to self-host.",
+    "tags": [
+      "Agent Orchestration",
+      "Self-Hosted",
+      "Workflows",
+      "Human in the Loop",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-14"
+  },
+  {
+    "slug": "skillevaluator",
+    "name": "SkillEvaluator",
+    "company": "NVIDIA",
+    "pricing": "open-source",
+    "pricingDetail": "SkillEvaluator is free and open-source under the Apache-2.0 licence. Tier 1 checks can run with no API key; LLM checks and live agent evaluation use your own model provider (including NVIDIA Build endpoints for free prototyping) and sandbox, which can incur charges.",
+    "description": "SkillEvaluator is an NVIDIA CLI that checks agent skills and measures their effect on agent results. It runs static quality and security checks, finds duplicated guidance across a skill catalog, and runs live evaluations that compare an agent with and without the skill in a sandbox.",
+    "keyFeatures": [
+      "Install with `pip install skillevaluator` or `uv tool install`",
+      "Tier 1 validation with quality, SkillSpector and Gitleaks security checks and optional LLM rubric checks",
+      "Tier 2 deduplication of overlapping guidance within and across skills",
+      "Tier 3 live evaluation of agents with and without the skill in a Docker sandbox via Harbor",
+      "Eval dataset generation from guidance, prompts or retained traces",
+      "`skillevaluator ci init` for GitHub Actions, plus a GitLab CI template",
+      "Agent skill so Claude Code, Codex or other skill-aware agents can run it"
+    ],
+    "bestFor": "Teams publishing or maintaining agent skills who want CI quality gates and evidence that a skill actually improves agent behaviour.",
+    "notIdealFor": "Users looking for a general LLM app evaluation tool, or anyone needing vendor support, since the project is marked experimental with no SLA.",
+    "recentUpdates": "v0.9.0 was released on November 13, 2026, after v0.8.0 on November 6; the repository was trending on GitHub on November 14, 2026.",
+    "verdict": "A thorough, well-documented way to test agent skills before shipping them, from NVIDIA's own skills pipeline.",
+    "tags": [
+      "Agent Skills",
+      "Evaluation",
+      "CI",
+      "Security Scanning",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-14"
   }
 ]
