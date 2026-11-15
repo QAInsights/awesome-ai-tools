@@ -13500,5 +13500,64 @@
       "LLM Serving"
     ],
     "lastUpdated": "2026-11-15"
+  },
+  {
+    "slug": "agweb",
+    "name": "Agweb",
+    "company": "paul-nameless",
+    "pricing": "open-source",
+    "pricingDetail": "Agweb is free and open-source under the MIT licence. It is distributed as a macOS app (Agweb.dmg) on GitHub Releases or built from source with Xcode 26; there is no paid tier or account.",
+    "description": "Agweb is a macOS browser for coding agents built on WebKit. Agents drive it from the shell with the `agweb` CLI, which mirrors playwright-cli commands, while the single window never takes focus and a dashboard shows every agent's tabs live, so several agents can browse at once without interrupting you.",
+    "keyFeatures": [
+      "`agweb` CLI with playwright-cli-style commands such as `open`, `snapshot` and `click`",
+      "Never steals focus; dialogs, file pickers and downloads are answered in code",
+      "Live dashboard (⌘D) of every agent's tabs and last command, grouped by workspace",
+      "Named profiles share logins across agents running at the same time",
+      "Replies and `snapshot --diff` report only what changed, saving tokens",
+      "`ask` hands a tab to you for logins, MFA codes or CAPTCHAs; `fill --secret-cmd` keeps passwords out of the transcript",
+      "Idle tab suspension, built-in uBlock Origin ad blocking and `video-start` MP4 recording",
+      "Bundled agent skill for Claude Code and Codex"
+    ],
+    "bestFor": "Mac developers running several coding agents in parallel who want them to browse and test web pages in a real, visible browser without windows stealing keyboard focus.",
+    "notIdealFor": "Linux or Windows users, anyone on macOS older than 26, or workflows that need Chrome DevTools Protocol, Playwright attachment or Chrome extensions, since Agweb is WebKit only.",
+    "recentUpdates": "v0.3.0 was released on November 14, 2026, adding a New Workspace dialog, `agweb list`, covered-element click detection and a strict-YAML fix for the agent skill, after v0.2.0 on November 13 and v0.1.0 on November 11; a Show HN post on November 14 reached over 100 points.",
+    "verdict": "A focused, lightweight alternative to Playwright Chrome for agents on macOS, with thoughtful touches for parallel agents and human hand-offs.",
+    "tags": [
+      "Browser Automation",
+      "AI Agents",
+      "macOS",
+      "CLI",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-15"
+  },
+  {
+    "slug": "ffmpeg-skill",
+    "name": "ffmpeg-skill",
+    "company": "kajisho5",
+    "pricing": "open-source",
+    "pricingDetail": "ffmpeg-skill is free and open-source under the MIT licence. It runs locally on your own FFmpeg and Python with no cloud service, account or API key; optional speech transcription uses a local engine you install.",
+    "description": "ffmpeg-skill is an agent skill and MCP server that gives Claude Code, Cursor, Codex or any MCP client a local video editor. It ships 42 FFmpeg tools and teaches the agent a fixed probe, edit, check and verify workflow, with a machine-readable contract derived from the tools' own CLI parsers.",
+    "keyFeatures": [
+      "42 FFmpeg tools for cutting, joining, silence and filler removal, captions, overlays, loudness and platform exports",
+      "Install with `npx ffmpeg-skill` for Claude Code, Cursor or Codex, or as a Claude Code, Codex or Gemini CLI plugin",
+      "Every tool also exposed as an MCP tool, with a core set of 12 advertised by default",
+      "Machine-readable contract (`npx ffmpeg-skill contract --json`) generated from the argparse CLI definitions",
+      "`--dry-run`, `--json` and `--plan` on every tool, plus `doctor` to check the local FFmpeg build",
+      "Optional local transcription for captions via faster-whisper, whisper or Parakeet",
+      "Python standard library only; tested in CI against FFmpeg 6.1 to 9.x"
+    ],
+    "bestFor": "Developers and creators who want a coding agent to edit, caption and export video on their own machine with verifiable results and no uploads.",
+    "notIdealFor": "People who want a graphical timeline editor or rendered motion graphics from code, or machines where FFmpeg 6.1+ and Python 3.10+ cannot be installed.",
+    "recentUpdates": "v3.9.0, v3.9.1 and v3.9.2 were all released on November 15, 2026; the repository was trending on GitHub on November 15, 2026, with more than 5,800 stars.",
+    "verdict": "A carefully engineered, local-first way to hand video editing to a coding agent, with unusually strong verification and contract discipline.",
+    "tags": [
+      "Agent Skills",
+      "MCP",
+      "Video Editing",
+      "Local-First",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-15"
   }
 ]

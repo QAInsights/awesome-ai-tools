@@ -2532,6 +2532,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "ffmpeg-skill",
+    "name": "ffmpeg-skill",
+    "company": "kajisho5",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "matt-pocock-skills",
     "name": "Matt Pocock Skills",
     "company": "Matt Pocock",
@@ -2577,6 +2583,12 @@
     "slug": "agent-desktop",
     "name": "agent-desktop",
     "company": "Vercel Labs",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "agweb",
+    "name": "Agweb",
+    "company": "paul-nameless",
     "category": "Developer Productivity & Workflow"
   },
   {
