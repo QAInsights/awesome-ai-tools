@@ -1986,5 +1986,13 @@
   {
     "companyName": "NVIDIA",
     "toolName": "SkillEvaluator"
+  },
+  {
+    "companyName": "paul-nameless",
+    "toolName": "Agweb"
+  },
+  {
+    "companyName": "kajisho5",
+    "toolName": "ffmpeg-skill"
   }
 ]
