@@ -1572,6 +1572,12 @@
     "category": "AI Code Review & Security"
   },
   {
+    "slug": "pentestcode",
+    "name": "PentestCode",
+    "company": "s0ld13rr",
+    "category": "AI Code Review & Security"
+  },
+  {
     "slug": "heydeer",
     "name": "HeyDeer",
     "company": "ETOILEE PTE. LTD. (submitted by HeyDeer's maintainer)",
@@ -2514,6 +2520,12 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "last30days",
+    "name": "last30days",
+    "company": "Matt Van Horn (mvanhorn)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "skills-manager",
     "name": "Skills Manager",
     "company": "Jay.TL",
@@ -2685,6 +2697,12 @@
     "slug": "bifrost",
     "name": "Bifrost",
     "company": "Maxim AI",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "coral",
+    "name": "Coral",
+    "company": "Coral",
     "category": "Developer Productivity & Workflow"
   },
   {
