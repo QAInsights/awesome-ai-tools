@@ -1,0 +1,369 @@
+---
+title: "Headless Browsers for AI Agents: Obscura, Lightpanda, Moli, Kitesurf, agent-browser and Chrome DevTools MCP"
+description: "Compare 6 headless browsers for AI agents: Obscura, Lightpanda, Moli, Kitesurf, agent-browser and Chrome DevTools MCP. Licences, installs, real limits, 2026."
+pubDate: 2026-11-16
+tags: ["browser", "headless-browser", "cdp", "mcp", "claude-code", "codex", "open-source", "roundup", "obscura", "lightpanda", "moli", "kitesurf", "agent-browser", "chrome-devtools-mcp"]
+---
+
+In this blog post, we will see which headless browsers for AI agents are worth running this week, how the new Chrome-free engines differ from tools that drive real Chrome, and a 47 line Python script that shows why agents read a snapshot instead of raw HTML. Every version, licence and star count below was checked on November 16, 2026, from the official repository, release page, package registry or docs.
+
+## Table of Contents
+
+1. [The short answer](#the-short-answer)
+2. [Why headless browsers for AI agents are trending this week](#why-headless-browsers-for-ai-agents-are-trending-this-week)
+3. [Engines vs drivers, in one example](#engines-vs-drivers-in-one-example)
+4. [Obscura](#obscura)
+5. [Lightpanda](#lightpanda)
+6. [Moli](#moli)
+7. [Kitesurf](#kitesurf)
+8. [agent-browser](#agent-browser)
+9. [Chrome DevTools MCP](#chrome-devtools-mcp)
+10. [Side by side](#side-by-side)
+11. [Which one I would set up first](#which-one-i-would-set-up-first)
+12. [FAQ](#faq)
+13. [How this ties to ai.dosa.dev](#how-this-ties-to-aidosadev)
+
+## The short answer
+
+Headless browsers for AI agents come in two layers. Engines (Obscura, Lightpanda, Moli, Kitesurf) replace Chrome with something lighter that still runs JavaScript and speaks CDP. Drivers (agent-browser, Chrome DevTools MCP) give the agent compact commands. Start with agent-browser on Chrome, then swap in Lightpanda or Obscura with `--engine` once your pages work.
+
+## Why headless browsers for AI agents are trending this week
+
+Signals from November 2 to 16, 2026, each from at least two independent sources:
+
+- **GitHub stars.** [Obscura](https://github.com/h4ckf0r0day/obscura) gained 3,938 stars in the week to November 16 according to [RepositoryStats](https://repositorystats.com/h4ckf0r0day/obscura), and entered the top 10 of the [AI Engineer Jang trending report](https://hrletsgo.me/en/documents/513) for November 11 to 14. [agent-browser](https://github.com/vercel-labs/agent-browser) added 4,217 stars that week and sat at #5 on the [GitStock weekly snapshot](https://gitstock.org/trending/weekly/2026-11-16). [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) was #5 on the [Trends MCP daily board](https://www.trendsmcp.ai/trending/github-trending-november-16-2026) for November 16.
+- **Launches.** Cloudflare open sourced Kitesurf under Apache 2.0 on November 12 ([changelog](https://developers.cloudflare.com/changelog/post/2026-11-12-kitesurf-open-source/)), with a [blog post](https://blog.cloudflare.com/kitesurf-open-source/) on November 13 and three separate Hacker News submissions.
+- **Releases.** In one week: Lightpanda 1.0.4 (November 13), Obscura v0.2.7 (November 13), agent-browser v0.43.0 (November 12), Chrome DevTools MCP v1.13.0 (November 11) and Moli v1.1.25 (November 15).
+
+The thing that surprised me: these projects are tangled together. Cloudflare's original [Kitesurf post](https://blog.cloudflare.com/kitesurf/) says the first prototype was an attempt to port Obscura to Workers, and the creator of Obscura showed up in the [Hacker News thread](https://news.ycombinator.com/item?id=49208393) to say he only found out by reading it. agent-browser now ships adapters for both [Lightpanda](https://agent-browser.dev/engines/lightpanda) and [Obscura](https://agent-browser.dev/engines/obscura). So you are not picking one tool. You are picking an engine and a driver.
+
+## Engines vs drivers, in one example
+
+An agent does not need pixels to click "Upgrade". It needs to know there is a button called "Upgrade" and how to reference it. That is what the "snapshot" in agent-browser, the "semantic tree" in Moli and Lightpanda's Markdown dump all give you.
+
+Here is the idea in its smallest form. The script reads an HTML page, drops `<script>`, `<style>` and `<head>`, and prints one line per link, button, heading and text node, with a ref the agent can act on.
+
+```python
+import sys
+from html.parser import HTMLParser
+
+ACTIONABLE = {"a": "link", "button": "button", "input": "textbox"}
+SKIP = {"script", "style", "head"}
+VOID = {"meta", "link", "br", "img", "input"}
+
+
+class Snapshot(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.lines, self.stack, self.ref = [], [], 0
+
+    def handle_starttag(self, tag, attrs):
+        if tag not in VOID:
+            self.stack.append(tag)
+        if tag in ACTIONABLE:
+            self.ref += 1
+            self.lines.append([f"- {ACTIONABLE[tag]} [ref=e{self.ref}]", ""])
+
+    def handle_endtag(self, tag):
+        if tag in self.stack:
+            while self.stack.pop() != tag:
+                pass
+
+    def handle_data(self, data):
+        text = data.strip()
+        if not text or any(t in SKIP for t in self.stack):
+            return
+        if self.lines and self.stack and self.stack[-1] in ACTIONABLE and not self.lines[-1][1]:
+            self.lines[-1][1] = f' "{text}"'
+        elif self.stack and self.stack[-1] in {"h1", "h2"}:
+            self.lines.append([f"- heading {self.stack[-1][1]}", f' "{text}"'])
+        else:
+            self.lines.append(["- text", f' "{text}"'])
+
+
+def tokens(s):
+    return len(s.encode()) // 4
+
+
+html = open(sys.argv[1]).read()
+p = Snapshot()
+p.feed(html)
+out = "\n".join(a + b for a, b in p.lines)
+print(out)
+print(f"\nraw HTML ~{tokens(html)} tokens -> snapshot ~{tokens(out)} tokens", file=sys.stderr)
+```
+
+I ran it with `python3 snapshot.py page.html` against a small pricing page with a nav bar, two pricing cards, an inline state blob, a stylesheet and an analytics script. The output is shown below:
+
+```text
+- link [ref=e1] "Home"
+- link [ref=e2] "Docs"
+- link [ref=e3] "Pricing"
+- heading 1 "Pricing"
+- heading 2 "Free"
+- text "$0 per month, 3 projects"
+- button [ref=e4] "Start free"
+- heading 2 "Pro"
+- text "$19 per month, unlimited projects"
+- button [ref=e5] "Upgrade"
+- text "© 2026 Acme Inc. All rights reserved."
+
+raw HTML ~288 tokens -> snapshot ~78 tokens
+```
+
+That is about 73% fewer estimated tokens on a page that is already tiny. On a real site with megabytes of bundled JavaScript the gap is far bigger. Lightpanda's [agent-browser guide](https://lightpanda.io/blog/posts/using-lightpanda-with-agent-browser) puts agent-browser snapshots at 200 to 400 tokens versus 3,000 to 5,000 for a raw DOM dump.
+
+My first version of this script printed only the five refs and no text. `<meta>` and `<link>` never get closing tags, so the parser thought the whole body was still inside `<head>`. Real engines do not have that bug, but it is a good reminder of what they are doing for you: building a correct DOM after JavaScript has run, then compressing it.
+
+What the toy skips is the hard part: running the page's JavaScript. The `window.__STATE__` blob and the click handler in my test page never execute. That is why engines exist. A plain `curl` plus a parser cannot see content a single page app renders after load.
+
+## Obscura
+
+### What it does
+
+[Obscura](https://github.com/h4ckf0r0day/obscura) is a headless browser engine written in Rust. It runs JavaScript on V8, speaks the Chrome DevTools Protocol, and positions itself as a drop-in replacement for headless Chrome with Puppeteer and Playwright. It also ships an MCP server with 12 browser tools, and v0.2.7 added opt-in web search to that server and native screenshots and PDFs without Chromium.
+
+### Who it is for
+
+Agents and scrapers that load many pages and need low memory and fast cold starts. The README claims 30 MB of memory and 85 ms page loads versus 200+ MB and about 500 ms for headless Chrome. Those are vendor numbers.
+
+### Facts
+
+- Stars: 35,693 ([RepositoryStats](https://repositorystats.com/h4ckf0r0day/obscura), November 16, 2026)
+- Latest: v0.2.7, November 13, 2026 ([releases](https://github.com/h4ckf0r0day/obscura/releases)), 87 commits since v0.2.6
+- Licence: Apache 2.0
+- Activity: 20 releases since April 2026, last commit a day ago, 118 open pull requests
+- Price: free. A hosted Obscura Cloud is announced but has no published pricing yet.
+
+### Try it
+
+From the README, on Linux x86_64:
+
+```bash
+curl -LO https://github.com/h4ckf0r0day/obscura/releases/latest/download/obscura-x86_64-linux.tar.gz
+tar xzf obscura-x86_64-linux.tar.gz
+./obscura fetch https://example.com --eval "document.title"
+./obscura fetch https://example.com --dump links
+```
+
+To drive it from Playwright, start the CDP server with `obscura serve --port 9222` and connect with `chromium.connectOverCDP('ws://127.0.0.1:9222')`. The [Playwright guide](https://github.com/h4ckf0r0day/obscura/blob/main/docs/Use-with-Playwright.md) warns to use `connectOverCDP`, not `connect`. For an MCP client, the command is `obscura mcp`.
+
+### Honest limitation
+
+The headline feature list includes "anti-detect" and a `--stealth` flag that masks `navigator.webdriver`. That is useful for privacy, but it is also the reason some sites will treat your agent as a bot evader. Check the terms of the sites you point it at. agent-browser's [Obscura adapter page](https://agent-browser.dev/engines/obscura) also lists no extensions, no persistent profiles and no storage state, and calls the adapter experimental.
+
+## Lightpanda
+
+### What it does
+
+[Lightpanda](https://github.com/lightpanda-io/browser) is a headless browser written from scratch in Zig. It runs JavaScript on V8 against an in-memory DOM and skips graphical rendering. It left beta with [1.0 on October 2, 2026](https://lightpanda.io/blog/posts/lightpanda-1-0), passing 1,739,845 Web Platform Tests subtests and enforcing CORS by default. You can drive it over CDP from Puppeteer, Playwright or chromedp, through its MCP server, or from the CLI.
+
+### Who it is for
+
+Teams that want the most mature Chrome-free engine on this list. It is the only one at 1.x with weekly patch releases.
+
+### Facts
+
+- Stars: 42,089 ([GitHub](https://github.com/lightpanda-io/browser))
+- Latest: 1.0.4, November 13, 2026 ([releases](https://github.com/lightpanda-io/browser/releases))
+- Licence: AGPL-3.0
+- Price: self-hosting is free. [Lightpanda Cloud](https://lightpanda.io/pricing) has a free Explorer plan (10 browser hours a month, 5 concurrent sessions) and Builder at $19 a month for 300 hours, then $0.08 an hour.
+
+### Try it
+
+```bash
+curl -L -o lightpanda https://github.com/lightpanda-io/browser/releases/download/nightly/lightpanda-x86_64-linux
+chmod a+x ./lightpanda
+./lightpanda version
+./lightpanda fetch --obey-robots --dump markdown https://example.com
+./lightpanda serve --host 127.0.0.1 --port 9222
+```
+
+For MCP, point your client at the binary with `"args": ["mcp"]`. On macOS, `brew install lightpanda-io/browser/lightpanda` installs the nightly.
+
+### Honest limitation
+
+AGPL-3.0 is the licence to check with your legal team. If you modify Lightpanda and offer it as a network service, you have to publish your changes. Using the unmodified binary inside your agent stack is a different case, but read the licence rather than my summary. The engine also has no Windows build; Windows users go through WSL2.
+
+## Moli
+
+### What it does
+
+[Moli](https://github.com/lexmount/moli) from Lexmount is a Rust headless browser that keeps the full runtime (JavaScript, DOM, CSS, networking, storage) but only computes layout and paint when an operation needs pixels. You use it through a CLI, CDP, WebDriver Classic or WebDriver BiDi. Its `--dump semantic_tree_text` output is the closest thing on this list to the toy script above.
+
+### Who it is for
+
+People who want WebDriver BiDi as well as CDP, and Windows support out of the box. It was Product Hunt's #1 Product of the Day on [October 25, 2026](https://hunted.space/product/lexmount-browser).
+
+### Facts
+
+- Stars: 23,823 ([GitHub](https://github.com/lexmount/moli))
+- Latest: v1.1.25, November 15, 2026 ([release](https://github.com/lexmount/moli/releases/tag/v1.1.25))
+- Licence: Apache 2.0 on GitHub
+- Price: the engine is free. [Lexmount Cloud Browser](https://browser.lexmount.com/pricing) has a free tier with 10 browser hours a month and Pro at $12 for one month with 100 hours.
+
+### Try it
+
+```bash
+curl --proto '=https' --tlsv1.2 -fsSL \
+  https://github.com/lexmount/moli/releases/latest/download/moli-installer.sh | sh
+moli fetch --dump semantic_tree_text --wait-selector body https://example.com
+moli fetch --layout --dump screenshot https://example.com > page.png
+```
+
+### Honest limitation
+
+The repo has 673 open issues for a project created in August 2026, which is a lot of open bug reports for three months. Lexmount's own [engine comparison](https://browser.lexmount.cn/en/moli) says "validate your pages" next to nearly every capability and recommends Chromium for persistent contexts, extensions and visual workflows. Read that as an honest scope statement.
+
+## Kitesurf
+
+### What it does
+
+[Kitesurf](https://github.com/cloudflare/kitesurf) is Cloudflare's browser engine that runs entirely on Workers. It parses HTML with Blitz, styles with Stylo, runs page JavaScript in Dynamic Workers (falling back to Boa in WebAssembly), and renders screenshots and PDFs with no Chromium process or container. It speaks CDP, so Puppeteer can connect to it.
+
+### Who it is for
+
+Teams already on Cloudflare Workers who want a browser that scales per request instead of a pool of Chrome containers.
+
+### Facts
+
+- Stars: 1,881 ([GitHub](https://github.com/cloudflare/kitesurf))
+- Open sourced: November 12, 2026, Apache 2.0. No tagged release yet, so there is no version number to pin. Latest version: unverified.
+- Activity: 53 open issues; the [changelog](https://developers.cloudflare.com/changelog/post/2026-11-12-kitesurf-open-source/) calls it "experimental and under heavy development".
+- Price: free to run locally. Deploying needs the [Workers Paid plan](https://developers.cloudflare.com/workers/platform/pricing/), from $5 a month, plus [Dynamic Workers usage](https://developers.cloudflare.com/dynamic-workers/pricing/).
+
+### Try it
+
+You need Bazelisk installed as `bazel`, Node.js 22+ and pnpm 9.15.4:
+
+```bash
+git clone https://github.com/cloudflare/kitesurf.git
+cd kitesurf
+pnpm install --frozen-lockfile
+pnpm run dev
+```
+
+Head to http://127.0.0.1:8787/health to confirm it is up, then connect Puppeteer with `browserWSEndpoint: "ws://127.0.0.1:8787/devtools/browser"`.
+
+### Honest limitation
+
+This is the one I would not reach for in a 15 minute trial. The first `pnpm run dev` compiles the Rust core and vendored crates through Bazel, which the README says "takes a while". And the engine has no authentication of its own. The README is blunt: anyone with the URL can browse through your engine and send requests from your account, so put Cloudflare Access or another auth layer in front of every deployment.
+
+## agent-browser
+
+### What it does
+
+[agent-browser](https://agent-browser.dev) from Vercel Labs is a native Rust CLI that lets an agent drive a browser one shell command at a time. `snapshot` returns the page as compact text with refs like `@e1`, the agent runs `click @e1` or `fill @e2 "text"`, then snapshots again. The browser stays open between commands. It drives Chrome by default and can swap in Lightpanda or Obscura with `--engine`.
+
+### Who it is for
+
+Anyone using Claude Code, Codex or another agent that already lives in a terminal. It is the easiest way on this list to try a lighter engine without changing how your agent works.
+
+### Facts
+
+- Stars: 51,821 ([GitHub](https://github.com/vercel-labs/agent-browser))
+- Latest: v0.43.0, November 12, 2026 ([releases](https://github.com/vercel-labs/agent-browser/releases)). v0.42.0 on November 10 added experimental saved flows that record a task once and replay its requests.
+- Licence: Apache 2.0
+- Price: free
+
+### Try it
+
+```bash
+npm install -g agent-browser
+agent-browser install
+agent-browser open example.com
+agent-browser snapshot
+agent-browser --engine lightpanda open example.com
+```
+
+On Linux, `agent-browser install --with-deps` also pulls Chrome's system libraries.
+
+### Honest limitation
+
+It moves fast: three releases in nine days, and v0.42.0 alone fixed session reuse, Safari WebDriver drops and `fill` altering literal text. Pin a version in CI. Also, the engine swap is not free: on Lightpanda and Obscura you lose `--profile`, `--state` and extensions, so anything that relies on a logged-in session stays on Chrome.
+
+## Chrome DevTools MCP
+
+### What it does
+
+[Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) is the Chrome team's MCP server and CLI that lets an agent control and inspect a live Chrome. Beyond clicks and screenshots, it records performance traces, reads console messages with source-mapped stack traces, and inspects network requests. v1.13.0 added logpoints and page-scoped network mocks.
+
+### Who it is for
+
+Developers who want the agent to debug their own web app, not browse other people's. This is the only tool here built around DevTools, not around being small.
+
+### Facts
+
+- Stars: 57,300 ([GitHub](https://github.com/ChromeDevTools/chrome-devtools-mcp))
+- Latest: v1.13.0, November 11, 2026 ([releases](https://github.com/ChromeDevTools/chrome-devtools-mcp/releases))
+- Licence: Apache 2.0
+- Price: free
+- Requires: Node.js LTS and current stable Chrome
+
+### Try it
+
+Add this to your MCP client config:
+
+```json
+{
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"]
+    }
+  }
+}
+```
+
+### Honest limitation
+
+It is full Chrome, so you pay full Chrome memory and startup costs. It is not the tool for crawling 500 pages. By default it also checks the npm registry for updates; set `CHROME_DEVTOOLS_MCP_NO_UPDATE_CHECKS` if your environment blocks outbound calls.
+
+## Side by side
+
+| Tool | Layer | Language | Protocols | Licence | Version checked | Stars |
+| --- | --- | --- | --- | --- | --- | --- |
+| Obscura | Engine | Rust | CDP, MCP, CLI | Apache-2.0 | v0.2.7 | 35,693 |
+| [Lightpanda](/tools/lightpanda) | Engine | Zig | CDP, MCP, CLI | AGPL-3.0 | 1.0.4 | 42,089 |
+| [Moli](/tools/moli) | Engine | Rust | CDP, WebDriver, BiDi, CLI | Apache-2.0 | v1.1.25 | 23,823 |
+| Kitesurf | Engine | Rust to Wasm on Workers | CDP | Apache-2.0 | Unverified (no tag) | 1,881 |
+| [agent-browser](/tools/agent-browser) | Driver | Rust | CLI, MCP | Apache-2.0 | v0.43.0 | 51,821 |
+| [Chrome DevTools MCP](/tools/chrome-devtools-mcp) | Driver | TypeScript | MCP, CLI | Apache-2.0 | v1.13.0 | 57,300 |
+
+## Which one I would set up first
+
+1. **Start with agent-browser on Chrome.** Get your agent's loop working on real Chrome first, so you know a failure later is the engine and not the prompt.
+2. **Swap in Lightpanda with `--engine lightpanda`** for read-heavy jobs like docs lookups and data extraction. It is the most mature lightweight engine here.
+3. **Try Obscura** if you want Apache 2.0 instead of AGPL, or native screenshots without Chrome. Run your target pages through both and keep the one that renders them correctly.
+4. **Use Chrome DevTools MCP** when the agent is debugging your own front end and needs traces, console and network data.
+5. **Watch Moli and Kitesurf.** Moli if you need WebDriver BiDi or Windows, Kitesurf if you are on Workers. Neither is where I would start today.
+
+## FAQ
+
+### What is a headless browser for AI agents?
+
+It is a browser that runs without a visible window and exposes the page to an agent as text or structured data. The new engines skip or delay graphical rendering to save memory and startup time. Most speak the Chrome DevTools Protocol, so existing Puppeteer and Playwright code can connect.
+
+### Is Lightpanda or Obscura better than headless Chrome?
+
+They use less memory and start faster, by their own benchmarks, because they skip most of what Chrome does to paint pixels. Chrome still wins on compatibility, extensions and logged-in profiles. Test your actual target pages before switching, because both engines document features that Chrome has and they do not.
+
+### Can I use these headless browsers with Claude Code?
+
+Yes. agent-browser works through Claude Code's Bash tool, and Obscura, Lightpanda and Chrome DevTools MCP all ship MCP servers you can register as a local stdio command. Kitesurf and Moli expose CDP, so any CDP-capable MCP server or script can drive them.
+
+### Do Playwright and Puppeteer work with Chrome-free engines?
+
+Over CDP, mostly. Obscura's docs say to use Playwright's `connectOverCDP`, not `connect`, and Kitesurf's own example uses `puppeteer.connect` with a WebSocket endpoint. Expect gaps on Chrome-specific features such as extensions and persistent profiles.
+
+### Are headless browsers for AI agents free?
+
+All six are free to self-host. Lightpanda and Lexmount sell hosted browser hours with free tiers, Obscura has announced a hosted cloud without public pricing, and deploying Kitesurf to Cloudflare needs the Workers Paid plan from $5 a month.
+
+## How this ties to ai.dosa.dev
+
+ai.dosa.dev already lists [agent-browser](/tools/agent-browser), [Lightpanda](/tools/lightpanda), [Moli](/tools/moli) and [Chrome DevTools MCP](/tools/chrome-devtools-mcp) in Developer Productivity & Workflow, alongside [Agweb](/tools/agweb), a macOS WebKit browser for coding agents. Obscura and Kitesurf are not in the directory yet, and both are good candidates for the [tool submission form](https://github.com/QAInsights/awesome-ai-tools/issues/new?template=submit-tool.yml).
+
+If your agent needs the whole desktop rather than one browser tab, read our roundup of [computer use tools for AI agents](/blog/computer-use-tools-for-ai-agents). If you want to keep page dumps out of your context window, see [context compression tools for AI coding agents](/blog/context-compression-tools-for-ai-coding-agents). And since any of these engines can send requests from your machine, run them inside one of the [open source sandboxes for AI coding agents](/blog/open-source-sandboxes-for-ai-coding-agents).
+
+Happy Testing! Which site does your agent fail on most often, and does it fail the same way on Lightpanda and on Chrome?

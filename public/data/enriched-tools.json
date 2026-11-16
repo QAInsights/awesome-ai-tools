@@ -13524,5 +13524,241 @@
       "Open Source"
     ],
     "lastUpdated": "2026-11-13"
+  },
+  {
+    "slug": "lody",
+    "name": "Lody",
+    "company": "LodyAI",
+    "pricing": "freemium",
+    "pricingDetail": "The Lody client, CLI and daemon are open source under the Apache-2.0 licence. The hosted workspace has Free, Plus and Enterprise plans listed on lody.ai/price. Agents run on your own machines with the subscriptions, logins and model keys already configured there, so model usage is billed by those providers.",
+    "description": "Lody is a shared workspace for the coding agents a team already uses. You connect machines with `npx lody daemon start`, bring Claude Code, Codex, Kimi, OpenCode or any ACP-compatible agent, and teammates can open the same conversation, follow its transcript and diffs, and dispatch work to any connected machine from desktop, mobile, web or the CLI.",
+    "keyFeatures": [
+      "Connect laptops, servers or cloud VMs with `npx lody daemon start`",
+      "Works with Claude Code, Codex, Kimi, OpenCode and other ACP-compatible agents on your existing logins",
+      "Shared conversations with full transcript, runtime status, files and code changes",
+      "Dispatch and approve work from desktop (macOS, Windows, Linux), iOS, Android, web or CLI",
+      "Agents can create and coordinate child conversations that run in parallel",
+      "Per-session git worktrees, per-turn diffs, line comments and pull request and CI status",
+      "In-session web preview with element-level visual annotations sent back to the agent"
+    ],
+    "bestFor": "Teams that already run Claude Code, Codex or other ACP agents on their own machines and want to share sessions, review changes together and hand off work from a phone.",
+    "notIdealFor": "Solo developers who only need a single local agent in the terminal, or teams that need fully offline operation today, since full local-first support is still in progress.",
+    "recentUpdates": "Lody OSS v0.109.0 was released on October 30, 2026, after v0.108.0 on October 24; the repository was trending on GitHub on November 14, 2026, with commits the same day.",
+    "verdict": "A polished way to turn individual coding agent sessions into shared team work across desktop and mobile, built on agents you already pay for.",
+    "tags": [
+      "Agent Workspace",
+      "Team Collaboration",
+      "ACP",
+      "Mobile",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-14"
+  },
+  {
+    "slug": "loopforge",
+    "name": "LoopForge",
+    "company": "Tencent",
+    "pricing": "open-source",
+    "pricingDetail": "LoopForge is free and open-source under the MIT licence and runs on your own infrastructure with Docker. Model usage is not included: each user brings credentials for the coding-agent CLI they pick, billed by that provider.",
+    "description": "LoopForge is a self-hosted workspace from Tencent for shipping software with coding agents. You either chat with Main Bot, which opens a Docker sandbox with your repositories and opens the pull request, or run an SOP: a versioned workflow of agent roles, scripts and human approval gates that delivers every requirement the same way.",
+    "keyFeatures": [
+      "Main Bot chat that works in on-demand Docker sandboxes and opens pull requests",
+      "Visual SOP designer with Agent, Script, Human-gate, Sub-SOP and Preview-build nodes",
+      "Ten coding-agent CLIs as executors, including CodeBuddy, Codex, Claude Code, OpenCode and Cursor CLI",
+      "Roles with their own prompt, model, rules, Skills and MCP tools",
+      "Needs review inbox, run traces, artifacts and token cost accounting",
+      "Scheduled AI tasks and an HTTP and MCP API",
+      "LoopForge Local brings the built-in workflows into Claude Code, Codex, Cursor and other hosts"
+    ],
+    "bestFor": "Engineering teams that want repeatable, reviewable delivery with coding agents on their own servers, with fixed stages, reviewers and sign-off.",
+    "notIdealFor": "Untrusted multi-tenant deployments, since sandboxes use the host Docker socket, or teams that need an English chat workbench today.",
+    "recentUpdates": "v0.3.8 was released on November 12, 2026, followed by the v0.3.9-rc.1 pre-release on November 13; the repository was trending on GitHub on November 14, 2026.",
+    "verdict": "A serious open-source take on agent delivery pipelines with human gates, best suited to teams willing to self-host.",
+    "tags": [
+      "Agent Orchestration",
+      "Self-Hosted",
+      "Workflows",
+      "Human in the Loop",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-14"
+  },
+  {
+    "slug": "skillevaluator",
+    "name": "SkillEvaluator",
+    "company": "NVIDIA",
+    "pricing": "open-source",
+    "pricingDetail": "SkillEvaluator is free and open-source under the Apache-2.0 licence. Tier 1 checks can run with no API key; LLM checks and live agent evaluation use your own model provider (including NVIDIA Build endpoints for free prototyping) and sandbox, which can incur charges.",
+    "description": "SkillEvaluator is an NVIDIA CLI that checks agent skills and measures their effect on agent results. It runs static quality and security checks, finds duplicated guidance across a skill catalog, and runs live evaluations that compare an agent with and without the skill in a sandbox.",
+    "keyFeatures": [
+      "Install with `pip install skillevaluator` or `uv tool install`",
+      "Tier 1 validation with quality, SkillSpector and Gitleaks security checks and optional LLM rubric checks",
+      "Tier 2 deduplication of overlapping guidance within and across skills",
+      "Tier 3 live evaluation of agents with and without the skill in a Docker sandbox via Harbor",
+      "Eval dataset generation from guidance, prompts or retained traces",
+      "`skillevaluator ci init` for GitHub Actions, plus a GitLab CI template",
+      "Agent skill so Claude Code, Codex or other skill-aware agents can run it"
+    ],
+    "bestFor": "Teams publishing or maintaining agent skills who want CI quality gates and evidence that a skill actually improves agent behaviour.",
+    "notIdealFor": "Users looking for a general LLM app evaluation tool, or anyone needing vendor support, since the project is marked experimental with no SLA.",
+    "recentUpdates": "v0.9.0 was released on November 13, 2026, after v0.8.0 on November 6; the repository was trending on GitHub on November 14, 2026.",
+    "verdict": "A thorough, well-documented way to test agent skills before shipping them, from NVIDIA's own skills pipeline.",
+    "tags": [
+      "Agent Skills",
+      "Evaluation",
+      "CI",
+      "Security Scanning",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-14"
+  },
+  {
+    "slug": "agweb",
+    "name": "Agweb",
+    "company": "paul-nameless",
+    "pricing": "open-source",
+    "pricingDetail": "Agweb is free and open-source under the MIT licence. It is distributed as a macOS app (Agweb.dmg) on GitHub Releases or built from source with Xcode 26; there is no paid tier or account.",
+    "description": "Agweb is a macOS browser for coding agents built on WebKit. Agents drive it from the shell with the `agweb` CLI, which mirrors playwright-cli commands, while the single window never takes focus and a dashboard shows every agent's tabs live, so several agents can browse at once without interrupting you.",
+    "keyFeatures": [
+      "`agweb` CLI with playwright-cli-style commands such as `open`, `snapshot` and `click`",
+      "Never steals focus; dialogs, file pickers and downloads are answered in code",
+      "Live dashboard (⌘D) of every agent's tabs and last command, grouped by workspace",
+      "Named profiles share logins across agents running at the same time",
+      "Replies and `snapshot --diff` report only what changed, saving tokens",
+      "`ask` hands a tab to you for logins, MFA codes or CAPTCHAs; `fill --secret-cmd` keeps passwords out of the transcript",
+      "Idle tab suspension, built-in uBlock Origin ad blocking and `video-start` MP4 recording",
+      "Bundled agent skill for Claude Code and Codex"
+    ],
+    "bestFor": "Mac developers running several coding agents in parallel who want them to browse and test web pages in a real, visible browser without windows stealing keyboard focus.",
+    "notIdealFor": "Linux or Windows users, anyone on macOS older than 26, or workflows that need Chrome DevTools Protocol, Playwright attachment or Chrome extensions, since Agweb is WebKit only.",
+    "recentUpdates": "v0.3.0 was released on November 14, 2026, adding a New Workspace dialog, `agweb list`, covered-element click detection and a strict-YAML fix for the agent skill, after v0.2.0 on November 13 and v0.1.0 on November 11; a Show HN post on November 14 reached over 100 points.",
+    "verdict": "A focused, lightweight alternative to Playwright Chrome for agents on macOS, with thoughtful touches for parallel agents and human hand-offs.",
+    "tags": [
+      "Browser Automation",
+      "AI Agents",
+      "macOS",
+      "CLI",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-15"
+  },
+  {
+    "slug": "ffmpeg-skill",
+    "name": "ffmpeg-skill",
+    "company": "kajisho5",
+    "pricing": "open-source",
+    "pricingDetail": "ffmpeg-skill is free and open-source under the MIT licence. It runs locally on your own FFmpeg and Python with no cloud service, account or API key; optional speech transcription uses a local engine you install.",
+    "description": "ffmpeg-skill is an agent skill and MCP server that gives Claude Code, Cursor, Codex or any MCP client a local video editor. It ships 42 FFmpeg tools and teaches the agent a fixed probe, edit, check and verify workflow, with a machine-readable contract derived from the tools' own CLI parsers.",
+    "keyFeatures": [
+      "42 FFmpeg tools for cutting, joining, silence and filler removal, captions, overlays, loudness and platform exports",
+      "Install with `npx ffmpeg-skill` for Claude Code, Cursor or Codex, or as a Claude Code, Codex or Gemini CLI plugin",
+      "Every tool also exposed as an MCP tool, with a core set of 12 advertised by default",
+      "Machine-readable contract (`npx ffmpeg-skill contract --json`) generated from the argparse CLI definitions",
+      "`--dry-run`, `--json` and `--plan` on every tool, plus `doctor` to check the local FFmpeg build",
+      "Optional local transcription for captions via faster-whisper, whisper or Parakeet",
+      "Python standard library only; tested in CI against FFmpeg 6.1 to 9.x"
+    ],
+    "bestFor": "Developers and creators who want a coding agent to edit, caption and export video on their own machine with verifiable results and no uploads.",
+    "notIdealFor": "People who want a graphical timeline editor or rendered motion graphics from code, or machines where FFmpeg 6.1+ and Python 3.10+ cannot be installed.",
+    "recentUpdates": "v3.9.0, v3.9.1 and v3.9.2 were all released on November 15, 2026; the repository was trending on GitHub on November 15, 2026, with more than 5,800 stars.",
+    "verdict": "A carefully engineered, local-first way to hand video editing to a coding agent, with unusually strong verification and contract discipline.",
+    "tags": [
+      "Agent Skills",
+      "MCP",
+      "Video Editing",
+      "Local-First",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-15"
+  },
+  {
+    "slug": "pentestcode",
+    "name": "PentestCode",
+    "company": "s0ld13rr",
+    "pricing": "open-source",
+    "pricingDetail": "PentestCode is free and open-source under the MIT licence. You install the single binary yourself and pay only for the LLM provider you connect; there is no hosted service, account or paid tier.",
+    "description": "PentestCode is an autonomous, multi-agent penetration testing agent for the terminal, built as a hard fork of OpenCode and rebuilt for authorized offensive security. A lead coordinator plans the engagement and dispatches specialist subagents in parallel, and every agent reads and writes one persistent engagement state of hosts, vulnerabilities, credentials and attack paths.",
+    "keyFeatures": [
+      "Lead `pentest` coordinator with 13 specialist subagents, including recon, scanner, exploiter, AD identity, web app, critic and reporter",
+      "Shared engagement state of hosts, services, vulnerabilities, credentials, access and relationships that survives restarts",
+      "Attack-path ranking over the relationship graph",
+      "18 built-in pentest tools, with mandatory nmap, Nuclei, NetExec and Gobuster output parsers",
+      "Operator-gated scope with `/status`, `/vulns`, `/creds` and `/goal` commands",
+      "Human-readable `findings.md` log of every finding with timestamps",
+      "Works with 20+ LLM providers through the AI SDK, including Anthropic, OpenAI, Google, Bedrock and Ollama",
+      "Install with `npm install -g pentestcode-ai`, the install script or the AUR package"
+    ],
+    "bestFor": "Penetration testers, red teams and CTF players who want an agent that runs and tracks a full authorized engagement from recon to report in their own terminal.",
+    "notIdealFor": "Teams that need a supported commercial product, Windows-native installs or a web dashboard, and anyone without written authorization to test the target systems.",
+    "recentUpdates": "v0.2.7 was released on October 23, 2026, fixing a command-injection and an arbitrary-file-write issue and adding a screenshot tool, a subagent kill dialog and eight pentest methodology skills, after v0.2.6 added a reflector agent and cross-engagement knowledge store on September 2; the repository was trending on GitHub on November 16, 2026, with more than 1,000 stars.",
+    "verdict": "A capable, terminal-first take on agentic pentesting with a well-designed shared engagement state, still labelled beta by its author.",
+    "tags": [
+      "AI Security",
+      "Pentesting",
+      "Multi-Agent",
+      "CLI",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-16"
+  },
+  {
+    "slug": "last30days",
+    "name": "last30days",
+    "company": "Matt Van Horn (mvanhorn)",
+    "pricing": "open-source",
+    "pricingDetail": "last30days is free and open-source under the MIT licence. Reddit, Hacker News, Polymarket and GitHub work with no keys; some optional sources need your own API keys, browser sessions or paid third-party credits.",
+    "description": "last30days is a research skill for coding agents. Running `/last30days <topic>` searches what people posted about the topic in the last 30 days across Reddit, X, YouTube, Hacker News, Polymarket, GitHub and the web, scores results by real engagement, and has the agent synthesize one grounded brief with citations.",
+    "keyFeatures": [
+      "`/last30days <topic>` research across Reddit, Hacker News, Polymarket and GitHub with zero configuration",
+      "Setup wizard unlocks X, YouTube, TikTok, arXiv, Techmeme and more sources",
+      "Results scored by upvotes, likes and prediction-market odds, then synthesized into one cited brief",
+      "Discovery mode that ranks emerging topics with follow-up commands",
+      "Claude Code plugin with marketplace auto-updates",
+      "`npx skills add mvanhorn/last30days-skill -g` for Codex, Cursor, Copilot, Gemini CLI and other Agent Skills hosts",
+      "Grok Build plugin, Claude Desktop `.mcpb` bundle and OpenClaw skill",
+      "`--preflight` shows planned reads and writes before any research runs"
+    ],
+    "bestFor": "Developers and builders who want their coding agent to pull a current, cited picture of a tool, company, person or trend before they build, buy or meet.",
+    "notIdealFor": "People who need an editorially vetted or long-horizon research report, or machines without Python 3.12+.",
+    "recentUpdates": "v4.1.0, v4.2.0 and v4.2.1 were all released on November 16, 2026, adding layered free Reddit access with an opt-in logged-in session and a coverage evaluation, plus provider and YouTube fixes; the repository was trending on GitHub on November 16, 2026, with more than 67,000 stars.",
+    "verdict": "One of the most widely adopted agent skills, and a practical way to give a coding agent fresh community signal instead of stale training data.",
+    "tags": [
+      "Agent Skills",
+      "Research",
+      "Claude Code",
+      "Plugins",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-16"
+  },
+  {
+    "slug": "coral",
+    "name": "Coral",
+    "company": "Coral",
+    "pricing": "open-source",
+    "pricingDetail": "Coral is free and open-source under the Apache 2.0 licence with no limits on users, agents or volume, run as a desktop app or on your own server. A separately licensed Coral Enterprise edition with SAML, SCIM, advanced RBAC, an immutable audit log and support SLAs is announced as coming soon.",
+    "description": "Coral is an open-source, self-hosted gateway that sits between AI agents and the systems they work on. Agents connect over MCP and call provider tools by writing short TypeScript programs; Coral checks every call against workspace policy before adding credentials, and lets agents save programs that work as custom tools to reuse.",
+    "keyFeatures": [
+      "One MCP URL for Claude Code, Codex, Cursor, VS Code, OpenCode and other MCP clients",
+      "Agents write TypeScript programs that run in a V8 isolate with no network access, credentials or imports",
+      "Allow, Ask or Block policy for each provider tool and custom tool, with per-call human approval",
+      "Successful programs saved as private custom tools and published to the workspace as shared tools",
+      "Credentials stored by Coral, with providers that can use each caller's own account",
+      "Connects any service with an MCP server or OpenAPI document",
+      "Desktop app for macOS, Windows and Linux, or a shared server via Docker Compose or Kubernetes",
+      "Written in Rust; every run attributed to the person or agent that started it"
+    ],
+    "bestFor": "Teams giving coding and operations agents access to GitHub, Slack, Linear, Datadog and internal APIs who want fine-grained permissions, approvals and reusable tools without handing agents raw tokens.",
+    "notIdealFor": "Solo users who only need a local MCP server or two, or organizations that need SSO, SCIM and an audit log today, since Coral Enterprise is not yet available.",
+    "recentUpdates": "v1.8.0 was released on November 13, 2026, adding operator-defined Secret Stores for credentials, after v1.7.0 on November 12 and v1.6.0 on November 10; a Show HN post on November 16, 2026 reached the front page.",
+    "verdict": "A thoughtful step beyond MCP gateways that only filter tool lists, combining code mode, per-call policy and reusable custom tools in a self-hosted package.",
+    "tags": [
+      "MCP",
+      "AI Agents",
+      "Gateway",
+      "Governance",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-16"
   }
 ]
