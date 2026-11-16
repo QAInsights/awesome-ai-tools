@@ -6155,10 +6155,10 @@
   {
     "slug": "cubic",
     "name": "cubic",
-    "company": "cubic",
+    "company": "cubic (Cohere)",
     "pricing": "freemium",
-    "pricingDetail": "Offers a free Starter plan with 20 PR reviews per month. Paid tiers include Team ($30/developer/month billed yearly), Pro ($79/developer/month billed yearly), and Max ($160/developer/month billed yearly), with custom Enterprise pricing available. Open source projects for public repositories are free.",
-    "description": "cubic is an AI-powered code review and security platform that integrates with GitHub to provide real-time pull request analysis and continuous whole-codebase scanning. It utilizes thousands of AI agents to detect bugs, enforce coding standards, and suggest fixes, while maintaining security through a no-training, SOC 2 compliant architecture.",
+    "pricingDetail": "Free Starter plan with 20 PR reviews a month, and free for public repositories. Paid plans are Team ($40/developer/month), Pro ($99/developer/month) and Max ($200/developer/month) when billed monthly, with 20% off yearly billing and custom Enterprise pricing with SSO/SAML and audit logs. The Cohere acquisition announced on November 13, 2026 did not change published pricing.",
+    "description": "cubic is an AI code review platform for GitHub that reviews pull requests, runs local CLI reviews before you push, and scans whole codebases for bugs and vulnerabilities. Custom review agents, learnings from past reviews, auto-fix and an AI wiki add team context. Cohere acquired cubic on November 13, 2026; cubic says the product keeps running and stays fully supported, and the team is joining Cohere to keep building it.",
     "keyFeatures": [
       "Continuous repository-wide codebase scanning",
       "Learns from senior developers' past PR feedback",
@@ -6168,7 +6168,7 @@
     ],
     "bestFor": "Development teams managing complex, multi-file codebases who need repository-wide context and automated, remediation-focused security and bug detection.",
     "notIdealFor": "Teams using version control platforms other than GitHub, as support is currently limited to GitHub repositories.",
-    "recentUpdates": "As of September 2026, cubic updated its offering to include more reviewed lines in Team and Pro plans, lowered the cost of additional flex capacity, and increased the number of linkable repositories to five.",
+    "recentUpdates": "On November 13, 2026, Cohere announced it had acquired cubic, alongside completing its AISLE acquisition, and said founder and CEO Paul Sanglé-Ferrière's team will establish Cohere's secure coding vertical. cubic's own announcement says the product will keep running and stay fully supported, with continued improvements. No sign-up freeze, shutdown, refund or data deletion dates were announced.",
     "verdict": "A highly capable, research-backed AI tool that distinguishes itself by combining PR-level reviews with deep, long-running codebase analysis and actionable one-click remediation workflows.",
     "tags": [
       "AI",
@@ -6177,7 +6177,7 @@
       "Static Analysis",
       "DevOps"
     ],
-    "lastUpdated": "2026-11-01"
+    "lastUpdated": "2026-11-13"
   },
   {
     "slug": "kodus",

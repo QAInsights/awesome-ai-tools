@@ -1,0 +1,242 @@
+---
+title: "cubic Alternatives After the Cohere Acquisition: 6 AI Code Review Tools to Compare"
+description: "Compare six cubic alternatives after Cohere's acquisition: AI code review for GitHub, GitLab and more, pricing, self-hosting and how to export settings."
+pubDate: 2026-11-13
+featured: true
+tags: ["cubic", "code-review", "cohere", "pull-requests", "open-source", "roundup"]
+---
+
+In this blog post, we will see which cubic alternatives I would shortlist after the Cohere acquisition, what the deal changes for current users, and how to keep your review rules portable. This follows our [earlier comparison of AI code review bots](/blog/ai-code-review-bots), but the question is different now: cubic is not shutting down, so the decision is about planning, not an emergency migration.
+
+Facts, prices and release links were checked on November 13, 2026. This is a source-based comparison, not a claim that I installed and benchmarked all six tools.
+
+## Table of Contents
+
+1. [The short answer](#the-short-answer)
+2. [What happened to cubic](#what-happened-to-cubic)
+3. [How to export your cubic data](#how-to-export-your-cubic-data)
+4. [CodeRabbit](#coderabbit)
+5. [Graphite](#graphite)
+6. [Qodo](#qodo)
+7. [Bito](#bito)
+8. [Kodus](#kodus)
+9. [PR-Agent](#pr-agent)
+10. [Side-by-side comparison](#side-by-side-comparison)
+11. [Which one I would switch to](#which-one-i-would-switch-to)
+12. [Honest Pros and Cons](#honest-pros-and-cons)
+13. [FAQ](#faq)
+14. [How this ties to ai.dosa.dev](#how-this-ties-to-aidosadev)
+15. [Final Words](#final-words)
+16. [Sources](#sources)
+
+## The short answer
+
+The closest cubic alternatives are CodeRabbit and Graphite for hosted pull request review, Qodo and Bito for teams that need GitLab, Bitbucket or Azure DevOps, and Kodus or PR-Agent if you want to self-host with your own model keys. cubic keeps running after the Cohere deal, and no shutdown or data deletion date has been announced, so you do not need to move today.
+
+## What happened to cubic
+
+[cubic](/tools/cubic) is the AI code review platform at cubic.dev, led by founder and CEO Paul Sanglé-Ferrière. It reviews GitHub pull requests, runs local CLI reviews before you push, scans whole codebases and lets teams write custom review agents.
+
+On November 13, 2026, [Cohere announced](https://cohere.com/blog/cohere-expands-its-sovereign-ai-platform-with-aisle-and-cubic) that it was welcoming the cubic team, in the same post that confirmed the completed AISLE acquisition. [cubic's own announcement](https://www.cubic.dev/blog/cubic-joins-cohere) says plainly that Cohere has acquired cubic. [Unite.AI](https://www.unite.ai/cohere-acquires-aisle-and-cubic-to-add-cyber-defense-and-secure-coding/) reported both deals the same day. Neither company disclosed financial terms.
+
+| Date | What changes | What I would do |
+| --- | --- | --- |
+| November 13, 2026 | Cohere announces the cubic acquisition. The team joins Cohere and will establish Cohere's secure coding vertical. | Read both announcements and note who your account contact is now. |
+| November 13, 2026 | cubic says the product keeps running, stays fully supported and keeps shipping improvements. | Keep using cubic for active work. |
+| Not announced | No sign-up freeze, shutdown, refund or data deletion dates were published by either company. | Move settings into your repository so a future switch is cheap. |
+
+The [official pricing page](https://www.cubic.dev/pricing) still lists Team at $40, Pro at $99 and Max at $200 per developer per month billed monthly, with 20% off yearly billing. The [homepage](https://www.cubic.dev/) lists a free Starter plan with 20 PR reviews a month and says cubic is free for public repositories. The [quickstart FAQ](https://docs.cubic.dev/ai-review/introduction) says cubic supports GitHub only, not GitLab or Bitbucket.
+
+What I would watch is direction, not availability. Cohere describes the team as the base for an enterprise secure coding vertical with on-premises and air-gapped deployments. That may suit regulated teams. Small teams on a self-serve plan should simply keep an eye on future pricing and plan changes.
+
+## How to export your cubic data
+
+There is no deadline, so treat this as housekeeping. cubic did not publish an export tool alongside the announcement. These steps use features that already exist in the cubic docs:
+
+1. **Move review settings into `cubic.yaml`.** The [cubic.yaml guide](https://docs.cubic.dev/configure/cubic-yaml) makes a file in your repository root the source of truth for review behaviour, ignore patterns, PR descriptions and custom agents. An org-wide file can live in a `cubic-config` repository. UI settings are stored per repository in the dashboard, so anything left only in the UI is not in your Git history.
+2. **Keep custom agent rules in files.** [Custom agents](https://docs.cubic.dev/ai-review/custom-agents) can read linked instruction files such as `.cubic/review-agent.md`. Rules written as Markdown in your repository are easy to paste into another tool's rules system later.
+3. **Sync the AI wiki into your repo.** The [AI wiki](https://docs.cubic.dev/wiki/ai-wiki) has a **Repo sync** option that exports pages as Markdown files to `.cubic/wiki` through a rolling pull request.
+4. **Record your learnings.** The [Learnings tab](https://docs.cubic.dev/ai-review/memory-and-learning) shows the team patterns cubic has learned. I found no documented export, so copy the ones you rely on into a rules file.
+5. **Pull analytics if you need history.** On Pro or Max, the [Analytics API](https://docs.cubic.dev/api-reference/analytics/list-pull-requests) exports merged pull request metrics from `GET /api/analytics/v1/prs`.
+
+Steps 1 to 3 and 5 are documented cubic features. Step 4 is my precaution. Review comments themselves already live on your GitHub pull requests. I found no documented importer for cubic settings in any of the tools below, so plan to rewrite rules rather than migrate them in one click.
+
+## CodeRabbit
+
+[CodeRabbit](/tools/coderabbit) is the first hosted reviewer I would compare against cubic, because it covers the same ground and more Git hosts.
+
+**Why it fits:** The [CodeRabbit docs](https://docs.coderabbit.ai/llms.txt) describe pull request reviews, security scanning and pre-merge checks on GitHub, GitLab, Bitbucket and Azure DevOps, plus reviews in the CLI, IDE and coding agents. That matches cubic's PR plus local review loop.
+
+**Verified facts:** The [official pricing page](https://www.coderabbit.ai/pricing) lists Essentials at $24, Team at $48 and Advanced at $72 per user per month billed annually. Essentials is $30 and Team is $60 billed monthly. Reviews past the plan limit cost $0.25 per reviewed file, and CodeRabbit Agent costs $0.40 per agent minute.
+
+**Try the CLI**, from the [official CLI guide](https://docs.coderabbit.ai/cli/index):
+
+```bash
+curl -fsSL https://cli.coderabbit.ai/install.sh | sh
+```
+
+Or use `brew install coderabbit` on a Mac.
+
+**Honest limitation:** Usage-based overage and agent minutes make the monthly bill harder to predict than a flat seat price. Set the spending cap before you roll it out.
+
+## Graphite
+
+[Graphite](/tools/graphite) is the option for GitHub teams that want AI review bundled with stacked pull requests and a merge queue.
+
+**Why it fits:** The [pricing page](https://graphite.com/pricing) puts unlimited AI reviews, review customisations, automations and the merge queue in the Team plan. If your cubic setup was mostly about getting PRs reviewed and merged faster, Graphite covers more of that path.
+
+**Verified facts:** Hobby is free with limited AI reviews. Starter is $20 and Team is $40 per user per month billed annually. Enterprise is custom and adds GHES support, SAML and audit logs. The [CLI install guide](https://graphite.com/docs/install-the-cli) says Graphite is built on GitHub's APIs.
+
+**Try the CLI**, from the official guide:
+
+```bash
+brew install withgraphite/tap/graphite
+```
+
+Or `npm install -g @withgraphite/graphite-cli@stable`.
+
+**Honest limitation:** Graphite is GitHub only, like cubic, so it does not help if part of your reason for leaving is GitLab or Bitbucket. Starter only includes limited AI reviews, so compare against Team.
+
+## Qodo
+
+[Qodo](/tools/qodo) suits teams that want an enterprise review platform across several Git hosts.
+
+**Why it fits:** The [Qodo Git page](https://www.qodo.ai/features/qodo-git/) lists GitHub, GitLab, Bitbucket and Azure DevOps, with single and multi-tenant or on-prem deployment. Its [pricing page](https://www.qodo.ai/pricing/) includes a rules system, Git and IDE integrations and pre-PR review skills.
+
+**Verified facts:** The pricing page lists a Pro Team plan at $30 with credit packs priced at $0.015 per credit pooled across the team, designed for up to 30 users, with a 14-day free trial and no credit card. Enterprise is custom and adds SSO, BYOK and single-tenant SaaS or on-prem.
+
+**Try it:** Start the free trial from the [pricing page](https://www.qodo.ai/pricing/) and connect one repository.
+
+**Honest limitation:** Credit-based plans need a usage estimate before you can compare them with cubic's per-developer seats. Qodo's hosted product is also separate from PR-Agent, its donated open-source project covered below.
+
+## Bito
+
+[Bito](/tools/bito) is the lower-cost hosted option with self-hosting available as an add-on.
+
+**Why it fits:** The [pricing page](https://bito.ai/pricing/) lists AI code review in GitHub, GitLab and Bitbucket, IDE extensions for VS Code, JetBrains IDEs, Cursor and Windsurf, a CLI, one-click AI fixes and code review analytics.
+
+**Verified facts:** Team is $12 per seat per month billed annually or $15 monthly. Professional is $20 annually or $25 monthly. Both include 5,000 reviewed lines per seat per month, then $5 per 1,000 lines. The Professional plan lists self-hosted deployment as a $5 per seat per month add-on.
+
+**Try it:** Start from the [pricing page](https://bito.ai/pricing/) and install it on a single repository first.
+
+**Honest limitation:** The line allowance matters. A team that ships large AI-generated pull requests can reach 5,000 lines per seat quickly, so check overage before comparing headline prices.
+
+## Kodus
+
+[Kodus](/tools/kodus) is my pick for teams that want an open-source reviewer they can self-host with their own model keys.
+
+**Why it fits:** The [official README](https://github.com/kodustech/kodus-ai) says Kodus reviews pull requests on GitHub, GitLab, Bitbucket, Azure DevOps and Forgejo, with plain-language Kody Rules, memory and BYOK for the model provider. That is a close match for cubic's custom agents and learnings.
+
+**Verified facts:** [Release 2.2.14](https://github.com/kodustech/kodus-ai/releases/tag/2.2.14) (November 12, 2026). The [licence file](https://github.com/kodustech/kodus-ai/blob/main/license.md) is dual: AGPL-3.0 for most code, plus a Kodus Enterprise Code License for `ee` files. The [pricing page](https://kodus.io/pricing/) lists a free Community plan, Teams at $10 per developer per month or $8 billed annually plus your token costs, and custom Enterprise.
+
+**Try it:** Use the hosted Community plan, or follow the [self-host guide](https://docs.kodus.io/how_to_deploy/en/deploy_kodus/generic_vm), which runs Kodus with Docker on a VM you control.
+
+**Honest limitation:** The Community plan caps Kody Rules at 10 and active plugins at 3. Self-hosting also means you run the service, the database and the upgrades.
+
+## PR-Agent
+
+[PR-Agent](/tools/pr-agent) is the minimal open-source choice when you mainly want review comments on your own model keys.
+
+**Why it fits:** The [official README](https://github.com/The-PR-Agent/pr-agent) supports GitHub, GitLab, Bitbucket, Azure DevOps and Gitea, and runs as a GitHub Action, CLI, Docker image, webhook or self-hosted app. Commands such as `/describe`, `/review` and `/ask` work as PR comments.
+
+**Verified facts:** MIT, [v0.50.0](https://github.com/The-PR-Agent/pr-agent/releases/tag/v0.50.0) (November 7, 2026). It works with OpenAI, Claude, Gemini, DeepSeek and any model reachable through LiteLLM. The software is free; you pay your model provider.
+
+**Try the CLI**, from the README:
+
+```bash
+pip install "pr-agent[github]"
+```
+
+Then run `pr-agent --pr_url <PR_URL> review` with your provider key set.
+
+**Honest limitation:** There is no hosted dashboard, analytics or codebase scan. It replaces cubic's PR comments, not its wiki, scans or learnings.
+
+## Side-by-side comparison
+
+These are workflow and pricing differences from official pages, not benchmark results.
+
+| Tool | Git hosts | Deployment | Licence | Entry price checked |
+| --- | --- | --- | --- | --- |
+| [cubic](/tools/cubic), now part of Cohere | GitHub | Hosted | Proprietary | Free Starter; Team $40/dev/month monthly |
+| [CodeRabbit](/tools/coderabbit) | GitHub, GitLab, Bitbucket, Azure DevOps | Hosted, self-hosted option | Proprietary | Essentials $24/user/month annual |
+| [Graphite](/tools/graphite) | GitHub | Hosted | Proprietary | Free Hobby; Team $40/user/month annual |
+| [Qodo](/tools/qodo) | GitHub, GitLab, Bitbucket, Azure DevOps | Hosted, on-prem on Enterprise | Proprietary | Pro Team $30 plus credits |
+| [Bito](/tools/bito) | GitHub, GitLab, Bitbucket | Hosted, self-hosted add-on | Proprietary | Team $12/seat/month annual |
+| [Kodus](/tools/kodus) | GitHub, GitLab, Bitbucket, Azure DevOps, Forgejo | Hosted or self-hosted | AGPL-3.0 plus enterprise licence | Free Community; Teams $8/dev/month annual |
+| [PR-Agent](/tools/pr-agent) | GitHub, GitLab, Bitbucket, Azure DevOps, Gitea | Self-hosted, Action, CLI | MIT | Free, plus model costs |
+
+Every price links back to the official page in the sections above. A free reviewer is not free inference: the open-source options still bill through your model provider.
+
+## Which one I would switch to
+
+**If I stayed on GitHub and wanted the closest hosted experience, I would trial CodeRabbit first.** It has PR, CLI and IDE review in one product, and it keeps GitLab and Azure DevOps open as options later.
+
+**If my team already used stacked PRs, I would choose Graphite.** Review and merge queue in one tool is a real workflow change, not a like-for-like swap, so I would only do it if stacking is already the habit.
+
+**If I had to support GitLab, Bitbucket or Azure DevOps, I would compare Qodo and Bito.** Qodo for enterprise deployment options, Bito for a lower seat price with a clear line allowance.
+
+**If data control is the requirement, I would self-host Kodus.** PR-Agent is the lighter option when I only need comments in pull requests and nothing else.
+
+None of these choices depends on benchmark rankings. I would run two candidates on the same week of real pull requests, compare the comments my team actually acted on, and then decide.
+
+## Honest Pros and Cons
+
+**Pros:** Keeping review rules in your repository makes any tool switch cheaper. Several alternatives support Git hosts that cubic does not. The open-source options let you choose the model and keep code on your own infrastructure.
+
+**Cons:** Every reviewer needs tuning, so a new tool will be noisier for the first few weeks. Learnings built up in cubic do not transfer automatically. Usage-based pricing, credits and line allowances make headline prices hard to compare.
+
+The acquisition is a reminder to keep your review policy in Git, not only in a vendor dashboard. None of these tools removes the need for a human to approve the change.
+
+## FAQ
+
+### Is cubic shutting down?
+
+No. cubic's announcement says the product will keep running and stay fully supported, with continued improvements. Neither cubic nor Cohere announced a shutdown, sign-up freeze, refund or data deletion date.
+
+### Who acquired cubic?
+
+Cohere, the enterprise AI company. Cohere announced the deal on November 13, 2026 and said the cubic team will establish its secure coding vertical. Financial terms were not disclosed.
+
+### Can new users still sign up for cubic?
+
+Yes, as of November 13, 2026 the homepage still offers a free trial and the pricing page lists Team, Pro and Max plans.
+
+### Which cubic alternatives support GitLab or Bitbucket?
+
+CodeRabbit, Qodo, Bito, Kodus and PR-Agent all document GitLab and Bitbucket support. Graphite, like cubic, is GitHub only.
+
+### Can I import my cubic rules into another tool?
+
+I could not verify an importer in any of these six tools. Keep your rules in `cubic.yaml` and linked Markdown files, then rewrite them in the new tool's rules format.
+
+### Is there a free cubic alternative?
+
+PR-Agent is free under the MIT licence and Kodus has a free Community plan. Both need your own model provider key, so inference still costs money.
+
+## How this ties to ai.dosa.dev
+
+The [cubic catalog page](/tools/cubic) now records the Cohere acquisition and the fact that the product continues. Our [AI code review bots comparison](/blog/ai-code-review-bots) covers how to roll out a reviewer without flooding your team with comments.
+
+Use the linked tool pages to keep your shortlist together, then confirm current plans at the official pricing pages before you buy. We will update the cubic profile if Cohere or cubic publish any change to plans or availability.
+
+## Final Words
+
+Do not migrate in a hurry. Move your review settings and rules into the repository, keep using cubic, and trial one alternative on real pull requests if the acquisition changes your plans.
+
+For me, CodeRabbit for hosted review, Kodus for self-hosting and Graphite for stacked PR teams are the first three trials. The best cubic alternative is the one whose comments your team actually acts on.
+
+Happy Testing! Which part of cubic would be hardest for your team to replace: the custom agents, the learnings, or the codebase scans?
+
+## Sources
+
+Checked November 13, 2026. Official sources are used for features, licences, installation, prices and releases; reporting supplies acquisition context.
+
+- cubic: [acquisition announcement](https://www.cubic.dev/blog/cubic-joins-cohere), [official pricing](https://www.cubic.dev/pricing), [homepage free plan and open source FAQ](https://www.cubic.dev/), [GitHub-only FAQ](https://docs.cubic.dev/ai-review/introduction), [cubic.yaml](https://docs.cubic.dev/configure/cubic-yaml), [custom agents](https://docs.cubic.dev/ai-review/custom-agents), [AI wiki repo sync](https://docs.cubic.dev/wiki/ai-wiki), [memory and learning](https://docs.cubic.dev/ai-review/memory-and-learning), [Analytics API](https://docs.cubic.dev/api-reference/analytics/list-pull-requests).
+- Cohere: [announcement, November 13, 2026](https://cohere.com/blog/cohere-expands-its-sovereign-ai-platform-with-aisle-and-cubic).
+- Acquisition reporting, November 13, 2026: [Unite.AI](https://www.unite.ai/cohere-acquires-aisle-and-cubic-to-add-cyber-defense-and-secure-coding/).
+- CodeRabbit: [official pricing](https://www.coderabbit.ai/pricing), [CLI installation](https://docs.coderabbit.ai/cli/index), [docs index and Git host support](https://docs.coderabbit.ai/llms.txt).
+- Graphite: [official pricing](https://graphite.com/pricing), [CLI installation](https://graphite.com/docs/install-the-cli).
+- Qodo: [official pricing](https://www.qodo.ai/pricing/), [Qodo Git hosts and deployment](https://www.qodo.ai/features/qodo-git/).
+- Bito: [official pricing, Git hosts, IDEs and self-hosted add-on](https://bito.ai/pricing/).
+- Kodus: [README, Git hosts and plans](https://github.com/kodustech/kodus-ai), [licence](https://github.com/kodustech/kodus-ai/blob/main/license.md), [official pricing](https://kodus.io/pricing/), [self-host guide](https://docs.kodus.io/how_to_deploy/en/deploy_kodus/generic_vm), [2.2.14 release](https://github.com/kodustech/kodus-ai/releases/tag/2.2.14).
+- PR-Agent: [README, Git hosts, models and installation](https://github.com/The-PR-Agent/pr-agent), [v0.50.0 release](https://github.com/The-PR-Agent/pr-agent/releases/tag/v0.50.0).
