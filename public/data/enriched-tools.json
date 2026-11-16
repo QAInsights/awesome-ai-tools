@@ -1652,7 +1652,7 @@
     "name": "GitHub Copilot",
     "company": "GitHub",
     "pricing": "freemium",
-    "pricingDetail": "Free plan is available; paid individual plans include Pro ($10/mo), Pro+ ($39/mo), and Max ($100/mo). Business and Enterprise plans are also available for organizations.",
+    "pricingDetail": "Free ($0/month), Pro ($10/month), Pro+ ($39/month), Max ($100/month), Business ($19/user/month), Enterprise ($39/user/month)",
     "description": "GitHub Copilot is an AI-powered coding agent integrated into the software development lifecycle, helping developers plan, write, review, and maintain code directly within their existing workflows. It provides real-time completions, chat-based assistance, and autonomous agent capabilities across IDEs, the terminal, and the GitHub platform.",
     "keyFeatures": [
       "Real-time code and next-edit suggestions",
@@ -6076,7 +6076,7 @@
     "name": "CodeRabbit",
     "company": "CodeRabbit",
     "pricing": "freemium",
-    "pricingDetail": "Offers plans starting at $24/user/month (Essentials) to $72/user/month (Advanced) when billed annually, plus a contact-based Enterprise tier. Usage-based pricing is available for reviews exceeding plan limits at $0.25 per file, and on-demand agents are billed at $0.40 per minute.",
+    "pricingDetail": "Essentials ($24/user/month billed annually or $30 month-to-month), Team ($48/user/month billed annually or $60 month-to-month), Advanced ($72/user/month billed annually or $90 month-to-month), Enterprise (Contact sales)",
     "description": "CodeRabbit is an AI-powered platform designed to provide governance and control for agentic development workflows. It offers automated code reviews, security scanning, and triage features that help engineering teams manage high volumes of AI-generated code.",
     "keyFeatures": [
       "Agentic code reviews across PR, CLI, and IDE environments",
