@@ -2006,5 +2006,17 @@
   {
     "companyName": "Coral",
     "toolName": "Coral"
+  },
+  {
+    "companyName": "Timon",
+    "toolName": "Timon"
+  },
+  {
+    "companyName": "Sachin Sharma (elementalsouls)",
+    "toolName": "Claude-BugHunter"
+  },
+  {
+    "companyName": "Traces (Vercel)",
+    "toolName": "Traces"
   }
 ]

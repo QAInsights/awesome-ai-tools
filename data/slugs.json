@@ -1344,6 +1344,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "timon",
+    "name": "Timon",
+    "company": "Timon",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1611,6 +1617,12 @@
     "slug": "stroq",
     "name": "Stroq",
     "company": "Agybay Gibatollayev",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "claude-bughunter",
+    "name": "Claude-BugHunter",
+    "company": "Sachin Sharma (elementalsouls)",
     "category": "AI Code Review & Security"
   },
   {
@@ -2949,6 +2961,12 @@
     "slug": "opencodex",
     "name": "opencodex",
     "company": "lidge-jun",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "traces",
+    "name": "Traces",
+    "company": "Traces (Vercel)",
     "category": "Developer Productivity & Workflow"
   },
   {

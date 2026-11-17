@@ -13760,5 +13760,94 @@
       "Open Source"
     ],
     "lastUpdated": "2026-11-16"
+  },
+  {
+    "slug": "timon",
+    "name": "Timon",
+    "company": "Timon",
+    "pricing": "freemium",
+    "pricingDetail": "Timon is free and open-source under the GNU AGPL v3 (with an exception that lets plugins use any licence; the SDK and plugin templates are MIT). The free edition includes agents, missions, Kanban, memory, routines, every bundled module and plugin, and all clients. A Pro licence adds several users, roles and groups, per-person permissions and support; it never replaces your agent CLI subscription, and Timon never calls a token-billed API on your behalf.",
+    "description": "Timon is an open-source agentic workstation that runs on your own machine and turns the coding-agent CLIs you already sign in to into a supervised team. An orchestrator splits a request into tasks, a coder works in its own git worktree, a reviewer checks the diff with a different model and a merger runs the test suite before landing the branch, with approval prompts before anything is pushed, published or deleted.",
+    "keyFeatures": [
+      "Orchestrator, coder, reviewer, merger, researcher and ops roles that you can rename or extend",
+      "Every task in its own git worktree, reviewed by a second model before it lands",
+      "Works through signed-in CLIs: claude, codex, copilot, grok, opencode, pi or hermes-acp (any ACP agent)",
+      "Quota fallbacks move work to the next backend when a subscription runs dry",
+      "Routines with cron and webhook triggers for overnight work paced to your quotas",
+      "Memory injected into later missions, and missions that resume after a crash",
+      "Background daemon with desktop, browser, phone, Telegram, CLI and remote API clients",
+      "Signed plugins (widgets, pages, themes, providers) built on the @timon-ai/sdk"
+    ],
+    "bestFor": "Developers who already pay for Claude Code, Codex, Copilot or similar subscriptions and want a local multi-agent pipeline with built-in review, merge checks and human approval gates.",
+    "notIdealFor": "Teams that need a mature, hosted product today, Intel Macs or ARM Linux machines, or anyone who wants to call model APIs directly rather than through agent CLIs.",
+    "recentUpdates": "The repository went public on November 6, 2026 and shipped v0.1.8 on November 15, 2026; a Show HN post followed on November 14, 2026.",
+    "verdict": "An ambitious, early-stage local workstation that packages a plan, code, review and merge loop around the agent CLIs developers already use.",
+    "tags": [
+      "AI Agents",
+      "Orchestration",
+      "Multi-Agent",
+      "Git Worktrees",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-17"
+  },
+  {
+    "slug": "claude-bughunter",
+    "name": "Claude-BugHunter",
+    "company": "Sachin Sharma (elementalsouls)",
+    "pricing": "open-source",
+    "pricingDetail": "Claude-BugHunter is free and open-source under the MIT licence. It runs inside Claude Code, so you need your own Claude Code access.",
+    "description": "Claude-BugHunter is an open-source Claude Code skill bundle for authorized bug bounty and external red-team work. Its skills load automatically by topic and cover methodology, per-vulnerability hunting playbooks built from disclosed HackerOne reports, enterprise identity and infrastructure attack chains, and triage and reporting with a validation gate.",
+    "keyFeatures": [
+      "83 skills and 15 slash commands for Claude Code",
+      "58 hunt-* skills built from 681 disclosed report patterns across 24 vulnerability classes",
+      "Enterprise platform chains for M365/Entra, Okta, vCenter, SSL-VPN appliances, SharePoint and cloud IAM",
+      "Scope reading and engagement-folder scaffolding with a hunt shell command",
+      "Burp MCP integration",
+      "Triage-validation gate with VRT-aware severity, OOS rebuttals and PII redaction",
+      "Installs as a Claude Code plugin or with scripts/install.sh"
+    ],
+    "bestFor": "Bug bounty hunters and red-team operators who use Claude Code and want structured, cited methodology for authorized engagements.",
+    "notIdealFor": "Developers looking for automated code review or SAST in CI, or anyone without written authorization to test the target.",
+    "recentUpdates": "v2.1 was released on June 5, 2026; the repository is still updated daily and was on GitHub Trending in November 2026 with more than 8,600 stars.",
+    "verdict": "One of the most widely adopted Claude Code skill packs for offensive security research, best used by experienced testers who stay in scope.",
+    "tags": [
+      "Security",
+      "Claude Code",
+      "Agent Skills",
+      "Bug Bounty",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-17"
+  },
+  {
+    "slug": "traces",
+    "name": "Traces",
+    "company": "Traces (Vercel)",
+    "pricing": "free",
+    "pricingDetail": "The Core plan is free for individuals and small teams, with unlimited traces, unlimited teams and up to 50 seats. Larger organizations are asked to get in touch. New organization creation is paused while Traces joins Vercel.",
+    "description": "Traces is a hub for coding-agent sessions. Its CLI captures sessions from 16 agent ecosystems, normalizes them into one format and lets developers and teams share, search, resume and learn from them, with git hooks that link each commit back to the session that produced it. On November 16, 2026 Traces announced that it is joining Vercel.",
+    "keyFeatures": [
+      "CLI install with npm i -g @traces-sh/traces or Homebrew",
+      "Adapters for Claude Code, Cursor, Codex, OpenCode, Pi, Amp, Cline, Copilot, Gemini CLI and more",
+      "Private, link-only and public trace visibility",
+      "Organization namespaces for team history and activity by agent or person",
+      "Git notes that link commits to the agent session behind them",
+      "traces resume to continue a session in a different agent",
+      "Agent skills, hooks and an MCP server",
+      "Export a namespace as JSONL or push it to a Hugging Face dataset"
+    ],
+    "bestFor": "Engineering teams that run several coding agents and want a shared, searchable record of agent sessions tied to the commits they produced.",
+    "notIdealFor": "Teams that want a new organization right now, since sign-ups for new orgs are paused during the Vercel transition, or teams that need fully self-hosted storage.",
+    "recentUpdates": "Traces announced on November 16, 2026 that its team is joining Vercel; existing users can keep publishing and using the CLI, and new organization creation is paused. OpenCode 2.x support shipped on October 27, 2026.",
+    "verdict": "A useful cross-agent layer for keeping and sharing session history, though its future roadmap now sits with Vercel.",
+    "tags": [
+      "AI Agents",
+      "Session Sharing",
+      "Observability",
+      "Team Collaboration",
+      "CLI"
+    ],
+    "lastUpdated": "2026-11-17"
   }
 ]
