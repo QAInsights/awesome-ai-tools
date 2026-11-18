@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import WorkflowGuideCta from '../../components/WorkflowGuideCta.astro';
+import { getResolvedWorkflowGuides } from '../../lib/workflow-guides';
+
+const guides = getResolvedWorkflowGuides();
+const title = 'AI workflow guides for developers';
+const description = 'Choose AI tools for real developer workflows: triage CI failures, review pull requests, write tests, test browser flows and refactor legacy code.';
+const pageUrl = new URL('/guides', Astro.site).href;
+const jsonLd = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    url: pageUrl,
+    name: title,
+    description,
+    mainEntity: {
+        '@type': 'ItemList',
+        itemListElement: guides.map((guide, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: guide.title,
+            url: `${pageUrl}/${guide.slug}`,
+        })),
+    },
+});
+---
+
+<BaseLayout title={`${title} | ai.dosa.dev`} description={description} canonical={pageUrl} jsonLd={jsonLd}>
+    <SiteHeader variant="page" title="Workflow guides" />
+    <main class="mx-auto max-w-5xl px-5 pt-8 pb-28 sm:px-8 md:pt-12">
+        <nav aria-label="Breadcrumb" class="text-sm text-ink-secondary">
+            <a href="/" class="hover:text-white">Home</a> <span aria-hidden="true">/</span> <span aria-current="page">Workflow guides</span>
+        </nav>
+        <header class="mt-8 border-b border-border pb-8">
+            <p class="font-mono text-xs tracking-widest text-gold-soft uppercase">Playbooks · Developer tools</p>
+            <h1 class="mt-3 max-w-3xl text-4xl font-semibold tracking-tight text-balance md:text-6xl">{title}</h1>
+            <p class="mt-4 max-w-2xl text-lg text-ink-secondary">Start with the job you need to do. Each guide compares tools from the directory, explains where they fall short, and gives you a small trial to run before committing.</p>
+        </header>
+        <ul class="my-8 grid gap-4 sm:grid-cols-2">
+            {guides.map((guide, i) => (
+                <li>
+                    <a href={`/guides/${guide.slug}`} class="group block h-full rounded-2xl border border-border bg-panel p-5 transition-colors hover:border-gold-soft sm:p-6">
+                        <p class="font-mono text-xs text-gold-soft">{String(i + 1).padStart(2, '0')} / {guide.tools.length} tools</p>
+                        <h2 class="mt-3 text-xl leading-tight font-semibold">{guide.title}</h2>
+                        <p class="mt-2 text-sm text-ink-secondary">{guide.description}</p>
+                        <span aria-hidden="true" class="mt-4 inline-block text-sm font-semibold text-gold-soft group-hover:underline">Read guide →</span>
+                    </a>
+                </li>
+            ))}
+        </ul>
+        <WorkflowGuideCta />
+    </main>
+</BaseLayout>

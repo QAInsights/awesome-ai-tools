@@ -52,6 +52,12 @@ describe('analytics event catalog', () => {
         })?.subject).toBe('');
     });
 
+    test('attributes sign-up starts to the workflow guide CTA', () => {
+        expect(sanitizeAuthTrigger('workflow_guide')).toBe('workflow_guide');
+        expect(normalizeClientEvent({ event: EVENTS.SIGNIN_STARTED, trigger: 'workflow_guide', provider: 'github' }))
+            .toMatchObject({ trigger: 'workflow_guide', provider: 'github' });
+    });
+
     test('accepts ad-close prompt events keyed by ad style', () => {
         expect(normalizeClientEvent({ event: EVENTS.AD_CLOSED, trigger: 'stickybox', subject: 'cursor' }))
             .toMatchObject({ event: 'ad_closed', trigger: 'stickybox', subject: '' });
