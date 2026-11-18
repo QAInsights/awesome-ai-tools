@@ -13849,5 +13849,89 @@
       "CLI"
     ],
     "lastUpdated": "2026-11-17"
+  },
+  {
+    "slug": "anthropic-skills",
+    "name": "Anthropic Skills",
+    "company": "Anthropic",
+    "pricing": "free",
+    "pricingDetail": "Free. The skills are published under Apache-2.0 (the docx, pdf, pptx and xlsx skills moved to Apache-2.0 on Nov 6, 2026). Running them needs Claude Code, a paid Claude.ai plan or the Claude API, which are billed separately.",
+    "description": "Anthropic's official public repository of Agent Skills for Claude. Each skill is a folder with a SKILL.md and optional scripts that Claude loads on demand, covering development tasks, the Office document skills behind Claude's file creation, and creative and enterprise examples, alongside the Agent Skills specification and a skill template.",
+    "keyFeatures": [
+      "Register as a Claude Code plugin marketplace with `/plugin marketplace add anthropics/skills`",
+      "Install `document-skills` or `example-skills` plugins from the `anthropic-agent-skills` marketplace",
+      "Development skills including mcp-builder, webapp-testing, frontend-design, claude-api and skill-creator",
+      "docx, pdf, pptx and xlsx skills that power Claude's document creation and editing",
+      "Agent Skills specification and a template skill for authoring your own",
+      "Skills also usable in Claude.ai and through the Claude API Skills endpoints"
+    ],
+    "bestFor": "Claude Code users and skill authors who want Anthropic's reference skills and the canonical examples of how to structure SKILL.md packages.",
+    "notIdealFor": "Teams wanting a supported product; the repository says its skills are for demonstration and education and behaviour in Claude may differ.",
+    "recentUpdates": "The Office skills moved to the Apache-2.0 license on Nov 6, 2026, and the docx, pptx, xlsx and pdf skills were updated on Nov 14 and Nov 16, 2026; the repository has about 197,000 GitHub stars.",
+    "verdict": "The reference skills pack from the company that created Agent Skills; the best starting point for learning the format and for document skills, though it is a sample library rather than a curated engineering toolkit.",
+    "tags": [
+      "agent-skills",
+      "claude-code",
+      "anthropic",
+      "open-source",
+      "developer-productivity"
+    ],
+    "lastUpdated": "2026-11-18"
+  },
+  {
+    "slug": "stitch-skills",
+    "name": "Stitch Skills",
+    "company": "Google Labs",
+    "pricing": "free",
+    "pricingDetail": "Free and open-source (Apache-2.0). The skills call Google Stitch through the Stitch MCP server, which must be set up with your own Stitch credentials.",
+    "description": "Google Labs' official library of Agent Skills and plugins for Google Stitch. It lets coding agents such as Codex, Claude Code, Cursor, Antigravity, Gemini CLI and OpenCode generate and edit Stitch designs, extract design systems and turn screens into production front-end code via the Stitch MCP server.",
+    "keyFeatures": [
+      "Three plugins: stitch-design, stitch-build and stitch-utilities",
+      "Generate designs, convert code to designs and manage design systems and DESIGN.md",
+      "Build skills for React components, Vite dashboards, React Native, shadcn/ui and Remotion",
+      "stitch-loop, enhance-prompt, site-md and taste-design utility skills",
+      "Install via Codex plugin marketplace, `npx plugins add` for Claude Code and Cursor, or `npx skills add google-labs-code/stitch-skills`",
+      "Follows the Agent Skills open standard, with manual setup documented for OpenCode"
+    ],
+    "bestFor": "Front-end developers who design screens in Google Stitch and want their coding agent to move designs into code and keep design systems in sync.",
+    "notIdealFor": "Teams that do not use Google Stitch, since every skill depends on the Stitch MCP server.",
+    "recentUpdates": "Released v1.0 on May 18, 2026; documentation for the site-md skill was added on Nov 17, 2026, and the repository has about 10,300 GitHub stars.",
+    "verdict": "The official bridge between Google Stitch and coding agents; well packaged across Codex, Claude Code and Cursor, but only useful if Stitch is part of your design workflow.",
+    "tags": [
+      "agent-skills",
+      "design-to-code",
+      "mcp",
+      "google",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-18"
+  },
+  {
+    "slug": "ui-ux-pro-max",
+    "name": "UI UX Pro Max",
+    "company": "NextLevelBuilder",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under the MIT license, installed as a Claude Code plugin or with the `ui-ux-pro-max-cli` npm package. Model usage is billed by the coding agent you run it in.",
+    "description": "UI UX Pro Max is a design-intelligence skill for AI coding agents. Its Design System Generator searches curated data on product types, UI styles, palettes, landing patterns and font pairings, applies reasoning rules and anti-patterns, and returns a complete design system plus stack-specific UI and UX guidelines.",
+    "keyFeatures": [
+      "Design System Generator combining product, style, color, landing-pattern and typography searches",
+      "BM25 search with reasoning rules and industry anti-pattern filtering",
+      "Stack-specific guidelines for 22 stacks including React, Next.js, Vue, SwiftUI, Flutter and Jetpack Compose",
+      "Pre-delivery accessibility and interaction checklist",
+      "Claude Code plugin marketplace install or `uipro init --ai <agent>` via `npm install -g ui-ux-pro-max-cli`",
+      "Supports Cursor, Windsurf, Antigravity, Copilot, Kiro, Codex, Gemini CLI, OpenCode and many more agents"
+    ],
+    "bestFor": "Developers using coding agents to build landing pages, dashboards and apps who want agents to follow a consistent, researched design system.",
+    "notIdealFor": "Teams with an established in-house design system that the agent should follow instead of generated recommendations.",
+    "recentUpdates": "v2.15.0 (Aug 13, 2026) reworked search routing and expanded the guideline catalog; commits on Nov 18, 2026 added web map UX guidelines and GIS product types. The repository has about 151,000 GitHub stars.",
+    "verdict": "One of the most widely adopted design skills for coding agents, with broad agent coverage and a deep data set; best treated as a strong default for teams without their own design system.",
+    "tags": [
+      "agent-skills",
+      "design",
+      "ui-ux",
+      "developer-productivity",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-18"
   }
 ]

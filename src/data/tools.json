@@ -2018,5 +2018,17 @@
   {
     "companyName": "Traces (Vercel)",
     "toolName": "Traces"
+  },
+  {
+    "companyName": "Anthropic",
+    "toolName": "Anthropic Skills"
+  },
+  {
+    "companyName": "Google Labs",
+    "toolName": "Stitch Skills"
+  },
+  {
+    "companyName": "NextLevelBuilder",
+    "toolName": "UI UX Pro Max"
   }
 ]

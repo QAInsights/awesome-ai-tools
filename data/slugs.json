@@ -2832,6 +2832,24 @@
     "category": "Developer Productivity & Workflow"
   },
   {
+    "slug": "anthropic-skills",
+    "name": "Anthropic Skills",
+    "company": "Anthropic",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "stitch-skills",
+    "name": "Stitch Skills",
+    "company": "Google Labs",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "ui-ux-pro-max",
+    "name": "UI UX Pro Max",
+    "company": "NextLevelBuilder",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
     "slug": "entire",
     "name": "Entire",
     "company": "Entire",
