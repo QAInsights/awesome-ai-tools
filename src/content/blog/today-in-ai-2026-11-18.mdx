@@ -1,0 +1,78 @@
+---
+title: "OpenAI ships GPT-6.2 Astra as Microsoft drops seven MAI models"
+description: "OpenAI cuts Astra API prices 20%, Microsoft answers with seven MAI models at Ignite, AMD closes World Labs, and Google open-sources ABFS for giant repos."
+pubDate: 2026-11-18
+tags: ["news","today-in-ai","openai","microsoft","models","pricing","agents","funding"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-11-18 UTC.
+
+Two frontier labs shipped model families on the same day, and the fight is now about cost per task rather than raw scores.
+
+## OpenAI ships GPT-6.2 Astra and Sol with 20% cheaper tokens
+
+**What happened:** OpenAI released GPT-6.2 Astra for hard professional work and GPT-6.2 Sol for everyday tasks. Astra's API input and output prices are 20% lower than GPT-6 Astra's, with cached input at $0.40 per million tokens. OpenAI says Astra beats Claude Fable 5.2 by 5.5 points on Agents' Last Exam at 5% of the cost.
+
+**Why it matters:** Cheaper frontier tokens and a 60% cache discount change the math on long agent runs, so recheck your per-task budgets against the new prices.
+
+[Source: OpenAI](<https://openai.com/index/introducing-gpt-6-2-astra-sol/>)
+
+## Microsoft launches seven MAI models at Ignite, led by cheap coding
+
+**What happened:** Microsoft AI released seven models, including MAI Code 2, MAI Code 2 Flash, MAI Image 2.7, MAI Realtime 1 and MAI Cyber 2 Flash. Microsoft says MAI Code 2 hits 98% of GPT-6.1 Sol's coding quality at 40% of the price, and that Maia 200, its second-generation accelerator, is now in production.
+
+**Why it matters:** A second price-performance option for routine coding and high-volume edits gives teams leverage when routing work between a frontier model and a cheap one.
+
+[Source: Microsoft AI](<https://microsoft.ai/news/microsoft-ignite-2026/>)
+
+## AMD closes its $8.2 billion World Labs acquisition
+
+**What happened:** AMD completed its purchase of World Labs, the world-model startup founded by Fei-Fei Li in 2024, paying roughly $8.2 billion entirely in stock. Li becomes chief scientist at AMD and reports to CEO Lisa Su. The deal was announced in late September.
+
+**Why it matters:** World Labs' Marble models already train and run on AMD GPUs, so the acquisition ties 3D world-model tooling more tightly to AMD hardware.
+
+[Source: Techzine Global](<https://www.techzine.eu/news/applications/145860/amd-completes-acquisition-of-world-labs-to-bolster-its-spatial-intelligence/>)
+
+## Google open-sources ABFS to speed up giant Git checkouts
+
+**What happened:** Google released ABFS, a content-addressable build file service, on GitHub. On Android it cut source checkout from about 36 minutes to under 8 seconds and full builds from about 80 minutes to just over 2 minutes, and it enables parallel agentic workflows across workspaces.
+
+**Why it matters:** If your agents spend their first minutes syncing a monorepo, a lazy-loading filesystem layer is the difference between fast iteration and idle waiting.
+
+[Source: Google Developers Blog](<https://developers.googleblog.com/accelerating-development-for-massive-git-repositories/>)
+
+## GitHub details the Agent Host Protocol for cross-device sessions
+
+**What happened:** GitHub published how it built the open Agent Host Protocol, which keeps a Copilot agent session alive across VS Code, the Copilot app, mobile and the cloud. It was built first in VS Code and adopted across GitHub, replacing per-client integrations that died with the editor window.
+
+**Why it matters:** An open protocol for session continuity means you can build your own client for a long-running agent instead of writing a one-off integration per app.
+
+[Source: GitHub](<https://github.blog/engineering/engineering-principles/building-the-agent-host-protocol-for-sessions-that-continue-across-devices/>)
+
+## Workday moves to buy Honeydew for governed agent definitions
+
+**What happened:** Workday announced its intent to acquire Honeydew, a semantic layer for AI and business intelligence. Honeydew's semantic compiler turns business definitions into governed queries so agents and BI tools return consistent answers within each user's permissions.
+
+**Why it matters:** If your agents query enterprise data, the semantic layer is where inconsistent definitions get fixed, and this deal pushes that layer into an HR and finance platform.
+
+[Source: Workday](<https://www.prnewswire.com/news-releases/workday-announces-intent-to-acquire-honeydew-a-semantic-layer-for-ai-and-business-intelligence-302943208.html>)
+
+## Model ML raises $250 million at a $1.5 billion valuation
+
+**What happened:** Model ML raised a $250 million Series B co-led by General Atlantic and QED Investors at a $1.5 billion valuation, bringing total funding to $350 million. The company says its annual recurring revenue grew 12x year on year in the third quarter of 2026.
+
+**Why it matters:** Money keeps flowing to vertical agents for finance work, a segment where the product is judged on whether the analysis is already done before the user asks.
+
+[Source: General Atlantic](<https://www.generalatlantic.com/media-article/model-ml-raises-250-million-at-1-5-billion-valuation-18-months-after-launching-from-stealth/>)
+
+## Sources
+
+- [OpenAI](<https://openai.com/index/introducing-gpt-6-2-astra-sol/>)
+- [Microsoft AI](<https://microsoft.ai/news/microsoft-ignite-2026/>)
+- [Techzine Global](<https://www.techzine.eu/news/applications/145860/amd-completes-acquisition-of-world-labs-to-bolster-its-spatial-intelligence/>)
+- [Google Developers Blog](<https://developers.googleblog.com/accelerating-development-for-massive-git-repositories/>)
+- [GitHub](<https://github.blog/engineering/engineering-principles/building-the-agent-host-protocol-for-sessions-that-continue-across-devices/>)
+- [Workday](<https://www.prnewswire.com/news-releases/workday-announces-intent-to-acquire-honeydew-a-semantic-layer-for-ai-and-business-intelligence-302943208.html>)
+- [General Atlantic](<https://www.generalatlantic.com/media-article/model-ml-raises-250-million-at-1-5-billion-valuation-18-months-after-launching-from-stealth/>)
