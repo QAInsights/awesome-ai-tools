@@ -23,7 +23,7 @@ const subjectPolicies = {
     },
 };
 
-export const AUTH_TRIGGERS = Object.freeze(['sidebar', 'favorite_heart', 'follow_bell', 'zap_btn', 'ad_close', 'stack_add', 'news_cta', 'browse_gate', 'one_tap', 'tool_email', 'directory_cta']);
+export const AUTH_TRIGGERS = Object.freeze(['sidebar', 'favorite_heart', 'follow_bell', 'zap_btn', 'ad_close', 'stack_add', 'news_cta', 'browse_gate', 'one_tap', 'tool_email', 'directory_cta', 'workflow_guide']);
 export const AD_STYLES = Object.freeze(['stickybox', 'fixedfooter']);
 export const BROWSE_GATE_SURFACES = Object.freeze(['wall', 'nudge']);
 export const OUTBOUND_TRIGGERS = Object.freeze(['tool_card', 'tool_detail', 'comparison', 'category', 'unknown']);
