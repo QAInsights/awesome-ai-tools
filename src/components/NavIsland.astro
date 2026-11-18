@@ -21,6 +21,7 @@ type NavItem = { key: string; href: string; label: string; desc?: string; icon: 
 
 const ICONS: Record<string, string> = {
     grid: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+    bookmark: '<path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.75L6 21V4.75Z"/>',
     news: '<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/>',
     trend: '<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
     award: '<circle cx="12" cy="8" r="6"/><path d="M15.48 12.89 17 22l-5-3-5 3 1.52-9.11"/>',
@@ -43,6 +44,7 @@ const ICONS: Record<string, string> = {
 
 const browse: NavItem[] = [
     { key: 'directory', href: '/', label: 'Directory', desc: 'Every curated AI coding tool', icon: 'grid' },
+    { key: 'favorites', href: '/favorites', label: 'Favorites', desc: 'Your bookmarked tools', icon: 'bookmark' },
     { key: 'news', href: '/news', label: 'Today in AI', desc: 'Daily model and tooling briefs', icon: 'news' },
     { key: 'trending', href: '/trending', label: 'Trending this week', desc: 'Most-zapped tools right now', icon: 'trend' },
     { key: 'best', href: '/best', label: 'Best AI Tools', desc: 'Ranked roundups by use case', icon: 'award' },
@@ -70,6 +72,7 @@ const more: NavItem[] = [
 ];
 
 const SECTION_PREFIXES: [string, string][] = [
+    ['/favorites', 'favorites'],
     ['/news', 'news'],
     ['/trending', 'trending'],
     ['/best', 'best'],

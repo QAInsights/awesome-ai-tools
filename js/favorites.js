@@ -1,9 +1,11 @@
 import { EVENTS } from '../src/lib/analytics-events.js';
 import { analytics } from './analytics-client.js';
-import { authAttribution } from './auth-attribution.js';
 import { createFavoritesStore } from './favorites-store.js';
+import { createGuestFavoritesStore, GUEST_FAVORITES_KEY } from './guest-favorites-store.js';
 
 const store = createFavoritesStore();
+export const guestFavorites = createGuestFavoritesStore();
+const guestListeners = new Set();
 let initialized = false;
 let activeUserId = null;
 let syncGeneration = 0;
@@ -13,17 +15,17 @@ let context = {
     onToggle: () => {},
 };
 
-function buttonLabel(button, active, authenticated) {
+function buttonLabel(button, active) {
     const toolName = button.dataset.toolName || 'tool';
-    if (!authenticated) return `Sign in to save ${toolName}`;
     return active ? `Remove ${toolName} from favorites` : `Save ${toolName} to favorites`;
 }
 
 export function refreshFavoriteButtons(root = document) {
     const authenticated = context.isAuthenticated();
+    const guestSaved = authenticated ? null : new Set(guestFavorites.slugs());
     root.querySelectorAll('.favorite-btn[data-tool-slug]').forEach(button => {
-        const active = authenticated && store.has(button.dataset.toolSlug);
-        const label = buttonLabel(button, active, authenticated);
+        const active = (guestSaved ?? store).has(button.dataset.toolSlug);
+        const label = buttonLabel(button, active);
         button.classList.toggle('favorited', active);
         button.setAttribute('aria-pressed', active ? 'true' : 'false');
         button.setAttribute('aria-label', label);
@@ -35,6 +37,16 @@ export function refreshFavoriteButtons(root = document) {
     });
 }
 
+function guestFavoritesChanged() {
+    refreshFavoriteButtons();
+    guestListeners.forEach(listener => listener());
+}
+
+export function subscribeGuestFavorites(listener) {
+    guestListeners.add(listener);
+    return () => guestListeners.delete(listener);
+}
+
 export function initFavorites(options = {}) {
     context = { ...context, ...options };
     if (initialized) {
@@ -44,6 +56,12 @@ export function initFavorites(options = {}) {
 
     initialized = true;
     store.subscribe(() => refreshFavoriteButtons());
+    document.defaultView?.addEventListener('storage', event => {
+        if (event.key === GUEST_FAVORITES_KEY || event.key === null) guestFavoritesChanged();
+    });
+    document.defaultView?.addEventListener('pageshow', event => {
+        if (event.persisted) guestFavoritesChanged();
+    });
     document.addEventListener('click', async event => {
         const button = event.target.closest?.('.favorite-btn[data-tool-slug]');
         if (!button) return;
@@ -51,9 +69,19 @@ export function initFavorites(options = {}) {
         event.stopPropagation();
 
         if (!context.isAuthenticated()) {
-            const subject = button.dataset.toolSlug;
-            analytics.track(EVENTS.GATE_BLOCKED, { trigger: 'favorite_heart', subject });
-            authAttribution.open('favorite_heart');
+            const feedback = document.getElementById?.('guestFavoritesFeedback');
+            try {
+                const added = guestFavorites.toggle(button.dataset.toolSlug);
+                if (feedback) feedback.textContent = '';
+                guestFavoritesChanged();
+                if (added) analytics.track(EVENTS.GUEST_FAVORITE_ADDED);
+            } catch (error) {
+                if (feedback) {
+                    feedback.textContent = error instanceof RangeError
+                        ? error.message
+                        : 'Could not update favorites in this browser. Check your browser storage or sign in to save to your account.';
+                }
+            }
             return;
         }
 
@@ -76,6 +104,13 @@ export async function loadFavorites() {
     const result = await store.load();
     refreshFavoriteButtons();
     return result;
+}
+
+export async function importGuestFavorites(slugs, expectedUserId) {
+    if (activeUserId !== expectedUserId || !context.isAuthenticated()) {
+        return { authenticated: false, favorites: [], stale: true };
+    }
+    return store.load({ slugs, expectedUserId });
 }
 
 export async function syncFavorites(user) {

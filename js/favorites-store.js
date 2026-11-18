@@ -38,15 +38,20 @@ export function createFavoritesStore({ request = fetch } = {}) {
         return { authenticated, favorites: records(), stale: true };
     }
 
-    async function load() {
+    async function load(importPayload = null) {
         const loadGeneration = generation;
         const loadId = ++latestLoad;
         const loadRevision = revision;
+        const options = importPayload
+            ? {
+                method: 'POST',
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                body: JSON.stringify(importPayload),
+            }
+            : { headers: { 'Accept': 'application/json' } };
         let response;
         try {
-            response = await request('/api/favorites', {
-                headers: { 'Accept': 'application/json' },
-            });
+            response = await request('/api/favorites', options);
         } catch (error) {
             if (!isCurrentLoad(loadGeneration, loadId, loadRevision)) return staleLoad(true);
             throw error;
@@ -59,7 +64,7 @@ export function createFavoritesStore({ request = fetch } = {}) {
             return { authenticated: false, favorites: [], stale: false };
         }
         if (!response.ok) {
-            const error = new Error('Unable to load favorites');
+            const error = new Error(importPayload ? 'Unable to import favorites' : 'Unable to load favorites');
             error.status = response.status;
             throw error;
         }

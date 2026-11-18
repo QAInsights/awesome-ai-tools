@@ -28,6 +28,12 @@ describe('analytics event catalog', () => {
         expect(sanitizeAuthTrigger('first_run')).toBe('sidebar');
     });
 
+    test('guest favorites metrics do not capture tool slugs', () => {
+        expect(normalizeClientEvent({ event: EVENTS.GUEST_FAVORITE_ADDED, subject: 'cursor' }))
+            .toMatchObject({ event: 'guest_favorite_added', subject: '' });
+        expect(normalizeClientEvent({ event: EVENTS.GUEST_FAVORITES_IMPORTED })).toBeNull();
+    });
+
     test('accepts onboarding events with whitelisted triggers and step subjects', () => {
         expect(normalizeClientEvent({
             event: EVENTS.ONBOARDING_SHOWN,
