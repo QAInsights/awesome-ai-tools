@@ -1,10 +1,34 @@
-import { describe, expect, test } from 'bun:test';
+import { describe, expect, mock, test } from 'bun:test';
 
 // Module top-level touches window/document; stub them before importing.
+let handleClick;
+const clickSignIn = mock(() => {});
 globalThis.window = { location: { pathname: '/', search: '', hostname: 'ai.dosa.dev', href: 'https://ai.dosa.dev/' } };
-globalThis.document = { addEventListener() {}, referrer: '' };
+globalThis.document = {
+    addEventListener(type, listener) {
+        if (type === 'click') handleClick = listener;
+    },
+    getElementById(id) {
+        if (id === 'signInTriggerBtn') return { click: clickSignIn };
+        if (id === 'signInModal') return {};
+        return null;
+    },
+    referrer: '',
+};
 
 const { badgeReferralEvent, visitEvent } = await import('./site-analytics.js');
+
+test('a workflow guide button opens the existing sign-in modal', () => {
+    const cta = { dataset: { authTrigger: 'workflow_guide' } };
+    const preventDefault = mock(() => {});
+    handleClick({
+        target: { closest: selector => selector === '[data-auth-trigger]' ? cta : null },
+        preventDefault,
+    });
+
+    expect(preventDefault).toHaveBeenCalledTimes(1);
+    expect(clickSignIn).toHaveBeenCalledTimes(1);
+});
 
 describe('badgeReferralEvent', () => {
     test('returns a tool_page event for a tool URL with ref=badge', () => {

@@ -71,10 +71,10 @@ function placement(anchor) {
 }
 
 document.addEventListener('click', event => {
-    const authLink = event.target.closest?.('a[data-auth-trigger]');
-    if (authLink) {
+    const authTrigger = event.target.closest?.('[data-auth-trigger]');
+    if (authTrigger) {
         event.preventDefault();
-        authAttribution.open(authLink.dataset.authTrigger);
+        authAttribution.open(authTrigger.dataset.authTrigger);
         return;
     }
 
