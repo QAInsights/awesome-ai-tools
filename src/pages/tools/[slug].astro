@@ -274,7 +274,7 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                             <div class="fo-cta fo-fade" style="--d:.85s">
                                 {hasSiteLink && <a class="fo-btn" href={siteHref} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${displayName} website`}>Visit site <i aria-hidden="true">→</i></a>}
                                 <div class="fo-save">
-                                    <button class="favorite-btn detail" type="button" data-tool-slug={tool.slug} data-tool-name={displayName} aria-label={`Sign in to save ${displayName}`} aria-pressed="false" title={`Sign in to save ${displayName}`}>
+                                    <button class="favorite-btn detail" type="button" data-tool-slug={tool.slug} data-tool-name={displayName} aria-label={`Save ${displayName} to favorites`} aria-pressed="false" title={`Save ${displayName} to favorites`}>
                                         <svg class="favorite-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                                             <path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.75L6 21V4.75Z"/>
                                         </svg>

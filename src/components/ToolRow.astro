@@ -54,7 +54,7 @@ const displayNotes = isLong ? fullNotes.substring(0, 100) + '...' : fullNotes;
                 <a href={detailHref} class="flex-1 min-w-0 text-white no-underline transition-all duration-200 hover:bg-gradient-to-r hover:from-[#a78bfa] hover:via-[#22d3ee] hover:to-[#a78bfa] hover:bg-[length:200%_auto] hover:bg-clip-text hover:text-transparent hover:animate-[shift_3s_linear_infinite]" aria-label={`View details for ${tool.name}`}>
                     {tool.name}
                 </a>
-                <button class="favorite-btn" type="button" data-tool-slug={tool.slug} data-tool-name={tool.name} aria-label={`Sign in to save ${tool.name}`} aria-pressed="false" title={`Sign in to save ${tool.name}`}>
+                <button class="favorite-btn" type="button" data-tool-slug={tool.slug} data-tool-name={tool.name} aria-label={`Save ${tool.name} to favorites`} aria-pressed="false" title={`Save ${tool.name} to favorites`}>
                     <svg class="favorite-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                         <path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.75L6 21V4.75Z"/>
                     </svg>

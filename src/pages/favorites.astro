@@ -27,7 +27,7 @@ const toolsJson = safeJsonForScript(tools);
                 <div>
                     <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-2">Your library</p>
                     <h1 class="text-2xl md:text-3xl font-semibold tracking-tight">Favorite tools</h1>
-                    <p class="text-[#a3a3a3] text-[15px] mt-2">Private bookmarks saved to your account.</p>
+                    <p class="text-[#a3a3a3] text-[15px] mt-2">Bookmark tools you want to come back to.</p>
                 </div>
                 <span id="favoriteCount" class="hidden font-mono text-[12px] text-[#c9aa6e] border border-[#3a3225] bg-[#211c16] rounded-full px-3 py-1.5"></span>
             </div>
@@ -39,11 +39,25 @@ const toolsJson = safeJsonForScript(tools);
             Loading your favorites…
         </div>
 
-        <div id="favoritesSignedOut" class="hidden border border-[#222] bg-white/[0.02] rounded-xl p-7">
-            <h2 class="text-lg font-semibold mb-2">Sign in to see your favorites</h2>
-            <p class="text-[#a3a3a3] text-[14px] mb-5">Favorites are private and sync across your devices.</p>
-            <a href="/?signin=1" data-auth-trigger="favorite_heart" class="inline-flex items-center py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 transition-colors">Sign in</a>
+        <div id="favoritesSignedOut" class="hidden mb-4 border border-[#222] bg-white/[0.02] rounded-xl p-5">
+            <h2 class="text-lg font-semibold mb-2">Saved in this browser</h2>
+            <p class="text-[#a3a3a3] text-[14px] mb-4">Sign in to keep these favorites across devices. You choose whether to sync them.</p>
+            <a href="/?signin=1" data-auth-trigger="favorite_heart" class="inline-flex items-center py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 transition-colors">Sign in to sync</a>
         </div>
+
+        <section id="guestFavoritesImport" aria-labelledby="guestFavoritesImportTitle" class="hidden mb-4 border border-[#3a3225] bg-[#211c16] rounded-xl p-5">
+            <h2 id="guestFavoritesImportTitle" class="text-lg font-semibold mb-2">Sync favorites from this browser?</h2>
+            <p class="text-[#a3a3a3] text-[14px] mb-4">Add these bookmarks to your account. Your existing favorites won’t change.</p>
+            <details class="mb-4 text-sm">
+                <summary class="cursor-pointer">View browser favorites</summary>
+                <ul id="guestFavoritesImportList" class="list-disc pl-5 mt-2 text-[#a3a3a3]"></ul>
+            </details>
+            <div class="flex flex-wrap gap-3">
+                <button id="guestFavoritesImportConfirm" type="button" class="py-2.5 px-4 bg-white text-black text-sm font-semibold rounded-md hover:bg-gray-200 disabled:opacity-60">Sync favorites</button>
+                <button id="guestFavoritesImportDismiss" type="button" class="py-2.5 px-4 border border-[#666] text-sm font-semibold rounded-md hover:bg-white/5 disabled:opacity-60">Not now</button>
+            </div>
+        </section>
+        <p id="guestFavoritesImportStatus" role="status" class="empty:sr-only mb-4 text-sm text-[#e2c48a]"></p>
 
         <div id="favoritesError" class="hidden border border-red-400/20 bg-red-400/[0.06] rounded-xl p-6 text-red-200">
             Favorites could not be loaded. Please refresh and try again.
