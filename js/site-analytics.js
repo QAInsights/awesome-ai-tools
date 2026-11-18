@@ -1,6 +1,7 @@
 import { EVENTS, REF_SOURCES } from '../src/lib/analytics-events.js';
 import { analytics } from './analytics-client.js';
 import { authAttribution } from './auth-attribution.js';
+import { initializeDirectoryShare } from './directory-share.js';
 import { initPostHog } from './posthog.js';
 
 function currentToolSlug() {
@@ -47,6 +48,7 @@ function isNewSession() {
 
 if (typeof window !== 'undefined') {
     initPostHog();
+    initializeDirectoryShare();
 
     if (isNewSession()) {
         analytics.track(EVENTS.VISIT, visitEvent(document.referrer, window.location.search, window.location.hostname));
@@ -71,10 +73,10 @@ function placement(anchor) {
 }
 
 document.addEventListener('click', event => {
-    const authLink = event.target.closest?.('a[data-auth-trigger]');
-    if (authLink) {
+    const authTrigger = event.target.closest?.('[data-auth-trigger]');
+    if (authTrigger) {
         event.preventDefault();
-        authAttribution.open(authLink.dataset.authTrigger);
+        authAttribution.open(authTrigger.dataset.authTrigger);
         return;
     }
 

@@ -24,6 +24,8 @@ import FolioPlans from '../../components/folio/FolioPlans.astro';
 import FolioFaq from '../../components/folio/FolioFaq.astro';
 import FolioScroll from '../../components/folio/FolioScroll.astro';
 import NewsSubscribeCta from '../../components/NewsSubscribeCta.astro';
+import DirectoryShare from '../../components/DirectoryShare.astro';
+import DirectorySignupCta from '../../components/DirectorySignupCta.astro';
 import { buildToolFaqs } from '../../lib/tool-faqs';
 import { buildToolReview, buildToolSeo } from '../../lib/tool-seo';
 import { blogPostsLinkingTo } from '../../lib/alternatives';
@@ -299,6 +301,7 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                                         </svg>
                                         <span data-follow-label>Follow</span>
                                     </button>
+                                    <DirectoryShare canonical={pageUrl} kind="tool" slug={tool.slug} name={displayName} />
                                 </div>
                                 {enriched && (
                                     <p class="fo-follow-note">Follow {displayName} to get an email when its listing changes, such as new pricing or features. One digest a day at most, and you can unsubscribe anytime.</p>
@@ -445,16 +448,7 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                     </section>
                 )}
 
-                <section class="fo-track" aria-label="Track this tool" data-signed-out-only>
-                    <div>
-                        <b>Track {displayName} in your AI stack</b>
-                        <p>Favorite this tool to revisit it later, or Zap it to contribute to the public vote count.</p>
-                    </div>
-                    <div>
-                        <a class="fo-link" href={`/category/${getCategorySlug(tool.categoryShort)}`}>Compare {tool.categoryShort}</a>
-                        <a class="fo-btn" href="/?signin=1" data-auth-trigger="favorite_heart">Sign in to save</a>
-                    </div>
-                </section>
+                <DirectorySignupCta toolName={displayName} class="my-8" />
 
                 {hasSiteLink && (
                     <footer class="fo-end">

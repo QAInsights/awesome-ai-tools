@@ -15,7 +15,12 @@ export const AUTH_RETURN_PATHS = Object.freeze([
 ]);
 
 const authReturnPaths = new Set(AUTH_RETURN_PATHS);
+const directoryReturnPath = /^\/(?:tools|category)\/([a-z0-9]+(?:-[a-z0-9]+)*)\/?$/;
 
 export function resolveAuthReturnPath(path) {
-    return typeof path === 'string' && authReturnPaths.has(path) ? path : '/';
+    if (typeof path !== 'string') return '/';
+    if (authReturnPaths.has(path)) return path;
+    const match = path.match(directoryReturnPath);
+    if (match && match[0] === path && match[1].length <= 128) return path.replace(/\/$/, '');
+    return '/';
 }

@@ -1,0 +1,31 @@
+---
+interface Props {
+    toolName?: string;
+    class?: string;
+}
+
+const { toolName, class: className } = Astro.props;
+---
+
+<aside
+    data-signed-out-only
+    hidden
+    aria-label="Create a free account"
+    class:list={['rounded-xl border border-border bg-white/[0.02] p-4 sm:p-5', className]}
+>
+    <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+            <h2 class="font-semibold text-ink">Build your AI tool shortlist</h2>
+            <p class="mt-1 text-sm leading-relaxed text-ink-secondary">
+                {toolName ? `Keep ${toolName} and other favorites in one place, synced across devices.` : 'Save tools as you browse and revisit your favorites on any device.'}
+            </p>
+        </div>
+        <button
+            type="button"
+            data-auth-trigger="directory_cta"
+            class="inline-flex min-h-11 cursor-pointer items-center justify-center rounded-full bg-gold-soft px-4 text-sm font-semibold text-page transition-colors hover:bg-gold-hi focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+        >
+            Create a free account
+        </button>
+    </div>
+</aside>
