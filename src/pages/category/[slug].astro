@@ -9,6 +9,8 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
+import DirectoryShare from '../../components/DirectoryShare.astro';
+import DirectorySignupCta from '../../components/DirectorySignupCta.astro';
 import { formatDate, getCategoriesDetailed, maxLastUpdated, type CategoryInfo, type Tool } from '../../lib/tools';
 import { robotsFor } from '../../lib/indexing';
 import { getAlternativesPageTools, humanizePricing } from '../../lib/compare';
@@ -137,10 +139,15 @@ const jsonLd = JSON.stringify({
                     <p class="text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">
                         {category.description}
                     </p>
-                    <div class="font-mono text-[12px] text-[#737373] tracking-wide">
-                        {count} tools{enrichedCount > 0 && ` · ${enrichedCount} with full reviews`}{freeCount > 0 && ` · ${freeCount} free or open source`}{lastUpdated && <> · Updated <time datetime={lastUpdated}>{formatDate(lastUpdated)}</time></>}
+                    <div class="flex flex-wrap items-start gap-x-4 gap-y-2">
+                        <div class="min-h-11 flex items-center font-mono text-[12px] text-ink-secondary tracking-wide">
+                            <span>{count} tools{enrichedCount > 0 && ` · ${enrichedCount} with full reviews`}{freeCount > 0 && ` · ${freeCount} free or open source`}{lastUpdated && <> · Updated <time datetime={lastUpdated}>{formatDate(lastUpdated)}</time></>}</span>
+                        </div>
+                        <DirectoryShare canonical={pageUrl} kind="category" slug={category.slug} name={category.name} />
                     </div>
                 </header>
+
+                <DirectorySignupCta />
 
                 <!-- Tool list (pre-rendered, no JS required) -->
                 <section aria-label={`${category.name} tools`} class="flex flex-col">

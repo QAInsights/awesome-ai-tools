@@ -13,6 +13,7 @@ globalThis.document = {
         if (id === 'signInModal') return {};
         return null;
     },
+    querySelectorAll: () => [],
     referrer: '',
 };
 
@@ -63,6 +64,8 @@ describe('visitEvent', () => {
     test('maps ?ref= to a known source or other', () => {
         expect(visitEvent('', '?ref=badge', 'ai.dosa.dev').trigger).toBe('badge');
         expect(visitEvent('', '?ref=Newsletter', 'ai.dosa.dev').trigger).toBe('newsletter');
+        expect(visitEvent('', '?ref=tool_share', 'ai.dosa.dev').trigger).toBe('tool_share');
+        expect(visitEvent('', '?ref=category_share', 'ai.dosa.dev').trigger).toBe('category_share');
         expect(visitEvent('', '?ref=producthunt', 'ai.dosa.dev').trigger).toBe('other');
         expect(visitEvent('', '?utm_source=x', 'ai.dosa.dev').trigger).toBe('');
     });

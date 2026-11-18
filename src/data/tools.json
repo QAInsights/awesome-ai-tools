@@ -2018,5 +2018,25 @@
   {
     "companyName": "Traces (Vercel)",
     "toolName": "Traces"
+  },
+  {
+    "companyName": "Althar",
+    "toolName": "Althar"
+  },
+  {
+    "companyName": "Ken Kocienda",
+    "toolName": "Tug"
+  },
+  {
+    "companyName": "MDiRi",
+    "toolName": "SoduWork"
+  },
+  {
+    "companyName": "Taskless",
+    "toolName": "Taskless"
+  },
+  {
+    "companyName": "Codenotary",
+    "toolName": "AgentMon Live"
   }
 ]

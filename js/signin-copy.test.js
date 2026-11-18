@@ -6,6 +6,7 @@ describe('sign-in modal copy', () => {
     test('matches the trigger the visitor clicked', () => {
         expect(getSignInCopy('favorite_heart').headline).toBe('Save tools to your favorites');
         expect(getSignInCopy('browse_gate').headline).toBe('Unlock the full index');
+        expect(getSignInCopy('directory_cta').headline).toBe('Build your AI tool shortlist');
     });
 
     test('falls back to the default copy for generic or unknown triggers', () => {

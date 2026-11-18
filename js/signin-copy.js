@@ -12,6 +12,10 @@ const SIGN_IN_COPY = Object.freeze({
         headline: 'Save tools to your favorites',
         benefits: ['Keep a shortlist on your Favorites page', 'Synced on every device you sign in on', FULL_INDEX],
     },
+    directory_cta: {
+        headline: 'Build your AI tool shortlist',
+        benefits: ['Save favorites to compare and revisit later', 'Pick up where you left off on any device', FULL_INDEX],
+    },
     zap_btn: {
         headline: 'Zap the tools you rate',
         benefits: ['Your Zap adds to the public vote count', 'See every tool you backed on your Zaps page', FULL_INDEX],
