@@ -2,7 +2,7 @@ import { describe, expect, test } from 'bun:test';
 
 // Module top-level touches window/document; stub them before importing.
 globalThis.window = { location: { pathname: '/', search: '', hostname: 'ai.dosa.dev', href: 'https://ai.dosa.dev/' } };
-globalThis.document = { addEventListener() {}, referrer: '' };
+globalThis.document = { addEventListener() {}, querySelectorAll: () => [], referrer: '' };
 
 const { badgeReferralEvent, visitEvent } = await import('./site-analytics.js');
 
@@ -39,6 +39,8 @@ describe('visitEvent', () => {
     test('maps ?ref= to a known source or other', () => {
         expect(visitEvent('', '?ref=badge', 'ai.dosa.dev').trigger).toBe('badge');
         expect(visitEvent('', '?ref=Newsletter', 'ai.dosa.dev').trigger).toBe('newsletter');
+        expect(visitEvent('', '?ref=tool_share', 'ai.dosa.dev').trigger).toBe('tool_share');
+        expect(visitEvent('', '?ref=category_share', 'ai.dosa.dev').trigger).toBe('category_share');
         expect(visitEvent('', '?ref=producthunt', 'ai.dosa.dev').trigger).toBe('other');
         expect(visitEvent('', '?utm_source=x', 'ai.dosa.dev').trigger).toBe('');
     });

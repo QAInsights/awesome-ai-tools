@@ -23,13 +23,14 @@ const subjectPolicies = {
     },
 };
 
-export const AUTH_TRIGGERS = Object.freeze(['sidebar', 'favorite_heart', 'follow_bell', 'zap_btn', 'ad_close', 'stack_add', 'news_cta', 'browse_gate', 'one_tap', 'tool_email']);
+export const AUTH_TRIGGERS = Object.freeze(['sidebar', 'favorite_heart', 'follow_bell', 'zap_btn', 'ad_close', 'stack_add', 'news_cta', 'browse_gate', 'one_tap', 'tool_email', 'directory_cta']);
 export const AD_STYLES = Object.freeze(['stickybox', 'fixedfooter']);
 export const BROWSE_GATE_SURFACES = Object.freeze(['wall', 'nudge']);
 export const OUTBOUND_TRIGGERS = Object.freeze(['tool_card', 'tool_detail', 'comparison', 'category', 'unknown']);
 export const ONBOARDING_TRIGGERS = Object.freeze(['inline', 'float', 'unknown']);
 export const ONBOARDING_STEP_SUBJECTS = Object.freeze(['favorites', 'follows', 'badge']);
-export const REF_SOURCES = Object.freeze(['badge', 'newsletter', 'social', 'other']);
+export const DIRECTORY_SHARE_SOURCES = Object.freeze({ tool: 'tool_share', category: 'category_share' });
+export const REF_SOURCES = Object.freeze(['badge', 'newsletter', 'social', 'other', ...Object.values(DIRECTORY_SHARE_SOURCES)]);
 export const ANALYTICS_PROVIDERS = Object.freeze(['github', 'google', 'dev', 'email']);
 
 export const EVENTS = Object.freeze({
@@ -59,6 +60,7 @@ export const EVENTS = Object.freeze({
     BROWSE_GATE_DISMISSED: 'browse_gate_dismissed',
     ONE_TAP_PROMPTED: 'one_tap_prompted',
     TOOL_RESULT_EMAILED: 'tool_result_emailed',
+    DIRECTORY_LINK_COPIED: 'directory_link_copied',
     VISIT: 'visit',
 });
 
@@ -89,6 +91,7 @@ export const EVENT_CATALOG = Object.freeze({
     [EVENTS.BROWSE_GATE_DISMISSED]: { client: true, triggers: BROWSE_GATE_SURFACES, subject: subjectPolicies.none },
     [EVENTS.ONE_TAP_PROMPTED]: { client: true, triggers: ['one_tap'], subject: subjectPolicies.none },
     [EVENTS.TOOL_RESULT_EMAILED]: { client: false, triggers: [], subject: subjectPolicies.slug },
+    [EVENTS.DIRECTORY_LINK_COPIED]: { client: true, triggers: Object.values(DIRECTORY_SHARE_SOURCES), subject: subjectPolicies.slug },
     // One per browser session: trigger = ?ref= source, subject = external referrer host.
     [EVENTS.VISIT]: { client: true, triggers: REF_SOURCES, subject: subjectPolicies.host },
 });

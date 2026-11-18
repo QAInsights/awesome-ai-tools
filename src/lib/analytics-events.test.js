@@ -24,6 +24,7 @@ describe('analytics event catalog', () => {
         expect(sanitizeAuthTrigger('stack_add')).toBe('stack_add');
         expect(sanitizeAuthTrigger('ad_close')).toBe('ad_close');
         expect(sanitizeAuthTrigger('news_cta')).toBe('news_cta');
+        expect(sanitizeAuthTrigger('directory_cta')).toBe('directory_cta');
         expect(sanitizeAuthTrigger('first_run')).toBe('sidebar');
     });
 
@@ -65,5 +66,13 @@ describe('analytics event catalog', () => {
         expect(normalizeClientEvent({ event: EVENTS.VISIT, trigger: 'spam', subject: 'https://x.com/path' }))
             .toMatchObject({ event: 'visit', trigger: '', subject: '' });
         expect(normalizeClientEvent({ event: EVENTS.VISIT, subject: 'localhost' })?.subject).toBe('');
+    });
+
+    test('records directory link copies and visits without accepting URLs as subjects', () => {
+        expect(normalizeClientEvent({ event: EVENTS.DIRECTORY_LINK_COPIED, trigger: 'tool_share', subject: 'cursor' }))
+            .toMatchObject({ event: 'directory_link_copied', trigger: 'tool_share', subject: 'cursor' });
+        expect(normalizeClientEvent({ event: EVENTS.DIRECTORY_LINK_COPIED, trigger: 'other', subject: 'https://x.com/' }))
+            .toMatchObject({ trigger: '', subject: '' });
+        expect(normalizeClientEvent({ event: EVENTS.VISIT, trigger: 'category_share' })?.trigger).toBe('category_share');
     });
 });
