@@ -13849,5 +13849,145 @@
       "CLI"
     ],
     "lastUpdated": "2026-11-17"
+  },
+  {
+    "slug": "althar",
+    "name": "Althar",
+    "company": "Althar",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under Apache-2.0. Althar runs each agent under your own sign-in (Claude, ChatGPT, Copilot, Junie, Kimi or Mistral plans, or API keys), so model usage is billed by those providers and there is no Althar account.",
+    "description": "Althar is an open-source desktop orchestration environment for software work with AI agents. Instead of an editor and chat tabs, a coordinator agent turns requests into tasks on a single board, runs a lead agent per task in its own worktree, optionally has a model from another lab review the work, and returns finished tasks with diffs, checks and screenshots.",
+    "keyFeatures": [
+      "Coordinator agent that plans work across one or more repositories and starts tasks",
+      "One board for queued, running, needs-you and settled tasks",
+      "Up to ten parallel tasks, each in its own git worktree",
+      "Optional cross-lab review, such as Claude's work checked by GPT",
+      "Scheduled automations and drafted pull request reviews",
+      "Supports Claude Code, Codex, GitHub Copilot, OpenCode, Junie, Grok Build, Kimi Code and Mistral Vibe"
+    ],
+    "bestFor": "Developers already paying for several agent subscriptions who want a calm, board-based way to run parallel tasks with review built in.",
+    "notIdealFor": "Developers who want a traditional code editor; Althar deliberately has no built-in text editor or chat sidebar.",
+    "recentUpdates": "v0.9.0 shipped on Nov 15, 2026, the same day as its Show HN launch; the author plans remote runners and a mobile companion next.",
+    "verdict": "A promising early open-source take on agent orchestration with a strong review loop; young (v0.9) but actively released.",
+    "tags": [
+      "agent-orchestration",
+      "ide",
+      "multi-agent",
+      "code-review",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-18"
+  },
+  {
+    "slug": "tug",
+    "name": "Tug",
+    "company": "Ken Kocienda",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under the MIT license. Tug runs Claude Code, so it needs a paid Claude plan that includes Claude Code, such as Pro or Max.",
+    "description": "Tug is a native macOS IDE for AI-assisted development built by Ken Kocienda, a former Apple engineer. It wraps Claude Code in one window where prompts, responses, shell commands, file edits, git history and in-flight work are integrated, with rich text input and tools to track and review what the agent is doing.",
+    "keyFeatures": [
+      "Native macOS app built from scratch for AI coding",
+      "Integrates prompts, AI output, shell commands, edits and git history in one view",
+      "Prompt, monitor, review and commit workflow",
+      "First-launch setup installs the claude CLI and signs you in",
+      "Rich text input and typography-focused display",
+      "Open-source codebase in Swift, Rust and TypeScript"
+    ],
+    "bestFor": "Mac developers who use Claude Code daily and want a dedicated, polished workspace around it instead of a terminal.",
+    "notIdealFor": "Windows or Linux users, Intel Mac users, and anyone not on a paid Claude plan or who wants to use other agents.",
+    "recentUpdates": "v0.9.3 (Nov 14, 2026) was the first release shaped by outside users, and v0.9.4 followed on Nov 17, 2026.",
+    "verdict": "A thoughtfully designed beta IDE for Claude Code users on Apple silicon; narrow in platform and agent support, but worth watching.",
+    "tags": [
+      "ide",
+      "claude-code",
+      "macos",
+      "open-source",
+      "ai-coding"
+    ],
+    "lastUpdated": "2026-11-18"
+  },
+  {
+    "slug": "soduwork",
+    "name": "SoduWork",
+    "company": "MDiRi",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open-source under the MIT license and self-hosted. Solo use runs locally; team deployments add a self-hosted Hub. Model usage is billed by the providers you configure.",
+    "description": "SoduWork is an open-source, self-hosted engine that turns coding-agent runs into reviewable team requests. Each request carries acceptance criteria, is done by one agent harness, reviewed by another on a different model, and signed off by a person, and successful chats can become reviewed team plugins.",
+    "keyFeatures": [
+      "Nine built-in harnesses including Pi, OpenCode, DeepSeek Harness, Qwen Code, Kimi Code and Codex",
+      "Add any Agent Client Protocol (ACP) program as a harness",
+      "Cross-model review against AI-drafted acceptance criteria before human sign-off",
+      "Save successful chats as versioned team plugins with review and access grants",
+      "Desktop client, self-hosted Hub and local or shared runners",
+      "Audit trail, roles, quotas and model catalog for team deployments"
+    ],
+    "bestFor": "Engineering teams that want several agent harnesses under one governed workflow with acceptance criteria, review and approval records.",
+    "notIdealFor": "Solo developers who just want a single coding agent; the Hub, runners and governance add setup overhead.",
+    "recentUpdates": "Released v1.13.17 on Nov 16 and v1.13.18 on Nov 18, 2026; the repository, created Oct 29, 2026, has about 2,700 GitHub stars and was covered by Hermes AI News on Nov 17, 2026.",
+    "verdict": "One of the more complete open-source team layers for multi-harness agent work, with review and sign-off as first-class steps; still in public beta.",
+    "tags": [
+      "multi-agent",
+      "agent-orchestration",
+      "self-hosted",
+      "code-review",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-18"
+  },
+  {
+    "slug": "taskless",
+    "name": "Taskless",
+    "company": "Taskless",
+    "pricing": "freemium",
+    "pricingDetail": "The CLI is free and open-source (MIT), and local rule authoring needs no account. A free Taskless account adds AI-powered rule generation, the GitHub integration and runtime rules.",
+    "description": "Taskless turns the corrections you give coding agents into deterministic rules that live in your repository. Each rule compiles to an ast-grep pattern, a Vale rule, your existing linter's dialect or a runtime check, ships with fixtures, and runs without a model in the editor, for every agent and in CI.",
+    "keyFeatures": [
+      "Install with `npx @taskless/cli`, which adds a skill to Claude, Cursor, OpenCode and .agents setups",
+      "Turns agent corrections, PR comments and fixup commits into rules",
+      "ast-grep rules for 25+ languages and Vale rules for prose",
+      "Every rule ships with pass/fail fixtures and validation",
+      "`check` exits 1 on error matches for CI",
+      "Local authoring with no account or API calls"
+    ],
+    "bestFor": "Teams tired of agents ignoring AGENTS.md or Cursor rules who want conventions enforced deterministically on every change.",
+    "notIdealFor": "Teams who prefer not to send anonymous usage telemetry, or who only need a standard linter configuration.",
+    "recentUpdates": "Shipped v0.13.7 in November 2026 and launched on Show HN on Nov 15, 2026.",
+    "verdict": "A practical way to make agent instructions enforceable rather than advisory; the local-first, no-model-at-check-time design is a strength.",
+    "tags": [
+      "code-quality",
+      "static-analysis",
+      "agent-rules",
+      "ci",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-18"
+  },
+  {
+    "slug": "agentmon-live",
+    "name": "AgentMon Live",
+    "company": "Codenotary",
+    "pricing": "free",
+    "pricingDetail": "Free and open-source under Apache-2.0. Runs locally; no account is required and session data stays on your machine.",
+    "description": "AgentMon Live is Codenotary's open-source monitor for AI coding sessions. It shows live tool calls, subagents, file changes, cost and usage limits in a pane beside Claude Code or in a local browser view, adds a done gate that checks Claude's work before it claims completion, and also lists Codex and Kiro Crew sessions.",
+    "keyFeatures": [
+      "Live pane beside the Claude Code chat and a localhost web view",
+      "Subagent tree, tool calls, file changes, cost and usage-limit tracking",
+      "Claude Code done gate for failed checks, stale tests and added skips",
+      "Codex sessions read from local session files, plus Codex plugin install",
+      "Kiro Crew conversations and app integration",
+      "Monitoring for agents in VMs, containers and headless environments"
+    ],
+    "bestFor": "Developers running several Claude Code or Codex sessions who want one place to see what each agent is doing and what it costs.",
+    "notIdealFor": "Users of agents other than Claude Code, Codex and Kiro Crew, or teams needing centralized, multi-user monitoring.",
+    "recentUpdates": "Codenotary released AgentMon Live on Nov 9, 2026 and expanded it to OpenAI Codex and AWS Kiro on Nov 17, 2026; v0.56.0 shipped on Nov 18, 2026, and it had a Show HN on Nov 16, 2026.",
+    "verdict": "A useful, privacy-preserving visibility layer for multi-session agent work, with the done gate as its most distinctive feature for Claude Code users.",
+    "tags": [
+      "observability",
+      "claude-code",
+      "codex",
+      "monitoring",
+      "open-source"
+    ],
+    "lastUpdated": "2026-11-18"
   }
 ]

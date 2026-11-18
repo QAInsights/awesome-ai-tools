@@ -360,6 +360,18 @@
     "category": "AI-Native IDEs & Editors"
   },
   {
+    "slug": "althar",
+    "name": "Althar",
+    "company": "Althar",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
+    "slug": "tug",
+    "name": "Tug",
+    "company": "Ken Kocienda",
+    "category": "AI-Native IDEs & Editors"
+  },
+  {
     "slug": "volt",
     "name": "Volt",
     "company": "LeulAria",
@@ -1350,6 +1362,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "soduwork",
+    "name": "SoduWork",
+    "company": "MDiRi",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1623,6 +1641,12 @@
     "slug": "claude-bughunter",
     "name": "Claude-BugHunter",
     "company": "Sachin Sharma (elementalsouls)",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "taskless",
+    "name": "Taskless",
+    "company": "Taskless",
     "category": "AI Code Review & Security"
   },
   {
@@ -2967,6 +2991,12 @@
     "slug": "traces",
     "name": "Traces",
     "company": "Traces (Vercel)",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "agentmon-live",
+    "name": "AgentMon Live",
+    "company": "Codenotary",
     "category": "Developer Productivity & Workflow"
   },
   {
