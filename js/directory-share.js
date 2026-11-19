@@ -6,6 +6,17 @@ export function initializeDirectoryShare({
     clipboard = globalThis.navigator?.clipboard,
     track = analytics.track,
 } = {}) {
+    const openPanels = () => [...root.querySelectorAll('[data-directory-share][open]')];
+    root.addEventListener?.('click', event => {
+        for (const panel of openPanels()) if (!panel.contains(event.target)) panel.open = false;
+    });
+    root.addEventListener?.('keydown', event => {
+        if (event.key !== 'Escape') return;
+        for (const panel of openPanels()) {
+            panel.open = false;
+            panel.querySelector('summary')?.focus();
+        }
+    });
     for (const panel of root.querySelectorAll('[data-directory-share]')) {
         const button = panel.querySelector('[data-share-copy]');
         const field = panel.querySelector('[data-share-url]');
