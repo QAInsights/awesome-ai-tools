@@ -2038,5 +2038,17 @@
   {
     "companyName": "Codenotary",
     "toolName": "AgentMon Live"
+  },
+  {
+    "companyName": "Anur Basic",
+    "toolName": "Reflektor"
+  },
+  {
+    "companyName": "brox",
+    "toolName": "qpilot"
+  },
+  {
+    "companyName": "cloveric",
+    "toolName": "TaroBird"
   }
 ]
