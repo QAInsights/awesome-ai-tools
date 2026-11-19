@@ -139,11 +139,11 @@ const jsonLd = JSON.stringify({
                     <p class="text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">
                         {category.description}
                     </p>
-                    <div class="flex flex-wrap items-start gap-x-4 gap-y-2">
+                    <div class="relative flex flex-wrap items-start gap-x-4 gap-y-2">
                         <div class="min-h-11 flex items-center font-mono text-[12px] text-ink-secondary tracking-wide">
                             <span>{count} tools{enrichedCount > 0 && ` · ${enrichedCount} with full reviews`}{freeCount > 0 && ` · ${freeCount} free or open source`}{lastUpdated && <> · Updated <time datetime={lastUpdated}>{formatDate(lastUpdated)}</time></>}</span>
                         </div>
-                        <DirectoryShare canonical={pageUrl} kind="category" slug={category.slug} name={category.name} />
+                        <DirectoryShare canonical={pageUrl} kind="category" slug={category.slug} name={category.name} align="start" />
                     </div>
                 </header>
 

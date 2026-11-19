@@ -44,3 +44,33 @@ test('selects the link for manual copying when clipboard permission is denied or
         expect(track).not.toHaveBeenCalled();
     }
 });
+
+function dismissSetup() {
+    const handlers = {};
+    const summary = { focus: mock() };
+    const inside = {};
+    const panel = { open: true, contains: node => node === inside, querySelector: sel => (sel === 'summary' ? summary : null) };
+    const root = {
+        addEventListener: (type, handler) => { handlers[type] = handler; },
+        querySelectorAll: selector => (selector.includes('[open]') ? [panel].filter(p => p.open) : []),
+    };
+    initializeDirectoryShare({ clipboard: null, track: mock(), root });
+    return { handlers, inside, panel, summary };
+}
+
+test('closes the share panel on an outside click but not on a click inside it', () => {
+    const { handlers, inside, panel } = dismissSetup();
+    handlers.click({ target: inside });
+    expect(panel.open).toBe(true);
+    handlers.click({ target: {} });
+    expect(panel.open).toBe(false);
+});
+
+test('closes the share panel on Escape and returns focus to its summary', () => {
+    const { handlers, panel, summary } = dismissSetup();
+    handlers.keydown({ key: 'Enter' });
+    expect(panel.open).toBe(true);
+    handlers.keydown({ key: 'Escape' });
+    expect(panel.open).toBe(false);
+    expect(summary.focus).toHaveBeenCalledTimes(1);
+});
