@@ -13989,5 +13989,92 @@
       "open-source"
     ],
     "lastUpdated": "2026-11-18"
+  },
+  {
+    "slug": "reflektor",
+    "name": "Reflektor",
+    "company": "Anur Basic",
+    "pricing": "free",
+    "pricingDetail": "The Reflektor skill and local daemon are free and open source under the MIT licence. Publishing a report to your team goes through reflektor.dev, as described in the official docs. Model usage is billed by whichever coding agent and plan you run it in.",
+    "description": "Reflektor is an agent skill and local daemon that turns a branch into a review report in your browser. Run `/reflektor` in Claude Code or `$reflektor` in Codex and the agent writes a report covering the request flow from UI to database, type and schema changes, database migrations, test coverage, risks, gaps and a plan check, while your project's tests, linter and type checker run in the background.",
+    "keyFeatures": [
+      "Install with `npx skills add bashovski/reflektor#skill -g` for Claude Code, Codex, Cursor, Gemini CLI, GitHub Copilot and other skill-aware agents",
+      "Request-flow visualization from UI to database with added, changed or removed types, interfaces, enums and constants",
+      "Database and migration changes, test coverage summary, risks and gaps",
+      "Runs your project's own tests, linter and type checker while the report is written",
+      "E2E UI checks with screenshots included in the report",
+      "Review rounds that regenerate the report on each commit and hand your comments back to the agent",
+      "Local daemon inbox and shareable team reports on reflektor.dev"
+    ],
+    "bestFor": "Developers and reviewers who receive large agent-written branches and want a structured, browsable report instead of reading the raw diff.",
+    "notIdealFor": "Teams that want an always-on hosted PR bot that comments on every pull request without running an agent session locally.",
+    "recentUpdates": "v0.9.0 and v0.9.1 were released on November 17, 2026, and Reflektor launched on Show HN on November 18, 2026.",
+    "verdict": "A thoughtful take on reviewing agent output: it makes the agent explain its own branch in a format a human can skim, with checks and screenshots attached.",
+    "tags": [
+      "Code Review",
+      "Agent Skills",
+      "Claude Code",
+      "Codex",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-19"
+  },
+  {
+    "slug": "qpilot",
+    "name": "qpilot",
+    "company": "brox",
+    "pricing": "free",
+    "pricingDetail": "qpilot is free and open source under the MIT licence and runs locally with `npx qpilot`. You bring your own Anthropic API key or any OpenAI-compatible endpoint, so model usage is billed by that provider.",
+    "description": "qpilot is an AI agent that runs plain-text manual test cases in a real Chrome browser. Paste a test case and it executes each step through Playwright, reads the page as an accessibility tree, and reports pass, fail or warn per step with the expected result, what the page actually showed and a screenshot of each failure.",
+    "keyFeatures": [
+      "Run with `npx qpilot`, no test code, selectors or config files",
+      "Per-step pass, fail or warn with expected versus actual results and failure screenshots",
+      "A second model call with a clean context re-checks every passed step",
+      "Sizes, overlaps and colours measured from the browser in pixels and RGB",
+      "Mock, patch, fail or delay requests and read back what the page sent",
+      "Pauses for a human on OTP or captcha, handles uploads, tabs and dialogs",
+      "Works with Anthropic or any OpenAI-compatible endpoint, including Qwen, vLLM and Ollama"
+    ],
+    "bestFor": "QA engineers and product teams with existing manual test cases who want them executed in a browser with evidence, without writing Playwright or Selenium code.",
+    "notIdealFor": "Teams that need deterministic scripted regression suites in CI or testing of native mobile apps, since qpilot targets web apps in desktop Chrome.",
+    "recentUpdates": "v0.15.2 was released on November 19, 2026, after v0.15.0 and v0.15.1 on November 13 and 14; qpilot launched on Show HN on November 18, 2026.",
+    "verdict": "A practical bridge from manual QA to agent-driven testing, with unusually careful attention to making a green step trustworthy.",
+    "tags": [
+      "Testing",
+      "QA",
+      "Browser Automation",
+      "Playwright",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-19"
+  },
+  {
+    "slug": "tarobird",
+    "name": "TaroBird",
+    "company": "cloveric",
+    "pricing": "free",
+    "pricingDetail": "TaroBird is free and open source under the AGPL-3.0 licence, with desktop builds for macOS and Windows, an iOS App Store app and an Android APK. It does not include AI engines, model accounts or credits; Bots run on the CLIs and plans you already have installed.",
+    "description": "TaroBird is a self-hosted messaging workspace for coding-agent CLIs on your own computers. Each host runs Bots on the official Codex, Claude Code, Kimi Code, DeepSeek Harness or Antigravity CLI, and you assign tasks, answer questions, approve runs and receive files from the same conversations on desktop and phone.",
+    "keyFeatures": [
+      "Runs the official Codex, Claude Code, Kimi Code, DeepSeek Harness and Antigravity CLIs as Bots",
+      "Desktop apps for macOS and Windows plus iOS and Android clients paired by QR code",
+      "Connect over LAN, Tailscale or a VPS relay",
+      "Up to 12 conversations side by side in ADHD mode",
+      "Multi-Bot groups with roundtable and independent-review modes, and Agent Bus visual workflows",
+      "Chancellor mode splits one goal into tracked tickets",
+      "Per-reply change review with line comments and Bot-to-Bot task handoff across hosts"
+    ],
+    "bestFor": "Developers who run several agent CLIs across their own machines and want to dispatch, follow and approve that work from one chat interface, including on a phone.",
+    "notIdealFor": "Teams that need a hosted, managed service or Linux desktop clients, or anyone who cannot use AGPL-3.0 software.",
+    "recentUpdates": "v1.5.1 was released for desktop and Windows on November 17, 2026, and TaroBird launched on Show HN on November 18, 2026.",
+    "verdict": "An ambitious, actively shipped way to turn the agent CLIs on your own hosts into a team you can message from anywhere.",
+    "tags": [
+      "Agent Workspace",
+      "Mobile",
+      "Multi-Agent",
+      "Self-Hosted",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-19"
   }
 ]

@@ -1368,6 +1368,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "tarobird",
+    "name": "TaroBird",
+    "company": "cloveric",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1650,6 +1656,12 @@
     "category": "AI Code Review & Security"
   },
   {
+    "slug": "reflektor",
+    "name": "Reflektor",
+    "company": "Anur Basic",
+    "category": "AI Code Review & Security"
+  },
+  {
     "slug": "gitauto",
     "name": "GitAuto",
     "company": "GitAuto",
@@ -1731,6 +1743,12 @@
     "slug": "skillevaluator",
     "name": "SkillEvaluator",
     "company": "NVIDIA",
+    "category": "AI Testing & Quality Assurance"
+  },
+  {
+    "slug": "qpilot",
+    "name": "qpilot",
+    "company": "brox",
     "category": "AI Testing & Quality Assurance"
   },
   {
