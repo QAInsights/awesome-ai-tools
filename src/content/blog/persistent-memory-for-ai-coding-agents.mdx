@@ -1,0 +1,319 @@
+---
+title: "Persistent Memory for AI Coding Agents: agentmemory, ai-memory, GBrain, TencentDB Agent Memory and OKF Agent Memory"
+description: "Compare 5 tools that add persistent memory for AI coding agents across Claude Code, Codex and Cursor: installs, licences, pricing and real limits, Nov 2026."
+pubDate: 2026-11-19
+tags: ["memory", "agent-memory", "mcp", "claude-code", "codex", "cursor", "open-source", "roundup", "agentmemory", "ai-memory", "gbrain", "tencentdb-agent-memory", "okf-agent-memory"]
+---
+
+In this blog post, we will see five tools that give you persistent memory for AI coding agents, so that what Claude Code learned on Monday is still there when Codex or Cursor opens the same repo on Tuesday. I also wrote a 44 line Python script that shows the core idea, and you can run it in under a minute. Every version, licence and star count below was checked on November 19, 2026, from the official repository, release page or docs.
+
+## Table of Contents
+
+1. [The short answer](#the-short-answer)
+2. [Why agent memory is trending this week](#why-agent-memory-is-trending-this-week)
+3. [What "memory" means here, in one example](#what-memory-means-here-in-one-example)
+4. [agentmemory](#agentmemory)
+5. [ai-memory](#ai-memory)
+6. [GBrain](#gbrain)
+7. [TencentDB Agent Memory](#tencentdb-agent-memory)
+8. [OKF Agent Memory](#okf-agent-memory)
+9. [Side by side](#side-by-side)
+10. [Which one I would set up first](#which-one-i-would-set-up-first)
+11. [FAQ](#faq)
+12. [How this ties to ai.dosa.dev](#how-this-ties-to-aidosadev)
+
+## The short answer
+
+Persistent memory for AI coding agents is a local server or file store that saves decisions, failures and facts from one session and returns the relevant ones to the next, even in a different agent. Start with agentmemory or ai-memory for one developer, GBrain for a curated knowledge base, and OKF Agent Memory for memory in git.
+
+## Why agent memory is trending this week
+
+Signals from November 5 to 19, 2026, each confirmed by at least two independent sources:
+
+- **Weekly star charts.** [Githot's weekly snapshot](https://githot.dev/en/weekly/2026-11-08) for November 2 to 8 shows [claude-mem](https://github.com/thedotmack/claude-mem) gaining 7.5k stars, [GitHub AI Trending Edition 4](https://rohansweblog.com/digests/github-trending/2026-11-05/) (November 5) ranked it #1 and called this "infrastructure week" led by agent memory, and the [Chinese weekly GitHub trending digest](https://blog.int2t.com/2026/11/07/2026-11-08-weekly-github-trending/) for November 8 named the memory layer (跨会话上下文, cross-session context) as one of its main themes. The ai.dosa.dev trending snapshot for week 46 shows GBrain adding 1,320 stars.
+- **Releases.** In fourteen days: agentmemory v0.9.33 (November 9), OKF Agent Memory v0.8.0 (November 5), codemem v0.49.1 (November 15), ai-memory v3.5.0 (November 18), claude-mem v16.0.0 (November 18) and GBrain stable v0.60.740.0 (November 18), with GBrain alpha builds landing several times a day.
+- **Launches.** [S.Space](https://www.producthunt.com/leaderboard/daily/2026/11/18) was #1 on Product Hunt on November 18 with a pitch built around agents from different vendors sharing one memory.
+
+What surprised me is how the pitch has shifted. Six months ago, memory tools sold "your agent remembers". Now every one of them sells "your agents share one memory". The handoff from Claude Code to Codex is the feature.
+
+## What "memory" means here, in one example
+
+Strip away the hooks, viewers and graphs, and all five tools do two things: save a small typed note when something worth remembering happens, and search those notes when a new session starts. Most of them use BM25 keyword search by default and only add embeddings when you give them an API key or a local model.
+
+Here is that loop in 44 lines. It saves each memory as a Markdown file with a `type` in the frontmatter, then ranks them with BM25 for a query.
+
+```python
+import math, re, sys, time
+from pathlib import Path
+
+STORE = Path(".memory")
+
+
+def tokens(text):
+    return re.findall(r"[a-z0-9]+", text.lower())
+
+
+def remember(kind, text):
+    STORE.mkdir(exist_ok=True)
+    path = STORE / f"{int(time.time() * 1000)}.md"
+    path.write_text(f"---\ntype: {kind}\n---\n{text}\n")
+    print(f"saved {path}")
+
+
+def recall(query, k=3):
+    docs = [(p, p.read_text()) for p in sorted(STORE.glob("*.md"))]
+    if not docs:
+        return
+    avg = sum(len(tokens(t)) for _, t in docs) / len(docs)
+    df = {}
+    for _, t in docs:
+        for w in set(tokens(t)):
+            df[w] = df.get(w, 0) + 1
+    scored = []
+    for p, t in docs:
+        words = tokens(t)
+        score = 0.0
+        for q in tokens(query):
+            tf = words.count(q)
+            if tf:
+                idf = math.log(1 + (len(docs) - df[q] + 0.5) / (df[q] + 0.5))
+                score += idf * tf * 2.2 / (tf + 1.2 * (0.25 + 0.75 * len(words) / avg))
+        if score:
+            scored.append((score, t.split("---\n", 2)[2].strip()))
+    for score, text in sorted(scored, reverse=True)[:k]:
+        print(f"{score:.2f}  {text}")
+
+
+if __name__ == "__main__":
+    cmd, *rest = sys.argv[1:]
+    remember(rest[0], " ".join(rest[1:])) if cmd == "save" else recall(" ".join(rest))
+```
+
+I saved three memories, then asked a question the way a new session would, as shown below:
+
+```text
+$ python3 memory.py save decision "Auth uses PKCE; do not add client secrets to the SPA"
+$ python3 memory.py save failure "Tried vitest --threads on CI, it hangs on the Postgres container. Use --pool forks"
+$ python3 memory.py save fact "Integration tests need docker compose up db before running"
+$ python3 memory.py recall "why do tests hang on CI"
+2.18  Tried vitest --threads on CI, it hangs on the Postgres container. Use --pool forks
+1.06  Integration tests need docker compose up db before running
+0.99  Auth uses PKCE; do not add client secrets to the SPA
+```
+
+The right answer comes first. The third result only matched on the word "do", which is exactly the noise real tools fight with stopword lists, decay, project scoping and token budgets. Keep that in mind as you read the limitations below: the hard part is not storing memories, it is deciding which ones reach the model.
+
+## agentmemory
+
+### What it does
+
+[agentmemory](https://github.com/rohitg00/agentmemory) is a local memory server that captures coding sessions through native hooks and plugins, scrubs secrets, and lets any connected agent search decisions, fixes and handoffs later. Keyword recall works without an API key; local or remote embeddings add semantic search. It has a live viewer for browsing, editing, exporting and forgetting memories.
+
+### Who it is for
+
+A solo developer who bounces between Claude Code, Codex CLI, Cursor, Cline, Continue, Antigravity or Pi and wants one store for all of them with the least setup.
+
+### Facts
+
+- Stars: 30,463 ([GitHub](https://github.com/rohitg00/agentmemory))
+- Latest: v0.9.33, November 9, 2026 ([releases](https://github.com/rohitg00/agentmemory/releases)), with commits on main as recent as November 18
+- Licence: Apache 2.0
+- Price: free, no account
+- Requires: Node.js 20 or newer
+
+### Try it
+
+```bash
+npx -y @agentmemory/agentmemory
+# in a second terminal
+npx -y @agentmemory/agentmemory connect claude-code
+```
+
+The server listens on port 3111 for REST and MCP and serves the viewer on 3113. Head to http://localhost:3113 to see what it captured. Run `connect` with no argument to pick from the agents it detects, then restart the agent.
+
+### Honest limitation
+
+The repo has 458 open issues and ships breaking changes inside 0.9.x. In 0.9.32, an API key alone stopped turning on LLM summaries: you now have to set `AGENTMEMORY_LLM_PROVIDER` too, and the v0.9.33 notes say Docker installs that set only a key ran without summaries. Pin a version and read the upgrade notes.
+
+## ai-memory
+
+### What it does
+
+[ai-memory](https://github.com/akitaonrails/ai-memory) is a single Rust binary that keeps memory as a Markdown wiki in git, with a SQLite FTS5 index for search. Its headline feature is the handoff: quit Claude Code mid-task, run `ai-memory run codex` in the same directory, and Codex starts with where you left off, what failed and what is still open. Handoffs are typed and claimed exactly once.
+
+### Who it is for
+
+Developers who switch agents mid-task, and anyone who wants memory they can read and edit by hand because it is plain Markdown.
+
+### Facts
+
+- Stars: 16,148 ([GitHub](https://github.com/akitaonrails/ai-memory))
+- Latest: v3.5.0, November 18, 2026 ([releases](https://github.com/akitaonrails/ai-memory/releases))
+- Licence: MIT
+- Activity: 38 open issues
+- Price: free
+
+### Try it
+
+```bash
+curl -fsSL https://github.com/akitaonrails/ai-memory/releases/latest/download/install.sh | sh
+ai-memory setup --plan
+ai-memory setup
+ai-memory run claude
+```
+
+`--plan` prints which agents it found and what it would change, without changing anything. The install script checks the release against its published SHA-256 and links `~/.local/bin/ai-memory` without root. On Windows, use `irm https://github.com/akitaonrails/ai-memory/releases/latest/download/install.ps1 | iex`.
+
+### Honest limitation
+
+You get the full handoff only when you launch agents through `ai-memory run`. Launching `claude` directly still works, but then you rely on hooks and MCP rather than the session projection. With no LLM provider configured, summaries are rule based, which is fine for capture and search but weaker for consolidation.
+
+## GBrain
+
+### What it does
+
+[GBrain](https://github.com/garrytan/gbrain), by Garry Tan, is a self-hosted brain for you or your team. It starts with keyword search and no API key, adds semantic search when you give it one, and exposes everything over MCP, so Claude Code, Codex, Cursor and any MCP client read the same brain. The notes are plain Markdown you can copy out.
+
+### Who it is for
+
+People who want a deliberate, curated knowledge base (decisions log, call notes, company docs) that every agent checks before answering, rather than a raw capture of every tool call.
+
+### Facts
+
+- Stars: 33,300 ([GitHub](https://github.com/garrytan/gbrain))
+- Latest stable: v0.60.740.0, November 18, 2026. Alpha v0.60.746.0 shipped November 19 ([releases](https://github.com/garrytan/gbrain/releases))
+- Licence: MIT
+- Activity: 349 open issues
+- Price: free to self-host. Hosted [gbrain.io](https://gbrain.io/pricing) is $49 a month Personal and $199 a month Team, with Enterprise on request
+- Requires: Bun 1.4.4 or newer
+
+### Try it
+
+```bash
+bun install -g github:garrytan/gbrain#stable
+gbrain init --pglite --no-embedding
+gbrain setup claude-code --instructions-only
+```
+
+The last command writes a short brain-first block into `~/.claude/CLAUDE.md`. The README explains why: agents seldom call an MCP server nobody told them about.
+
+### Honest limitation
+
+Do not run `npm install -g gbrain`. The README warns that the npm package with that name is unrelated and can shadow the real binary. Release cadence is also extreme: several alpha builds a day. Stay on `#stable`: per the release docs, a version reaches it only after a production-shaped soak passes on its exact git tree.
+
+## TencentDB Agent Memory
+
+### What it does
+
+[TencentDB Agent Memory](https://github.com/TencentCloud/TencentDB-Agent-Memory) is a team memory hub that turns conversations, documents and code into four assets: Chat Memory, Skills, an LLM-Wiki and a Code-Graph. The unusual part is integration: you point the agent's base URL at its Proxy and add a User Key. Most clients need no plugin, hook or MCP server.
+
+### Who it is for
+
+Teams that want shared memory across Claude Code, CodeBuddy and other agents that accept a custom base URL, and are fine running a few services to get it.
+
+### Facts
+
+- Stars: 31,023 ([GitHub](https://github.com/TencentCloud/TencentDB-Agent-Memory))
+- Latest: v2.0.3, October 26, 2026 ([releases](https://github.com/TencentCloud/TencentDB-Agent-Memory/releases))
+- Licence: GitHub reports "Other", so read the LICENSE file before you deploy it at work
+- Activity: 863 open issues
+- Price: free to self-host; you pay for the LLM calls it makes
+
+### Try it
+
+```bash
+git clone https://github.com/TencentCloud/TencentDB-Agent-Memory.git
+cd TencentDB-Agent-Memory/deploy/global-images
+cp .env.example .env   # fill in the memory and proxy LLM settings
+./start-all.sh
+```
+
+This starts memory-core, memory-hub and the proxy. Head to http://localhost:8125 for the panel.
+
+### Honest limitation
+
+This is not a 15 minute install for most people. You need two sets of LLM settings before anything starts, and the proxy approach means every request your agent makes goes through Tencent's service on your machine. The changelog is mostly in Chinese, and the default branch is `feat/server_team`, not `main`.
+
+## OKF Agent Memory
+
+### What it does
+
+[OKF Agent Memory](https://github.com/okf-memory/okf-agent-memory) stores project knowledge as Markdown files with YAML frontmatter inside the repo, following Google's Open Knowledge Format v0.2. A Go binary called `okf` gives you in-memory BM25 search, validation, a quality scorecard and a built-in MCP server. No database.
+
+### Who it is for
+
+Teams who want memory reviewed in pull requests like code, and anyone who distrusts a background service capturing everything.
+
+### Facts
+
+- Stars: 867 ([GitHub](https://github.com/okf-memory/okf-agent-memory))
+- Latest: v0.8.0, November 5, 2026 ([releases](https://github.com/okf-memory/okf-agent-memory/releases)), with prebuilt binaries for macOS, Linux and Windows
+- Licence: MIT
+- Activity: 2 open issues
+- Price: free
+
+### Try it
+
+From a clone of the repo:
+
+```bash
+make build
+./bin/okf bootstrap /path/to/project --name "My Project"
+./bin/okf create decisions/auth-flow knowledge --type Decision \
+  --title "OAuth2 Authorization Flow" --desc "Standardized on PKCE for client authentication."
+./bin/okf search "auth flow" knowledge
+```
+
+### Honest limitation
+
+Nothing is captured automatically. The agent (or you) has to write each concept, so memory is only as good as the discipline behind it. It is also the smallest project here by a wide margin, and v0.8.0 already broke the CLI and MCP schema by removing the `--scope bundle` alias.
+
+## Side by side
+
+| Tool | Storage | Capture | Default search | Licence | Version checked | Stars |
+| --- | --- | --- | --- | --- | --- | --- |
+| [agentmemory](/tools/agentmemory) | Local server | Hooks, automatic | BM25, embeddings optional | Apache-2.0 | v0.9.33 | 30,463 |
+| [ai-memory](/tools/ai-memory) | Markdown wiki in git + SQLite | Hooks and `run`, automatic | FTS5, vectors optional | MIT | v3.5.0 | 16,148 |
+| [GBrain](/tools/gbrain) | Markdown pages + Postgres (PGlite) | Explicit facts | Keyword, semantic with a key | MIT | v0.60.740.0 | 33,300 |
+| [TencentDB Agent Memory](/tools/tencentdb-agent-memory) | Services via proxy | Proxy, automatic | Layered memory + Code-Graph | Other (check) | v2.0.3 | 31,023 |
+| [OKF Agent Memory](/tools/okf-agent-memory) | Markdown in your repo | Manual or agent-written | BM25 | MIT | v0.8.0 | 867 |
+
+## Which one I would set up first
+
+1. **Write down what you want remembered.** Decisions, dead ends and setup traps are worth it. Every tool call is not. This decides between automatic capture and explicit notes.
+2. **Try agentmemory or ai-memory first** if you are one developer switching agents. Both run locally with no account. Pick ai-memory if you want the memory itself in Markdown you can open.
+3. **Pick GBrain** when the memory is less about the repo and more about you or your company: notes, docs, decisions across projects.
+4. **Pick OKF Agent Memory** if memory should go through code review.
+5. **Leave TencentDB Agent Memory** for a team that already wants a shared hub and can run the services. I would not start there.
+
+One thing I would skip: running two capture tools at once. They both inject context at session start, and you pay for both in tokens.
+
+## FAQ
+
+### What is persistent memory for AI coding agents?
+
+It is storage outside the context window where an agent saves decisions, failures and project facts, plus a search step that brings the relevant ones back in a later session. The tools here run locally or self-hosted and expose that memory through hooks or MCP, so several agents can share it.
+
+### Does Claude Code already have memory?
+
+Claude Code reads `CLAUDE.md` files, and Codex and others read `AGENTS.md`. Those files are instructions you maintain by hand, per repo and per agent, so they do not capture what failed yesterday or carry a half-finished task from one agent to another.
+
+### Can Claude Code and Codex share the same memory?
+
+Yes. agentmemory, ai-memory and GBrain all document setup for both, and ai-memory's `ai-memory run codex` is built specifically for picking up a Claude Code session in Codex. TencentDB Agent Memory shares memory by sitting in front of both as a proxy.
+
+### Do I need an API key or a vector database?
+
+No. agentmemory, ai-memory and GBrain all start with keyword search and no key, and OKF Agent Memory never needs one. You add embeddings or an LLM provider later for semantic search and summaries. TencentDB Agent Memory is the exception: it needs LLM settings before it starts.
+
+### Is agent memory the same as context compression?
+
+No. Compression shrinks what goes into the current session, while memory carries knowledge to the next one. They stack well, which is why claude-mem appears in our [context compression roundup](/blog/context-compression-tools-for-ai-coding-agents).
+
+## How this ties to ai.dosa.dev
+
+ai.dosa.dev already lists [agentmemory](/tools/agentmemory), [ai-memory](/tools/ai-memory), [GBrain](/tools/gbrain), [TencentDB Agent Memory](/tools/tencentdb-agent-memory) and [OKF Agent Memory](/tools/okf-agent-memory), next to [claude-mem](/tools/claude-mem), [MemPalace](/tools/mempalace) and [Codebase Memory MCP](/tools/codebase-memory-mcp). [codemem](https://github.com/kunickiaj/codemem), a smaller local-first option with sync that shipped v0.49.1 on November 15, is not in the directory yet and is a good fit for the [tool submission form](https://github.com/QAInsights/awesome-ai-tools/issues/new?template=submit-tool.yml).
+
+Memory pairs naturally with structure. If you want the agent to know how the code fits together rather than what you decided, read [code knowledge graph tools for AI coding agents](/blog/code-knowledge-graph-tools-ai-coding-agents). And if you are running several agents that should share one memory, see [how to run multiple coding agents in parallel](/blog/run-multiple-coding-agents-in-parallel).
+
+Happy Testing! What is the one thing you keep re-explaining to your coding agent every morning?
