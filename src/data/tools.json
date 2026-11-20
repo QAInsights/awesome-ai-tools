@@ -2050,5 +2050,17 @@
   {
     "companyName": "cloveric",
     "toolName": "TaroBird"
+  },
+  {
+    "companyName": "Eclipse Foundation",
+    "toolName": "Eclipse Enclave"
+  },
+  {
+    "companyName": "Vercel",
+    "toolName": "Vercel Board"
+  },
+  {
+    "companyName": "Mastra",
+    "toolName": "Mastra Factory"
   }
 ]

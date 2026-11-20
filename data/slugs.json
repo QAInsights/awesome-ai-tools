@@ -1374,6 +1374,24 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "eclipse-enclave",
+    "name": "Eclipse Enclave",
+    "company": "Eclipse Foundation",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "vercel-board",
+    "name": "Vercel Board",
+    "company": "Vercel",
+    "category": "Autonomous & Async Agents"
+  },
+  {
+    "slug": "mastra-factory",
+    "name": "Mastra Factory",
+    "company": "Mastra",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",

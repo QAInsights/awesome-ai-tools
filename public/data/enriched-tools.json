@@ -14076,5 +14076,92 @@
       "Open Source"
     ],
     "lastUpdated": "2026-11-19"
+  },
+  {
+    "slug": "eclipse-enclave",
+    "name": "Eclipse Enclave",
+    "company": "Eclipse Foundation",
+    "pricing": "free",
+    "pricingDetail": "Free and open source under the MIT licence. You need Docker and your own coding-agent subscriptions or API keys; Enclave itself has no paid plan.",
+    "description": "Eclipse Enclave is a vendor-neutral sandbox and runtime from the Eclipse Foundation for running coding agents at full autonomy. Each session runs in its own Docker container that sees only the paths you mount, and a sidecar gateway limits outbound traffic to the domains on your allowlist and logs what it proxies and blocks. Claude Code, Codex, GitHub Copilot CLI, OpenCode and Pi are built in.",
+    "keyFeatures": [
+      "One command, `enclave`, starts your agent in an isolated container on the current checkout",
+      "Network gateway with domain allowlists, per-tool and per-project policies and connection audit logs",
+      "Separate git worktrees for parallel agents, with plain git and no extra setup",
+      "Persistent sessions: pause, resume with `enclave continue` and list with `enclave ps`",
+      "Custom skills, agent templates, extra mounts and devcontainer support",
+      "More harnesses and tooling such as Antigravity and Playwright MCP in enclave-extensions",
+      "Optional HomeShell web and desktop UI for projects and workstreams (preview)"
+    ],
+    "bestFor": "Developers and teams who want to let Claude Code, Codex or OpenCode run without approval prompts while keeping files, secrets and network access boxed in.",
+    "notIdealFor": "Native Windows users without WSL2, or anyone who cannot run Docker on their machine.",
+    "recentUpdates": "The Eclipse Foundation announced Eclipse Enclave 1.0 on November 19, 2026; EclipseSource contributed the project to the foundation in July 2026. v1.0.1 is the latest tagged release (October 31, 2026), with a rolling pre-release rebuilt from main.",
+    "verdict": "A credible, foundation-governed answer to running autonomous agents safely, with real network controls rather than worktree isolation alone.",
+    "tags": [
+      "Sandbox",
+      "Security",
+      "Coding Agents",
+      "Open Source",
+      "Docker"
+    ],
+    "lastUpdated": "2026-11-20"
+  },
+  {
+    "slug": "vercel-board",
+    "name": "Vercel Board",
+    "company": "Vercel",
+    "pricing": "free",
+    "pricingDetail": "Experimental feature available on all Vercel plans. The CLI, SDK and skill are open source under Apache-2.0, and a local board can run on your own machine with `npx @vercel/board serve`.",
+    "description": "Vercel Board is a message board for people and coding agents. A board has channels and threads; tasks are threads that agents claim with a lease, update and complete, while labels, grants and an event log record state and who wrote each message. Agents use it through the Vercel CLI, the `@vercel/board` SDK or an agent skill, and threads can sync with Slack, GitHub and Linear.",
+    "keyFeatures": [
+      "Install the agent skill with `npx skills add vercel/board`",
+      "Task claims with leases, renewals, dependencies and completion notes",
+      "Agents post under their own name with the credentials of the person running them",
+      "Watchers that wake a Vercel deployment when a reply or label arrives",
+      "Scheduled follow-ups, such as checking CI five minutes after opening a pull request",
+      "Two-way sync with Slack, GitHub and Linear through Vercel Connect",
+      "Live viewer with `npx @vercel/board inspect`, plus local and Tailscale boards"
+    ],
+    "bestFor": "Teams running several coding agents, or agent swarms and software factories, that need a shared task queue and conversation history across tools.",
+    "notIdealFor": "Teams that want a stable, generally available product today, since Board is labelled experimental, or teams that do not use Vercel and do not want to self-run a local board.",
+    "recentUpdates": "Vercel launched Board on November 18, 2026 as an experimental feature on all plans; @vercel/board 0.53.0 was released on November 19, 2026. Vercel says it rebuilt v0's software factory on Board.",
+    "verdict": "A simple, harness-agnostic coordination layer for multi-agent work, best suited to teams already on Vercel.",
+    "tags": [
+      "Multi-Agent",
+      "Coordination",
+      "Coding Agents",
+      "CLI",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-20"
+  },
+  {
+    "slug": "mastra-factory",
+    "name": "Mastra Factory",
+    "company": "Mastra",
+    "pricing": "freemium",
+    "pricingDetail": "Mastra Factory is open source, and the generated project is Apache-2.0. You can self-host it with your own auth, storage and sandboxes, or run it on Mastra platform, which has a free plan ($0 a month); other plans are on mastra.ai/pricing. Model usage is billed by your provider.",
+    "description": "Mastra Factory is an open-source software factory from the team behind the Mastra agent framework. It takes issues from GitHub, GitLab, Linear, Jira, Slack or incident tools through configurable stages to reviewed pull requests, using a cloud coding agent that works in its own sandbox, shares live app previews and can be driven from Slack.",
+    "keyFeatures": [
+      "Create a project with `npm create factory@latest my-factory`",
+      "Configurable stages from Intake and Triage through Planning, Building, Review and Done",
+      "Per-stage skills, rules and optional human approvals",
+      "Cloud coding agent built on Mastra Code with memory across work items",
+      "MicroVM sandboxes (E2B by default) and live preview links for every change",
+      "Slack-native: mention Factory to file work, answer questions and approve plans",
+      "Any model provider or OpenAI-compatible endpoint, and a self-host mode with `--no-platform`"
+    ],
+    "bestFor": "Engineering teams that want a configurable issue-to-pull-request pipeline run by agents, with approvals where they choose.",
+    "notIdealFor": "Solo developers who only want an interactive coding agent, or teams that need a 1.0 release, since Mastra says Factory is not yet 1.0.",
+    "recentUpdates": "Mastra launched new Factory capabilities on November 18, 2026 (intake sources, configurable stages, app previews and Slack features) after an alpha in July and a beta in September 2026, and shared it on Show HN the same day. Mastra says Factory opened and merged 238 PRs across its repositories in one week.",
+    "verdict": "One of the more complete open-source software factories, backed by a team that uses it on its own busy repositories.",
+    "tags": [
+      "Software Factory",
+      "Coding Agents",
+      "Automation",
+      "Slack",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-20"
   }
 ]
