@@ -1374,6 +1374,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "opencomputer",
+    "name": "OpenComputer",
+    "company": "Digger",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1851,6 +1857,12 @@
     "slug": "ironclaw",
     "name": "IronClaw",
     "company": "NEAR AI",
+    "category": "Personal AI Agents"
+  },
+  {
+    "slug": "kwant",
+    "name": "kwant",
+    "company": "alexsergivan",
     "category": "Personal AI Agents"
   },
   {
@@ -3015,6 +3027,12 @@
     "slug": "agentmon-live",
     "name": "AgentMon Live",
     "company": "Codenotary",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "agentmash",
+    "name": "agentmash",
+    "company": "agentmash",
     "category": "Developer Productivity & Workflow"
   },
   {
