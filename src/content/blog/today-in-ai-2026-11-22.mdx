@@ -1,0 +1,77 @@
+---
+title: "Google's Agent Compute Engine keeps agent secrets out of the sandbox"
+description: "Google details Agent Compute Engine microVM sandboxes, Thinking Machines ships Inkling 2 Mini, and Signal blocks AI agents from screenshotting chats."
+pubDate: 2026-11-22
+tags: ["news","today-in-ai","google","agents","open-weights","security","voice","browsers"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-11-22 UTC.
+
+Google's new agent sandbox design, a 26B open model that runs on a laptop, and Signal's answer to on-device AI agents reading your messages.
+
+## Google's Agent Compute Engine keeps keys out of agent sandboxes
+
+**What happened:** Google announced Agent Compute Engine, a managed service that runs AI agents in isolated microVMs with checkpoint and restore, keeping credentials, API keys and OAuth refresh tokens outside the sandbox behind an external Agent Gateway that authenticates requests and injects secrets.
+
+**Why it matters:** If you run agents that touch real systems, the harness-outside-sandbox split gives you a deterministic audit trail tying each tool call to compute activity inside the VM.
+
+[Source: InfoQ](<https://www.infoq.com/news/2026/11/google-agent-compute-engine/>)
+
+## Thinking Machines ships Inkling 2 Mini, a 26B model for laptops
+
+**What happened:** Thinking Machines Lab released Inkling 2 Mini, an Apache 2.0 open-weights model with 26.4 billion total parameters and a roughly 20GB footprint that runs offline on a 32GB MacBook Pro or a single desktop GPU, using a looped transformer that cycles data through its middle layers.
+
+**Why it matters:** A permissively licensed model that fits on a laptop and still handles software engineering and tool use gives local agent builders a serious offline option.
+
+[Source: VentureBeat](<https://venturebeat.com/technology/thinking-machines-wows-with-inkling-2-mini-looped-transformer-model-that-runs-locally-on-laptops>)
+
+## Signal turns off screenshots by default to block AI agents
+
+**What happened:** Signal said it will restrict screenshots by default on Android and iOS to stop AI agents from reading private chats, covering agentic systems built into iOS 27 and supported Android versions, while conceding the protection is incomplete.
+
+**Why it matters:** On-device agents that read the screen lose a data path, so builders relying on screen capture for context need another route to user data.
+
+[Source: The Hacker News](<https://aihub.com/research>)
+
+## Lean and Mathlib verify Claude-assisted Riemann proof
+
+**What happened:** The Lean Focused Research Organization and the Mathlib Initiative said on November 21 they independently verified Levent Alpoge's Riemann Hypothesis proof, which he says he developed with Claude, and have full confidence in its correctness.
+
+**Why it matters:** Formal verification is becoming the check on AI-assisted math, and Lean tooling is where that check happens.
+
+[Source: AI Tool Lab](<https://theaitoolab.com/news/>)
+
+## OpenAI puts GPT-Live-1.1 voice model in the API with standby pricing
+
+**What happened:** OpenAI made GPT-Live-1.1, the full-duplex voice model behind ChatGPT voice since October, available in the API, with a standby mode that bills a silent session at $0.02 per minute instead of $0.05 when active.
+
+**Why it matters:** Idle time on a voice agent now costs 60% less, which changes the math on keeping a call open while the user thinks.
+
+[Source: Neural Daily](<https://www.neuraldaily.news/en/models>)
+
+## OpenAI says updated Astra safeguards cut reasoning extraction to 0.2%
+
+**What happened:** OpenAI described stronger reasoning-extraction defenses and coordinated campaign detection, reporting that in its internal adaptive evaluation extraction of earlier reasoning fell from 54% for original GPT-6 Astra safeguards to 0.2% for updated GPT-6.2 Astra safeguards.
+
+**Why it matters:** If you fine-tune or wrap frontier models, distillation defense numbers tell you how much of a model's reasoning you can expect to pull out through queries.
+
+[Source: join.dev](<https://join.dev/news/>)
+
+## Microsoft's Aion Instruct replaces Phi in Edge
+
+**What happened:** Microsoft released Aion Instruct, a 2.3-billion-parameter model under the MIT license, which replaces Phi-4-mini as Edge's built-in small language model, and put the Prompt API into an origin trial for testing on live sites.
+
+**Why it matters:** Browser-side inference through a standard Prompt API means web apps can call a local model without shipping weights or paying per token.
+
+[Source: Neural Daily](<https://www.neuraldaily.news/en/models>)
+
+## Sources
+
+- [InfoQ](<https://www.infoq.com/news/2026/11/google-agent-compute-engine/>)
+- [VentureBeat](<https://venturebeat.com/technology/thinking-machines-wows-with-inkling-2-mini-looped-transformer-model-that-runs-locally-on-laptops>)
+- [The Hacker News](<https://aihub.com/research>)
+- [AI Tool Lab](<https://theaitoolab.com/news/>)
+- [Neural Daily](<https://www.neuraldaily.news/en/models>)
+- [join.dev](<https://join.dev/news/>)
