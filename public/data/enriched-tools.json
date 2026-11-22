@@ -14162,5 +14162,92 @@
       "Open Source"
     ],
     "lastUpdated": "2026-11-21"
+  },
+  {
+    "slug": "agent-mcts",
+    "name": "agent-mcts",
+    "company": "natsu0529",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT license. You pay only for the coding agent and model usage it drives; the run shows a node and dollar budget (for example 12 nodes / $10.00) before spending anything.",
+    "description": "agent-mcts is a test-time search harness that wraps a coding-agent CLI such as Claude Code in Monte Carlo Tree Search. Instead of one linear run, it explores several solution branches in isolated git worktrees, scores each attempt with your tests, a diff-reading judge or tests an agent writes from the task, and lets you apply the best branch.",
+    "keyFeatures": [
+      "Real MCTS with UCT selection, expansion, evaluation and backup rather than best-of-N",
+      "Every node is an isolated git worktree plus a forked agent session",
+      "Value function from your test command, an optional --judge, or --generate-tests",
+      "Live tree view in the terminal, with show, resume and apply commands",
+      "Budget and cost shown before the search starts; Ctrl-C keeps the partial tree",
+      "Verified with Claude Code; Codex CLI adapter tested only against a fake binary; Kimi CLI planned",
+      "Install with uv tool install agent-mcts"
+    ],
+    "bestFor": "Developers who want more reliable answers from Claude Code on well-specified tasks and can spend extra time and tokens on search.",
+    "notIdealFor": "Quick edits, vague bug reports without good tests, or teams that need a production-ready Codex integration today.",
+    "recentUpdates": "agent-mcts v0.4.0 was released on November 22, 2026, two days after v0.3.0 on November 20, 2026.",
+    "verdict": "An early but working way to bring tree search to the coding agent you already use, with published benchmark caveats.",
+    "tags": [
+      "CLI",
+      "Claude Code",
+      "Test-Time Search",
+      "Git Worktrees",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-22"
+  },
+  {
+    "slug": "instabox",
+    "name": "InstaBox",
+    "company": "InsForge",
+    "pricing": "freemium",
+    "pricingDetail": "Free plan with 1 machine (4 vCPU / 8 GiB), a fixed 20 GiB disk and 5 snapshots. Pro costs $20 a month, Builder $100 and Team $500, each including that amount in monthly credits, plus usage billed by the second ($0.004 per vCPU-hour, $0.00225 per GiB-hour of memory, GPUs from $0.49 per hour). Enterprise is custom.",
+    "description": "InstaBox gives each AI agent its own cloud computer. A full Linux VM with root, Docker and systemd comes with Claude Code, Codex and OpenCode preinstalled, and you can fork a running machine, snapshot it, attach GPUs, or run Windows, Android and macOS desktops for computer use.",
+    "keyFeatures": [
+      "Start with npx instabox@latest sh",
+      "Full VM with its own kernel, root access, native Docker and systemd services",
+      "Fork a running machine with its processes, files and disk",
+      "Linux, Windows, Android and macOS desktops for computer use",
+      "NVIDIA H100, A100, L4 and T4 GPU machines on paid plans",
+      "instabox CLI, agent skills and MCP server for Claude, Cursor, Codex, OpenCode and Antigravity",
+      "Warm GitHub Actions runners from a snapshot, webhooks, TypeScript and Python SDKs"
+    ],
+    "bestFor": "Developers and teams running many coding or computer-use agents in parallel who want full machines instead of lightweight containers.",
+    "notIdealFor": "Work that must stay on local hardware, or very small experiments that a local container already covers.",
+    "recentUpdates": "The InstaBox changelog lists warm GitHub Actions runners from a snapshot on November 21, 2026 and workspace accounts on November 22, 2026, after A100 and H100 GPU machines on November 17 and 18, 2026.",
+    "verdict": "A capable cloud runtime for agents, with forking, GPUs and multi-OS desktops behind a single npx command.",
+    "tags": [
+      "Cloud Sandbox",
+      "Agent Runtime",
+      "Computer Use",
+      "MCP",
+      "GPU"
+    ],
+    "lastUpdated": "2026-11-22"
+  },
+  {
+    "slug": "treasure-map",
+    "name": "Treasure Map",
+    "company": "JoeyZzZzZz",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 license. It runs no model and needs no API key; you pay only for the agent and model you connect.",
+    "description": "Treasure Map is a firmware map for AI agents doing vulnerability research. It statically analyzes an unpacked firmware with Ghidra, records facts about risky call sites, diffs two firmware versions at the function level, and serves all of it over MCP so your agent decides what to read and records its judgments.",
+    "keyFeatures": [
+      "tmap scan maps command-execution, memory-copy, format-string and file-path call sites",
+      "YES, NO or UNKNOWN fact layers, with UNKNOWN stating what is missing",
+      "Cross-binary facts such as nvram writers and readers and which scripts launch each program",
+      "tmap diff builds a function-level patch diff with Ghidra, BinExport and BinDiff",
+      "Must-read changes handed out in work units with judged coverage tracked",
+      "Annotation layer keeps agent judgments across sessions, models and agents",
+      "MCP server plus a diff-review skill installed by tmap init"
+    ],
+    "bestFor": "Security researchers who use Claude Code, Codex or similar agents to audit embedded firmware or check whether a vendor patch is complete.",
+    "notIdealFor": "Application source-code review, or teams that need a stable interface, since it is a developer preview whose commands and MCP fields may change.",
+    "recentUpdates": "Treasure Map v0.2.0 was released on November 18, 2026, following v0.1.1 on October 27, 2026.",
+    "verdict": "A thoughtful fact layer that keeps agents honest about what they have and have not read in a firmware image.",
+    "tags": [
+      "Security",
+      "Firmware",
+      "MCP",
+      "Static Analysis",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-22"
   }
 ]
