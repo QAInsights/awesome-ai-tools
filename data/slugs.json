@@ -966,6 +966,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "agent-mcts",
+    "name": "agent-mcts",
+    "company": "natsu0529",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
@@ -1380,6 +1386,12 @@
     "category": "Autonomous & Async Agents"
   },
   {
+    "slug": "instabox",
+    "name": "InstaBox",
+    "company": "InsForge",
+    "category": "Autonomous & Async Agents"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -1665,6 +1677,12 @@
     "slug": "reflektor",
     "name": "Reflektor",
     "company": "Anur Basic",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "treasure-map",
+    "name": "Treasure Map",
+    "company": "JoeyZzZzZz",
     "category": "AI Code Review & Security"
   },
   {
