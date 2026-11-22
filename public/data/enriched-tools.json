@@ -14181,7 +14181,7 @@
     ],
     "bestFor": "Developers who want more reliable answers from Claude Code on well-specified tasks and can spend extra time and tokens on search.",
     "notIdealFor": "Quick edits, vague bug reports without good tests, or teams that need a production-ready Codex integration today.",
-    "recentUpdates": "agent-mcts v0.4.0 was released on November 22, 2026, two days after v0.3.0 on November 20, 2026.",
+    "recentUpdates": "agent-mcts v0.4.1 was published on PyPI on November 22, 2026, hours after v0.4.0 and two days after v0.3.0 on November 20, 2026.",
     "verdict": "An early but working way to bring tree search to the coding agent you already use, with published benchmark caveats.",
     "tags": [
       "CLI",
