@@ -2050,5 +2050,17 @@
   {
     "companyName": "cloveric",
     "toolName": "TaroBird"
+  },
+  {
+    "companyName": "Digger",
+    "toolName": "OpenComputer"
+  },
+  {
+    "companyName": "alexsergivan",
+    "toolName": "kwant"
+  },
+  {
+    "companyName": "agentmash",
+    "toolName": "agentmash"
   }
 ]

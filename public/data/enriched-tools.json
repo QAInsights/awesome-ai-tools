@@ -14076,5 +14076,91 @@
       "Open Source"
     ],
     "lastUpdated": "2026-11-19"
+  },
+  {
+    "slug": "opencomputer",
+    "name": "OpenComputer",
+    "company": "Digger",
+    "pricing": "freemium",
+    "pricingDetail": "Self-hosting is free under Apache-2.0: you pay your cloud and model provider. OpenComputer Cloud is billed per Slack workspace for work minutes: a 3-day free trial with 600 work minutes and $10 of model tokens, Pro at $20 per month (2,000 work minutes), Max at $200 per month (25,000 work minutes) and custom Enterprise pricing above 60,000 minutes. Extra minutes cost $0.01 from prepaid credits. Bring your Claude or ChatGPT subscription or an API key, or use OpenComputer's tokens at API prices with no markup.",
+    "description": "OpenComputer is an open-source, self-hostable cloud coding agent for teams. Mention @Computer in a Slack thread or call the API, and it runs Claude Code, Codex or OpenCode on a warm cloud Linux machine, with each thread in its own isolated session and branch, and returns a pull request the whole thread can watch and steer.",
+    "keyFeatures": [
+      "Hand work to @Computer from a Slack thread or the API",
+      "Runs Claude Code, Codex or OpenCode rather than its own agent",
+      "Each thread gets an isolated rootless Podman session and its own branch",
+      "Everyone in the thread sees every file opened and command run, and can steer it",
+      "Pull requests explain what changed and how it was checked, with screenshots and previews for UI changes",
+      "Self-host on one outbound-only VM in AWS, GCP or Azure, with session state persisted to a git-backed store",
+      "Bring your own Claude or ChatGPT subscription, an API key, or use OpenComputer tokens at cost"
+    ],
+    "bestFor": "Teams that already use Slack and Claude Code or Codex and want a shared cloud coding agent that turns thread requests into pull requests, in their own cloud or a hosted one.",
+    "notIdealFor": "Teams without Slack, anyone who needs macOS or Windows build machines, or developers who want shell access to the agent's sessions.",
+    "recentUpdates": "v0.6.0.50 was released on November 9, 2026, and OpenComputer launched on Show HN as an open-source Devin alternative on November 20, 2026.",
+    "verdict": "A fast, fully open-source take on the Slack-driven cloud coding agent that reuses the harnesses your team already trusts.",
+    "tags": [
+      "Cloud Agent",
+      "Slack",
+      "Self-Hosted",
+      "Multi-Agent",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-21"
+  },
+  {
+    "slug": "kwant",
+    "name": "kwant",
+    "company": "alexsergivan",
+    "pricing": "free",
+    "pricingDetail": "kwant is free and open source under the AGPL-3.0 licence, with desktop apps for macOS, Linux (beta) and Windows (beta) and a server binary or Docker image for a VPS. It sends no telemetry; bots run on Claude, Codex or Grok CLI logins or API keys you already pay for.",
+    "description": "kwant is a self-hosted team of AI bots in one Rust binary. Bots with their own roles and models share chats, hand work to each other, run routines on a schedule and track work on a Mission board, where a task is marked Verified only when kwant runs the check itself. Its Dev mode adds per-task git worktrees, pull request reviews and approvals before pushes and deploys.",
+    "keyFeatures": [
+      "Bots with their own roles and models that hand work to each other with an @mention",
+      "Mission board where tasks turn Verified only after kwant runs a check, plus a second check on another model",
+      "Dev mode with a git worktree per bot task, PR reviews and failed CI sent back to the bot",
+      "Approval cards for risky steps such as git push, network calls, deploys and payments",
+      "Runs on Claude, Codex or Grok CLI logins or Anthropic, OpenAI, xAI and compatible API keys, with account fallback",
+      "Routines on a schedule, an Inbox, MCP servers and a shared bot browser",
+      "Desktop apps, a VPS binary or Docker, and an installable phone web app"
+    ],
+    "bestFor": "Developers and power users who want a self-hosted team of agents for coding and everyday work, with checks and approvals before anything counts as done.",
+    "notIdealFor": "Teams that want a hosted, managed service, a signed and notarized installer today, or software that is not AGPL-3.0.",
+    "recentUpdates": "v0.9.37 was released on November 21, 2026, part of more than 70 releases since late October 2026.",
+    "verdict": "A fast-moving, self-hosted agent team that takes verification seriously, with a dedicated Dev mode for code.",
+    "tags": [
+      "Multi-Agent",
+      "Self-Hosted",
+      "Personal Agent",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-21"
+  },
+  {
+    "slug": "agentmash",
+    "name": "agentmash",
+    "company": "agentmash",
+    "pricing": "freemium",
+    "pricingDetail": "The client, hooks and MCP server are open source under MIT. The hosted service has a Free plan with 40 agent-hours a month, one private repo and 7 days of history; Team costs $20 per developer per month ($16 billed annually) with unlimited agent-hours and repos; Enterprise self-hosting starts at $15,000 a year.",
+    "description": "agentmash is a multiplayer layer for a team's coding agents. It adds hooks to Claude Code, Codex, Cursor and many other agents so each one tells the team's room which file it changed and why, and is warned before it edits a file a teammate's agent is working in, so it can adapt instead of colliding at merge time.",
+    "keyFeatures": [
+      "One `npx agentmash login` connects every coding agent found on the machine",
+      "Hooks for Claude Code, Codex, Cursor, GitHub Copilot, Gemini CLI, Amp, Cline, Devin, Kiro, OpenCode and more",
+      "Pre-edit warnings when a teammate's agent is working in the same file, with nothing locked",
+      "MCP server for Continue and Zed with tools such as who_is_working_on_what",
+      "Read-only asks to a teammate's agent, status of hot files and a weekly digest",
+      "Environment switches to keep prompts and diffs on your machine",
+      "Desktop apps for macOS and Windows"
+    ],
+    "bestFor": "Small teams where several developers run coding agents in the same repository and want fewer surprise merge conflicts.",
+    "notIdealFor": "Solo developers, or teams that cannot send file paths, branch names and prompt snippets to a hosted service.",
+    "recentUpdates": "agentmash 0.14.0 was published on November 12, 2026, and agentmash launched on Product Hunt in November 2026.",
+    "verdict": "A focused, transparent fix for agents on the same team stepping on each other's edits.",
+    "tags": [
+      "Multi-Agent",
+      "Collaboration",
+      "Hooks",
+      "MCP",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-21"
   }
 ]
