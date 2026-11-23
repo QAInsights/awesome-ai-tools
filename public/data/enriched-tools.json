@@ -14256,9 +14256,9 @@
     "company": "Lio Fleishman (leofle)",
     "pricing": "open-source",
     "pricingDetail": "Free and open source under the MIT licence. You pay only for the coding agents and model plans you run inside it.",
-    "description": "Trix is a Rust terminal workspace for coding agents on Linux and macOS. Run Claude Code, Codex, OpenCode, Cursor, GitHub Copilot CLI, Gemini CLI, Amp, shells or any CLI agent side by side, and Trix shows at a glance which one is working, which one needs you and which one finished, using hooks or plugins it hands to each agent process.",
+    "description": "Trix is a Rust terminal workspace for coding agents on Linux and macOS. Run Claude Code, Codex, OpenCode, Cursor, GitHub Copilot CLI, Gemini CLI, Amp, shells or any CLI agent side by side, and Trix shows at a glance which one is working, which one needs you and which one finished, using per-process hooks or plugins for Claude Code, Codex, OpenCode, Cursor, Copilot and Muse, and terminal titles or screens for Grok, Gemini, Antigravity and Amp.",
     "keyFeatures": [
-      "Per-process hooks or plugins so agents report their own lifecycle without changes to your agent configs",
+      "Per-process hooks or plugins for Claude Code, Codex, OpenCode, Cursor, Copilot and Muse without changes to your agent configs; title or screen detection for Grok, Gemini, Antigravity and Amp",
       "Needs-you strip, desktop notification and alt+a to jump to the agent blocked longest",
       "Context gauge and token cost per Claude and Codex agent, with workspace or per-agent budgets",
       "Built-in git worktrees and a diff review with line notes, commit, push, PR and merge",
@@ -14296,7 +14296,7 @@
       "CIS machine-hardening checks for macOS and Linux",
       "wpantry fix runs only unattended user-level updates and prints other steps for you or your agent",
       "wpantry skill prints an agent skill; reports as tables, JSON, HTML, Markdown or an audit summary",
-      "Only package names and versions leave the machine"
+      "Local checks send nothing; lookups send only package ecosystems, names and versions, plus installed vendor and product names for CVE lookups"
     ],
     "bestFor": "Developers who install many agent plugins, MCP servers and packages and want one local scan of what actually applies to their machine.",
     "notIdealFor": "Teams that need a hosted dashboard across many machines today, or full machine inventory on Windows, which is still limited.",
