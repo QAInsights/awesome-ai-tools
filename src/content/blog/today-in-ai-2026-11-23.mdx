@@ -1,0 +1,69 @@
+---
+title: "AMD buys Taalas for $2.9B as Oracle locks in OpenAI buildout"
+description: "AMD acquires inference chip startup Taalas for $2.9B, Oracle says the OpenAI buildout is fully funded, and vLLM shows NVMe can replace DRAM for KV cache."
+pubDate: 2026-11-23
+tags: ["news","today-in-ai","chips","amd","inference","openai","vllm","regulation"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-11-23 UTC.
+
+Chip money moved fast today: AMD bought an inference startup, Oracle closed the funding gap on OpenAI's buildout, and vLLM found a cheaper place to park agent KV cache.
+
+## AMD acquires Toronto inference chip startup Taalas for $2.9B
+
+**What happened:** AMD completed its acquisition of Taalas, a Toronto-based AI chip startup, for $2.9 billion, according to Tech.eu. The deal is aimed at AMD's AI inference technology.
+
+**Why it matters:** Inference silicon is where serving costs get decided, so a stronger AMD inference stack gives teams running open-weight models another hardware option to price against NVIDIA.
+
+[Source: Tech.eu](<https://exa.ai/library/news/story/rb8dpr19sy6y4by2pcbwdrvwr>)
+
+## Oracle says OpenAI buildout is fully funded after $20B raise
+
+**What happened:** Oracle says its OpenAI infrastructure buildout is fully funded following a final $20 billion capital raise, and it anticipates more than $30 billion in cash flow by FY2029, ETCIO reports. The contract is reported at $300 billion.
+
+**Why it matters:** Compute capacity for OpenAI models depends on this buildout landing on schedule, so the funding close is the signal that planned capacity is less likely to slip.
+
+[Source: ETCIO](<https://exa.ai/library/news/story/4f3t4yq8y4v5p07xq8xmvwxpf>)
+
+## vLLM puts agent KV cache on NVMe and skips the DRAM tier
+
+**What happened:** The vLLM blog reports that on AMD MI355X GPUs with AMD's MoRI UMBP pool, an NVMe KV cache matched a same-size DRAM pool within 1% on Kimi-K3 across two sets of runs. In AgentX replays of Claude Code sessions, the median turn was 142K input tokens and over 96% was already-seen prefix.
+
+**Why it matters:** Long agent sessions blow past GPU memory and host DRAM, so a drive-backed KV pool lets you keep prefixes cached for a full day without buying a 1.8 TB DRAM tier.
+
+[Source: vLLM](<https://vllm.ai/blog/2026-11-23-skip-the-dram-tier>)
+
+## MIT's SLIC trains a laptop-sized model to design analog chips
+
+**What happened:** MIT researchers developed SLIC, a method that trains a small language model to perform analog circuit design as well as or better than a frontier LLM, according to MIT News. The model is cheap enough to run on a laptop, so proprietary circuit and foundry data stays local.
+
+**Why it matters:** If you work with sensitive design data, a locally trained small model removes the reason to ship it to a cloud frontier model just to get design help.
+
+[Source: MIT News](<https://news.mit.edu/2026/ai-driven-technique-could-help-engineers-design-analog-chips-faster-and-less-expensive-1123>)
+
+## Architect Labs says AI agents designed a CPU from scratch
+
+**What happened:** Palo Alto startup Architect Labs said its AI systems discovered, designed and verified Frostbite, a general-purpose CPU with a new instruction set. A four-tile cluster posted 4.59x the performance per watt of a dual-issue in-order core across 25 workloads, dropping to 3.83x on the 15 workloads without AI tuning, from a simulated 7nm design not yet in silicon.
+
+**Why it matters:** The numbers are pre-silicon and the comparison core is unnamed, so treat this as a research claim to watch, not a procurement input.
+
+[Source: Tom's Hardware](<https://www.tomshardware.com/tech-industry/semiconductors/ai-agents-design-an-entirely-new-cpu-architecture-from-scratch-startup-claims-frostbite-posts-4-59x-the-performance-per-watt-of-an-in-order-core-in-pre-silicon-tests>)
+
+## France's Darcos bill rewrite narrows the AI training presumption
+
+**What happened:** Amendment No. 111, tabled 18 November by rapporteur Dorine Bregman, limits Senator Laure Darcos's presumption of AI training use to models able to generate content comparable to protected works, even if generation is not their main purpose. The Senate passed the bill on 8 April 2026; the National Assembly did not reach it on 19 November.
+
+**Why it matters:** If you ship generative features to users in France, the amendment decides whether a product that generates only as a side option falls inside the presumption.
+
+[Source: Le Latent](<https://lelatent.com/en/society/france-darcos-bill-ai-copyright-presumption/>)
+
+## Sources
+
+- [Tech.eu](<https://exa.ai/library/news/story/rb8dpr19sy6y4by2pcbwdrvwr>)
+- [ETCIO](<https://exa.ai/library/news/story/4f3t4yq8y4v5p07xq8xmvwxpf>)
+- [vLLM](<https://vllm.ai/blog/2026-11-23-skip-the-dram-tier>)
+- [MIT News](<https://news.mit.edu/2026/ai-driven-technique-could-help-engineers-design-analog-chips-faster-and-less-expensive-1123>)
+- [Tom's Hardware](<https://www.tomshardware.com/tech-industry/semiconductors/ai-agents-design-an-entirely-new-cpu-architecture-from-scratch-startup-claims-frostbite-posts-4-59x-the-performance-per-watt-of-an-in-order-core-in-pre-silicon-tests>)
+- [Le Latent](<https://lelatent.com/en/society/france-darcos-bill-ai-copyright-presumption/>)
