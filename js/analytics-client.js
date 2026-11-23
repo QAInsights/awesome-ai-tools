@@ -20,6 +20,7 @@ export function mirrorClientEvent(event, fields, captureEvent = capture) {
             if (typeof fields[field] === 'string') props[field] = fields[field];
         }
     }
+    if (event === 'news_next_step_click' && typeof fields.source_path === 'string') props.source_path = fields.source_path;
     captureEvent(event, props);
 }
 
