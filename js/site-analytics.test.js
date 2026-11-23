@@ -3,11 +3,13 @@ import { analytics } from './analytics-client.js';
 
 // Module top-level touches window/document; stub them before importing.
 let handleClick;
+let handleAuxClick;
 const clickSignIn = mock(() => {});
 globalThis.window = { location: { pathname: '/', search: '', hostname: 'ai.dosa.dev', href: 'https://ai.dosa.dev/' } };
 globalThis.document = {
     addEventListener(type, listener) {
         if (type === 'click') handleClick = listener;
+        if (type === 'auxclick') handleAuxClick = listener;
     },
     getElementById(id) {
         if (id === 'signInTriggerBtn') return { click: clickSignIn };
@@ -46,6 +48,31 @@ test('subscription auth buttons defer to news-subscribe to preserve pending subs
     handleClick({ target: { closest: selector => selector === '[data-auth-trigger]' ? cta : null }, preventDefault });
     expect(clickSignIn.mock.calls.length).toBe(before);
     expect(preventDefault).not.toHaveBeenCalled();
+});
+
+test('counts middle-click next steps once and ignores right clicks and unrelated auxclicks', () => {
+    const track = analytics.track;
+    const calls = [];
+    analytics.track = (...args) => calls.push(args);
+    const preventDefault = mock(() => {});
+    const step = { dataset: { newsNextStep: 'tool_card', newsSubject: 'claude-code' } };
+    const target = { closest: selector => selector === '[data-news-next-step]' ? step : null };
+    try {
+        handleClick({ target, button: 1, preventDefault });
+        handleAuxClick({ target, button: 1, preventDefault });
+        expect(calls).toEqual([['news_next_step_click', { trigger: 'tool_card', subject: 'claude-code', source_path: '/' }]]);
+        handleClick({ target, button: 2, preventDefault });
+        handleAuxClick({ target, button: 2, preventDefault });
+        handleAuxClick({ target, button: 0, preventDefault });
+        handleAuxClick({ target: { closest: () => null }, button: 1, preventDefault });
+        expect(calls).toHaveLength(1);
+        handleClick({ target, button: 0, preventDefault });
+        handleAuxClick({ target, button: 0, preventDefault });
+        expect(calls).toHaveLength(2);
+        expect(preventDefault).not.toHaveBeenCalled();
+    } finally {
+        analytics.track = track;
+    }
 });
 
 test('records each shared page only once per browser session', () => {

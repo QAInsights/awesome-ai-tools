@@ -99,7 +99,7 @@ function placement(anchor) {
     return 'unknown';
 }
 
-document.addEventListener('click', event => {
+function trackNewsNextStep(event) {
     const nextStep = event.target.closest?.('[data-news-next-step]');
     if (nextStep && NEWS_NEXT_STEP_TRIGGERS.includes(nextStep.dataset.newsNextStep)) {
         analytics.track(EVENTS.NEWS_NEXT_STEP_CLICK, {
@@ -108,6 +108,14 @@ document.addEventListener('click', event => {
             source_path: window.location.pathname,
         });
     }
+}
+
+document.addEventListener('auxclick', event => {
+    if (event.button === 1) trackNewsNextStep(event);
+}, { capture: true });
+
+document.addEventListener('click', event => {
+    if ((event.button ?? 0) === 0) trackNewsNextStep(event);
 
     const authTrigger = event.target.closest?.('[data-auth-trigger]');
     if (authTrigger && authTrigger.dataset.newsSubscribe === undefined) {
