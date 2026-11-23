@@ -1,4 +1,4 @@
-import { EVENTS, REF_SOURCES } from '../src/lib/analytics-events.js';
+import { EVENTS, REF_SOURCES, NEWS_NEXT_STEP_TRIGGERS } from '../src/lib/analytics-events.js';
 import { analytics } from './analytics-client.js';
 import { authAttribution } from './auth-attribution.js';
 import { initializeDirectoryShare } from './directory-share.js';
@@ -100,8 +100,17 @@ function placement(anchor) {
 }
 
 document.addEventListener('click', event => {
+    const nextStep = event.target.closest?.('[data-news-next-step]');
+    if (nextStep && NEWS_NEXT_STEP_TRIGGERS.includes(nextStep.dataset.newsNextStep)) {
+        analytics.track(EVENTS.NEWS_NEXT_STEP_CLICK, {
+            trigger: nextStep.dataset.newsNextStep,
+            subject: nextStep.dataset.newsSubject,
+            source_path: window.location.pathname,
+        });
+    }
+
     const authTrigger = event.target.closest?.('[data-auth-trigger]');
-    if (authTrigger) {
+    if (authTrigger && authTrigger.dataset.newsSubscribe === undefined) {
         event.preventDefault();
         authAttribution.open(authTrigger.dataset.authTrigger);
         return;

@@ -2,6 +2,16 @@ import { describe, expect, test } from 'bun:test';
 import { EVENTS, normalizeClientEvent, sanitizeAuthTrigger } from './analytics-events.js';
 
 describe('analytics event catalog', () => {
+    test('allowlists news next-step triggers and slug subjects', () => {
+        for (const trigger of ['tool_card', 'tool_alternatives', 'next_brief', 'prev_brief']) {
+            expect(normalizeClientEvent({ event: EVENTS.NEWS_NEXT_STEP_CLICK, trigger, subject: 'today-in-ai-2026-11-23' })).toMatchObject({
+                event: 'news_next_step_click', trigger, subject: 'today-in-ai-2026-11-23',
+            });
+        }
+        expect(normalizeClientEvent({ event: EVENTS.NEWS_NEXT_STEP_CLICK, trigger: 'unknown', subject: 'private@example.com' })).toMatchObject({ trigger: '', subject: '' });
+        expect(normalizeClientEvent({ event: EVENTS.NEWS_NEXT_STEP_CLICK })).toMatchObject({ trigger: '', subject: '' });
+    });
+
     test('owns client eligibility, trigger, provider, and subject policy', () => {
         expect(normalizeClientEvent({
             event: EVENTS.GATE_BLOCKED,

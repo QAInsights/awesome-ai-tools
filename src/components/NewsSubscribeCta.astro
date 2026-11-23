@@ -4,6 +4,7 @@ interface Props {
   subject?: string;
   compact?: boolean;
   class?: string;
+  showRss?: boolean;
 }
 
 const {
@@ -11,6 +12,7 @@ const {
   subject = 'today-in-ai',
   compact = false,
   class: className,
+  showRss = false,
 } = Astro.props;
 
 const eyebrow = isNewsPost ? 'Daily AI Brief' : 'Stay in the Loop';
@@ -48,6 +50,7 @@ const copy = isNewsPost
       <button
         type="button"
         data-news-subscribe
+        data-auth-trigger="news_cta"
         data-subscribe-default="Get daily brief by email"
         data-subscribe-active="Subscribed to daily brief"
         data-subscribe-subject={subject}
@@ -60,6 +63,7 @@ const copy = isNewsPost
         </svg>
         <span data-subscribe-label>Get daily brief by email</span>
       </button>
+      {showRss && <a href="/news/rss.xml" class="text-[13px] text-gold hover:text-gold-soft transition-colors">Or follow via RSS →</a>}
       <p
         data-news-subscribe-status
         class="hidden text-[12px] font-mono text-[#8a8a8a]"

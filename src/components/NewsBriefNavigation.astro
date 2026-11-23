@@ -1,0 +1,30 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    previous?: CollectionEntry<'blog'>;
+    next?: CollectionEntry<'blog'>;
+}
+
+const { previous, next } = Astro.props;
+---
+
+<nav aria-label="Daily brief navigation" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    {previous && (
+        <a href={`/blog/${previous.id}`} data-news-next-step="prev_brief" data-news-subject={previous.id} class="rounded-xl border border-border p-5 bg-white/[0.02] hover:bg-white/[0.05] transition-colors duration-200">
+            <span class="block font-mono text-[11px] uppercase tracking-widest text-gold mb-2">← Previous brief</span>
+            <span class="text-[15px] text-ink">{previous.data.title}</span>
+        </a>
+    )}
+    {next ? (
+        <a href={`/blog/${next.id}`} data-news-next-step="next_brief" data-news-subject={next.id} class="rounded-xl border border-border p-5 bg-white/[0.02] hover:bg-white/[0.05] transition-colors duration-200">
+            <span class="block font-mono text-[11px] uppercase tracking-widest text-gold mb-2">Next brief →</span>
+            <span class="text-[15px] text-ink">{next.data.title}</span>
+        </a>
+    ) : (
+        <div class="rounded-xl border border-border p-5 bg-white/[0.02]">
+            <p class="font-semibold text-ink">Tomorrow's brief lands at 06:00 UTC</p>
+            <p class="text-[14px] text-ink-secondary mt-2">Subscribe below to get the next edition in your inbox.</p>
+        </div>
+    )}
+</nav>
