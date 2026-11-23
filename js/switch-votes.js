@@ -1,9 +1,11 @@
 import { EVENTS } from '../src/lib/analytics-events.js';
 import { analytics } from './analytics-client.js';
+import { auth } from './auth.js';
 import { turnstileToken } from './turnstile.js';
 
-export function createSwitchVotes({ tool, request = globalThis.fetch, getToken = turnstileToken, track = analytics.track, sourcePath = globalThis.location?.pathname ?? '', onChange = () => {} }) {
+export function createSwitchVotes({ tool, request = globalThis.fetch, getToken = turnstileToken, track = analytics.track, sourcePath = globalThis.location?.pathname ?? '', onChange = () => {}, authManager = auth }) {
     const state = { data: { total: 0, counts: [], mine: null }, busy: false, loaded: false, error: '' };
+    let identityVersion = 0;
     async function fetchData(options) {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 10000);
@@ -15,26 +17,42 @@ export function createSwitchVotes({ tool, request = globalThis.fetch, getToken =
             return data;
         } finally { clearTimeout(timeout); }
     }
-    async function load() {
-        if (state.busy) return;
+    async function load(identityChanged = false) {
+        if (state.busy && !identityChanged) return;
+        const version = ++identityVersion;
+        if (identityChanged) {
+            state.loaded = false;
+            state.data = { ...state.data, mine: null };
+        }
         state.busy = true; state.error = ''; onChange(state);
-        try { state.data = await fetchData(); state.loaded = true; }
-        catch (error) { state.error = error.message || 'Could not load community picks. Please retry.'; }
-        finally { state.busy = false; onChange(state); }
+        try {
+            const data = await fetchData();
+            if (version !== identityVersion) return;
+            state.data = data; state.loaded = true;
+        }
+        catch (error) { if (version === identityVersion) state.error = error.message || 'Could not load community picks. Please retry.'; }
+        finally { if (version === identityVersion) { state.busy = false; onChange(state); } }
     }
     async function vote(pick) {
         if (state.busy || !state.loaded) return false;
         const previous = state.data.mine;
         const target = previous === pick ? null : pick;
+        const version = identityVersion;
         state.busy = true; state.error = ''; onChange(state);
         try {
             const token = await getToken();
-            state.data = await fetchData({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ tool, target, token }) });
+            if (version !== identityVersion) return false;
+            const data = await fetchData({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ tool, target, token }) });
+            if (version !== identityVersion) return false;
+            state.data = data;
             try { track(EVENTS.SWITCH_VOTE, { trigger: 'alternatives', subject: tool, target: target ?? previous, action: target === null ? 'undo' : previous ? 'change' : 'set', source_path: sourcePath }); } catch {}
             return true;
-        } catch (error) { state.error = error.message || 'Could not save your pick. Please retry.'; return false; }
-        finally { state.busy = false; onChange(state); }
+        } catch (error) { if (version === identityVersion) state.error = error.message || 'Could not save your pick. Please retry.'; return false; }
+        finally { if (version === identityVersion) { state.busy = false; onChange(state); } }
     }
+    authManager.onAuthChange(({ event }) => {
+        if (['signin', 'signout', 'session_restored'].includes(event)) return load(true);
+    });
     return { state, load, vote };
 }
 

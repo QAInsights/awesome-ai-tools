@@ -72,6 +72,63 @@ function element(dataset = {}) {
     };
 }
 
+test('sign-in and sign-out refetch identity-specific picks and render the correct undo control', async () => {
+    const selectors = Object.fromEntries(['results', 'total', 'status', 'retry', 'share'].map(key => [`[data-switch-${key}]`, element()]));
+    const widget = element({ switchVotes: 'cursor' });
+    widget.querySelector = selector => selectors[selector];
+    widget.ownerDocument = { createElement: () => element() };
+    const buttons = ['cline', 'zed'].map(slug => element({ switchTarget: slug, switchName: slug }));
+    let authChanged, mine = 'cline';
+    const posts = [];
+    const controller = initializeSwitchVotes({ querySelector: () => widget, querySelectorAll: () => buttons }, {
+        authManager: { onAuthChange: callback => { authChanged = callback; } },
+        getToken: async () => 'token', track() {},
+        request: async (_url, options) => {
+            if (options.method) { const body = JSON.parse(options.body); posts.push(body); mine = body.target; }
+            return response(data(mine));
+        },
+    });
+    await controller.ready;
+    expect(buttons[0].textContent).toBe('Undo my pick');
+    mine = 'zed';
+    const signin = authChanged({ event: 'signin' });
+    expect(buttons.every(button => button.disabled)).toBe(true);
+    await signin;
+    expect(buttons[0].attributes['aria-pressed']).toBe('false');
+    expect(buttons[1].textContent).toBe('Undo my pick');
+    mine = 'cline';
+    await authChanged({ event: 'signout' });
+    expect(buttons[0].textContent).toBe('Undo my pick');
+    expect(buttons[1].textContent).toBe('I switched to this');
+    await controller.vote('zed');
+    expect(posts[0].target).toBe('zed');
+});
+
+test('auth changes supersede pending reads and prevent pending challenges from voting as another identity', async () => {
+    let authChanged, finishRead, finishToken, reads = 0, posts = 0;
+    const controller = createSwitchVotes({ tool: 'cursor',
+        authManager: { onAuthChange: callback => { authChanged = callback; } },
+        getToken: () => new Promise(resolve => { finishToken = resolve; }),
+        request: (_url, options) => {
+            if (options.method) posts++;
+            if (++reads === 1) return new Promise(resolve => { finishRead = resolve; });
+            return Promise.resolve(response(data('zed')));
+        },
+    });
+    const oldRead = controller.load();
+    await authChanged({ event: 'signin' });
+    finishRead(response(data('cline')));
+    await oldRead;
+    expect(controller.state.data.mine).toBe('zed');
+    const oldVote = controller.vote('zed');
+    await authChanged({ event: 'signout' });
+    finishToken('token');
+    expect(await oldVote).toBe(false);
+    expect(posts).toBe(0);
+    expect(controller.state.busy).toBe(false);
+    expect(controller.state.data.mine).toBe('zed');
+});
+
 test('renders empty and voted states, top-five bars, button selection and share visibility', async () => {
     const selectors = Object.fromEntries(['results', 'total', 'status', 'retry', 'share'].map(key => [`[data-switch-${key}]`, element()]));
     const widget = element({ switchVotes: 'cursor' });
