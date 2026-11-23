@@ -33,7 +33,7 @@ const copy = isNewsPost
   ]}
 >
   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-    <div class="min-w-0">
+    <div class="min-w-0 flex-1">
       <div class="inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-widest text-[#22d3ee] mb-1">
         <span class="w-1.5 h-1.5 rounded-full bg-[#22d3ee]"></span>
         {eyebrow}
@@ -46,7 +46,7 @@ const copy = isNewsPost
       </p>
     </div>
 
-    <div class="flex flex-col sm:items-end gap-1.5 shrink-0">
+    <div class="flex flex-col sm:items-end gap-1.5 min-w-0 sm:max-w-[50%] sm:shrink-0">
       <button
         type="button"
         data-news-subscribe
@@ -55,7 +55,7 @@ const copy = isNewsPost
         data-subscribe-active="Subscribed to daily brief"
         data-subscribe-subject={subject}
         aria-pressed="false"
-        class="inline-flex items-center justify-center gap-2 h-10 px-4 rounded-lg border border-[#22d3ee]/40 bg-[#22d3ee]/10 text-[#67e8f9] hover:bg-[#22d3ee]/20 hover:border-[#22d3ee]/60 transition-colors text-[13px] font-mono font-medium cursor-pointer"
+        class="inline-flex items-center justify-center gap-2 min-h-10 max-w-full px-4 py-2 rounded-lg border border-[#22d3ee]/40 bg-[#22d3ee]/10 text-[#67e8f9] hover:bg-[#22d3ee]/20 hover:border-[#22d3ee]/60 transition-colors text-[13px] font-mono font-medium cursor-pointer"
       >
         <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -64,11 +64,11 @@ const copy = isNewsPost
         <span data-subscribe-label>Get daily brief by email</span>
       </button>
       {showRss && <a href="/news/rss.xml" class="text-[13px] text-gold hover:text-gold-soft transition-colors">Or follow via RSS →</a>}
-      <p
-        data-news-subscribe-status
-        class="hidden text-[12px] font-mono text-[#8a8a8a]"
-        aria-live="polite"
-      ></p>
     </div>
   </div>
+  <p
+    data-news-subscribe-status
+    class="hidden mt-3 text-[12px] font-mono text-[#8a8a8a] [overflow-wrap:anywhere]"
+    aria-live="polite"
+  ></p>
 </aside>
