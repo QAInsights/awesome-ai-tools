@@ -11,6 +11,20 @@ export function shareVisitProperties(pathname, search) {
     return { share_ref: ref, share_medium: params.get('utm_medium')?.slice(0, 64) || 'copy_link', $pathname: pathname, source_path: pathname };
 }
 
+export function recordShareVisit(pathname, search, { storage, captureEvent = capture } = {}) {
+    const properties = shareVisitProperties(pathname, search);
+    if (!properties) return false;
+    try {
+        storage ??= globalThis.window?.sessionStorage;
+        if (!storage) return false;
+        const key = `aat_share_visit:${pathname.replace(/\/$/, '') || '/'}`;
+        if (storage.getItem(key)) return false;
+        storage.setItem(key, '1');
+        captureEvent('share_visit', properties);
+        return true;
+    } catch { return false; }
+}
+
 export function outboundProperties(anchor, location) {
     let url;
     try { url = new URL(anchor.href); } catch { return null; }
@@ -61,8 +75,7 @@ function isNewSession() {
 if (typeof window !== 'undefined') {
     initPostHog();
     initializeDirectoryShare();
-    const shareVisit = shareVisitProperties(window.location.pathname, window.location.search);
-    if (shareVisit) capture('share_visit', shareVisit);
+    recordShareVisit(window.location.pathname, window.location.search);
 
     if (isNewSession()) {
         analytics.track(EVENTS.VISIT, visitEvent(document.referrer, window.location.search, window.location.hostname));
