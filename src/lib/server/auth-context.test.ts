@@ -15,3 +15,8 @@ test('ignores empty, malformed and foreign auth context', () => {
         expect(getAuthContext(cookies(value), request)).toEqual({});
     }
 });
+
+test('strips user input and fragments even from an unsanitized cookie', () => {
+    const context = getAuthContext(cookies(JSON.stringify({ url: 'https://ai.dosa.dev/utilities/token-counter?input=private&ref=tool_share&utm_medium=chat#private' })), request);
+    expect(context.$current_url).toBe('https://ai.dosa.dev/utilities/token-counter?ref=tool_share&utm_medium=chat');
+});

@@ -14,10 +14,10 @@ describe('auth attribution', () => {
     test('stores the starting URL and visitor PostHog session alongside the trigger', () => {
         const writes = [];
         const documentRef = { set cookie(value) { writes.push(value); } };
-        const attribution = createAuthAttribution({ storage: memoryStorage(), documentRef, locationRef: { href: 'https://ai.dosa.dev/tools/cursor', protocol: 'https:' }, sessionId: () => 'session-123' });
+        const attribution = createAuthAttribution({ storage: memoryStorage(), documentRef, locationRef: { href: 'https://ai.dosa.dev/tools/cursor?input=private&ref=tool_share&utm_source=chat#private', protocol: 'https:' }, sessionId: () => 'session-123' });
         attribution.begin('browse_gate');
         const context = JSON.parse(decodeURIComponent(writes[0].split(';')[0].split('=')[1]));
-        expect(context).toEqual({ url: 'https://ai.dosa.dev/tools/cursor', sessionId: 'session-123' });
+        expect(context).toEqual({ url: 'https://ai.dosa.dev/tools/cursor?ref=tool_share&utm_source=chat', sessionId: 'session-123' });
         expect(writes[1]).toContain('aat_auth_trigger=browse_gate');
     });
     test('keeps a trigger across a page redirect and writes one shared cookie', () => {

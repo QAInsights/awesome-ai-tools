@@ -1,4 +1,5 @@
 import { sanitizeAuthTrigger } from '../src/lib/analytics-events.js';
+import { authAnalyticsUrl } from '../src/lib/auth-analytics-url.js';
 import { ensureSessionId, getSessionId } from './posthog.js';
 
 const PENDING_KEY = 'aat_auth_trigger_pending';
@@ -40,7 +41,7 @@ export function createAuthAttribution({
     }
 
     async function prepare() {
-        if (!context) context = { url: locationRef?.href || '', sessionId: sessionId() };
+        if (!context) context = { url: authAnalyticsUrl(locationRef?.href), sessionId: sessionId() };
         context.sessionId = context.sessionId || await ensureSessionId();
         writeContext();
     }
@@ -59,7 +60,7 @@ export function createAuthAttribution({
         write(ACTIVE_SUBJECT_KEY, activeSubject);
         const secure = locationRef?.protocol === 'https:' ? '; Secure' : '';
         if (documentRef) {
-            context = { url: locationRef?.href || '', sessionId: sessionId() };
+            context = { url: authAnalyticsUrl(locationRef?.href), sessionId: sessionId() };
             writeContext();
             documentRef.cookie = `${COOKIE_NAME}=${encodeURIComponent(active)}; Max-Age=600; Path=/; SameSite=Lax${secure}`;
         }

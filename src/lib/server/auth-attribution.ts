@@ -1,5 +1,6 @@
 import type { AstroCookies } from 'astro';
 import { sanitizeAuthTrigger } from '../analytics-events.js';
+import { authAnalyticsUrl } from '../auth-analytics-url.js';
 
 export const AUTH_TRIGGER_COOKIE_NAME = 'aat_auth_trigger';
 
@@ -12,7 +13,7 @@ export function getAuthContext(cookies: AstroCookies, request: Request) {
         if (url.origin !== new URL(request.url).origin) return {};
         return {
             $pathname: url.pathname,
-            $current_url: url.href.slice(0, 2048),
+            $current_url: authAnalyticsUrl(url.href).slice(0, 2048),
             $session_id: typeof context.sessionId === 'string' ? context.sessionId.slice(0, 128) : '',
         };
     } catch { return {}; }
