@@ -50,6 +50,11 @@
   ],
   "ratelimits": [
     {
+      "name": "SWITCH_WRITE_LIMITER",
+      "namespace_id": "1007",
+      "simple": { "limit": 10, "period": 60 }
+    },
+    {
       "name": "STACK_WRITE_LIMITER",
       "namespace_id": "1001",
       "simple": {
@@ -142,6 +147,11 @@
         }
       ],
       "ratelimits": [
+        {
+          "name": "SWITCH_WRITE_LIMITER",
+          "namespace_id": "2007",
+          "simple": { "limit": 10, "period": 60 }
+        },
         {
           "name": "STACK_WRITE_LIMITER",
           "namespace_id": "2001",

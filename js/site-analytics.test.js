@@ -51,6 +51,7 @@ test('outbound captures tool, destination and source on cards and tool pages', (
 });
 
 test('share visits record shipped refs even mid-session, with medium and page', () => {
+    expect(shareVisitProperties('/tools/cursor/alternatives', '?ref=switch_share').share_ref).toBe('switch_share');
     expect(shareVisitProperties('/tools/cursor', '?ref=tool_share')).toEqual({ share_ref: 'tool_share', share_medium: 'copy_link', source_path: '/tools/cursor', $pathname: '/tools/cursor' });
     expect(shareVisitProperties('/category/ides', '?ref=category_share&utm_medium=chat').share_medium).toBe('chat');
     expect(shareVisitProperties('/', '')).toBeNull();

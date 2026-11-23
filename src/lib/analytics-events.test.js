@@ -2,6 +2,11 @@ import { describe, expect, test } from 'bun:test';
 import { EVENTS, normalizeClientEvent, sanitizeAuthTrigger } from './analytics-events.js';
 
 describe('analytics event catalog', () => {
+    test('allowlists switch votes and normalizes source, destination and action', () => {
+        for (const action of ['set', 'change', 'undo']) expect(normalizeClientEvent({ event: EVENTS.SWITCH_VOTE, subject: 'cursor', target: 'cline', action })).toMatchObject({ subject: 'cursor', target: 'cline', action });
+        expect(normalizeClientEvent({ event: EVENTS.SWITCH_VOTE, subject: 'invalid@text', target: 'https://example.com', action: 'delete' })).toMatchObject({ subject: '', target: '', action: '' });
+        expect(normalizeClientEvent({ event: EVENTS.VISIT, trigger: 'switch_share' })?.trigger).toBe('switch_share');
+    });
     test('owns client eligibility, trigger, provider, and subject policy', () => {
         expect(normalizeClientEvent({
             event: EVENTS.GATE_BLOCKED,

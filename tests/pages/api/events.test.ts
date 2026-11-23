@@ -49,6 +49,14 @@ function request(events: unknown[], origin = 'https://ai.dosa.dev') {
 }
 
 describe('POST /api/events', () => {
+    test('accepts switch votes while validating the source slug', async () => {
+        const response = await POST({ request: request([{ event: 'switch_vote', subject: 'cursor', target: 'cline', action: 'set' }, { event: 'switch_vote', subject: 'bad@email', target: 'bad@email', action: 'delete' }]), cookies } as never);
+        expect(response.status).toBe(204);
+        expect(points).toHaveLength(2);
+        expect(points[0]!.indexes).toEqual(['switch_vote']);
+        expect(points[0]!.blobs[4]).toBe('cursor');
+        expect(points[1]!.blobs[4]).toBe('');
+    });
     test('rejects cross-origin submissions', async () => {
         const response = await POST({ request: request([], 'https://example.com'), cookies } as never);
         expect(response.status).toBe(403);

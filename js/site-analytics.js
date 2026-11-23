@@ -7,7 +7,7 @@ import { capture, initPostHog } from './posthog.js';
 export function shareVisitProperties(pathname, search) {
     const params = new URLSearchParams(search);
     const ref = params.get('ref');
-    if (!['tool_share', 'category_share'].includes(ref)) return null;
+    if (!['tool_share', 'category_share', 'switch_share'].includes(ref)) return null;
     return { share_ref: ref, share_medium: params.get('utm_medium')?.slice(0, 64) || 'copy_link', $pathname: pathname, source_path: pathname };
 }
 
