@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { EVENTS } from '../../../lib/analytics-events.js';
 import { resolveAuthReturnPath } from '../../../lib/auth-session.js';
-import { getAuthTrigger } from '../../../lib/server/auth-attribution';
+import { getAuthContext, getAuthTrigger } from '../../../lib/server/auth-attribution';
 import { trackRequest } from '../../../lib/server/analytics';
 import { fetchGitHubIdentity } from '../../../lib/server/github-auth';
 import {
@@ -64,6 +64,7 @@ export const GET: APIRoute = async ({ request, redirect, cookies }) => {
             sessionCookieOptions(url),
         );
         trackRequest(request, EVENTS.SIGNIN_COMPLETED, {
+            ...getAuthContext(cookies, request),
             userId: session.user.id,
             provider: 'github',
             trigger,

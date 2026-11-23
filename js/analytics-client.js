@@ -15,6 +15,11 @@ export function mirrorClientEvent(event, fields, captureEvent = capture) {
         const value = normalized[field];
         if (value !== '' && value !== undefined) props[field] = value;
     }
+    if (event === 'outbound_click') {
+        for (const field of ['tool', 'url', 'destination_host', 'source_path', '$pathname']) {
+            if (typeof fields[field] === 'string') props[field] = fields[field];
+        }
+    }
     captureEvent(event, props);
 }
 

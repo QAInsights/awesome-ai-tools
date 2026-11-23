@@ -138,6 +138,7 @@ export class AuthManager {
         analytics.track(EVENTS.SIGNIN_STARTED, { provider: 'google', trigger: authAttribution.current() });
         try {
             return await this._queueSessionMutation(async () => {
+                await authAttribution.prepare();
                 this.user = await this.sessions.createGoogle(response.credential);
                 this._notifyAuthChange('signin');
                 return this.user;
@@ -229,6 +230,7 @@ export class AuthManager {
             analytics.track(EVENTS.SIGNIN_STARTED, { provider: 'dev', trigger: authAttribution.current() });
             try {
                 await this._queueSessionMutation(async () => {
+                    await authAttribution.prepare();
                     this.user = await this.sessions.createDev();
                     this._notifyAuthChange('signin');
                 });
@@ -250,6 +252,8 @@ export class AuthManager {
     async initiateGitHubSignIn() {
         if (!this.GITHUB_CLIENT_ID) return;
         await this.sessionMutation;
+
+        await authAttribution.prepare();
 
         analytics.track(EVENTS.SIGNIN_STARTED, { provider: 'github', trigger: authAttribution.current() });
         const state = this._generateState();

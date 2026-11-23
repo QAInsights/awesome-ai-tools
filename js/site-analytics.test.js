@@ -17,7 +17,45 @@ globalThis.document = {
     referrer: '',
 };
 
-const { badgeReferralEvent, visitEvent } = await import('./site-analytics.js');
+const { badgeReferralEvent, visitEvent, outboundProperties, shareVisitProperties, recordShareVisit } = await import('./site-analytics.js');
+
+test('records each shared page only once per browser session', () => {
+    const values = new Map();
+    const storage = { getItem: key => values.get(key), setItem: (key, value) => values.set(key, value) };
+    const captureEvent = mock(() => {});
+    const options = { storage, captureEvent };
+    expect(recordShareVisit('/tools/cursor', '?ref=tool_share', options)).toBe(true);
+    expect(recordShareVisit('/tools/cursor/', '?ref=tool_share&utm_medium=chat', options)).toBe(false);
+    expect(recordShareVisit('/tools/claude', '?ref=tool_share', options)).toBe(true);
+    expect(recordShareVisit('/tools/other', '', options)).toBe(false);
+    expect(captureEvent).toHaveBeenCalledTimes(2);
+    values.clear();
+    expect(recordShareVisit('/tools/cursor', '?ref=tool_share', options)).toBe(true);
+});
+
+test('does not throw or repeatedly capture when session storage is blocked', () => {
+    const captureEvent = mock(() => {});
+    expect(recordShareVisit('/tools/cursor', '?ref=tool_share', {
+        storage: { getItem() { throw new Error('blocked'); } }, captureEvent,
+    })).toBe(false);
+    expect(captureEvent).not.toHaveBeenCalled();
+});
+
+test('outbound captures tool, destination and source on cards and tool pages', () => {
+    const anchor = { href: 'https://cursor.com/download', closest: () => ({ dataset: { slug: 'cursor' } }) };
+    expect(outboundProperties(anchor, window.location)).toEqual({ tool: 'cursor', url: anchor.href, destination_host: 'cursor.com', source_path: '/', $pathname: '/' });
+    expect(outboundProperties({ ...anchor, closest: () => null }, { ...window.location, pathname: '/tools/cursor' }).tool).toBe('cursor');
+    expect(outboundProperties({ ...anchor, href: 'invalid' }, window.location)).toBeNull();
+    expect(outboundProperties({ ...anchor, closest: () => null }, window.location)).toBeNull();
+    expect(outboundProperties({ ...anchor, href: 'https://ai.dosa.dev/tools/cursor' }, window.location)).toBeNull();
+});
+
+test('share visits record shipped refs even mid-session, with medium and page', () => {
+    expect(shareVisitProperties('/tools/cursor', '?ref=tool_share')).toEqual({ share_ref: 'tool_share', share_medium: 'copy_link', source_path: '/tools/cursor', $pathname: '/tools/cursor' });
+    expect(shareVisitProperties('/category/ides', '?ref=category_share&utm_medium=chat').share_medium).toBe('chat');
+    expect(shareVisitProperties('/', '')).toBeNull();
+    expect(shareVisitProperties('/', '?ref=invalid')).toBeNull();
+});
 
 test('a workflow guide button opens the existing sign-in modal', () => {
     const cta = { dataset: { authTrigger: 'workflow_guide' } };
