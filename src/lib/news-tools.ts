@@ -1,8 +1,8 @@
 const GENERIC_NAMES = new Set([
-    'amp', 'ante', 'atlas', 'beacon', 'bob', 'coder', 'conductor', 'continue',
+    'agent skills', 'agent substrate', 'amp', 'ante', 'atlas', 'beacon', 'bob', 'coder', 'conductor', 'continue',
     'crush', 'cubic', 'delta', 'director', 'entire', 'executor', 'gauge', 'genie',
     'goose', 'headroom', 'hindsight', 'magnitude', 'muse',
-    'nod', 'pantry', 'reason', 'replicas', 'space', 'superpowers', 'sweep',
+    'nod', 'pantry', 'parallel code', 'reason', 'replicas', 'space', 'superpowers', 'sweep',
     'tale', 'traces', 'void', 'warp', 'wave', 'whiteboard', 'zero',
 ]);
 
@@ -11,6 +11,13 @@ const ALIASES: Record<string, string> = {
     'Warp terminal': 'warp',
     'Goose agent': 'goose',
 };
+
+const DISTINCTIVE_BRANDS = new Set([
+    'Aider', 'Antigravity', 'Base44', 'Bolt.new', 'ChatGPT', 'Claude', 'Cline',
+    'CodeRabbit', 'Codebuff', 'Cursor', 'DeepSeek', 'Devin', 'Gemini', 'Greptile',
+    'Lovable', 'Manus', 'OpenClaw', 'OpenCode', 'OpenHands', 'Perplexity', 'Qodo',
+    'QwenCloud', 'Replit', 'Supermaven', 'Tabnine', 'TokenEconomizer', 'Trae',
+]);
 
 interface NamedTool {
     slug: string;
@@ -42,8 +49,15 @@ export function matchNewsTools<T extends NamedTool>(body: string, catalog: T[], 
         }),
     ];
     const candidates = names.flatMap(({ name, tool }) => {
-        const pattern = new RegExp(`(?<![\\p{L}\\p{N}_])${escapeRegex(name)}(?![\\p{L}\\p{N}_])`, 'giu');
-        return [...text.matchAll(pattern)].map(match => ({ start: match.index!, end: match.index! + match[0].length, tool }));
+        const singleWord = !/\s/.test(name);
+        if (singleWord && !DISTINCTIVE_BRANDS.has(name)) return [];
+        const pattern = new RegExp(`(?<![\\p{L}\\p{N}_])${escapeRegex(name)}(?![\\p{L}\\p{N}_])`, singleWord ? 'gu' : 'giu');
+        return [...text.matchAll(pattern)].flatMap(match => {
+            const start = match.index!;
+            const end = start + match[0].length;
+            if (singleWord && (/^\s+\p{Lu}/u.test(text.slice(end)) || /(?:['’]s|s['’])\s+$/iu.test(text.slice(0, start)))) return [];
+            return [{ start, end, tool }];
+        });
     }).sort((a, b) => (b.end - b.start) - (a.end - a.start) || a.start - b.start);
 
     const matches: typeof candidates = [];

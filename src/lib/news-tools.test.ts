@@ -5,9 +5,31 @@ const tool = (name: string, slug = name.toLowerCase().replace(/ /g, '-')) => ({ 
 const slugs = (body: string, catalog: ReturnType<typeof tool>[], override?: string[]) => matchNewsTools(body, catalog, override).map(tool => tool.slug);
 
 describe('news tool matching', () => {
-    test('matches case-insensitively at word boundaries, in first-mention order', () => {
-        expect(slugs('Supercursor is not Cursor. Try CLINE, then cursor.', [tool('Cline'), tool('Cursor')])).toEqual(['cursor', 'cline']);
+    test('matches distinctive single-word brands case-sensitively at word boundaries', () => {
+        expect(slugs('Supercursor is not Cursor. Try Cline, then cursor and CLINE.', [tool('Cline'), tool('Cursor')])).toEqual(['cursor', 'cline']);
+        expect(slugs('cursor and CLINE', [tool('Cline'), tool('Cursor')])).toEqual([]);
         expect(slugs('éCursor Cursorish _Cursor Cursor2', [tool('Cursor')])).toEqual([]);
+    });
+
+    test('does not link the unrelated Fern and Rune in the October 31 brief', () => {
+        const catalog = [tool('Fern'), tool('Rune')];
+        expect(slugs("Mirendil's Fern launches. Salesforce buys Rune Technologies. Fern has a 10M-token window.", catalog)).toEqual([]);
+    });
+
+    test('excludes generic phrases and ambiguous projects found in the full news audit', () => {
+        expect(slugs('Packaged agent skills enable parallel code generation. NVIDIA published Agent Substrate.', [
+            tool('Agent Skills'), tool('Parallel Code'), tool('Agent Substrate'),
+        ])).toEqual([]);
+    });
+
+    test('rejects larger proper-noun phrases and possessives even for allowed brands', () => {
+        const catalog = [tool('Claude'), tool('Gemini')];
+        expect(slugs("Mirendil's Claude and Mirendil’s Gemini. Claude Technologies and Gemini Labs.", catalog)).toEqual([]);
+        expect(slugs('Claude helps; Gemini ships.', catalog)).toEqual(['claude', 'gemini']);
+    });
+
+    test('keeps multi-word names case-insensitive without the brand restrictions', () => {
+        expect(slugs("Mirendil's CLAUDE CODE Templates and claude code.", [tool('Claude Code')])).toEqual(['claude-code']);
     });
 
     test('prefers the longest overlapping name without losing later mentions', () => {
@@ -23,12 +45,12 @@ describe('news tool matching', () => {
     });
 
     test('escapes punctuation and ignores URLs and code', () => {
-        expect(slugs('`Cursor` https://example.com/cline [Bolt.new](https://example.com/cursor) BoltXnew', [tool('Cursor'), tool('Cline'), tool('Bolt.new')])).toEqual(['bolt.new']);
+        expect(slugs('`Cursor` https://example.com/cline [Bolt.new](https://example.com/cursor) vs BoltXnew', [tool('Cursor'), tool('Cline'), tool('Bolt.new')])).toEqual(['bolt.new']);
     });
 
     test('deduplicates tools and caps results at six', () => {
-        const catalog = Array.from({ length: 8 }, (_, i) => tool(`Tool${i}`));
-        expect(slugs('Tool0 Tool0 Tool1 Tool2 Tool3 Tool4 Tool5 Tool6 Tool7', catalog)).toEqual(catalog.slice(0, 6).map(tool => tool.slug));
+        const catalog = Array.from({ length: 8 }, (_, i) => tool(`Tool ${i}`));
+        expect(slugs('Tool 0 Tool 0 Tool 1 Tool 2 Tool 3 Tool 4 Tool 5 Tool 6 Tool 7', catalog)).toEqual(catalog.slice(0, 6).map(tool => tool.slug));
     });
 
     test('explicit slugs replace matching, ignore invalid slugs and preserve order', () => {
