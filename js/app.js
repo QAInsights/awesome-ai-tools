@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     const ENABLE_VOTING = process.env.ENABLE_VOTING === 'true';
-    const CF_SITEKEY = process.env.CF_SITEKEY || "1x00000000000000000000AA";
 
     // 1. Initialize UI (Sidebar, Version, Year)
     initUiManager();
@@ -182,7 +181,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (ENABLE_VOTING) {
             await initVoting().catch(err => console.warn('[voting] init failed:', err));
             syncVotingUi();
-            renderTurnstile(CF_SITEKEY);
         }
     };
 
@@ -213,14 +211,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         categories = new Set(toolsData.map(tool => tool.category));
     }
 
-    function renderTurnstile(siteKey) {
-        if (typeof turnstile !== 'undefined') {
-            window.turnstileWidgetId = turnstile.render("#turnstile-container", {
-                sitekey: siteKey,
-                callback: (token) => window.cfTokenValue = token
-            });
-        } else {
-            setTimeout(() => renderTurnstile(siteKey), 100);
-        }
-    }
 });

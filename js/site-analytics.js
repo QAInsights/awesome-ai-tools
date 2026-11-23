@@ -2,11 +2,23 @@ import { EVENTS, REF_SOURCES } from '../src/lib/analytics-events.js';
 import { analytics } from './analytics-client.js';
 import { authAttribution } from './auth-attribution.js';
 import { initializeDirectoryShare } from './directory-share.js';
-import { initPostHog } from './posthog.js';
+import { capture, initPostHog } from './posthog.js';
 
-function currentToolSlug() {
-    const match = window.location.pathname.match(/^\/tools\/([^/]+)\/?$/);
-    return match ? decodeURIComponent(match[1]) : '';
+export function shareVisitProperties(pathname, search) {
+    const params = new URLSearchParams(search);
+    const ref = params.get('ref');
+    if (!['tool_share', 'category_share'].includes(ref)) return null;
+    return { share_ref: ref, share_medium: params.get('utm_medium')?.slice(0, 64) || 'copy_link', $pathname: pathname, source_path: pathname };
+}
+
+export function outboundProperties(anchor, location) {
+    let url;
+    try { url = new URL(anchor.href); } catch { return null; }
+    if (!['http:', 'https:'].includes(url.protocol) || url.hostname === location.hostname) return null;
+    const row = anchor.closest('[data-compare-row]');
+    const tool = row?.dataset.slug || location.pathname.match(/^\/tools\/([^/]+)\/?$/)?.[1] || '';
+    if (!tool) return null;
+    return { tool, url: url.href, destination_host: url.hostname, source_path: location.pathname, $pathname: location.pathname };
 }
 
 // Pure decision: an incoming `?ref=badge` link means a maker added the
@@ -49,6 +61,8 @@ function isNewSession() {
 if (typeof window !== 'undefined') {
     initPostHog();
     initializeDirectoryShare();
+    const shareVisit = shareVisitProperties(window.location.pathname, window.location.search);
+    if (shareVisit) capture('share_visit', shareVisit);
 
     if (isNewSession()) {
         analytics.track(EVENTS.VISIT, visitEvent(document.referrer, window.location.search, window.location.hostname));
@@ -83,19 +97,11 @@ document.addEventListener('click', event => {
     const anchor = event.target.closest?.('a[href^="http"]');
     if (!anchor) return;
 
-    let url;
-    try {
-        url = new URL(anchor.href);
-    } catch {
-        return;
-    }
-    if (url.hostname === window.location.hostname) return;
-
-    const row = anchor.closest('[data-compare-row]');
-    const subject = row?.dataset.slug || currentToolSlug();
-    if (!subject) return;
+    const properties = outboundProperties(anchor, window.location);
+    if (!properties) return;
     analytics.track(EVENTS.OUTBOUND_CLICK, {
         trigger: placement(anchor),
-        subject,
+        subject: properties.tool,
+        ...properties,
     });
-});
+}, { capture: true });

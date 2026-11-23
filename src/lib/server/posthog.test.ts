@@ -43,6 +43,11 @@ afterAll(() => {
 });
 
 describe('server PostHog capture', () => {
+    test('preserves sign-in page and session without replacing other server routes', () => {
+        const fields = { $pathname: '/tools/cursor', $current_url: 'https://ai.dosa.dev/tools/cursor', $session_id: 'session-123', trigger: 'one_tap', route: '/api/auth/session' };
+        expect(buildPostHogEvent(EVENTS.SIGNIN_COMPLETED, fields).properties).toMatchObject(fields);
+        expect(buildPostHogEvent(EVENTS.FOLLOW_ADDED, { route: '/tools/cursor' }).properties.route).toBe('/tools/cursor');
+    });
     test('builds a capture payload with normalized properties and the user id', () => {
         const payload = buildPostHogEvent(EVENTS.SIGNIN_COMPLETED, {
             userId: 'github:42',

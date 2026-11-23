@@ -1,0 +1,42 @@
+import { expect, test } from 'bun:test';
+import { createTurnstile } from './turnstile.js';
+
+test('does not load or render on ordinary page views; protected actions get fresh tokens', async () => {
+    let renders = 0;
+    const removed = [];
+    const windowRef = { turnstile: {
+        render: (_selector, options) => { renders++; queueMicrotask(() => options.callback(`token-${renders}`)); return renders; },
+        remove: id => removed.push(id),
+    } };
+    const check = createTurnstile({ windowRef });
+    expect(renders).toBe(0);
+    expect(await check.token()).toBe('token-1');
+    expect(await check.token()).toBe('token-2');
+    expect(removed).toEqual([1]);
+});
+
+test('handles widget errors without throwing and allows an action retry', async () => {
+    let options;
+    const check = createTurnstile({ windowRef: { turnstile: {
+        render: (_selector, value) => { options = value; return 0; }, remove: () => {},
+    } } });
+    const first = check.token();
+    await Promise.resolve();
+    expect(options['error-callback']('300030')).toBe(true);
+    await expect(first).rejects.toThrow('Security check failed');
+    const second = check.token();
+    await Promise.resolve();
+    options.callback('retry-token');
+    expect(await second).toBe('retry-token');
+});
+
+test('rejects empty tokens and times out an unavailable API', async () => {
+    const empty = createTurnstile({ windowRef: { turnstile: {
+        render: (_selector, options) => { options.callback(''); return 0; },
+    } } });
+    await expect(empty.token()).rejects.toThrow('no token');
+    const unavailable = createTurnstile({ windowRef: {}, documentRef: {
+        createElement: () => ({}), head: { appendChild() {} },
+    }, timeoutMs: 1 });
+    await expect(unavailable.token()).rejects.toThrow('timed out');
+});

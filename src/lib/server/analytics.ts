@@ -4,6 +4,9 @@ import { getRequestContext } from './request-context';
 import { capturePostHog } from './posthog';
 
 export interface EventFields {
+    $pathname?: string;
+    $current_url?: string;
+    $session_id?: string;
     anonId?: string;
     userId?: string;
     trigger?: string;

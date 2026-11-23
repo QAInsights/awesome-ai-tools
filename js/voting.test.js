@@ -451,26 +451,28 @@ describe('voting', () => {
         test('starts the request deadline only after Turnstile supplies a token', async () => {
             const btn = makeBtn('cursor');
             const originalSetTimeout = global.setTimeout;
-            const originalSetInterval = global.setInterval;
             const deadlines = [];
-            let pollToken;
+            let provideToken;
             window.cfTokenValue = '';
+            window.turnstile = {
+                render: (_container, options) => { provideToken = options.callback; return 'widget'; },
+                remove: () => {},
+            };
             mockFetchResponse = { ok: true, status: 200 };
             global.setTimeout = (callback, delay, ...args) => {
                 if (delay === 10000) deadlines.push(delay);
                 return originalSetTimeout(callback, delay, ...args);
             };
-            global.setInterval = callback => { pollToken = callback; return 0; };
 
             try {
                 click(btn);
-                expect(typeof pollToken).toBe('function');
+                await Promise.resolve();
+                expect(typeof provideToken).toBe('function');
                 expect(deadlines).toEqual([]);
                 expect(btn.disabled).toBe(true);
                 expect(fetchCalls.some(call => call.url === '/api/v1/vote')).toBe(false);
 
-                window.cfTokenValue = 'delayed-cf-token';
-                pollToken();
+                provideToken('delayed-cf-token');
                 await flush();
 
                 expect(deadlines).toEqual([10000]);
@@ -478,7 +480,6 @@ describe('voting', () => {
                 expect(getVoteCount('cursor')).toBe(6);
             } finally {
                 global.setTimeout = originalSetTimeout;
-                global.setInterval = originalSetInterval;
             }
         });
 

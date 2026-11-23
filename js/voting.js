@@ -2,6 +2,7 @@ import { EVENTS } from '../src/lib/analytics-events.js';
 import { analytics } from './analytics-client.js';
 import { authAttribution } from './auth-attribution.js';
 import { auth } from './auth.js';
+import { turnstileToken } from './turnstile.js';
 
 let zapCounts = {};
 
@@ -75,27 +76,10 @@ export async function initVoting() {
     });
 }
 
-async function waitForTurnstileToken(timeoutMs = 3000) {
-    // If token already available, return immediately
-    const turnstileInput = document.querySelector('[name="cf-turnstile-response"]');
-    if (window.cfTokenValue || (turnstileInput && turnstileInput.value)) {
-        return window.cfTokenValue || turnstileInput.value;
-    }
+async function waitForTurnstileToken() {
+    if (window.cfTokenValue) return window.cfTokenValue;
 
-    // Wait for Turnstile callback to populate window.cfTokenValue
-    return new Promise((resolve) => {
-        const start = Date.now();
-        const interval = setInterval(() => {
-            if (window.cfTokenValue) {
-                clearInterval(interval);
-                resolve(window.cfTokenValue);
-            } else if (Date.now() - start > timeoutMs) {
-                clearInterval(interval);
-                console.warn('[Voting] Turnstile token timed out, sending without cf_token');
-                resolve("");
-            }
-        }, 100);
-    });
+    return turnstileToken();
 }
 
 const ZAP_ERROR_MESSAGES = {
@@ -158,11 +142,6 @@ async function castVote(toolId, btn) {
         clearTimeout(timeoutId);
         btn.disabled = false;
         window.cfTokenValue = '';
-        try {
-            if (window.turnstile) window.turnstile.reset(window.turnstileWidgetId);
-        } catch (error) {
-            console.warn('[Voting] Could not reset security check:', error);
-        }
     }
 
     clearZapError(btn);
