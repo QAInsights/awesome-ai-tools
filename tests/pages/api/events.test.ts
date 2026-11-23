@@ -57,6 +57,25 @@ describe('POST /api/events', () => {
         expect(points[0]!.blobs[4]).toBe('cursor');
         expect(points[1]!.blobs[4]).toBe('');
     });
+    test('accepts news next-step clicks and validates their fields', async () => {
+        const triggers = ['tool_card', 'tool_alternatives', 'next_brief', 'prev_brief'];
+        const response = await POST({
+            request: request([
+                ...triggers.map(trigger => ({ event: 'news_next_step_click', trigger, subject: trigger.includes('brief') ? 'today-in-ai-2026-11-23' : 'claude-code' })),
+                { event: 'news_next_step_click', trigger: 'subscribe', subject: 'private@example.com' },
+            ]), cookies,
+        } as never);
+        expect(response.status).toBe(204);
+        expect(points).toHaveLength(5);
+        for (const [index, trigger] of triggers.entries()) {
+            expect(points[index]!.indexes).toEqual(['news_next_step_click']);
+            expect(points[index]!.blobs[3]).toBe(trigger);
+            expect(points[index]!.blobs[4]).toBe(trigger.includes('brief') ? 'today-in-ai-2026-11-23' : 'claude-code');
+        }
+        expect(points[4]!.blobs[3]).toBe('');
+        expect(points[4]!.blobs[4]).toBe('');
+    });
+
     test('rejects cross-origin submissions', async () => {
         const response = await POST({ request: request([], 'https://example.com'), cookies } as never);
         expect(response.status).toBe(403);

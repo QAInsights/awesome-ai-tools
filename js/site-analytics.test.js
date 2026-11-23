@@ -1,12 +1,15 @@
 import { describe, expect, mock, test } from 'bun:test';
+import { analytics } from './analytics-client.js';
 
 // Module top-level touches window/document; stub them before importing.
 let handleClick;
+let handleAuxClick;
 const clickSignIn = mock(() => {});
 globalThis.window = { location: { pathname: '/', search: '', hostname: 'ai.dosa.dev', href: 'https://ai.dosa.dev/' } };
 globalThis.document = {
     addEventListener(type, listener) {
         if (type === 'click') handleClick = listener;
+        if (type === 'auxclick') handleAuxClick = listener;
     },
     getElementById(id) {
         if (id === 'signInTriggerBtn') return { click: clickSignIn };
@@ -18,6 +21,59 @@ globalThis.document = {
 };
 
 const { badgeReferralEvent, visitEvent, outboundProperties, shareVisitProperties, recordShareVisit } = await import('./site-analytics.js');
+
+test('clicks track each news next step with its subject and source path without blocking navigation', () => {
+    const track = analytics.track;
+    const calls = [];
+    analytics.track = (...args) => calls.push(args);
+    const preventDefault = mock(() => {});
+    try {
+        for (const trigger of ['tool_card', 'tool_alternatives', 'next_brief', 'prev_brief', 'invalid']) {
+            const step = { dataset: { newsNextStep: trigger, newsSubject: 'claude-code' } };
+            handleClick({ target: { closest: selector => selector === '[data-news-next-step]' ? step : null }, preventDefault });
+        }
+        expect(calls).toEqual(['tool_card', 'tool_alternatives', 'next_brief', 'prev_brief'].map(trigger => [
+            'news_next_step_click', { trigger, subject: 'claude-code', source_path: '/' },
+        ]));
+        expect(preventDefault).not.toHaveBeenCalled();
+    } finally {
+        analytics.track = track;
+    }
+});
+
+test('subscription auth buttons defer to news-subscribe to preserve pending subscription intent', () => {
+    const cta = { dataset: { authTrigger: 'news_cta', newsSubscribe: '' } };
+    const before = clickSignIn.mock.calls.length;
+    const preventDefault = mock(() => {});
+    handleClick({ target: { closest: selector => selector === '[data-auth-trigger]' ? cta : null }, preventDefault });
+    expect(clickSignIn.mock.calls.length).toBe(before);
+    expect(preventDefault).not.toHaveBeenCalled();
+});
+
+test('counts middle-click next steps once and ignores right clicks and unrelated auxclicks', () => {
+    const track = analytics.track;
+    const calls = [];
+    analytics.track = (...args) => calls.push(args);
+    const preventDefault = mock(() => {});
+    const step = { dataset: { newsNextStep: 'tool_card', newsSubject: 'claude-code' } };
+    const target = { closest: selector => selector === '[data-news-next-step]' ? step : null };
+    try {
+        handleClick({ target, button: 1, preventDefault });
+        handleAuxClick({ target, button: 1, preventDefault });
+        expect(calls).toEqual([['news_next_step_click', { trigger: 'tool_card', subject: 'claude-code', source_path: '/' }]]);
+        handleClick({ target, button: 2, preventDefault });
+        handleAuxClick({ target, button: 2, preventDefault });
+        handleAuxClick({ target, button: 0, preventDefault });
+        handleAuxClick({ target: { closest: () => null }, button: 1, preventDefault });
+        expect(calls).toHaveLength(1);
+        handleClick({ target, button: 0, preventDefault });
+        handleAuxClick({ target, button: 0, preventDefault });
+        expect(calls).toHaveLength(2);
+        expect(preventDefault).not.toHaveBeenCalled();
+    } finally {
+        analytics.track = track;
+    }
+});
 
 test('records each shared page only once per browser session', () => {
     const values = new Map();

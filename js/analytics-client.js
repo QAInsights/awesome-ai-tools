@@ -25,6 +25,7 @@ export function mirrorClientEvent(event, fields, captureEvent = capture) {
         if (normalized.action) props.action = normalized.action;
         if (typeof fields.source_path === 'string') props.source_path = fields.source_path;
     }
+    if (event === 'news_next_step_click' && typeof fields.source_path === 'string') props.source_path = fields.source_path;
     captureEvent(event, props);
 }
 

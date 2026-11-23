@@ -22,6 +22,17 @@ describe('analytics client', () => {
             ['switch_vote', {}],
         ]);
     });
+    test('mirrors news source paths with normalized fields, not arbitrary properties', () => {
+        const calls = [];
+        const capture = (...args) => calls.push(args);
+        mirrorClientEvent(EVENTS.NEWS_NEXT_STEP_CLICK, { trigger: 'tool_card', subject: 'claude-code', source_path: '/blog/today-in-ai-2026-11-23', email: 'private@example.com' }, capture);
+        mirrorClientEvent(EVENTS.NEWS_NEXT_STEP_CLICK, { source_path: null }, capture);
+        expect(calls).toEqual([
+            [EVENTS.NEWS_NEXT_STEP_CLICK, { trigger: 'tool_card', subject: 'claude-code', source_path: '/blog/today-in-ai-2026-11-23' }],
+            [EVENTS.NEWS_NEXT_STEP_CLICK, {}],
+        ]);
+    });
+
     test('batches events and flushes at the size threshold', async () => {
         const calls = [];
         const client = createAnalytics({

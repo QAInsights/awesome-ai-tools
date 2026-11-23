@@ -2,6 +2,11 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
 import NewsSubscribeCta from '../../components/NewsSubscribeCta.astro';
+import NewsToolCards from '../../components/NewsToolCards.astro';
+import NewsBriefNavigation from '../../components/NewsBriefNavigation.astro';
+import { getAllTools } from '../../lib/tools';
+import { matchNewsTools } from '../../lib/news-tools';
+import { getBriefNavigation } from '../../lib/news-navigation';
 import { safeJsonForScript } from '../../lib/serialize';
 import { postMarkdown } from '../../lib/post-markdown';
 import { extractNewsCitations } from '../../lib/news-citations.js';
@@ -23,6 +28,8 @@ const { Content, headings, remarkPluginFrontmatter } = await render(entry);
 
 const postUrl = `https://ai.dosa.dev/blog/${entry.id}`;
 const isNewsPost = entry.data.tags?.includes('news');
+const mentionedTools = isNewsPost ? matchNewsTools(entry.body ?? '', getAllTools(), entry.data.tools) : [];
+const { previous, next } = isNewsPost ? getBriefNavigation(await getCollection('blog'), entry.id) : {};
 
 const ogImage = `https://ai.dosa.dev/images/og/blog/${entry.id}.png`;
 const publishedIso = entry.data.pubDate.toISOString();
@@ -137,6 +144,8 @@ const articleMarkdownJson = safeJsonForScript({ markdown: postMarkdown(entry) })
   jsonLd={jsonLd}
   markdownUrl={`/blog/${entry.id}.md`}
   activeNav="blog"
+  prevUrl={previous ? `https://ai.dosa.dev/blog/${previous.id}` : undefined}
+  nextUrl={next ? `https://ai.dosa.dev/blog/${next.id}` : undefined}
 >
   <div class="max-w-[1400px] mx-auto w-full flex flex-col grow shrink-0 p-6 md:p-8">
     <div class="max-w-4xl mx-auto flex flex-col flex-1 w-full min-w-0">
@@ -244,7 +253,13 @@ const articleMarkdownJson = safeJsonForScript({ markdown: postMarkdown(entry) })
           <Content />
         </div>
 
-        <NewsSubscribeCta isNewsPost={Boolean(isNewsPost)} subject={entry.id} />
+        {isNewsPost ? (
+          <section data-news-next-steps aria-label="Explore this brief and keep reading" class="mt-10 space-y-6">
+            <NewsToolCards tools={mentionedTools} />
+            <NewsBriefNavigation previous={previous} next={next} />
+            <NewsSubscribeCta isNewsPost subject={entry.id} compact showRss />
+          </section>
+        ) : <NewsSubscribeCta subject={entry.id} />}
 
         {/* Share and AI actions, after the story */}
         <div class="mt-12 pt-8 border-t border-[#222] space-y-6">
