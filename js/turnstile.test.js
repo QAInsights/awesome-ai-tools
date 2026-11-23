@@ -44,6 +44,21 @@ test('rejects empty tokens and times out an unavailable API', async () => {
     expect(loads).toBe(2);
 });
 
+test('rejects unsupported browsers and releases the pending challenge for retry', async () => {
+    let options;
+    const check = createTurnstile({ windowRef: { turnstile: {
+        render: (_selector, value) => { options = value; return 0; }, remove: () => {},
+    } } });
+    const first = check.token();
+    await Promise.resolve();
+    options['unsupported-callback']();
+    await expect(first).rejects.toThrow("Security check isn't supported in this browser.");
+    const retry = check.token();
+    await Promise.resolve();
+    options.callback('retry-token');
+    expect(await retry).toBe('retry-token');
+});
+
 test('allows interactive solves beyond the SDK deadline and reveals the challenge', async () => {
     let options;
     let scrolled = false;

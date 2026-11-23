@@ -47,6 +47,7 @@ export function createTurnstile({ windowRef = globalThis.window, documentRef = g
                     sitekey: siteKey,
                     callback: value => value ? finish(null, value) : finish(new Error('Security check returned no token. Please retry.')),
                     'error-callback': () => { finish(new Error('Security check failed. Please retry.')); return true; },
+                    'unsupported-callback': () => finish(new Error("Security check isn't supported in this browser.")),
                     'expired-callback': () => finish(new Error('Security check expired. Please retry.')),
                     'before-interactive-callback': () => documentRef?.querySelector?.('#turnstile-container')?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
                 });

@@ -508,6 +508,25 @@ describe('voting', () => {
             }
         });
 
+        test('re-enables the vote button when Turnstile reports an unsupported browser', async () => {
+            const btn = makeBtn('cursor');
+            let options;
+            window.cfTokenValue = '';
+            window.turnstile = {
+                render: (_selector, value) => { options = value; return 'widget'; },
+                remove: () => {},
+            };
+            click(btn);
+            await Promise.resolve();
+            expect(btn.disabled).toBe(true);
+            options['unsupported-callback']();
+            await flush();
+            expect(btn.disabled).toBe(false);
+            expect(btn.countEl.textContent).toBe('Failed');
+            expect(getVoteCount('cursor')).toBe(5);
+            expect(fetchCalls.some(call => call.url === '/api/v1/vote')).toBe(false);
+        });
+
         test('keeps a confirmed vote even if resetting Turnstile fails', async () => {
             const btn = makeBtn('cursor');
             window.turnstile = { reset: () => { throw new Error('Widget unavailable'); } };
