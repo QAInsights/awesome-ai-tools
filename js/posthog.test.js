@@ -40,6 +40,18 @@ async function loadClient({ client, state }) {
 }
 
 describe('PostHog client', () => {
+    test('does not block authentication on a stalled SDK import', async () => {
+        const { client } = createHarness({ loadSdk: () => new Promise(() => {}) });
+        expect(await client.ensureSessionId(1)).toBe('');
+    });
+
+    test('returns a ready session and tolerates SDK errors', async () => {
+        const harness = createHarness();
+        harness.posthog.get_session_id = () => 'session-123';
+        expect(await harness.client.ensureSessionId()).toBe('session-123');
+        const failed = createHarness({ loadSdk: async () => { throw new Error('offline'); } });
+        expect(await failed.client.ensureSessionId()).toBe('');
+    });
     test('is disabled on non-production hosts and with an empty key', () => {
         for (const hostname of ['localhost', 'preview.workers.dev', 'ai.dosa.dev']) {
             const state = { calls: [], sdkLoads: 0 };

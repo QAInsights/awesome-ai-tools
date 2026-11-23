@@ -140,10 +140,19 @@ export function createPostHogClient({
         try { return posthog?.get_session_id?.() || ''; } catch { return ''; }
     }
 
-    async function ensureSessionId() {
-        await initialize();
-        if (initializationPromise) await initializationPromise.catch(() => {});
-        return getSessionId();
+    async function ensureSessionId(timeoutMs = 1000) {
+        let timer;
+        try {
+            return await Promise.race([
+                (async () => {
+                    await initialize();
+                    if (initializationPromise) await initializationPromise.catch(() => {});
+                    return getSessionId();
+                })(),
+                new Promise(resolve => { timer = globalThis.setTimeout(() => resolve(''), timeoutMs); }),
+            ]);
+        } catch { return ''; }
+        finally { globalThis.clearTimeout(timer); }
     }
 
     return { initPostHog, capture, identifyUser, resetUser, getSessionId, ensureSessionId };
