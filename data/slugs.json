@@ -972,6 +972,12 @@
     "category": "Terminal & CLI Agents"
   },
   {
+    "slug": "trix",
+    "name": "Trix",
+    "company": "Lio Fleishman (leofle)",
+    "category": "Terminal & CLI Agents"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
@@ -1683,6 +1689,18 @@
     "slug": "treasure-map",
     "name": "Treasure Map",
     "company": "JoeyZzZzZz",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "pantry",
+    "name": "Pantry",
+    "company": "Waffuru",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "clawvet",
+    "name": "ClawVet",
+    "company": "Mohib Shaikh",
     "category": "AI Code Review & Security"
   },
   {

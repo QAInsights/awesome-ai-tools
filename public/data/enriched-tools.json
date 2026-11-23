@@ -14249,5 +14249,98 @@
       "Open Source"
     ],
     "lastUpdated": "2026-11-22"
+  },
+  {
+    "slug": "trix",
+    "name": "Trix",
+    "company": "Lio Fleishman (leofle)",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT licence. You pay only for the coding agents and model plans you run inside it.",
+    "description": "Trix is a Rust terminal workspace for coding agents on Linux and macOS. Run Claude Code, Codex, OpenCode, Cursor, GitHub Copilot CLI, Gemini CLI, Amp, shells or any CLI agent side by side, and Trix shows at a glance which one is working, which one needs you and which one finished, using hooks or plugins it hands to each agent process.",
+    "keyFeatures": [
+      "Per-process hooks or plugins so agents report their own lifecycle without changes to your agent configs",
+      "Needs-you strip, desktop notification and alt+a to jump to the agent blocked longest",
+      "Context gauge and token cost per Claude and Codex agent, with workspace or per-agent budgets",
+      "Built-in git worktrees and a diff review with line notes, commit, push, PR and merge",
+      "Clone an agent, search every agent's scrollback, broadcast one prompt to idle agents",
+      "Background server keeps agents running when you detach; restore and named sessions",
+      "trix spawn, send, read and wait let a lead agent drive workers",
+      "Install with brew install leofle/trix/trix, the Arch package or the release binary"
+    ],
+    "bestFor": "Developers who run several CLI coding agents at once in the terminal and want to know immediately which one needs input.",
+    "notIdealFor": "Windows users (there is no Windows build) or people who prefer a graphical desktop app over a terminal UI.",
+    "recentUpdates": "v1.4.3 shipped on November 22, 2026 and v1.5.0, v1.6.0 and v1.6.1 followed on November 23, 2026; Trix launched on Show HN on November 22, 2026.",
+    "verdict": "An agent-first terminal multiplexer with unusually deep per-agent state, review and cost tracking, moving fast in early releases.",
+    "tags": [
+      "Terminal",
+      "Multi-Agent",
+      "Claude Code",
+      "Codex",
+      "Git Worktrees",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-23"
+  },
+  {
+    "slug": "pantry",
+    "name": "Pantry",
+    "company": "Waffuru",
+    "pricing": "open-source",
+    "pricingDetail": "Pantry is free and its source is MIT-licensed. Waffuru offers separate tools for teams looking after fleets of computers.",
+    "description": "Pantry is Waffuru's vulnerability scanner for your computer and your code, run as the wpantry CLI. It checks only what is installed or locked on the machine against OSV.dev, CVE records, CISA KEV and EPSS, and also lists the MCP servers, plugins, skills and repo hooks that coding agents such as Claude Code, Codex and Cursor run.",
+    "keyFeatures": [
+      "Findings scoped to installed and locked versions, with CVSS, EPSS and CISA known-exploited marks",
+      "Inventory of coding-agent MCP servers, plugins, skills and repo hooks; unpinned npx MCP servers warn",
+      "YARA malware rules, known-bad hashes and hosts, malicious-package and typosquat checks",
+      "Secrets anywhere in git history and hidden Unicode aimed at AI assistants",
+      "CIS machine-hardening checks for macOS and Linux",
+      "wpantry fix runs only unattended user-level updates and prints other steps for you or your agent",
+      "wpantry skill prints an agent skill; reports as tables, JSON, HTML, Markdown or an audit summary",
+      "Only package names and versions leave the machine"
+    ],
+    "bestFor": "Developers who install many agent plugins, MCP servers and packages and want one local scan of what actually applies to their machine.",
+    "notIdealFor": "Teams that need a hosted dashboard across many machines today, or full machine inventory on Windows, which is still limited.",
+    "recentUpdates": "v0.5.0 was released on November 19, v0.6.0 on November 21 and v0.7.0 on November 22, 2026; Pantry launched on Show HN on November 21, 2026.",
+    "verdict": "A thorough, privacy-conscious local scanner that treats coding-agent extensions as part of the attack surface.",
+    "tags": [
+      "Security",
+      "Vulnerability Scanning",
+      "MCP",
+      "Supply Chain",
+      "CLI",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-23"
+  },
+  {
+    "slug": "clawvet",
+    "name": "ClawVet",
+    "company": "Mohib Shaikh",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT licence. The optional --semantic pass uses your own Anthropic or OpenAI-compatible key, or a local model.",
+    "description": "ClawVet is a static and install-time security scanner for AI agent skills, rules, hooks and MCP configs across OpenClaw, Claude Code, Cursor, Codex and Windsurf. It vets each SKILL.md and the scripts it references for prompt injection, credential theft, remote code execution, typosquatting and rug-pull updates, then grades the skill and summarises its permissions.",
+    "keyFeatures": [
+      "Regex passes plus Tree-sitter taint tracking over skills and bundled scripts",
+      "A to F risk grade with a permissions summary of sites, credential stores, secret env vars and persistence",
+      "Permission diff on updates to catch rug-pull changes",
+      "clawvet audit --summary for everything installed on the machine",
+      "clawvet gate for OpenClaw's install policy and clawvet init for a Claude Code PostToolUse guard",
+      "GitHub Action with SARIF upload and a PR permissions diff comment",
+      "Runs offline by default; optional --semantic LLM judge and --osv dependency pass",
+      "Browser playground that scans client-side with WebAssembly"
+    ],
+    "bestFor": "Developers and teams who install third-party agent skills, rules or MCP configs and want a gate before they run.",
+    "notIdealFor": "Full application security scanning of a codebase; it focuses on agent skills and configs, not your app's own code.",
+    "recentUpdates": "v0.16.2 was released on November 20, 2026 and v0.17.0 and v0.18.0 on November 21, 2026, the day it was posted to Show HN.",
+    "verdict": "A focused, offline-first supply-chain check for agent skills with a practical install gate and CI story.",
+    "tags": [
+      "Security",
+      "Agent Skills",
+      "MCP",
+      "Claude Code",
+      "OpenClaw",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-23"
   }
 ]
