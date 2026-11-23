@@ -6,6 +6,7 @@ import { turnstileToken } from './turnstile.js';
 export function createSwitchVotes({ tool, request = globalThis.fetch, getToken = turnstileToken, track = analytics.track, sourcePath = globalThis.location?.pathname ?? '', onChange = () => {}, authManager = auth }) {
     const state = { data: { total: 0, counts: [], mine: null }, busy: false, loaded: false, error: '' };
     let identityVersion = 0;
+    let votingVersion = null;
     async function fetchData(options) {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), 10000);
@@ -24,7 +25,9 @@ export function createSwitchVotes({ tool, request = globalThis.fetch, getToken =
             state.loaded = false;
             state.data = { ...state.data, mine: null };
         }
-        state.busy = true; state.error = ''; onChange(state);
+        state.busy = true;
+        state.error = identityChanged && votingVersion !== null ? 'Your sign-in state changed while voting. Please choose your pick again.' : '';
+        onChange(state);
         try {
             const data = await fetchData();
             if (version !== identityVersion) return;
@@ -38,6 +41,7 @@ export function createSwitchVotes({ tool, request = globalThis.fetch, getToken =
         const previous = state.data.mine;
         const target = previous === pick ? null : pick;
         const version = identityVersion;
+        votingVersion = version;
         state.busy = true; state.error = ''; onChange(state);
         try {
             const token = await getToken();
@@ -48,10 +52,13 @@ export function createSwitchVotes({ tool, request = globalThis.fetch, getToken =
             try { track(EVENTS.SWITCH_VOTE, { trigger: 'alternatives', subject: tool, target: target ?? previous, action: target === null ? 'undo' : previous ? 'change' : 'set', source_path: sourcePath }); } catch {}
             return true;
         } catch (error) { if (version === identityVersion) state.error = error.message || 'Could not save your pick. Please retry.'; return false; }
-        finally { if (version === identityVersion) { state.busy = false; onChange(state); } }
+        finally {
+            if (votingVersion === version) votingVersion = null;
+            if (version === identityVersion) { state.busy = false; onChange(state); }
+        }
     }
     authManager.onAuthChange(({ event }) => {
-        if (['signin', 'signout', 'session_restored'].includes(event)) return load(true);
+        if (['signin', 'signout'].includes(event)) return load(true);
     });
     return { state, load, vote };
 }

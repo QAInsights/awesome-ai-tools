@@ -127,6 +127,29 @@ test('auth changes supersede pending reads and prevent pending challenges from v
     expect(posts).toBe(0);
     expect(controller.state.busy).toBe(false);
     expect(controller.state.data.mine).toBe('zed');
+    expect(controller.state.error).toContain('sign-in state changed while voting');
+});
+
+test('session restoration does not refetch or cancel a vote waiting on Turnstile', async () => {
+    let authChanged, finishToken, gets = 0;
+    const posts = [];
+    const controller = createSwitchVotes({ tool: 'cursor', track() {},
+        authManager: { onAuthChange: callback => { authChanged = callback; } },
+        getToken: () => new Promise(resolve => { finishToken = resolve; }),
+        request: async (_url, options) => {
+            if (options.method) { posts.push(JSON.parse(options.body)); return response(data('cline')); }
+            gets++; return response(data());
+        },
+    });
+    await controller.load();
+    const pending = controller.vote('cline');
+    await authChanged({ event: 'session_restored' });
+    expect(gets).toBe(1);
+    expect(controller.state.busy).toBe(true);
+    finishToken('token');
+    expect(await pending).toBe(true);
+    expect(posts).toEqual([{ tool: 'cursor', target: 'cline', token: 'token' }]);
+    expect(controller.state.error).toBe('');
 });
 
 test('renders empty and voted states, top-five bars, button selection and share visibility', async () => {
