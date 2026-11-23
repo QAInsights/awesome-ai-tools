@@ -52,11 +52,10 @@ export function matchNewsTools<T extends NamedTool>(body: string, catalog: T[], 
         const singleWord = !/\s/.test(name);
         if (singleWord && !DISTINCTIVE_BRANDS.has(name)) return [];
         const pattern = new RegExp(`(?<![\\p{L}\\p{N}_])${escapeRegex(name)}(?![\\p{L}\\p{N}_])`, singleWord ? 'gu' : 'giu');
-        return [...text.matchAll(pattern)].flatMap(match => {
+        return [...text.matchAll(pattern)].map(match => {
             const start = match.index!;
             const end = start + match[0].length;
-            if (singleWord && (/^\s+\p{Lu}/u.test(text.slice(end)) || /(?:['’]s|s['’])\s+$/iu.test(text.slice(0, start)))) return [];
-            return [{ start, end, tool }];
+            return { start, end, tool };
         });
     }).sort((a, b) => (b.end - b.start) - (a.end - a.start) || a.start - b.start);
 

@@ -22,10 +22,10 @@ describe('news tool matching', () => {
         ])).toEqual([]);
     });
 
-    test('rejects larger proper-noun phrases and possessives even for allowed brands', () => {
+    test('recognizes distinctive brands in product extensions and possessive phrases', () => {
         const catalog = [tool('Claude'), tool('Gemini')];
-        expect(slugs("Mirendil's Claude and Mirendil’s Gemini. Claude Technologies and Gemini Labs.", catalog)).toEqual([]);
-        expect(slugs('Claude helps; Gemini ships.', catalog)).toEqual(['claude', 'gemini']);
+        expect(slugs('Gemini API previews Tool Retrieval. Replit tests Claude Opus 5.5.', catalog)).toEqual(['gemini', 'claude']);
+        expect(slugs("Google's Gemini and Anthropic’s Claude.", catalog)).toEqual(['gemini', 'claude']);
     });
 
     test('keeps multi-word names case-insensitive without the brand restrictions', () => {
