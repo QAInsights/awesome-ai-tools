@@ -8,9 +8,22 @@ export function createTurnstile({ windowRef = globalThis.window, documentRef = g
         if (!scriptPromise) {
             scriptPromise = new Promise((resolve, reject) => {
                 const script = documentRef.createElement('script');
+                const fail = message => {
+                    clearTimeout(timer);
+                    script.onload = null;
+                    script.onerror = null;
+                    scriptPromise = null;
+                    script.remove?.();
+                    reject(new Error(message));
+                };
+                const timer = setTimeout(() => fail('Security check timed out. Please retry.'), timeoutMs);
                 script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-                script.onload = () => resolve(windowRef.turnstile);
-                script.onerror = () => { scriptPromise = null; script.remove(); reject(new Error('Security check unavailable. Please retry.')); };
+                script.onload = () => {
+                    clearTimeout(timer);
+                    if (windowRef.turnstile) resolve(windowRef.turnstile);
+                    else fail('Security check unavailable. Please retry.');
+                };
+                script.onerror = () => fail('Security check unavailable. Please retry.');
                 documentRef.head.appendChild(script);
             });
         }
@@ -24,11 +37,9 @@ export function createTurnstile({ windowRef = globalThis.window, documentRef = g
             const finish = (error, value) => {
                 if (settled) return;
                 settled = true;
-                clearTimeout(timer);
                 if (error) reject(error);
                 else resolve(value);
             };
-            const timer = setTimeout(() => finish(new Error('Security check timed out. Please retry.')), timeoutMs);
             load().then(api => {
                 if (settled) return;
                 if (widget !== undefined) api.remove(widget);
@@ -37,6 +48,7 @@ export function createTurnstile({ windowRef = globalThis.window, documentRef = g
                     callback: value => value ? finish(null, value) : finish(new Error('Security check returned no token. Please retry.')),
                     'error-callback': () => { finish(new Error('Security check failed. Please retry.')); return true; },
                     'expired-callback': () => finish(new Error('Security check expired. Please retry.')),
+                    'before-interactive-callback': () => documentRef?.querySelector?.('#turnstile-container')?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
                 });
             }).catch(error => finish(error));
         }).finally(() => { pending = null; });

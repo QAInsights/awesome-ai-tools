@@ -35,8 +35,27 @@ test('rejects empty tokens and times out an unavailable API', async () => {
         render: (_selector, options) => { options.callback(''); return 0; },
     } } });
     await expect(empty.token()).rejects.toThrow('no token');
+    let loads = 0;
     const unavailable = createTurnstile({ windowRef: {}, documentRef: {
-        createElement: () => ({}), head: { appendChild() {} },
+        createElement: () => ({}), head: { appendChild() { loads++; } },
     }, timeoutMs: 1 });
     await expect(unavailable.token()).rejects.toThrow('timed out');
+    await expect(unavailable.token()).rejects.toThrow('timed out');
+    expect(loads).toBe(2);
+});
+
+test('allows interactive solves beyond the SDK deadline and reveals the challenge', async () => {
+    let options;
+    let scrolled = false;
+    const check = createTurnstile({ timeoutMs: 1, documentRef: {
+        querySelector: () => ({ scrollIntoView: () => { scrolled = true; } }),
+    }, windowRef: { turnstile: {
+        render: (_selector, value) => { options = value; return 0; },
+    } } });
+    const token = check.token();
+    await new Promise(resolve => setTimeout(resolve, 10));
+    options['before-interactive-callback']();
+    expect(scrolled).toBe(true);
+    options.callback('late-solve');
+    expect(await token).toBe('late-solve');
 });
