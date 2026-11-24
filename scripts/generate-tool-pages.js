@@ -35,12 +35,12 @@ export async function generateToolPages() {
     // addedAt is the day a slug first enters the catalog; keep the stored
     // stamp on regenerations and stamp genuinely new slugs with today.
     const slugsPath = join(DATA_DIR, 'slugs.json');
-    let priorAddedAt = new Map();
+    let priorBySlug = new Map();
     try {
         const prior = JSON.parse(readFileSync(slugsPath, 'utf-8'));
         if (Array.isArray(prior)) {
             for (const entry of prior) {
-                if (entry?.slug && typeof entry?.addedAt === 'string') priorAddedAt.set(entry.slug, entry.addedAt);
+                if (entry?.slug && typeof entry?.addedAt === 'string') priorBySlug.set(entry.slug, entry);
             }
         }
     } catch { /* first generation or unreadable file: everyone gets stamped today */ }
@@ -61,12 +61,31 @@ export async function generateToolPages() {
             name: tool.name,
             company: tool.company,
             category: stripEmoji(tool.category),
-            addedAt: priorAddedAt.get(tool.slug) ?? today,
+            addedAt: priorBySlug.get(tool.slug)?.addedAt ?? today,
         });
     }
 
     // Emit slug catalog for the backend scheduler
     writeFileSync(slugsPath, JSON.stringify(catalog, null, 2) + '\n', 'utf-8');
+
+    // Slugs that left the catalog keep their drop record in
+    // data/removed-slugs.json so /new/<date> permalinks outlive removals.
+    const removedPath = join(DATA_DIR, 'removed-slugs.json');
+    let removedBySlug = new Map();
+    try {
+        const removed = JSON.parse(readFileSync(removedPath, 'utf-8'));
+        if (Array.isArray(removed)) {
+            for (const entry of removed) {
+                if (entry?.slug) removedBySlug.set(entry.slug, entry);
+            }
+        }
+    } catch { /* no removed file yet */ }
+    for (const entry of priorBySlug.values()) {
+        if (!slugs.has(entry.slug)) removedBySlug.set(entry.slug, entry);
+    }
+    for (const slug of slugs) removedBySlug.delete(slug);
+    const removedList = [...removedBySlug.values()].sort((a, b) => a.slug.localeCompare(b.slug));
+    writeFileSync(removedPath, JSON.stringify(removedList, null, 2) + '\n', 'utf-8');
 
     return { count: slugs.size };
 }

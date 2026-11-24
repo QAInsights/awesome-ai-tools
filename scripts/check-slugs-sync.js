@@ -61,8 +61,13 @@ const actual = JSON.parse(readFileSync(SLUGS_PATH, 'utf-8'));
 // be recomputed from README, so it is checked for presence/format rather
 // than exact equality with a regenerated catalog.
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+function isValidDate(d) {
+  if (!DATE_RE.test(d)) return false;
+  const parsed = new Date(`${d}T00:00:00Z`);
+  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === d;
+}
 const missingDates = Array.isArray(actual)
-  ? actual.filter(e => !DATE_RE.test(e?.addedAt ?? '')).map(e => e?.slug ?? '?')
+  ? actual.filter(e => !isValidDate(e?.addedAt ?? '')).map(e => e?.slug ?? '?')
   : [];
 if (missingDates.length > 0) {
   console.error(`slugs.json entries missing a valid addedAt (YYYY-MM-DD): ${missingDates.join(', ')}`);
@@ -82,7 +87,7 @@ const missing = expected.filter((tool) => !actualBySlug.has(tool.slug));
 const extra = actual.filter((tool) => !expectedBySlug.has(tool.slug));
 const changed = expected.filter((tool) => {
   const current = actualBySlug.get(tool.slug);
-  return current && JSON.stringify(current) !== JSON.stringify(tool);
+  return current && JSON.stringify(stripAddedAt(current)) !== JSON.stringify(tool);
 });
 
 console.error('data/slugs.json is out of sync with README.md.');

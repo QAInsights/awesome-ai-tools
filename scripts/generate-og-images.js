@@ -326,8 +326,12 @@ async function main() {
     // One share card per drop day (/new/<date>): count + tool names.
     let newWritten = 0, newSkipped = 0;
     const slugDates = JSON.parse(readFileSync(join(ROOT, 'data', 'slugs.json'), 'utf-8'));
+    let removedSlugs = [];
+    try {
+        removedSlugs = JSON.parse(readFileSync(join(ROOT, 'data', 'removed-slugs.json'), 'utf-8'));
+    } catch { /* no removed file yet */ }
     const dropsByDate = new Map();
-    for (const entry of slugDates) {
+    for (const entry of [...slugDates, ...(Array.isArray(removedSlugs) ? removedSlugs : [])]) {
         if (!/^\d{4}-\d{2}-\d{2}$/.test(entry?.addedAt ?? '')) continue;
         const list = dropsByDate.get(entry.addedAt) ?? [];
         list.push(entry.name);
