@@ -14389,7 +14389,7 @@
       "Python is parsed directly for the most accurate results; TypeScript, JavaScript, Go, Java, Rust and other languages also work",
       "Browser view plus a summary.md ready to paste into a pull request",
       "The CLI calls no model, sends nothing anywhere and never runs your code",
-      "Install with uv tool install from the repo, then genesis agent install --agent claude, codex or both"
+      "Install with uv tool install --python 3.12 from the repo's packages/genesis_ci subdirectory, then genesis agent install --agent claude, codex or both"
     ],
     "bestFor": "Developers who review a lot of coding-agent output and want to see which changed behaviors their tests actually check.",
     "notIdealFor": "Windows users (not tested), or teams wanting a hosted PR bot or a rule engine; risks are what the agent notices and tests are read, not run.",
