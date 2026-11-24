@@ -1,0 +1,88 @@
+---
+/**
+ * /new - fresh drops: every tool added to the catalog, grouped by day.
+ * The latest day is featured; past days link to permanent /new/<date> pages.
+ */
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import DropDay from '../../components/DropDay.astro';
+import { getDropDays, getLatestDropDay, formatDropDate } from '../../lib/drops';
+import { robotsFor } from '../../lib/indexing';
+
+const days = getDropDays();
+const latest = getLatestDropDay();
+const dayCount = (day: (typeof days)[number]) => day.tools.length + day.removed.length;
+const dayNames = (day: (typeof days)[number]) => [...day.tools.map(t => t.name), ...day.removed.map(t => t.name)];
+const pageUrl = 'https://ai.dosa.dev/new';
+const description = latest
+    ? `Fresh drops on ai.dosa.dev: the newest AI coding tools added to the directory, latest ${formatDropDate(latest.date)} with ${latest.tools.map(t => t.name).join(', ')}.`
+    : 'Fresh drops on ai.dosa.dev: the newest AI coding tools added to the directory.';
+const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "CollectionPage",
+            "@id": pageUrl,
+            "url": pageUrl,
+            "name": "Fresh drops - new AI coding tools by day",
+            "description": description,
+            "isPartOf": { "@id": "https://ai.dosa.dev/#website" },
+            "inLanguage": "en",
+            ...(latest ? { "dateModified": latest.date } : {}),
+        },
+        ...(latest ? [{
+            "@type": "ItemList",
+            "name": `New AI coding tools, ${formatDropDate(latest.date)}`,
+            "itemListOrder": "https://schema.org/ItemListOrderDescending",
+            "numberOfItems": latest.tools.length,
+            "itemListElement": latest.tools.map((t, i) => ({
+                "@type": "ListItem",
+                "position": i + 1,
+                "name": t.enriched?.name ?? t.name,
+                "url": `https://ai.dosa.dev/tools/${t.slug}`,
+            })),
+        }] : []),
+    ],
+});
+---
+
+<DashboardLayout
+    title="Fresh Drops - New AI Coding Tools by Day | ai.dosa.dev"
+    description={description}
+    canonical={pageUrl}
+    keywords="new AI coding tools, fresh AI tools, latest AI developer tools, AI tools directory updates, ai.dosa.dev"
+    robots={robotsFor('/new')}
+    ogImage={latest ? `https://ai.dosa.dev/images/og/new/${latest.date}.png` : undefined}
+    ogImageAlt={latest ? `${latest.tools.length} new AI coding tools, ${formatDropDate(latest.date)}` : undefined}
+    modifiedTime={latest?.date}
+    jsonLd={jsonLd}
+    activeNav="new"
+>
+    <div class="max-w-[1000px] mx-auto w-full flex flex-col gap-8 p-6 md:p-8">
+        {latest ? (
+            <>
+                <DropDay day={latest} />
+                <a href={`/new/${latest.date}`} class="font-mono text-[12px] text-ink-muted hover:text-ink">Permanent link to {formatDropDate(latest.date)} &rarr;</a>
+            </>
+        ) : (
+            <header class="flex flex-col gap-2">
+                <h1 class="text-3xl sm:text-4xl font-semibold text-ink tracking-tight m-0">Fresh drops</h1>
+                <p class="text-ink-secondary text-[15px] leading-relaxed m-0">New tools land here as they are added to the directory.</p>
+            </header>
+        )}
+        {days.length > 1 && (
+            <section aria-labelledby="archive-heading" class="flex flex-col gap-3">
+                <h2 id="archive-heading" class="text-[18px] font-semibold text-ink m-0">Past drops</h2>
+                <ul class="flex flex-col m-0 p-0 list-none border border-border rounded-xl">
+                    {days.slice(1).map(day => (
+                        <li class="border-b border-border last:border-0">
+                            <a href={`/new/${day.date}`} class="flex items-center justify-between gap-4 px-4 py-3 hover:bg-white/[0.02]">
+                                <span class="text-[14px] text-ink">{formatDropDate(day.date)}</span>
+                                <span class="font-mono text-[11px] text-ink-muted truncate">{dayCount(day)} {dayCount(day) === 1 ? 'tool' : 'tools'} · {dayNames(day).slice(0, 3).join(', ')}{dayCount(day) > 3 ? '…' : ''}</span>
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </section>
+        )}
+    </div>
+</DashboardLayout>

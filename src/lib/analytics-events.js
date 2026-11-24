@@ -30,7 +30,7 @@ export const OUTBOUND_TRIGGERS = Object.freeze(['tool_card', 'tool_detail', 'com
 export const NEWS_NEXT_STEP_TRIGGERS = Object.freeze(['tool_card', 'tool_alternatives', 'next_brief', 'prev_brief']);
 export const ONBOARDING_TRIGGERS = Object.freeze(['inline', 'float', 'unknown']);
 export const ONBOARDING_STEP_SUBJECTS = Object.freeze(['favorites', 'follows', 'badge']);
-export const DIRECTORY_SHARE_SOURCES = Object.freeze({ tool: 'tool_share', category: 'category_share', switch: 'switch_share' });
+export const DIRECTORY_SHARE_SOURCES = Object.freeze({ tool: 'tool_share', category: 'category_share', switch: 'switch_share', drop: 'drop_share' });
 export const REF_SOURCES = Object.freeze(['badge', 'newsletter', 'social', 'other', ...Object.values(DIRECTORY_SHARE_SOURCES)]);
 export const ANALYTICS_PROVIDERS = Object.freeze(['github', 'google', 'dev', 'email']);
 

@@ -1,0 +1,76 @@
+---
+/**
+ * /new/<date> - permanent page for a single day's catalog additions.
+ * One page per addedAt day in data/slugs.json.
+ */
+import DashboardLayout from '../../layouts/DashboardLayout.astro';
+import DropDay from '../../components/DropDay.astro';
+import { getDropDays, formatDropDate } from '../../lib/drops';
+import { robotsFor } from '../../lib/indexing';
+
+export function getStaticPaths() {
+    const days = getDropDays();
+    return days.map((day, i) => ({
+        params: { date: day.date },
+        props: { day, newer: days[i - 1] ?? null, older: days[i + 1] ?? null },
+    }));
+}
+
+const { day, newer, older } = Astro.props;
+const pageUrl = `https://ai.dosa.dev/new/${day.date}`;
+const totalCount = day.tools.length + day.removed.length;
+const names = [...day.tools.map(t => t.enriched?.name ?? t.name), ...day.removed.map(t => t.name)].join(', ');
+const description = `${totalCount} new AI coding ${totalCount === 1 ? 'tool' : 'tools'} added on ${formatDropDate(day.date)}: ${names}.`;
+const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "CollectionPage",
+            "@id": pageUrl,
+            "url": pageUrl,
+            "name": `New AI coding tools, ${formatDropDate(day.date)}`,
+            "description": description,
+            "isPartOf": { "@id": "https://ai.dosa.dev/#website" },
+            "inLanguage": "en",
+            "datePublished": day.date,
+        },
+        {
+            "@type": "ItemList",
+            "name": `New AI coding tools, ${formatDropDate(day.date)}`,
+            "numberOfItems": day.tools.length,
+            "itemListElement": day.tools.map((t, i) => ({
+                "@type": "ListItem",
+                "position": i + 1,
+                "name": t.enriched?.name ?? t.name,
+                "url": `https://ai.dosa.dev/tools/${t.slug}`,
+            })),
+        },
+    ],
+});
+---
+
+<DashboardLayout
+    title={`${totalCount} New AI Coding Tools - ${formatDropDate(day.date)} | ai.dosa.dev`}
+    description={description}
+    canonical={pageUrl}
+    keywords="new AI coding tools, fresh AI tools, AI tools added today, ai.dosa.dev"
+    robots={robotsFor(`/new/${day.date}`)}
+    ogImage={`https://ai.dosa.dev/images/og/new/${day.date}.png`}
+    ogImageAlt={`${totalCount} new AI coding tools, ${formatDropDate(day.date)}`}
+    publishedTime={day.date}
+    jsonLd={jsonLd}
+    activeNav="new"
+>
+    <div class="max-w-[1000px] mx-auto w-full flex flex-col gap-8 p-6 md:p-8">
+        <DropDay day={day} />
+        <nav aria-label="More drops" class="flex items-center justify-between gap-4 font-mono text-[12px]">
+            {older
+                ? <a href={`/new/${older.date}`} class="text-ink-muted hover:text-ink">&larr; {formatDropDate(older.date)}</a>
+                : <span />}
+            <a href="/new" class="text-ink-muted hover:text-ink">All drops</a>
+            {newer
+                ? <a href={`/new/${newer.date}`} class="text-ink-muted hover:text-ink">{formatDropDate(newer.date)} &rarr;</a>
+                : <span />}
+        </nav>
+    </div>
+</DashboardLayout>
