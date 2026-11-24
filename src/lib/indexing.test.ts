@@ -160,7 +160,7 @@ describe('generated page catalog', () => {
             trending: getTrendingSnapshots().length,
             best: getBestFacets().length,
             switch: getResolvedSwitchGuides().length,
-            drop: getDropDays().length,
+            drop: getDropDays().length + 1, // per-day pages plus the /new index
         });
         const paths = getGeneratedPageCandidates().map(p => p.path);
         expect(new Set(paths).size).toBe(paths.length);

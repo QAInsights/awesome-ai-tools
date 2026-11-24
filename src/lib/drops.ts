@@ -8,6 +8,7 @@
  */
 
 import slugsJson from '../../data/slugs.json';
+import removedSlugsJson from '../../data/removed-slugs.json';
 import { getAllTools, type Tool } from './tools';
 
 export interface SlugEntry {
@@ -21,10 +22,20 @@ export interface SlugEntry {
 export interface DropDay {
     /** "2026-11-24" */
     date: string;
+    /** Live catalog tools added that day. */
     tools: Tool[];
+    /** Tools added that day but later removed from the catalog. */
+    removed: SlugEntry[];
 }
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+
+/** Strict YYYY-MM-DD calendar date (rejects e.g. 2026-02-30). */
+export function isDropDate(date: string): boolean {
+    if (!DATE_RE.test(date)) return false;
+    const parsed = new Date(`${date}T00:00:00Z`);
+    return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === date;
+}
 
 let _days: DropDay[] | null = null;
 
@@ -33,17 +44,24 @@ export function getDropDays(): DropDay[] {
     if (_days) return _days;
     const bySlug = new Map(getAllTools().map(t => [t.slug, t]));
     const grouped = new Map<string, Tool[]>();
+    const removedGrouped = new Map<string, SlugEntry[]>();
     for (const entry of slugsJson as SlugEntry[]) {
-        if (!DATE_RE.test(entry.addedAt ?? '')) continue;
+        if (!isDropDate(entry.addedAt ?? '')) continue;
         const tool = bySlug.get(entry.slug);
         if (!tool) continue;
         const list = grouped.get(entry.addedAt) ?? [];
         list.push(tool);
         grouped.set(entry.addedAt, list);
     }
-    _days = [...grouped.entries()]
-        .sort((a, b) => b[0].localeCompare(a[0]))
-        .map(([date, tools]) => ({ date, tools }));
+    for (const entry of removedSlugsJson as SlugEntry[]) {
+        if (!isDropDate(entry.addedAt ?? '')) continue;
+        const list = removedGrouped.get(entry.addedAt) ?? [];
+        list.push(entry);
+        removedGrouped.set(entry.addedAt, list);
+    }
+    _days = [...new Set([...grouped.keys(), ...removedGrouped.keys()])]
+        .sort((a, b) => b.localeCompare(a))
+        .map(date => ({ date, tools: grouped.get(date) ?? [], removed: removedGrouped.get(date) ?? [] }));
     return _days;
 }
 

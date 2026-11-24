@@ -238,13 +238,25 @@ export function getGeneratedPageCandidates(): IndexCandidate[] {
         listed: [],
         primaryContent: `${g.from} to ${g.to}`,
     }));
-    const drops: IndexCandidate[] = getDropDays().map(day => ({
-        type: 'drop',
-        path: `/new/${day.date}`,
-        subjects: [],
-        listed: day.tools,
-        primaryContent: day.tools.map(t => t.slug).join(' '),
-    }));
+    const dropDays = getDropDays();
+    const drops: IndexCandidate[] = [
+        {
+            // /new is judged on the whole archive, not the newest day alone,
+            // so a thin latest drop never noindexes the index page.
+            type: 'drop',
+            path: '/new',
+            subjects: [],
+            listed: dropDays.flatMap(day => day.tools),
+            primaryContent: `new index ${dropDays.map(day => day.date).join(' ')}`,
+        },
+        ...dropDays.map(day => ({
+            type: 'drop' as const,
+            path: `/new/${day.date}`,
+            subjects: [],
+            listed: day.tools,
+            primaryContent: day.tools.map(t => t.slug).join(' '),
+        })),
+    ];
     return [...tools, ...compares, ...alternatives, ...pricing, ...categories, ...trending, ...best, ...switches, ...drops];
 }
 

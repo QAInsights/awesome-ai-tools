@@ -6,10 +6,12 @@
 import DashboardLayout from '../../layouts/DashboardLayout.astro';
 import DropDay from '../../components/DropDay.astro';
 import { getDropDays, getLatestDropDay, formatDropDate } from '../../lib/drops';
-import { NOINDEX_ROBOTS, robotsFor } from '../../lib/indexing';
+import { robotsFor } from '../../lib/indexing';
 
 const days = getDropDays();
 const latest = getLatestDropDay();
+const dayCount = (day: (typeof days)[number]) => day.tools.length + day.removed.length;
+const dayNames = (day: (typeof days)[number]) => [...day.tools.map(t => t.name), ...day.removed.map(t => t.name)];
 const pageUrl = 'https://ai.dosa.dev/new';
 const description = latest
     ? `Fresh drops on ai.dosa.dev: the newest AI coding tools added to the directory, latest ${formatDropDate(latest.date)} with ${latest.tools.map(t => t.name).join(', ')}.`
@@ -48,7 +50,7 @@ const jsonLd = JSON.stringify({
     description={description}
     canonical={pageUrl}
     keywords="new AI coding tools, fresh AI tools, latest AI developer tools, AI tools directory updates, ai.dosa.dev"
-    robots={latest ? robotsFor(`/new/${latest.date}`) : NOINDEX_ROBOTS}
+    robots={robotsFor('/new')}
     ogImage={latest ? `https://ai.dosa.dev/images/og/new/${latest.date}.png` : undefined}
     ogImageAlt={latest ? `${latest.tools.length} new AI coding tools, ${formatDropDate(latest.date)}` : undefined}
     modifiedTime={latest?.date}
@@ -59,23 +61,23 @@ const jsonLd = JSON.stringify({
         {latest ? (
             <>
                 <DropDay day={latest} />
-                <a href={`/new/${latest.date}`} class="font-mono text-[12px] text-[#737373] hover:text-white">Permanent link to {formatDropDate(latest.date)} &rarr;</a>
+                <a href={`/new/${latest.date}`} class="font-mono text-[12px] text-ink-muted hover:text-ink">Permanent link to {formatDropDate(latest.date)} &rarr;</a>
             </>
         ) : (
             <header class="flex flex-col gap-2">
-                <h1 class="text-3xl sm:text-4xl font-semibold text-white tracking-tight m-0">Fresh drops</h1>
-                <p class="text-[#a3a3a3] text-[15px] leading-relaxed m-0">New tools land here as they are added to the directory.</p>
+                <h1 class="text-3xl sm:text-4xl font-semibold text-ink tracking-tight m-0">Fresh drops</h1>
+                <p class="text-ink-secondary text-[15px] leading-relaxed m-0">New tools land here as they are added to the directory.</p>
             </header>
         )}
         {days.length > 1 && (
             <section aria-labelledby="archive-heading" class="flex flex-col gap-3">
-                <h2 id="archive-heading" class="text-[18px] font-semibold text-white m-0">Past drops</h2>
-                <ul class="flex flex-col m-0 p-0 list-none border border-[#222] rounded-xl">
+                <h2 id="archive-heading" class="text-[18px] font-semibold text-ink m-0">Past drops</h2>
+                <ul class="flex flex-col m-0 p-0 list-none border border-border rounded-xl">
                     {days.slice(1).map(day => (
-                        <li class="border-b border-[#1a1a1a] last:border-0">
+                        <li class="border-b border-border last:border-0">
                             <a href={`/new/${day.date}`} class="flex items-center justify-between gap-4 px-4 py-3 hover:bg-white/[0.02]">
-                                <span class="text-[14px] text-white">{formatDropDate(day.date)}</span>
-                                <span class="font-mono text-[11px] text-[#737373] truncate">{day.tools.length} {day.tools.length === 1 ? 'tool' : 'tools'} · {day.tools.slice(0, 3).map(t => t.name).join(', ')}{day.tools.length > 3 ? '…' : ''}</span>
+                                <span class="text-[14px] text-ink">{formatDropDate(day.date)}</span>
+                                <span class="font-mono text-[11px] text-ink-muted truncate">{dayCount(day)} {dayCount(day) === 1 ? 'tool' : 'tools'} · {dayNames(day).slice(0, 3).join(', ')}{dayCount(day) > 3 ? '…' : ''}</span>
                             </a>
                         </li>
                     ))}
