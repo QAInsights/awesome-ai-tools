@@ -1026,6 +1026,12 @@
     "category": "AI-Native Terminals"
   },
   {
+    "slug": "horus",
+    "name": "Horus",
+    "company": "Scarif Labs",
+    "category": "AI-Native Terminals"
+  },
+  {
     "slug": "jules",
     "name": "Jules",
     "company": "Google",
@@ -1701,6 +1707,12 @@
     "slug": "clawvet",
     "name": "ClawVet",
     "company": "Mohib Shaikh",
+    "category": "AI Code Review & Security"
+  },
+  {
+    "slug": "genesis-map",
+    "name": "Genesis Map",
+    "company": "GenesisAgentInfra",
     "category": "AI Code Review & Security"
   },
   {
@@ -3069,6 +3081,12 @@
     "slug": "agentmash",
     "name": "agentmash",
     "company": "agentmash",
+    "category": "Developer Productivity & Workflow"
+  },
+  {
+    "slug": "bough",
+    "name": "bough",
+    "company": "Nikhil Kumar (nickelsec)",
     "category": "Developer Productivity & Workflow"
   },
   {
