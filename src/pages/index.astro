@@ -120,7 +120,7 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
                         </p>
                         <span class="inline-flex items-center gap-4 mt-2">
                             <a href="/trending" class="inline-flex items-center gap-1.5 font-mono text-[12px] text-[#a3a3a3] hover:text-[#e2c48a] transition-colors">Trending this week &rarr;</a>
-                            {latestDrop && <a href="/new" class="inline-flex items-center gap-1.5 font-mono text-[12px] text-ink-secondary hover:text-gold-soft transition-colors">{latestDrop.tools.length} new {latestDrop.tools.length === 1 ? 'tool' : 'tools'} {formatDropDateShort(latestDrop.date)} &rarr;</a>}
+                            {latestDrop && <a href="/new" class="inline-flex items-center gap-1.5 font-mono text-[12px] text-ink-secondary hover:text-gold-soft transition-colors">{latestDrop.tools.length + latestDrop.removed.length} new {latestDrop.tools.length + latestDrop.removed.length === 1 ? 'tool' : 'tools'} {formatDropDateShort(latestDrop.date)} &rarr;</a>}
                         </span>
                     </div>
                     <div class="hidden xl:block ml-auto w-full max-w-[640px]">
