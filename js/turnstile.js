@@ -5,6 +5,11 @@ export function createTurnstile({ windowRef = globalThis.window, documentRef = g
     let cached;
     let prefetching;
     let activeTake;
+    let needsInteraction = false;
+
+    function revealChallenge() {
+        documentRef?.querySelector?.('#turnstile-container')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
 
     function load() {
         if (windowRef.turnstile) return Promise.resolve(windowRef.turnstile);
@@ -35,11 +40,13 @@ export function createTurnstile({ windowRef = globalThis.window, documentRef = g
 
     function requestToken() {
         if (pending) return pending;
+        needsInteraction = false;
         pending = new Promise((resolve, reject) => {
             let settled = false;
             const finish = (error, value) => {
                 if (settled) return;
                 settled = true;
+                needsInteraction = false;
                 if (error) reject(error);
                 else resolve(value);
             };
@@ -52,7 +59,11 @@ export function createTurnstile({ windowRef = globalThis.window, documentRef = g
                     'error-callback': () => { cached = null; finish(new Error('Security check failed. Please retry.')); return true; },
                     'unsupported-callback': () => finish(new Error("Security check isn't supported in this browser.")),
                     'expired-callback': () => { cached = null; finish(new Error('Security check expired. Please retry.')); },
-                    'before-interactive-callback': () => documentRef?.querySelector?.('#turnstile-container')?.scrollIntoView({ behavior: 'smooth', block: 'center' }),
+                    'before-interactive-callback': () => {
+                        if (settled) return;
+                        needsInteraction = true;
+                        if (activeTake) revealChallenge();
+                    },
                 });
             }).catch(error => finish(error));
         }).finally(() => { pending = null; });
@@ -71,6 +82,7 @@ export function createTurnstile({ windowRef = globalThis.window, documentRef = g
 
     async function consume() {
         if (prefetching) {
+            if (needsInteraction) revealChallenge();
             try { await prefetching; } catch {}
         }
         const ready = cached;

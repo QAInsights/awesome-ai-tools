@@ -141,3 +141,71 @@ test('viewport prefetch cannot cache a token already being consumed by an action
     expect(await click).toEqual({ token: 'token-1', prefetched: false });
     expect(await check.take()).toEqual({ token: 'token-2', prefetched: false });
 });
+
+test('a passive interactive challenge waits to scroll until take and clears interaction state after failure', async () => {
+    let options, renders = 0;
+    const scrolls = [];
+    const check = createTurnstile({ documentRef: {
+        querySelector: () => ({ scrollIntoView: options => scrolls.push(options) }),
+    }, windowRef: { turnstile: {
+        render: (_selector, value) => { options = value; return ++renders; }, remove() {},
+    } } });
+    const prefetch = check.prefetch();
+    await Promise.resolve();
+    options['before-interactive-callback']();
+    expect(scrolls).toEqual([]);
+    const vote = check.take();
+    expect(scrolls).toEqual([{ behavior: 'smooth', block: 'center' }]);
+    expect(renders).toBe(1);
+    options.callback('solved');
+    await prefetch;
+    expect(await vote).toEqual({ token: 'solved', prefetched: true });
+
+    const retryPrefetch = check.prefetch();
+    await Promise.resolve();
+    options['before-interactive-callback']();
+    expect(scrolls).toHaveLength(1);
+    options['error-callback']();
+    await expect(retryPrefetch).rejects.toThrow('Security check failed');
+    const retryVote = check.take();
+    expect(scrolls).toHaveLength(1);
+    await Promise.resolve();
+    options['before-interactive-callback']();
+    expect(scrolls).toHaveLength(2);
+    options.callback('retry-solved');
+    expect(await retryVote).toEqual({ token: 'retry-solved', prefetched: false });
+});
+
+test('a prefetch becoming interactive after take scrolls for the waiting action', async () => {
+    let options, scrolls = 0;
+    const check = createTurnstile({ documentRef: {
+        querySelector: () => ({ scrollIntoView: () => { scrolls++; } }),
+    }, windowRef: { turnstile: {
+        render: (_selector, value) => { options = value; return 0; },
+    } } });
+    const prefetch = check.prefetch();
+    await Promise.resolve();
+    const vote = check.take();
+    expect(scrolls).toBe(0);
+    options['before-interactive-callback']();
+    expect(scrolls).toBe(1);
+    options.callback('solved');
+    await prefetch;
+    expect(await vote).toEqual({ token: 'solved', prefetched: true });
+});
+
+test('taking an already solved passive token never scrolls or retains an interaction prompt', async () => {
+    let options, scrolls = 0;
+    const check = createTurnstile({ documentRef: {
+        querySelector: () => ({ scrollIntoView: () => { scrolls++; } }),
+    }, windowRef: { turnstile: {
+        render: (_selector, value) => { options = value; return 0; },
+    } } });
+    const prefetch = check.prefetch();
+    await Promise.resolve();
+    options['before-interactive-callback']();
+    options.callback('solved-without-vote');
+    await prefetch;
+    expect(await check.take()).toEqual({ token: 'solved-without-vote', prefetched: true });
+    expect(scrolls).toBe(0);
+});
