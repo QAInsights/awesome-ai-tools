@@ -16,10 +16,11 @@ import { getAlternativesPageTools, getResolvedComparisons, getTopPricingTools } 
 import { getTrendingSnapshots } from './trending-data';
 import { getBestPages } from './best';
 import { getResolvedSwitchGuides } from './switch-guides';
+import { getDropDays } from './drops';
 
-export type GeneratedPageType = 'tool' | 'compare' | 'alternatives' | 'pricing' | 'category' | 'trending' | 'best' | 'switch';
+export type GeneratedPageType = 'tool' | 'compare' | 'alternatives' | 'pricing' | 'category' | 'trending' | 'best' | 'switch' | 'drop';
 
-export const GENERATED_PAGE_TYPES: GeneratedPageType[] = ['tool', 'compare', 'alternatives', 'pricing', 'category', 'trending', 'best', 'switch'];
+export const GENERATED_PAGE_TYPES: GeneratedPageType[] = ['tool', 'compare', 'alternatives', 'pricing', 'category', 'trending', 'best', 'switch', 'drop'];
 
 export type EnrichedField = Exclude<keyof EnrichedTool, 'slug'>;
 
@@ -62,6 +63,11 @@ export const INDEXING_RULES: Record<GeneratedPageType, IndexingRule> = {
         subjectFields: [],
         listedFields: ['description'],
         minQualifying: 3,
+    },
+    drop: {
+        subjectFields: [],
+        listedFields: ['description'],
+        minQualifying: 1,
     },
     best: {
         subjectFields: [],
@@ -232,7 +238,14 @@ export function getGeneratedPageCandidates(): IndexCandidate[] {
         listed: [],
         primaryContent: `${g.from} to ${g.to}`,
     }));
-    return [...tools, ...compares, ...alternatives, ...pricing, ...categories, ...trending, ...best, ...switches];
+    const drops: IndexCandidate[] = getDropDays().map(day => ({
+        type: 'drop',
+        path: `/new/${day.date}`,
+        subjects: [],
+        listed: day.tools,
+        primaryContent: day.tools.map(t => t.slug).join(' '),
+    }));
+    return [...tools, ...compares, ...alternatives, ...pricing, ...categories, ...trending, ...best, ...switches, ...drops];
 }
 
 let _decisions: Map<string, IndexDecision> | null = null;

@@ -57,7 +57,20 @@ function buildCatalog() {
 const expected = buildCatalog();
 const actual = JSON.parse(readFileSync(SLUGS_PATH, 'utf-8'));
 
-if (JSON.stringify(actual) === JSON.stringify(expected)) {
+// addedAt is assigned once when a slug first enters the catalog and cannot
+// be recomputed from README, so it is checked for presence/format rather
+// than exact equality with a regenerated catalog.
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+const missingDates = Array.isArray(actual)
+  ? actual.filter(e => !DATE_RE.test(e?.addedAt ?? '')).map(e => e?.slug ?? '?')
+  : [];
+if (missingDates.length > 0) {
+  console.error(`slugs.json entries missing a valid addedAt (YYYY-MM-DD): ${missingDates.join(', ')}`);
+  process.exit(1);
+}
+const stripAddedAt = entry => ({ slug: entry.slug, name: entry.name, company: entry.company, category: entry.category });
+
+if (JSON.stringify(actual.map(stripAddedAt)) === JSON.stringify(expected)) {
   console.log(`slugs.json is in sync with README.md (${actual.length} tools).`);
   process.exit(0);
 }

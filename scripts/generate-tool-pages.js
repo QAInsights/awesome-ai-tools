@@ -32,6 +32,20 @@ export async function generateToolPages() {
 
     mkdirSync(DATA_DIR, { recursive: true });
 
+    // addedAt is the day a slug first enters the catalog; keep the stored
+    // stamp on regenerations and stamp genuinely new slugs with today.
+    const slugsPath = join(DATA_DIR, 'slugs.json');
+    let priorAddedAt = new Map();
+    try {
+        const prior = JSON.parse(readFileSync(slugsPath, 'utf-8'));
+        if (Array.isArray(prior)) {
+            for (const entry of prior) {
+                if (entry?.slug && typeof entry?.addedAt === 'string') priorAddedAt.set(entry.slug, entry.addedAt);
+            }
+        }
+    } catch { /* first generation or unreadable file: everyone gets stamped today */ }
+    const today = new Date().toISOString().slice(0, 10);
+
     const slugs = new Set();
     const catalog = [];
 
@@ -47,11 +61,12 @@ export async function generateToolPages() {
             name: tool.name,
             company: tool.company,
             category: stripEmoji(tool.category),
+            addedAt: priorAddedAt.get(tool.slug) ?? today,
         });
     }
 
     // Emit slug catalog for the backend scheduler
-    writeFileSync(join(DATA_DIR, 'slugs.json'), JSON.stringify(catalog, null, 2) + '\n', 'utf-8');
+    writeFileSync(slugsPath, JSON.stringify(catalog, null, 2) + '\n', 'utf-8');
 
     return { count: slugs.size };
 }

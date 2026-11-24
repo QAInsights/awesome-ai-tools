@@ -25,6 +25,7 @@ const TRENDING_OUT_DIR = join(OUT_DIR, 'trending');
 const BEST_OUT_DIR = join(OUT_DIR, 'best');
 const COMPARE_OUT_DIR = join(OUT_DIR, 'compare');
 const SWITCH_OUT_DIR = join(OUT_DIR, 'switch');
+const NEW_OUT_DIR = join(OUT_DIR, 'new');
 const FONT_DIR = join(ROOT, 'assets', 'fonts');
 
 const fonts = [
@@ -194,6 +195,7 @@ async function main() {
     mkdirSync(BEST_OUT_DIR, { recursive: true });
     mkdirSync(COMPARE_OUT_DIR, { recursive: true });
     mkdirSync(SWITCH_OUT_DIR, { recursive: true });
+    mkdirSync(NEW_OUT_DIR, { recursive: true });
 
     let written = 0, skipped = 0, blogWritten = 0, blogSkipped = 0;
     for (const tool of tools) {
@@ -321,7 +323,36 @@ async function main() {
         switchWritten++;
     }
 
-    console.log(`OG images: ${written} generated, ${skipped} up-to-date (${tools.length} tools); ${blogWritten} blog posts generated, ${blogSkipped} up-to-date (${posts.length} posts total); ${trendingWritten} trending weeks generated, ${trendingSkipped} up-to-date; ${bestWritten} best-of pages generated, ${bestSkipped} up-to-date; ${compareWritten} comparisons generated, ${compareSkipped} up-to-date; ${switchWritten} switch guides generated, ${switchSkipped} up-to-date`);
+    // One share card per drop day (/new/<date>): count + tool names.
+    let newWritten = 0, newSkipped = 0;
+    const slugDates = JSON.parse(readFileSync(join(ROOT, 'data', 'slugs.json'), 'utf-8'));
+    const dropsByDate = new Map();
+    for (const entry of slugDates) {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(entry?.addedAt ?? '')) continue;
+        const list = dropsByDate.get(entry.addedAt) ?? [];
+        list.push(entry.name);
+        dropsByDate.set(entry.addedAt, list);
+    }
+    for (const [date, names] of dropsByDate) {
+        const title = `${names.length} new AI coding ${names.length === 1 ? 'tool' : 'tools'}`;
+        const contentKey = hash(JSON.stringify([date, names]));
+        const outPath = join(NEW_OUT_DIR, `${date}.png`);
+        const hashPath = join(NEW_OUT_DIR, `${date}.hash`);
+        if (existsSync(outPath) && existsSync(hashPath) && readFileSync(hashPath, 'utf-8') === contentKey) {
+            newSkipped++;
+            continue;
+        }
+        const png = await renderCardPng({
+            label: 'Fresh drops',
+            title: truncate(title, 48),
+            subtitle: truncate([formatPostDate(date), names.join(', ')].filter(Boolean).join(' · '), 42),
+        });
+        writeFileSync(outPath, png);
+        writeFileSync(hashPath, contentKey);
+        newWritten++;
+    }
+
+    console.log(`OG images: ${written} generated, ${skipped} up-to-date (${tools.length} tools); ${blogWritten} blog posts generated, ${blogSkipped} up-to-date (${posts.length} posts total); ${trendingWritten} trending weeks generated, ${trendingSkipped} up-to-date; ${bestWritten} best-of pages generated, ${bestSkipped} up-to-date; ${compareWritten} comparisons generated, ${compareSkipped} up-to-date; ${switchWritten} switch guides generated, ${switchSkipped} up-to-date; ${newWritten} drop days generated, ${newSkipped} up-to-date`);
 }
 
 main().catch(err => { console.error('OG image generation failed:', err); process.exit(1); });

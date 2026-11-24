@@ -1,0 +1,56 @@
+---
+/**
+ * One drop day: the tools added to the catalog that day plus share actions.
+ * Shared by /new (latest day) and the permanent /new/<date> pages.
+ */
+import DirectoryShare from './DirectoryShare.astro';
+import { formatDropDate, type DropDay } from '../lib/drops';
+
+interface Props {
+    day: DropDay;
+    headingLevel?: 'h1' | 'h2';
+}
+
+const { day, headingLevel = 'h1' } = Astro.props;
+const Heading = headingLevel;
+
+const pageUrl = `https://ai.dosa.dev/new/${day.date}`;
+const names = day.tools.map(t => t.name).join(', ');
+const count = day.tools.length;
+const shareText = count === 1
+    ? `New on ai.dosa.dev: ${names}`
+    : `${count} new AI coding tools on ai.dosa.dev: ${names}`;
+const xUrl = `https://x.com/intent/post?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(pageUrl)}`;
+const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
+const pillClass = 'inline-flex min-h-9 items-center gap-2 rounded-full border border-border px-4 text-sm text-ink-secondary transition-colors hover:border-border-strong hover:text-ink';
+---
+
+<header class="flex flex-col gap-2 pb-6 border-b border-[#222]">
+    <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] m-0">Fresh drops &middot; <time datetime={day.date}>{formatDropDate(day.date)}</time></p>
+    <Heading class="text-3xl sm:text-4xl font-semibold text-white tracking-tight m-0">
+        {count === 1 ? '1 new AI coding tool' : `${count} new AI coding tools`}
+    </Heading>
+    <p class="text-[#a3a3a3] text-[15px] leading-relaxed m-0 max-w-[70ch]">{names}.</p>
+    <div class="flex flex-wrap items-center gap-3 pt-2">
+        <a href={xUrl} target="_blank" rel="noopener noreferrer" class={pillClass}>Post on X</a>
+        <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" class={pillClass}>Share on LinkedIn</a>
+        <DirectoryShare canonical={pageUrl} kind="drop" slug={day.date} name={`the ${formatDropDate(day.date)} drops`} align="start" label="Copy link" />
+    </div>
+</header>
+
+<ul class="flex flex-col m-0 p-0 list-none border border-[#222] rounded-xl divide-y divide-[#1a1a1a]">
+    {day.tools.map(tool => (
+        <li>
+            <a href={`/tools/${tool.slug}`} class="flex flex-col gap-1 px-4 py-4 hover:bg-white/[0.02] transition-colors">
+                <span class="flex flex-wrap items-baseline gap-x-3">
+                    <span class="text-[15px] font-semibold text-white">{tool.enriched?.name ?? tool.name}</span>
+                    <span class="text-[13px] text-[#a3a3a3]">{tool.enriched?.company ?? tool.company}</span>
+                    <span class="font-mono text-[11px] uppercase tracking-widest text-[#737373] ml-auto">{tool.categoryShort}</span>
+                </span>
+                {tool.enriched?.description && (
+                    <span class="text-[13px] text-[#a3a3a3] leading-relaxed">{tool.enriched.description.length > 220 ? `${tool.enriched.description.slice(0, 219).trimEnd()}…` : tool.enriched.description}</span>
+                )}
+            </a>
+        </li>
+    ))}
+</ul>
