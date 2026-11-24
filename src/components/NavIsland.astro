@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import TodayPromos from './TodayPromos.astro';
 import houseAds from '../data/house-ads.json';
+import { t } from '../i18n/zh';
 
 /**
  * Site navigation "island": a pill pinned top-centre on desktop (bottom on
@@ -15,6 +16,7 @@ import houseAds from '../data/house-ads.json';
 interface Props {
     activeNav?: string;
     search?: 'live' | 'link';
+    lang?: string;
 }
 
 type NavItem = { key: string; href: string; label: string; desc?: string; icon: string; external?: boolean };
@@ -100,7 +102,10 @@ const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const derived = path === '/' ? 'directory' : SECTION_PREFIXES.find(([prefix]) => path.startsWith(prefix))?.[1];
 const active = allItems.find(item => item.key === (activeNavKey(Astro.props.activeNav) ?? derived));
 const search = Astro.props.search ?? 'link';
-const pillLabel = active?.label ?? 'Menu';
+const lang = Astro.props.lang ?? 'en';
+const navLabel = (item: NavItem) => t(lang, `nav.${item.key}`, item.label);
+const navDesc = (item: NavItem) => t(lang, `nav.${item.key}.desc`, item.desc ?? '');
+const pillLabel = active ? navLabel(active) : t(lang, 'nav.menu', 'Menu');
 const pillIcon = ICONS[active?.icon ?? 'menu'];
 
 function activeNavKey(key?: string) {
@@ -113,7 +118,9 @@ const newsPosts = await getCollection('blog', ({ data }) =>
 const latestNews = newsPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())[0];
 
 const linkAttrs = (item: NavItem) => ({
-    href: item.href,
+    // Only the directory root has a zh mirror today; everything else keeps
+    // its English href until phase 2 pages land.
+    href: !item.external && lang === 'zh' && item.key === 'directory' ? '/zh/' : item.href,
     ...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}),
     'aria-current': item.key === active?.key ? ('page' as const) : undefined,
 });
@@ -122,7 +129,7 @@ const linkAttrs = (item: NavItem) => ({
 <div class="ni-scrim" data-ni-scrim aria-hidden="true"></div>
 
 <div class="ni" id="navIsland" data-nav-island data-open="false" data-view="nav" data-search={search}>
-    <button type="button" class="ni-pill" data-ni-toggle aria-expanded="false" aria-controls="navIslandPanel" aria-label={`Open site menu. Current section: ${pillLabel}`}>
+    <button type="button" class="ni-pill" data-ni-toggle aria-expanded="false" aria-controls="navIslandPanel" aria-label={t(lang, 'nav.openMenu', `Open site menu. Current section: ${pillLabel}`, { label: pillLabel })}>
         <span class="ni-sec">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={pillIcon}></svg>
             <span>{pillLabel}</span>
@@ -130,9 +137,9 @@ const linkAttrs = (item: NavItem) => ({
         <span class="ni-div" aria-hidden="true"></span>
         <span class="ni-live" aria-hidden="true"></span>
         <span class="ni-tick" aria-hidden="true" data-ni-ticker>
-            {latestNews && <span class="ni-tick-item is-on"><b class="text-danger">Today in AI</b>{latestNews.data.title}</span>}
+            {latestNews && <span class="ni-tick-item is-on"><b class="text-danger">{t(lang, 'nav.news', 'Today in AI')}</b>{latestNews.data.title}</span>}
             {houseAds.map(ad => <span class="ni-tick-item" data-ni-tick-ad={ad.id}><b class="text-[#a8e86f]">Ad</b>{ad.name}: {ad.tagline}</span>)}
-            <span class={`ni-tick-item${latestNews ? '' : ' is-on'}`}><b class="text-gold-soft">Featured</b>Promote your AI tool to developers</span>
+            <span class={`ni-tick-item${latestNews ? '' : ' is-on'}`}><b class="text-gold-soft">{t(lang, 'nav.featured', 'Featured')}</b>{t(lang, 'nav.featuredCta', 'Promote your AI tool to developers')}</span>
         </span>
         <span class="ni-status" data-ni-status hidden></span>
         <kbd class="ni-kbd" aria-hidden="true" data-ni-kbd>Ctrl K</kbd>
@@ -150,9 +157,9 @@ const linkAttrs = (item: NavItem) => ({
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                         </svg>
-                        <input type="text" id="searchInput" aria-label="Search tools" placeholder="Search tools, agents, and workflows" autocomplete="off" class="search-input w-full rounded-2xl text-[15px] outline-none transition-all duration-300">
+                        <input type="text" id="searchInput" aria-label={t(lang, 'nav.searchLabel', 'Search tools')} placeholder={t(lang, 'nav.searchPlaceholder', 'Search tools, agents, and workflows')} autocomplete="off" class="search-input w-full rounded-2xl text-[15px] outline-none transition-all duration-300">
                         <div class="absolute right-3.5 top-1/2 -translate-y-1/2 flex items-center gap-2">
-                            <button class="bg-transparent border-none text-ink-muted text-sm cursor-pointer p-1 hidden hover:text-white" id="searchClear" aria-label="Clear search" title="Clear search">&#x2715;</button>
+                            <button class="bg-transparent border-none text-ink-muted text-sm cursor-pointer p-1 hidden hover:text-white" id="searchClear" aria-label={t(lang, 'nav.clearSearch', 'Clear search')} title={t(lang, 'nav.clearSearch', 'Clear search')}>&#x2715;</button>
                             <span class="search-shortcut hidden md:inline-flex" aria-hidden="true">/</span>
                             <span id="resultCount" class="search-result-count font-mono text-[10px] hidden md:block"></span>
                         </div>
@@ -165,40 +172,40 @@ const linkAttrs = (item: NavItem) => ({
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
-                    <input type="search" name="q" id="globalSearchInput" aria-label="Search tools" placeholder="Search tools, agents, and workflows" autocomplete="off" class="search-input w-full rounded-2xl text-[15px] outline-none transition-all duration-300">
+                    <input type="search" name="q" id="globalSearchInput" aria-label={t(lang, 'nav.searchLabel', 'Search tools')} placeholder={t(lang, 'nav.searchPlaceholder', 'Search tools, agents, and workflows')} autocomplete="off" class="search-input w-full rounded-2xl text-[15px] outline-none transition-all duration-300">
                     <span class="search-shortcut hidden md:inline-flex absolute right-3.5 top-1/2 -translate-y-1/2" aria-hidden="true">/</span>
                 </form>
             )}
             <slot name="scope" />
             <nav class="ni-grid" aria-label="Site">
                 <div>
-                    <div class="ni-h">Browse</div>
+                    <div class="ni-h">{t(lang, 'nav.browse', 'Browse')}</div>
                     <ul class="ni-list">
                         {browse.map(item => (
                             <li><a class="ni-link" {...linkAttrs(item)}>
                                 <span class="ni-ib"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONS[item.icon]}></svg></span>
-                                <span class="min-w-0"><span class="ni-link-t">{item.label}</span><span class="ni-link-d">{item.desc}</span></span>
+                                <span class="min-w-0"><span class="ni-link-t">{navLabel(item)}</span><span class="ni-link-d">{navDesc(item)}</span></span>
                             </a></li>
                         ))}
                     </ul>
                 </div>
 
                 <div>
-                    <div class="ni-h">AI Utilities</div>
+                    <div class="ni-h">{t(lang, 'nav.utilities', 'AI Utilities')}</div>
                     <ul class="ni-list">
                         {utilities.map(item => (
                             <li><a class="ni-card" {...linkAttrs(item)}>
                                 <span class="ni-ib"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONS[item.icon]}></svg></span>
-                                <span class="min-w-0"><span class="ni-link-t">{item.label}</span><span class="ni-link-d">{item.desc}</span></span>
+                                <span class="min-w-0"><span class="ni-link-t">{navLabel(item)}</span><span class="ni-link-d">{navDesc(item)}</span></span>
                             </a></li>
                         ))}
                     </ul>
-                    <div class="ni-h ni-h-gap">More</div>
+                    <div class="ni-h ni-h-gap">{t(lang, 'nav.more', 'More')}</div>
                     <ul class="ni-chips">
                         {more.map(item => (
                             <li><a class="ni-chip" {...linkAttrs(item)}>
                                 <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={ICONS[item.icon]}></svg>
-                                {item.label}
+                                {navLabel(item)}
                             </a></li>
                         ))}
                     </ul>

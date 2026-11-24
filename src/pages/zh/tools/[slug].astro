@@ -1,0 +1,23 @@
+---
+/**
+ * Simplified Chinese mirror of /tools/[slug] - same component, lang="zh".
+ */
+import ToolDetail from '../../../components/pages/ToolDetail.astro';
+import { getAllTools, type Tool } from '../../../lib/tools';
+
+export async function getStaticPaths() {
+    const tools = getAllTools();
+    return tools.map(tool => ({
+        params: { slug: tool.slug },
+        props: { tool },
+    }));
+}
+
+interface Props {
+    tool: Tool;
+}
+
+const { tool } = Astro.props;
+---
+
+<ToolDetail tool={tool} lang="zh" />

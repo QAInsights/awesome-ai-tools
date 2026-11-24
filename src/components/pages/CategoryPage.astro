@@ -1,0 +1,214 @@
+---
+/**
+ * Category landing page - /category/[slug]
+ *
+ * One static page per category (12 total). Targets head/mid-tail queries like
+ * "best AI IDEs", "AI code review tools". Pre-rendered tool list (no JS
+ * required), data-derived FAQ block with FAQPage schema, ItemList schema,
+ * and cross-links to sibling categories.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import DirectoryShare from '../../components/DirectoryShare.astro';
+import DirectorySignupCta from '../../components/DirectorySignupCta.astro';
+import { formatDate, getCategoriesDetailed, maxLastUpdated, type CategoryInfo, type Tool } from '../../lib/tools';
+import { robotsFor } from '../../lib/indexing';
+import { getAlternativesPageTools, humanizePricing } from '../../lib/compare';
+import { t, localePrefix, zhCategoryName, zhCategoryDesc } from '../../i18n/zh';
+
+interface Props {
+    category: CategoryInfo;
+    lang?: string;
+}
+
+const { category, lang = 'en' } = Astro.props;
+const p = localePrefix(lang);
+const catZh = zhCategoryName(category.name);
+// category.short is a terse English label; zh pages use the full zh name.
+const catZhShort = lang === 'zh' ? catZh : category.short;
+const catDesc = lang === 'zh' ? (zhCategoryDesc(category.name) || category.description) : category.description;
+const allCategories = getCategoriesDetailed();
+const siblings = allCategories.filter(c => c.slug !== category.slug);
+
+const pageUrl = `https://ai.dosa.dev${p}/category/${category.slug}`;
+const count = category.tools.length;
+
+// Honest freshness: latest enrichment stamp across this category's tools
+const lastUpdated = maxLastUpdated(category.tools.map(t => t.enriched?.lastUpdated));
+
+// Pricing stats derived from enriched data (honest, computed at build time)
+const KNOWN_FREE = new Set(['free', 'open-source', 'open_source', 'oss']);
+const enrichedCount = category.tools.filter(t => t.enriched).length;
+const freeCount = category.tools.filter(t => KNOWN_FREE.has((t.enriched?.pricing ?? '').toLowerCase())).length;
+
+// Alternatives guides for this category's tools - indexable pages only
+const alternativesGuides = getAlternativesPageTools()
+    .filter(t => t.category === category.tools[0]?.category && !robotsFor(`/tools/${t.slug}/alternatives`))
+    .slice(0, 12);
+
+// Top picks: enriched tools first (they have reviews/verdicts), README order preserved
+const topPicks = category.tools.filter(t => t.enriched).slice(0, 3);
+const topNames = (topPicks.length > 0 ? topPicks : category.tools.slice(0, 3)).map(t => t.name);
+
+const faqs = [
+    {
+        q: t(lang, 'cat.faqBest', `What are the best ${category.short} tools?`, { cat: catZhShort }),
+        a: t(lang, 'cat.faqBestA', `The most complete ${category.short} listings on ai.dosa.dev include ${topNames.join(', ')}. Every tool has a detail page with pricing, key features, and a verdict - see the full list of ${count} tools below.`, { cat: catZhShort, names: topNames.join(', '), n: count }),
+    },
+    {
+        q: t(lang, 'cat.faqFree', `Are ${category.short} tools free?`, { cat: catZhShort }),
+        a: freeCount > 0
+            ? t(lang, 'cat.faqFreeAYes', `${freeCount} of the ${count} ${category.short} tools listed here are free or open source. Others offer freemium or paid plans - check each tool's detail page for current pricing.`, { cat: catZhShort, n: count, free: freeCount })
+            : t(lang, 'cat.faqFreeANo', `Pricing varies across the ${count} ${category.short} tools listed here - most offer free tiers or trials. Check each tool's detail page for current pricing.`, { cat: catZhShort, n: count }),
+    },
+    {
+        q: t(lang, 'cat.faqCurated', 'How is this list curated?'),
+        a: t(lang, 'cat.faqCuratedA', 'ai.dosa.dev is manually curated from community submissions and editorial review. Entries are enriched with pricing, features, and reviewer notes, and the directory is updated continuously.'),
+    },
+];
+
+const jsonLd = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "CollectionPage",
+            "@id": `${pageUrl}#collection`,
+            "url": pageUrl,
+            "name": `${category.name} - AI Coding Tools Directory`,
+            "description": catDesc || `${count} curated ${category.name} tools with pricing, features, and verdicts.`,
+            "isPartOf": { "@type": "WebSite", "@id": "https://ai.dosa.dev/#website", "url": "https://ai.dosa.dev", "name": "ai.dosa.dev - Awesome AI Tools" },
+            "inLanguage": lang === 'zh' ? 'zh' : 'en',
+            ...(lastUpdated ? { "dateModified": lastUpdated } : {}),
+        },
+        {
+            "@type": "ItemList",
+            "numberOfItems": count,
+            "itemListElement": category.tools.map((t: Tool, i: number) => ({
+                "@type": "ListItem",
+                "position": i + 1,
+                "name": t.name,
+                "url": `https://ai.dosa.dev/tools/${t.slug}`
+            }))
+        },
+        {
+            "@type": "FAQPage",
+            "mainEntity": faqs.map(f => ({
+                "@type": "Question",
+                "name": f.q,
+                "acceptedAnswer": { "@type": "Answer", "text": f.a }
+            }))
+        },
+        {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": t(lang, 'home', 'Home'), "item": "https://ai.dosa.dev" },
+                { "@type": "ListItem", "position": 2, "name": catZh, "item": pageUrl }
+            ]
+        }
+    ]
+});
+---
+
+<BaseLayout
+    title={lang === 'zh' ? t(lang, 'cat.metaTitle', `${count} Best ${category.name} Tools (2026) - Compared | ai.dosa.dev`, { n: count, cat: catZh }) : `${count} Best ${category.name} Tools (2026) - Compared | ai.dosa.dev`}
+    description={lang === 'zh' ? t(lang, 'cat.metaDesc', `${category.description ? category.description + ' ' : ''}${count} curated ${category.name} tools with pricing, key features, and verdicts. Compare ${topNames.join(', ')} and more.`, { n: count, cat: catZh, names: topNames.join(', ') }) : `${category.description ? category.description + ' ' : ''}${count} curated ${category.name} tools with pricing, key features, and verdicts. Compare ${topNames.join(', ')} and more.`}
+    keywords={`${category.name}, ${category.short}, best ${category.short} tools, AI coding tools, AI developer tools`}
+    canonical={pageUrl}
+    robots={robotsFor(`/category/${category.slug}`)}
+    lang={lang}
+    i18nPath={`/category/${category.slug}`}
+    jsonLd={jsonLd}
+    markdownUrl={lang === 'zh' ? undefined : `/category/${category.slug}.md`}
+>
+    <div class="flex h-[100dvh] overflow-hidden">
+
+        <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
+            <SiteHeader variant="page" title={catZhShort} lang={lang} />
+
+            <div class="max-w-[1000px] mx-auto w-full flex flex-col flex-1 p-4 md:p-8 gap-6">
+                <!-- Breadcrumb -->
+                <nav aria-label="Breadcrumb" class="font-mono text-[12px] text-[#737373] tracking-wide flex items-center gap-2 flex-wrap">
+                    <a href={`${p}/`} class="hover:text-white transition-colors">{t(lang, 'home', 'Home')}</a>
+                    <span>/</span>
+                    <span class="text-white">{catZh}</span>
+                </nav>
+
+                <!-- Header -->
+                <header class="flex flex-col gap-3 pb-4 border-b border-[#222]">
+                    <h1 class="text-[32px] md:text-[40px] font-semibold tracking-tight leading-tight bg-gradient-to-r from-white via-[#e5e5e5] to-white bg-clip-text text-transparent">
+                        {catZh}
+                    </h1>
+                    <p class="text-[17px] leading-relaxed text-[#d4d4d4] max-w-[72ch]">
+                        {catDesc}
+                    </p>
+                    <div class="relative flex flex-wrap items-start gap-x-4 gap-y-2">
+                        <div class="min-h-11 flex items-center font-mono text-[12px] text-ink-secondary tracking-wide">
+                            <span>{t(lang, 'cat.tools', `${count} tools`, { n: count })}{enrichedCount > 0 && ` · ${t(lang, 'cat.withReviews', `${enrichedCount} with full reviews`, { n: enrichedCount })}`}{freeCount > 0 && ` · ${t(lang, 'cat.freeOss', `${freeCount} free or open source`, { n: freeCount })}`}{lastUpdated && <> · {t(lang, 'updated', 'Updated')} <time datetime={lastUpdated}>{formatDate(lastUpdated)}</time></>}</span>
+                        </div>
+                        <DirectoryShare canonical={pageUrl} kind="category" slug={category.slug} name={category.name} align="start" />
+                    </div>
+                </header>
+
+                <DirectorySignupCta />
+
+                <!-- Tool list (pre-rendered, no JS required) -->
+                <section aria-label={`${category.name} tools`} class="flex flex-col">
+                    {category.tools.map(t => (
+                        <a href={`${p}/tools/${t.slug}`} class="group flex flex-col md:flex-row md:items-center gap-1 md:gap-6 py-4 border-b border-[#1a1a1a] transition-colors hover:bg-white/[0.02] md:px-2 -mx-2 rounded">
+                            <div class="flex items-center gap-3 md:w-[260px] shrink-0">
+                                <span class="text-[16px] font-medium text-white group-hover:bg-gradient-to-r group-hover:from-[#a78bfa] group-hover:via-[#22d3ee] group-hover:to-[#a78bfa] group-hover:bg-clip-text group-hover:text-transparent transition-all">{t.name}</span>
+                                {t.enriched?.pricing && (
+                                    <span class="font-mono text-[10px] uppercase tracking-wide px-2 py-0.5 border border-[#222] rounded-full text-[#737373]">{humanizePricing(t.enriched.pricing)}</span>
+                                )}
+                            </div>
+                            <span class="md:w-[160px] shrink-0 font-mono text-[12px] text-[#737373] uppercase tracking-wide">{t.company}</span>
+                            <span class="grow text-[14px] text-[#a3a3a3] leading-relaxed line-clamp-2">{t.enriched?.description ?? t.notes}</span>
+                        </a>
+                    ))}
+                </section>
+
+                <!-- FAQ (AEO: mirrors FAQPage JSON-LD) -->
+                <section aria-label="Frequently asked questions" class="flex flex-col gap-4 pt-4">
+                    <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em]">{t(lang, 'cat.faqLabel', 'FAQ')}</div>
+                    {faqs.map(f => (
+                        <details class="border border-[#222] bg-white/[0.02] rounded-md group">
+                            <summary class="cursor-pointer px-5 py-4 text-[15px] font-medium text-white list-none flex items-center justify-between gap-3 hover:bg-white/[0.03] transition-colors rounded-md">
+                                {f.q}
+                                <svg class="w-4 h-4 text-[#525252] shrink-0 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </summary>
+                            <p class="px-5 pb-4 pt-1 text-[14px] text-[#a3a3a3] leading-relaxed">{f.a}</p>
+                        </details>
+                    ))}
+                </section>
+
+                {alternativesGuides.length > 0 && (
+                    <nav aria-label={`${category.short} alternatives guides`} class="pt-4">
+                        <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em] mb-4">{t(lang, 'cat.altGuides', 'Alternatives guides')}</div>
+                        <div class="flex flex-wrap gap-2">
+                            {alternativesGuides.map(alt => (
+                                <a href={`/tools/${alt.slug}/alternatives`} class="inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide hover:text-white hover:border-[#444] transition-colors">
+                                    {t(lang, 'cat.alternatives', `${alt.enriched?.name ?? alt.name} alternatives`, { name: alt.enriched?.name ?? alt.name })}
+                                </a>
+                            ))}
+                        </div>
+                    </nav>
+                )}
+
+                <!-- Sibling categories -->
+                <nav aria-label="Other categories" class="pt-4 pb-8">
+                    <div class="font-mono text-[11px] uppercase text-[#525252] tracking-[0.2em] mb-4">{t(lang, 'cat.browseOther', 'Browse other categories')}</div>
+                    <div class="flex flex-wrap gap-2">
+                        {siblings.map(c => (
+                            <a href={`${p}/category/${c.slug}`} class="inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide hover:text-white hover:border-[#444] transition-colors">
+                                {lang === 'zh' ? zhCategoryName(c.short) : c.short}
+                                <span class="text-[#525252]">{c.tools.length}</span>
+                            </a>
+                        ))}
+                    </div>
+                </nav>
+            </div>
+        </main>
+    </div>
+
+    <script src="/dist/app.js" type="module" defer></script>
+</BaseLayout>
