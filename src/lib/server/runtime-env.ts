@@ -89,6 +89,10 @@ export function getZapWriteLimiter(): RateLimit | undefined {
     return runtimeEnv.ZAP_WRITE_LIMITER as RateLimit | undefined;
 }
 
+export function getSwitchWriteLimiter(): RateLimit | undefined {
+    return runtimeEnv.SWITCH_WRITE_LIMITER as RateLimit | undefined;
+}
+
 export function getEmailOtpLimiter(): RateLimit | undefined {
     return runtimeEnv.EMAIL_OTP_LIMITER as RateLimit | undefined;
 }

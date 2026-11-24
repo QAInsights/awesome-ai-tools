@@ -2,6 +2,11 @@ import { describe, expect, test } from 'bun:test';
 import { EVENTS, normalizeClientEvent, sanitizeAuthTrigger } from './analytics-events.js';
 
 describe('analytics event catalog', () => {
+    test('allowlists switch votes and normalizes source, destination and action', () => {
+        for (const action of ['set', 'change', 'undo']) expect(normalizeClientEvent({ event: EVENTS.SWITCH_VOTE, subject: 'cursor', target: 'cline', action })).toMatchObject({ subject: 'cursor', target: 'cline', action });
+        expect(normalizeClientEvent({ event: EVENTS.SWITCH_VOTE, subject: 'invalid@text', target: 'https://example.com', action: 'delete' })).toMatchObject({ subject: '', target: '', action: '' });
+        expect(normalizeClientEvent({ event: EVENTS.VISIT, trigger: 'switch_share' })?.trigger).toBe('switch_share');
+    });
     test('allowlists news next-step triggers and slug subjects', () => {
         for (const trigger of ['tool_card', 'tool_alternatives', 'next_brief', 'prev_brief']) {
             expect(normalizeClientEvent({ event: EVENTS.NEWS_NEXT_STEP_CLICK, trigger, subject: 'today-in-ai-2026-11-23' })).toMatchObject({

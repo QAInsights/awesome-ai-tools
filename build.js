@@ -54,6 +54,7 @@ const result = await build({
         './js/compare.js',
         './js/blog.js',
         './js/site-analytics.js',
+        './js/switch-votes.js',
         './js/onboarding.js',
         './js/one-tap.js',
         './js/ad-gate.js',

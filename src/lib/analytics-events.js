@@ -30,7 +30,7 @@ export const OUTBOUND_TRIGGERS = Object.freeze(['tool_card', 'tool_detail', 'com
 export const NEWS_NEXT_STEP_TRIGGERS = Object.freeze(['tool_card', 'tool_alternatives', 'next_brief', 'prev_brief']);
 export const ONBOARDING_TRIGGERS = Object.freeze(['inline', 'float', 'unknown']);
 export const ONBOARDING_STEP_SUBJECTS = Object.freeze(['favorites', 'follows', 'badge']);
-export const DIRECTORY_SHARE_SOURCES = Object.freeze({ tool: 'tool_share', category: 'category_share' });
+export const DIRECTORY_SHARE_SOURCES = Object.freeze({ tool: 'tool_share', category: 'category_share', switch: 'switch_share' });
 export const REF_SOURCES = Object.freeze(['badge', 'newsletter', 'social', 'other', ...Object.values(DIRECTORY_SHARE_SOURCES)]);
 export const ANALYTICS_PROVIDERS = Object.freeze(['github', 'google', 'dev', 'email']);
 
@@ -50,6 +50,7 @@ export const EVENTS = Object.freeze({
     SIGNIN_STARTED: 'signin_started',
     GATE_BLOCKED: 'gate_blocked',
     ZAP_CAST: 'zap_cast',
+    SWITCH_VOTE: 'switch_vote',
     OUTBOUND_CLICK: 'outbound_click',
     NEWS_NEXT_STEP_CLICK: 'news_next_step_click',
     COMPARE_BUILT: 'compare_built',
@@ -84,6 +85,7 @@ export const EVENT_CATALOG = Object.freeze({
     [EVENTS.SIGNIN_STARTED]: { client: true, triggers: AUTH_TRIGGERS, subject: subjectPolicies.none },
     [EVENTS.GATE_BLOCKED]: { client: true, triggers: ['favorite_heart', 'follow_bell', 'zap_btn', 'news_cta', 'browse_gate', 'tool_email'], subject: subjectPolicies.slug },
     [EVENTS.ZAP_CAST]: { client: true, triggers: ['zap_btn'], subject: subjectPolicies.slug },
+    [EVENTS.SWITCH_VOTE]: { client: true, triggers: ['alternatives'], subject: subjectPolicies.slug },
     [EVENTS.OUTBOUND_CLICK]: { client: true, triggers: OUTBOUND_TRIGGERS, subject: subjectPolicies.slug },
     [EVENTS.NEWS_NEXT_STEP_CLICK]: { client: true, triggers: NEWS_NEXT_STEP_TRIGGERS, subject: subjectPolicies.slug },
     [EVENTS.COMPARE_BUILT]: { client: true, triggers: ['comparison'], subject: subjectPolicies.comparison },
@@ -118,6 +120,10 @@ export function normalizeEventFields(event, input = {}) {
         provider: ANALYTICS_PROVIDERS.includes(input.provider) ? input.provider : '',
         value: finite(input.value),
         durationMs: finite(input.durationMs),
+        ...(event === EVENTS.SWITCH_VOTE ? {
+            target: subjectPolicies.slug(input.target),
+            action: ['set', 'change', 'undo'].includes(input.action) ? input.action : '',
+        } : {}),
     };
 }
 
@@ -133,5 +139,6 @@ export function normalizeClientEvent(input) {
         variant: typeof input.variant === 'string' ? input.variant.slice(0, 64) : '',
         value: fields.value,
         durationMs: fields.durationMs,
+        ...(input.event === EVENTS.SWITCH_VOTE ? { target: fields.target, action: fields.action } : {}),
     };
 }

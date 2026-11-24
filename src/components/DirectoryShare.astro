@@ -7,9 +7,10 @@ interface Props {
     slug: string;
     name: string;
     align?: 'start' | 'end';
+    label?: string;
 }
 
-const { canonical, kind, slug, name, align = 'end' } = Astro.props;
+const { canonical, kind, slug, name, align = 'end', label = 'Share' } = Astro.props;
 const source = DIRECTORY_SHARE_SOURCES[kind];
 const shareUrl = new URL(canonical);
 shareUrl.search = new URLSearchParams({ ref: source }).toString();
@@ -24,7 +25,7 @@ shareUrl.hash = '';
         <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M12 15V3m-4 4 4-4 4 4M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" />
         </svg>
-        Share
+        {label}
     </summary>
     <div class:list={[
         'absolute top-[calc(100%+12px)] z-[80] w-[min(24rem,calc(100vw-2rem))] rounded-xl border border-border bg-panel p-3 shadow-[0_24px_48px_rgba(0,0,0,.55)]',
