@@ -79,9 +79,12 @@ const review = buildToolReview(tool);
 // hardcoding price:0 for paid/freemium tools is misleading structured data.
 const KNOWN_FREE = new Set(['free']);
 const isKnownFree = KNOWN_FREE.has((enriched?.pricing ?? '').toLowerCase());
+// The app entity keeps its English canonical @id on zh pages - it is the
+// same software, so both locale WebPages reference the one node.
+const appId = `https://ai.dosa.dev/tools/${tool.slug}#app`;
 const softwareApp: Record<string, unknown> = {
     "@type": "SoftwareApplication",
-    "@id": `https://ai.dosa.dev/tools/${tool.slug}#app`,
+    "@id": appId,
     "name": displayName,
     "url": hasSiteLink ? tool.url : `https://ai.dosa.dev/tools/${tool.slug}`,
     "description": displayDescription,
@@ -117,8 +120,8 @@ const webPage: Record<string, unknown> = {
     "description": descMeta,
     "inLanguage": lang === 'zh' ? 'zh' : 'en',
     "isPartOf": { "@id": "https://ai.dosa.dev/#website" },
-    "about": { "@id": `${pageUrl}#app` },
-    "mainEntity": { "@id": `${pageUrl}#app` },
+    "about": { "@id": appId },
+    "mainEntity": { "@id": appId },
     "primaryImageOfPage": { "@type": "ImageObject", "url": `https://ai.dosa.dev/images/og/${tool.slug}.png`, "width": 1200, "height": 630 },
     ...(enriched?.lastUpdated ? { "dateModified": enriched.lastUpdated } : {}),
     "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["h1", ".td-summary", ".td-verdict"] },

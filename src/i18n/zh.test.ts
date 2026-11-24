@@ -51,13 +51,31 @@ describe('zh dictionary', () => {
         expect(missing).toEqual([]);
     });
 
-    test('zh templates use no placeholder absent from the en fallback', () => {
+    test('zh templates use no placeholder absent from the call-site vars', () => {
+        // t(lang, 'key', `fallback`, { name: x }) - the vars object defines
+        // the placeholders interpolate() can fill; a zh entry referencing a
+        // name no call site passes would render the literal "{name}".
+        const callVars = new Map<string, Set<string>>();
+        for (const file of astroFiles(join(root, 'src'))) {
+            const src = readFileSync(file, 'utf8');
+            for (const m of src.matchAll(/\bt\(\s*lang\s*,\s*'([^']+)'\s*,\s*(`[^`]*`|'[^']*'|"[^"]*")\s*,\s*\{([^}]*)\}\s*\)/g)) {
+                const vars = callVars.get(m[1]) ?? new Set<string>();
+                for (const v of m[3].matchAll(/(\w+)\s*:/g)) vars.add(v[1]);
+                callVars.set(m[1], vars);
+            }
+        }
         const src = readFileSync(fileURLToPath(new URL('./zh.ts', import.meta.url)), 'utf8');
         const entries = [...src.matchAll(/^\s+'([^']+)':\s*'([^']*)'/gm)];
-        for (const [key] of entries) {
-            expect(key.length).toBeGreaterThan(0);
-        }
         expect(entries.length).toBeGreaterThan(60);
+        const offenders: string[] = [];
+        for (const [key, tpl] of entries) {
+            const allowed = callVars.get(key);
+            if (!allowed) continue;
+            for (const pm of tpl.matchAll(/\{(\w+)\}/g)) {
+                if (!allowed.has(pm[1])) offenders.push(`${key} uses {${pm[1]}} not passed by any call site`);
+            }
+        }
+        expect(offenders).toEqual([]);
     });
 
     test('every catalog category has a zh display name', () => {

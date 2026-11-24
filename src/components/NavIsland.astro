@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import TodayPromos from './TodayPromos.astro';
 import houseAds from '../data/house-ads.json';
-import { t } from '../i18n/zh';
+import { t, localePrefix } from '../i18n/zh';
 
 /**
  * Site navigation "island": a pill pinned top-centre on desktop (bottom on
@@ -99,10 +99,13 @@ const SECTION_PREFIXES: [string, string][] = [
 
 const allItems = [...browse, ...utilities, ...more];
 const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
-const derived = path === '/' ? 'directory' : SECTION_PREFIXES.find(([prefix]) => path.startsWith(prefix))?.[1];
+// zh routes are locale-prefixed en routes - match sections on the bare path.
+const barePath = path.replace(/^\/zh(?=\/|$)/, '') || '/';
+const derived = barePath === '/' ? 'directory' : SECTION_PREFIXES.find(([prefix]) => barePath.startsWith(prefix))?.[1];
 const active = allItems.find(item => item.key === (activeNavKey(Astro.props.activeNav) ?? derived));
 const search = Astro.props.search ?? 'link';
 const lang = Astro.props.lang ?? 'en';
+const lp = localePrefix(lang);
 const navLabel = (item: NavItem) => t(lang, `nav.${item.key}`, item.label);
 const navDesc = (item: NavItem) => t(lang, `nav.${item.key}.desc`, item.desc ?? '');
 const pillLabel = active ? navLabel(active) : t(lang, 'nav.menu', 'Menu');
@@ -167,7 +170,7 @@ const linkAttrs = (item: NavItem) => ({
                     <slot name="search-actions" />
                 </div>
             ) : (
-                <form action="/" method="get" role="search" class="search-shell relative max-w-[560px] w-full group ni-search">
+                <form action={`${lp}/`} method="get" role="search" class="search-shell relative max-w-[560px] w-full group ni-search">
                     <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-[#6f6a63] group-focus-within:text-[#d6c7a8] w-4.5 h-4.5 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>

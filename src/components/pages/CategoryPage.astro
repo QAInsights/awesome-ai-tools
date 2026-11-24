@@ -200,7 +200,7 @@ const jsonLd = JSON.stringify({
                     <div class="flex flex-wrap gap-2">
                         {siblings.map(c => (
                             <a href={`${p}/category/${c.slug}`} class="inline-flex items-center gap-2 px-3 py-1.5 border border-[#222] rounded-full bg-white/5 font-mono text-[12px] text-[#a3a3a3] tracking-wide hover:text-white hover:border-[#444] transition-colors">
-                                {lang === 'zh' ? zhCategoryName(c.short) : c.short}
+                                {lang === 'zh' ? zhCategoryName(c.name) : c.short}
                                 <span class="text-[#525252]">{c.tools.length}</span>
                             </a>
                         ))}

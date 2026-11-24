@@ -230,7 +230,7 @@ export interface PageViewGroup {
     dimensions?: { requestHost?: unknown; requestPath?: unknown };
 }
 
-const TOOL_PATH_PATTERN = /^\/tools\/([a-z0-9][a-z0-9-]*)(?:\/(?:pricing|alternatives))?\/?$/;
+const TOOL_PATH_PATTERN = /^\/(?:zh\/)?tools\/([a-z0-9][a-z0-9-]*)(?:\/(?:pricing|alternatives))?\/?$/;
 
 /** Slug of the catalog tool a request path belongs to (/tools/<slug>, /pricing, /alternatives), else null. */
 export function toolSlugFromPath(path: unknown, slugs: Set<string>): string | null {
