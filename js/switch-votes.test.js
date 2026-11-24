@@ -177,7 +177,7 @@ test('renders empty and voted states, top-five bars, button selection and share 
 });
 
 function switchDom(options = {}) {
-    const selectors = Object.fromEntries(['results', 'total', 'status', 'retry', 'share', 'undo', 'other'].map(key => [`[data-switch-${key}]`, element()]));
+    const selectors = Object.fromEntries(['results', 'total', 'status', 'retry', 'share', 'undo', 'other', 'other-vote'].map(key => [`[data-switch-${key}]`, element()]));
     selectors['[data-switch-other]'].options = [{ value: '' }, { value: 'zed' }];
     const widget = element({ switchVotes: 'cursor' });
     widget.querySelector = selector => selectors[selector];
@@ -193,6 +193,42 @@ function switchDom(options = {}) {
     });
     return { controller, buttons, widget, selectors };
 }
+
+test('Other selection changes only enable an explicit Vote button, never save on arrow-key changes', async () => {
+    const posts = [];
+    let tokens = 0;
+    const { controller, selectors } = switchDom({
+        getToken: async () => { tokens++; return 'token'; },
+        request: async (_url, options) => {
+            if (!options.method) return response(data());
+            const { target } = JSON.parse(options.body);
+            posts.push(target);
+            return response(data(target));
+        },
+    });
+    const other = selectors['[data-switch-other]'], vote = selectors['[data-switch-other-vote]'];
+    expect(vote.disabled).toBe(true);
+    await controller.ready;
+    expect(vote.disabled).toBe(true);
+    other.value = 'zed';
+    other.listeners.change();
+    expect(vote.disabled).toBe(false);
+    expect(posts).toEqual([]);
+    expect(tokens).toBe(0);
+    expect(controller.state.data.mine).toBeNull();
+    other.value = '';
+    other.listeners.change();
+    expect(vote.disabled).toBe(true);
+    expect(await vote.listeners.click()).toBeUndefined();
+    other.value = 'zed';
+    other.listeners.change();
+    const pending = vote.listeners.click();
+    expect(vote.disabled).toBe(true);
+    expect(await pending).toBe(true);
+    expect(posts).toEqual(['zed']);
+    expect(tokens).toBe(1);
+    expect(other.value).toBe('zed');
+});
 
 test('in-box picks, named cards, Other and Undo share selection and rollback optimistic rendering', async () => {
     let finishPost;
@@ -215,7 +251,8 @@ test('in-box picks, named cards, Other and Undo share selection and rollback opt
     expect(status.textContent).toBe('Your pick: Cline.');
     expect(undo.hidden).toBe(false);
     other.value = 'zed';
-    const changed = other.listeners.change();
+    other.listeners.change();
+    const changed = selectors['[data-switch-other-vote]'].listeners.click();
     expect(other.value).toBe('zed');
     expect(other.classList.values.has('switch-selected')).toBe(true);
     expect(buttons.map(button => button.attributes['aria-pressed'])).toEqual(['false', 'false', 'true']);
@@ -262,15 +299,15 @@ test('prefetch stays off-screen until proximity or vote-control intent, and fail
     expect(prefetches).toBe(0);
     intersect([{ isIntersecting: false }]);
     expect(prefetches).toBe(0);
-    for (const control of [...buttons, selectors['[data-switch-other]'], selectors['[data-switch-undo]']]) {
+    for (const control of [...buttons, selectors['[data-switch-other]'], selectors['[data-switch-undo]'], selectors['[data-switch-other-vote]']]) {
         control.listeners.pointerenter();
         control.listeners.focus();
     }
     await Promise.resolve();
-    expect(prefetches).toBe(10);
+    expect(prefetches).toBe(12);
     intersect([{ isIntersecting: true }]);
     await Promise.resolve();
-    expect(prefetches).toBe(11);
+    expect(prefetches).toBe(13);
     expect(disconnected).toBe(true);
     expect(await controller.vote('cline')).toBe(true);
     expect(controller.state.error).toBe('');

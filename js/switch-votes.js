@@ -102,6 +102,7 @@ export function initializeSwitchVotes(root = document, options = {}) {
     const share = widget.querySelector('[data-switch-share]');
     const undo = widget.querySelector('[data-switch-undo]');
     const other = widget.querySelector('[data-switch-other]');
+    const otherVote = widget.querySelector('[data-switch-other-vote]');
     const documentRef = widget.ownerDocument;
     const controller = createSwitchVotes({ ...options, tool: widget.dataset.switchVotes, onChange(state) {
         widget.setAttribute('aria-busy', String(state.busy));
@@ -115,6 +116,7 @@ export function initializeSwitchVotes(root = document, options = {}) {
             other.value = [...other.options].some(option => option.value === state.data.mine) ? state.data.mine : '';
             other.classList.toggle('switch-selected', Boolean(other.value));
         }
+        if (otherVote) otherVote.disabled = state.busy || !state.loaded || !other?.value;
         for (const button of buttons) {
             const selected = button.dataset.switchTarget === state.data.mine;
             button.disabled = state.busy || !state.loaded;
@@ -141,8 +143,12 @@ export function initializeSwitchVotes(root = document, options = {}) {
     retry.addEventListener('click', () => { void controller.load(); });
     for (const button of buttons) button.addEventListener('click', () => controller.vote(button.dataset.switchTarget));
     undo?.addEventListener('click', () => controller.vote(null));
-    other?.addEventListener('change', () => { if (other.value) return controller.vote(other.value); });
-    for (const control of [...buttons, undo, other].filter(Boolean)) {
+    other?.addEventListener('change', () => {
+        if (otherVote) otherVote.disabled = controller.state.busy || !controller.state.loaded || !other.value;
+        other.classList.toggle('switch-selected', other.value === controller.state.data.mine);
+    });
+    otherVote?.addEventListener('click', () => { if (other?.value) return controller.vote(other.value); });
+    for (const control of [...buttons, undo, other, otherVote].filter(Boolean)) {
         for (const event of ['pointerenter', 'focus']) control.addEventListener(event, () => { if (!controller.state.busy) void controller.prefetch(); });
     }
     const Observer = options.IntersectionObserver ?? globalThis.IntersectionObserver;
