@@ -14342,5 +14342,98 @@
       "Open Source"
     ],
     "lastUpdated": "2026-11-23"
+  },
+  {
+    "slug": "horus",
+    "name": "Horus",
+    "company": "Scarif Labs",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT licence, distributed on F-Droid and GitHub Releases. You pay only for the Claude, OpenAI or OpenCode model plans you sign in to inside each agent.",
+    "description": "Horus is an Android app that gives your phone a full ARM64 Linux workspace (Alpine, or experimental Debian 13) and a native terminal, then puts Claude Code, Codex and OpenCode one tap away. It needs no root or Termux, bundles its own PRoot runtime, and keeps agent sessions running in a foreground service with the screen off.",
+    "keyFeatures": [
+      "Claude Code, Codex and OpenCode each install on first tap into their own home",
+      "Alpine Linux workspace, or experimental Debian 13 for glibc programs, verified against a pinned SHA-256",
+      "Native PTY and terminal renderer with a key bar for Esc, Tab, arrows and Ctrl/Alt",
+      "Sessions keep running with the screen off and notify you when an agent is waiting",
+      "Clone any HTTPS or SSH repo or pick from your GitHub repos after a device login",
+      "No analytics, ads, crash reporting or Google services; password lock after 15 minutes in the background",
+      "Optional horus CLI (npm install -g horus-cli) for key-only SSH, file sync and port forwarding over USB",
+      "Install from F-Droid or the F-Droid-signed APK on GitHub Releases"
+    ],
+    "bestFor": "Developers who want to run CLI coding agents from an Android phone, or turn a spare phone into a small always-on box for agents.",
+    "notIdealFor": "iPhone users, 32-bit or pre-Android 7.0 devices, or heavy builds that need desktop-class CPU and memory.",
+    "recentUpdates": "v1.2.0 shipped on November 7, v1.2.1 on November 12 and v1.2.2 on November 18, 2026; Horus launched on Show HN on November 24, 2026.",
+    "verdict": "A polished, privacy-minded way to carry real Claude Code, Codex and OpenCode sessions on an Android phone without rooting it.",
+    "tags": [
+      "Android",
+      "Mobile",
+      "Terminal",
+      "Claude Code",
+      "Codex",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-24"
+  },
+  {
+    "slug": "genesis-map",
+    "name": "Genesis Map",
+    "company": "GenesisAgentInfra",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 licence. The CLI calls no model; the agent you already use (Claude Code, Codex or another) does the reading on your own plan.",
+    "description": "Genesis Map is a local CLI and agent skill that turns your codebase into a business flow map and shows which of your coding agent's changes are untested or risky. It runs inside Claude Code, Codex and other agents, writes a browser page and a summary.md for the pull request, and checks every step the agent writes against the source.",
+    "keyFeatures": [
+      "/genesis map draws the system as it is now as a business flow map",
+      "/genesis review <revision> places each change on the flow with a test verdict and risks",
+      "Test verdicts: behavior checked, behavior not checked, no coverage found or unclear",
+      "Every step must quote the code it stands for, checked against a frozen snapshot of the repo",
+      "Python is parsed directly for the most accurate results; TypeScript, JavaScript, Go, Java, Rust and other languages also work",
+      "Browser view plus a summary.md ready to paste into a pull request",
+      "The CLI calls no model, sends nothing anywhere and never runs your code",
+      "Install with uv tool install from the repo, then genesis agent install --agent claude, codex or both"
+    ],
+    "bestFor": "Developers who review a lot of coding-agent output and want to see which changed behaviors their tests actually check.",
+    "notIdealFor": "Windows users (not tested), or teams wanting a hosted PR bot or a rule engine; risks are what the agent notices and tests are read, not run.",
+    "recentUpdates": "The repository was created on November 6, 2026, v0.1.0 was released on November 21, 2026, and Genesis Map launched on Show HN on November 24, 2026.",
+    "verdict": "An early but careful change-review skill that grounds agent explanations in quoted code and focuses on tests that run a change without catching it.",
+    "tags": [
+      "Code Review",
+      "Testing",
+      "Claude Code",
+      "Codex",
+      "Agent Skill",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-24"
+  },
+  {
+    "slug": "bough",
+    "name": "bough",
+    "company": "Nikhil Kumar (nickelsec)",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT licence. It runs locally and prices your past work at published API rates; it does not bill you or connect to any service.",
+    "description": "bough is a single Go binary that reads your Claude Code, OpenAI Codex CLI and Pi session history and draws what you actually built: sittings, the tasks inside them and every prompt, with the commits they produced and what each piece of work cost in tokens and dollars at published API rates.",
+    "keyFeatures": [
+      "Reads Claude Code, OpenAI Codex CLI and Pi transcripts, found automatically",
+      "Splits sessions into sittings, tasks and prompts so cost lands on work you recognise",
+      "Marks tasks that ended in a commit by reading the project's git history read-only (--no-repo to skip)",
+      "Prices work in tokens and dollars at published rates built into the binary; local models priced at nothing",
+      "Search and sort projects by time or cost, filter by agent and narrow to a cost threshold",
+      "Local page served from 127.0.0.1, plus a --text view in the terminal",
+      "No writes, no network and no telemetry",
+      "Install with brew install nickelsec/tap/bough, the checksummed install script for macOS, Linux and Windows, or go install"
+    ],
+    "bestFor": "Developers who use Claude Code, Codex or Pi heavily and want to see what each feature or bug actually cost and how their sessions broke down.",
+    "notIdealFor": "Teams needing a shared, hosted spend dashboard or actual billed amounts; bough shows API-equivalent cost, not your subscription bill.",
+    "recentUpdates": "v0.7.0 shipped on September 27, v0.7.1 on September 28 and v0.8.0 on October 2, 2026; commit-level cost per piece of work landed in September 2026.",
+    "verdict": "A thoughtful, fully offline way to turn opaque agent session logs into a readable, priced history of the work.",
+    "tags": [
+      "Cost Tracking",
+      "Session History",
+      "Claude Code",
+      "Codex",
+      "CLI",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-24"
   }
 ]
