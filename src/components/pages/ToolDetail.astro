@@ -1,0 +1,484 @@
+---
+/**
+ * Dynamic tool detail page - [slug].astro
+ *
+ * Replaces:
+ *   - scripts/generate-tool-pages.js  (build-time page generator)
+ *   - src/tool-template.html          (template)
+ *   - js/tool-detail.js               (runtime data hydration)
+ *   - js/tool-cache.js                (localStorage cache for enriched data)
+ *
+ * All 108 tool pages are now generated from this single file via getStaticPaths().
+ * Seed + enriched data are embedded at build time - no client-side fetch needed.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import { formatDate, getAlternativesFor, getAllTools, getCategorySlug, getToolBySlug, type Tool } from '../../lib/tools';
+import { robotsFor } from '../../lib/indexing';
+import { getComparisonsForTool, hasAlternativesPage, hasPricingPage, humanizePricing, truncate } from '../../lib/compare';
+import { entryLabel, priceSummary } from '../../lib/folio';
+import FolioStyles from '../../components/folio/FolioStyles.astro';
+import FolioTitle from '../../components/folio/FolioTitle.astro';
+import FolioPlans from '../../components/folio/FolioPlans.astro';
+import FolioFaq from '../../components/folio/FolioFaq.astro';
+import FolioScroll from '../../components/folio/FolioScroll.astro';
+import NewsSubscribeCta from '../../components/NewsSubscribeCta.astro';
+import DirectoryShare from '../../components/DirectoryShare.astro';
+import DirectorySignupCta from '../../components/DirectorySignupCta.astro';
+import { buildToolFaqs } from '../../lib/tool-faqs';
+import { buildToolReview, buildToolSeo } from '../../lib/tool-seo';
+import { blogPostsLinkingTo } from '../../lib/alternatives';
+import { addOutboundUtmParams } from '../../lib/outbound-utm.js';
+import { t, localePrefix, zhCategoryName } from '../../i18n/zh';
+
+interface Props {
+    tool: Tool;
+    lang?: string;
+}
+
+const { tool, lang = 'en' } = Astro.props;
+const p = localePrefix(lang);
+const { enriched } = tool;
+
+// Prefer enriched data, fall back to seed
+const displayName = enriched?.name ?? tool.name;
+const displayCompany = enriched?.company ?? tool.company;
+const isDiscontinued = (enriched?.status ?? '').toLowerCase() === 'discontinued';
+const isWindingDown = (enriched?.status ?? '').toLowerCase() === 'winding-down';
+const successor = isDiscontinued && enriched?.successor ? getToolBySlug(enriched.successor) : undefined;
+const hasSiteLink = typeof tool.url === 'string' && /^https?:\/\//i.test(tool.url);
+const displayDescription = enriched?.description ?? tool.notes;
+
+// ── Related tools (same category, enriched first) ───────────────────────────
+const related = getAlternativesFor(tool).slice(0, 6);
+
+// Meta title/description (truncated to 155 chars)
+const { title: enTitle, description: enDesc } = buildToolSeo(tool, related);
+const catZh = lang === 'zh' ? zhCategoryName(tool.categoryClean) : tool.categoryClean;
+const seoTitle = lang === 'zh'
+    ? t(lang, 'td.metaTitle', enTitle, { name: displayName, cat: catZh })
+    : enTitle;
+const seoDescription = lang === 'zh'
+    ? t(lang, displayCompany ? 'td.metaDesc' : 'td.metaDescNoCo', enDesc, { name: displayName, company: displayCompany ?? '', cat: catZh })
+    : enDesc;
+const descMeta = truncate(seoDescription, 155);
+
+const keywords = [
+    tool.name,
+    tool.company,
+    tool.categoryClean,
+    tool.categoryShort,
+    'AI coding',
+    'developer tools',
+].filter(Boolean).join(', ');
+
+// JSON-LD structured data
+const review = buildToolReview(tool);
+// Only emit a free Offer when pricing is actually known to be free -
+// hardcoding price:0 for paid/freemium tools is misleading structured data.
+const KNOWN_FREE = new Set(['free']);
+const isKnownFree = KNOWN_FREE.has((enriched?.pricing ?? '').toLowerCase());
+// The app entity keeps its English canonical @id on zh pages - it is the
+// same software, so both locale WebPages reference the one node.
+const appId = `https://ai.dosa.dev/tools/${tool.slug}#app`;
+const softwareApp: Record<string, unknown> = {
+    "@type": "SoftwareApplication",
+    "@id": appId,
+    "name": displayName,
+    "url": hasSiteLink ? tool.url : `https://ai.dosa.dev/tools/${tool.slug}`,
+    "description": displayDescription,
+    "applicationCategory": "DeveloperApplication",
+    "applicationSubCategory": tool.categoryClean,
+    "operatingSystem": "Any",
+    "image": `https://ai.dosa.dev/images/og/${tool.slug}.png`,
+    ...(hasSiteLink ? { "sameAs": [tool.url] } : {}),
+    ...(displayCompany ? { "author": { "@type": "Organization", "name": displayCompany }, "publisher": { "@type": "Organization", "name": displayCompany } } : {}),
+    ...(enriched?.keyFeatures?.length ? { "featureList": enriched.keyFeatures } : {}),
+    ...(enriched?.tags?.length ? { "keywords": enriched.tags.join(', ') } : {}),
+    ...(review ? { "review": review } : {}),
+    // Honest freshness: dateModified reflects the enrichment pipeline's
+    // lastUpdated stamp for this tool, not the build date.
+    ...(enriched?.lastUpdated ? { "dateModified": enriched.lastUpdated } : {}),
+    "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://ai.dosa.dev/#website",
+        "url": "https://ai.dosa.dev",
+        "name": "ai.dosa.dev - Awesome AI Tools"
+    }
+};
+if (isKnownFree) {
+    softwareApp["offers"] = { "@type": "Offer", "price": "0", "priceCurrency": "USD" };
+}
+
+const pageUrl = `https://ai.dosa.dev${p}/tools/${tool.slug}`;
+const webPage: Record<string, unknown> = {
+    "@type": "WebPage",
+    "@id": pageUrl,
+    "url": pageUrl,
+    "name": seoTitle,
+    "description": descMeta,
+    "inLanguage": lang === 'zh' ? 'zh' : 'en',
+    "isPartOf": { "@id": "https://ai.dosa.dev/#website" },
+    "about": { "@id": appId },
+    "mainEntity": { "@id": appId },
+    "primaryImageOfPage": { "@type": "ImageObject", "url": `https://ai.dosa.dev/images/og/${tool.slug}.png`, "width": 1200, "height": 630 },
+    ...(enriched?.lastUpdated ? { "dateModified": enriched.lastUpdated } : {}),
+    "speakable": { "@type": "SpeakableSpecification", "cssSelector": ["h1", ".td-summary", ".td-verdict"] },
+};
+
+const jsonLdObj = {
+    "@context": "https://schema.org",
+    "@graph": [
+        softwareApp,
+        webPage,
+        {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": t(lang, 'home', 'Home'), "item": "https://ai.dosa.dev" },
+                { "@type": "ListItem", "position": 2, "name": catZh, "item": `https://ai.dosa.dev${p}/category/${getCategorySlug(tool.categoryShort)}` },
+                { "@type": "ListItem", "position": 3, "name": displayName, "item": `https://ai.dosa.dev${p}/tools/${tool.slug}` }
+            ]
+        }
+    ]
+};
+
+const showAlternativesLink = hasAlternativesPage(tool.slug);
+const showPricingLink = hasPricingPage(tool.slug);
+
+// Blog posts that link to this tool
+const blogPosts = await getCollection('blog', ({ data }) => data.draft !== true);
+const reading = blogPostsLinkingTo(blogPosts, tool.slug);
+
+// ── Curated comparison pages featuring this tool ────────────────────────────
+const comparisons = getComparisonsForTool(tool.slug)
+    .map(c => {
+        const a = getToolBySlug(c.a);
+        const b = getToolBySlug(c.b);
+        return a && b ? { slug: c.slug, label: `${a.name} vs ${b.name}` } : null;
+    })
+    .filter((c): c is { slug: string; label: string } => c !== null)
+    .slice(0, 4);
+
+// ── FAQ block (AEO) - built from enriched data, only where data exists ──────
+const faqs = buildToolFaqs(tool, getAlternativesFor(tool));
+if (faqs.length >= 2) {
+    (jsonLdObj["@graph"] as object[]).push({
+        "@type": "FAQPage",
+        "mainEntity": faqs.map(f => ({
+            "@type": "Question",
+            "name": f.q,
+            "acceptedAnswer": { "@type": "Answer", "text": f.a }
+        }))
+    });
+}
+const jsonLd = JSON.stringify(jsonLdObj);
+
+// ── Hero, pricing and section data ──────────────────────────────────────────
+const description = displayDescription ?? '';
+const features = enriched?.keyFeatures ?? [];
+const bestFor = enriched?.bestFor ?? '';
+const notIdealFor = enriched?.notIdealFor ?? '';
+const verdict = enriched?.verdict ?? '';
+const updates = enriched?.recentUpdates ?? '';
+const tags = enriched?.tags ?? [];
+const updated = enriched?.lastUpdated ? formatDate(enriched.lastUpdated) : null;
+const model = humanizePricing(enriched?.pricing) || 'Unlisted';
+const siteHref = hasSiteLink ? addOutboundUtmParams(tool.url) : '';
+
+const sentences = description.split(/(?<=[.!?])\s+(?=[A-Z])/);
+const lead = sentences[0] ?? '';
+const rest = sentences.slice(1).join(' ');
+
+const { paid, entry, freeTier, main: priceMain, unit: priceUnit } = priceSummary(enriched?.pricing, enriched?.pricingDetail);
+
+const peers = getAllTools().filter(t => t.category === tool.category && t.slug !== tool.slug);
+const facts = [
+    { k: t(lang, 'td.factCompany', 'Company'), v: displayCompany || '—' },
+    { k: t(lang, 'td.factPricing', 'Pricing model'), v: model },
+    { k: t(lang, 'td.factPaidPlans', 'Paid plans'), v: paid.length ? String(paid.length) : t(lang, 'td.noneListed', 'None listed') },
+    { k: t(lang, 'td.factPeers', 'Category peers'), v: String(peers.length) },
+];
+
+const hasPricing = Boolean(enriched?.pricing || enriched?.pricingDetail);
+const sections = [
+    rest && 'overview',
+    features.length && 'capabilities',
+    hasPricing && 'pricing',
+    (bestFor || notIdealFor) && 'fit',
+    verdict && 'verdict',
+    updates && 'latest',
+    faqs.length >= 2 && 'faq',
+    related.length && 'alternatives',
+    comparisons.length && 'compare',
+    reading.length && 'reading',
+    tags.length && 'tags',
+].filter(Boolean) as string[];
+const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
+---
+
+
+<BaseLayout
+    title={seoTitle}
+    description={descMeta}
+    keywords={keywords}
+    canonical={pageUrl}
+    robots={robotsFor(`/tools/${tool.slug}`)}
+    lang={lang}
+    i18nPath={`/tools/${tool.slug}`}
+    ogTitle={seoTitle}
+    ogDescription={descMeta}
+    ogImage={`https://ai.dosa.dev/images/og/${tool.slug}.png`}
+    ogType="article"
+    modifiedTime={enriched?.lastUpdated}
+    twitterTitle={seoTitle}
+    twitterDescription={descMeta}
+    jsonLd={jsonLd}
+    markdownUrl={lang === 'zh' ? undefined : `/tools/${tool.slug}.md`}
+>
+
+    <div class="flex h-[100dvh] overflow-hidden">
+
+        <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative overflow-y-auto">
+            <SiteHeader variant="page" title={displayName} lang={lang} i18nPath={`/tools/${tool.slug}`} />
+
+            <article class="fo">
+                <header class="fo-hero">
+                    <div>
+                        <div class="fo-top fo-fade" style="--d:.1s">
+                            <nav aria-label="Breadcrumb" class="fo-crumbs">
+                                <a href={`${p}/`}>{t(lang, 'home', 'Home')}</a><span>/</span>
+                                <a href={`${p}/category/${getCategorySlug(tool.categoryShort)}`}>{catZh}</a><span>/</span>
+                                <span class="here">{displayName}</span>
+                            </nav>
+                            <span class="fo-status">
+                                {isDiscontinued && <span class="fo-off">{t(lang, 'td.discontinued', 'Discontinued')}</span>}
+                                {isWindingDown && <span class="fo-off">{t(lang, 'td.windingDown', 'Winding down')}</span>}
+                                {enriched?.lastUpdated && <span>{t(lang, 'updated', 'Updated')} <time datetime={enriched.lastUpdated}>{updated}</time></span>}
+                            </span>
+                        </div>
+                        <div class="fo-rule"></div>
+                        {isWindingDown && (
+                            <aside class="fo-notice fo-fade" style="--d:.2s" role="note">
+                                <span><b>{t(lang, 'td.windingDownNotice', 'Service winding down.')}</b> {enriched?.recentUpdates}</span>
+                                {reading[0] && <a href={`/blog/${reading[0].id}`}>{t(lang, 'td.readMigration', 'Read the migration guide →')}</a>}
+                            </aside>
+                        )}
+                        {isDiscontinued && (
+                            <aside class="fo-notice fo-fade" style="--d:.2s" role="note">
+                                <span><b>{t(lang, 'td.noLongerMaintained', 'No longer maintained.')}</b> {t(lang, 'td.discontinuedFold', `${displayName} has been discontinued${successor ? ` and folded into ${successor.enriched?.name ?? successor.name}` : ''}.`, { name: displayName, fold: successor ? t(lang, 'td.foldedInto', ` and folded into ${successor.enriched?.name ?? successor.name}`, { name: successor.enriched?.name ?? successor.name }) : '' })}</span>
+                                {successor && <a href={`${p}/tools/${successor.slug}`}>{t(lang, 'td.seeTool', `See ${successor.enriched?.name ?? successor.name} →`, { name: successor.enriched?.name ?? successor.name })}</a>}
+                            </aside>
+                        )}
+                    </div>
+                    <div>
+                        <FolioTitle parts={[{ text: displayName }]} />
+                        <div class="fo-intro tool-detail-intro">
+                            <p class="fo-lead td-summary fo-fade" style="--d:.55s">{lead}</p>
+                            <div class="fo-price fo-fade" style="--d:.7s">
+                                <small>{entry ? t(lang, 'td.from', 'From') : t(lang, 'td.pricing', 'Pricing')}</small>
+                                <b>{priceMain}</b>
+                                <span>{priceUnit}{entry && freeTier ? ` · ${t(lang, 'td.freeTier', 'free tier available')}` : ''}</span>
+                            </div>
+                            <div class="fo-cta fo-fade" style="--d:.85s">
+                                {hasSiteLink && <a class="fo-btn" href={siteHref} target="_blank" rel="noopener noreferrer" aria-label={t(lang, 'td.visitSiteAria', `Visit ${displayName} website`, { name: displayName })}>{t(lang, 'td.visitSite', 'Visit site')} <i aria-hidden="true">→</i></a>}
+                                <div class="fo-save">
+                                    <button class="favorite-btn detail" type="button" data-tool-slug={tool.slug} data-tool-name={displayName} aria-label={t(lang, 'td.favoriteAria', `Save ${displayName} to favorites`, { name: displayName })} aria-pressed="false" title={t(lang, 'td.favoriteAria', `Save ${displayName} to favorites`, { name: displayName })}>
+                                        <svg class="favorite-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.75L6 21V4.75Z"/>
+                                        </svg>
+                                        <span data-favorite-label>{t(lang, 'td.favorite', 'Favorite')}</span>
+                                    </button>
+                                    <div class="stack-control" data-stack-control>
+                                        <button
+                                            class="stack-btn detail"
+                                            type="button"
+                                            data-add-to-stack
+                                            data-tool-slug={tool.slug}
+                                            data-tool-category={tool.categoryShort}
+                                            aria-label={t(lang, 'td.addToStackAria', `Add ${displayName} to a stack`, { name: displayName })}
+                                            aria-expanded="false"
+                                        >
+                                            <span aria-hidden="true">＋</span><span>{t(lang, 'td.addToStack', 'Add to stack')}</span>
+                                        </button>
+                                    </div>
+                                    <button class="follow-btn detail" type="button" data-tool-slug={tool.slug} data-tool-name={displayName} aria-label={t(lang, 'td.followAria', `Sign in to follow ${displayName}`, { name: displayName })} aria-pressed="false" title={t(lang, 'td.followTitle', `Get email updates about ${displayName}`, { name: displayName })}>
+                                        <svg class="follow-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/>
+                                        </svg>
+                                        <span data-follow-label>{t(lang, 'td.follow', 'Follow')}</span>
+                                    </button>
+                                    <DirectoryShare canonical={pageUrl} kind="tool" slug={tool.slug} name={displayName} />
+                                </div>
+                                {enriched && (
+                                    <p class="fo-follow-note">{t(lang, 'td.followNote', `Follow ${displayName} to get an email when its listing changes, such as new pricing or features. One digest a day at most, and you can unsubscribe anytime.`, { name: displayName })}</p>
+                                )}
+                            </div>
+                        </div>
+                        <div class="fo-facts">
+                            {facts.map((f, i) => (
+                                <div class="fo-fact fo-fade" style={`--d:${0.9 + i * 0.08}s`}>
+                                    <span class="fo-k">{f.k}</span>
+                                    <b>{f.v}</b>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </header>
+
+                {!enriched && (
+                    <p class="fo-pending">{t(lang, 'td.pending', "Enriched details are coming soon. We're still gathering pricing, key features and reviewer notes for this tool. In the meantime, visit the official site for more.")}</p>
+                )}
+
+                {rest && (
+                    <section class="fo-sec" id="overview">
+                        <div class="fo-label"><em>{num('overview')}</em>{t(lang, 'td.secOverview', 'Overview')}</div>
+                        <div class="fo-body fo-reveal"><p class="fo-text td-summary">{rest}</p></div>
+                    </section>
+                )}
+
+                {features.length > 0 && (
+                    <section class="fo-sec" id="capabilities">
+                        <div class="fo-label"><em>{num('capabilities')}</em>{t(lang, 'td.secFeatures', 'Key features')}</div>
+                        <div class="fo-body">
+                            <ol class="fo-list">
+                                {features.map((f, i) => <li><span>{String(i + 1).padStart(2, '0')}</span><p>{f}</p></li>)}
+                            </ol>
+                        </div>
+                    </section>
+                )}
+
+                {hasPricing && (
+                    <section class="fo-sec" id="pricing">
+                        <div class="fo-label"><em>{num('pricing')}</em>{t(lang, 'td.secPricing', 'Pricing')}</div>
+                        <div class="fo-body">
+                            <FolioPlans pricing={enriched?.pricing} detail={enriched?.pricingDetail} />
+                        </div>
+                    </section>
+                )}
+
+                {(bestFor || notIdealFor) && (
+                    <section class="fo-sec" id="fit">
+                        <div class="fo-label"><em>{num('fit')}</em>{t(lang, 'td.secFit', "Who it's for")}</div>
+                        <div class="fo-body fo-fit">
+                            {bestFor && <div class="fo-reveal"><h3>{t(lang, 'td.bestFor', 'Best for')}</h3><p>{bestFor}</p></div>}
+                            {notIdealFor && <div class="fo-reveal"><h3>{t(lang, 'td.notIdealFor', 'Not ideal for')}</h3><p>{notIdealFor}</p></div>}
+                        </div>
+                    </section>
+                )}
+
+                {verdict && (
+                    <section class="fo-sec" id="verdict">
+                        <div class="fo-label"><em>{num('verdict')}</em>{t(lang, 'td.secVerdict', 'Verdict')}</div>
+                        <div class="fo-body">
+                            <blockquote class="fo-verdict td-verdict">{verdict.split(/\s+/).map(w => <span class="w">{w} </span>)}</blockquote>
+                            <div class="fo-sign">{t(lang, 'td.editorial', 'ai.dosa.dev editorial')}{updated && ` · ${updated}`}</div>
+                        </div>
+                    </section>
+                )}
+
+                {updates && (
+                    <section class="fo-sec" id="latest">
+                        <div class="fo-label"><em>{num('latest')}</em>{t(lang, 'td.secLatest', 'Recent updates')}</div>
+                        <div class="fo-body fo-reveal">
+                            <p class="fo-text sm">{updates}</p>
+                            {enriched?.lastUpdated && <p class="fo-note">{t(lang, 'td.asOf', 'As of')} <time datetime={enriched.lastUpdated}>{updated}</time></p>}
+                        </div>
+                    </section>
+                )}
+
+                {faqs.length >= 2 && (
+                    <section class="fo-sec" id="faq" aria-label="Frequently asked questions">
+                        <div class="fo-label"><em>{num('faq')}</em>{t(lang, 'td.secFaq', 'Pricing & FAQ')}</div>
+                        <FolioFaq faqs={faqs} />
+                    </section>
+                )}
+
+                {related.length > 0 && (
+                    <section class="fo-sec" id="alternatives" aria-label={`More ${tool.categoryClean} tools`}>
+                        <div class="fo-label"><em>{num('alternatives')}</em>{t(lang, 'td.secMore', `More in ${tool.categoryShort}`, { cat: catZh })}</div>
+                        <div class="fo-body">
+                            {related.map(r => (
+                                <a class="fo-alt" href={`${p}/tools/${r.slug}`}>
+                                    <span><b>{r.enriched?.name ?? r.name}</b></span>
+                                    <small>{r.enriched?.company ?? r.company}</small>
+                                    <span class="pr">{entryLabel(r)}</span>
+                                    <i aria-hidden="true">→</i>
+                                </a>
+                            ))}
+                            {(showAlternativesLink || showPricingLink) && (
+                                <div class="fo-more">
+                                    {showAlternativesLink && <a href={`/tools/${tool.slug}/alternatives`}>{t(lang, 'td.seeAllAlts', `See all ${displayName} alternatives →`, { name: displayName })}</a>}
+                                    {showPricingLink && <a href={`/tools/${tool.slug}/pricing`}>{t(lang, 'td.seePricing', `See ${displayName} pricing details →`, { name: displayName })}</a>}
+                                </div>
+                            )}
+                        </div>
+                    </section>
+                )}
+
+                {comparisons.length > 0 && (
+                    <section class="fo-sec" id="compare" aria-label={`Compare ${displayName}`}>
+                        <div class="fo-label"><em>{num('compare')}</em>{t(lang, 'td.secCompare', 'Compare')}</div>
+                        <div class="fo-body">
+                            {comparisons.map(c => (
+                                <a class="fo-alt" href={`/compare/${c.slug}`}>
+                                    <span><b>{c.label}</b></span>
+                                    <small></small>
+                                    <span class="pr"></span>
+                                    <i aria-hidden="true">→</i>
+                                </a>
+                            ))}
+                            {showAlternativesLink && (
+                                <div class="fo-more">
+                                    <a href={`/tools/${tool.slug}/alternatives`}>{t(lang, 'td.compareAll', `Compare ${displayName} with all its alternatives →`, { name: displayName })}</a>
+                                </div>
+                            )}
+                        </div>
+                    </section>
+                )}
+
+                {reading.length > 0 && (
+                    <nav class="fo-sec" id="reading" aria-label="Related reading">
+                        <div class="fo-label"><em>{num('reading')}</em>{t(lang, 'td.secReading', 'Related reading')}</div>
+                        <div class="fo-body">
+                            <ul class="fo-tags">
+                                {reading.map(p => <li><a href={`/blog/${p.id}`}>{p.data.title}</a></li>)}
+                            </ul>
+                        </div>
+                    </nav>
+                )}
+
+                {tags.length > 0 && (
+                    <section class="fo-sec" id="tags">
+<div class="fo-label"><em>{num('tags')}</em>{t(lang, 'td.secTags', 'Tags')}</div>
+                        <div class="fo-body"><ul class="fo-tags">{tags.map(t => <li>{t}</li>)}</ul></div>
+                    </section>
+                )}
+
+                <DirectorySignupCta toolName={displayName} class="my-8" />
+
+                {hasSiteLink && (
+                    <footer class="fo-end">
+                        <a class="big" href={siteHref} target="_blank" rel="noopener noreferrer">{t(lang, 'td.try', `Try ${displayName}`, { name: displayName })}<i aria-hidden="true">→</i></a>
+                        <span class="fo-k" style="margin:0">{entry ? `${t(lang, 'td.from', 'From')} ${priceMain} ${priceUnit}` : priceMain}</span>
+                    </footer>
+                )}
+
+                <NewsSubscribeCta subject="tool" class="fo-brief" />
+
+
+                <div class="fo-notes">
+                    <span>{t(lang, 'aiContentNote', "Content on this page is AI-generated. Please verify details with the vendor's website for accuracy.")}</span>
+                    <span>{t(lang, 'makerNote', 'Are you the maker?')} <a href={`/badge?tool=${tool.slug}`}>{t(lang, 'getBadge', 'Get your Featured badge')}</a></span>
+                    <a class="back" href={`${p}/`}>{t(lang, 'backToDirectory', '← Back to directory')}</a>
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <FolioStyles />
+    <FolioScroll />
+
+    <!-- Client scripts for auth + sidebar toggle (shared with all pages) -->
+    <script src="/dist/app.js" type="module" defer></script>
+</BaseLayout>

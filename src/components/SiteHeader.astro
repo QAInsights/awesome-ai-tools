@@ -1,24 +1,35 @@
 ---
 import NavIsland from './NavIsland.astro';
+import { t, localePrefix } from '../i18n/zh';
 
 interface Props {
     variant: 'index' | 'page';
     title?: string;
     activeNav?: string;
+    lang?: string;
+    i18nPath?: string;
 }
 
-const { variant, title = 'ai.dosa.dev', activeNav } = Astro.props;
+const { variant, title = 'ai.dosa.dev', activeNav, lang = 'en', i18nPath } = Astro.props;
 const isIndex = variant === 'index';
+const p = localePrefix(lang);
+// en/zh deep-link for pages that exist in both locales: i18nPath is the
+// unprefixed en path, so the zh mirror is always one prefix away.
+const altHref = i18nPath
+    ? lang === 'zh'
+        ? i18nPath
+        : i18nPath === '/' ? '/zh/' : `/zh${i18nPath}`
+    : undefined;
 ---
 
-<NavIsland activeNav={activeNav} search={isIndex ? 'live' : 'link'}>
+<NavIsland activeNav={activeNav} search={isIndex ? 'live' : 'link'} lang={lang}>
     <slot slot="search-actions" />
     <slot name="overlay" slot="scope" />
 </NavIsland>
 
 <div class="border-b border-border bg-black/80 backdrop-blur-xl sticky top-0 z-20">
     <div class="flex items-center gap-3 h-14 md:h-16 px-4 md:px-8">
-        <a href="/" data-brand class="group flex items-center gap-2.5 md:gap-3 no-underline min-w-0">
+        <a href={`${p}/`} data-brand class="group flex items-center gap-2.5 md:gap-3 no-underline min-w-0">
             <img src="/images/icons/favicon-96x96.png" alt="dosa.dev logo" width="28" height="28" fetchpriority="high" decoding="async" class="shrink-0 w-6 h-6 md:w-7 md:h-7 transition-transform duration-300 group-hover:scale-105" />
             {isIndex
                 ? <h1 class="text-[17px] md:text-[18px] font-semibold tracking-wide text-white m-0 leading-none">ai.dosa.dev <span class="sr-only">- Awesome AI Coding Tools Directory</span></h1>
@@ -26,15 +37,20 @@ const isIndex = variant === 'index';
             }
         </a>
         <div id="authHeader" class="flex items-center gap-3 shrink-0 ml-auto">
+            {altHref && (
+                <a href={altHref} hreflang={lang === 'zh' ? 'en' : 'zh-Hans'} aria-label={t(lang, 'hd.langSwitch', 'View this page in 中文')} class="inline-flex items-center px-2.5 py-1.5 border border-border rounded-full font-mono text-[12px] font-medium text-ink-secondary hover:text-white hover:bg-white/5 hover:border-border-strong transition-all whitespace-nowrap">
+                    {lang === 'zh' ? 'EN' : '中文'}
+                </a>
+            )}
             <a href="/advertise" title="Sponsor the Featured slot on ai.dosa.dev" class="hidden xl:inline-flex items-center gap-2 px-4 py-2 border border-border rounded-full text-sm font-medium text-ink-secondary hover:text-white hover:bg-white/5 hover:border-border-strong transition-all whitespace-nowrap">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z"></path><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path></svg>
-                <span>Advertise</span>
+                <span>{t(lang, 'hd.advertise', 'Advertise')}</span>
             </a>
             <a href="https://github.com/QAInsights/awesome-ai-tools/issues/new?template=submit-tool.yml" target="_blank" rel="noopener noreferrer" class="hidden xl:inline-flex items-center gap-1.5 px-4 py-2 border border-border rounded-full text-sm font-medium text-ink-secondary hover:text-white hover:bg-white/5 hover:border-border-strong transition-all whitespace-nowrap">
                 <span aria-hidden="true">+</span>
-                <span>Submit</span>
+                <span>{t(lang, 'hd.submit', 'Submit')}</span>
             </a>
-            <button id="signInTriggerBtn" class="hidden px-3.5 md:px-5 py-2 bg-white text-black rounded-full text-[13px] md:text-sm font-semibold hover:bg-gray-200 transition-all active:scale-[0.98] whitespace-nowrap">Sign in free</button>
+            <button id="signInTriggerBtn" class="hidden px-3.5 md:px-5 py-2 bg-white text-black rounded-full text-[13px] md:text-sm font-semibold hover:bg-gray-200 transition-all active:scale-[0.98] whitespace-nowrap">{t(lang, 'hd.signIn', 'Sign in free')}</button>
 
             <div id="userProfile" class="hidden relative">
                 <div id="userProfileBtn" class="flex items-center gap-2.5 pl-1.5 pr-3 py-1.5 bg-white/[0.03] rounded-full border border-border cursor-pointer hover:bg-white/10 transition-all hover:border-border-strong">
@@ -49,13 +65,13 @@ const isIndex = variant === 'index';
                     <div class="px-4 py-2 border-b border-border mb-1">
                         <div id="userEmail" class="text-[11px] text-ink-disabled truncate"></div>
                     </div>
-                    <a href="/favorites" class="flex items-center px-4 py-2.5 text-[14px] text-ink-secondary hover:text-white hover:bg-white/5 transition-colors">Favorites</a>
-                    <a href="/stacks" class="flex items-center px-4 py-2.5 text-[14px] text-ink-secondary hover:text-white hover:bg-white/5 transition-colors">My stacks</a>
-                    <a href="/zap" class="flex items-center px-4 py-2.5 text-[14px] text-ink-secondary hover:text-white hover:bg-white/5 transition-colors">Zap Dashboard</a>
-                    <a href="/settings" class="flex items-center px-4 py-2.5 text-[14px] text-ink-secondary hover:text-white hover:bg-white/5 transition-colors">Settings</a>
-                    <a href="/badge" id="getBadgeMenuBtn" class="w-full text-left flex items-center px-4 py-2.5 text-[14px] text-ink-secondary hover:text-white hover:bg-white/5 transition-colors">Get Badge</a>
+                    <a href="/favorites" class="flex items-center px-4 py-2.5 text-[14px] text-ink-secondary hover:text-white hover:bg-white/5 transition-colors">{t(lang, 'hd.favorites', 'Favorites')}</a>
+                    <a href="/stacks" class="flex items-center px-4 py-2.5 text-[14px] text-ink-secondary hover:text-white hover:bg-white/5 transition-colors">{t(lang, 'hd.myStacks', 'My stacks')}</a>
+                    <a href="/zap" class="flex items-center px-4 py-2.5 text-[14px] text-ink-secondary hover:text-white hover:bg-white/5 transition-colors">{t(lang, 'hd.zap', 'Zap Dashboard')}</a>
+                    <a href="/settings" class="flex items-center px-4 py-2.5 text-[14px] text-ink-secondary hover:text-white hover:bg-white/5 transition-colors">{t(lang, 'hd.settings', 'Settings')}</a>
+                    <a href="/badge" id="getBadgeMenuBtn" class="w-full text-left flex items-center px-4 py-2.5 text-[14px] text-ink-secondary hover:text-white hover:bg-white/5 transition-colors">{t(lang, 'getBadge', 'Get Badge')}</a>
                     <div class="h-px bg-border my-1.5"></div>
-                    <button id="signOutBtn" class="w-full text-left flex items-center px-4 py-2.5 text-[14px] text-danger hover:bg-danger/10 transition-colors">Sign Out</button>
+                    <button id="signOutBtn" class="w-full text-left flex items-center px-4 py-2.5 text-[14px] text-danger hover:bg-danger/10 transition-colors">{t(lang, 'hd.signOut', 'Sign Out')}</button>
                 </div>
             </div>
         </div>

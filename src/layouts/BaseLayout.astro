@@ -34,6 +34,11 @@ interface Props {
     /** Paginated collections: rel=prev / rel=next hints */
     prevUrl?: string;
     nextUrl?: string;
+    /** Content locale: 'en' (default) or 'zh' (Simplified Chinese). */
+    lang?: string;
+    /** Locale-neutral path for hreflang alternates, e.g. "/tools/cursor".
+     *  Set only on pages that have both en and zh versions. */
+    i18nPath?: string;
 }
 
 const {
@@ -57,6 +62,8 @@ const {
     prevUrl,
     nextUrl,
     markdownUrl,
+    lang = 'en',
+    i18nPath,
 } = Astro.props;
 
 const showAd = !Astro.url.pathname.startsWith('/admin');
@@ -86,7 +93,7 @@ const extraMeta: { name: string; content: string }[] = [
     { name: 'author', content: authors?.length ? authors.join(', ') : 'dosa.dev' },
     { name: 'publisher', content: 'dosa.dev' },
 ];
-const extraLinks: { rel: string; href: string; type?: string; title?: string }[] = [
+const extraLinks: { rel: string; href: string; type?: string; title?: string; hreflang?: string }[] = [
     { rel: 'sitemap', type: 'application/xml', title: 'Sitemap', href: '/sitemap-index.xml' },
     { rel: 'alternate', type: 'application/rss+xml', title: 'ai.dosa.dev Blog RSS', href: '/rss.xml' },
     { rel: 'alternate', type: 'application/rss+xml', title: 'Today in AI RSS', href: '/news/rss.xml' },
@@ -96,9 +103,22 @@ const extraLinks: { rel: string; href: string; type?: string; title?: string }[]
 if (markdownUrl) extraLinks.push({ rel: 'alternate', type: 'text/markdown', title: 'Markdown', href: markdownUrl });
 if (prevUrl) extraLinks.push({ rel: 'prev', href: prevUrl });
 if (nextUrl) extraLinks.push({ rel: 'next', href: nextUrl });
+
+// hreflang alternates for localized pages (en + zh-Hans + x-default → en)
+if (i18nPath) {
+    const enUrl = `https://ai.dosa.dev${i18nPath === '/' ? '/' : i18nPath}`;
+    const zhUrl = `https://ai.dosa.dev/zh${i18nPath === '/' ? '/' : i18nPath}`;
+    extraLinks.push(
+        { rel: 'alternate', hreflang: 'en', href: enUrl },
+        { rel: 'alternate', hreflang: 'zh-Hans', href: zhUrl },
+        { rel: 'alternate', hreflang: 'x-default', href: enUrl },
+    );
+}
+const htmlLang = lang === 'zh' ? 'zh-Hans' : 'en';
+const ogLocale = lang === 'zh' ? 'zh_CN' : 'en_US';
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang={htmlLang}>
 
 <head>
     <meta charset="UTF-8">
@@ -117,7 +137,7 @@ if (nextUrl) extraLinks.push({ rel: 'next', href: nextUrl });
         optional: {
           description: resolvedOgDesc,
           siteName: "ai.dosa.dev",
-          locale: "en_US",
+          locale: ogLocale,
         },
         image: {
           width: 1200,

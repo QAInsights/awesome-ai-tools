@@ -1,0 +1,22 @@
+---
+/**
+ * Simplified Chinese mirror of /category/[slug] - same component, lang="zh".
+ */
+import CategoryPage from '../../../components/pages/CategoryPage.astro';
+import { getCategoriesDetailed, type CategoryInfo } from '../../../lib/tools';
+
+export async function getStaticPaths() {
+    return getCategoriesDetailed().map(category => ({
+        params: { slug: category.slug },
+        props: { category },
+    }));
+}
+
+interface Props {
+    category: CategoryInfo;
+}
+
+const { category } = Astro.props;
+---
+
+<CategoryPage category={category} lang="zh" />

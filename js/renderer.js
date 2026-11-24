@@ -14,6 +14,7 @@ let isAuthenticatedFn = () => false;
 let refreshFavoriteButtonsFn = () => {};
 let refreshFollowButtonsFn = () => {};
 
+const LOCALE_PREFIX = typeof document !== 'undefined' && document.documentElement?.lang === 'zh-Hans' ? '/zh' : '';
 const BATCH_SIZE = 20;
 let filteredTools = [];
 let loadedCount = 0;
@@ -252,7 +253,7 @@ function setupCompareHandlers() {
 
         const slug = row.dataset.slug;
         if (!slug) return;
-        window.location.href = `/tools/${encodeURIComponent(slug)}`;
+        window.location.href = `${LOCALE_PREFIX}/tools/${encodeURIComponent(slug)}`;
     });
 
     const clearBtn = document.getElementById('clearCompareBtn');
@@ -370,7 +371,7 @@ function createToolRow(tool, index) {
 
     const safeName = escapeHtml(tool.name);
     const detailHref = tool.slug
-        ? `/tools/${encodeURIComponent(tool.slug)}`
+        ? `${LOCALE_PREFIX}/tools/${encodeURIComponent(tool.slug)}`
         : escapeHtml(addOutboundUtmParams(tool.url));
 
     // Truncate notes
@@ -422,7 +423,7 @@ ${createZapButtonHtml(toolId, tool.name, initialVoteCount)}
         <div class="reg-col-company w-full font-mono text-[14px] text-[#a3a3a3] uppercase tracking-wide mb-2 md:mb-0 md:order-2">${escapeHtml(tool.company)}</div>
         <div class="reg-col-desc w-full text-[16px] text-[#a3a3a3] leading-relaxed transition-colors group-hover:text-[#e0e0e0] mb-3 md:mb-0 md:order-3 tool-notes" title="${isLong ? escapeHtml(fullNotes) : ''}">${escapeHtml(displayNotes)}</div>
         <div class="reg-col-category w-full md:hidden lg:block text-left lg:text-center mt-1 md:mt-0 md:order-4">
-            <a href="/category/${catShort.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}" class="inline-block px-3 py-1 border border-[#222] rounded-full bg-white/5 font-mono text-[13px] tracking-wide text-[#a3a3a3] hover:text-white hover:border-[#444] transition-colors" title="${escapeHtml(catClean)}" onclick="event.stopPropagation()">${escapeHtml(catShort)}</a>
+            <a href="${LOCALE_PREFIX}/category/${catShort.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}" class="inline-block px-3 py-1 border border-[#222] rounded-full bg-white/5 font-mono text-[13px] tracking-wide text-[#a3a3a3] hover:text-white hover:border-[#444] transition-colors" title="${escapeHtml(catClean)}" onclick="event.stopPropagation()">${escapeHtml(catShort)}</a>
         </div>`;
 
     row.setAttribute('aria-selected', isSelected(tool.slug) ? 'true' : 'false');

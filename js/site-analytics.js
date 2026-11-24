@@ -30,7 +30,7 @@ export function outboundProperties(anchor, location) {
     try { url = new URL(anchor.href); } catch { return null; }
     if (!['http:', 'https:'].includes(url.protocol) || url.hostname === location.hostname) return null;
     const row = anchor.closest('[data-compare-row]');
-    const tool = row?.dataset.slug || location.pathname.match(/^\/tools\/([^/]+)\/?$/)?.[1] || '';
+    const tool = row?.dataset.slug || location.pathname.match(/^\/(?:zh\/)?tools\/([^/]+)\/?$/)?.[1] || '';
     if (!tool) return null;
     return { tool, url: url.href, destination_host: url.hostname, source_path: location.pathname, $pathname: location.pathname };
 }
@@ -39,7 +39,7 @@ export function outboundProperties(anchor, location) {
 // Featured badge to their README - count which tool it refers to.
 export function badgeReferralEvent(pathname, search) {
     if (new URLSearchParams(search).get('ref') !== 'badge') return null;
-    const match = pathname.match(/^\/tools\/([^/]+)\/?$/);
+    const match = pathname.match(/^\/(?:zh\/)?tools\/([^/]+)\/?$/);
     const subject = match ? decodeURIComponent(match[1]) : '';
     return { trigger: subject ? 'tool_page' : 'home', subject };
 }
@@ -93,9 +93,10 @@ if (typeof window !== 'undefined') {
 
 function placement(anchor) {
     if (anchor.closest('[data-compare-row]')) return 'tool_card';
-    if (window.location.pathname.startsWith('/compare')) return 'comparison';
-    if (window.location.pathname.startsWith('/category')) return 'category';
-    if (window.location.pathname.startsWith('/tools/')) return 'tool_detail';
+    const bare = window.location.pathname.replace(/^\/zh(?=\/|$)/, '') || '/';
+    if (bare.startsWith('/compare')) return 'comparison';
+    if (bare.startsWith('/category')) return 'category';
+    if (bare.startsWith('/tools/')) return 'tool_detail';
     return 'unknown';
 }
 
