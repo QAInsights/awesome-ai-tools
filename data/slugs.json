@@ -88,14 +88,14 @@
     "name": "toad",
     "company": "Batrachian AI",
     "category": "AI-Native IDEs & Editors",
-    "addedAt": "2026-04-23"
+    "addedAt": "2026-04-22"
   },
   {
     "slug": "nimbalyst",
     "name": "Nimbalyst",
     "company": "Nimbalyst",
     "category": "AI-Native IDEs & Editors",
-    "addedAt": "2026-05-06"
+    "addedAt": "2026-05-09"
   },
   {
     "slug": "superset",
@@ -123,14 +123,14 @@
     "name": "codex-profiles",
     "company": "Chai Pin Zheng",
     "category": "AI-Native IDEs & Editors",
-    "addedAt": "2026-05-19"
+    "addedAt": "2026-05-18"
   },
   {
     "slug": "reasonix",
     "name": "Reasonix",
     "company": "ESEngine",
     "category": "AI-Native IDEs & Editors",
-    "addedAt": "2026-05-24"
+    "addedAt": "2026-05-23"
   },
   {
     "slug": "minimax-code",
@@ -151,14 +151,14 @@
     "name": "DeepCode",
     "company": "HKUDS",
     "category": "AI-Native IDEs & Editors",
-    "addedAt": "2026-08-08"
+    "addedAt": "2026-08-07"
   },
   {
     "slug": "fletch",
     "name": "Fletch",
     "company": "FWDAI",
     "category": "AI-Native IDEs & Editors",
-    "addedAt": "2026-08-08"
+    "addedAt": "2026-08-07"
   },
   {
     "slug": "factory-ai",
@@ -228,14 +228,14 @@
     "name": "AgentOne",
     "company": "BestCodes",
     "category": "AI-Native IDEs & Editors",
-    "addedAt": "2026-08-17"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "onecli",
     "name": "OneCLI",
     "company": "OneCLI",
     "category": "AI-Native IDEs & Editors",
-    "addedAt": "2026-08-19"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "termy",
@@ -466,7 +466,7 @@
     "name": "Junie",
     "company": "JetBrains",
     "category": "IDE Extensions & Plugins",
-    "addedAt": "2026-04-16"
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "gemini-code-assist",
@@ -529,7 +529,7 @@
     "name": "Cody",
     "company": "Sourcegraph",
     "category": "IDE Extensions & Plugins",
-    "addedAt": "2026-04-16"
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "supermaven",
@@ -543,7 +543,7 @@
     "name": "Blackbox",
     "company": "Blackbox",
     "category": "IDE Extensions & Plugins",
-    "addedAt": "2026-04-16"
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "snyk-code",
@@ -613,7 +613,7 @@
     "name": "Toprank",
     "company": "nowork-studio",
     "category": "IDE Extensions & Plugins",
-    "addedAt": "2026-04-10"
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "wozcode",
@@ -627,7 +627,7 @@
     "name": "Claude Code Skills 中文精选集",
     "company": "老实人实验室",
     "category": "IDE Extensions & Plugins",
-    "addedAt": "2026-05-07"
+    "addedAt": "2026-05-09"
   },
   {
     "slug": "oh-my-codex",
@@ -641,7 +641,7 @@
     "name": "Bob",
     "company": "IBM",
     "category": "IDE Extensions & Plugins",
-    "addedAt": "2026-04-16"
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "firebender",
@@ -676,7 +676,7 @@
     "name": "Codex++",
     "company": "bennett",
     "category": "IDE Extensions & Plugins",
-    "addedAt": "2026-08-15"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "ponytail",
@@ -704,7 +704,7 @@
     "name": "Codex CLI",
     "company": "OpenAI",
     "category": "Terminal & CLI Agents",
-    "addedAt": "2026-04-16"
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "amp",
@@ -795,7 +795,7 @@
     "name": "lucinate",
     "company": "lucinate-ai",
     "category": "Terminal & CLI Agents",
-    "addedAt": "2026-05-08"
+    "addedAt": "2026-05-09"
   },
   {
     "slug": "mcpjam",
@@ -914,14 +914,14 @@
     "name": "OpenCode",
     "company": "Anomaly",
     "category": "Terminal & CLI Agents",
-    "addedAt": "2026-04-16"
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "antigravity-cli",
     "name": "Antigravity CLI",
     "company": "Google",
     "category": "Terminal & CLI Agents",
-    "addedAt": "2026-06-06"
+    "addedAt": "2026-06-05"
   },
   {
     "slug": "nanocoder",
@@ -935,28 +935,28 @@
     "name": "AI Prompt Architect",
     "company": "AI Prompt Architect",
     "category": "Terminal & CLI Agents",
-    "addedAt": "2026-06-23"
+    "addedAt": "2026-06-22"
   },
   {
     "slug": "ai-badger",
     "name": "AI Badger",
     "company": "PVR Labs",
     "category": "Terminal & CLI Agents",
-    "addedAt": "2026-06-23"
+    "addedAt": "2026-06-22"
   },
   {
     "slug": "agentbox",
     "name": "AgentBox",
     "company": "Marco D'Alia",
     "category": "Terminal & CLI Agents",
-    "addedAt": "2026-07-30"
+    "addedAt": "2026-07-29"
   },
   {
     "slug": "oh-my-pi",
     "name": "Oh My Pi",
     "company": "Can Bölük",
     "category": "Terminal & CLI Agents",
-    "addedAt": "2026-08-08"
+    "addedAt": "2026-08-07"
   },
   {
     "slug": "grok-build",
@@ -970,63 +970,63 @@
     "name": "BitFun",
     "company": "GCWing",
     "category": "Terminal & CLI Agents",
-    "addedAt": "2026-08-12"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "deepseek-harness",
     "name": "DeepSeek Harness",
     "company": "DeepSeek",
     "category": "Terminal & CLI Agents",
-    "addedAt": "2026-08-13"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "atomic-agent",
     "name": "Atomic Agent",
     "company": "AtomicBot",
     "category": "Terminal & CLI Agents",
-    "addedAt": "2026-08-13"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "kane-cli",
     "name": "Kane CLI",
     "company": "TestMU AI",
     "category": "Terminal & CLI Agents",
-    "addedAt": "2026-08-13"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "caveman-code",
     "name": "Caveman Code",
     "company": "Julius Brussee",
     "category": "Terminal & CLI Agents",
-    "addedAt": "2026-08-13"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "sillage",
     "name": "Sillage",
     "company": "MarlBurroW (open source)",
     "category": "Terminal & CLI Agents",
-    "addedAt": "2026-08-15"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "mathcode",
     "name": "MathCode",
     "company": "Math-AI",
     "category": "Terminal & CLI Agents",
-    "addedAt": "2026-08-17"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "fxsh",
     "name": "fx.sh",
     "company": "Vercel",
     "category": "Terminal & CLI Agents",
-    "addedAt": "2026-08-18"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "zero",
     "name": "Zero",
     "company": "Gitlawb",
     "category": "Terminal & CLI Agents",
-    "addedAt": "2026-08-18"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "headlong",
@@ -1236,7 +1236,7 @@
     "name": "Sweep",
     "company": "Sweep",
     "category": "Autonomous & Async Agents",
-    "addedAt": "2026-04-16"
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "ellipsis",
@@ -1271,7 +1271,7 @@
     "name": "Orkas",
     "company": "Orkas-AI",
     "category": "Autonomous & Async Agents",
-    "addedAt": "2026-07-30"
+    "addedAt": "2026-07-29"
   },
   {
     "slug": "kody",
@@ -1299,7 +1299,7 @@
     "name": "LoopTroop",
     "company": "LoopTroop AI",
     "category": "Autonomous & Async Agents",
-    "addedAt": "2026-08-14"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "muse",
@@ -1670,7 +1670,7 @@
     "name": "PlayCode",
     "company": "PlayCode",
     "category": "Browser-Based & App Builders",
-    "addedAt": "2026-04-16"
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "emergentsh",
@@ -1789,14 +1789,14 @@
     "name": "cubic",
     "company": "Cubic (Cohere)",
     "category": "AI Code Review & Security",
-    "addedAt": "2026-05-26"
+    "addedAt": "2026-05-25"
   },
   {
     "slug": "kodus",
     "name": "Kodus",
     "company": "Kodus",
     "category": "AI Code Review & Security",
-    "addedAt": "2026-06-03"
+    "addedAt": "2026-06-05"
   },
   {
     "slug": "gito",
@@ -1810,21 +1810,21 @@
     "name": "Bubo",
     "company": "MountainOwl",
     "category": "AI Code Review & Security",
-    "addedAt": "2026-08-08"
+    "addedAt": "2026-08-07"
   },
   {
     "slug": "heygrc",
     "name": "heygrc",
     "company": "ISMS Copilot / Better ISMS",
     "category": "AI Code Review & Security",
-    "addedAt": "2026-08-10"
+    "addedAt": "2026-08-11"
   },
   {
     "slug": "mydentify-ai-crawler-access-checker",
     "name": "Mydentify AI Crawler Access Checker",
     "company": "Mydentify / Timothy Allard",
     "category": "AI Code Review & Security",
-    "addedAt": "2026-08-15"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "vercel-agent",
@@ -2020,7 +2020,7 @@
     "name": "Agent QA",
     "company": "Vostride",
     "category": "AI Testing & Quality Assurance",
-    "addedAt": "2026-08-16"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "e2e",
@@ -2251,7 +2251,7 @@
     "name": "Remio",
     "company": "Remio",
     "category": "AI Codebase Knowledge & Generation",
-    "addedAt": "2026-06-25"
+    "addedAt": "2026-06-24"
   },
   {
     "slug": "contextstream",
@@ -2391,7 +2391,7 @@
     "name": "agenttrace",
     "company": "luoyuctl",
     "category": "Developer Productivity & Workflow",
-    "addedAt": "2026-05-10"
+    "addedAt": "2026-05-11"
   },
   {
     "slug": "vibe-kanban",
@@ -2503,35 +2503,35 @@
     "name": "AI Product Adoption Deck",
     "company": "aiproduct.cards",
     "category": "Developer Productivity & Workflow",
-    "addedAt": "2026-06-03"
+    "addedAt": "2026-06-05"
   },
   {
     "slug": "coderplan",
     "name": "CoderPlan",
     "company": "CoderPlan",
     "category": "Developer Productivity & Workflow",
-    "addedAt": "2026-06-06"
+    "addedAt": "2026-06-05"
   },
   {
     "slug": "aiflowlearn",
     "name": "AIFlowLearn",
     "company": "AIFlowLearn / 木子霖",
     "category": "Developer Productivity & Workflow",
-    "addedAt": "2026-06-06"
+    "addedAt": "2026-06-05"
   },
   {
     "slug": "faryo",
     "name": "Faryo",
     "company": "Snailflyer",
     "category": "Developer Productivity & Workflow",
-    "addedAt": "2026-06-06"
+    "addedAt": "2026-06-05"
   },
   {
     "slug": "tree-ring-memory",
     "name": "Tree Ring Memory",
     "company": "TerminallyLazy",
     "category": "Developer Productivity & Workflow",
-    "addedAt": "2026-07-14"
+    "addedAt": "2026-07-13"
   },
   {
     "slug": "openagentrelay",
@@ -2545,49 +2545,49 @@
     "name": "Better Agent",
     "company": "Ofek Ron",
     "category": "Developer Productivity & Workflow",
-    "addedAt": "2026-07-30"
+    "addedAt": "2026-07-29"
   },
   {
     "slug": "tura",
     "name": "Tura",
     "company": "Tura-AI",
     "category": "Developer Productivity & Workflow",
-    "addedAt": "2026-07-30"
+    "addedAt": "2026-07-29"
   },
   {
     "slug": "fractal",
     "name": "fractal",
     "company": "Plasma AI",
     "category": "Developer Productivity & Workflow",
-    "addedAt": "2026-07-30"
+    "addedAt": "2026-07-29"
   },
   {
     "slug": "wolfmarkdown",
     "name": "WolfMarkDown",
     "company": "WolfMark",
     "category": "Developer Productivity & Workflow",
-    "addedAt": "2026-08-15"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "codex-quota-overlay",
     "name": "Codex Quota Overlay",
     "company": "cpys (maintainer; independent community project)",
     "category": "Developer Productivity & Workflow",
-    "addedAt": "2026-08-16"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "deskcue",
     "name": "DeskCue",
     "company": "Alexander Kornev",
     "category": "Developer Productivity & Workflow",
-    "addedAt": "2026-08-19"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "sandbase-cli",
     "name": "SandBase CLI",
     "company": "SandBase",
     "category": "Developer Productivity & Workflow",
-    "addedAt": "2026-08-15"
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "aipm",
