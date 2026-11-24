@@ -22,6 +22,7 @@ const zh: Record<string, string> = {
     'getBadge': '领取精选徽章',
 
     // ── SiteHeader chrome ────────────────────────────────────────────────
+    'hd.langSwitch': '查看本页英文版',
     'hd.advertise': '赞助',
     'hd.submit': '提交',
     'hd.signIn': '免费登录',

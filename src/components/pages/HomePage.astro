@@ -100,7 +100,7 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
 
         <main class="flex-1 flex flex-col h-full bg-black min-w-0 relative">
             <div class="max-w-[1400px] mx-auto w-full flex flex-col flex-1 min-h-0">
-                <SiteHeader variant="index" lang={lang}>
+                <SiteHeader variant="index" lang={lang} i18nPath="/">
                     <button id="filterAccordionBtn" class="refine-btn flex h-[52px] items-center gap-2.5 px-4 md:px-5 rounded-2xl text-sm font-medium transition-all active:scale-[0.98] shrink-0">
                         <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
