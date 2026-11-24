@@ -9,13 +9,19 @@ let verified = true;
 let secret = 'test-secret';
 let limitKeys: string[] = [];
 let verificationCalls = 0;
-mock.module('../../../src/lib/server/route-auth', () => ({ getCookieSessionUser: async () => user }));
+let lookupCalls: boolean[] = [];
+let verification: (() => Promise<boolean>) | null = null;
+let lookup: (() => Promise<typeof user>) | null = null;
+mock.module('../../../src/lib/server/route-auth', () => ({ getCookieSessionUser: async (_cookies: unknown, _db: unknown, touchActivity = true) => {
+    lookupCalls.push(touchActivity);
+    return lookup ? lookup() : user;
+} }));
 mock.module('../../../src/lib/server/runtime-env', () => ({
     requireDatabase: () => database.db,
     getSwitchWriteLimiter: () => ({ limit: async ({ key }: { key: string }) => { limitKeys.push(key); return { success: allows }; } }),
     getTurnstileSecret: () => secret,
 }));
-mock.module('../../../src/lib/server/turnstile', () => ({ verifyTurnstile: async () => { verificationCalls++; return verified; } }));
+mock.module('../../../src/lib/server/turnstile', () => ({ verifyTurnstile: async () => { verificationCalls++; return verification ? verification() : verified; } }));
 mock.module('../../../src/lib/tools', () => ({
     getToolBySlug: (slug: string) => slug === 'cursor' ? { slug } : undefined,
     getAlternativesFor: () => [{ slug: 'cline' }, { slug: 'zed' }],
@@ -27,6 +33,7 @@ beforeEach(() => {
     database.sqlite.close();
     database = createTestDatabase();
     user = null; allows = true; verified = true; secret = 'test-secret'; limitKeys = []; verificationCalls = 0;
+    lookupCalls = []; verification = null; lookup = null;
 });
 
 function context(body?: unknown, { origin = 'https://ai.dosa.dev', tool = 'cursor', cookie = '' } = {}) {
@@ -99,6 +106,48 @@ test('requires a token and fails closed on verification failure or missing secre
     secret = '';
     expect((await POST(context(vote()) as never)).status).toBe(503);
     expect(database.sqlite.query('SELECT COUNT(*) AS n FROM switch_votes').get()).toEqual({ n: 0 });
+});
+
+test('overlaps read-only session lookup and verification, then returns a single write/read batch', async () => {
+    let finishVerification!: (value: boolean) => void;
+    let finishLookup!: (value: typeof user) => void;
+    let signalStarted!: () => void;
+    const started = new Promise<void>(resolve => { signalStarted = resolve; });
+    verification = () => new Promise(resolve => { finishVerification = resolve; });
+    lookup = () => new Promise(resolve => { finishLookup = resolve; signalStarted(); });
+    const batch = database.db.batch.bind(database.db);
+    const sizes: number[] = [];
+    database.db.batch = (statements => { sizes.push(statements.length); return batch(statements); }) as typeof database.db.batch;
+    const ctx = context(vote());
+    const pending = POST(ctx as never);
+    await started;
+    expect(verificationCalls).toBe(1);
+    expect(lookupCalls).toEqual([false]);
+    expect(ctx.sets).toHaveLength(0);
+    expect(sizes).toEqual([]);
+    finishLookup(null);
+    finishVerification(true);
+    expect(await (await pending).json()).toEqual({ total: 1, counts: [{ tool: 'cline', votes: 1 }], mine: 'cline' });
+    expect(sizes).toEqual([3]);
+    expect(lookupCalls).toEqual([false]);
+    expect(ctx.sets).toHaveLength(1);
+});
+
+test('verification failure or lookup rejection never writes or creates a guest cookie', async () => {
+    const batch = database.db.batch.bind(database.db);
+    let batches = 0;
+    database.db.batch = (statements => { batches++; return batch(statements); }) as typeof database.db.batch;
+    verified = false;
+    const rejected = context(vote());
+    expect(await (await POST(rejected as never)).json()).toEqual({ error: 'turnstile_failed' });
+    expect(lookupCalls).toEqual([false]);
+    expect(rejected.sets).toHaveLength(0);
+    verified = true;
+    lookup = async () => { throw new Error('database unavailable'); };
+    const unavailable = context(vote());
+    expect((await POST(unavailable as never)).status).toBe(503);
+    expect(unavailable.sets).toHaveLength(0);
+    expect(batches).toBe(0);
 });
 
 test('rate limits by SHA-256 IP, before Turnstile or identity creation', async () => {

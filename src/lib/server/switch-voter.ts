@@ -1,6 +1,7 @@
 import type { AstroCookies } from 'astro';
 import type { Database } from './db';
 import { getCookieSessionUser } from './route-auth';
+import type { SessionUser } from './user-session';
 
 export const SWITCH_VOTER_COOKIE = 'aat_switch_voter';
 
@@ -9,8 +10,8 @@ export async function hashSwitchIdentity(value: string): Promise<string> {
     return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
-export async function getSwitchVoter(cookies: AstroCookies, db: Database, create = false): Promise<string | null> {
-    const user = await getCookieSessionUser(cookies, db);
+export async function getSwitchVoter(cookies: AstroCookies, db: Database, create = false, resolvedUser?: SessionUser | null): Promise<string | null> {
+    const user = resolvedUser === undefined ? await getCookieSessionUser(cookies, db) : resolvedUser;
     if (user) return `u:${user.id}`;
     let id = cookies.get(SWITCH_VOTER_COOKIE)?.value ?? '';
     if (!/^[a-f0-9]{64}$/.test(id)) {

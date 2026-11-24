@@ -15,10 +15,10 @@ const eventTarget = { addEventListener() {} };
 describe('analytics client', () => {
     test('mirrors normalized switch destinations and actions with source path', () => {
         const calls = [];
-        mirrorClientEvent(EVENTS.SWITCH_VOTE, { subject: 'cursor', target: 'cline', action: 'change', source_path: '/tools/cursor/alternatives', secret: 'private' }, (...args) => calls.push(args));
+        mirrorClientEvent(EVENTS.SWITCH_VOTE, { subject: 'cursor', target: 'cline', action: 'change', source_path: '/tools/cursor/alternatives', token_ms: 0, request_ms: 500.5, token_prefetched: false, secret: 'private' }, (...args) => calls.push(args));
         mirrorClientEvent(EVENTS.SWITCH_VOTE, { target: 'bad@email', action: 'delete' }, (...args) => calls.push(args));
         expect(calls).toEqual([
-            ['switch_vote', { subject: 'cursor', target: 'cline', action: 'change', source_path: '/tools/cursor/alternatives' }],
+            ['switch_vote', { subject: 'cursor', target: 'cline', action: 'change', source_path: '/tools/cursor/alternatives', token_ms: 0, request_ms: 500.5, token_prefetched: false }],
             ['switch_vote', {}],
         ]);
     });

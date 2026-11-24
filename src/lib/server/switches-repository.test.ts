@@ -2,6 +2,29 @@ import { expect, test } from 'bun:test';
 import { createTestDatabase } from './test-d1-adapter';
 import { getSwitches, setSwitch } from './switches-repository';
 
+test('writes and reads the authoritative counts and pick in exactly one batch, including undo', async () => {
+    const { db, sqlite } = createTestDatabase();
+    const batch = db.batch.bind(db);
+    const sizes: number[] = [];
+    db.batch = (statements => { sizes.push(statements.length); return batch(statements); }) as typeof db.batch;
+    try {
+        expect(await setSwitch(db, 'cursor', 'g:1', 'zed')).toEqual({ total: 1, counts: [{ tool: 'zed', votes: 1 }], mine: 'zed' });
+        expect(await setSwitch(db, 'cursor', 'g:1', 'cline')).toEqual({ total: 1, counts: [{ tool: 'cline', votes: 1 }], mine: 'cline' });
+        expect(await setSwitch(db, 'cursor', 'g:1', null)).toEqual({ total: 0, counts: [], mine: null });
+        expect(sizes).toEqual([3, 3, 3]);
+    } finally { sqlite.close(); }
+});
+
+test('rolls back a batch write if a following read fails', async () => {
+    const { db, sqlite } = createTestDatabase();
+    const prepare = db.prepare.bind(db);
+    db.prepare = sql => prepare(sql.includes('GROUP BY') ? 'SELECT * FROM missing_table' : sql);
+    try {
+        await expect(setSwitch(db, 'cursor', 'g:1', 'zed')).rejects.toThrow();
+        expect(sqlite.query('SELECT COUNT(*) AS n FROM switch_votes').get()).toEqual({ n: 0 });
+    } finally { sqlite.close(); }
+});
+
 test('upserts one pick per source and voter, preserving creation time on changes', async () => {
     const { db, sqlite } = createTestDatabase();
     try {

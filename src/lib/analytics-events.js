@@ -123,6 +123,9 @@ export function normalizeEventFields(event, input = {}) {
         ...(event === EVENTS.SWITCH_VOTE ? {
             target: subjectPolicies.slug(input.target),
             action: ['set', 'change', 'undo'].includes(input.action) ? input.action : '',
+            token_ms: finite(input.token_ms),
+            request_ms: finite(input.request_ms),
+            token_prefetched: typeof input.token_prefetched === 'boolean' ? input.token_prefetched : undefined,
         } : {}),
     };
 }
@@ -139,6 +142,6 @@ export function normalizeClientEvent(input) {
         variant: typeof input.variant === 'string' ? input.variant.slice(0, 64) : '',
         value: fields.value,
         durationMs: fields.durationMs,
-        ...(input.event === EVENTS.SWITCH_VOTE ? { target: fields.target, action: fields.action } : {}),
+        ...(input.event === EVENTS.SWITCH_VOTE ? { target: fields.target, action: fields.action, token_ms: fields.token_ms, request_ms: fields.request_ms, token_prefetched: fields.token_prefetched } : {}),
     };
 }

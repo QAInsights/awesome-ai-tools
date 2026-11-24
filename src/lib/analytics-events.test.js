@@ -2,6 +2,18 @@ import { describe, expect, test } from 'bun:test';
 import { EVENTS, normalizeClientEvent, sanitizeAuthTrigger } from './analytics-events.js';
 
 describe('analytics event catalog', () => {
+    test('normalizes switch timing and prefetch fields without coercing invalid values', () => {
+        expect(normalizeClientEvent({ event: EVENTS.SWITCH_VOTE, token_ms: 0, request_ms: 501.2, token_prefetched: true, private: 'drop' })).toMatchObject({ token_ms: 0, request_ms: 501.2, token_prefetched: true });
+        for (const value of [undefined, null, '12', NaN, Infinity]) {
+            const normalized = normalizeClientEvent({ event: EVENTS.SWITCH_VOTE, token_ms: value, request_ms: value, token_prefetched: value });
+            expect(normalized.token_ms).toBeUndefined();
+            expect(normalized.request_ms).toBeUndefined();
+            expect(normalized.token_prefetched).toBeUndefined();
+            expect(normalized.private).toBeUndefined();
+        }
+        expect(normalizeClientEvent({ event: EVENTS.SWITCH_VOTE, token_ms: -2, request_ms: -1, token_prefetched: false })).toMatchObject({ token_ms: 0, request_ms: 0, token_prefetched: false });
+        expect(normalizeClientEvent({ event: EVENTS.VISIT, token_ms: 1, request_ms: 2, token_prefetched: true })).not.toHaveProperty('token_ms');
+    });
     test('allowlists switch votes and normalizes source, destination and action', () => {
         for (const action of ['set', 'change', 'undo']) expect(normalizeClientEvent({ event: EVENTS.SWITCH_VOTE, subject: 'cursor', target: 'cline', action })).toMatchObject({ subject: 'cursor', target: 'cline', action });
         expect(normalizeClientEvent({ event: EVENTS.SWITCH_VOTE, subject: 'invalid@text', target: 'https://example.com', action: 'delete' })).toMatchObject({ subject: '', target: '', action: '' });
