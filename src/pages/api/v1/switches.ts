@@ -7,6 +7,7 @@ import { getSwitchWriteLimiter, getTurnstileSecret, requireDatabase } from '../.
 import { getSwitchVoter, hashSwitchIdentity } from '../../../lib/server/switch-voter';
 import { getSwitches, setSwitch } from '../../../lib/server/switches-repository';
 import { verifyTurnstile } from '../../../lib/server/turnstile';
+import { getCookieSessionUser } from '../../../lib/server/route-auth';
 
 export const prerender = false;
 const HEADERS = { 'Cache-Control': 'private, no-store' };
@@ -48,11 +49,14 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         if (limited) return limited;
         const secret = getTurnstileSecret();
         if (!secret) return jsonError('Switch voting is temporarily unavailable', 503);
-        if (!await verifyTurnstile(body.token, secret, request.headers.get('CF-Connecting-IP'))) return jsonError('turnstile_failed', 403);
         const db = requireDatabase();
-        const voterKey = (await getSwitchVoter(cookies, db, true))!;
-        await setSwitch(db, tool.slug, voterKey, target as string | null);
-        return Response.json(await getSwitches(db, tool.slug, voterKey), { headers: HEADERS });
+        const [verified, user] = await Promise.all([
+            verifyTurnstile(body.token, secret, request.headers.get('CF-Connecting-IP')),
+            getCookieSessionUser(cookies, db, false),
+        ]);
+        if (!verified) return jsonError('turnstile_failed', 403);
+        const voterKey = (await getSwitchVoter(cookies, db, true, user))!;
+        return Response.json(await setSwitch(db, tool.slug, voterKey, target as string | null), { headers: HEADERS });
     } catch {
         return jsonError('Switch voting is temporarily unavailable', 503);
     }

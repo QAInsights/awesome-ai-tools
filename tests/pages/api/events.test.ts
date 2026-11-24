@@ -50,7 +50,7 @@ function request(events: unknown[], origin = 'https://ai.dosa.dev') {
 
 describe('POST /api/events', () => {
     test('accepts switch votes while validating the source slug', async () => {
-        const response = await POST({ request: request([{ event: 'switch_vote', subject: 'cursor', target: 'cline', action: 'set' }, { event: 'switch_vote', subject: 'bad@email', target: 'bad@email', action: 'delete' }]), cookies } as never);
+        const response = await POST({ request: request([{ event: 'switch_vote', subject: 'cursor', target: 'cline', action: 'set', token_ms: 0, request_ms: 500, token_prefetched: true }, { event: 'switch_vote', subject: 'bad@email', target: 'bad@email', action: 'delete', token_ms: 'invalid' }]), cookies } as never);
         expect(response.status).toBe(204);
         expect(points).toHaveLength(2);
         expect(points[0]!.indexes).toEqual(['switch_vote']);

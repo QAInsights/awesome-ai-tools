@@ -1,5 +1,5 @@
 import { expect, test } from 'bun:test';
-import { createSwitchVotes, initializeSwitchVotes } from './switch-votes.js';
+import { createSwitchVotes, initializeSwitchVotes, optimisticSwitch } from './switch-votes.js';
 
 const data = (mine = null) => ({ total: mine ? 1 : 0, counts: mine ? [{ tool: mine, votes: 1 }] : [], mine });
 const response = body => new Response(JSON.stringify(body), { headers: { 'Content-Type': 'application/json' } });
@@ -64,7 +64,7 @@ test('failed or malformed initial responses allow retry without enabling prematu
 
 function element(dataset = {}) {
     return { dataset, hidden: false, disabled: false, children: [], style: {}, attributes: {}, listeners: {},
-        classList: { toggle() {} },
+        classList: { values: new Set(), toggle(name, enabled) { if (enabled) this.values.add(name); else this.values.delete(name); } },
         setAttribute(key, value) { this.attributes[key] = value; },
         addEventListener(type, handler) { this.listeners[type] = handler; },
         replaceChildren() { this.children = []; }, append(...children) { this.children.push(...children); },
@@ -99,7 +99,7 @@ test('sign-in and sign-out refetch identity-specific picks and render the correc
     mine = 'cline';
     await authChanged({ event: 'signout' });
     expect(buttons[0].textContent).toBe('Undo my pick');
-    expect(buttons[1].textContent).toBe('I switched to this');
+    expect(buttons[1].textContent).toBe('I switched to zed');
     await controller.vote('zed');
     expect(posts[0].target).toBe('zed');
 });
@@ -174,4 +174,161 @@ test('renders empty and voted states, top-five bars, button selection and share 
     expect(buttons[0].textContent).toBe('Undo my pick');
     expect(buttons[0].attributes['aria-pressed']).toBe('true');
     expect(selectors['[data-switch-total]'].textContent).toBe('6 votes');
+});
+
+function switchDom(options = {}) {
+    const selectors = Object.fromEntries(['results', 'total', 'status', 'retry', 'share', 'undo', 'other'].map(key => [`[data-switch-${key}]`, element()]));
+    selectors['[data-switch-other]'].options = [{ value: '' }, { value: 'zed' }];
+    const widget = element({ switchVotes: 'cursor' });
+    widget.querySelector = selector => selectors[selector];
+    widget.ownerDocument = { createElement: () => element() };
+    const buttons = [
+        element({ switchTarget: 'cline', switchName: 'Cline', switchLabel: 'Cline' }),
+        element({ switchTarget: 'cline', switchName: 'Cline' }),
+        element({ switchTarget: 'zed', switchName: 'Zed' }),
+    ];
+    const controller = initializeSwitchVotes({ querySelector: () => widget, querySelectorAll: () => buttons }, {
+        authManager: { onAuthChange() {} }, getToken: async () => 'token', track() {},
+        request: async (_url, options) => response(data(options.method ? JSON.parse(options.body).target : null)), ...options,
+    });
+    return { controller, buttons, widget, selectors };
+}
+
+test('in-box picks, named cards, Other and Undo share selection and rollback optimistic rendering', async () => {
+    let finishPost;
+    const { controller, selectors, buttons } = switchDom({ request: async (_url, options) => options.method ? new Promise(resolve => { finishPost = resolve; }) : response(data()) });
+    const status = selectors['[data-switch-status]'], other = selectors['[data-switch-other]'], undo = selectors['[data-switch-undo]'];
+    await controller.ready;
+    expect(status.textContent).toBe('Be the first to vote. Pick the tool you switched to.');
+    expect(undo.hidden).toBe(true);
+    expect(buttons.map(button => button.textContent)).toEqual(['Cline', 'I switched to Cline', 'I switched to Zed']);
+    const picked = buttons[0].listeners.click();
+    expect(buttons.slice(0, 2).map(button => button.attributes['aria-pressed'])).toEqual(['true', 'true']);
+    expect(status.textContent).toBe('Saving…');
+    expect(selectors['[data-switch-total]'].textContent).toBe('1 vote');
+    expect(selectors['[data-switch-results]'].children[0].children[0].textContent).toBe('Cline · 1 vote · 100%');
+    expect(buttons.every(button => button.disabled)).toBe(true);
+    expect(other.disabled).toBe(true);
+    await Promise.resolve();
+    finishPost(response(data('cline')));
+    expect(await picked).toBe(true);
+    expect(status.textContent).toBe('Your pick: Cline.');
+    expect(undo.hidden).toBe(false);
+    other.value = 'zed';
+    const changed = other.listeners.change();
+    expect(other.value).toBe('zed');
+    expect(other.classList.values.has('switch-selected')).toBe(true);
+    expect(buttons.map(button => button.attributes['aria-pressed'])).toEqual(['false', 'false', 'true']);
+    expect(selectors['[data-switch-total]'].textContent).toBe('1 vote');
+    await Promise.resolve();
+    finishPost(new Response(JSON.stringify({ error: 'turnstile_failed' }), { status: 403 }));
+    expect(await changed).toBe(false);
+    expect(status.textContent).toBe('Security check failed. Please retry.');
+    expect(other.value).toBe('');
+    expect(other.classList.values.has('switch-selected')).toBe(false);
+    expect(buttons.map(button => button.attributes['aria-pressed'])).toEqual(['true', 'true', 'false']);
+    const undone = undo.listeners.click();
+    expect(selectors['[data-switch-total]'].textContent).toBe('0 votes');
+    expect(selectors['[data-switch-results]'].children).toHaveLength(0);
+    expect(buttons.map(button => button.attributes['aria-pressed'])).toEqual(['false', 'false', 'false']);
+    await Promise.resolve();
+    finishPost(response(data()));
+    expect(await undone).toBe(true);
+    expect(undo.hidden).toBe(true);
+    expect(status.textContent).toContain('Be the first to vote');
+});
+
+test('optimistic set, change and undo preserve other voters, resort top picks and never mutate the snapshot', () => {
+    const original = { total: 7, mine: 'zed', counts: [{ tool: 'zed', votes: 2 }, ...['a', 'b', 'c', 'd', 'e'].map(tool => ({ tool, votes: 1 }))] };
+    const changed = optimisticSwitch(original, 'e');
+    expect(changed.total).toBe(7);
+    expect(changed.counts[0]).toEqual({ tool: 'e', votes: 2 });
+    expect(changed.counts.slice(0, 5).map(row => row.tool)).toEqual(['e', 'a', 'b', 'c', 'd']);
+    expect(original.counts[0]).toEqual({ tool: 'zed', votes: 2 });
+    expect(optimisticSwitch(data(), 'cline')).toEqual(data('cline'));
+    expect(optimisticSwitch(data('cline'), null)).toEqual(data());
+});
+
+test('prefetch stays off-screen until proximity or vote-control intent, and failures do not block a click', async () => {
+    let intersect, observed, disconnected = false, prefetches = 0;
+    class Observer {
+        constructor(callback, options) { intersect = callback; expect(options.rootMargin).toBe('200px'); }
+        observe(target) { observed = target; }
+        disconnect() { disconnected = true; }
+    }
+    const { controller, widget, buttons, selectors } = switchDom({ IntersectionObserver: Observer, prefetchToken: async () => { prefetches++; throw new Error('prefetch failed'); } });
+    await controller.ready;
+    expect(observed).toBe(widget);
+    expect(prefetches).toBe(0);
+    intersect([{ isIntersecting: false }]);
+    expect(prefetches).toBe(0);
+    for (const control of [...buttons, selectors['[data-switch-other]'], selectors['[data-switch-undo]']]) {
+        control.listeners.pointerenter();
+        control.listeners.focus();
+    }
+    await Promise.resolve();
+    expect(prefetches).toBe(10);
+    intersect([{ isIntersecting: true }]);
+    await Promise.resolve();
+    expect(prefetches).toBe(11);
+    expect(disconnected).toBe(true);
+    expect(await controller.vote('cline')).toBe(true);
+    expect(controller.state.error).toBe('');
+});
+
+test('records token/request timing and whether the single-use token was prefetched', async () => {
+    const events = [], times = [10, 12, 13, 513, 600, 625, 626, 726];
+    let tokens = 0;
+    const controller = createSwitchVotes({ tool: 'cursor', now: () => times.shift(),
+        getToken: async () => ({ token: 'token', prefetched: ++tokens === 1 }), track: (_event, fields) => events.push(fields),
+        request: async (_url, options) => response(data(options.method ? JSON.parse(options.body).target : null)),
+    });
+    await controller.load();
+    await controller.vote('cline');
+    await controller.vote('cline');
+    expect(events.map(({ token_ms, request_ms, token_prefetched }) => ({ token_ms, request_ms, token_prefetched }))).toEqual([
+        { token_ms: 2, request_ms: 500, token_prefetched: true }, { token_ms: 25, request_ms: 100, token_prefetched: false },
+    ]);
+});
+
+test('honest security errors do not replace other 403, 429 or server-error messages', async () => {
+    for (const [status, body, message] of [
+        [403, { error: 'turnstile_failed' }, 'Security check failed. Please retry.'],
+        [403, { error: 'Invalid request origin' }, 'Community picks are unavailable. Please retry.'],
+        [403, 'not JSON', 'Community picks are unavailable. Please retry.'],
+        [429, {}, 'Too many votes. Please wait a minute and retry.'],
+        [503, {}, 'Community picks are unavailable. Please retry.'],
+    ]) {
+        const controller = createSwitchVotes({ tool: 'cursor', getToken: async () => 'token',
+            request: async (_url, options) => options.method ? new Response(typeof body === 'string' ? body : JSON.stringify(body), { status }) : response(data('cline')),
+        });
+        await controller.load();
+        expect(await controller.vote('zed')).toBe(false);
+        expect(controller.state.data).toEqual(data('cline'));
+        expect(controller.state.error).toBe(message);
+        expect(controller.state.saving).toBe(false);
+    }
+});
+
+test('a response from an old voter cannot overwrite the refreshed identity or roll it back', async () => {
+    let authChanged, finishPost, failPost;
+    const controller = createSwitchVotes({ tool: 'cursor', getToken: async () => 'token',
+        authManager: { onAuthChange: callback => { authChanged = callback; } },
+        request: async (_url, options) => options.method ? new Promise((resolve, reject) => { finishPost = resolve; failPost = reject; }) : response(data('zed')),
+    });
+    await controller.load();
+    const first = controller.vote('cline');
+    expect(controller.state.data.mine).toBe('cline');
+    await Promise.resolve();
+    await authChanged({ event: 'signout' });
+    finishPost(response(data('cline')));
+    expect(await first).toBe(false);
+    expect(controller.state.data).toEqual(data('zed'));
+    const second = controller.vote('cline');
+    await Promise.resolve();
+    await authChanged({ event: 'signin' });
+    failPost(new Error('network failed'));
+    expect(await second).toBe(false);
+    expect(controller.state.data).toEqual(data('zed'));
+    expect(controller.state.error).toContain('sign-in state changed');
 });

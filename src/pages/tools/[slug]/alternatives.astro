@@ -272,9 +272,19 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                     <h2 class="fo-label" id="community-heading"><em>{num('community')}</em>What did you switch to?</h2>
                     <div class="fo-body space-y-4">
                         <p class="text-ink-secondary">Community picks — one choice per person for {displayName}. Guests welcome. You can change or undo your pick.</p>
+                        <div class="flex flex-wrap gap-2" aria-label="Pick the tool you switched to">
+                            {alternatives.slice(0, 8).map(alt => <button type="button" disabled data-switch-target={alt.slug} data-switch-name={nameOf(alt)} data-switch-label={nameOf(alt)} aria-pressed="false" class="switch-pick min-h-11 rounded-full border border-gold/50 bg-gold/10 px-4 py-2 text-[14px] text-gold transition-colors hover:bg-gold/20 disabled:opacity-50">{nameOf(alt)}</button>)}
+                        </div>
+                        {alternatives.length > 8 && <label class="block text-[14px] text-ink-secondary">Other…
+                            <select data-switch-other disabled class="mt-2 block max-w-full rounded-xl border border-border bg-panel px-4 py-3 text-ink focus:border-gold">
+                                <option value="">Choose another alternative</option>
+                                {alternatives.slice(8).map(alt => <option value={alt.slug}>{nameOf(alt)}</option>)}
+                            </select>
+                        </label>}
                         <p data-switch-total class="font-mono text-[12px] text-ink-muted">Loading community picks…</p>
                         <ol data-switch-results class="space-y-3" aria-label="Top five community picks"></ol>
                         <p data-switch-status role="status" class="text-[14px] text-ink-secondary">Loading…</p>
+                        <button type="button" data-switch-undo hidden class="min-h-10 rounded-full border border-gold/50 px-4 py-2 text-gold hover:bg-gold/10">Undo my pick</button>
                         <button type="button" data-switch-retry hidden class="rounded-full border border-border px-4 py-2 text-ink hover:border-border-strong">Retry</button>
                         <div data-switch-share hidden><DirectoryShare canonical={pageUrl} kind="switch" slug={tool.slug} name={`${displayName} community picks`} label="Share results" align="start" /></div>
                         <noscript>Enable JavaScript to see live community picks and vote.</noscript>
@@ -300,7 +310,7 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                                             {pairSlug && <a class="g" href={`/compare/${pairSlug}`}>{displayName} vs {altName} →</a>}
                                             {hasAlternativesPage(alt.slug) && <a href={`/tools/${alt.slug}/alternatives`}>{altName} alternatives →</a>}
                                         </div>
-                                        <button type="button" disabled data-switch-target={alt.slug} data-switch-name={altName} aria-pressed="false" class="mt-4 min-h-10 rounded-full border border-border px-4 py-2 font-mono text-[12px] text-ink-secondary transition-colors hover:border-gold hover:text-gold disabled:opacity-50 disabled:cursor-wait">I switched to this</button>
+                                        <button type="button" disabled data-switch-target={alt.slug} data-switch-name={altName} aria-pressed="false" class="mt-4 min-h-11 rounded-full border border-gold/50 bg-gold/10 px-4 py-2 font-mono text-[12px] text-gold transition-colors hover:bg-gold/20 disabled:opacity-50 disabled:cursor-wait">I switched to {altName}</button>
                                     </div>
                                     <span class="pr">{entryLabel(alt)}</span>
                                 </div>
@@ -354,4 +364,5 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
 <style>
     .fo-rank.switch-selected { outline: 1px solid var(--color-gold); outline-offset: 4px; border-radius: 12px; }
     .fo-rank.switch-selected button { color: var(--color-gold); border-color: var(--color-gold); }
+    .switch-pick[aria-pressed="true"], select.switch-selected { outline: 2px solid var(--color-gold); outline-offset: 2px; }
 </style>

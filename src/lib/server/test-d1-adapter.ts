@@ -37,8 +37,9 @@ export function createTestDatabase() {
                         }),
                         first: async <T>() => (sqlite.query(sql).get(...values) as T | null) ?? null,
                         run: async () => {
-                            const result = sqlite.query(sql).run(...values);
-                            return { meta: { changes: result.changes } };
+                            const results = sqlite.query(sql).all(...values);
+                            const changes = sqlite.query('SELECT changes() AS n').get() as { n: number };
+                            return { results, meta: { changes: changes.n } };
                         },
                     };
                 },
