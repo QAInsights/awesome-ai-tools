@@ -55,7 +55,7 @@ const related = getAlternativesFor(tool).slice(0, 6);
 
 // Meta title/description (truncated to 155 chars)
 const { title: enTitle, description: enDesc } = buildToolSeo(tool, related);
-const catZh = zhCategoryName(tool.categoryClean);
+const catZh = lang === 'zh' ? zhCategoryName(tool.categoryClean) : tool.categoryClean;
 const seoTitle = lang === 'zh'
     ? t(lang, 'td.metaTitle', enTitle, { name: displayName, cat: catZh })
     : enTitle;

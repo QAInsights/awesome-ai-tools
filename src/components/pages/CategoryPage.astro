@@ -23,7 +23,7 @@ interface Props {
 
 const { category, lang = 'en' } = Astro.props;
 const p = localePrefix(lang);
-const catZh = zhCategoryName(category.name);
+const catZh = lang === 'zh' ? zhCategoryName(category.name) : category.name;
 // category.short is a terse English label; zh pages use the full zh name.
 const catZhShort = lang === 'zh' ? catZh : category.short;
 const catDesc = lang === 'zh' ? (zhCategoryDesc(category.name) || category.description) : category.description;
