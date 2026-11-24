@@ -147,7 +147,9 @@ export function initializeSwitchVotes(root = document, options = {}) {
         if (otherVote) otherVote.disabled = controller.state.busy || !controller.state.loaded || !other.value;
         other.classList.toggle('switch-selected', other.value === controller.state.data.mine);
     });
-    otherVote?.addEventListener('click', () => { if (other?.value) return controller.vote(other.value); });
+    otherVote?.addEventListener('click', () => {
+        if (other?.value && other.value !== controller.state.data.mine) return controller.vote(other.value);
+    });
     for (const control of [...buttons, undo, other, otherVote].filter(Boolean)) {
         for (const event of ['pointerenter', 'focus']) control.addEventListener(event, () => { if (!controller.state.busy) void controller.prefetch(); });
     }

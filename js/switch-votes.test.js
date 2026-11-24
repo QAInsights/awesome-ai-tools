@@ -230,6 +230,39 @@ test('Other selection changes only enable an explicit Vote button, never save on
     expect(other.value).toBe('zed');
 });
 
+test('resubmitting the current Other pick is a no-op; only an explicit Undo removes it', async () => {
+    const posts = [], events = [];
+    let tokens = 0;
+    const { controller, selectors } = switchDom({
+        getToken: async () => { tokens++; return 'token'; }, track: (_event, fields) => events.push(fields),
+        request: async (_url, options) => {
+            if (!options.method) return response(data('zed'));
+            const { target } = JSON.parse(options.body);
+            posts.push(target);
+            return response(data(target));
+        },
+    });
+    await controller.ready;
+    const other = selectors['[data-switch-other]'], vote = selectors['[data-switch-other-vote]'];
+    expect(other.value).toBe('zed');
+    other.listeners.change();
+    expect(vote.disabled).toBe(false);
+    expect(await vote.listeners.click()).toBeUndefined();
+    expect(controller.state.data).toEqual(data('zed'));
+    expect(controller.state.busy).toBe(false);
+    expect(selectors['[data-switch-status]'].textContent).toBe('Your pick: Zed.');
+    expect(other.classList.values.has('switch-selected')).toBe(true);
+    expect(tokens).toBe(0);
+    expect(posts).toEqual([]);
+    expect(events).toEqual([]);
+    expect(await selectors['[data-switch-undo]'].listeners.click()).toBe(true);
+    expect(posts).toEqual([null]);
+    expect(events[0].action).toBe('undo');
+    expect(controller.state.data).toEqual(data());
+    expect(other.value).toBe('');
+    expect(vote.disabled).toBe(true);
+});
+
 test('in-box picks, named cards, Other and Undo share selection and rollback optimistic rendering', async () => {
     let finishPost;
     const { controller, selectors, buttons } = switchDom({ request: async (_url, options) => options.method ? new Promise(resolve => { finishPost = resolve; }) : response(data()) });
