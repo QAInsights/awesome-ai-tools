@@ -5,7 +5,9 @@ on:
     paths:
       - README.md
       - data/slugs.json
+      - data/removed-slugs.json
       - scripts/generate-tool-pages.js
+      - scripts/check-slugs-sync.js
       - js/parser.js
       - js/category.js
   push:
@@ -14,7 +16,9 @@ on:
     paths:
       - README.md
       - data/slugs.json
+      - data/removed-slugs.json
       - scripts/generate-tool-pages.js
+      - scripts/check-slugs-sync.js
       - js/parser.js
       - js/category.js
 

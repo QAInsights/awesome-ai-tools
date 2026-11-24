@@ -81,7 +81,12 @@ const stripAddedAt = entry => ({ slug: entry.slug, name: entry.name, company: en
 let removed = [];
 try {
   removed = JSON.parse(readFileSync(REMOVED_PATH, 'utf-8'));
-} catch { /* no archive yet is fine */ }
+} catch (err) {
+  if (err?.code !== 'ENOENT') {
+    console.error(`data/removed-slugs.json is not valid JSON: ${err.message}`);
+    process.exit(1);
+  }
+}
 if (!Array.isArray(removed)) {
   console.error('data/removed-slugs.json must be a JSON array.');
   process.exit(1);
