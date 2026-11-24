@@ -18,7 +18,7 @@ import ToolRow from '../../components/ToolRow.astro';
 import { formatDate, getAllTools, getLatestUpdate } from '../../lib/tools';
 import { getLatestDropDay, formatDropDateShort } from '../../lib/drops';
 import { ORGANIZATION } from '../../lib/site';
-import { t } from '../../i18n/zh';
+import { t, localePrefix } from '../../i18n/zh';
 
 interface Props {
     lang?: string;
@@ -34,6 +34,7 @@ const categoryCount = new Set(tools.map(t => t.category)).size;
 const latestUpdate = getLatestUpdate(tools);
 const latestUpdateLabel = latestUpdate ? formatDate(latestUpdate) : '';
 const latestDrop = getLatestDropDay();
+const p = localePrefix(lang);
 
 // Build structured data JSON-LD
 const jsonLd = JSON.stringify({
@@ -54,8 +55,8 @@ const jsonLd = JSON.stringify({
         },
         {
             "@type": "CollectionPage",
-            "@id": "https://ai.dosa.dev/#collection",
-            "url": "https://ai.dosa.dev",
+            "@id": `https://ai.dosa.dev${p}/#collection`,
+            "url": `https://ai.dosa.dev${p}/`,
             "name": "Awesome AI Tools Directory",
             "description": `${tools.length}+ manually curated AI-powered coding tools across 12 categories.`,
             "isPartOf": { "@id": "https://ai.dosa.dev/#website" },
@@ -161,7 +162,7 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
                 <!-- Tool Grid - pre-rendered at build time (SSR); JS hydrates compare/zap
                      state in place and only re-renders on search/filter/sort interaction -->
                 <div class="registry px-4 pb-4 pt-2 md:px-8 md:pb-8 md:pt-4 grow overflow-y-auto" id="toolGrid" data-registry data-ssr="true">
-                    {tools.map((t, i) => <ToolRow tool={t} index={i} />)}
+                    {tools.map((t, i) => <ToolRow tool={t} index={i} lang={lang} />)}
                 </div>
             </div>
         </main>

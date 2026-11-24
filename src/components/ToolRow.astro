@@ -11,18 +11,21 @@
  */
 import { getCategorySlug, type Tool } from '../lib/tools';
 import { addOutboundUtmParams } from '../lib/outbound-utm.js';
+import { localePrefix } from '../i18n/zh';
 
 interface Props {
     tool: Tool;
     index: number;
+    lang?: string;
 }
 
-const { tool, index } = Astro.props;
+const { tool, index, lang = 'en' } = Astro.props;
+const lp = localePrefix(lang);
 
 // Vote key - mirrors renderer.js / sorting.js
 const toolId = `${tool.company.toLowerCase().replace(/[^a-z0-9]/g, '')}-${tool.name.toLowerCase().replace(/[^a-z0-9]/g, '')}`;
 
-const detailHref = `/tools/${tool.slug}`;
+const detailHref = `${lp}/tools/${tool.slug}`;
 
 const fullNotes = tool.notes || '';
 const isLong = fullNotes.length > 105;
@@ -87,6 +90,6 @@ const displayNotes = isLong ? fullNotes.substring(0, 100) + '...' : fullNotes;
     <div class="reg-col-company w-full font-mono text-[14px] text-[#a3a3a3] uppercase tracking-wide mb-2 md:mb-0 md:order-2">{tool.company}</div>
     <div class="reg-col-desc w-full text-[16px] text-[#a3a3a3] leading-relaxed transition-colors group-hover:text-[#e0e0e0] mb-3 md:mb-0 md:order-3 tool-notes" title={isLong ? fullNotes : ''}>{displayNotes}</div>
     <div class="reg-col-category w-full md:hidden lg:block text-left lg:text-center mt-1 md:mt-0 md:order-4">
-        <a href={`/category/${getCategorySlug(tool.categoryShort)}`} class="inline-block px-3 py-1 border border-[#222] rounded-full bg-white/5 font-mono text-[13px] tracking-wide text-[#a3a3a3] hover:text-white hover:border-[#444] transition-colors" title={tool.categoryClean} onclick="event.stopPropagation()">{tool.categoryShort}</a>
+        <a href={`${lp}/category/${getCategorySlug(tool.categoryShort)}`} class="inline-block px-3 py-1 border border-[#222] rounded-full bg-white/5 font-mono text-[13px] tracking-wide text-[#a3a3a3] hover:text-white hover:border-[#444] transition-colors" title={tool.categoryClean} onclick="event.stopPropagation()">{tool.categoryShort}</a>
     </div>
 </div>
