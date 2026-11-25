@@ -30,6 +30,12 @@
       "default": false,
       "type": "boolean"
     },
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "$schema": {
       "type": "string"
     }

@@ -4,7 +4,7 @@
     "name": "Cursor",
     "company": "Anysphere",
     "pricing": "freemium",
-    "pricingDetail": "Free ($0/month), Plus ($8/month), Premium ($30/month), Super ($100/month), Ultra ($200/month), Teams ($30, $100, or $200 per seat/month), Enterprise (Custom)",
+    "pricingDetail": "Free ($0/month), Plus ($8/month), Premium ($30/month), Super ($100/month), Ultra ($200/month), Teams ($30, $100, or $200 per seat/month), Enterprise (Custom). Third-party models are not included: Free and Plus do not offer them, Premium and above bill them at API list price from prepaid credit, and Teams adds the Cursor Token Rate on most of them.",
     "description": "Cursor is an AI-native code editor forked from VS Code that integrates agentic capabilities for codebase understanding, feature planning, and automated bug fixing. It supports a range of frontier models and features collaborative tools like PR review bots, multi-file editing, and cloud-based agents.",
     "keyFeatures": [
       "Agentic code generation and multi-file editing",
@@ -2471,7 +2471,7 @@
     "name": "Firebender",
     "company": "Firebender",
     "pricing": "freemium",
-    "pricingDetail": "Individual plans start with Flex at $9/mo, with Developer ($30/mo), Developer+ ($75/mo), and Ultra ($150/mo) tiers. Business plans are $60/user/mo, with custom Enterprise pricing available. Usage-based overages and BYOK options exist for paid tiers.",
+    "pricingDetail": "Firebender's service ended on October 31, 2026, and new subscriptions are closed. Former individual plans ran from Flex ($9/month) through Developer ($30/month), Developer+ ($75/month) and Ultra ($150/month), with Business at $60/user/month; these historical prices are no longer an available purchase offer.",
     "description": "Firebender is an advanced coding agent designed for JetBrains IDEs that enables AI-driven development through features like subagents, codebase planning, and inline editing. It offers deep integration for Android development, including Figma-to-Compose code generation and emulator testing capabilities.",
     "keyFeatures": [
       "Multi-agent architecture with parallelized subagents",
@@ -2480,10 +2480,10 @@
       "Inline code refactoring and autocompletion",
       "Integrated Android emulator testing and debugging"
     ],
-    "bestFor": "Android developers and teams using JetBrains IDEs who require agentic workflows for complex task automation, UI implementation, and code refactoring.",
-    "notIdealFor": "Users who do not use JetBrains-based IDEs or those seeking a non-commercial, free coding assistant, as the service is scheduled to conclude operations on October 31, 2026.",
+    "bestFor": "Former Firebender users planning a migration to another Android or JetBrains coding agent.",
+    "notIdealFor": "Anyone starting new work: the service ended on October 31, 2026.",
     "recentUpdates": "The service announced it will conclude on October 31, 2026, with new subscriptions disabled. Notable prior updates included support for IntelliJ IDEA 2026.2 (v1.0.12) and various refinements to agent planning and subagent implementations throughout early 2026.",
-    "verdict": "A highly specialized, powerful AI agent platform for Android and JetBrains developers that effectively replaces context-switching between IDEs and external dashboards.",
+    "verdict": "Firebender was a specialized AI agent for Android and JetBrains developers, but its service ended on October 31, 2026, so it is no longer an option for new or ongoing work.",
     "tags": [
       "IDE Extensions & Plugins",
       "Coding Assistant",
@@ -2491,7 +2491,8 @@
       "Android Development",
       "JetBrains"
     ],
-    "lastUpdated": "2026-11-25"
+    "lastUpdated": "2026-11-25",
+    "status": "discontinued"
   },
   {
     "slug": "feather-wand",
@@ -4626,7 +4627,7 @@
     "name": "Jules by Google",
     "company": "Google",
     "pricing": "freemium",
-    "pricingDetail": "Free ($0/month), Google AI Pro ($19.99/month), Google AI Ultra ($99.99/month)",
+    "pricingDetail": "Jules has been read-only since November 11, 2026, and shuts down on December 31, 2026; new tasks cannot be created. It was previously free with 15 tasks per day and included in Google AI Pro ($19.99/month) and Google AI Ultra ($99.99/month); these historical plans no longer run new tasks.",
     "description": "Jules is an autonomous coding agent designed to handle background development tasks such as bug fixing, dependency upgrades, and test generation. It operates by cloning your GitHub repository into a secure virtual machine to execute plans and open pull requests, allowing developers to delegate repetitive work asynchronously.",
     "keyFeatures": [
       "Autonomous asynchronous task execution in cloud VMs",
@@ -4635,8 +4636,8 @@
       "Support for MCP servers to connect external tools",
       "Proactive task suggestions based on repository scanning"
     ],
-    "bestFor": "Developers looking to offload repetitive, non-urgent backlog tasks like dependency version bumps, lint fixes, and test scaffolding.",
-    "notIdealFor": "Real-time pair programming, debugging complex state issues, working with large files over 50,000 lines, or projects hosted on platforms other than GitHub.",
+    "bestFor": "Existing Jules users reviewing past sessions and exporting their data before the December 31, 2026 shutdown.",
+    "notIdealFor": "New tasks of any kind: Jules has been read-only since November 11, 2026.",
     "recentUpdates": "On October 29, 2026, Google announced that Jules will be wound down on December 31, 2026, with the service becoming read-only after November 11, 2026.",
     "verdict": "Jules is a highly effective tool for automating maintenance and backlog tasks, but it is being discontinued at the end of 2026 as its agentic technology transitions into other platforms like Google Antigravity.",
     "tags": [
@@ -4646,7 +4647,8 @@
       "Automation",
       "DevOps"
     ],
-    "lastUpdated": "2026-11-25"
+    "lastUpdated": "2026-11-25",
+    "status": "winding-down"
   },
   {
     "slug": "openhands",
@@ -4656,7 +4658,7 @@
     "pricingDetail": "OpenHands is available as a free, open-source version for local use with your own LLM keys. OpenHands Cloud offers a $20/month subscription model for hosted access, with pay-as-you-go model pricing. Enterprise plans are available for self-hosted, multi-user deployments.",
     "description": "OpenHands is an open-source platform for autonomous software engineering agents that can interact with repositories, manage development workflows, and execute code. It provides a web-based control center called Agent Canvas, an SDK, and various backend options to run agents locally, in the cloud, or on private infrastructure.",
     "keyFeatures": [
-      "Autonomous agent execution with full sandbox isolation",
+      "Optional Docker sandbox isolation for agent execution; the basic local install can run without a sandbox, directly on the host",
       "Model-agnostic support for LLMs like Claude, Codex, and Gemini",
       "Agent Canvas interface for managing workflows and conversations",
       "Automations for Slack, GitHub, Jira, and Linear integration",
@@ -5284,7 +5286,7 @@
     ],
     "bestFor": "Teams running multiple AI agents that require collaborative task management, spending guardrails, and human-in-the-loop oversight.",
     "notIdealFor": "Individuals running a single agent in a local terminal or developers seeking a turn-key autonomous business platform without setup or oversight.",
-    "recentUpdates": "",
+    "recentUpdates": "Version 2026.1117.0 (November 17, 2026) made the Coordinator layout and Agent Chat the default workspace, with task chat showing a Runner agent's plan, inline diffs, tool calls and subagents. Version 2026.1106.0 (November 6, 2026) made the Paperclip Runner the default for new agents and added GitHub Copilot as a native harness.",
     "verdict": "A sophisticated and highly structured approach to agent management that treats AI like headcount rather than code, making it the premier choice for organizations needing professional-grade auditability and governance.",
     "tags": [
       "AI Agents",
@@ -6404,7 +6406,7 @@
     "name": "Replit",
     "company": "Replit",
     "pricing": "freemium",
-    "pricingDetail": "Offers a free Starter plan with daily credits. Paid plans include Core ($18/month annually or $20/month) and Pro ($90/month annually or $100/month), featuring higher credit limits, more collaborators, and advanced features. Custom Enterprise plans are available.",
+    "pricingDetail": "Core ($18/month billed annually or $20/month) is the entry plan for new sign-ups, and Pro is $90/month billed annually or $100/month, with higher credit limits, more collaborators and advanced features. The free Starter plan is no longer listed on the pricing page, though Replit's docs still describe it with daily Agent credits and one published app. Free Mode is included Agent usage within each plan's allowance, not a separate plan. Custom Enterprise plans are available.",
     "description": "Replit is a cloud-based development environment that combines an AI-powered coding agent, hosting, and collaboration tools in a single browser interface. It allows users to build, test, and deploy full-stack applications without needing local environment setup.",
     "keyFeatures": [
       "Replit Agent 4 for prompt-to-app development",
@@ -6415,7 +6417,7 @@
     ],
     "bestFor": "Technical founders, students, and small teams looking to rapidly build and ship MVPs, internal tools, or prototypes without local environment configuration.",
     "notIdealFor": "Professional developers managing large, existing codebases or users who require strictly predictable monthly billing costs.",
-    "recentUpdates": "In August 2026, Replit introduced Free Mode for everyday AI work within plan allowances. As of November 2026, the free Starter plan is no longer available to new sign-ups, making Core the primary entry point.",
+    "recentUpdates": "In August 2026, Replit introduced Free Mode for everyday AI work within plan allowances. In September 2026, Replit removed the free Starter plan from its pricing page, making Core the entry point for new users.",
     "verdict": "Replit is an excellent all-in-one solution for developers and teams looking to minimize environment setup and maximize productivity through integrated AI, hosting, and collaboration.",
     "tags": [
       "cloud-ide",
@@ -6810,7 +6812,7 @@
     "name": "CodeRabbit",
     "company": "CodeRabbit",
     "pricing": "freemium",
-    "pricingDetail": "Essentials ($24/user/month), Team ($48/user/month), Advanced ($72/user/month), Enterprise (Contact Us)",
+    "pricingDetail": "Essentials ($24/user/month billed annually or $30 month-to-month), Team ($48/user/month billed annually or $60 month-to-month), Advanced ($72/user/month billed annually or $90 month-to-month), Enterprise (Contact sales)",
     "description": "CodeRabbit is an AI-powered platform that provides agentic code reviews, security analysis, and pull request management. It integrates into development workflows to summarize changes, identify bugs, and offer one-click fixes directly within PRs and IDEs.",
     "keyFeatures": [
       "Agentic code reviews in PR, CLI, and IDE",
@@ -7271,7 +7273,7 @@
     "name": "Codex Security",
     "company": "OpenAI",
     "pricing": "paid",
-    "pricingDetail": "ChatGPT Enterprise ($X/month), Business ($X/month), Edu ($X/month), Pro ($X/month), Codex Security Cloud (token-based billing)",
+    "pricingDetail": "Codex Security Cloud uses token-based billing. It is available to ChatGPT Enterprise, Edu, Business, and Pro users. Security reviews consume included Codex allowance or ChatGPT credits.",
     "description": "Codex Security is an application security agent that identifies, validates, and remediates vulnerabilities by analyzing code within its system-specific context. It acts as an automated security researcher, building editable threat models to understand application trust boundaries and proposing patches for human review.",
     "keyFeatures": [
       "Context-aware vulnerability scanning and threat modeling",
@@ -7783,9 +7785,9 @@
     "slug": "agent-qa",
     "name": "Agent QA",
     "company": "Vostride",
-    "pricing": "open-source",
+    "pricing": "free",
     "pricingDetail": "No paid tier, seat fees, or platform costs exist for use under the FSL-1.1-ALv2 license; users provide their own LLM credentials and execution infrastructure.",
-    "description": "agent-qa is an open-source, self-improving AI testing harness that enables developers to run plain-English tests across web, Android, and iOS applications. It maintains persistent behavioral memory and provides reviewable evidence, ensuring all tests, knowledge, and configurations remain within the user's repository.",
+    "description": "Agent QA is a source-available, self-improving AI testing harness that runs plain-English YAML tests across web, Android, and iOS apps. It is licensed under FSL-1.1-ALv2, which restricts competing use and converts each version to Apache-2.0 after two years. It maintains persistent behavioral memory (memidex) and reviewable evidence, keeping tests, knowledge and configuration in your repository.",
     "keyFeatures": [
       "Plain-English YAML testing for web and mobile",
       "Memidex persistent behavioral memory",
@@ -7803,7 +7805,7 @@
       "Automation",
       "Mobile Testing",
       "Web Testing",
-      "Open Source"
+      "Source Available"
     ],
     "lastUpdated": "2026-11-25"
   },

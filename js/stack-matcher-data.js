@@ -92,7 +92,6 @@ export const CURATED_PROFILES = [
   { slug: 'warp', slots: ['primary'], env: ['terminal'], privacy: ['cloud', 'byok'], workflows: ['agentic', 'fullstack'], base: 6, rules: null, why: 'Agentic terminal with built-in AI blocks and team sharing.' },
   // ── Companion-only ───────────────────────────────────────────────────────
   { slug: 'kiro-cli', slots: ['companion'], env: ['terminal'], privacy: ['cloud'], workflows: ['agentic'], base: 5, rules: null, why: 'Kiro\u2019s spec-driven agent as a CLI companion alongside your editor.' },
-  { slug: 'jules', slots: ['companion'], env: ANY_ENV, privacy: ['cloud'], workflows: ['agentic'], base: 6, rules: null, why: 'Google\u2019s async coding agent that runs repo tasks in the background.' },
   { slug: 'openhands', slots: ['companion'], env: ANY_ENV, privacy: ['byok', 'local', 'cloud'], workflows: ['agentic'], base: 6, nativeTo: ['byok', 'local'], rules: null, why: 'Open-source autonomous agent you can self-host with your own keys.' },
   { slug: 'sweep', slots: ['companion'], env: ['jetbrains'], privacy: ['cloud'], workflows: ['fullstack', 'agentic'], base: 5, rules: null, why: 'Async agent that turns issues into pull requests from JetBrains IDEs.' },
   { slug: 'codebase-memory-mcp', slots: ['companion'], env: ANY_ENV, privacy: ['local', 'byok'], workflows: ['agentic', 'fullstack'], base: 5, nativeTo: ['local'], rules: null, why: 'Local MCP server that gives agents persistent codebase memory.' },
