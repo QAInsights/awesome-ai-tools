@@ -2098,5 +2098,13 @@
   {
     "companyName": "GenesisAgentInfra",
     "toolName": "Genesis Map"
+  },
+  {
+    "companyName": "Hatchet",
+    "toolName": "Brickie"
+  },
+  {
+    "companyName": "Piotr Kukiełka",
+    "toolName": "gitfold"
   }
 ]

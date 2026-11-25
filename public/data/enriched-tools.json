@@ -14435,5 +14435,65 @@
       "Open Source"
     ],
     "lastUpdated": "2026-11-24"
+  },
+  {
+    "slug": "brickie",
+    "name": "Brickie",
+    "company": "Hatchet",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT licence. You run it on your own Docker host or Kubernetes cluster and pay for your own compute and object storage; it needs a Hatchet engine, either self-hosted Hatchet Lite or Hatchet Cloud.",
+    "description": "Brickie is Hatchet's open-source provider for running durable sandboxes for AI agents in your own cloud or Kubernetes cluster. Each sandbox session is a container with a shell and a workspace, every call that changes the workspace saves an immutable, forkable snapshot to object storage, and every sandbox call runs as a retryable, observable Hatchet task.",
+    "keyFeatures": [
+      "Built on the Kubernetes agent-sandbox controller with warm pools for short cold starts",
+      "Kata, gVisor or AWS Nitro isolation for sandbox pods",
+      "Immutable, forkable snapshots after every workspace change, stored in any S3-compatible store, GCS or Azure",
+      "Every sandbox call is a Hatchet task, so retries reuse the stored snapshot instead of running a command twice",
+      "TypeScript SDK `@hatchet-dev/sandbox` with create, files.write, exec and connect to resume a sandbox by ID",
+      "Mutual TLS between provider and sandboxes, per-sandbox network and resource limits",
+      "FIPS 140-3 mode by default and cosign-signed images with SBOM attestations",
+      "Docker driver for local development and a Helm chart for Kubernetes"
+    ],
+    "bestFor": "Platform teams already using or adopting Hatchet who want agent sandboxes with snapshot, fork and resume inside their own AWS account or Kubernetes cluster.",
+    "notIdealFor": "Individual developers who want a hosted sandbox API with no infrastructure to run, or teams not willing to run a Hatchet engine; flags and chart values may still change before 1.0.",
+    "recentUpdates": "v0.1.5 was released on November 10 and v0.1.6 and v0.1.7 on November 17, 2026, adding FIPS 140-3 sandboxd images and signed images with SBOMs; Hatchet launched Brickie on Show HN on November 24, 2026.",
+    "verdict": "A solid self-hosted sandbox layer whose durable, snapshot-per-call design suits long-running agents; best value for teams already on Hatchet.",
+    "tags": [
+      "Sandboxing",
+      "Agent Infrastructure",
+      "Kubernetes",
+      "Self-Hosted",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-25"
+  },
+  {
+    "slug": "gitfold",
+    "name": "gitfold",
+    "company": "Piotr Kukiełka",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the Apache-2.0 licence. It runs locally on your existing clone and needs no server or account.",
+    "description": "gitfold is a Rust FUSE filesystem that mounts every branch and commit of an existing git clone as a folder, so coding agents and reviewers each get their own workspace on a large monorepo in about a second, without git worktree copying the whole tree. Editable branches are real linked worktrees, and only the files you change are stored.",
+    "keyFeatures": [
+      "`gitfold mount` exposes any revision as a read-only `@<revision>` folder and any branch as an editable folder",
+      "Each editable folder is a linked git worktree, so git, editors, rg and agents work as usual",
+      "Opens a Chromium branch (512k files) in 0.87 s versus over 17 s and 5.5 GiB for git worktree add",
+      "Workspaces store only edited files under .git/gitfold/ and survive unmounts and crashes",
+      "Branches built on other branches pick up their new commits automatically",
+      "Claude Code plugin gives each `claude -w` session and worktree-isolated subagent its own workspace",
+      "Prebuilt x86_64 and aarch64 Linux binaries with SHA256SUMS, or cargo install"
+    ],
+    "bestFor": "Developers running many coding agents in parallel on large monorepos on Linux who find git worktree too slow or too heavy on disk.",
+    "notIdealFor": "macOS or Windows users, small repositories, write-heavy builds, or repositories that rely on Git LFS, .gitattributes filters or submodules.",
+    "recentUpdates": "v0.5.0 was released on November 18, v0.5.1 on November 20 and v0.5.2 on November 21, 2026; gitfold was shown on Hacker News on November 22, 2026.",
+    "verdict": "A clever, well-documented answer to worktree sprawl for parallel agents on big repos, with honest notes on its FUSE trade-offs.",
+    "tags": [
+      "Git",
+      "Worktrees",
+      "Parallel Agents",
+      "Claude Code",
+      "CLI",
+      "Open Source"
+    ],
+    "lastUpdated": "2026-11-25"
   }
 ]
