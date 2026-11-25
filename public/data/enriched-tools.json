@@ -2471,7 +2471,7 @@
     "name": "Firebender",
     "company": "Firebender",
     "pricing": "freemium",
-    "pricingDetail": "Firebender's service ended on October 31, 2026, and new subscriptions are closed. Former individual plans ran from Flex ($9/month) through Developer ($30/month), Developer+ ($75/month) and Ultra ($150/month), with Business at $60/user/month; these historical prices are no longer an available purchase offer.",
+    "pricingDetail": "Firebender's service ended on October 31, 2026, and new subscriptions are closed. Historical plan prices are no longer an available purchase offer.",
     "description": "Firebender is an advanced coding agent designed for JetBrains IDEs that enables AI-driven development through features like subagents, codebase planning, and inline editing. It offers deep integration for Android development, including Figma-to-Compose code generation and emulator testing capabilities.",
     "keyFeatures": [
       "Multi-agent architecture with parallelized subagents",
@@ -4627,7 +4627,7 @@
     "name": "Jules by Google",
     "company": "Google",
     "pricing": "freemium",
-    "pricingDetail": "Jules has been read-only since November 11, 2026, and shuts down on December 31, 2026; new tasks cannot be created. It was previously free with 15 tasks per day and included in Google AI Pro ($19.99/month) and Google AI Ultra ($99.99/month); these historical plans no longer run new tasks.",
+    "pricingDetail": "Jules has been read-only since November 11, 2026, and shuts down on December 31, 2026; new tasks cannot be created. It was previously free with a daily task limit and included in Google AI Pro and Ultra. Historical plan prices are no longer an available purchase offer.",
     "description": "Jules is an autonomous coding agent designed to handle background development tasks such as bug fixing, dependency upgrades, and test generation. It operates by cloning your GitHub repository into a secure virtual machine to execute plans and open pull requests, allowing developers to delegate repetitive work asynchronously.",
     "keyFeatures": [
       "Autonomous asynchronous task execution in cloud VMs",
