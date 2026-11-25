@@ -1,0 +1,78 @@
+---
+title: "Cognition's SWE-2.1 doubles its predecessor on coding benchmarks"
+description: "Cognition ships SWE-2.1 with big benchmark jumps and stronger exploit work, OpenAI details Pando for Git at agent scale, and Amazon buys Decart for $7.5B."
+pubDate: 2026-11-25
+tags: ["news","today-in-ai","coding-agents","benchmarks","chips","robotics","mcp","acquisitions"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-11-25 UTC.
+
+A new coding model from Cognition, a Git backend rebuilt for agents, and a $7.5B chip-software acquisition lead today's brief.
+
+## Cognition's SWE-2.1 doubles SWE-2 on Terminal-Bench and FrontierCode
+
+**What happened:** Cognition released SWE-2.1, trained with pure reinforcement learning on Kimi K3. It scores 50.0 on Terminal-Bench 4.1 versus SWE-2's 24.2, and 41.3 on FrontierCode 2.0 versus 24.1, with 80% on ExploitBench and 27.3% ExploitGym success.
+
+**Why it matters:** Cognition says the gains come from targeting long-horizon workflows, so teams running coding agents should re-test it on multi-hour tasks, not just single-file fixes.
+
+[Source: Cognition](<https://cognition.com/blog/swe-2-1>)
+
+## Amazon agrees to buy Decart's AI optimization tech for $7.5B
+
+**What happened:** Amazon agreed to acquire Decart AI optimization technology for $7.5 billion, per coverage aggregated from Yahoo Finance and TechCrunch. TechCrunch frames the deal as a software bet to narrow the gap with NVIDIA on chips.
+
+**Why it matters:** If Decart's optimization stack lands on Trainium, teams weighing AWS silicon against NVIDIA GPUs get a new reason to benchmark both before committing.
+
+[Source: TechCrunch](<https://exa.ai/library/news/story/rqz29hy3rglmht1l4mj6fr8p9>)
+
+## OpenAI's Pando backend cuts median Git push latency nearly 80%
+
+**What happened:** OpenAI detailed Pando, a Git backend that coordinates branch updates independently and reuses stored packfiles across fetches. It reports nearly 80% lower median push latency, powers all development in OpenAI's monorepo, and serves nearly a petabyte of Git data per day, with load attributed to Codex-driven development.
+
+**Why it matters:** Concurrent agents hammering one repo is now a real infrastructure problem, and Pando's approach shows where the bottleneck sits: reference coordination, not the Git client.
+
+[Source: InfoQ](<https://www.infoq.com/news/2026/11/openai-git-pando/>)
+
+## Bagel Labs ships open-weight robot model ranked third on RoboDojo
+
+**What happened:** Bagel Labs introduced Bagel-Robotics-1, an open-weight world-action model for robotic arms that debuted third worldwide on the RoboDojo-Sim leaderboard for standalone models on November 18. It also demonstrated RoboDojo tasks, including tube placement and sorting, on a real robot. Weights are on Hugging Face.
+
+**Why it matters:** For robotics teams that cannot depend on hosted model APIs, this is a downloadable option that generates arm and gripper actions on infrastructure they control.
+
+[Source: Bagel Labs](<https://blog.bagel.com/p/bagel-robotics-1>)
+
+## Anthropic lets MCP servers hand Claude skills and background tasks
+
+**What happened:** Anthropic added server-provided skills to MCP for Claude, plus background tasks and requests for user input. Skills over MCP is in public beta, Tasks and Elicitation are generally available, and File Uploads is still to come. Claude Code v2.1.332 adds the skills, shown as server:skill in the / menu.
+
+**Why it matters:** MCP server authors can now ship capability and long-running work with the server itself, instead of asking users to install and configure skills separately.
+
+[Source: Inferama](<https://www.inferama.com/en/news/models>)
+
+## Delegent hands easy subtasks to a small model, cutting coding cost 67%
+
+**What happened:** University of Waterloo researchers built Delegent, a harness on Claude Code where the frontier model leads every task but delegates focused subtasks to a small model. With a 27B FP8 SLM it cut long-horizon coding cost by 67% and agentic search by 59% with no loss in task performance; a 2B laptop-sized SLM cut coding cost by 66%.
+
+**Why it matters:** You can keep frontier quality on the hard parts and pay small-model prices for the legwork, with no router to train and either model swappable.
+
+[Source: arXiv](<https://arxiv.org/html/2611.33098>)
+
+## AIChipBench: hardware agents pass tests, still ship broken state
+
+**What happened:** AIChipBench had coding agents implement quantized Qwen3.5, Gemma 3, Gemma 4 and Llama 3.2 decoders in synthesizable RTL across 9, 136 attempts. Feedback pointing at the first state mismatch raised acceptance by 25.0 to 46.9 points over output-only feedback, and 45 of 69 accepted designs failed when regraded on new sequences.
+
+**Why it matters:** If you point agents at hardware, grade on held-out sequences and resets, because passing the development tests says little about the stored state.
+
+[Source: arXiv](<https://arxiv.org/abs/2611.33093>)
+
+## Sources
+
+- [Cognition](<https://cognition.com/blog/swe-2-1>)
+- [TechCrunch](<https://exa.ai/library/news/story/rqz29hy3rglmht1l4mj6fr8p9>)
+- [InfoQ](<https://www.infoq.com/news/2026/11/openai-git-pando/>)
+- [Bagel Labs](<https://blog.bagel.com/p/bagel-robotics-1>)
+- [Inferama](<https://www.inferama.com/en/news/models>)
+- [arXiv](<https://arxiv.org/html/2611.33098>)
+- [arXiv](<https://arxiv.org/abs/2611.33093>)
