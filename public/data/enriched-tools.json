@@ -2902,7 +2902,7 @@
     "name": "Codebuff",
     "company": "Codebuff",
     "pricing": "freemium",
-    "pricingDetail": "Offers a usage-based model where users purchase credits to pay per task, alongside a free tier providing 500 credits per month. Optional ad-supported usage is available where impressions earn credits.",
+    "pricingDetail": "Codebuff shuts down on December 1, 2026, and new purchases are closed. Historical plan prices are no longer an available purchase offer.",
     "description": "Codebuff was a terminal-based AI coding assistant that utilized a multi-agent architecture to orchestrate specialized agents for file discovery, planning, editing, and code review. It was designed to handle large codebases through parallel processing and efficient context management, though it is currently shutting down.",
     "keyFeatures": [
       "Multi-agent architecture",
@@ -2911,8 +2911,8 @@
       "Automatic code review",
       "TypeScript SDK for custom agents"
     ],
-    "bestFor": "Developers who required a terminal-native, multi-agent assistant capable of managing large codebases through targeted, parallelized edits.",
-    "notIdealFor": "Users seeking a long-term solution or those who required self-hosting, local model support, or strict data residency outside the United States.",
+    "bestFor": "Existing Codebuff users finishing current work and planning a migration before the December 1, 2026 shutdown.",
+    "notIdealFor": "New users or long-term projects: new purchases are closed and the service shuts down on December 1, 2026.",
     "recentUpdates": "The service is shutting down on December 1, 2026, and new subscriptions are closed as of November 2026.",
     "verdict": "Codebuff is a sophisticated, high-speed coding agent that differentiates itself through a robust multi-agent framework and superior performance in real-world benchmarks compared to tools like Claude Code.",
     "tags": [
@@ -2921,7 +2921,8 @@
       "AI Coding Assistant",
       "Multi-agent"
     ],
-    "lastUpdated": "2026-11-25"
+    "lastUpdated": "2026-11-25",
+    "status": "winding-down"
   },
   {
     "slug": "command-code",
