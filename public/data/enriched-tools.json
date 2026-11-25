@@ -2914,7 +2914,7 @@
     "bestFor": "Existing Codebuff users finishing current work and planning a migration before the December 1, 2026 shutdown.",
     "notIdealFor": "New users or long-term projects: new purchases are closed and the service shuts down on December 1, 2026.",
     "recentUpdates": "The service is shutting down on December 1, 2026, and new subscriptions are closed as of November 2026.",
-    "verdict": "Codebuff is a sophisticated, high-speed coding agent that differentiates itself through a robust multi-agent framework and superior performance in real-world benchmarks compared to tools like Claude Code.",
+    "verdict": "Codebuff was a fast multi-agent coding agent, but new purchases are closed and the service shuts down on December 1, 2026, so it is not an option for new work.",
     "tags": [
       "Terminal",
       "CLI Agents",
