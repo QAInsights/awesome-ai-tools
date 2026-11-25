@@ -6515,7 +6515,7 @@
     "name": "Floot",
     "company": "Floot",
     "pricing": "freemium",
-    "pricingDetail": "Free ($0/month), Pro ($25/month), Power ($100/month)",
+    "pricingDetail": "Free plan includes 100 build actions per day and limited storage. Pro ($25/mo) and Power ($100/mo) plans increase build action limits, storage, and offer features like custom domains, removed badges, code export, and increased native app builds.",
     "description": "Floot is a platform that enables users to build, host, and publish full-stack TypeScript and React applications by describing them to AI assistants like Claude, ChatGPT, or Cursor. It functions as a remote MCP server, providing managed backend services including a Postgres database, authentication, file storage, and hosting without requiring local infrastructure or command-line tools.",
     "keyFeatures": [
       "Full-stack integration including managed Postgres, auth, and hosting",
@@ -7004,7 +7004,7 @@
     "name": "heygrc",
     "company": "Better ISMS",
     "pricing": "freemium",
-    "pricingDetail": "Free ($0/month), Starter ($39/month), Pro ($149/month), Business ($399/month), Scale ($1,490/month), Enterprise (by quote)",
+    "pricingDetail": "Free for public repos (500 reviews/org/month) and 10 private PR reviews/month. Paid tiers include Starter ($39/mo, 100 reviews), Pro ($149/mo, 500 reviews), Business ($399/mo, 2000 reviews) and Scale ($1,490/mo), with Enterprise by quote. Extras are $0.49/PR review if enabled.",
     "description": "heyGRC is a compliance-focused GitHub App that reviews pull requests against selected frameworks like SOC 2, HIPAA, and ISO 27001 by grounding findings in specific controls. It shifts compliance verification left by identifying audit-relevant changes directly within the development workflow.",
     "keyFeatures": [
       "Control-grounded compliance findings for PRs",
@@ -7409,7 +7409,7 @@
     "name": "farol",
     "company": "Winnin",
     "pricing": "freemium",
-    "pricingDetail": "Free ($0/month), Starter ($29/month), Pro ($99/month), Team ($249/month)",
+    "pricingDetail": "Offers a free plan with 200 reviews per month; paid plans start at $29/mo (Starter), $99/mo (Pro), and $249/mo (Team), providing higher monthly review volumes and analytics.",
     "description": "farol is a risk-assessment tool that provides a deterministic, static analysis-based report for pull requests to help human reviewers prioritize their focus. It analyzes code reach, diff coverage, and dependency changes to rank the risk of merges rather than replacing AI-based line-by-line reviewers.",
     "keyFeatures": [
       "Static analysis-based risk scoring (0-100 scale)",
