@@ -1638,6 +1638,13 @@
     "addedAt": "2026-11-22"
   },
   {
+    "slug": "brickie",
+    "name": "Brickie",
+    "company": "Hatchet",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-25"
+  },
+  {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
@@ -3603,6 +3610,13 @@
     "company": "Nikhil Kumar (nickelsec)",
     "category": "Developer Productivity & Workflow",
     "addedAt": "2026-11-24"
+  },
+  {
+    "slug": "gitfold",
+    "name": "gitfold",
+    "company": "Piotr Kukiełka",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-25"
   },
   {
     "slug": "visual-studio-code",
