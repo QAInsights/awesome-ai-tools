@@ -6053,8 +6053,8 @@
     "slug": "vespin",
     "name": "Vespin",
     "company": "Stage Inc.",
-    "pricing": "freemium",
-    "pricingDetail": "Agents run on your own Claude or ChatGPT plan or API keys; while the site notes billing setup and integration for usage, there are no public pricing plans listed.",
+    "pricing": "unknown",
+    "pricingDetail": "Vespin does not publish pricing on its site. Agents run on your own Claude or ChatGPT plan or your own Anthropic or OpenAI API keys, and Vespin can move an agent to the next plan or key when one hits its usage limit.",
     "description": "Vespin is a unified workspace and inbox designed for managing autonomous coding agents like Claude Code and Codex. It centralizes communications by having agents post to a single inbox only when they require human intervention, such as decisions, to-dos, or code reviews.",
     "keyFeatures": [
       "Unified inbox for agent requests and task management",
