@@ -149,6 +149,7 @@ const showPricingLink = hasPricingPage(tool.slug);
 // Blog posts that link to this tool
 const blogPosts = await getCollection('blog', ({ data }) => data.draft !== true);
 const reading = blogPostsLinkingTo(blogPosts, tool.slug);
+const migrationGuide = reading.find(post => post.id === `${tool.slug}-alternatives`);
 
 // ── Curated comparison pages featuring this tool ────────────────────────────
 const comparisons = getComparisonsForTool(tool.slug)
@@ -261,7 +262,7 @@ const num = (id: string) => String(sections.indexOf(id) + 1).padStart(2, '0');
                         {isWindingDown && (
                             <aside class="fo-notice fo-fade" style="--d:.2s" role="note">
                                 <span><b>{t(lang, 'td.windingDownNotice', 'Service winding down.')}</b> {enriched?.recentUpdates}</span>
-                                {reading[0] && <a href={`/blog/${reading[0].id}`}>{t(lang, 'td.readMigration', 'Read the migration guide →')}</a>}
+                                {migrationGuide && <a href={`/blog/${migrationGuide.id}`}>{t(lang, 'td.readMigration', 'Read the migration guide →')}</a>}
                             </aside>
                         )}
                         {isDiscontinued && (
