@@ -1204,6 +1204,13 @@
     "addedAt": "2026-11-24"
   },
   {
+    "slug": "caw",
+    "name": "Caw",
+    "company": "04mg",
+    "category": "AI-Native Terminals",
+    "addedAt": "2026-11-26"
+  },
+  {
     "slug": "jules",
     "name": "Jules",
     "company": "Google",
@@ -2385,6 +2392,13 @@
     "company": "Southleft",
     "category": "AI Codebase Knowledge & Generation",
     "addedAt": "2026-11-06"
+  },
+  {
+    "slug": "githits",
+    "name": "GitHits",
+    "company": "GitHits",
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-11-26"
   },
   {
     "slug": "pieces-for-developers",
