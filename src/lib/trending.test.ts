@@ -165,6 +165,11 @@ describe('tool page views', () => {
         expect(toolSlugFromPath('/tools/aider/alternatives/?ref=x', slugs)).toBe('aider');
     });
 
+    test('maps zh-prefixed tool paths to their slug', () => {
+        expect(toolSlugFromPath('/zh/tools/cursor', slugs)).toBe('cursor');
+        expect(toolSlugFromPath('/zh/tools/cursor/pricing', slugs)).toBe('cursor');
+    });
+
     test('ignores non-tool pages, unknown slugs and malformed paths', () => {
         for (const path of ['/', '/compare/cursor-vs-aider', '/tools/token-counter', '/tools/cursor/reviews', '/tools/', '/xtools/cursor', 42, null]) {
             expect(toolSlugFromPath(path, slugs)).toBeNull();

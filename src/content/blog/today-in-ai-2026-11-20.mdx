@@ -1,0 +1,78 @@
+---
+title: "Genie 4 hits the Gemini API as DeepSeek closes $15B round"
+description: "Google opens Genie 4 to developers through the Gemini API, DeepSeek closes a roughly $15B round, Eclipse ships Enclave 1.0 and Replit measures agent swarms."
+pubDate: 2026-11-20
+tags: ["news","today-in-ai","google","world-models","deepseek","coding-agents","open-weights","funding"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-11-20 UTC.
+
+Google puts its world model in developers' hands, DeepSeek banks a huge round, and two new tools take aim at how coding agents get run and organized.
+
+## Genie 4 lands in the Gemini API and AI Studio
+
+**What happened:** Google says Genie 4 is now available to developers through the Gemini API via the Interactions API and in Google AI Studio. It generates continuous 720p worlds at 24fps with synchronized native audio from a text prompt, a reference image, or both, and every output carries SynthID watermarking.
+
+**Why it matters:** Builders can now prototype interactive environments, spatial design previews and agent or robotics training setups against a hosted world model instead of assembling their own simulator.
+
+[Source: Google](<https://blog.google/innovation-and-ai/technology/developers-tools/genie-4-in-gemini-api/>)
+
+## DeepSeek closes about $15B round ahead of Shanghai IPO
+
+**What happened:** DeepSeek closed a roughly 100-billion-yuan ($15B) round and is preparing a Shanghai STAR Market IPO, according to a daily briefing. A separate tracker reports the operating entity's registered capital rose about 21.1% on November 17, with new shareholder Hangzhou Chengyan holding about 17.265%.
+
+**Why it matters:** A war chest that size keeps DeepSeek's open-weight models and API pricing in play for teams that route cheap inference through Chinese providers.
+
+[Source: AI Briefing](<https://aibriefing.dev/>)
+
+## Eclipse Enclave 1.0 sandboxes coding agents
+
+**What happened:** The Eclipse Foundation released Eclipse Enclave 1.0, an open source, vendor-neutral runtime and sandbox that runs AI coding agents in isolated containers with defined access to files, networks and development resources. It supports Claude Code, Codex, OpenCode and others.
+
+**Why it matters:** Teams can let agents run autonomously and in parallel without handing them unrestricted access to developer machines, and apply one set of policy controls across different agent tools.
+
+[Source: Eclipse Foundation](<https://newsroom.eclipse.org/news/announcements/eclipse-foundation-launches-eclipse-enclave-10-bringing-security-and-choice>)
+
+## Replit: 32-agent swarms hit 18.9x on NumPy tasks
+
+**What happened:** Replit researchers ran performance engineering tasks with agent swarms and report one Claude Opus 5.5 agent made NumPy workloads 3.7x faster in two hours, while 32 Opus agents reached 18.9x in the same time. GPT-6.2 Astra was the strongest solo agent tested, but its swarms got worse as they grew.
+
+**Why it matters:** How you wire a swarm matters as much as model choice: the best runs used a shared task board with few direct messages, while coordinator-routed setups choked as agents were added.
+
+[Source: Replit](<https://frontier.replit.com/throwing-headcount-at-the-problem/>)
+
+## Moonshot releases Kimi K3.1 weights on Hugging Face
+
+**What happened:** Moonshot published the Kimi K3.1 weights on Hugging Face, focusing on post-training, according to heise online. The report says the model can compete with commercial models such as Opus 5.5 and beats them on some benchmarks, but at 2.8 trillion parameters it needs data center grade hardware for acceptable token speed.
+
+**Why it matters:** Another frontier-class open-weight option exists, but self-hosting it is a data center decision, not a laptop one, so most builders will meet it through a provider.
+
+[Source: heise online](<https://www.heise.de/en/background/AI-model-roundup-Fast-open-models-falling-prices-and-new-math-11530644.html>)
+
+## Gemini API previews Tool Retrieval for large tool sets
+
+**What happened:** Google introduced Tool Retrieval in the Gemini API in preview, which gives agents access to hundreds of tools while using fewer tokens, according to a listing on Frontier AI Watch.
+
+**Why it matters:** Agents with sprawling tool catalogs can stop stuffing every schema into the prompt, cutting token spend and improving which tool gets picked.
+
+[Source: Frontier AI Watch](<https://frontieraiwatch.com/en/models-tools>)
+
+## Scale Labs benchmarks agents that optimize agents
+
+**What happened:** Scale Labs published VeRO, a harness that benchmarks coding agents on optimizing a target agent's prompts, tools and control flow. Across 105 runs on five benchmarks, it found tool-use tasks admit meaningful optimization, while models show limited exploration diversity and a bias toward prompt edits over architecture changes.
+
+**Why it matters:** If you plan to have coding agents tune your own agent harness, expect them to tweak prompts and rarely restructure the system, so keep a human on the architecture.
+
+[Source: Scale Labs](<https://labs.scale.com/blog/vero>)
+
+## Sources
+
+- [Google](<https://blog.google/innovation-and-ai/technology/developers-tools/genie-4-in-gemini-api/>)
+- [AI Briefing](<https://aibriefing.dev/>)
+- [Eclipse Foundation](<https://newsroom.eclipse.org/news/announcements/eclipse-foundation-launches-eclipse-enclave-10-bringing-security-and-choice>)
+- [Replit](<https://frontier.replit.com/throwing-headcount-at-the-problem/>)
+- [heise online](<https://www.heise.de/en/background/AI-model-roundup-Fast-open-models-falling-prices-and-new-math-11530644.html>)
+- [Frontier AI Watch](<https://frontieraiwatch.com/en/models-tools>)
+- [Scale Labs](<https://labs.scale.com/blog/vero>)

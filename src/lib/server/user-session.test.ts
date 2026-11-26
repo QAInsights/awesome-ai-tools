@@ -120,6 +120,11 @@ describe('server user sessions', () => {
         const current = makeDatabase({ ...row, last_seen_at: now });
         await getSessionUser(current.db, 'token', now);
         expect(current.prepared.some(call => call.sql.includes('UPDATE users SET last_seen_at'))).toBe(false);
+
+        const readOnly = makeDatabase(row);
+        expect((await getSessionUser(readOnly.db, 'token', now, false))?.id).toBe('github:42');
+        expect(readOnly.prepared).toHaveLength(1);
+        expect(readOnly.prepared[0]?.sql).toContain('SELECT');
     });
 
     test('uses an HTTP-only cookie and only marks HTTPS requests secure', () => {

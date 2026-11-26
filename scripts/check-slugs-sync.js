@@ -16,6 +16,7 @@ const ROOT = join(__dirname, '..');
 
 const README_PATH = join(ROOT, 'README.md');
 const SLUGS_PATH = join(ROOT, 'data', 'slugs.json');
+const REMOVED_PATH = join(ROOT, 'data', 'removed-slugs.json');
 
 function stripEmoji(value) {
   return String(value ?? '')
@@ -57,7 +58,48 @@ function buildCatalog() {
 const expected = buildCatalog();
 const actual = JSON.parse(readFileSync(SLUGS_PATH, 'utf-8'));
 
-if (JSON.stringify(actual) === JSON.stringify(expected)) {
+// addedAt is assigned once when a slug first enters the catalog and cannot
+// be recomputed from README, so it is checked for presence/format rather
+// than exact equality with a regenerated catalog.
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+function isValidDate(d) {
+  if (!DATE_RE.test(d)) return false;
+  const parsed = new Date(`${d}T00:00:00Z`);
+  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === d;
+}
+const missingDates = Array.isArray(actual)
+  ? actual.filter(e => !isValidDate(e?.addedAt ?? '')).map(e => e?.slug ?? '?')
+  : [];
+if (missingDates.length > 0) {
+  console.error(`slugs.json entries missing a valid addedAt (YYYY-MM-DD): ${missingDates.join(', ')}`);
+  process.exit(1);
+}
+const stripAddedAt = entry => ({ slug: entry.slug, name: entry.name, company: entry.company, category: entry.category });
+
+// The removal archive must hold only well-formed records for slugs that
+// are gone from the catalog; a slug in both lists means a stale archive.
+let removed = [];
+try {
+  removed = JSON.parse(readFileSync(REMOVED_PATH, 'utf-8'));
+} catch (err) {
+  if (err?.code !== 'ENOENT') {
+    console.error(`data/removed-slugs.json is not valid JSON: ${err.message}`);
+    process.exit(1);
+  }
+}
+if (!Array.isArray(removed)) {
+  console.error('data/removed-slugs.json must be a JSON array.');
+  process.exit(1);
+}
+const actualSlugs = new Set(actual.map(e => e.slug));
+const badRemoved = removed.filter(e => !e?.slug || !isValidDate(e?.addedAt ?? '') || actualSlugs.has(e.slug));
+if (badRemoved.length) {
+  console.error('removed-slugs.json entries need a slug and a valid addedAt, and must not be in the live catalog:');
+  for (const e of badRemoved) console.error(`- ${e?.slug ?? '?'}`);
+  process.exit(1);
+}
+
+if (JSON.stringify(actual.map(stripAddedAt)) === JSON.stringify(expected)) {
   console.log(`slugs.json is in sync with README.md (${actual.length} tools).`);
   process.exit(0);
 }
@@ -69,7 +111,7 @@ const missing = expected.filter((tool) => !actualBySlug.has(tool.slug));
 const extra = actual.filter((tool) => !expectedBySlug.has(tool.slug));
 const changed = expected.filter((tool) => {
   const current = actualBySlug.get(tool.slug);
-  return current && JSON.stringify(current) !== JSON.stringify(tool);
+  return current && JSON.stringify(stripAddedAt(current)) !== JSON.stringify(tool);
 });
 
 console.error('data/slugs.json is out of sync with README.md.');

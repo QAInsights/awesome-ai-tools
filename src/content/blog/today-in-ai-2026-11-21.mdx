@@ -1,0 +1,75 @@
+---
+title: "METR warns AI R&D gains are outpacing measurement"
+description: "METR says public evidence cannot rule out drastic AI R&D acceleration, Baseten ships open decision models, NVIDIA opens Nemotron for Science, and more."
+pubDate: 2026-11-21
+tags: ["news","today-in-ai","metr","evaluations","open-weights","nvidia","agents","infrastructure"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-11-21 UTC.
+
+Capability evals get harder to trust, Baseten puts decision models on open weights, and NVIDIA hands scientists a chemistry dataset.
+
+## METR says AI R&amp;D gains are outrunning its own measurements
+
+**What happened:** METR published capability evaluations of public models up to Opus 5.5 and GPT-6 Astra, saying it remains significantly uncertain what capabilities are needed for drastic AI R&amp;D acceleration and how fast they improve. It says current public evidence cannot rule out such acceleration in the next couple of years.
+
+**Why it matters:** Teams using benchmark scores to pick models should treat them as weaker signals than a year ago, since METR itself says the measurements are getting harder to make.
+
+[Source: METR](<https://metr.org/blog/2026-11-20-q4-2026-capability-update/>)
+
+## Baseten ships open decision models on a Gemma 4 backbone
+
+**What happened:** Base Labs released bison-1, a 31B dense model, and groundhog-1, a 26B mixture-of-experts model with about 4B active parameters, both built on Gemma 4 with 128k context. bison-1 ranks first of 19 models on Artificial Analysis Decision Index v2.1 at 76, and both are on Hugging Face.
+
+**Why it matters:** Open weights plus a 128k window mean builders can self-host a calibrated decision model instead of paying per call for a closed one.
+
+[Source: Base Labs](<https://labs.baseten.co/articles/bison-1-and-groundhog-1-frontier-american-backbone-decision-models>)
+
+## NVIDIA opens Nemotron for Science with a 50, 000-question chemistry set
+
+**What happened:** NVIDIA introduced Nemotron for Science, combining scientific applications of its Nemotron 3.5 Super VL open model, post-training recipes and LitmusBench v0.2, an open dataset of nearly 50, 000 chemistry reasoning questions. Lila Sciences, Terray and Therna are customizing it, and Argonne and Jülich are integrating it.
+
+**Why it matters:** An open model plus a public chemistry benchmark gives research teams a starting point for domain agents without training a base model from scratch.
+
+[Source: Engineering.com](<https://www.engineering.com/nvidia-launches-nemotron-for-scientific-discovery-agents/>)
+
+## AWS lets AI agents buy Marketplace products on their own
+
+**What happened:** AWS extended its billing and marketplace infrastructure to purchases made autonomously by AI agents. The option covers only select x402-enabled listings and keeps Marketplace policies and AWS account controls in place.
+
+**Why it matters:** Agent builders can now wire purchasing into a workflow, but only for listings that opted into x402, so procurement logic has to handle a partial catalog.
+
+[Source: Automatica Press](<https://www.automaticapress.com/sections/models-research>)
+
+## Microsoft taps Intel EMIB packaging for Azure silicon
+
+**What happened:** Microsoft said it is the first company to announce use of Intel Foundry's EMIB packaging for Azure first-party silicon, alongside a multi-year Xeon supply commitment that includes Diamond Rapids CPUs.
+
+**Why it matters:** Azure's custom chips get a second packaging source, which matters to anyone sizing capacity plans around first-party cloud silicon.
+
+[Source: Automatica Press](<https://www.automaticapress.com/sections/models-research>)
+
+## PromptArmor benchmark puts numbers on agent prompt injection
+
+**What happened:** A new PromptArmor benchmark measures prompt-injection attack success rates across four dimensions: frontier attack success rates, enterprise workflows, cyber consequences, and threat-intelligence-driven synthetic attack generation.
+
+**Why it matters:** If you ship agents that read untrusted content, this gives you a way to test injection exposure before attackers do it for you.
+
+[Source: Automatica Press](<https://www.automaticapress.com/sections/models-research>)
+
+## Together AI adds a free cache layer to GPU clusters
+
+**What happened:** Together AI added a free cache layer aimed at the cost of multiple workers fetching the same model or dataset from a remote origin. Its published speed figures come from a single-node test, and its documentation flags stale-cache and workload-access considerations.
+
+**Why it matters:** Shared model and dataset fetches get cheaper, but check the stale-cache caveats before pointing training jobs at it.
+
+[Source: Automatica Press](<https://www.automaticapress.com/sections/models-research>)
+
+## Sources
+
+- [METR](<https://metr.org/blog/2026-11-20-q4-2026-capability-update/>)
+- [Base Labs](<https://labs.baseten.co/articles/bison-1-and-groundhog-1-frontier-american-backbone-decision-models>)
+- [Engineering.com](<https://www.engineering.com/nvidia-launches-nemotron-for-scientific-discovery-agents/>)
+- [Automatica Press](<https://www.automaticapress.com/sections/models-research>)

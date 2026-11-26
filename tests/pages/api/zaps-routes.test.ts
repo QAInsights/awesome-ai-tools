@@ -77,12 +77,12 @@ function postContext(body?: string, origin = 'https://ai.dosa.dev') {
 }
 
 describe('GET /api/v1/count', () => {
-    test('returns counts keyed with the votes: prefix and a public cache header', async () => {
+    test('returns counts keyed with the votes: prefix without caching', async () => {
         zapCounts = { cursor: 42, zed: 7 };
         const response = await GET(getContext());
 
         expect(response.status).toBe(200);
-        expect(response.headers.get('Cache-Control')).toBe('public, max-age=30');
+        expect(response.headers.get('Cache-Control')).toBe('no-store');
         expect(await response.json()).toEqual({ 'votes:cursor': 42, 'votes:zed': 7 });
     });
 });

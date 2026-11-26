@@ -61,6 +61,19 @@ export async function addFavorite(
     };
 }
 
+export async function importFavorites(
+    db: Database,
+    userId: string,
+    slugs: string[],
+    createdAt = Date.now(),
+): Promise<number> {
+    const result = await db.prepare(`
+        INSERT OR IGNORE INTO favorites (user_id, tool_slug, created_at)
+        SELECT ?, value, ? FROM json_each(?)
+    `).bind(userId, createdAt, JSON.stringify(slugs)).run();
+    return result.meta.changes ?? 0;
+}
+
 export async function removeFavorite(
     db: Database,
     userId: string,

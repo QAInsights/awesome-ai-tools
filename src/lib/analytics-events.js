@@ -23,13 +23,15 @@ const subjectPolicies = {
     },
 };
 
-export const AUTH_TRIGGERS = Object.freeze(['sidebar', 'favorite_heart', 'follow_bell', 'zap_btn', 'ad_close', 'stack_add', 'news_cta', 'browse_gate', 'one_tap', 'tool_email']);
+export const AUTH_TRIGGERS = Object.freeze(['sidebar', 'favorite_heart', 'follow_bell', 'zap_btn', 'ad_close', 'stack_add', 'news_cta', 'browse_gate', 'one_tap', 'tool_email', 'directory_cta', 'workflow_guide']);
 export const AD_STYLES = Object.freeze(['stickybox', 'fixedfooter']);
 export const BROWSE_GATE_SURFACES = Object.freeze(['wall', 'nudge']);
 export const OUTBOUND_TRIGGERS = Object.freeze(['tool_card', 'tool_detail', 'comparison', 'category', 'unknown']);
+export const NEWS_NEXT_STEP_TRIGGERS = Object.freeze(['tool_card', 'tool_alternatives', 'next_brief', 'prev_brief']);
 export const ONBOARDING_TRIGGERS = Object.freeze(['inline', 'float', 'unknown']);
 export const ONBOARDING_STEP_SUBJECTS = Object.freeze(['favorites', 'follows', 'badge']);
-export const REF_SOURCES = Object.freeze(['badge', 'newsletter', 'social', 'other']);
+export const DIRECTORY_SHARE_SOURCES = Object.freeze({ tool: 'tool_share', category: 'category_share', switch: 'switch_share', drop: 'drop_share' });
+export const REF_SOURCES = Object.freeze(['badge', 'newsletter', 'social', 'other', ...Object.values(DIRECTORY_SHARE_SOURCES)]);
 export const ANALYTICS_PROVIDERS = Object.freeze(['github', 'google', 'dev', 'email']);
 
 export const EVENTS = Object.freeze({
@@ -37,6 +39,8 @@ export const EVENTS = Object.freeze({
     SIGNOUT: 'signout',
     FAVORITE_ADDED: 'favorite_added',
     FAVORITE_REMOVED: 'favorite_removed',
+    GUEST_FAVORITE_ADDED: 'guest_favorite_added',
+    GUEST_FAVORITES_IMPORTED: 'guest_favorites_imported',
     STACK_CREATED: 'stack_created',
     STACK_PUBLISHED: 'stack_published',
     FOLLOW_ADDED: 'follow_added',
@@ -46,7 +50,9 @@ export const EVENTS = Object.freeze({
     SIGNIN_STARTED: 'signin_started',
     GATE_BLOCKED: 'gate_blocked',
     ZAP_CAST: 'zap_cast',
+    SWITCH_VOTE: 'switch_vote',
     OUTBOUND_CLICK: 'outbound_click',
+    NEWS_NEXT_STEP_CLICK: 'news_next_step_click',
     COMPARE_BUILT: 'compare_built',
     ONBOARDING_SHOWN: 'onboarding_shown',
     ONBOARDING_DISMISSED: 'onboarding_dismissed',
@@ -59,6 +65,7 @@ export const EVENTS = Object.freeze({
     BROWSE_GATE_DISMISSED: 'browse_gate_dismissed',
     ONE_TAP_PROMPTED: 'one_tap_prompted',
     TOOL_RESULT_EMAILED: 'tool_result_emailed',
+    DIRECTORY_LINK_COPIED: 'directory_link_copied',
     VISIT: 'visit',
 });
 
@@ -67,6 +74,8 @@ export const EVENT_CATALOG = Object.freeze({
     [EVENTS.SIGNOUT]: { client: false, triggers: [], subject: subjectPolicies.none },
     [EVENTS.FAVORITE_ADDED]: { client: false, triggers: ['favorite_heart'], subject: subjectPolicies.slug },
     [EVENTS.FAVORITE_REMOVED]: { client: false, triggers: ['favorite_heart'], subject: subjectPolicies.slug },
+    [EVENTS.GUEST_FAVORITE_ADDED]: { client: true, triggers: [], subject: subjectPolicies.none },
+    [EVENTS.GUEST_FAVORITES_IMPORTED]: { client: false, triggers: [], subject: subjectPolicies.none },
     [EVENTS.STACK_CREATED]: { client: false, triggers: [], subject: subjectPolicies.slug },
     [EVENTS.STACK_PUBLISHED]: { client: false, triggers: [], subject: subjectPolicies.slug },
     [EVENTS.FOLLOW_ADDED]: { client: false, triggers: ['follow_bell'], subject: subjectPolicies.slug },
@@ -76,7 +85,9 @@ export const EVENT_CATALOG = Object.freeze({
     [EVENTS.SIGNIN_STARTED]: { client: true, triggers: AUTH_TRIGGERS, subject: subjectPolicies.none },
     [EVENTS.GATE_BLOCKED]: { client: true, triggers: ['favorite_heart', 'follow_bell', 'zap_btn', 'news_cta', 'browse_gate', 'tool_email'], subject: subjectPolicies.slug },
     [EVENTS.ZAP_CAST]: { client: true, triggers: ['zap_btn'], subject: subjectPolicies.slug },
+    [EVENTS.SWITCH_VOTE]: { client: true, triggers: ['alternatives'], subject: subjectPolicies.slug },
     [EVENTS.OUTBOUND_CLICK]: { client: true, triggers: OUTBOUND_TRIGGERS, subject: subjectPolicies.slug },
+    [EVENTS.NEWS_NEXT_STEP_CLICK]: { client: true, triggers: NEWS_NEXT_STEP_TRIGGERS, subject: subjectPolicies.slug },
     [EVENTS.COMPARE_BUILT]: { client: true, triggers: ['comparison'], subject: subjectPolicies.comparison },
     [EVENTS.ONBOARDING_SHOWN]: { client: true, triggers: ONBOARDING_TRIGGERS, subject: subjectPolicies.none },
     [EVENTS.ONBOARDING_DISMISSED]: { client: true, triggers: ONBOARDING_TRIGGERS, subject: subjectPolicies.none },
@@ -89,6 +100,7 @@ export const EVENT_CATALOG = Object.freeze({
     [EVENTS.BROWSE_GATE_DISMISSED]: { client: true, triggers: BROWSE_GATE_SURFACES, subject: subjectPolicies.none },
     [EVENTS.ONE_TAP_PROMPTED]: { client: true, triggers: ['one_tap'], subject: subjectPolicies.none },
     [EVENTS.TOOL_RESULT_EMAILED]: { client: false, triggers: [], subject: subjectPolicies.slug },
+    [EVENTS.DIRECTORY_LINK_COPIED]: { client: true, triggers: Object.values(DIRECTORY_SHARE_SOURCES), subject: subjectPolicies.slug },
     // One per browser session: trigger = ?ref= source, subject = external referrer host.
     [EVENTS.VISIT]: { client: true, triggers: REF_SOURCES, subject: subjectPolicies.host },
 });
@@ -108,6 +120,13 @@ export function normalizeEventFields(event, input = {}) {
         provider: ANALYTICS_PROVIDERS.includes(input.provider) ? input.provider : '',
         value: finite(input.value),
         durationMs: finite(input.durationMs),
+        ...(event === EVENTS.SWITCH_VOTE ? {
+            target: subjectPolicies.slug(input.target),
+            action: ['set', 'change', 'undo'].includes(input.action) ? input.action : '',
+            token_ms: finite(input.token_ms),
+            request_ms: finite(input.request_ms),
+            token_prefetched: typeof input.token_prefetched === 'boolean' ? input.token_prefetched : undefined,
+        } : {}),
     };
 }
 
@@ -123,5 +142,6 @@ export function normalizeClientEvent(input) {
         variant: typeof input.variant === 'string' ? input.variant.slice(0, 64) : '',
         value: fields.value,
         durationMs: fields.durationMs,
+        ...(input.event === EVENTS.SWITCH_VOTE ? { target: fields.target, action: fields.action, token_ms: fields.token_ms, request_ms: fields.request_ms, token_prefetched: fields.token_prefetched } : {}),
     };
 }

@@ -1,7 +1,7 @@
 import { env, waitUntil } from 'cloudflare:workers';
 import type { EventFields } from './analytics';
 
-const PROPERTY_FIELDS = ['trigger', 'subject', 'provider', 'route', 'device', 'country', 'value', 'durationMs'] as const;
+const PROPERTY_FIELDS = ['trigger', 'subject', 'provider', 'route', 'device', 'country', 'value', 'durationMs', '$pathname', '$current_url', '$session_id'] as const;
 
 export function buildPostHogEvent(event: string, fields: EventFields = {}) {
     const properties: Record<string, unknown> = {
@@ -26,7 +26,11 @@ export function buildPostHogEvent(event: string, fields: EventFields = {}) {
 
 export function capturePostHog(event: string, fields: EventFields = {}): void {
     try {
-        if (import.meta.env.DEV || !env.POSTHOG_KEY) return;
+        if (import.meta.env.DEV) {
+            console.debug('[PostHog preview]', JSON.stringify(buildPostHogEvent(event, fields)));
+            return;
+        }
+        if (!env.POSTHOG_KEY) return;
         const host = (env.POSTHOG_HOST || 'https://us.i.posthog.com').replace(/\/+$/, '');
         const promise = fetch(`${host}/i/v0/e/`, {
             method: 'POST',

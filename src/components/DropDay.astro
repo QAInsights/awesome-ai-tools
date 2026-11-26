@@ -1,0 +1,78 @@
+---
+/**
+ * One drop day: the tools added to the catalog that day plus share actions.
+ * Shared by /new (latest day) and the permanent /new/<date> pages.
+ */
+import DirectoryShare from './DirectoryShare.astro';
+import { formatDropDate, type DropDay } from '../lib/drops';
+
+interface Props {
+    day: DropDay;
+    headingLevel?: 'h1' | 'h2';
+}
+
+const { day, headingLevel = 'h1' } = Astro.props;
+const Heading = headingLevel;
+
+const pageUrl = `https://ai.dosa.dev/new/${day.date}`;
+const allNames = [...day.tools.map(t => t.name), ...day.removed.map(t => t.name)];
+const count = allNames.length;
+
+// Keep the X draft comfortably inside the 280-char post limit: names are
+// listed until the text reaches ~160 chars, then summarized as "+N more".
+const SHARE_NAMES_MAX = 160;
+let shareNames = '';
+let shareShown = 0;
+for (const name of allNames) {
+    const next = shareNames ? `${shareNames}, ${name}` : name;
+    if (next.length > SHARE_NAMES_MAX) break;
+    shareNames = next;
+    shareShown++;
+}
+if (shareShown < count) shareNames += ` +${count - shareShown} more`;
+const shareText = count === 1
+    ? `New on ai.dosa.dev: ${shareNames}`
+    : `${count} new AI coding tools on ai.dosa.dev: ${shareNames}`;
+const xUrl = `https://x.com/intent/post?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(pageUrl)}`;
+const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
+const pillClass = 'inline-flex min-h-9 items-center gap-2 rounded-full border border-border px-4 text-sm text-ink-secondary transition-colors hover:border-border-strong hover:text-ink';
+---
+
+<header class="flex flex-col gap-2 pb-6 border-b border-border">
+    <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-muted m-0">Fresh drops &middot; <time datetime={day.date}>{formatDropDate(day.date)}</time></p>
+    <Heading class="text-3xl sm:text-4xl font-semibold text-ink tracking-tight m-0">
+        {count === 1 ? '1 new AI coding tool' : `${count} new AI coding tools`}
+    </Heading>
+    <p class="text-ink-secondary text-[15px] leading-relaxed m-0 max-w-[70ch]">{allNames.join(', ')}.</p>
+    <div class="flex flex-wrap items-center gap-3 pt-2">
+        <a href={xUrl} target="_blank" rel="noopener noreferrer" class={pillClass}>Post on X</a>
+        <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" class={pillClass}>Share on LinkedIn</a>
+        <DirectoryShare canonical={pageUrl} kind="drop" slug={day.date} name={`the ${formatDropDate(day.date)} drops`} align="start" label="Copy link" />
+    </div>
+</header>
+
+<ul class="flex flex-col m-0 p-0 list-none border border-border rounded-xl divide-y divide-border">
+    {day.tools.map(tool => (
+        <li>
+            <a href={`/tools/${tool.slug}`} class="flex flex-col gap-1 px-4 py-4 hover:bg-white/[0.02] transition-colors">
+                <span class="flex flex-wrap items-baseline gap-x-3">
+                    <span class="text-[15px] font-semibold text-ink">{tool.enriched?.name ?? tool.name}</span>
+                    <span class="text-[13px] text-ink-secondary">{tool.enriched?.company ?? tool.company}</span>
+                    <span class="font-mono text-[11px] uppercase tracking-widest text-ink-muted ml-auto">{tool.categoryShort}</span>
+                </span>
+                {tool.enriched?.description && (
+                    <span class="text-[13px] text-ink-secondary leading-relaxed">{tool.enriched.description.length > 220 ? `${tool.enriched.description.slice(0, 219).trimEnd()}…` : tool.enriched.description}</span>
+                )}
+            </a>
+        </li>
+    ))}
+    {day.removed.map(tool => (
+        <li>
+            <span class="flex flex-wrap items-baseline gap-x-3 px-4 py-4">
+                <span class="text-[15px] font-semibold text-ink-disabled">{tool.name}</span>
+                <span class="text-[13px] text-ink-muted">{tool.company}</span>
+                <span class="font-mono text-[11px] uppercase tracking-widest text-ink-muted ml-auto">Removed</span>
+            </span>
+        </li>
+    ))}
+</ul>

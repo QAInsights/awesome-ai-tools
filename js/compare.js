@@ -4,7 +4,6 @@ import * as cache from './tool-cache.js';
 
 const ENRICHED_URL = '/data/enriched-tools.json';
 const ENABLE_VOTING = process.env.ENABLE_VOTING === 'true';
-const CF_SITEKEY = process.env.CF_SITEKEY || '1x00000000000000000000AA';
 
 // Escape tool-sourced strings before innerHTML interpolation (same pattern
 // as tool-detail.js) - enriched data/cache content is not trusted markup.
@@ -104,16 +103,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    function renderTurnstile(siteKey) {
-        if (typeof turnstile !== 'undefined') {
-            window.turnstileWidgetId = turnstile.render('#turnstile-container', {
-                sitekey: siteKey,
-                callback: (token) => window.cfTokenValue = token
-            });
-        } else {
-            setTimeout(() => renderTurnstile(siteKey), 100);
-        }
-    }
 
     const slugs = toolsParam.split(',').filter(Boolean);
     if (slugs.length === 0) {
@@ -311,7 +300,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 refreshZapButtons();
                 await initVoting();
-                renderTurnstile(CF_SITEKEY);
             } catch (error) {
                 console.warn('[compare] voting bootstrap failed:', error);
             }

@@ -2,6 +2,7 @@ import { EVENTS } from '../src/lib/analytics-events.js';
 import { analytics } from './analytics-client.js';
 import { authAttribution } from './auth-attribution.js';
 import { auth } from './auth.js';
+import { turnstileToken } from './turnstile.js';
 
 let zapCounts = {};
 
@@ -20,7 +21,7 @@ export async function initVoting() {
         const timeoutId = setTimeout(() => controller.abort(), 5000);
         let response;
         try {
-            response = await fetch('/api/v1/count', { signal: controller.signal });
+            response = await fetch('/api/v1/count', { cache: 'no-store', signal: controller.signal });
         } finally {
             clearTimeout(timeoutId);
         }
@@ -58,7 +59,7 @@ export async function initVoting() {
         const toolId = btn.dataset.toolId;
         
         // Prevent multiple rapid api calls
-        if (btn.classList.contains('zapped')) return;
+        if (btn.disabled || btn.classList.contains('zapped')) return;
 
         // Require authentication to vote
         if (!auth.isAuthenticated()) {
@@ -67,45 +68,18 @@ export async function initVoting() {
             return;
         }
 
-        // Once confirmed not clicked, cast the vote securely
-        castVote(toolId, btn);
-
         if (!zapCounts[toolId]) {
             zapCounts[toolId] = parseInt(btn.querySelector('.zap-count').textContent.replace(/,/g, '')) || 0;
         }
-        zapCounts[toolId]++;
-
-        btn.classList.add('firing');
-        btn.classList.add('zapped');
-
-        const countEl = btn.querySelector('.zap-count');
-        countEl.textContent = zapCounts[toolId].toLocaleString();
-
-        setTimeout(() => btn.classList.remove('firing'), 500);
+        btn.disabled = true;
+        void castVote(toolId, btn);
     });
 }
 
-async function waitForTurnstileToken(timeoutMs = 3000) {
-    // If token already available, return immediately
-    const turnstileInput = document.querySelector('[name="cf-turnstile-response"]');
-    if (window.cfTokenValue || (turnstileInput && turnstileInput.value)) {
-        return window.cfTokenValue || turnstileInput.value;
-    }
+async function waitForTurnstileToken() {
+    if (window.cfTokenValue) return window.cfTokenValue;
 
-    // Wait for Turnstile callback to populate window.cfTokenValue
-    return new Promise((resolve) => {
-        const start = Date.now();
-        const interval = setInterval(() => {
-            if (window.cfTokenValue) {
-                clearInterval(interval);
-                resolve(window.cfTokenValue);
-            } else if (Date.now() - start > timeoutMs) {
-                clearInterval(interval);
-                console.warn('[Voting] Turnstile token timed out, sending without cf_token');
-                resolve("");
-            }
-        }, 100);
-    });
+    return turnstileToken();
 }
 
 const ZAP_ERROR_MESSAGES = {
@@ -114,12 +88,22 @@ const ZAP_ERROR_MESSAGES = {
     429: { tip: "You are voting too fast! Please slow down.", label: "Wait", color: "#ef4444" },
 };
 const ZAP_ERROR_DEFAULT = { tip: "Security check failed. Please refresh and try again.", label: "Failed", color: "#ef4444" };
+const ZAP_NETWORK_ERROR = { tip: "Could not confirm your zap. Please refresh and try again.", label: "Failed", color: "#ef4444" };
+const zapErrorStates = new WeakMap();
 
-function rollbackZap(btn, toolId, { tip, label, color }) {
-    if (!btn) return;
-    btn.classList.remove('zapped');
-    zapCounts[toolId]--;
+function clearZapError(btn) {
+    const state = zapErrorStates.get(btn);
+    if (!state) return;
+    clearTimeout(state.timeoutId);
+    const countEl = btn.querySelector('.zap-count');
+    countEl.textContent = getVoteCount(state.toolId).toLocaleString();
+    countEl.style.color = '';
+    btn.dataset.tip = state.originalTip;
+    zapErrorStates.delete(btn);
+}
 
+function showZapError(btn, toolId, { tip, label, color }) {
+    clearZapError(btn);
     const countEl = btn.querySelector('.zap-count');
     const originalTip = btn.dataset.tip;
 
@@ -127,44 +111,44 @@ function rollbackZap(btn, toolId, { tip, label, color }) {
     countEl.textContent = label ?? zapCounts[toolId].toLocaleString();
     countEl.style.color = color;
 
-    setTimeout(() => {
-        countEl.textContent = zapCounts[toolId].toLocaleString();
-        countEl.style.color = "";
-        btn.dataset.tip = originalTip;
-    }, 3000);
+    const timeoutId = setTimeout(() => clearZapError(btn), 3000);
+    zapErrorStates.set(btn, { toolId, originalTip, timeoutId });
 }
 
 async function castVote(toolId, btn) {
-    const cfToken = await waitForTurnstileToken();
+    const controller = new AbortController();
+    let timeoutId;
+    try {
+        const cfToken = await waitForTurnstileToken();
+        timeoutId = setTimeout(() => controller.abort(), 10000);
+        const response = await fetch('/api/v1/vote', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ tool_id: toolId, cf_token: cfToken }),
+            signal: controller.signal,
+        });
 
-    const payload = {
-        tool_id: toolId,
-        cf_token: cfToken
-    };
-
-    const response = await fetch('/api/v1/vote', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-    });
-
-    // Reset Turnstile for the next vote
-    if (window.turnstile && window.turnstileWidgetId !== undefined) {
-        window.turnstile.reset(window.turnstileWidgetId);
-        window.cfTokenValue = "";
-    } else if (window.turnstile) {
-        window.turnstile.reset();
-        window.cfTokenValue = "";
-    }
-
-    if (!response.ok) {
-        rollbackZap(btn, toolId, ZAP_ERROR_MESSAGES[response.status] ?? ZAP_ERROR_DEFAULT);
-        if (response.status === 401) authAttribution.open('zap_btn');
-        console.error('Failed to cast vote', response.status);
+        if (!response.ok) {
+            showZapError(btn, toolId, ZAP_ERROR_MESSAGES[response.status] ?? ZAP_ERROR_DEFAULT);
+            if (response.status === 401) authAttribution.open('zap_btn');
+            console.error('Failed to cast vote', response.status);
+            return;
+        }
+    } catch (error) {
+        showZapError(btn, toolId, ZAP_NETWORK_ERROR);
+        console.error('Could not confirm vote:', error);
         return;
+    } finally {
+        clearTimeout(timeoutId);
+        btn.disabled = false;
+        window.cfTokenValue = '';
     }
 
+    clearZapError(btn);
+    zapCounts[toolId]++;
+    btn.querySelector('.zap-count').textContent = zapCounts[toolId].toLocaleString();
+    btn.classList.add('firing');
+    btn.classList.add('zapped');
+    setTimeout(() => btn.classList.remove('firing'), 500);
     analytics.track(EVENTS.ZAP_CAST, { trigger: 'zap_btn', subject: toolId });
 }

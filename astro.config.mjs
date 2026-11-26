@@ -33,6 +33,7 @@ function loadLastmodMap() {
         'AI Code Review & Security': 'Code Review',
         'AI Testing & Quality Assurance': 'QA & Testing',
         'General-Purpose AI Assistants (with Strong Coding Capability)': 'General AI',
+        'Personal AI Agents': 'Personal Agents',
         'AI Codebase Knowledge & Generation': 'Codebase AI',
         'Developer Productivity & Workflow': 'Productivity',
         'Editor Platforms with Native AI Features': 'Native Editors',

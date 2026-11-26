@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { EVENTS } from '../../../lib/analytics-events.js';
-import { getAuthTrigger } from '../../../lib/server/auth-attribution';
+import { getAuthContext, getAuthTrigger } from '../../../lib/server/auth-attribution';
 import { trackRequest } from '../../../lib/server/analytics';
 import { hasLocalDevOrigin, isLocalDevRequest } from '../../../lib/server/dev-auth';
 import { jsonError } from '../../../lib/server/request-security';
@@ -37,6 +37,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
             sessionCookieOptions(new URL(request.url)),
         );
         trackRequest(request, EVENTS.SIGNIN_COMPLETED, {
+            ...getAuthContext(cookies, request),
             userId: session.user.id,
             provider: 'dev',
             trigger,

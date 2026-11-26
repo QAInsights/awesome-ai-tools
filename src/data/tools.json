@@ -424,7 +424,7 @@
     "toolName": "toad"
   },
   {
-    "companyName": "Superset",
+    "companyName": "Paradev",
     "toolName": "Superset"
   },
   {
@@ -444,7 +444,7 @@
     "toolName": "Reasonix"
   },
   {
-    "companyName": "Cubic",
+    "companyName": "Cubic (Cohere)",
     "toolName": "cubic"
   },
   {
@@ -1850,5 +1850,261 @@
   {
     "companyName": "Capy (YC F24, formerly Scrapybara)",
     "toolName": "Capy"
+  },
+  {
+    "companyName": "Kopilot Web LLC",
+    "toolName": "TimeUno"
+  },
+  {
+    "companyName": "Useful Software Co (Rhys Sullivan, YC)",
+    "toolName": "Executor"
+  },
+  {
+    "companyName": "Meta",
+    "toolName": "Astryx"
+  },
+  {
+    "companyName": "Synchopate",
+    "toolName": "llama-modchip"
+  },
+  {
+    "companyName": "Zed Industries",
+    "toolName": "Delta"
+  },
+  {
+    "companyName": "Boxes.dev (Nick Bushak, Drew Regitsky)",
+    "toolName": "Boxes.dev"
+  },
+  {
+    "companyName": "Hoplite",
+    "toolName": "Hoplite"
+  },
+  {
+    "companyName": "Replicas (YC P26)",
+    "toolName": "Replicas"
+  },
+  {
+    "companyName": "Tembo",
+    "toolName": "Tembo"
+  },
+  {
+    "companyName": "Vorflux (YC F26)",
+    "toolName": "Vorflux"
+  },
+  {
+    "companyName": "Tella",
+    "toolName": "Open Session"
+  },
+  {
+    "companyName": "Nuphos",
+    "toolName": "Nuphos"
+  },
+  {
+    "companyName": "devvmhq",
+    "toolName": "devvm"
+  },
+  {
+    "companyName": "Scott Hanselman",
+    "toolName": "sandbox-mcp"
+  },
+  {
+    "companyName": "OmniJev",
+    "toolName": "Flide"
+  },
+  {
+    "companyName": "Stage Inc.",
+    "toolName": "Vespin"
+  },
+  {
+    "companyName": "n8n (n8n Labs)",
+    "toolName": "Nod"
+  },
+  {
+    "companyName": "Atuin",
+    "toolName": "Atuin"
+  },
+  {
+    "companyName": "Google Chrome",
+    "toolName": "Modern Web Guidance"
+  },
+  {
+    "companyName": "HKUDS (HKU Data Intelligence Lab)",
+    "toolName": "nanobot"
+  },
+  {
+    "companyName": "NanoCo",
+    "toolName": "NanoClaw"
+  },
+  {
+    "companyName": "ZeroClaw Labs",
+    "toolName": "ZeroClaw"
+  },
+  {
+    "companyName": "Sipeed",
+    "toolName": "PicoClaw"
+  },
+  {
+    "companyName": "NEAR AI",
+    "toolName": "IronClaw"
+  },
+  {
+    "companyName": "Daniel Sadilek",
+    "toolName": "Obeya"
+  },
+  {
+    "companyName": "Amazon Web Services",
+    "toolName": "AWS Emulator"
+  },
+  {
+    "companyName": "Indicode BV",
+    "toolName": "klad"
+  },
+  {
+    "companyName": "Parcha",
+    "toolName": "AgentRun"
+  },
+  {
+    "companyName": "Callstack",
+    "toolName": "agent-device"
+  },
+  {
+    "companyName": "Google",
+    "toolName": "Elephant-Goldfish Model"
+  },
+  {
+    "companyName": "lidge-jun",
+    "toolName": "opencodex"
+  },
+  {
+    "companyName": "LodyAI",
+    "toolName": "Lody"
+  },
+  {
+    "companyName": "Tencent",
+    "toolName": "LoopForge"
+  },
+  {
+    "companyName": "NVIDIA",
+    "toolName": "SkillEvaluator"
+  },
+  {
+    "companyName": "paul-nameless",
+    "toolName": "Agweb"
+  },
+  {
+    "companyName": "kajisho5",
+    "toolName": "ffmpeg-skill"
+  },
+  {
+    "companyName": "s0ld13rr",
+    "toolName": "PentestCode"
+  },
+  {
+    "companyName": "Matt Van Horn (mvanhorn)",
+    "toolName": "last30days"
+  },
+  {
+    "companyName": "Coral",
+    "toolName": "Coral"
+  },
+  {
+    "companyName": "Timon",
+    "toolName": "Timon"
+  },
+  {
+    "companyName": "Sachin Sharma (elementalsouls)",
+    "toolName": "Claude-BugHunter"
+  },
+  {
+    "companyName": "Traces (Vercel)",
+    "toolName": "Traces"
+  },
+  {
+    "companyName": "Althar",
+    "toolName": "Althar"
+  },
+  {
+    "companyName": "Ken Kocienda",
+    "toolName": "Tug"
+  },
+  {
+    "companyName": "MDiRi",
+    "toolName": "SoduWork"
+  },
+  {
+    "companyName": "Taskless",
+    "toolName": "Taskless"
+  },
+  {
+    "companyName": "Codenotary",
+    "toolName": "AgentMon Live"
+  },
+  {
+    "companyName": "Anur Basic",
+    "toolName": "Reflektor"
+  },
+  {
+    "companyName": "brox",
+    "toolName": "qpilot"
+  },
+  {
+    "companyName": "cloveric",
+    "toolName": "TaroBird"
+  },
+  {
+    "companyName": "Digger",
+    "toolName": "OpenComputer"
+  },
+  {
+    "companyName": "alexsergivan",
+    "toolName": "kwant"
+  },
+  {
+    "companyName": "agentmash",
+    "toolName": "agentmash"
+  },
+  {
+    "companyName": "natsu0529",
+    "toolName": "agent-mcts"
+  },
+  {
+    "companyName": "InsForge",
+    "toolName": "InstaBox"
+  },
+  {
+    "companyName": "JoeyZzZzZz",
+    "toolName": "Treasure Map"
+  },
+  {
+    "companyName": "Lio Fleishman (leofle)",
+    "toolName": "Trix"
+  },
+  {
+    "companyName": "Waffuru",
+    "toolName": "Pantry"
+  },
+  {
+    "companyName": "Mohib Shaikh",
+    "toolName": "ClawVet"
+  },
+  {
+    "companyName": "Scarif Labs",
+    "toolName": "Horus"
+  },
+  {
+    "companyName": "Nikhil Kumar (nickelsec)",
+    "toolName": "bough"
+  },
+  {
+    "companyName": "GenesisAgentInfra",
+    "toolName": "Genesis Map"
+  },
+  {
+    "companyName": "Hatchet",
+    "toolName": "Brickie"
+  },
+  {
+    "companyName": "Piotr Kukiełka",
+    "toolName": "gitfold"
   }
 ]

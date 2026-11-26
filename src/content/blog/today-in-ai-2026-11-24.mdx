@@ -1,0 +1,78 @@
+---
+title: "Anthropic's Claude Ship takes pull requests from review to fix"
+description: "Claude Ship automates GitHub PR review and fixes, Microsoft details Rocket RL for its 3T MAI Base 2, and Z.ai's GLM-5.4 loops 28 layers twice at 750B."
+pubDate: 2026-11-24
+tags: ["news","today-in-ai","anthropic","coding-agents","microsoft","model-releases","funding","chips"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-11-24 UTC.
+
+Anthropic puts agents on pull requests, Microsoft scales RL to a three-trillion-parameter base model, and Z.ai bets looping layers beat raw size.
+
+## Anthropic's Claude Ship reviews, fixes and approves pull requests
+
+**What happened:** Anthropic launched Claude Ship for Team and Enterprise GitHub repos, bundling Code Review, now generally available, with two beta agents: PR Steward, which works on failing checks and feedback, and Claude Approvals, which applies an approval policy kept as a file in the repo.
+
+**Why it matters:** Teams can wire an approval policy into the repository and let agents clear failing checks, though Anthropic advises running the approval helper in observe-only mode first.
+
+[Source: join.dev](<https://join.dev/news/ai/2026-11-24/>)
+
+## Microsoft post-trains its 3T-parameter MAI Base 2 with Rocket
+
+**What happened:** Microsoft AI says its three-trillion-parameter base model, MAI Base 2, is now being post-trained with Rocket, its in-house RL framework, climbing from the base model through RL without distillation from third-party models. Rocket was reworked for staleness, numerical consistency and fault tolerance.
+
+**Why it matters:** Long RL runs on thousands of GPUs only pay off if the framework survives hardware failures and reconfigures mid-run, the engineering problem most training teams hit at scale.
+
+[Source: Microsoft AI](<https://microsoft.ai/news/rl-infrastructure-at-microsoft-ai/>)
+
+## Z.ai's GLM-5.4 runs 28 layers twice at 750B scale
+
+**What happened:** Z.ai released GLM-5.4, its first Loop Transformer flagship, which runs 28 layers of the GLM-5 base model for two iterations at the 750B scale. The lab says it reaches intelligence comparable to 2T to 3T parameter models; API access is marked coming soon and open weights are planned.
+
+**Why it matters:** If looping layers buys frontier-level reasoning at a smaller parameter count, the tradeoff shifts from raw model size to inference cost per token, which changes what builders can afford to run.
+
+[Source: The AI Gazette](<https://ravilution.ai/gazette/sections/frontier-news>)
+
+## Bedrock opens a single API for Anthropic's frontier safeguards
+
+**What happened:** AWS announced general availability of the trusted access program API on Amazon Bedrock, one place to discover, request and enroll in model provider programs. The first two offerings, in public preview, are Anthropic's Enterprise Frontier Safeguards and Enterprise Data Controls, available on Bedrock.
+
+**Why it matters:** Admins can gate enrollment with existing IAM and service control policies, and with EFS prompts and completions are not retained by Anthropic or Amazon Bedrock.
+
+[Source: AWS](<https://aws.amazon.com/blogs/machine-learning/introducing-the-amazon-bedrock-trusted-access-api-with-anthropics-enterprise-frontier-safeguards-and-enterprise-data-controls/>)
+
+## Sierra raises $1.75B at a $30B valuation as ARR tops $400M
+
+**What happened:** Sierra announced a $1.75 billion raise at a $30 billion valuation, doubling its valuation within six months, with annual recurring revenue topping $400 million, per TechCrunch's reporting.
+
+**Why it matters:** Customer-experience agents are pulling venture money at a scale that will fund a lot of competing tooling for anyone building support and service automation.
+
+[Source: TechCrunch](<https://exa.ai/library/news/story/qvzyd1q70n8trkk534dyhzrvr>)
+
+## Surge AI benchmark asks whether coding agents act like staff engineers
+
+**What happened:** Surge AI published sudo L7, a benchmark of 60 software-engineering tasks written by staff-level engineers, mostly in private production codebases, each paired with a hidden rubric of 1, 287 atomic criteria. Claude Fable 5.2 passes 52.2% of attempts, Claude Sonnet 5.5 50.6% and Claude Opus 5.5 46.1%.
+
+**Why it matters:** More than half the gating criteria test something other than functional correctness, so passing tests no longer tells you whether an agent flagged risks or reported honestly.
+
+[Source: Surge AI](<https://arxiv.org/abs/2611.30517>)
+
+## PFN and SEMIFIVE team up on 3D-stacked inference chips
+
+**What happened:** Preferred Networks and SEMIFIVE announced a collaboration to develop the MN-Core L2000 Series, PFN's next-generation AI inference chips, planned to deliver more than twice the memory bandwidth of the MN-Core L1000 Series. Tape-out is scheduled for the first quarter of 2027.
+
+**Why it matters:** The L series stacks logic with DRAM in 3D to chase memory bandwidth, the spec that decides how fast agent workloads run, so it is a second source to watch against GPUs.
+
+[Source: Semiconductor Digest](<https://www.semiconductor-digest.com/pfn-and-semifive-collaborate-to-develop-the-mn-core-l2000-series-of-next-generation-ai-inference-chips/>)
+
+## Sources
+
+- [join.dev](<https://join.dev/news/ai/2026-11-24/>)
+- [Microsoft AI](<https://microsoft.ai/news/rl-infrastructure-at-microsoft-ai/>)
+- [The AI Gazette](<https://ravilution.ai/gazette/sections/frontier-news>)
+- [AWS](<https://aws.amazon.com/blogs/machine-learning/introducing-the-amazon-bedrock-trusted-access-api-with-anthropics-enterprise-frontier-safeguards-and-enterprise-data-controls/>)
+- [TechCrunch](<https://exa.ai/library/news/story/qvzyd1q70n8trkk534dyhzrvr>)
+- [Surge AI](<https://arxiv.org/abs/2611.30517>)
+- [Semiconductor Digest](<https://www.semiconductor-digest.com/pfn-and-semifive-collaborate-to-develop-the-mn-core-l2000-series-of-next-generation-ai-inference-chips/>)

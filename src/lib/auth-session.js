@@ -15,7 +15,22 @@ export const AUTH_RETURN_PATHS = Object.freeze([
 ]);
 
 const authReturnPaths = new Set(AUTH_RETURN_PATHS);
+const directoryReturnPath = /^\/(?:tools|category)\/([a-z0-9]+(?:-[a-z0-9]+)*)\/?$/;
 
 export function resolveAuthReturnPath(path) {
-    return typeof path === 'string' && authReturnPaths.has(path) ? path : '/';
+    if (typeof path !== 'string') return '/';
+    // zh routes are locale prefixes over the en allowlist - validate the
+    // stripped path, then put the prefix back so users stay in Chinese.
+    const zh = path === '/zh' || path.startsWith('/zh/');
+    const bare = zh ? (path.slice(3) || '/') : path;
+    if (authReturnPaths.has(bare)) {
+        if (!zh) return bare;
+        return bare === '/' ? '/zh/' : `/zh${bare}`;
+    }
+    const match = bare.match(directoryReturnPath);
+    if (match && match[0] === bare && match[1].length <= 128) {
+        const clean = bare.replace(/\/$/, '');
+        return zh ? `/zh${clean}` : clean;
+    }
+    return zh ? '/zh/' : '/';
 }

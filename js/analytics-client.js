@@ -15,6 +15,18 @@ export function mirrorClientEvent(event, fields, captureEvent = capture) {
         const value = normalized[field];
         if (value !== '' && value !== undefined) props[field] = value;
     }
+    if (event === 'outbound_click') {
+        for (const field of ['tool', 'url', 'destination_host', 'source_path', '$pathname']) {
+            if (typeof fields[field] === 'string') props[field] = fields[field];
+        }
+    }
+    if (event === 'switch_vote') {
+        if (normalized.target) props.target = normalized.target;
+        if (normalized.action) props.action = normalized.action;
+        for (const key of ['token_ms', 'request_ms', 'token_prefetched']) if (normalized[key] !== undefined) props[key] = normalized[key];
+        if (typeof fields.source_path === 'string') props.source_path = fields.source_path;
+    }
+    if (event === 'news_next_step_click' && typeof fields.source_path === 'string') props.source_path = fields.source_path;
     captureEvent(event, props);
 }
 

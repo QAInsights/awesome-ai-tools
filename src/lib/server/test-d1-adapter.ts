@@ -14,6 +14,7 @@ const migrations = [
     new URL('../../../migrations/0009_tool_stacks.sql', import.meta.url),
     new URL('../../../migrations/0010_zaps.sql', import.meta.url),
     new URL('../../../migrations/0011_email_otp.sql', import.meta.url),
+    new URL('../../../migrations/0013_switch_votes.sql', import.meta.url),
 ];
 
 export function createTestDatabase() {
@@ -36,8 +37,9 @@ export function createTestDatabase() {
                         }),
                         first: async <T>() => (sqlite.query(sql).get(...values) as T | null) ?? null,
                         run: async () => {
-                            const result = sqlite.query(sql).run(...values);
-                            return { meta: { changes: result.changes } };
+                            const results = sqlite.query(sql).all(...values);
+                            const changes = sqlite.query('SELECT changes() AS n').get() as { n: number };
+                            return { results, meta: { changes: changes.n } };
                         },
                     };
                 },

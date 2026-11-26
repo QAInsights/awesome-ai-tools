@@ -3,6 +3,15 @@ import { describe, expect, test } from 'bun:test';
 import { priceSummary, unitWords } from './folio';
 import { buildPricingBreakdown, extractPlans, pricingSignals, splitPricePoints } from './pricing-breakdown';
 
+describe('priceSummary', () => {
+    test('treats an unknown pricing model as unlisted, not quote-based', () => {
+        const summary = priceSummary('unknown', 'Vespin does not publish pricing on its site.');
+        expect(summary.main).toBe('—');
+        expect(summary.unit).toBe('pricing not yet listed');
+        expect(priceSummary('paid', 'Contact sales.').main).toBe('Custom');
+    });
+});
+
 describe('extractPlans', () => {
     test('reads "Name ($price/unit)" plans in order, keeping trailing notes', () => {
         expect(extractPlans('Paid plans include Pro ($20/month), Max ($200/month), and Teams ($80/month base plus $40/seat).')).toEqual([

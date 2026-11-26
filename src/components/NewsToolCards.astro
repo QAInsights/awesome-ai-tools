@@ -1,0 +1,34 @@
+---
+import type { Tool } from '../lib/tools';
+import { hasAlternativesPage } from '../lib/compare';
+
+interface Props {
+    tools: Tool[];
+}
+
+const { tools } = Astro.props;
+const description = (tool: Tool) => (tool.enriched?.description || tool.notes || 'Explore features, pricing, and more.')
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/[*_`]/g, '');
+---
+
+{tools.length > 0 && (
+    <section aria-labelledby="news-tools-heading">
+        <h2 id="news-tools-heading" class="text-[22px] font-semibold text-ink mb-4">Tools in this brief</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {tools.map(tool => (
+                <div class="rounded-xl border border-border bg-white/[0.02] hover:bg-white/[0.05] p-5 transition-colors duration-200">
+                    <h3 class="font-semibold text-ink">
+                        <a href={`/tools/${tool.slug}`} data-news-next-step="tool_card" data-news-subject={tool.slug} class="hover:text-gold transition-colors">{tool.name}</a>
+                    </h3>
+                    <p class="text-[14px] text-ink-secondary truncate mt-2" title={description(tool)}>{description(tool)}</p>
+                    <div class="flex flex-wrap gap-x-4 gap-y-2 mt-4 text-[13px]">
+                        <a href={`/tools/${tool.slug}`} data-news-next-step="tool_card" data-news-subject={tool.slug} class="text-gold hover:text-gold-soft transition-colors">Explore tool →</a>
+                        {hasAlternativesPage(tool.slug) && (
+                            <a href={`/tools/${tool.slug}/alternatives`} data-news-next-step="tool_alternatives" data-news-subject={tool.slug} class="text-ink-secondary hover:text-ink transition-colors">See alternatives →</a>
+                        )}
+                    </div>
+                </div>
+            ))}
+        </div>
+    </section>
+)}

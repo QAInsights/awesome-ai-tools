@@ -166,6 +166,7 @@ export async function getSessionUser(
     db: Database,
     token: string,
     now = Date.now(),
+    touchActivity = true,
 ): Promise<SessionUser | null> {
     if (!token) return null;
     const tokenHash = await hashSessionToken(token);
@@ -188,7 +189,7 @@ export async function getSessionUser(
 
     if (!row) return null;
     const utcDay = Math.floor(now / 86_400_000);
-    if (!row.last_seen_at || Math.floor(row.last_seen_at / 86_400_000) < utcDay) {
+    if (touchActivity && (!row.last_seen_at || Math.floor(row.last_seen_at / 86_400_000) < utcDay)) {
         await db.prepare('UPDATE users SET last_seen_at = ? WHERE id = ?').bind(now, row.id).run();
     }
     return sessionUserFromRow(row);

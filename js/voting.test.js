@@ -242,6 +242,31 @@ describe('voting', () => {
 
         const flush = () => new Promise(resolve => setTimeout(resolve, 20));
 
+        const captureErrorTimers = () => {
+            const originalSetTimeout = global.setTimeout;
+            const originalClearTimeout = global.clearTimeout;
+            const timers = new Map();
+            global.setTimeout = (callback, delay, ...args) => {
+                if (delay !== 3000) return originalSetTimeout(callback, delay, ...args);
+                const timer = {};
+                timers.set(timer, () => {
+                    timers.delete(timer);
+                    callback(...args);
+                });
+                return timer;
+            };
+            global.clearTimeout = timer => {
+                if (!timers.delete(timer)) originalClearTimeout(timer);
+            };
+            return {
+                timers,
+                restore: () => {
+                    global.setTimeout = originalSetTimeout;
+                    global.clearTimeout = originalClearTimeout;
+                },
+            };
+        };
+
         const authOpenCalls = [];
         const originalAuthOpen = authAttribution.open;
 
@@ -260,6 +285,9 @@ describe('voting', () => {
             authAttribution.open = originalAuthOpen;
             auth.user = null;
             window.cfTokenValue = '';
+            delete window.turnstile;
+            delete window.turnstileWidgetId;
+            global.fetch = createMockFetch();
         });
 
         test('signed-out click opens sign-in and keeps the count visible', async () => {
@@ -287,13 +315,237 @@ describe('voting', () => {
             expect(JSON.parse(voteCall.options.body)).toEqual({ tool_id: 'cursor', cf_token: 'test-cf-token' });
             expect(btn.classes.has('zapped')).toBe(true);
             expect(getVoteCount('cursor')).toBe(6);
+            expect(btn.disabled).toBe(false);
+        });
+
+        test('waits for persistence before incrementing and blocks repeat pending clicks', async () => {
+            const btn = makeBtn('cursor');
+            let completeVote;
+            global.fetch = (url, options) => {
+                fetchCalls.push({ url, options });
+                return new Promise(resolve => { completeVote = resolve; });
+            };
+
+            click(btn);
+            await flush();
+            click(btn);
+
+            expect(btn.disabled).toBe(true);
+            expect(btn.countEl.textContent).toBe('5');
+            expect(getVoteCount('cursor')).toBe(5);
+            expect(btn.classes.has('zapped')).toBe(false);
+            expect(fetchCalls.filter(call => call.url === '/api/v1/vote')).toHaveLength(1);
+
+            completeVote({ ok: true, status: 200 });
+            await flush();
+
+            expect(btn.disabled).toBe(false);
+            expect(btn.countEl.textContent).toBe('6');
+            expect(getVoteCount('cursor')).toBe(6);
+            expect(btn.classes.has('zapped')).toBe(true);
+        });
+
+        test('reloads the saved count instead of reusing a cached pre-vote total', async () => {
+            let savedCount = 5;
+            global.fetch = async (url, options) => {
+                if (url === '/api/v1/vote') {
+                    savedCount += 1;
+                    return { ok: true, status: 200 };
+                }
+                const count = options.cache === 'no-store' ? savedCount : 5;
+                return { ok: true, json: async () => ({ 'votes:cursor': count }) };
+            };
+            const btn = makeBtn('cursor');
+
+            click(btn);
+            await flush();
+            expect(getVoteCount('cursor')).toBe(6);
+
+            await initVoting();
+            expect(getVoteCount('cursor')).toBe(6);
         });
 
         test.each([
+            new TypeError('Failed to fetch'),
+            new DOMException('Request timed out', 'AbortError'),
+        ])('keeps the saved count and allows retry after a network failure: %s', async error => {
+            const btn = makeBtn('cursor');
+            global.fetch = async () => { throw error; };
+
+            click(btn);
+            await flush();
+
+            expect(getVoteCount('cursor')).toBe(5);
+            expect(btn.disabled).toBe(false);
+            expect(btn.classes.has('zapped')).toBe(false);
+            expect(btn.countEl.textContent).toBe('Failed');
+            expect(btn.dataset.tip).toBe('Could not confirm your zap. Please refresh and try again.');
+
+            global.fetch = createMockFetch();
+            mockFetchResponse = { ok: true, status: 200 };
+            window.cfTokenValue = 'retry-cf-token';
+            click(btn);
+            await flush();
+
+            expect(getVoteCount('cursor')).toBe(6);
+            expect(btn.classes.has('zapped')).toBe(true);
+            expect(btn.dataset.tip).toBe('Zap!');
+            expect(btn.countEl.style.color).toBe('');
+        });
+
+        test('replaces an earlier failure timer and restores the original tooltip', async () => {
+            const btn = makeBtn('cursor');
+            const { timers, restore } = captureErrorTimers();
+            try {
+                mockFetchResponse = { ok: false, status: 403 };
+                click(btn);
+                await flush();
+                const firstTimer = [...timers.keys()][0];
+
+                window.cfTokenValue = 'retry-cf-token';
+                mockFetchResponse = { ok: false, status: 429 };
+                click(btn);
+                await flush();
+
+                expect(timers.size).toBe(1);
+                expect(timers.has(firstTimer)).toBe(false);
+                expect(btn.dataset.tip).toBe('You are voting too fast! Please slow down.');
+                [...timers.values()][0]();
+
+                expect(timers.size).toBe(0);
+                expect(btn.dataset.tip).toBe('Zap!');
+                expect(btn.countEl.textContent).toBe('5');
+                expect(btn.countEl.style.color).toBe('');
+            } finally {
+                restore();
+            }
+        });
+
+        test('keeps error reset timers independent for different buttons', async () => {
+            const first = makeBtn('cursor');
+            const second = makeBtn('another-tool');
+            second.dataset.tip = 'Zap another tool';
+            const { timers, restore } = captureErrorTimers();
+            try {
+                mockFetchResponse = { ok: false, status: 403 };
+                click(first);
+                await flush();
+                window.cfTokenValue = 'next-cf-token';
+                mockFetchResponse = { ok: false, status: 429 };
+                click(second);
+                await flush();
+
+                expect(timers.size).toBe(2);
+                const [resetFirst, resetSecond] = [...timers.values()];
+                resetFirst();
+                expect(first.dataset.tip).toBe('Zap!');
+                expect(second.dataset.tip).toBe('You are voting too fast! Please slow down.');
+                resetSecond();
+                expect(second.dataset.tip).toBe('Zap another tool');
+                expect(timers.size).toBe(0);
+            } finally {
+                restore();
+            }
+        });
+
+        test('starts the request deadline only after Turnstile supplies a token', async () => {
+            const btn = makeBtn('cursor');
+            const originalSetTimeout = global.setTimeout;
+            const deadlines = [];
+            let provideToken;
+            window.cfTokenValue = '';
+            window.turnstile = {
+                render: (_container, options) => { provideToken = options.callback; return 'widget'; },
+                remove: () => {},
+            };
+            mockFetchResponse = { ok: true, status: 200 };
+            global.setTimeout = (callback, delay, ...args) => {
+                if (delay === 10000) deadlines.push(delay);
+                return originalSetTimeout(callback, delay, ...args);
+            };
+
+            try {
+                click(btn);
+                await Promise.resolve();
+                expect(typeof provideToken).toBe('function');
+                expect(deadlines).toEqual([]);
+                expect(btn.disabled).toBe(true);
+                expect(fetchCalls.some(call => call.url === '/api/v1/vote')).toBe(false);
+
+                provideToken('delayed-cf-token');
+                await flush();
+
+                expect(deadlines).toEqual([10000]);
+                expect(btn.disabled).toBe(false);
+                expect(getVoteCount('cursor')).toBe(6);
+            } finally {
+                global.setTimeout = originalSetTimeout;
+            }
+        });
+
+        test('aborts a stalled vote request and re-enables the button', async () => {
+            const btn = makeBtn('cursor');
+            const originalSetTimeout = global.setTimeout;
+            let voteSignal;
+            global.setTimeout = (callback, delay, ...args) => originalSetTimeout(callback, delay === 10000 ? 0 : delay, ...args);
+            global.fetch = (_url, { signal }) => {
+                voteSignal = signal;
+                return new Promise((_resolve, reject) => {
+                    signal.addEventListener('abort', () => reject(signal.reason), { once: true });
+                });
+            };
+
+            try {
+                click(btn);
+                await flush();
+
+                expect(voteSignal.aborted).toBe(true);
+                expect(getVoteCount('cursor')).toBe(5);
+                expect(btn.disabled).toBe(false);
+                expect(btn.countEl.textContent).toBe('Failed');
+            } finally {
+                global.setTimeout = originalSetTimeout;
+            }
+        });
+
+        test('re-enables the vote button when Turnstile reports an unsupported browser', async () => {
+            const btn = makeBtn('cursor');
+            let options;
+            window.cfTokenValue = '';
+            window.turnstile = {
+                render: (_selector, value) => { options = value; return 'widget'; },
+                remove: () => {},
+            };
+            click(btn);
+            await Promise.resolve();
+            expect(btn.disabled).toBe(true);
+            options['unsupported-callback']();
+            await flush();
+            expect(btn.disabled).toBe(false);
+            expect(btn.countEl.textContent).toBe('Failed');
+            expect(getVoteCount('cursor')).toBe(5);
+            expect(fetchCalls.some(call => call.url === '/api/v1/vote')).toBe(false);
+        });
+
+        test('keeps a confirmed vote even if resetting Turnstile fails', async () => {
+            const btn = makeBtn('cursor');
+            window.turnstile = { reset: () => { throw new Error('Widget unavailable'); } };
+            mockFetchResponse = { ok: true, status: 200 };
+
+            click(btn);
+            await flush();
+
+            expect(getVoteCount('cursor')).toBe(6);
+            expect(btn.classes.has('zapped')).toBe(true);
+            expect(btn.disabled).toBe(false);
+        });
+
+        test.each([
+            [403, 'Failed'],
             [429, 'Wait'],
             [400, "Zap'd"],
             [500, 'Failed'],
-        ])('rolls back the optimistic count and shows %s error state', async (status, label) => {
+        ])('leaves the count unchanged and shows %s error state', async (status, label) => {
             const btn = makeBtn('cursor');
             mockFetchResponse = { ok: false, status };
 
@@ -301,12 +553,13 @@ describe('voting', () => {
             await flush();
 
             expect(getVoteCount('cursor')).toBe(5);
+            expect(btn.disabled).toBe(false);
             expect(btn.classes.has('zapped')).toBe(false);
             expect(btn.countEl.textContent).toBe(label);
             expect(authOpenCalls).toEqual([]);
         });
 
-        test('401 rolls back the count and prompts sign-in', async () => {
+        test('401 leaves the count unchanged and prompts sign-in', async () => {
             const btn = makeBtn('cursor');
             mockFetchResponse = { ok: false, status: 401 };
 

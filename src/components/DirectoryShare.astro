@@ -1,0 +1,49 @@
+---
+import { DIRECTORY_SHARE_SOURCES } from '../lib/analytics-events.js';
+
+interface Props {
+    canonical: string;
+    kind: keyof typeof DIRECTORY_SHARE_SOURCES;
+    slug: string;
+    name: string;
+    align?: 'start' | 'end';
+    label?: string;
+}
+
+const { canonical, kind, slug, name, align = 'end', label = 'Share' } = Astro.props;
+const source = DIRECTORY_SHARE_SOURCES[kind];
+const shareUrl = new URL(canonical);
+shareUrl.search = new URLSearchParams({ ref: source }).toString();
+shareUrl.hash = '';
+---
+
+<details data-directory-share={source} data-share-slug={slug} class="relative max-w-full text-sm max-[600px]:static">
+    <summary
+        aria-label={`Share ${name}`}
+        class="inline-flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-full border border-border px-4 text-ink-secondary transition-colors hover:border-border-strong hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold [&::-webkit-details-marker]:hidden"
+    >
+        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 15V3m-4 4 4-4 4 4M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" />
+        </svg>
+        {label}
+    </summary>
+    <div class:list={[
+        'absolute top-[calc(100%+12px)] z-[80] w-[min(24rem,calc(100vw-2rem))] rounded-xl border border-border bg-panel p-3 shadow-[0_24px_48px_rgba(0,0,0,.55)]',
+        'max-[600px]:inset-x-0 max-[600px]:top-auto max-[600px]:mt-3 max-[600px]:w-auto',
+        align === 'end' ? 'right-0' : 'left-0',
+    ]}>
+        <label class="block text-xs text-ink-secondary">
+            Share link
+            <textarea
+                readonly
+                rows="2"
+                data-share-url
+                class="mt-1 block w-full min-w-0 resize-none field-sizing-content break-all rounded-lg border border-border bg-page px-2 py-1.5 font-mono text-xs text-ink"
+            >{shareUrl.href}</textarea>
+        </label>
+        <button type="button" hidden data-share-copy class="mt-2 min-h-9 cursor-pointer rounded-full border border-border px-3 text-ink hover:border-border-strong">
+            Copy link
+        </button>
+        <p data-share-status role="status" class="text-xs text-ink-secondary empty:hidden mt-2"></p>
+    </div>
+</details>

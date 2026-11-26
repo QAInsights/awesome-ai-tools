@@ -13,7 +13,7 @@ export const GET: APIRoute = async () => {
             body[`votes:${toolId}`] = count;
         }
         return Response.json(body, {
-            headers: { 'Cache-Control': 'public, max-age=30' },
+            headers: { 'Cache-Control': 'no-store' },
         });
     } catch (error) {
         console.error('[Zaps] Count failed:', error instanceof Error ? error.message : String(error));

@@ -3,1003 +3,1205 @@
     "slug": "cursor",
     "name": "Cursor",
     "company": "Anysphere",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "devin",
     "name": "Devin",
     "company": "Cognition",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "trae",
     "name": "Trae",
     "company": "ByteDance",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "zed",
     "name": "Zed",
     "company": "Zed Industries",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-03-20"
+  },
+  {
+    "slug": "delta",
+    "name": "Delta",
+    "company": "Zed Industries",
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-11-09"
   },
   {
     "slug": "pearai",
     "name": "PearAI",
     "company": "PearAI",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "antigravity",
     "name": "Antigravity",
     "company": "Google",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-03-30"
   },
   {
     "slug": "void",
     "name": "Void",
     "company": "Void",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "verdent",
     "name": "Verdent",
     "company": "Verdent",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "pochi",
     "name": "Pochi",
     "company": "Pochi",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-03-24"
   },
   {
     "slug": "qoder",
     "name": "Qoder",
     "company": "Qoder",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-03-27"
   },
   {
     "slug": "z-code",
     "name": "Z Code",
     "company": "Z",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-04-07"
   },
   {
     "slug": "toad",
     "name": "toad",
     "company": "Batrachian AI",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-04-22"
   },
   {
     "slug": "nimbalyst",
     "name": "Nimbalyst",
     "company": "Nimbalyst",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-05-09"
   },
   {
     "slug": "superset",
     "name": "Superset",
-    "company": "Superset",
-    "category": "AI-Native IDEs & Editors"
+    "company": "Paradev",
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-05-09"
   },
   {
     "slug": "conductor",
     "name": "Conductor",
     "company": "Melty Labs (Meta)",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-11-06"
   },
   {
     "slug": "archestra",
     "name": "archestra",
     "company": "Archestra Inc.",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-05-18"
   },
   {
     "slug": "codex-profiles",
     "name": "codex-profiles",
     "company": "Chai Pin Zheng",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-05-18"
   },
   {
     "slug": "reasonix",
     "name": "Reasonix",
     "company": "ESEngine",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-05-23"
   },
   {
     "slug": "minimax-code",
     "name": "MiniMax Code",
     "company": "MiniMax",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-07"
   },
   {
     "slug": "meta-muse",
     "name": "Meta Muse",
     "company": "Meta",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-07"
   },
   {
     "slug": "deepcode",
     "name": "DeepCode",
     "company": "HKUDS",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-07"
   },
   {
     "slug": "fletch",
     "name": "Fletch",
     "company": "FWDAI",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-07"
   },
   {
     "slug": "factory-ai",
     "name": "Factory AI",
     "company": "Factory",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-08"
   },
   {
     "slug": "ante",
     "name": "ante",
     "company": "AntigmaLabs",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-10"
   },
   {
     "slug": "unsloth",
     "name": "unsloth",
     "company": "unsloth",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-11"
   },
   {
     "slug": "bb",
     "name": "bb",
     "company": "bb",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-11"
   },
   {
     "slug": "openchamber",
     "name": "OpenChamber",
     "company": "OpenChamber",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-11"
   },
   {
     "slug": "waku",
     "name": "Waku",
     "company": "EGOIST",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-11"
   },
   {
     "slug": "jcode",
     "name": "jcode",
     "company": "Jeremy Huang",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-11"
   },
   {
     "slug": "grok-bot",
     "name": "Grok Bot",
     "company": "X",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-12"
   },
   {
     "slug": "ori",
     "name": "Ori",
     "company": "OpenRouter",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-12"
   },
   {
     "slug": "agentone",
     "name": "AgentOne",
     "company": "BestCodes",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "onecli",
     "name": "OneCLI",
     "company": "OneCLI",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "termy",
     "name": "Termy",
     "company": "Lasse",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-22"
   },
   {
     "slug": "paseo",
     "name": "Paseo",
     "company": "getpaseo",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-22"
   },
   {
     "slug": "openworker",
     "name": "OpenWorker",
     "company": "Andrew Ng",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-08-25"
   },
   {
     "slug": "monocode",
     "name": "MonoCode",
     "company": "Nick",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-09-05"
   },
   {
     "slug": "emdash",
     "name": "Emdash",
     "company": "generalaction",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-09-07"
   },
   {
     "slug": "atlarix",
     "name": "Atlarix",
     "company": "NorahLabs",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-09-11"
   },
   {
     "slug": "atomic-chat",
     "name": "Atomic Chat",
     "company": "Atomic Local Ai",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-09-18"
   },
   {
     "slug": "tastecode",
     "name": "TasteCode",
     "company": "Leon Lin",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-09-18"
   },
   {
     "slug": "orca",
     "name": "Orca",
     "company": "Stably AI",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-09-19"
   },
   {
     "slug": "orchestratorinc",
     "name": "Orchestrator.inc",
     "company": "Orchestrator.inc",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-10-19"
   },
   {
     "slug": "supercode",
     "name": "Supercode",
     "company": "Yash Dewasthale",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-09-20"
   },
   {
     "slug": "rune",
     "name": "Rune",
     "company": "Unstable Build",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-09-21"
   },
   {
     "slug": "kimi-code",
     "name": "Kimi Code",
     "company": "Kimi",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-09-21"
   },
   {
     "slug": "step-code",
     "name": "Step Code",
     "company": "stepfun-ai",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-09-22"
   },
   {
     "slug": "athas",
     "name": "Athas",
     "company": "Athas",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-09-24"
   },
   {
     "slug": "ccgui",
     "name": "ccgui",
     "company": "zhukunpenglinyutong",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-09-25"
   },
   {
     "slug": "zeron",
     "name": "Zeron",
     "company": "Zeron",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-09-26"
   },
   {
     "slug": "juggler",
     "name": "Juggler",
     "company": "Julian Storer",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-09-28"
   },
   {
     "slug": "whiteboard",
     "name": "Whiteboard",
     "company": "/dev/fast (YC W26)",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-09-29"
   },
   {
     "slug": "proliferate",
     "name": "Proliferate",
     "company": "Proliferate",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-09-29"
   },
   {
     "slug": "t3-code",
     "name": "T3 Code",
     "company": "Ping.gg",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-10-03"
   },
   {
     "slug": "voidleap-code",
     "name": "Voidleap Code",
     "company": "Voidleap",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-10-08"
   },
   {
     "slug": "helicon",
     "name": "Helicon",
     "company": "Harjot Singh Rana",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-10-09"
   },
   {
     "slug": "maki",
     "name": "maki",
     "company": "Tony Solomonik",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-10-14"
   },
   {
     "slug": "unstoppable-ai",
     "name": "Unstoppable AI",
     "company": "Unstoppable AI",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-10-23"
   },
   {
     "slug": "thinkrail",
     "name": "ThinkRail",
     "company": "JetBrains",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-10-25"
+  },
+  {
+    "slug": "althar",
+    "name": "Althar",
+    "company": "Althar",
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-11-18"
+  },
+  {
+    "slug": "tug",
+    "name": "Tug",
+    "company": "Ken Kocienda",
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-11-18"
   },
   {
     "slug": "volt",
     "name": "Volt",
     "company": "LeulAria",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-10-29"
   },
   {
     "slug": "prospero",
     "name": "Prospero",
     "company": "Chris Wellons (skeeto)",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-11-02"
   },
   {
     "slug": "kandev",
     "name": "Kandev",
     "company": "kdlbs",
-    "category": "AI-Native IDEs & Editors"
+    "category": "AI-Native IDEs & Editors",
+    "addedAt": "2026-11-06"
   },
   {
     "slug": "github-copilot",
     "name": "GitHub Copilot",
     "company": "GitHub",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "junie",
     "name": "Junie",
     "company": "JetBrains",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "gemini-code-assist",
     "name": "Gemini Code Assist",
     "company": "Google",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "amazon-q-developer",
     "name": "Amazon Q Developer",
     "company": "AWS",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "tabnine",
     "name": "Tabnine",
     "company": "Tabnine",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "cline",
     "name": "Cline",
     "company": "Cline",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "kilo-code",
     "name": "Kilo Code",
     "company": "Kilo Code",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "roo-code",
     "name": "Roo Code",
     "company": "Roo Code",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "continue",
     "name": "Continue",
     "company": "Continue",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "augment-code",
     "name": "Augment Code",
     "company": "Augment",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "cody",
     "name": "Cody",
     "company": "Sourcegraph",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "supermaven",
     "name": "Supermaven",
     "company": "Supermaven",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "blackbox",
     "name": "Blackbox",
     "company": "Blackbox",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "snyk-code",
     "name": "Snyk Code",
     "company": "Snyk",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "qodo",
     "name": "Qodo",
     "company": "Qodo",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "marscode",
     "name": "MarsCode",
     "company": "ByteDance",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "replit-ai",
     "name": "Replit AI",
     "company": "Replit",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "codebuddy",
     "name": "CodeBuddy",
     "company": "Tencent",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "cortex-code",
     "name": "Cortex Code",
     "company": "Snowflake",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "kode",
     "name": "Kode",
     "company": "ShareAI",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "apertis",
     "name": "Apertis",
     "company": "Stima",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-31"
   },
   {
     "slug": "corust",
     "name": "Corust",
     "company": "Corust",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-31"
   },
   {
     "slug": "toprank",
     "name": "Toprank",
     "company": "nowork-studio",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "wozcode",
     "name": "WozCode",
     "company": "WozCode",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-03-31"
   },
   {
     "slug": "claude-code-skills",
     "name": "Claude Code Skills 中文精选集",
     "company": "老实人实验室",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-05-09"
   },
   {
     "slug": "oh-my-codex",
     "name": "Oh My codeX",
     "company": "Yeachan-Heo",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-04-01"
   },
   {
     "slug": "bob",
     "name": "Bob",
     "company": "IBM",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "firebender",
     "name": "Firebender",
     "company": "Firebender",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-04-01"
   },
   {
     "slug": "feather-wand",
     "name": "Feather Wand",
     "company": "NaveenKumar Namachivayam",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-08-10"
   },
   {
     "slug": "sf-pi",
     "name": "SF Pi",
     "company": "Salesforce",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-08-11"
   },
   {
     "slug": "blume",
     "name": "Blume",
     "company": "Blume",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-08-11"
   },
   {
     "slug": "codex",
     "name": "Codex++",
     "company": "bennett",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "ponytail",
     "name": "Ponytail",
     "company": "Dietrich Gebert",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-09-14"
   },
   {
     "slug": "aicode",
     "name": "AICode",
     "company": "AI Sovereign Labs",
-    "category": "IDE Extensions & Plugins"
+    "category": "IDE Extensions & Plugins",
+    "addedAt": "2026-08-28"
   },
   {
     "slug": "claude-code",
     "name": "Claude Code",
     "company": "Anthropic",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "codex-cli",
     "name": "Codex CLI",
     "company": "OpenAI",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "amp",
     "name": "Amp",
     "company": "Sourcegraph",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-09-07"
   },
   {
     "slug": "aider",
     "name": "Aider",
     "company": "Aider",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "gemini-cli",
     "name": "Gemini CLI",
     "company": "Google",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "goose",
     "name": "Goose",
     "company": "Block",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "amazon-q-cli",
     "name": "Amazon Q CLI",
     "company": "AWS",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "letta-code",
     "name": "Letta Code",
     "company": "Letta",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-27"
   },
   {
     "slug": "qwen-cli",
     "name": "Qwen CLI",
     "company": "Alibaba",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-27"
   },
   {
     "slug": "codebuff",
     "name": "Codebuff",
     "company": "Codebuff",
-    "category": "Terminal & CLI Agents"
-  },
-  {
-    "slug": "openclaw",
-    "name": "OpenClaw",
-    "company": "OpenClaw",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-27"
   },
   {
     "slug": "command-code",
     "name": "Command Code",
     "company": "Command Code",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "crush",
     "name": "Crush",
     "company": "Charmbracelet",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "iflow-cli",
     "name": "iFlow CLI",
     "company": "iFlow",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "kiro-cli",
     "name": "Kiro CLI",
     "company": "AWS",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "lucinate",
     "name": "lucinate",
     "company": "lucinate-ai",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-05-09"
   },
   {
     "slug": "mcpjam",
     "name": "MCPJam",
     "company": "MCPJam",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "mistral-vibe",
     "name": "Mistral Vibe",
     "company": "Mistral",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "mux",
     "name": "Mux",
     "company": "Coder",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "zencoder",
     "name": "Zencoder",
     "company": "Zencoder",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "neovate",
     "name": "Neovate",
     "company": "Neovate",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "adal",
     "name": "AdaL",
     "company": "Sylph",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "cline-kanban",
     "name": "Cline Kanban",
     "company": "Cline",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-29"
   },
   {
     "slug": "parallel-code",
     "name": "Parallel Code",
     "company": "Parallel Code",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-29"
   },
   {
     "slug": "pi",
     "name": "Pi",
     "company": "badlogic",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "autohand-acp",
     "name": "Autohand ACP",
     "company": "Autohand",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-31"
   },
   {
     "slug": "crow-cli",
     "name": "Crow CLI",
     "company": "Crow",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-31"
   },
   {
     "slug": "fast-agent",
     "name": "Fast Agent",
     "company": "EvalState",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-31"
   },
   {
     "slug": "minion-code",
     "name": "Minion Code",
     "company": "Femto",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-31"
   },
   {
     "slug": "compass-nova-cli",
     "name": "Compass Nova CLI",
     "company": "Compass",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-31"
   },
   {
     "slug": "pi-acp",
     "name": "Pi ACP",
     "company": "svkozak",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-31"
   },
   {
     "slug": "stakpak-agent",
     "name": "Stakpak Agent",
     "company": "Stakpak",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-03-31"
   },
   {
     "slug": "opencode",
     "name": "OpenCode",
     "company": "Anomaly",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "antigravity-cli",
     "name": "Antigravity CLI",
     "company": "Google",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-06-05"
   },
   {
     "slug": "nanocoder",
     "name": "Nanocoder",
     "company": "Nano Collective",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-06-13"
   },
   {
     "slug": "ai-prompt-architect",
     "name": "AI Prompt Architect",
     "company": "AI Prompt Architect",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-06-22"
   },
   {
     "slug": "ai-badger",
     "name": "AI Badger",
     "company": "PVR Labs",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-06-22"
   },
   {
     "slug": "agentbox",
     "name": "AgentBox",
     "company": "Marco D'Alia",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-07-29"
   },
   {
     "slug": "oh-my-pi",
     "name": "Oh My Pi",
     "company": "Can Bölük",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-08-07"
   },
   {
     "slug": "grok-build",
     "name": "Grok Build",
     "company": "X",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-08-12"
   },
   {
     "slug": "bitfun",
     "name": "BitFun",
     "company": "GCWing",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "deepseek-harness",
     "name": "DeepSeek Harness",
     "company": "DeepSeek",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "atomic-agent",
     "name": "Atomic Agent",
     "company": "AtomicBot",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "kane-cli",
     "name": "Kane CLI",
     "company": "TestMU AI",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "caveman-code",
     "name": "Caveman Code",
     "company": "Julius Brussee",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "sillage",
     "name": "Sillage",
     "company": "MarlBurroW (open source)",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "mathcode",
     "name": "MathCode",
     "company": "Math-AI",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "fxsh",
     "name": "fx.sh",
     "company": "Vercel",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "zero",
     "name": "Zero",
     "company": "Gitlawb",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "headlong",
     "name": "Headlong",
     "company": "Laude Institute",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-08-24"
   },
   {
     "slug": "ob-1",
     "name": "OB-1",
     "company": "Overbrilliant",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-08-25"
   },
   {
     "slug": "xirp",
     "name": "XIRP",
     "company": "Spotify",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-09-04"
   },
   {
     "slug": "kolkrabbi",
     "name": "Kolkrabbi",
     "company": "onembyte (Franco Michetti)",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-09-05"
   },
   {
     "slug": "frontieragent",
     "name": "FrontierAgent",
     "company": "Apodex AI",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-09-21"
   },
   {
     "slug": "yylo",
     "name": "YYLO",
     "company": "yylo-dev",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-09-06"
   },
   {
     "slug": "pi-agent-ide",
     "name": "pi-agent-ide",
     "company": "Aleksandr Shpuntenko",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-09-20"
   },
   {
     "slug": "mimo-code",
     "name": "MiMo Code",
     "company": "Xiaomi",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-09-23"
   },
   {
     "slug": "molt",
     "name": "molt",
     "company": "Solvyx / Tyler Skelton",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-09-29"
   },
   {
     "slug": "prime-agent",
     "name": "Prime Agent",
     "company": "Prime Intellect",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-10-01"
   },
   {
     "slug": "codeaf",
     "name": "CodeAF",
     "company": "AgentField",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-10-07"
   },
   {
     "slug": "herdr",
     "name": "Herdr",
     "company": "Herdr",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-10-20"
   },
   {
     "slug": "agent-deck",
     "name": "Agent Deck",
     "company": "Ashesh Goplani",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-10-20"
   },
   {
     "slug": "memdoor",
     "name": "Memdoor",
     "company": "Memdoor (guregodevo)",
-    "category": "Terminal & CLI Agents"
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-11-03"
+  },
+  {
+    "slug": "agent-mcts",
+    "name": "agent-mcts",
+    "company": "natsu0529",
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-11-22"
+  },
+  {
+    "slug": "trix",
+    "name": "Trix",
+    "company": "Lio Fleishman (leofle)",
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-11-23"
   },
   {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
-    "category": "AI-Native Terminals"
+    "category": "AI-Native Terminals",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "wave",
     "name": "Wave",
     "company": "Wave",
-    "category": "AI-Native Terminals"
+    "category": "AI-Native Terminals",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "termrover",
     "name": "TermRover",
     "company": "TermRover",
-    "category": "AI-Native Terminals"
+    "category": "AI-Native Terminals",
+    "addedAt": "2026-09-08"
   },
   {
     "slug": "uniterm",
     "name": "uniTerm",
     "company": "ys-ll",
-    "category": "AI-Native Terminals"
+    "category": "AI-Native Terminals",
+    "addedAt": "2026-10-12"
   },
   {
     "slug": "cmux",
     "name": "cmux",
     "company": "Manaflow",
-    "category": "AI-Native Terminals"
+    "category": "AI-Native Terminals",
+    "addedAt": "2026-10-13"
   },
   {
     "slug": "corgi",
     "name": "Corgi",
     "company": "Tal Shiri (tals)",
-    "category": "AI-Native Terminals"
+    "category": "AI-Native Terminals",
+    "addedAt": "2026-10-24"
   },
   {
     "slug": "nodeterm",
     "name": "nodeterm",
     "company": "Enes Kirca",
-    "category": "AI-Native Terminals"
+    "category": "AI-Native Terminals",
+    "addedAt": "2026-11-01"
   },
   {
     "slug": "harp",
     "name": "Harp",
     "company": "Dominik Martin",
-    "category": "AI-Native Terminals"
+    "category": "AI-Native Terminals",
+    "addedAt": "2026-11-05"
+  },
+  {
+    "slug": "horus",
+    "name": "Horus",
+    "company": "Scarif Labs",
+    "category": "AI-Native Terminals",
+    "addedAt": "2026-11-24"
   },
   {
     "slug": "mel-the-agentic-terminal",
@@ -1011,1800 +1213,2513 @@
     "slug": "jules",
     "name": "Jules",
     "company": "Google",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "openhands",
     "name": "OpenHands",
     "company": "All Hands",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "swe-agent",
     "name": "SWE-agent",
     "company": "Princeton NLP",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "mini-swe-agent",
     "name": "mini-swe-agent",
     "company": "SWE-agent (Princeton & Stanford)",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-08"
   },
   {
     "slug": "sweep",
     "name": "Sweep",
     "company": "Sweep",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "ellipsis",
     "name": "Ellipsis",
     "company": "Ellipsis",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "genie",
     "name": "Genie",
     "company": "Cosine",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "open-yak",
     "name": "Open-yak",
     "company": "Open-yak",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-03-29"
   },
   {
     "slug": "deepagents-js",
     "name": "DeepAgents JS",
     "company": "LangChain",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-03-31"
   },
   {
     "slug": "orkas",
     "name": "Orkas",
     "company": "Orkas-AI",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-07-29"
   },
   {
     "slug": "kody",
     "name": "Kody",
     "company": "Kent C. Dodds",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-08-08"
   },
   {
     "slug": "omnigent",
     "name": "Omnigent",
     "company": "Omnigent",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-08-08"
   },
   {
     "slug": "manus",
     "name": "Manus",
     "company": "Monica",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-03-31"
   },
   {
     "slug": "looptroop",
     "name": "LoopTroop",
     "company": "LoopTroop AI",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "muse",
     "name": "Muse",
     "company": "Meta",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-09-08"
   },
   {
     "slug": "otodock",
     "name": "OtoDock",
     "company": "OtoDock",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-09-09"
   },
   {
     "slug": "firstmate",
     "name": "firstmate",
     "company": "kunchenguid",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-09-16"
   },
   {
     "slug": "openresearch",
     "name": "OpenResearch",
     "company": "alphaXiv",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "hermes-agent",
-    "name": "Hermes Agent",
-    "company": "Nous Research",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-09-16"
   },
   {
     "slug": "coder",
     "name": "Coder",
     "company": "Coder",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-09-18"
   },
   {
     "slug": "ax",
     "name": "AX",
     "company": "Google",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-09-20"
   },
   {
     "slug": "agent-substrate",
     "name": "Agent Substrate",
     "company": "Google (donated to CNCF)",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-08"
   },
   {
     "slug": "rivet",
     "name": "Rivet",
     "company": "Rivet (YC W23)",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-07"
   },
   {
     "slug": "github-agentic-workflows",
     "name": "GitHub Agentic Workflows",
     "company": "GitHub",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-09-22"
   },
   {
     "slug": "strand-agents",
     "name": "Strand Agents",
     "company": "Strand",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-09-21"
   },
   {
     "slug": "paperclip",
     "name": "Paperclip",
     "company": "Paperclip Labs",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-09-25"
   },
   {
     "slug": "opensre",
     "name": "OpenSRE",
     "company": "Tracer",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-10-02"
   },
   {
     "slug": "superplane",
     "name": "SuperPlane",
     "company": "SuperPlane",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-10-03"
   },
   {
     "slug": "docker-agent",
     "name": "Docker Agent",
     "company": "Docker",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-10-08"
   },
   {
     "slug": "orbi",
     "name": "Orbi",
     "company": "orbi-build (Lawrence Liu)",
-    "category": "Autonomous & Async Agents"
-  },
-  {
-    "slug": "openhuman",
-    "name": "OpenHuman",
-    "company": "Tiny Humans",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-10-08"
   },
   {
     "slug": "reason",
     "name": "Reason",
     "company": "Reason Machines",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-10-15"
   },
   {
     "slug": "rakazo",
     "name": "Rakazo",
     "company": "Elie Steinbock (elie222)",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-10-18"
   },
   {
     "slug": "open-cuak",
     "name": "Open-CUAK",
     "company": "Aident AI",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-10-21"
   },
   {
     "slug": "omnara",
     "name": "Omnara",
     "company": "Omnara (YC S25)",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-10-22"
   },
   {
     "slug": "scion",
     "name": "Scion",
     "company": "Google Cloud Platform",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-10-22"
   },
   {
     "slug": "cindy",
     "name": "Cindy",
     "company": "XD Inc.",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-10-25"
   },
   {
     "slug": "zozo-hq",
     "name": "Zozo HQ",
     "company": "Roundhouse Labs Inc.",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-10-25"
   },
   {
     "slug": "agensh",
     "name": "Agensh",
     "company": "Microsoft",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-10-25"
   },
   {
     "slug": "openbot",
     "name": "OpenBot",
     "company": "Nightly Labs",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-10-26"
   },
   {
     "slug": "openmausbot",
     "name": "OpenMausBot",
     "company": "Milind Soni",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-10-31"
   },
   {
     "slug": "autoswarm",
     "name": "AutoSwarm",
     "company": "HKUDS",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-10-27"
   },
   {
     "slug": "lemon-code",
     "name": "Lemon Code",
     "company": "Specific Labs",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-01"
   },
   {
     "slug": "dsh-superagent",
     "name": "dsh-superagent",
     "company": "DeepSeek",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-01"
   },
   {
     "slug": "sandcastle",
     "name": "Sandcastle",
     "company": "AI Hero (Matt Pocock)",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-03"
   },
   {
     "slug": "agent-autoloop",
     "name": "Agent Autoloop",
     "company": "Khazix",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-05"
   },
   {
     "slug": "capy",
     "name": "Capy",
     "company": "Capy (YC F24, formerly Scrapybara)",
-    "category": "Autonomous & Async Agents"
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-08"
+  },
+  {
+    "slug": "boxesdev",
+    "name": "Boxes.dev",
+    "company": "Boxes.dev (Nick Bushak, Drew Regitsky)",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-09"
+  },
+  {
+    "slug": "hoplite",
+    "name": "Hoplite",
+    "company": "Hoplite",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-09"
+  },
+  {
+    "slug": "replicas",
+    "name": "Replicas",
+    "company": "Replicas (YC P26)",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-09"
+  },
+  {
+    "slug": "tembo",
+    "name": "Tembo",
+    "company": "Tembo",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-09"
+  },
+  {
+    "slug": "vorflux",
+    "name": "Vorflux",
+    "company": "Vorflux (YC F26)",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-09"
+  },
+  {
+    "slug": "open-session",
+    "name": "Open Session",
+    "company": "Tella",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-09"
+  },
+  {
+    "slug": "nuphos",
+    "name": "Nuphos",
+    "company": "Nuphos",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-09"
+  },
+  {
+    "slug": "obeya",
+    "name": "Obeya",
+    "company": "Daniel Sadilek",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-12"
+  },
+  {
+    "slug": "vespin",
+    "name": "Vespin",
+    "company": "Stage Inc.",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-11"
+  },
+  {
+    "slug": "agentrun",
+    "name": "AgentRun",
+    "company": "Parcha",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-13"
+  },
+  {
+    "slug": "lody",
+    "name": "Lody",
+    "company": "LodyAI",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-14"
+  },
+  {
+    "slug": "loopforge",
+    "name": "LoopForge",
+    "company": "Tencent",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-14"
+  },
+  {
+    "slug": "timon",
+    "name": "Timon",
+    "company": "Timon",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-17"
+  },
+  {
+    "slug": "soduwork",
+    "name": "SoduWork",
+    "company": "MDiRi",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-18"
+  },
+  {
+    "slug": "tarobird",
+    "name": "TaroBird",
+    "company": "cloveric",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-19"
+  },
+  {
+    "slug": "opencomputer",
+    "name": "OpenComputer",
+    "company": "Digger",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-22"
+  },
+  {
+    "slug": "instabox",
+    "name": "InstaBox",
+    "company": "InsForge",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-22"
+  },
+  {
+    "slug": "brickie",
+    "name": "Brickie",
+    "company": "Hatchet",
+    "category": "Autonomous & Async Agents",
+    "addedAt": "2026-11-25"
   },
   {
     "slug": "boltnew",
     "name": "Bolt.new",
     "company": "StackBlitz",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "v0",
     "name": "v0",
     "company": "Vercel",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "lovable",
     "name": "Lovable",
     "company": "Lovable",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "replit",
     "name": "Replit",
     "company": "Replit",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "playcode",
     "name": "PlayCode",
     "company": "PlayCode",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-04-18"
   },
   {
     "slug": "emergentsh",
     "name": "Emergent.sh",
     "company": "Emergent",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "bitrig",
     "name": "Bitrig",
     "company": "Bitrig",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-03-30"
   },
   {
     "slug": "floot",
     "name": "Floot",
     "company": "Floot",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-08-21"
   },
   {
     "slug": "dyad",
     "name": "Dyad",
     "company": "Dyad",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-09-07"
   },
   {
     "slug": "onlook",
     "name": "Onlook",
     "company": "Onlook",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-09-07"
   },
   {
     "slug": "base44",
     "name": "Base44",
     "company": "Base44",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-09-07"
   },
   {
     "slug": "ploy",
     "name": "Ploy",
     "company": "Ploy",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-09-23"
   },
   {
     "slug": "rork",
     "name": "Rork",
     "company": "Rork",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-09-07"
   },
   {
     "slug": "cloudflare-os",
     "name": "Cloudflare OS",
     "company": "Cloudflare",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-10-03"
   },
   {
     "slug": "modaal",
     "name": "Modaal",
     "company": "Modaal",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-10-14"
   },
   {
     "slug": "openpencil",
     "name": "OpenPencil",
     "company": "ZSeven-W",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-10-24"
   },
   {
     "slug": "appwizzy",
     "name": "AppWizzy",
     "company": "AppWizzy",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-10-30"
   },
   {
     "slug": "massvai",
     "name": "Massvai",
     "company": "Massvai",
-    "category": "Browser-Based & App Builders"
+    "category": "Browser-Based & App Builders",
+    "addedAt": "2026-10-31"
   },
   {
     "slug": "coderabbit",
     "name": "CodeRabbit",
     "company": "CodeRabbit",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "qodo-qodo",
     "name": "Qodo",
     "company": "Qodo",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "snyk-code-snyk",
     "name": "Snyk Code",
     "company": "Snyk",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "cubic",
     "name": "cubic",
-    "company": "Cubic",
-    "category": "AI Code Review & Security"
+    "company": "Cubic (Cohere)",
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-05-25"
   },
   {
     "slug": "kodus",
     "name": "Kodus",
     "company": "Kodus",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-06-05"
   },
   {
     "slug": "gito",
     "name": "Gito",
     "company": "Vitalii Stepanenko",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-06-17"
   },
   {
     "slug": "bubo",
     "name": "Bubo",
     "company": "MountainOwl",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-08-07"
   },
   {
     "slug": "heygrc",
     "name": "heygrc",
     "company": "ISMS Copilot / Better ISMS",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-08-11"
   },
   {
     "slug": "mydentify-ai-crawler-access-checker",
     "name": "Mydentify AI Crawler Access Checker",
     "company": "Mydentify / Timothy Allard",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "vercel-agent",
     "name": "Vercel Agent",
     "company": "Vercel",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-09-07"
   },
   {
     "slug": "graphite",
     "name": "Graphite",
     "company": "Graphite",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-09-07"
   },
   {
     "slug": "bito",
     "name": "Bito",
     "company": "Bito",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-09-07"
   },
   {
     "slug": "security-audit",
     "name": "security-audit",
     "company": "Cloudflare",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-09-16"
   },
   {
     "slug": "open-code-review",
     "name": "Open Code Review",
     "company": "Alibaba",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-09-13"
   },
   {
     "slug": "skillspector",
     "name": "SkillSpector",
     "company": "NVIDIA",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-09-29"
   },
   {
     "slug": "strix",
     "name": "Strix",
     "company": "Strix",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-10-03"
   },
   {
     "slug": "adr",
     "name": "ADR",
     "company": "Uber",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-10-07"
   },
   {
     "slug": "codex-security",
     "name": "Codex Security",
     "company": "OpenAI",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-10-08"
   },
   {
     "slug": "plannotator",
     "name": "Plannotator",
     "company": "backnotprop",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-10-08"
   },
   {
     "slug": "pentagi",
     "name": "PentAGI",
     "company": "VXControl",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-10-09"
+  },
+  {
+    "slug": "pentestcode",
+    "name": "PentestCode",
+    "company": "s0ld13rr",
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-11-16"
   },
   {
     "slug": "heydeer",
     "name": "HeyDeer",
     "company": "ETOILEE PTE. LTD. (submitted by HeyDeer's maintainer)",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-10-12"
   },
   {
     "slug": "farol",
     "name": "farol",
     "company": "Winnin",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-10-26"
   },
   {
     "slug": "no-mistakes",
     "name": "no-mistakes",
     "company": "kunchenguid",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-10-27"
   },
   {
     "slug": "sphinx",
     "name": "Sphinx",
     "company": "parthh01",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-10-30"
   },
   {
     "slug": "pr-agent",
     "name": "PR-Agent",
     "company": "PR-Agent community (donated by Qodo)",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-10-31"
   },
   {
     "slug": "stroq",
     "name": "Stroq",
     "company": "Agybay Gibatollayev",
-    "category": "AI Code Review & Security"
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-11-06"
+  },
+  {
+    "slug": "claude-bughunter",
+    "name": "Claude-BugHunter",
+    "company": "Sachin Sharma (elementalsouls)",
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-11-17"
+  },
+  {
+    "slug": "taskless",
+    "name": "Taskless",
+    "company": "Taskless",
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-11-18"
+  },
+  {
+    "slug": "reflektor",
+    "name": "Reflektor",
+    "company": "Anur Basic",
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-11-19"
+  },
+  {
+    "slug": "treasure-map",
+    "name": "Treasure Map",
+    "company": "JoeyZzZzZz",
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-11-22"
+  },
+  {
+    "slug": "pantry",
+    "name": "Pantry",
+    "company": "Waffuru",
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-11-23"
+  },
+  {
+    "slug": "clawvet",
+    "name": "ClawVet",
+    "company": "Mohib Shaikh",
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-11-23"
+  },
+  {
+    "slug": "genesis-map",
+    "name": "Genesis Map",
+    "company": "GenesisAgentInfra",
+    "category": "AI Code Review & Security",
+    "addedAt": "2026-11-24"
   },
   {
     "slug": "gitauto",
     "name": "GitAuto",
     "company": "GitAuto",
-    "category": "AI Testing & Quality Assurance"
+    "category": "AI Testing & Quality Assurance",
+    "addedAt": "2026-03-29"
   },
   {
     "slug": "agentdiff",
     "name": "AgentDiff",
     "company": "AgentStatus",
-    "category": "AI Testing & Quality Assurance"
+    "category": "AI Testing & Quality Assurance",
+    "addedAt": "2026-05-09"
   },
   {
     "slug": "agent-qa",
     "name": "Agent QA",
     "company": "Vostride",
-    "category": "AI Testing & Quality Assurance"
+    "category": "AI Testing & Quality Assurance",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "e2e",
     "name": "e2e",
     "company": "TesterArmy",
-    "category": "AI Testing & Quality Assurance"
+    "category": "AI Testing & Quality Assurance",
+    "addedAt": "2026-10-04"
   },
   {
     "slug": "ifixai",
     "name": "iFixAi",
     "company": "iFixAi",
-    "category": "AI Testing & Quality Assurance"
+    "category": "AI Testing & Quality Assurance",
+    "addedAt": "2026-10-05"
   },
   {
     "slug": "artemis",
     "name": "ARTEMIS",
     "company": "Google",
-    "category": "AI Testing & Quality Assurance"
+    "category": "AI Testing & Quality Assurance",
+    "addedAt": "2026-10-20"
   },
   {
     "slug": "promptfoo",
     "name": "Promptfoo",
     "company": "Promptfoo (part of OpenAI)",
-    "category": "AI Testing & Quality Assurance"
+    "category": "AI Testing & Quality Assurance",
+    "addedAt": "2026-10-23"
   },
   {
     "slug": "reticle",
     "name": "Reticle",
     "company": "Reticle Labs",
-    "category": "AI Testing & Quality Assurance"
+    "category": "AI Testing & Quality Assurance",
+    "addedAt": "2026-10-30"
   },
   {
     "slug": "momentic",
     "name": "Momentic",
     "company": "Momentic (YC W24)",
-    "category": "AI Testing & Quality Assurance"
+    "category": "AI Testing & Quality Assurance",
+    "addedAt": "2026-11-03"
   },
   {
     "slug": "gauge",
     "name": "Gauge",
     "company": "Gauge",
-    "category": "AI Testing & Quality Assurance"
+    "category": "AI Testing & Quality Assurance",
+    "addedAt": "2026-11-05"
+  },
+  {
+    "slug": "sandbox-mcp",
+    "name": "sandbox-mcp",
+    "company": "Scott Hanselman",
+    "category": "AI Testing & Quality Assurance",
+    "addedAt": "2026-11-10"
+  },
+  {
+    "slug": "aws-emulator",
+    "name": "AWS Emulator",
+    "company": "Amazon Web Services",
+    "category": "AI Testing & Quality Assurance",
+    "addedAt": "2026-11-12"
+  },
+  {
+    "slug": "agent-device",
+    "name": "agent-device",
+    "company": "Callstack",
+    "category": "AI Testing & Quality Assurance",
+    "addedAt": "2026-11-13"
+  },
+  {
+    "slug": "skillevaluator",
+    "name": "SkillEvaluator",
+    "company": "NVIDIA",
+    "category": "AI Testing & Quality Assurance",
+    "addedAt": "2026-11-14"
+  },
+  {
+    "slug": "qpilot",
+    "name": "qpilot",
+    "company": "brox",
+    "category": "AI Testing & Quality Assurance",
+    "addedAt": "2026-11-19"
   },
   {
     "slug": "claude",
     "name": "Claude",
     "company": "Anthropic",
-    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+    "category": "General-Purpose AI Assistants (with Strong Coding Capability)",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "chatgpt",
     "name": "ChatGPT",
     "company": "OpenAI",
-    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+    "category": "General-Purpose AI Assistants (with Strong Coding Capability)",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "gemini",
     "name": "Gemini",
     "company": "Google",
-    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+    "category": "General-Purpose AI Assistants (with Strong Coding Capability)",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "deepseek",
     "name": "DeepSeek",
     "company": "DeepSeek",
-    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+    "category": "General-Purpose AI Assistants (with Strong Coding Capability)",
+    "addedAt": "2026-03-27"
   },
   {
     "slug": "perplexity",
     "name": "Perplexity",
     "company": "Perplexity",
-    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
-  },
-  {
-    "slug": "nenva",
-    "name": "nenva",
-    "company": "Anjadhe",
-    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+    "category": "General-Purpose AI Assistants (with Strong Coding Capability)",
+    "addedAt": "2026-03-27"
   },
   {
     "slug": "odysseus",
     "name": "Odysseus",
     "company": "odysseus-dev",
-    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+    "category": "General-Purpose AI Assistants (with Strong Coding Capability)",
+    "addedAt": "2026-10-09"
+  },
+  {
+    "slug": "openclaw",
+    "name": "OpenClaw",
+    "company": "OpenClaw",
+    "category": "Personal AI Agents",
+    "addedAt": "2026-03-28"
+  },
+  {
+    "slug": "hermes-agent",
+    "name": "Hermes Agent",
+    "company": "Nous Research",
+    "category": "Personal AI Agents",
+    "addedAt": "2026-09-09"
+  },
+  {
+    "slug": "openhuman",
+    "name": "OpenHuman",
+    "company": "Tiny Humans",
+    "category": "Personal AI Agents",
+    "addedAt": "2026-10-09"
+  },
+  {
+    "slug": "nenva",
+    "name": "nenva",
+    "company": "Anjadhe",
+    "category": "Personal AI Agents",
+    "addedAt": "2026-09-25"
   },
   {
     "slug": "hob",
     "name": "Hob",
     "company": "Frigade",
-    "category": "General-Purpose AI Assistants (with Strong Coding Capability)"
+    "category": "Personal AI Agents",
+    "addedAt": "2026-10-26"
+  },
+  {
+    "slug": "nod",
+    "name": "Nod",
+    "company": "n8n (n8n Labs)",
+    "category": "Personal AI Agents",
+    "addedAt": "2026-11-11"
+  },
+  {
+    "slug": "nanobot",
+    "name": "nanobot",
+    "company": "HKUDS (HKU Data Intelligence Lab)",
+    "category": "Personal AI Agents",
+    "addedAt": "2026-11-11"
+  },
+  {
+    "slug": "nanoclaw",
+    "name": "NanoClaw",
+    "company": "NanoCo",
+    "category": "Personal AI Agents",
+    "addedAt": "2026-11-11"
+  },
+  {
+    "slug": "zeroclaw",
+    "name": "ZeroClaw",
+    "company": "ZeroClaw Labs",
+    "category": "Personal AI Agents",
+    "addedAt": "2026-11-11"
+  },
+  {
+    "slug": "picoclaw",
+    "name": "PicoClaw",
+    "company": "Sipeed",
+    "category": "Personal AI Agents",
+    "addedAt": "2026-11-11"
+  },
+  {
+    "slug": "ironclaw",
+    "name": "IronClaw",
+    "company": "NEAR AI",
+    "category": "Personal AI Agents",
+    "addedAt": "2026-11-11"
+  },
+  {
+    "slug": "kwant",
+    "name": "kwant",
+    "company": "alexsergivan",
+    "category": "Personal AI Agents",
+    "addedAt": "2026-11-22"
   },
   {
     "slug": "greptile",
     "name": "Greptile",
     "company": "Greptile",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "fern",
     "name": "Fern",
     "company": "Fern",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "remio",
     "name": "Remio",
     "company": "Remio",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-06-24"
   },
   {
     "slug": "contextstream",
     "name": "ContextStream",
     "company": "ContextStream",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-09-05"
   },
   {
     "slug": "okf-agent-memory",
     "name": "OKF Agent Memory",
     "company": "okf-memory",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-09-06"
   },
   {
     "slug": "tseha",
     "name": "Tseha",
     "company": "Tseha",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-09-08"
   },
   {
     "slug": "brain-scanner",
     "name": "Brain Scanner",
     "company": "Kevin Lozada Santos (submitted by his authorized AI assistant)",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-09-12"
   },
   {
     "slug": "codebase-memory-mcp",
     "name": "codebase-memory-mcp",
     "company": "DeusData",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-09-23"
   },
   {
     "slug": "gortex",
     "name": "Gortex",
     "company": "zzet",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-09-27"
   },
   {
     "slug": "gitdiagram",
     "name": "GitDiagram",
     "company": "Ahmed Khaleel",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-09-26"
   },
   {
     "slug": "jevgrep",
     "name": "jevgrep",
     "company": "David Zhang (dzhng)",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-09-28"
   },
   {
     "slug": "codegraph",
     "name": "CodeGraph",
     "company": "Colby McHenry",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-09-30"
   },
   {
     "slug": "gitnexus",
     "name": "GitNexus",
     "company": "Abhigyan Patwari",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-09-30"
   },
   {
     "slug": "code-review-graph",
     "name": "code-review-graph",
     "company": "Tirth Kanani",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-09-30"
   },
   {
     "slug": "repowise",
     "name": "Repowise",
     "company": "Repowise",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-10-11"
   },
   {
     "slug": "xerj",
     "name": "XERJ",
     "company": "XERJ",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-10-12"
   },
   {
     "slug": "graphify",
     "name": "Graphify",
     "company": "Graphify Labs",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-10-15"
   },
   {
     "slug": "graphicle",
     "name": "Graphicle",
     "company": "Graphicle AI",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-10-19"
   },
   {
     "slug": "serena",
     "name": "Serena",
     "company": "Oraios AI",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-11-01"
   },
   {
     "slug": "floorplan",
     "name": "Floorplan",
     "company": "Hayden Smith",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-11-04"
   },
   {
     "slug": "figma-console-mcp",
     "name": "Figma Console MCP",
     "company": "Southleft",
-    "category": "AI Codebase Knowledge & Generation"
+    "category": "AI Codebase Knowledge & Generation",
+    "addedAt": "2026-11-06"
   },
   {
     "slug": "pieces-for-developers",
     "name": "Pieces for Developers",
     "company": "Pieces",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-03-27"
   },
   {
     "slug": "agenttrace",
     "name": "agenttrace",
     "company": "luoyuctl",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-05-11"
   },
   {
     "slug": "vibe-kanban",
     "name": "Vibe Kanban",
     "company": "Vibe",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-03-28"
   },
   {
     "slug": "ai-memory",
     "name": "AI-MEMORY",
     "company": "AkitaOnRails",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-22"
   },
   {
     "slug": "smolvm",
     "name": "smolvm",
     "company": "smol machines",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-22"
   },
   {
     "slug": "coop",
     "name": "coop",
     "company": "Trail of Bits",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-26"
   },
   {
     "slug": "space",
     "name": "SPACE",
     "company": "Perplexity",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-21"
   },
   {
     "slug": "layerfs",
     "name": "LayerFS",
     "company": "Ephemeral AI Lab",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-21"
   },
   {
     "slug": "claude-code-templates",
     "name": "Claude Code Templates",
     "company": "Daniel Avila",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-22"
   },
   {
     "slug": "wshobson-agents",
     "name": "wshobson Agents",
     "company": "Seth Hobson",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-22"
   },
   {
     "slug": "claude-code-game-studios",
     "name": "Claude Code Game Studios",
     "company": "Donchitos",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-01"
   },
   {
     "slug": "director",
     "name": "Director",
     "company": "Director",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-08"
   },
   {
     "slug": "claudete",
     "name": "Claudete",
     "company": "Claudete",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-08"
   },
   {
     "slug": "pandacode",
     "name": "PandaCode",
     "company": "AICodeKing",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-23"
   },
   {
     "slug": "fractal-os",
     "name": "Fractal OS",
     "company": "Nubler Digital",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-08"
   },
   {
     "slug": "zuse",
     "name": "Zuse",
     "company": "Zuse",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-08"
   },
   {
     "slug": "cydonia",
     "name": "Cydonia",
     "company": "Crabtalk",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-08"
   },
   {
     "slug": "ai-product-adoption-deck",
     "name": "AI Product Adoption Deck",
     "company": "aiproduct.cards",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-06-05"
   },
   {
     "slug": "coderplan",
     "name": "CoderPlan",
     "company": "CoderPlan",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-06-05"
   },
   {
     "slug": "aiflowlearn",
     "name": "AIFlowLearn",
     "company": "AIFlowLearn / 木子霖",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-06-05"
   },
   {
     "slug": "faryo",
     "name": "Faryo",
     "company": "Snailflyer",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-06-05"
   },
   {
     "slug": "tree-ring-memory",
     "name": "Tree Ring Memory",
     "company": "TerminallyLazy",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-07-13"
   },
   {
     "slug": "openagentrelay",
     "name": "OpenAgentRelay",
     "company": "ShakespeareLabs",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-07-16"
   },
   {
     "slug": "better-agent",
     "name": "Better Agent",
     "company": "Ofek Ron",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-07-29"
   },
   {
     "slug": "tura",
     "name": "Tura",
     "company": "Tura-AI",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-07-29"
   },
   {
     "slug": "fractal",
     "name": "fractal",
     "company": "Plasma AI",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-07-29"
   },
   {
     "slug": "wolfmarkdown",
     "name": "WolfMarkDown",
     "company": "WolfMark",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "codex-quota-overlay",
     "name": "Codex Quota Overlay",
     "company": "cpys (maintainer; independent community project)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "deskcue",
     "name": "DeskCue",
     "company": "Alexander Kornev",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "sandbase-cli",
     "name": "SandBase CLI",
     "company": "SandBase",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-08-20"
   },
   {
     "slug": "aipm",
     "name": "AIPM",
     "company": "Abhishek Srivastava",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-08-28"
   },
   {
     "slug": "superagent",
     "name": "Superagent",
     "company": "pungme",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-04"
   },
   {
     "slug": "xiurouter",
     "name": "XiuRouter",
     "company": "XiuLab Inc",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-05"
   },
   {
     "slug": "qwencloud",
     "name": "QwenCloud",
     "company": "Alibaba Cloud",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-05"
   },
   {
     "slug": "orcareplay",
     "name": "OrcaReplay",
     "company": "Continuum AI",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-07"
   },
   {
     "slug": "agentplay",
     "name": "agentplay",
     "company": "Entelligence AI",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-23"
   },
   {
     "slug": "scrawl",
     "name": "Scrawl",
     "company": "Kit Langton",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-23"
   },
   {
     "slug": "magic-patterns",
     "name": "Magic Patterns",
     "company": "Magic Patterns",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-07"
   },
   {
     "slug": "builderio-visual-copilot",
     "name": "Builder.io Visual Copilot",
     "company": "Builder.io",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-07"
   },
   {
     "slug": "jackalope",
     "name": "Jackalope",
     "company": "Jackalope Digital LLC",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-07"
   },
   {
     "slug": "cabinet",
     "name": "Cabinet",
     "company": "Cabinet AI",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-08"
   },
   {
     "slug": "pi-desktop",
     "name": "PI-Desktop",
     "company": "vastsa",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-09"
   },
   {
     "slug": "ruflo",
     "name": "Ruflo",
     "company": "ruvnet",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-09"
   },
   {
     "slug": "context-mode",
     "name": "Context Mode",
     "company": "mksglu",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-09"
   },
   {
     "slug": "worktrunk",
     "name": "Worktrunk",
     "company": "Worktrunk",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-13"
   },
   {
     "slug": "rtk",
     "name": "RTK",
     "company": "RTK-AI",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-13"
   },
   {
     "slug": "gentle-ai",
     "name": "Gentle-AI",
     "company": "Gentleman Programming",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-13"
   },
   {
     "slug": "ecc",
     "name": "ECC",
     "company": "Affaan Mustafa",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-14"
   },
   {
     "slug": "atlas",
     "name": "Atlas",
     "company": "pacifio",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-14"
   },
   {
     "slug": "archify",
     "name": "Archify",
     "company": "tt-a1i",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-14"
   },
   {
     "slug": "workmux",
     "name": "workmux",
     "company": "raine",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-14"
   },
   {
     "slug": "spec-kit",
     "name": "Spec Kit",
     "company": "GitHub",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-15"
   },
   {
     "slug": "agent-skills",
     "name": "Agent Skills",
     "company": "Addy Osmani",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-15"
   },
   {
     "slug": "9router",
     "name": "9Router",
     "company": "decolua",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-15"
   },
   {
     "slug": "i-have-adhd",
     "name": "i-have-adhd",
     "company": "ayghri",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-15"
   },
   {
     "slug": "oh-my-hermes",
     "name": "Oh My Hermes",
     "company": "rlaope",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-16"
   },
   {
     "slug": "superpowers",
     "name": "Superpowers",
     "company": "obra",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-09"
   },
   {
     "slug": "blabla",
     "name": "BlaBla",
     "company": "Petro Yakovyshyn (independent; I maintain BlaBla)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-17"
   },
   {
     "slug": "openspec",
     "name": "OpenSpec",
     "company": "Fission-AI",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-18"
   },
   {
     "slug": "ai-dlc",
     "name": "AI-DLC",
     "company": "AWS (awslabs)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-07"
   },
   {
     "slug": "gsd-core",
     "name": "GSD Core",
     "company": "Open GSD",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-08"
   },
   {
     "slug": "browserskill",
     "name": "BrowserSkill",
     "company": "Tencent",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-18"
   },
   {
     "slug": "multica",
     "name": "Multica",
     "company": "Multica",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-19"
   },
   {
     "slug": "engram",
     "name": "Engram",
     "company": "Gentleman Programming",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-19"
   },
   {
     "slug": "webcodex",
     "name": "WebCodex",
     "company": "yyjeqhc",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-19"
   },
   {
     "slug": "shadcn-lint",
     "name": "shadcn lint",
     "company": "shadcn",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-21"
   },
   {
     "slug": "codenotch",
     "name": "Codenotch",
     "company": "vinzdg",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-20"
   },
   {
     "slug": "agent-native",
     "name": "Agent-Native",
     "company": "Builder.io",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-20"
   },
   {
     "slug": "screenpipe",
     "name": "Screenpipe",
     "company": "Screenpipe (Negentropy Labs, Inc.)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-21"
   },
   {
     "slug": "antiburn",
     "name": "antiburn",
     "company": "antiburn",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-23"
   },
   {
     "slug": "claude-mem",
     "name": "claude-mem",
     "company": "thedotmack",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-23"
   },
   {
     "slug": "mempalace",
     "name": "MemPalace",
     "company": "MemPalace",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-31"
   },
   {
     "slug": "oh-my-openagent",
     "name": "Oh My OpenAgent",
     "company": "Sisyphus Labs (code-yeongyu)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-23"
   },
   {
     "slug": "oh-my-claudecode",
     "name": "oh-my-claudecode",
     "company": "Yeachan Heo",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-31"
   },
   {
     "slug": "cli-anything",
     "name": "CLI-Anything",
     "company": "HKUDS",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-23"
   },
   {
     "slug": "cc-switch",
     "name": "CC Switch",
     "company": "farion1231",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-24"
   },
   {
     "slug": "magpie",
     "name": "magpie",
     "company": "yetone",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-27"
   },
   {
     "slug": "hindsight",
     "name": "Hindsight",
     "company": "Vectorize",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-24"
   },
   {
     "slug": "treg",
     "name": "Treg",
     "company": "Superdesign",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-24"
   },
   {
     "slug": "impeccable",
     "name": "Impeccable",
     "company": "Paul Bakaus",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-25"
   },
   {
     "slug": "chrome-devtools-mcp",
     "name": "Chrome DevTools MCP",
     "company": "Google (Chrome DevTools)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-25"
   },
   {
     "slug": "mobile-mcp",
     "name": "Mobile MCP",
     "company": "Mobile Next",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-26"
   },
   {
     "slug": "openrig",
     "name": "OpenRig",
     "company": "Esoteric Labs",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-28"
   },
   {
     "slug": "cua",
     "name": "Cua",
     "company": "Cua",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-28"
   },
   {
     "slug": "openshell",
     "name": "OpenShell",
     "company": "NVIDIA",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-29"
   },
   {
     "slug": "agent-manager",
     "name": "agent-manager",
     "company": "YoanWai",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-29"
   },
   {
     "slug": "buzz",
     "name": "Buzz",
     "company": "Block",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-30"
   },
   {
     "slug": "beacon",
     "name": "Beacon",
     "company": "Asymptote Labs",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-30"
   },
   {
     "slug": "hyperconsciousness",
     "name": "Hyperconsciousness",
     "company": "Louis Beaumont (maintainer)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-09-30"
   },
   {
     "slug": "gstack",
     "name": "gstack",
     "company": "Garry Tan",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-01"
   },
   {
     "slug": "beads",
     "name": "Beads",
     "company": "Steve Yegge",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-01"
   },
   {
     "slug": "tuios",
     "name": "TUIOS",
     "company": "Gaurav Gosain",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-01"
   },
   {
     "slug": "omniroute",
     "name": "OmniRoute",
     "company": "Diego Souza (diegosouzapw)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-01"
   },
   {
     "slug": "monty",
     "name": "Monty",
     "company": "Pydantic",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-02"
   },
   {
     "slug": "gcx",
     "name": "gcx",
     "company": "Grafana Labs",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-02"
   },
   {
     "slug": "agentgateway",
     "name": "agentgateway",
     "company": "Agentic AI Foundation (Linux Foundation)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-02"
   },
   {
     "slug": "weave-router",
     "name": "Weave Router",
     "company": "Weave",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-03"
   },
   {
     "slug": "cf",
     "name": "cf",
     "company": "Cloudflare",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-04"
   },
   {
     "slug": "taste-skill",
     "name": "Taste Skill",
     "company": "Leon Lin",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-05"
+  },
+  {
+    "slug": "last30days",
+    "name": "last30days",
+    "company": "Matt Van Horn (mvanhorn)",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-16"
   },
   {
     "slug": "skills-manager",
     "name": "Skills Manager",
     "company": "Jay.TL",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-05"
   },
   {
     "slug": "hyperframes",
     "name": "HyperFrames",
     "company": "HeyGen",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-05"
   },
   {
     "slug": "bashcut",
     "name": "BashCut",
     "company": "Nolan / dongnguyenvie",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-06"
+  },
+  {
+    "slug": "ffmpeg-skill",
+    "name": "ffmpeg-skill",
+    "company": "kajisho5",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-15"
   },
   {
     "slug": "matt-pocock-skills",
     "name": "Matt Pocock Skills",
     "company": "Matt Pocock",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-06"
   },
   {
     "slug": "rea",
     "name": "REA",
     "company": "morluto",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-06"
   },
   {
     "slug": "diagram-design",
     "name": "Diagram Design",
     "company": "Cathryn Lavery (LittleMight)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-06"
   },
   {
     "slug": "dbx",
     "name": "DBX",
     "company": "DBX",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-06"
   },
   {
     "slug": "obsidian-mind",
     "name": "Obsidian Mind",
     "company": "Brenno Ferrari (breferrari)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-07"
   },
   {
     "slug": "gbrain",
     "name": "GBrain",
     "company": "Garry Tan",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-07"
   },
   {
     "slug": "agent-browser",
     "name": "agent-browser",
     "company": "Vercel Labs",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-08"
   },
   {
     "slug": "agent-desktop",
     "name": "agent-desktop",
     "company": "Vercel Labs",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-01"
+  },
+  {
+    "slug": "agweb",
+    "name": "Agweb",
+    "company": "paul-nameless",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-15"
   },
   {
     "slug": "bmad-method",
     "name": "BMAD Method",
     "company": "BMad Code",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-08"
   },
   {
     "slug": "tale",
     "name": "Tale",
     "company": "Ruler GmbH",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-08"
   },
   {
     "slug": "screen-browser",
     "name": "Screen Browser",
     "company": "MiCCA OÜ",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-08"
   },
   {
     "slug": "headroom",
     "name": "Headroom",
     "company": "Headroom Labs",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-09"
   },
   {
     "slug": "cubesandbox",
     "name": "CubeSandbox",
     "company": "Tencent Cloud",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-09"
   },
   {
     "slug": "reqode",
     "name": "Reqode",
     "company": "Almware Ltd.",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-10"
   },
   {
     "slug": "mxc",
     "name": "MXC",
     "company": "Microsoft",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-11"
   },
   {
     "slug": "moli",
     "name": "Moli",
     "company": "Lexmount",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-11"
   },
   {
     "slug": "lightpanda",
     "name": "Lightpanda",
     "company": "Lightpanda",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-30"
   },
   {
     "slug": "free-claude-code",
     "name": "Free Claude Code",
     "company": "Ali Khokhar (Alishahryar1)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-12"
   },
   {
     "slug": "pairfob",
     "name": "Pairfob",
     "company": "arronKler",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-12"
   },
   {
     "slug": "aident-loadout",
     "name": "Aident Loadout",
     "company": "Aident AI",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-12"
   },
   {
     "slug": "agentmemory",
     "name": "agentmemory",
     "company": "rohitg00",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-13"
   },
   {
     "slug": "teamai",
     "name": "TeamAI",
     "company": "Tencent",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-13"
   },
   {
     "slug": "agent-toolkit-for-aws",
     "name": "Agent Toolkit for AWS",
     "company": "AWS",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-14"
   },
   {
     "slug": "bifrost",
     "name": "Bifrost",
     "company": "Maxim AI",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-14"
+  },
+  {
+    "slug": "coral",
+    "name": "Coral",
+    "company": "Coral",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-16"
   },
   {
     "slug": "neckbeard",
     "name": "neckbeard",
     "company": "bealesh",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-15"
   },
   {
     "slug": "billion-context",
     "name": "billion-context",
     "company": "ranxianglei",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-15"
   },
   {
     "slug": "coucou",
     "name": "Coucou",
     "company": "Louis Raillé (Louis-CFM)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-15"
   },
   {
     "slug": "lazyskills",
     "name": "LazySkills",
     "company": "Alvin (alvinunreal)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-18"
   },
   {
     "slug": "otari",
     "name": "Otari",
     "company": "Mozilla.ai",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-18"
   },
   {
     "slug": "skillssh",
     "name": "skills.sh",
     "company": "Vercel Labs",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-19"
   },
   {
     "slug": "github-mcp-server",
     "name": "GitHub MCP Server",
     "company": "GitHub",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-19"
   },
   {
     "slug": "tencentdb-agent-memory",
     "name": "TencentDB Agent Memory",
     "company": "Tencent Cloud",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-19"
   },
   {
     "slug": "phone-harness",
     "name": "Phone Harness",
     "company": "Shawn Pana",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-19"
   },
   {
     "slug": "harness2",
     "name": "Harness2",
     "company": "Google Research",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-19"
   },
   {
     "slug": "agentsview",
     "name": "AgentsView",
     "company": "Kenn Software",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-20"
   },
   {
     "slug": "laminar",
     "name": "Laminar",
     "company": "Laminar (YC S24)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-20"
   },
   {
     "slug": "threadkeep",
     "name": "ThreadKeep",
     "company": "Interesting Concepts LLC",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-21"
   },
   {
     "slug": "system-one-api",
     "name": "System One API",
     "company": "Ziyu Li / System One",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-23"
   },
   {
     "slug": "hallmark",
     "name": "Hallmark",
     "company": "Together AI",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-24"
   },
   {
     "slug": "codync",
     "name": "Codync",
     "company": "leepokai",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-24"
   },
   {
     "slug": "respan-gateway",
     "name": "Respan Gateway",
     "company": "Respan (YC W24)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-24"
   },
   {
     "slug": "android-skills",
     "name": "Android Skills",
     "company": "Google",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-26"
   },
   {
     "slug": "google-agent-skills",
     "name": "Google Agent Skills",
     "company": "Google",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-07"
   },
   {
     "slug": "entire",
     "name": "Entire",
     "company": "Entire",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-27"
   },
   {
     "slug": "selan",
     "name": "Selan",
     "company": "Selan UAB (submitted by the Selan team with AI assistance)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-28"
   },
   {
     "slug": "expo-skills",
     "name": "Expo Skills",
     "company": "Expo",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-28"
   },
   {
     "slug": "sandbox-runtime-srt",
     "name": "Sandbox Runtime (srt)",
     "company": "Anthropic",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-28"
   },
   {
     "slug": "cc-skills-golang",
     "name": "cc-skills-golang",
     "company": "Samuel Berthe (samber)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-28"
   },
   {
     "slug": "sqwakie",
     "name": "Sqwakie",
     "company": "Alex Carney",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-29"
   },
   {
     "slug": "skill-recorder",
     "name": "Skill Recorder",
     "company": "Microsoft",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-29"
   },
   {
     "slug": "mcode-stack",
     "name": "MCode Stack",
     "company": "MiniMax",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-10-29"
   },
   {
     "slug": "callmemcp",
     "name": "CallMeMCP",
     "company": "Serdar Oztetik (Oztetik Solutions)",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-01"
   },
   {
     "slug": "interfaces-skills",
     "name": "Interfaces Skills",
     "company": "Jakub Krehel",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-02"
   },
   {
     "slug": "traycer",
     "name": "Traycer",
     "company": "Traycer",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-04"
   },
   {
     "slug": "tokeneconomizer",
     "name": "TokenEconomizer",
     "company": "Microsoft",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-05"
   },
   {
     "slug": "unslop",
     "name": "unslop",
     "company": "Damir Sokolovsky",
-    "category": "Developer Productivity & Workflow"
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-06"
+  },
+  {
+    "slug": "timeuno",
+    "name": "TimeUno",
+    "company": "Kopilot Web LLC",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-09"
+  },
+  {
+    "slug": "executor",
+    "name": "Executor",
+    "company": "Useful Software Co (Rhys Sullivan, YC)",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-09"
+  },
+  {
+    "slug": "astryx",
+    "name": "Astryx",
+    "company": "Meta",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-09"
+  },
+  {
+    "slug": "devvm",
+    "name": "devvm",
+    "company": "devvmhq",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-10"
+  },
+  {
+    "slug": "atuin",
+    "name": "Atuin",
+    "company": "Atuin",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-11"
+  },
+  {
+    "slug": "modern-web-guidance",
+    "name": "Modern Web Guidance",
+    "company": "Google Chrome",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-11"
+  },
+  {
+    "slug": "klad",
+    "name": "klad",
+    "company": "Indicode BV",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-12"
+  },
+  {
+    "slug": "elephant-goldfish-model",
+    "name": "Elephant-Goldfish Model",
+    "company": "Google",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-13"
+  },
+  {
+    "slug": "opencodex",
+    "name": "opencodex",
+    "company": "lidge-jun",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-13"
+  },
+  {
+    "slug": "traces",
+    "name": "Traces",
+    "company": "Traces (Vercel)",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-17"
+  },
+  {
+    "slug": "agentmon-live",
+    "name": "AgentMon Live",
+    "company": "Codenotary",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-18"
+  },
+  {
+    "slug": "agentmash",
+    "name": "agentmash",
+    "company": "agentmash",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-22"
+  },
+  {
+    "slug": "bough",
+    "name": "bough",
+    "company": "Nikhil Kumar (nickelsec)",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-24"
+  },
+  {
+    "slug": "gitfold",
+    "name": "gitfold",
+    "company": "Piotr Kukiełka",
+    "category": "Developer Productivity & Workflow",
+    "addedAt": "2026-11-25"
   },
   {
     "slug": "visual-studio-code",
     "name": "Visual Studio Code",
     "company": "Microsoft",
-    "category": "Editor Platforms with Native AI Features"
+    "category": "Editor Platforms with Native AI Features",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "xcode",
     "name": "Xcode",
     "company": "Apple",
-    "category": "Editor Platforms with Native AI Features"
+    "category": "Editor Platforms with Native AI Features",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "jetbrains-ides",
     "name": "JetBrains IDEs",
     "company": "JetBrains",
-    "category": "Editor Platforms with Native AI Features"
+    "category": "Editor Platforms with Native AI Features",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "visual-studio",
     "name": "Visual Studio",
     "company": "Microsoft",
-    "category": "Editor Platforms with Native AI Features"
+    "category": "Editor Platforms with Native AI Features",
+    "addedAt": "2026-03-20"
   },
   {
     "slug": "copperhead",
     "name": "Copperhead",
     "company": "Copperhead",
-    "category": "Hardware & Edge AI"
+    "category": "Hardware & Edge AI",
+    "addedAt": "2026-09-10"
   },
   {
     "slug": "personal-ai-router",
     "name": "Personal AI Router",
     "company": "NVIDIA",
-    "category": "Hardware & Edge AI"
+    "category": "Hardware & Edge AI",
+    "addedAt": "2026-09-10"
   },
   {
     "slug": "webllm",
     "name": "WebLLM",
     "company": "MLC AI",
-    "category": "Hardware & Edge AI"
+    "category": "Hardware & Edge AI",
+    "addedAt": "2026-09-10"
   },
   {
     "slug": "magnitude",
     "name": "Magnitude",
     "company": "Magnitude (YC)",
-    "category": "Hardware & Edge AI"
+    "category": "Hardware & Edge AI",
+    "addedAt": "2026-09-24"
   },
   {
     "slug": "text-to-cad",
     "name": "text-to-cad",
     "company": "earthtojake",
-    "category": "Hardware & Edge AI"
+    "category": "Hardware & Edge AI",
+    "addedAt": "2026-10-05"
   },
   {
     "slug": "nanochat",
     "name": "nanochat",
     "company": "Andrej Karpathy",
-    "category": "Hardware & Edge AI"
+    "category": "Hardware & Edge AI",
+    "addedAt": "2026-11-01"
   },
   {
     "slug": "colibri",
     "name": "colibri",
     "company": "JustVugg",
-    "category": "Hardware & Edge AI"
+    "category": "Hardware & Edge AI",
+    "addedAt": "2026-11-02"
   },
   {
     "slug": "freetoken",
     "name": "FreeToken",
     "company": "FlashML",
-    "category": "Hardware & Edge AI"
+    "category": "Hardware & Edge AI",
+    "addedAt": "2026-11-02"
+  },
+  {
+    "slug": "llama-modchip",
+    "name": "llama-modchip",
+    "company": "Synchopate",
+    "category": "Hardware & Edge AI",
+    "addedAt": "2026-11-09"
+  },
+  {
+    "slug": "flide",
+    "name": "Flide",
+    "company": "OmniJev",
+    "category": "Hardware & Edge AI",
+    "addedAt": "2026-11-10"
   }
 ]

@@ -1,0 +1,281 @@
+---
+title: "Computer Use Tools for AI Agents: agent-desktop, Cua Driver, Hybrid Computer Use, computer-use-rs and ywza"
+description: "Compare 5 open source computer use tools for AI agents that read the accessibility tree: agent-desktop, Cua Driver, HCU, computer-use-rs, ywza, with installs."
+pubDate: 2026-11-09
+tags: ["computer-use", "accessibility-tree", "mcp", "claude-code", "codex", "open-source", "roundup", "agent-desktop", "cua", "hybrid-computer-use", "computer-use-rs", "ywza"]
+---
+
+In this blog post, we will see why computer use tools for AI agents are suddenly all over GitHub Trending, why the new ones read the accessibility tree instead of screenshots, and which of five open source options I would wire into Claude Code or Codex first. Every version, licence and star count below was checked on November 9, 2026, from the official repository, package registry or docs.
+
+This is a source-based roundup. My test machine runs Ubuntu 22.04, which is below agent-desktop's Linux floor, so the only code I ran end to end is the small snapshot reader further down. I say so wherever it matters.
+
+## Table of Contents
+
+1. [The short answer](#the-short-answer)
+2. [Why computer use is trending this week](#why-computer-use-is-trending-this-week)
+3. [What an agent actually reads: a 25 line example](#what-an-agent-actually-reads-a-25-line-example)
+4. [agent-desktop](#agent-desktop)
+5. [Cua Driver](#cua-driver)
+6. [Hybrid Computer Use](#hybrid-computer-use)
+7. [computer-use-rs](#computer-use-rs)
+8. [ywza](#ywza)
+9. [Side by side](#side-by-side)
+10. [Which one I would install first](#which-one-i-would-install-first)
+11. [FAQ](#faq)
+12. [How this ties to ai.dosa.dev](#how-this-ties-to-aidosadev)
+
+## The short answer
+
+Computer use tools for AI agents let coding agents like Claude Code or Codex read and operate desktop apps. The current wave reads the OS accessibility tree and acts on element refs instead of clicking pixel coordinates. Start with agent-desktop for a CLI, Cua Driver for an MCP server with skills, and Hybrid Computer Use when you need screenshots too.
+
+## Why computer use is trending this week
+
+Here is what showed up across independent sources between November 2 and November 9:
+
+- **GitHub Trending:** [vercel-labs/agent-desktop](https://trendoday.com/github/trending/weekly) gained about 13,700 stars in the week and sat at roughly 19,991 total on November 9, second on the weekly list.
+- **Release activity:** [Cua](https://github.com/trycua/cua/releases) shipped cua-driver-rs 0.44.0, 0.44.1, 0.44.2, 0.45.0, 0.45.1 and 0.45.2 between November 8 and 9. agent-desktop shipped v1.2.0 with a new `agent-desktop mcp` command on November 5.
+- **New projects:** AgentOne [open-sourced computer-use-rs](https://www.agent-one.dev/blog/computer-use-rs) on November 8, and ywza appeared as a [Show HN](https://news.ycombinator.com/item?id=50408730) on November 8.
+- **Weekly digests:** [Tommy Zhang's trending digest](https://www.tommyz.blog/blog/github-trending-weekly-2026-11-02-to-2026-11-07) summed up the week as agents getting "new ways to drive real desktops and browsers".
+
+The shared idea is older than the hype. Screen readers have used the macOS Accessibility API, Windows UI Automation and Linux AT-SPI for years. In the [original agent-desktop Show HN](https://news.ycombinator.com/item?id=47982708), the author's pitch was that screenshot, predict coordinates, click, repeat is "slow, expensive in tokens, and fragile". Reading a tree of named buttons is the desktop version of what Playwright did for the web.
+
+## What an agent actually reads: a 25 line example
+
+Before the tools, here is the core concept. A snapshot is JSON: a tree of roles and names, with a ref on every element the agent can act on. This sample follows the envelope shape in the [agent-desktop README](https://github.com/vercel-labs/agent-desktop) (`version`, `ok`, `command`, `data.snapshot_id`, refs like `@s1a2b3c4:e6`), trimmed by hand to a Calculator window. It is illustrative, not captured output.
+
+```json
+{
+  "version": "2.6",
+  "ok": true,
+  "command": "snapshot",
+  "data": {
+    "app": "Calculator",
+    "snapshot_id": "s1a2b3c4",
+    "tree": {
+      "role": "window", "name": "Calculator", "children": [
+        {"role": "group", "children": [
+          {"role": "button", "name": "6", "ref": "@s1a2b3c4:e6"},
+          {"role": "button", "name": "Multiply", "ref": "@s1a2b3c4:e14"},
+          {"role": "button", "name": "7", "ref": "@s1a2b3c4:e7"},
+          {"role": "button", "name": "Equals", "ref": "@s1a2b3c4:e18"},
+          {"role": "button", "ref": "@s1a2b3c4:e21"}
+        ]},
+        {"role": "statictext", "name": "Result", "value": "0"}
+      ]
+    }
+  }
+}
+```
+
+And a reader that flattens it into the list an agent reasons over:
+
+```python
+import json
+import sys
+
+
+def walk(node):
+    role = node.get("role", "?")
+    name = node.get("name", "")
+    ref = node.get("ref")
+    if ref:
+        label = name or "UNNAMED"
+        yield f"{ref}  {role:<10} {label}"
+    for child in node.get("children", []):
+        yield from walk(child)
+
+
+envelope = json.load(open(sys.argv[1]))
+if not envelope.get("ok"):
+    sys.exit(f"snapshot failed: {envelope.get('error')}")
+
+lines = list(walk(envelope["data"]["tree"]))
+print("\n".join(lines))
+unnamed = sum("UNNAMED" in line for line in lines)
+print(f"{len(lines)} actionable refs, {unnamed} without a name")
+```
+
+I ran `python3 refs.py snapshot.json` with Python 3.10.12, and the output is as shown below:
+
+```
+@s1a2b3c4:e6  button     6
+@s1a2b3c4:e14  button     Multiply
+@s1a2b3c4:e7  button     7
+@s1a2b3c4:e18  button     Equals
+@s1a2b3c4:e21  button     UNNAMED
+5 actionable refs, 1 without a name
+```
+
+To compute 6 × 7, the agent clicks `e6`, `e14`, `e7`, `e18`, snapshots again and reads `Result`. No vision model, no coordinates. The whole file is 669 bytes.
+
+The last line is the catch. That unnamed button is a guess for the agent, and for a screen reader user. Javier Aguilar [measured this on his Mac](https://www.javieraguilar.ai/en/blog/an-agent-sees-what-a-screen-reader-sees/) with agent-desktop: Telegram exposed 1,493 elements, all named, while the Android emulator exposed exactly one, the window. Accessibility tree tools are only as good as the app's accessibility. That is why some of the tools below keep a screenshot fallback.
+
+## agent-desktop
+
+[agent-desktop](/tools/agent-desktop) is a Rust CLI and C library from Vercel Labs, the desktop sibling of [agent-browser](/tools/agent-browser). It started as lahfir's project and now lives under vercel-labs.
+
+**What it does:** `snapshot` returns the JSON tree with snapshot-scoped refs. `click`, `type`, `set-value`, `scroll` and `press` act on refs. There is no model inside; the loop lives in your agent.
+
+**Who it is for:** anyone who wants a shell-first tool that Claude Code, Codex or any agent with a Bash tool can call without extra setup.
+
+**Verified facts:** Apache-2.0, [v1.2.0](https://github.com/vercel-labs/agent-desktop/releases) released November 5, 2026, about 19,991 stars on November 9. The [npm package](https://www.npmjs.com/package/agent-desktop) shows about 50,000 weekly downloads. Free. Supports macOS 13+, Windows 10 1809+ and Ubuntu 24.04+ on x64 and ARM64.
+
+**Try it**, using the commands from the official README:
+
+```bash
+npm install -g agent-desktop
+agent-desktop status
+agent-desktop permissions --guide   # macOS only
+agent-desktop snapshot --app Finder -i
+```
+
+Then act on a ref from that snapshot, for example `agent-desktop click @s8f3k2p9:e8`, and snapshot again to verify. Node 18 or later is required.
+
+**What I liked:** stale refs fail loudly. If the UI changes before an action lands, you get `STALE_REF` or `AMBIGUOUS_TARGET` instead of a wrong click. Actions are headless by default, so your pointer does not move.
+
+**Honest limitation:** the Linux floor is real. The [install docs](https://github.com/vercel-labs/agent-desktop/blob/main/docs/install.md) say Ubuntu 22.04's AT-SPI bridge aborts on `Action.GetActions`, so my 22.04 box is out. On Windows, the binary is unsigned and a clean Windows 11 install with Smart App Control on will block it. Also watch the name: [agent-desktop.dev](https://agent-desktop.dev/) is a different project built on xa11y.
+
+## Cua Driver
+
+[Cua](/tools/cua) is a YC-backed computer-use platform. Cua Driver is its open-source piece for operating native apps on the machine your agent runs on.
+
+**What it does:** gives the agent tools to inspect and operate desktop apps and browsers through MCP, a CLI (`cua-driver call`) or Python and TypeScript SDKs. It tries to deliver input in the background without stealing focus, where the platform allows it.
+
+**Who it is for:** people who want Claude Code, Codex or Cursor connected through MCP with an agent skill installed for them, and who may later want cloud desktops.
+
+**Verified facts:** MIT, [cua-driver-rs v0.45.2](https://github.com/trycua/cua/releases) released November 9, 2026, about 32,004 stars on the `trycua/cua` monorepo. Cua Driver is free; Cua's paid cloud desktops are a separate product and I could not verify a public price table, so none is quoted here.
+
+**Try it on macOS or Linux**, from the [official README](https://github.com/trycua/cua):
+
+```bash
+/bin/bash -c "$(curl -fsSL https://cua.ai/driver/install.sh)"
+cua-driver connect --client claude
+```
+
+The [Claude Code guide](https://cua.ai/docs/cua-driver/guides/claude-code) says `connect` adds the MCP server and installs the skill, and running it twice changes nothing. To register it by hand instead:
+
+```bash
+claude mcp add --transport stdio cua-driver -- cua-driver mcp
+```
+
+Their suggested first task is a good smoke test: ask the agent to compute 6 × 7 in Calculator and verify the display shows 42.
+
+**Honest limitation:** the release pace cuts both ways. Six driver releases in two days is great for bug fixes and bad for pinning a version in CI. The monorepo also had 1,406 open issues on November 9, though that count covers every Cua product, not only the driver. And I would read `install.sh` before piping it into bash.
+
+## Hybrid Computer Use
+
+[Hybrid Computer Use](https://github.com/microsoft/Hybrid-Computer-Use) (HCU) is Microsoft Research's MCP server, named `computer-use`, released alongside a paper.
+
+**What it does:** adds two tools next to the agent's own shell and file tools. `AX` reads a compact accessibility tree with short refs and runs up to 64 actions in one call, returning a diff. `GUI` takes screenshots, zooms into dense regions and sends batched pointer and keyboard input. The agent picks the channel per step.
+
+**Who it is for:** anyone whose target apps are only half accessible, like the Android emulator example above, and who wants a structured path plus a pixel fallback in one server.
+
+**Verified facts:** MIT, [HCU 1.0.0](https://repositorystats.com/microsoft/hybrid-computer-use) released October 30, 2026, about 45 stars on November 9. Free. Linux, macOS and Windows.
+
+**Try it on Linux**, from the official README (Go 1.22+):
+
+```bash
+git clone https://github.com/microsoft/Hybrid-Computer-Use
+cd Hybrid-Computer-Use
+make build-local
+make smoke
+artifacts/computer-use doctor
+```
+
+`make smoke` checks that the stdio MCP server exposes `AX` and `GUI`. For Codex, point `[mcp_servers.computer_use]` in `~/.codex/config.toml` at the binary with `args = ["mcp"]`. `python3 -m hcu.render_agent_config` writes configs for Codex, Claude Code, Gemini CLI and Grok Build.
+
+**Honest limitation:** it is a research release with five commits and 45 stars, so expect paper-first docs and slow issue turnaround. You build from source, macOS needs Swift 6.2+ and Windows needs .NET 8. Claude Code goes through a Python schema adapter rather than the binary directly. The README also warns that HCU sends real input to the signed-in desktop and recommends a dedicated desktop or disposable VM for untrusted tasks.
+
+## computer-use-rs
+
+[computer-use-rs](https://docs.rs/crate/computer-use-rs/latest) is a Rust crate from AgentOne, the team behind the [AgentOne](/tools/agentone) desktop agent. It powers AgentOne's own Computer Use feature.
+
+**What it does:** a typed library, imported as `computer_use`. A `Computer` session gives you `list_apps`, `get_app_state` (indexed tree, PNG screenshot and a text outline), `click`, `type_text`, `set_value`, `scroll`, `drag` and `query`. No server, no protocol.
+
+**Who it is for:** people building their own agent or desktop test harness in Rust who do not want a CLI subprocess in the loop. It is also useful for plain end-to-end tests of desktop apps.
+
+**Verified facts:** MIT OR Apache-2.0, version 0.3.1 on docs.rs, open-sourced on [November 8, 2026](https://www.agent-one.dev/blog/computer-use-rs). Rust 1.89+. Free. Supports macOS 14+, Windows 10+ and Linux via AT-SPI. Star count: unverified.
+
+**Try it**, from the announcement:
+
+```bash
+cargo add computer-use-rs
+git clone https://github.com/The-Best-Codes/computer-use-rs
+cd computer-use-rs
+cargo run --example list_apps
+```
+
+The `inspect` example (`cargo run --example inspect -- TextEdit /tmp/textedit.png`) prints the full element tree and saves a screenshot, so you see what an agent would see.
+
+**Honest limitation:** it is a day old as a public project and is not an agent tool by itself. You write the loop, the MCP wrapper and the permission handling. The README also says some portions are AI-generated. On Linux, Electron, Chromium and Firefox apps only check the accessibility flag at startup, so already-open apps need a restart, and Wayland screenshots are limited.
+
+## ywza
+
+[ywza](https://github.com/alielmorsy/ywza) is the newest and smallest entry, and the only one that is a complete agent rather than a tool for one.
+
+**What it does:** runs a background service, `ywza-agent`, on the PC you want to control and a `ywza` client wherever you type. It describes each window as a numbered list of elements, asks for a screenshot only when it needs one, and works in terminals you already have open. Other devices pair once with a six-digit code and connect peer to peer.
+
+**Who it is for:** Windows users who want to drive their own PC from another machine with a local model through Ollama or LM Studio. Any OpenAI-chat-compatible model works.
+
+**Verified facts:** AGPL-3.0, repository created November 7, 2026, Show HN on November 8. One star when I checked. No tagged release found, so version: unverified. Free.
+
+**Try it**, from the README (recent Rust toolchain):
+
+```bash
+git clone https://github.com/alielmorsy/ywza
+cd ywza
+cargo build --release
+./target/release/ywza-agent run
+```
+
+**Honest limitation:** this one is on the list as a watch item, not a recommendation. It has one contributor, two days of history and no security audit. Linux support is X11 only. An [independent write-up](https://ainews.leverageai.com.au/case/ywza-remote-computer-use-agent) points out that paired devices can connect through public relays, so "nothing exposed to the internet" does not mean no third party in the path. I would not point it at a machine with real credentials yet.
+
+## Side by side
+
+| Tool | Shape | Agent connection | Screenshot fallback | Licence | Version checked |
+| --- | --- | --- | --- | --- | --- |
+| [agent-desktop](/tools/agent-desktop) | Rust CLI + C library | Shell, `agent-desktop mcp` | Yes, `screenshot` command | Apache-2.0 | v1.2.0 |
+| [Cua Driver](/tools/cua) | Driver + CLI + SDKs | MCP, `cua-driver call` | Yes, `get_window_state` | MIT | 0.45.2 |
+| Hybrid Computer Use | MCP server | MCP (`AX`, `GUI`) | Yes, first-class `GUI` tool | MIT | 1.0.0 |
+| computer-use-rs | Rust crate | Your own code | Yes, in `get_app_state` | MIT OR Apache-2.0 | 0.3.1 |
+| ywza | Full agent + client | Built in, OpenAI chat API | On request | AGPL-3.0 | Unverified |
+
+## Which one I would install first
+
+1. **On a Mac with Claude Code or Codex, start with agent-desktop.** It is one npm install, the JSON is easy to read in a transcript, and the stale-ref errors make failures visible. Give the agent the version-matched skill with `agent-desktop skills get desktop`.
+2. **If you would rather the setup be MCP-native, use Cua Driver.** `cua-driver connect --client claude` wires the server and skill in one step. Pin a version if you run it in CI.
+3. **If your target app is a canvas, a game, an emulator or anything with a thin tree, try Hybrid Computer Use.** Its `GUI` channel is a planned fallback, not an afterthought.
+4. **If you are writing your own agent in Rust, read computer-use-rs before rolling your own bindings.**
+5. **Skip ywza for now** unless you want to follow a two-day-old project.
+
+Whatever you pick, run it inside a VM or a separate user account first. All five can type into any window your user can reach, including a terminal with a production shell open.
+
+## FAQ
+
+### What is computer use for AI agents?
+
+Computer use means an AI agent operates desktop apps the way a person does: reading what is on screen, clicking, typing and checking the result. Older approaches sent screenshots to a vision model and clicked coordinates. The tools here read the OS accessibility tree instead and act on named elements.
+
+### Is accessibility tree computer use better than screenshots?
+
+It is cheaper and more precise when the app exposes a good tree, because the agent reads 669 bytes of JSON rather than an image and acts on a ref rather than a guess. It fails on apps that draw their own pixels, like emulators and some games. That is why Hybrid Computer Use and Cua Driver keep screenshots as a fallback.
+
+### Can Claude Code control my desktop apps?
+
+Yes, through any of these tools. Cua Driver registers itself with `cua-driver connect --client claude`, Hybrid Computer Use is added with `claude mcp add`, and agent-desktop works through Claude Code's Bash tool or its MCP command. Each needs OS permissions, such as Accessibility on macOS.
+
+### Does agent-desktop work on Linux?
+
+Yes, on Ubuntu 24.04 or later, on X11 or Wayland, using AT-SPI. Its docs say Ubuntu 22.04 does not work because the AT-SPI bridge aborts on one call. Run it inside the user's graphical session with `at-spi2-core` installed.
+
+### Are computer use tools for AI agents safe to run?
+
+They send real input to your signed-in desktop, so they can do anything you can. Microsoft's HCU README recommends a dedicated desktop or disposable VM for untrusted tasks, and I would follow that for all five. agent-desktop also warns that snapshots and clipboard reads can contain private data, so keep them out of public logs.
+
+## How this ties to ai.dosa.dev
+
+ai.dosa.dev already lists [agent-desktop](/tools/agent-desktop), its browser sibling [agent-browser](/tools/agent-browser), and [Cua](/tools/cua) in Developer Productivity & Workflow, plus [Open-CUAK](/tools/open-cuak) and [OpenMausBot](/tools/openmausbot) for agents that come with their own computer. The agents these tools plug into are [Claude Code](/tools/claude-code) and [Codex CLI](/tools/codex-cli).
+
+Since every tool here can type into any window, pair this with our guide to [open source sandboxes for AI coding agents](/blog/open-source-sandboxes-for-ai-coding-agents). And if your goal is testing apps rather than automating them, see [e2e by TesterArmy](/blog/agentic-end-to-end-testing-framework-e2e).
+
+Happy Testing! Which desktop app in your workflow has no API, and how much of it shows up in its accessibility tree?

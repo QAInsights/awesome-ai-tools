@@ -1,4 +1,6 @@
 import { sanitizeAuthTrigger } from '../src/lib/analytics-events.js';
+import { authAnalyticsUrl } from '../src/lib/auth-analytics-url.js';
+import { ensureSessionId, getSessionId } from './posthog.js';
 
 const PENDING_KEY = 'aat_auth_trigger_pending';
 const ACTIVE_KEY = 'aat_auth_trigger_active';
@@ -10,6 +12,7 @@ export function createAuthAttribution({
     storage = globalThis.sessionStorage,
     documentRef = globalThis.document,
     locationRef = globalThis.location,
+    sessionId = getSessionId,
 } = {}) {
     let active = '';
 
@@ -29,6 +32,19 @@ export function createAuthAttribution({
     }
 
     let activeSubject = '';
+    let context = null;
+
+    function writeContext() {
+        if (!documentRef || !context) return;
+        const secure = locationRef?.protocol === 'https:' ? '; Secure' : '';
+        documentRef.cookie = `aat_auth_context=${encodeURIComponent(JSON.stringify(context))}; Max-Age=600; Path=/; SameSite=Lax${secure}`;
+    }
+
+    async function prepare() {
+        if (!context) context = { url: authAnalyticsUrl(locationRef?.href), sessionId: sessionId() };
+        context.sessionId = context.sessionId || await ensureSessionId();
+        writeContext();
+    }
 
     function setPending(trigger, subject = '') {
         write(PENDING_KEY, sanitizeAuthTrigger(trigger));
@@ -44,6 +60,8 @@ export function createAuthAttribution({
         write(ACTIVE_SUBJECT_KEY, activeSubject);
         const secure = locationRef?.protocol === 'https:' ? '; Secure' : '';
         if (documentRef) {
+            context = { url: authAnalyticsUrl(locationRef?.href), sessionId: sessionId() };
+            writeContext();
             documentRef.cookie = `${COOKIE_NAME}=${encodeURIComponent(active)}; Max-Age=600; Path=/; SameSite=Lax${secure}`;
         }
         return active;
@@ -58,6 +76,7 @@ export function createAuthAttribution({
     }
 
     function clear() {
+        context = null;
         active = '';
         activeSubject = '';
         write(PENDING_KEY, '');
@@ -65,7 +84,10 @@ export function createAuthAttribution({
         write(PENDING_SUBJECT_KEY, '');
         write(ACTIVE_SUBJECT_KEY, '');
         const secure = locationRef?.protocol === 'https:' ? '; Secure' : '';
-        if (documentRef) documentRef.cookie = `${COOKIE_NAME}=; Max-Age=0; Path=/; SameSite=Lax${secure}`;
+        if (documentRef) {
+            documentRef.cookie = `aat_auth_context=; Max-Age=0; Path=/; SameSite=Lax${secure}`;
+            documentRef.cookie = `${COOKIE_NAME}=; Max-Age=0; Path=/; SameSite=Lax${secure}`;
+        }
     }
 
     function open(trigger, subjectValue = '') {
@@ -78,7 +100,7 @@ export function createAuthAttribution({
         else if (locationRef) locationRef.href = '/?signin=1';
     }
 
-    return { begin, clear, current, open, setPending, subject };
+    return { begin, clear, current, open, prepare, setPending, subject };
 }
 
 export const authAttribution = createAuthAttribution();

@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { EVENTS } from '../../../lib/analytics-events.js';
+import { isFavoriteSlug } from '../../../lib/favorite-slugs.js';
 import { trackRequest } from '../../../lib/server/analytics';
 import { addFavorite, removeFavoriteWithFollow } from '../../../lib/server/favorites-repository';
 import { isAllowedMutationRequest, jsonError } from '../../../lib/server/request-security';
@@ -8,13 +9,9 @@ import { getCookieSessionUser } from '../../../lib/server/route-auth';
 
 export const prerender = false;
 
-function validSlug(value: string | undefined): value is string {
-    return Boolean(value && value.length <= 128 && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value));
-}
-
 export const PUT: APIRoute = async ({ request, cookies, params }) => {
     if (!isAllowedMutationRequest(request, import.meta.env.DEV)) return jsonError('Invalid request origin', 403);
-    if (!validSlug(params.slug)) return jsonError('Tool not found', 404);
+    if (!isFavoriteSlug(params.slug)) return jsonError('Tool not found', 404);
 
     try {
         const db = requireDatabase();
@@ -42,7 +39,7 @@ export const PUT: APIRoute = async ({ request, cookies, params }) => {
 
 export const DELETE: APIRoute = async ({ request, cookies, params }) => {
     if (!isAllowedMutationRequest(request, import.meta.env.DEV)) return jsonError('Invalid request origin', 403);
-    if (!validSlug(params.slug)) return jsonError('Tool not found', 404);
+    if (!isFavoriteSlug(params.slug)) return jsonError('Tool not found', 404);
 
     try {
         const db = requireDatabase();

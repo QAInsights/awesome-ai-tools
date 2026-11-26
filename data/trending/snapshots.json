@@ -1,5 +1,887 @@
 [
   {
+    "week": "2026-w47",
+    "start": "2026-11-16T00:00:00.000Z",
+    "end": "2026-11-23T00:00:00.000Z",
+    "generatedAt": "2026-11-23T07:41:48.246Z",
+    "entries": [
+      {
+        "slug": "rea",
+        "name": "REA",
+        "company": "morluto",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 60,
+        "rank": 1,
+        "score": 229.6,
+        "starGrowth": 12079
+      },
+      {
+        "slug": "superpowers",
+        "name": "Superpowers",
+        "company": "obra",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 10,
+        "rank": 2,
+        "score": 163.3,
+        "starGrowth": 6249
+      },
+      {
+        "slug": "deepseek-harness",
+        "name": "DeepSeek Harness",
+        "company": "DeepSeek",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 3,
+        "score": 127.7,
+        "starGrowth": 3875
+      },
+      {
+        "slug": "unslop",
+        "name": "unslop",
+        "company": "Damir Sokolovsky",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 2,
+        "views": 10,
+        "rank": 4,
+        "score": 125.4,
+        "starGrowth": 3563
+      },
+      {
+        "slug": "security-audit",
+        "name": "security-audit",
+        "company": "Cloudflare",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 5,
+        "score": 124,
+        "starGrowth": 3847
+      },
+      {
+        "slug": "magpie",
+        "name": "magpie",
+        "company": "yetone",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 6,
+        "score": 109.6,
+        "starGrowth": 3002
+      },
+      {
+        "slug": "free-claude-code",
+        "name": "Free Claude Code",
+        "company": "Ali Khokhar (Alishahryar1)",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 7,
+        "score": 94.8,
+        "starGrowth": 2099
+      },
+      {
+        "slug": "floorplan",
+        "name": "Floorplan",
+        "company": "Hayden Smith",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 10,
+        "rank": 8,
+        "score": 88.9,
+        "starGrowth": 1752
+      },
+      {
+        "slug": "hermes-agent",
+        "name": "Hermes Agent",
+        "company": "Nous Research",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 9,
+        "score": 85,
+        "starGrowth": 1808
+      },
+      {
+        "slug": "caveman-code",
+        "name": "Caveman Code",
+        "company": "Julius Brussee",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 10,
+        "score": 82.5,
+        "starGrowth": 1701
+      },
+      {
+        "slug": "tokeneconomizer",
+        "name": "TokenEconomizer",
+        "company": "Microsoft",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 11,
+        "score": 71.1,
+        "starGrowth": 1265
+      },
+      {
+        "slug": "claude-code-game-studios",
+        "name": "Claude Code Game Studios",
+        "company": "Donchitos",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 0,
+        "rank": 12,
+        "score": 66,
+        "starGrowth": 1023
+      },
+      {
+        "slug": "dsh-superagent",
+        "name": "dsh-superagent",
+        "company": "DeepSeek",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 13,
+        "score": 61.2,
+        "starGrowth": 936
+      },
+      {
+        "slug": "harness2",
+        "name": "Harness2",
+        "company": "Google Research",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 14,
+        "score": 60.6,
+        "starGrowth": 826
+      },
+      {
+        "slug": "openhands",
+        "name": "OpenHands",
+        "company": "All Hands",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 13,
+        "views": 20,
+        "rank": 15,
+        "score": 59.3,
+        "starGrowth": 568
+      },
+      {
+        "slug": "codex-cli",
+        "name": "Codex CLI",
+        "company": "OpenAI",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 20,
+        "rank": 16,
+        "score": 58.5,
+        "starGrowth": 731
+      },
+      {
+        "slug": "billion-context",
+        "name": "billion-context",
+        "company": "ranxianglei",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 2,
+        "views": 10,
+        "rank": 17,
+        "score": 56.1,
+        "starGrowth": 628
+      },
+      {
+        "slug": "agent-autoloop",
+        "name": "Agent Autoloop",
+        "company": "Khazix",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 18,
+        "score": 55.7,
+        "starGrowth": 776
+      },
+      {
+        "slug": "paseo",
+        "name": "Paseo",
+        "company": "getpaseo",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 20,
+        "rank": 19,
+        "score": 55.3,
+        "starGrowth": 597
+      },
+      {
+        "slug": "gstack",
+        "name": "gstack",
+        "company": "Garry Tan",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 20,
+        "score": 52,
+        "starGrowth": 675
+      },
+      {
+        "slug": "i-have-adhd",
+        "name": "i-have-adhd",
+        "company": "ayghri",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 21,
+        "score": 51.7,
+        "starGrowth": 667
+      },
+      {
+        "slug": "codex-security",
+        "name": "Codex Security",
+        "company": "OpenAI",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 22,
+        "score": 50.6,
+        "starGrowth": 641
+      },
+      {
+        "slug": "oh-my-pi",
+        "name": "Oh My Pi",
+        "company": "Can Bölük",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 23,
+        "score": 50.1,
+        "starGrowth": 550
+      },
+      {
+        "slug": "unsloth",
+        "name": "unsloth",
+        "company": "unsloth",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 20,
+        "rank": 24,
+        "score": 45.9,
+        "starGrowth": 430
+      },
+      {
+        "slug": "ai-memory",
+        "name": "AI-MEMORY",
+        "company": "AkitaOnRails",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 12,
+        "views": 10,
+        "rank": 25,
+        "score": 44.9,
+        "starGrowth": 303
+      }
+    ],
+    "rising": [
+      {
+        "slug": "paseo",
+        "name": "Paseo",
+        "company": "getpaseo",
+        "rank": 19,
+        "previousRank": null,
+        "score": 55.3,
+        "previousScore": 0,
+        "delta": 55.3
+      },
+      {
+        "slug": "unsloth",
+        "name": "unsloth",
+        "company": "unsloth",
+        "rank": 24,
+        "previousRank": null,
+        "score": 45.9,
+        "previousScore": 0,
+        "delta": 45.9
+      },
+      {
+        "slug": "superpowers",
+        "name": "Superpowers",
+        "company": "obra",
+        "rank": 2,
+        "previousRank": 6,
+        "score": 163.3,
+        "previousScore": 117.9,
+        "delta": 45.4
+      },
+      {
+        "slug": "ruflo",
+        "name": "Ruflo",
+        "company": "ruvnet",
+        "rank": 26,
+        "previousRank": 190,
+        "score": 42.9,
+        "previousScore": 3.2,
+        "delta": 39.7
+      },
+      {
+        "slug": "artemis",
+        "name": "ARTEMIS",
+        "company": "Google",
+        "rank": 27,
+        "previousRank": 137,
+        "score": 41.7,
+        "previousScore": 3.2,
+        "delta": 38.5
+      }
+    ],
+    "newTools": [
+      {
+        "slug": "althar",
+        "name": "Althar",
+        "company": "Althar"
+      },
+      {
+        "slug": "tug",
+        "name": "Tug",
+        "company": "Ken Kocienda"
+      },
+      {
+        "slug": "agent-mcts",
+        "name": "agent-mcts",
+        "company": "natsu0529"
+      },
+      {
+        "slug": "timon",
+        "name": "Timon",
+        "company": "Timon"
+      },
+      {
+        "slug": "soduwork",
+        "name": "SoduWork",
+        "company": "MDiRi"
+      },
+      {
+        "slug": "tarobird",
+        "name": "TaroBird",
+        "company": "cloveric"
+      },
+      {
+        "slug": "opencomputer",
+        "name": "OpenComputer",
+        "company": "Digger"
+      },
+      {
+        "slug": "instabox",
+        "name": "InstaBox",
+        "company": "InsForge"
+      },
+      {
+        "slug": "pentestcode",
+        "name": "PentestCode",
+        "company": "s0ld13rr"
+      },
+      {
+        "slug": "claude-bughunter",
+        "name": "Claude-BugHunter",
+        "company": "Sachin Sharma (elementalsouls)"
+      }
+    ],
+    "guard": {
+      "ungatedZapsDropped": 0,
+      "burstActorsDropped": 0
+    }
+  },
+  {
+    "week": "2026-w46",
+    "start": "2026-11-09T00:00:00.000Z",
+    "end": "2026-11-16T00:00:00.000Z",
+    "generatedAt": "2026-11-16T06:32:50.288Z",
+    "entries": [
+      {
+        "slug": "rea",
+        "name": "REA",
+        "company": "morluto",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 3,
+        "views": 70,
+        "rank": 1,
+        "score": 279.6,
+        "starGrowth": 17930
+      },
+      {
+        "slug": "security-audit",
+        "name": "security-audit",
+        "company": "Cloudflare",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 20,
+        "rank": 2,
+        "score": 162.2,
+        "starGrowth": 6220
+      },
+      {
+        "slug": "deepseek-harness",
+        "name": "DeepSeek Harness",
+        "company": "DeepSeek",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 30,
+        "rank": 3,
+        "score": 148,
+        "starGrowth": 5081
+      },
+      {
+        "slug": "unslop",
+        "name": "unslop",
+        "company": "Damir Sokolovsky",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 4,
+        "score": 140.5,
+        "starGrowth": 4713
+      },
+      {
+        "slug": "magpie",
+        "name": "magpie",
+        "company": "yetone",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 5,
+        "score": 138.9,
+        "starGrowth": 4603
+      },
+      {
+        "slug": "superpowers",
+        "name": "Superpowers",
+        "company": "obra",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 6,
+        "score": 117.9,
+        "starGrowth": 3474
+      },
+      {
+        "slug": "free-claude-code",
+        "name": "Free Claude Code",
+        "company": "Ali Khokhar (Alishahryar1)",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 2,
+        "views": 0,
+        "rank": 7,
+        "score": 116.1,
+        "starGrowth": 3209
+      },
+      {
+        "slug": "claude-code-game-studios",
+        "name": "Claude Code Game Studios",
+        "company": "Donchitos",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 2,
+        "views": 10,
+        "rank": 8,
+        "score": 106.2,
+        "starGrowth": 2511
+      },
+      {
+        "slug": "codex-security",
+        "name": "Codex Security",
+        "company": "OpenAI",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 9,
+        "score": 96.1,
+        "starGrowth": 2309
+      },
+      {
+        "slug": "dsh-superagent",
+        "name": "dsh-superagent",
+        "company": "DeepSeek",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 2,
+        "views": 10,
+        "rank": 10,
+        "score": 94.9,
+        "starGrowth": 1974
+      },
+      {
+        "slug": "caveman-code",
+        "name": "Caveman Code",
+        "company": "Julius Brussee",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 10,
+        "rank": 11,
+        "score": 94.6,
+        "starGrowth": 2091
+      },
+      {
+        "slug": "billion-context",
+        "name": "billion-context",
+        "company": "ranxianglei",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 12,
+        "score": 93.9,
+        "starGrowth": 2202
+      },
+      {
+        "slug": "hermes-agent",
+        "name": "Hermes Agent",
+        "company": "Nous Research",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 20,
+        "rank": 13,
+        "score": 91,
+        "starGrowth": 1870
+      },
+      {
+        "slug": "codex-cli",
+        "name": "Codex CLI",
+        "company": "OpenAI",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 20,
+        "rank": 14,
+        "score": 82.6,
+        "starGrowth": 1450
+      },
+      {
+        "slug": "agent-autoloop",
+        "name": "Agent Autoloop",
+        "company": "Khazix",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 1,
+        "views": 0,
+        "rank": 15,
+        "score": 76.5,
+        "starGrowth": 1389
+      },
+      {
+        "slug": "tokeneconomizer",
+        "name": "TokenEconomizer",
+        "company": "Microsoft",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 16,
+        "score": 74.5,
+        "starGrowth": 1389
+      },
+      {
+        "slug": "gbrain",
+        "name": "GBrain",
+        "company": "Garry Tan",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 17,
+        "score": 72.7,
+        "starGrowth": 1320
+      },
+      {
+        "slug": "floorplan",
+        "name": "Floorplan",
+        "company": "Hayden Smith",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 18,
+        "score": 71.6,
+        "starGrowth": 1282
+      },
+      {
+        "slug": "oh-my-pi",
+        "name": "Oh My Pi",
+        "company": "Can Bölük",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 20,
+        "rank": 19,
+        "score": 62,
+        "starGrowth": 826
+      },
+      {
+        "slug": "gstack",
+        "name": "gstack",
+        "company": "Garry Tan",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 20,
+        "score": 59.9,
+        "starGrowth": 896
+      },
+      {
+        "slug": "harness2",
+        "name": "Harness2",
+        "company": "Google Research",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 21,
+        "score": 58.1,
+        "starGrowth": 845
+      },
+      {
+        "slug": "bb",
+        "name": "bb",
+        "company": "bb",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 6,
+        "views": 40,
+        "rank": 22,
+        "score": 56.7,
+        "starGrowth": 518
+      },
+      {
+        "slug": "i-have-adhd",
+        "name": "i-have-adhd",
+        "company": "ayghri",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 0,
+        "views": 0,
+        "rank": 23,
+        "score": 55.5,
+        "starGrowth": 769
+      },
+      {
+        "slug": "ai-memory",
+        "name": "AI-MEMORY",
+        "company": "AkitaOnRails",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 5,
+        "views": 10,
+        "rank": 24,
+        "score": 54.4,
+        "starGrowth": 547
+      },
+      {
+        "slug": "openhands",
+        "name": "OpenHands",
+        "company": "All Hands",
+        "zaps": 0,
+        "favorites": 0,
+        "follows": 0,
+        "outboundClicks": 4,
+        "views": 10,
+        "rank": 25,
+        "score": 54.2,
+        "starGrowth": 553
+      }
+    ],
+    "rising": [
+      {
+        "slug": "unslop",
+        "name": "unslop",
+        "company": "Damir Sokolovsky",
+        "rank": 4,
+        "previousRank": 210,
+        "score": 140.5,
+        "previousScore": 3.2,
+        "delta": 137.3
+      },
+      {
+        "slug": "codex-security",
+        "name": "Codex Security",
+        "company": "OpenAI",
+        "rank": 9,
+        "previousRank": null,
+        "score": 96.1,
+        "previousScore": 0,
+        "delta": 96.1
+      },
+      {
+        "slug": "gbrain",
+        "name": "GBrain",
+        "company": "Garry Tan",
+        "rank": 17,
+        "previousRank": null,
+        "score": 72.7,
+        "previousScore": 0,
+        "delta": 72.7
+      },
+      {
+        "slug": "floorplan",
+        "name": "Floorplan",
+        "company": "Hayden Smith",
+        "rank": 18,
+        "previousRank": null,
+        "score": 71.6,
+        "previousScore": 0,
+        "delta": 71.6
+      },
+      {
+        "slug": "agent-autoloop",
+        "name": "Agent Autoloop",
+        "company": "Khazix",
+        "rank": 15,
+        "previousRank": 78,
+        "score": 76.5,
+        "previousScore": 5.2,
+        "delta": 71.3
+      }
+    ],
+    "newTools": [
+      {
+        "slug": "delta",
+        "name": "Delta",
+        "company": "Zed Industries"
+      },
+      {
+        "slug": "boxesdev",
+        "name": "Boxes.dev",
+        "company": "Boxes.dev (Nick Bushak, Drew Regitsky)"
+      },
+      {
+        "slug": "hoplite",
+        "name": "Hoplite",
+        "company": "Hoplite"
+      },
+      {
+        "slug": "replicas",
+        "name": "Replicas",
+        "company": "Replicas (YC P26)"
+      },
+      {
+        "slug": "tembo",
+        "name": "Tembo",
+        "company": "Tembo"
+      },
+      {
+        "slug": "vorflux",
+        "name": "Vorflux",
+        "company": "Vorflux (YC F26)"
+      },
+      {
+        "slug": "open-session",
+        "name": "Open Session",
+        "company": "Tella"
+      },
+      {
+        "slug": "nuphos",
+        "name": "Nuphos",
+        "company": "Nuphos"
+      },
+      {
+        "slug": "obeya",
+        "name": "Obeya",
+        "company": "Daniel Sadilek"
+      },
+      {
+        "slug": "vespin",
+        "name": "Vespin",
+        "company": "Stage Inc."
+      }
+    ],
+    "guard": {
+      "ungatedZapsDropped": 0,
+      "burstActorsDropped": 1
+    }
+  },
+  {
     "week": "2026-w45",
     "start": "2026-11-02T00:00:00.000Z",
     "end": "2026-11-09T00:00:00.000Z",

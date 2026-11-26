@@ -26,6 +26,7 @@ export function createPostHogClient({
     let ready = false;
     let retryCount = 0;
     let queue = [];
+    let initializationPromise;
 
     function invoke(method, args) {
         try {
@@ -66,7 +67,8 @@ export function createPostHogClient({
         if (!enabled || initialized) return;
         initialized = true;
         try {
-            const sdk = posthogInstance ? null : await loadSdk();
+            initializationPromise = posthogInstance ? Promise.resolve(null) : loadSdk();
+            const sdk = await initializationPromise;
             posthog = posthogInstance ?? sdk?.default ?? sdk?.posthog ?? sdk;
             if (!posthog || typeof posthog.init !== 'function') {
                 retryInitialization();
@@ -134,7 +136,26 @@ export function createPostHogClient({
         } catch {}
     }
 
-    return { initPostHog, capture, identifyUser, resetUser };
+    function getSessionId() {
+        try { return posthog?.get_session_id?.() || ''; } catch { return ''; }
+    }
+
+    async function ensureSessionId(timeoutMs = 1000) {
+        let timer;
+        try {
+            return await Promise.race([
+                (async () => {
+                    await initialize();
+                    if (initializationPromise) await initializationPromise.catch(() => {});
+                    return getSessionId();
+                })(),
+                new Promise(resolve => { timer = globalThis.setTimeout(() => resolve(''), timeoutMs); }),
+            ]);
+        } catch { return ''; }
+        finally { globalThis.clearTimeout(timer); }
+    }
+
+    return { initPostHog, capture, identifyUser, resetUser, getSessionId, ensureSessionId };
 }
 
 const posthogClient = createPostHogClient();
@@ -143,3 +164,5 @@ export const initPostHog = posthogClient.initPostHog;
 export const capture = posthogClient.capture;
 export const identifyUser = posthogClient.identifyUser;
 export const resetUser = posthogClient.resetUser;
+export const getSessionId = posthogClient.getSessionId;
+export const ensureSessionId = posthogClient.ensureSessionId;
