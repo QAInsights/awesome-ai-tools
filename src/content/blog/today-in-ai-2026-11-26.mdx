@@ -1,0 +1,77 @@
+---
+title: "Anthropic prices $83 IPO as Workday buys C1.ai for $850M"
+description: "Anthropic prices its Nasdaq IPO at $83 a share, Workday pays $850M for C1.ai, JetBrains ships Mellum2.1 Instruct, and AMD posts agentic inference numbers."
+pubDate: 2026-11-26
+tags: ["news","today-in-ai","anthropic","ipo","funding","coding-agents","inference","chips"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-11-26 UTC.
+
+Anthropic's listing finally has a price, Workday spends big on AI, and JetBrains ships a faster sibling to its coding model.
+
+## Anthropic prices IPO at $83 a share on Nasdaq
+
+**What happened:** Anthropic priced its initial public offering at $83 a share for 980 million Class A shares, trading on Nasdaq under the symbol ANT. Underwriters hold a 30-day option for up to 147 million more shares, and Anthropic gets no proceeds from the portion sold by unnamed selling stockholders.
+
+**Why it matters:** A public Anthropic means quarterly numbers, pricing pressure and roadmap scrutiny for every team building on Claude.
+
+[Source: AI Breaking Wire](<https://aibreakingwire.com/news/ai-brief-2026-11-26>)
+
+## Workday buys C1.ai for $850 million
+
+**What happened:** Workday acquired San Francisco AI startup C1.ai for $850 million, part of a pivot that has included hundreds of Bay Area layoffs and close to $2 billion in acquisitions over the last two years, the San Francisco Business Times reported.
+
+**Why it matters:** Another enterprise suite absorbing an AI vendor, so check where C1.ai's integrations and APIs land before you build on them.
+
+[Source: San Francisco Business Times](<https://www.bizjournals.com/sanfrancisco/news/2026/11/25/workday-c1-acquisition-price-layoffs.html>)
+
+## JetBrains ships Mellum2.1 Instruct for fast coding sub-agents
+
+**What happened:** JetBrains released Mellum2.1 Instruct, the same 12B mixture-of-experts architecture as Mellum2.1 Thinking but answering without chain of thought. It generates about half the tokens of the Thinking variant and scores almost as well on SWE-bench Verified, and ships with the multi-token prediction head that makes generation up to 1.8x faster.
+
+**Why it matters:** A local model tuned for tool loops and small fixes cuts latency and compute for coding agents that do not need step-by-step reasoning.
+
+[Source: JetBrains](<https://blog.jetbrains.com/ai/2026/11/mellum2-1-instruct-is-out-bringing-faster-answers-for-coding-agents/>)
+
+## AMD says TokenSpeed sets an agentic inference frontier on MI355X
+
+**What happened:** AMD reports TokenSpeed on Muse Spark Open hits 645 output tokens per second per user at concurrency 6 on eight MI355X GPUs, and 48, 868 total tokens per second per GPU at concurrency 40 on four MI355X GPUs on SemiAnalysis's InferenceX AgentX workload.
+
+**Why it matters:** Agent serving economics are the real constraint on coding agents, and AMD is publishing throughput and cost numbers to argue its GPUs compete.
+
+[Source: AMD](<https://www.amd.com/en/developer/resources/technical-articles/2026/advancing-muse-spark-open-agentic-inference-on-amd-gpus-with-tok.html>)
+
+## Anthropic moves Messages API to Rust, cuts CPU per request 70%
+
+**What happened:** Anthropic says porting its Messages API from Python to Rust cut CPU use per request by about 70% and median time to first token by about 20% with no downtime or feature freeze. At one early stage about 98% of tests passed while only about a quarter of production inputs matched.
+
+**Why it matters:** The replay-and-diff verification method is a reusable pattern for anyone rewriting a live API under traffic without double billing.
+
+[Source: Atlasnote.ai](<https://www.atlasnote.ai/en/brief/2026-11-26-daily>)
+
+## Pydantic launches Pax, a plugin-based terminal coding agent
+
+**What happened:** Pydantic released Pax, a terminal coding agent built on the beta Pydantic AI Harness SDK, treating coding, sandboxes, MCP and Logfire observability as toggleable plugins. Code mode is on by default, it can import Claude Code and Codex conversations and switch models, and durable execution across crashes is not yet available in Pax.
+
+**Why it matters:** A harness where tools and models are swappable gives teams a way to test agents without locking into one vendor's runtime.
+
+[Source: Atlasnote.ai](<https://www.atlasnote.ai/en/brief/2026-11-26-daily>)
+
+## Orbital says CurieOS beats Claude Code cost by up to 58%
+
+**What happened:** Orbital Industries published benchmarks for CurieOS, its agentic harness for science and engineering, claiming up to 58% lower cost per task than general-purpose coding harnesses like Claude Code. On Terminal-Bench-Science-0.1 it reports $25.81 per task against $52.33 with Claude Fable 5.2, scoring 74.3% versus Claude Code's published 74.6%.
+
+**Why it matters:** Harness design, not just the model, is now where agent cost is won or lost, so benchmark your own loop before blaming the model bill.
+
+[Source: Orbital Industries](<https://www.orbitalindustries.com/news/blog/curieos-agent-harness-benchmarks>)
+
+## Sources
+
+- [AI Breaking Wire](<https://aibreakingwire.com/news/ai-brief-2026-11-26>)
+- [San Francisco Business Times](<https://www.bizjournals.com/sanfrancisco/news/2026/11/25/workday-c1-acquisition-price-layoffs.html>)
+- [JetBrains](<https://blog.jetbrains.com/ai/2026/11/mellum2-1-instruct-is-out-bringing-faster-answers-for-coding-agents/>)
+- [AMD](<https://www.amd.com/en/developer/resources/technical-articles/2026/advancing-muse-spark-open-agentic-inference-on-amd-gpus-with-tok.html>)
+- [Atlasnote.ai](<https://www.atlasnote.ai/en/brief/2026-11-26-daily>)
+- [Orbital Industries](<https://www.orbitalindustries.com/news/blog/curieos-agent-harness-benchmarks>)
