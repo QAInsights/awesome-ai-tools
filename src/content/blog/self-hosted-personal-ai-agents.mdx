@@ -168,11 +168,19 @@ Pick Hermes if you already work in a terminal and want a scheduled task such as 
    hermes setup
    ```
 
-3. In Hermes chat, try the one-off reminder from the [cron docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/cron):
+3. For scheduled jobs, check `hermes cron status`. If no gateway is running, start one in a separate terminal and leave it open. The [foreground gateway](https://hermes-agent.nousresearch.com/docs/developer-guide/gateway-internals) works without a messaging platform.
+
+   ```sh
+   hermes gateway run
+   ```
+
+4. In Hermes CLI chat, try the one-off reminder from the [cron docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/cron):
 
    ```text
    /cron add "in 30m" "Remind me to check the build"
    ```
+
+   With the default CLI delivery, look for the output under `~/.hermes/cron/output/` after the job runs.
 
 ### Honest limitation
 
@@ -211,7 +219,7 @@ No shell or virtual computer means Eigin is not the pick for the cancellation ex
 | Nod | Desktop or your server | Find a trial renewal date | A supported model connection |
 | Amuse | Your Docker host | Watch it find a public return policy | An OpenAI API key |
 | Rakazo | Your Docker host | Set up one bot with one read-only routine | A model connection and room for bot computers |
-| Hermes Agent | Your computer or server | Schedule a one-off reminder | A model provider; configure a gateway only if needed |
+| Hermes Agent | Your computer or server | Schedule a one-off reminder | A model provider and a running gateway for scheduled jobs |
 | Eigin | iPhone | Review a proposed reminder | iOS 26 and TestFlight access |
 
 ## FAQ
