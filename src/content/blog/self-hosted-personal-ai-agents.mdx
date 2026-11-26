@@ -1,0 +1,241 @@
+---
+title: "5 Open-Source Self-Hosted Personal AI Agents You Can Run"
+description: "Compare five self-hosted personal AI agents for browser tasks, scheduled work, and iPhone privacy. See setup steps, approval controls, and real costs for each."
+pubDate: 2026-11-26
+tags: ["personal-agents", "self-hosted", "open-source", "roundup", "nod", "amuse", "rakazo", "hermes-agent", "eigin"]
+tools: ["nod", "rakazo", "hermes-agent"]
+---
+
+In this blog post, we will see five self-hosted personal AI agents you can use to handle browser errands, schedule a recurring check, or work with your calendar. I checked the setup steps against the projects' READMEs and official docs on November 26, 2026. I did not run the installs. Star counts are snapshots from the GitHub pages I could access, not live counters.
+
+## Table of Contents
+
+1. [The short answer](#the-short-answer)
+2. [What self-hosting changes](#what-self-hosting-changes)
+3. [One errand, one approval](#one-errand-one-approval)
+4. [Nod](#nod)
+5. [Amuse](#amuse)
+6. [Rakazo](#rakazo)
+7. [Hermes Agent](#hermes-agent)
+8. [Eigin](#eigin)
+9. [Side by side](#side-by-side)
+10. [FAQ](#faq)
+11. [How this ties to ai.dosa.dev](#how-this-ties-to-aidosadev)
+
+## The short answer
+
+Self-hosted personal AI agents run on a computer or phone you control. Pick Nod for browser errands, Amuse for a browser you can take over, Rakazo for multiple bots, Hermes Agent for scheduled terminal workflows, or Eigin for on-device iPhone tasks. Check what leaves your device and which actions still need your approval.
+
+## What self-hosting changes
+
+[ChatGPT Dots](https://openai.com/index/introducing-dots/), [Claude Duet](https://claude.com/resources/articles/claude-duet), [Grok Bot](https://x.ai/bot), and [Meta Muse](https://ai.meta.com/muse/) set the comparison here: agents that take on tasks, not just answer questions. The tools below cover parts of that job. None is meant as a feature-for-feature replacement.
+
+Self-hosting tells you where the agent runs, not where the model runs. For example, Amuse runs on your machine but requires an OpenAI API key. Eigin runs on your iPhone and can use an on-device model. A connected calendar or website can still receive requests, even if inference is local.
+
+## One errand, one approval
+
+Start with a trial listed in an account you control. Use a prompt like this with a browser agent:
+
+> Find when my trial renews and show me the cancellation terms. Stop before clicking any button that changes my account. Ask me to approve the final cancellation.
+
+The useful test is the stopping point, not the summary. If the agent cannot identify the account and the exact change it is about to make, do the last click yourself. [Nod's approval docs](https://nod.n8n.io/docs/trust/approvals/) distinguish between steps you authorized in the request and actions that still need a separate yes. That is why the stop instruction matters.
+
+## Nod
+
+### What it does
+
+Nod gives a personal agent its own workspace and browser. Use it to find a renewal date on a website or draft a message from a document. Its [trust check](https://nod.n8n.io/docs/trust/approvals/) reviews actions against your request and rules.
+
+### Who it is for
+
+Pick Nod if the work jumps between a connected app and a website, and you want a desktop setup without installing Docker.
+
+### Facts
+
+- **Release:** [v0.9.8](https://github.com/n8n-io/nod/releases), November 26, 2026.
+- **License and stars:** Apache-2.0; about 3,700 stars in the [GitHub snapshot](https://github.com/n8n-io/nod).
+- **Maintenance:** [November 26 commit](https://github.com/n8n-io/nod/commit/544217b) for Fedora packaging; the [PR list](https://github.com/n8n-io/nod/pulls) shows work on scheduling and OpenRouter.
+- **Pricing:** [Free to run](https://nod.n8n.io/). A paid model provider bills separately; a local model has no per-request fee.
+
+### How to try it
+
+1. Head to [the Nod desktop install guide](https://nod.n8n.io/docs/get-started/install-desktop/). On macOS 14 or later, choose the DMG for Apple silicon or Intel, open it, and drag Nod to Applications.
+2. Open Nod, choose **Get started** for a local assistant, and connect a supported model. Start with the read-only half of the trial prompt, before connecting email or messaging.
+
+### Honest limitation
+
+The macOS app and its local runtime are about 1.8 GB together. [Linux x64 and Windows 11 are previews](https://github.com/n8n-io/nod/releases), so I would check the requirements for those platforms before planning a quick setup.
+
+## Amuse
+
+### What it does
+
+[Amuse](https://github.com/replit/amuse/blob/main/README.md) runs a single-user agent with a live browser you can watch, stop, or take over. Its README documents approval cards for sends, submissions, payments, and new schedules.
+
+### Who it is for
+
+Pick Amuse if you already have an OpenAI API key and want to see how the agent got to a form before deciding whether to submit it.
+
+### Facts
+
+- **Release:** No tagged release on [GitHub Releases](https://github.com/replit/amuse/releases); [the changelog](https://raw.githubusercontent.com/replit/amuse/a71da98873f05928bed217be1a48f9e0109ad1c4/CHANGELOG.md) lists 0.1.0 as unreleased.
+- **License and stars:** Apache-2.0; about 180 stars in the [GitHub snapshot](https://github.com/replit/amuse).
+- **Maintenance:** GitHub's [API snapshot](https://api.github.com/repos/replit/amuse) records a November 24 push. I could not verify the latest commit date or a regular [PR cadence](https://github.com/replit/amuse/pulls).
+- **Pricing:** No Amuse subscription is required for this install. [OpenAI API usage](https://developers.openai.com/api/docs/pricing) is billed separately.
+
+### How to try it
+
+1. With Git and Docker Engine with Compose installed, clone the project and copy its example environment file:
+
+   ```sh
+   git clone https://github.com/replit/amuse
+   cd amuse
+   cp .env.example .env
+   ```
+
+2. Set `OPENAI_API_KEY` in your local `.env`, then run the [README's Compose command](https://github.com/replit/amuse/blob/main/README.md):
+
+   ```sh
+   docker compose up -d --build
+   ```
+
+3. Head to [http://localhost:3000](http://localhost:3000) and create your agent. Ask it to find the return policy on a public site, then watch where it navigates.
+
+### Honest limitation
+
+Hosting the app yourself does not remove the OpenAI requirement. The documented stack also starts PostgreSQL, and without a tagged release you are building whatever the default branch contains at clone time.
+
+## Rakazo
+
+### What it does
+
+[Rakazo](https://github.com/elie222/rakazo) gives bots memory, routines, and their own computers. You can run one bot for a recurring website check or put several in a group chat and hand work between them.
+
+### Who it is for
+
+Pick Rakazo if you want separate bots with distinct jobs or want a web, desktop, and phone client pointed at the same server.
+
+### Facts
+
+- **Release:** [v0.16.0](https://github.com/elie222/rakazo/releases/tag/v0.16.0), November 24, 2026.
+- **License and stars:** Apache-2.0; about 9,800 stars in the [GitHub snapshot](https://github.com/elie222/rakazo).
+- **Maintenance:** [November 26 commit](https://github.com/elie222/rakazo/commit/294b0db) for [PR #6670](https://github.com/elie222/rakazo/pull/6670); the v0.16.0 notes list fixes to browser-origin checks and owner approvals.
+- **Pricing:** [Self-hosted is free](https://rakazo.com/pricing/); budget separately for your infrastructure and model. Rakazo's hosted bring-your-own-model plan starts at $15 per month on monthly billing.
+
+### How to try it
+
+1. Check the [self-hosting guide](https://github.com/elie222/rakazo/blob/main/docs/self-host.md) for prerequisites: Docker Engine 26 or later, the Compose plugin, curl, and OpenSSL.
+2. Download the official installer to a dedicated folder, inspect it, then run it to start the published images:
+
+   ```sh
+   mkdir -p rakazo && cd rakazo
+   curl -fsSLO https://raw.githubusercontent.com/elie222/rakazo/main/infra/compose/install-images.sh
+   ```
+
+   ```sh
+   bash install-images.sh
+   ```
+
+3. Head to [http://localhost:5173](http://localhost:5173), connect a model in onboarding, and start with one bot and one read-only routine.
+
+### Honest limitation
+
+The self-hosting guide recommends 2 vCPUs and 4 GB of RAM, and says a running bot computer can use up to 2 GB. If you only need one reminder, I would skip the multi-bot setup.
+
+## Hermes Agent
+
+### What it does
+
+[Hermes Agent](https://github.com/NousResearch/hermes-agent) is a local or server-hosted agent with reusable skills and a messaging gateway. Its [cron tool](https://hermes-agent.nousresearch.com/docs/user-guide/features/cron) runs one-off or recurring tasks, and can deliver results back to a chat.
+
+### Who it is for
+
+Pick Hermes if you already work in a terminal and want a scheduled task such as checking a feed, with results delivered to a chat later.
+
+### Facts
+
+- **Release:** [Stable v0.23.4](https://github.com/NousResearch/hermes-agent/releases/tag/v0.23.4), published to GitHub November 24, 2026 UTC; the release notes are dated November 23.
+- **License and stars:** MIT; about 266,000 stars in the [GitHub snapshot](https://github.com/NousResearch/hermes-agent).
+- **Maintenance:** [November 26 commit history](https://github.com/NousResearch/hermes-agent/commits) shows gateway fixes. The stable release notes report 229 merged PRs and 281 closed issues since v0.23.3.
+- **Pricing:** [Free to self-host](https://hermes-agent.nousresearch.com/open-source-ai-agent); model usage, hosted tools and Nous cloud hosting are separate.
+
+### How to try it
+
+1. Head to [the official installation guide](https://hermes-agent.nousresearch.com/docs/getting-started/installation). On an Apple silicon Mac with macOS 13 or later, open the desktop DMG and copy Hermes Agent to Applications.
+2. Open a terminal and run the [quickstart's setup command](https://hermes-agent.nousresearch.com/docs/getting-started/quickstart), choose a model provider, and verify that chat responds before configuring a gateway.
+
+   ```sh
+   hermes setup
+   ```
+
+3. In Hermes chat, try the one-off reminder from the [cron docs](https://hermes-agent.nousresearch.com/docs/user-guide/features/cron):
+
+   ```text
+   /cron add "in 30m" "Remind me to check the build"
+   ```
+
+### Honest limitation
+
+The [dangerous command approval system](https://hermes-agent.nousresearch.com/docs/user-guide/security) checks shell commands against known patterns. That is not an approval card for every external action, so I would start with a read-only task and leave unattended approval off.
+
+## Eigin
+
+### What it does
+
+[Eigin](https://github.com/Eigin-AI/Eigin) runs the agent, memory, and fixed set of tools on an iPhone, without a shell or virtual computer. It includes calendar and reminders tools. It is the device-local option here, not a general-purpose server deployment.
+
+### Who it is for
+
+Pick Eigin if you want calendar and reminders on an iPhone and would rather approve a specific change than hand an agent a browser session.
+
+### Facts
+
+- **Release:** iOS 26 TestFlight beta per the [project README](https://github.com/Eigin-AI/Eigin); exact current build number and publish date unverified.
+- **License and stars:** AGPL-3.0; 5 stars on its read-only [GitHub mirror](https://github.com/Eigin-AI/Eigin). The project directs contributions to its [own forge](https://code.eigin.ai/dev/eigin).
+- **Maintenance:** The [mirror's latest visible commit](https://github.com/Eigin-AI/Eigin/commits/main/) is a November 14 merge. Current issue and merge request activity on the primary forge is unverified.
+- **Pricing:** [The app is free](https://docs.eigin.ai/faq.html); optional Eigin Relay charges for cloud inference. You can use a local model or pay your own provider directly.
+
+### How to try it
+
+1. Head to [Eigin's README](https://github.com/Eigin-AI/Eigin) on an iPhone running iOS 26 and follow **Join the beta on TestFlight**.
+2. For an on-device model, download one from the app as described in [Eigin's FAQ](https://www.eigin.ai/en/). Ask it to draft a reminder for tomorrow and check the proposed time before approving. I could verify the documented beta route, not whether TestFlight has a slot available.
+
+### Honest limitation
+
+No shell or virtual computer means Eigin is not the pick for the cancellation example. Start with an action exposed by its iPhone tools, such as adding a reminder.
+
+## Side by side
+
+| Tool | Where the agent runs | First task to try | What you need to supply |
+| --- | --- | --- | --- |
+| Nod | Desktop or your server | Find a trial renewal date | A supported model connection |
+| Amuse | Your Docker host | Watch it find a public return policy | An OpenAI API key |
+| Rakazo | Your Docker host | Set up one bot with one read-only routine | A model connection and room for bot computers |
+| Hermes Agent | Your computer or server | Schedule a one-off reminder | A model provider; configure a gateway only if needed |
+| Eigin | iPhone | Review a proposed reminder | iOS 26 and TestFlight access |
+
+## FAQ
+
+### What is a self-hosted personal AI agent?
+
+A self-hosted personal AI agent runs on your own computer, server, or phone and performs tasks through tools you give it. It can still use a hosted model, so hosting the agent yourself does not guarantee the task data stays local.
+
+### What is a self-hosted alternative to ChatGPT Dots or Claude Duet?
+
+Nod is a starting point for browser errands, and Amuse lets you watch or take over its browser. Rakazo is a better fit if you want several bots with their own routines on a server you control.
+
+### Can a personal AI agent run without an API key?
+
+Yes, if it supports local inference or a local model server. Eigin can download an on-device model, while Nod supports local model servers; Amuse's documented setup requires an OpenAI API key.
+
+### Will a personal AI agent ask before it sends a message or changes my account?
+
+That depends on the tool and what you authorized. Amuse documents approval cards for sends and submissions, while Nod can proceed with steps your request already authorizes, so explicitly say where to stop and confirm before connecting a real account.
+
+## How this ties to ai.dosa.dev
+
+The directory already lists [Nod](/tools/nod), [Rakazo](/tools/rakazo), and [Hermes Agent](/tools/hermes-agent). To keep comparing personal agents, see [OpenClaw](/tools/openclaw), [nanobot](/tools/nanobot), and [IronClaw](/tools/ironclaw).
+
+If you only need one part of the stack, compare [computer use tools](/blog/computer-use-tools-for-ai-agents), [headless browsers](/blog/headless-browsers-for-ai-agents), [persistent memory](/blog/persistent-memory-for-ai-coding-agents), or [open source sandboxes](/blog/open-source-sandboxes-for-ai-coding-agents).
+
+Happy Testing! What is the first errand you would hand to an agent, and where would you make it stop?
