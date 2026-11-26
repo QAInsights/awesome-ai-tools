@@ -14298,5 +14298,59 @@
       "GPU Acceleration"
     ],
     "lastUpdated": "2026-11-25"
+  },
+  {
+    "slug": "caw",
+    "name": "Caw",
+    "company": "04mg",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT licence. You download a single binary for Linux, macOS (Apple Silicon) or Windows and run it locally; the agents it launches use your own subscriptions or API keys.",
+    "description": "Caw is a web terminal multiplexer for AI coding agents. It runs a local server, detects the CLI agents installed on your machine and opens each one in a browser terminal pane, with a live status board, per-agent git worktrees, push notifications and usage-limit tracking.",
+    "keyFeatures": [
+      "Runs Claude Code, Codex CLI, GitHub Copilot, OpenCode, Antigravity, Pi, Hermes and other CLI agents side by side in the browser",
+      "Agent Control Center Kanban board showing Working, Needs Input or Idle from each agent transcript",
+      "Automatic isolated git worktree and branch per agent",
+      "Push notifications on desktop or phone when an agent needs input or finishes",
+      "Live usage limits and reset times for Claude, Codex, Copilot, OpenCode, Ollama, OpenRouter, Zed and more"
+    ],
+    "bestFor": "Developers who run several CLI coding agents at once and want to watch and answer them from one browser tab, including from a phone.",
+    "notIdealFor": "Teams that need a hosted, multi-user agent platform, or developers who prefer a native terminal app over a browser interface.",
+    "recentUpdates": "v0.3.7 shipped on November 1, 2026, following v0.3.6 on September 6, 2026; the project launched on Product Hunt as an open-source web interface for AI agents.",
+    "verdict": "A lightweight, self-hosted way to supervise many CLI agents from a browser; still pre-1.0 and maintained by a small team.",
+    "tags": [
+      "Terminal",
+      "Multi-Agent",
+      "Git Worktrees",
+      "Open Source",
+      "Developer Productivity"
+    ],
+    "lastUpdated": "2026-11-26"
+  },
+  {
+    "slug": "githits",
+    "name": "GitHits",
+    "company": "GitHits",
+    "pricing": "free",
+    "pricingDetail": "The CLI and MCP server are open source under Apache-2.0. The hosted index launched as a free beta in June 2026 and needs a GitHits account; the company said a commercial version would follow, and no pricing page was published as of November 26, 2026.",
+    "description": "GitHits gives AI coding agents a version-aware index of open-source code, documentation and package data. Through an MCP server, CLI or REST API, agents can search and read dependency source at the exact version they use, find source-cited examples, and check package health before changing code.",
+    "keyFeatures": [
+      "Search, grep and read dependency source and docs at a specific package version or repository ref",
+      "Source-cited code examples from real open-source projects",
+      "Package inspection for dependencies, licences, vulnerabilities and changelogs, plus upgrade reviews and version diffs",
+      "`npx githits@latest init` configures Claude Code, Cursor, Windsurf, VS Code, Cline, Codex CLI, Gemini CLI, OpenCode, Zed and more",
+      "Public REST API and githits-scan for SBOMs and lockfile audits"
+    ],
+    "bestFor": "Developers whose coding agents guess at third-party library behaviour and need source-backed answers about the dependencies they use or plan to upgrade.",
+    "notIdealFor": "Work that depends mainly on private or proprietary libraries, or teams that cannot send queries to a hosted service.",
+    "recentUpdates": "CLI and MCP v0.41.0 (November 19, 2026) added package lifecycle evidence and unified vulnerability findings; githits-scan 0.6.0 and 0.6.1 (November 19 and 20, 2026) added audit presentation JSON and upgrade dependency checks.",
+    "verdict": "A focused context layer for the code beyond your repository, shipping weekly; the hosted index is still labelled beta and pricing is not yet published.",
+    "tags": [
+      "MCP",
+      "Code Search",
+      "Context Engineering",
+      "Dependencies",
+      "CLI"
+    ],
+    "lastUpdated": "2026-11-26"
   }
 ]
