@@ -136,7 +136,8 @@ Pick Rakazo if you want separate bots with distinct jobs or want a web, desktop,
    bash install-images.sh
    ```
 
-3. Head to [http://localhost:5173](http://localhost:5173), connect a model in onboarding, and start with one bot and one read-only routine.
+3. The app binds to `127.0.0.1:5173` on the machine running Compose. If that is your computer, head to [http://127.0.0.1:5173](http://127.0.0.1:5173). For a private server, forward the server's loopback port over SSH and open the forwarded port in your browser. For a public server, set up a TLS reverse proxy and configure the public origins as described in the self-hosting guide, then head to your public HTTPS URL.
+4. Connect a model in onboarding and start with one bot and one read-only routine.
 
 ### Honest limitation
 
