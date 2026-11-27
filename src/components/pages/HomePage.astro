@@ -126,7 +126,7 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
                 </SiteHeader>
                 <!-- Hero: one-line orientation for first-time visitors -->
                 <div class="px-4 md:px-8 pt-6 md:pt-8 pb-2 shrink-0 flex items-start gap-6">
-                    <div class="min-w-0 flex-1">
+                    <div class="fresh-drops-hero min-w-0 flex-1">
                         <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-2.5">
                             <span class="inline-block align-middle mr-2 w-1.5 h-1.5 rounded-full bg-[#d6b77a]"></span>
                             {t(lang, 'home.heroStats', `${tools.length} tools · ${categoryCount} categories · curated by hand`, { tools: tools.length, cats: categoryCount })}{latestUpdateLabel && <>&nbsp;&middot; {t(lang, 'home.heroUpdated', `updated ${latestUpdateLabel}`, { date: latestUpdateLabel })}</>}
@@ -140,11 +140,12 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
                                 <a href="/new" class="fresh-drops-pill group inline-flex min-w-0 max-w-full items-center gap-2 rounded-full border border-border bg-white/[0.02] px-3 py-1.5 transition-colors hover:border-border-strong hover:bg-white/[0.05] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">
                                     <span class="size-1.5 shrink-0 rounded-full bg-gold shadow-[0_0_10px_rgba(214,183,122,0.55)]" aria-hidden="true"></span>
                                     <span class="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-secondary">
-                                        {t(lang, 'home.freshDrops', 'Fresh drops')} · <time datetime={latestDrop.date}>{formatDropDateShort(latestDrop.date)}</time>
+                                        {t(lang, 'home.freshDrops', 'Fresh drops')}<span class="fresh-drops-date"> · <time datetime={latestDrop.date}>{formatDropDateShort(latestDrop.date)}</time></span>
                                     </span>
-                                    <span class="h-3 w-px shrink-0 bg-border" aria-hidden="true"></span>
+                                    <span class="fresh-drops-divider h-3 w-px shrink-0 bg-border" aria-hidden="true"></span>
                                     <span class="min-w-0 truncate text-[13px] font-medium text-ink">{latestDropPreview}</span>
-                                    <span class="shrink-0 font-mono text-[11px] text-gold-soft transition-transform group-hover:translate-x-0.5">{latestDropCountLabel} →</span>
+                                    <span class="fresh-drops-count-full shrink-0 font-mono text-[11px] text-gold-soft transition-transform group-hover:translate-x-0.5">{latestDropCountLabel} →</span>
+                                    <span class="fresh-drops-count-compact shrink-0 font-mono text-[11px] text-gold-soft transition-transform group-hover:translate-x-0.5">+{latestDropCount} →</span>
                                 </a>
                             )}
                         </span>
@@ -227,4 +228,25 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
     <script src="/dist/app.js" type="module" defer></script>
     <script src="/dist/browse-gate.js" type="module" defer></script>
 
+<style>
+    .fresh-drops-hero {
+        container-type: inline-size;
+    }
+
+    .fresh-drops-count-compact {
+        display: none;
+    }
+
+    @container (max-width: 30rem) {
+        .fresh-drops-date,
+        .fresh-drops-divider,
+        .fresh-drops-count-full {
+            display: none;
+        }
+
+        .fresh-drops-count-compact {
+            display: inline;
+        }
+    }
+</style>
 </BaseLayout>
