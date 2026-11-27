@@ -10,4 +10,18 @@ describe('BaseLayout SEO title escaping', () => {
         expect(source).toContain('title: resolvedOgTitle');
         expect(source).toContain('title: resolvedTwitterTitle');
     });
+
+    test('loads the Cloudflare AI Search chat bubble against the instance origin', () => {
+        const source = readFileSync(new URL('./BaseLayout.astro', import.meta.url), 'utf8');
+
+        expect(source).toContain("const aiSearchApiUrl = 'https://6902291b-4254-4f26-9404-44f89ddb0767.search.ai.cloudflare.com';");
+        expect(source).toContain('/assets/v0.0.40/search-snippet.es.js');
+        expect(source).toContain('integrity={aiSearchSnippetIntegrity}');
+        expect(source).toContain('fetchpriority="low"');
+        expect(source).toContain('api-url={aiSearchApiUrl}');
+        expect(source).toContain('placeholder="Ask about AI coding tools..."');
+        expect(source).toContain('translations={aiSearchTranslations}');
+        expect(source).toContain("--search-snippet-primary-color: #f2c040;");
+        expect(source).not.toContain('chat/completions/chat/completions');
+    });
 });

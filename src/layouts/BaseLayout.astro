@@ -116,6 +116,15 @@ if (i18nPath) {
 }
 const htmlLang = lang === 'zh' ? 'zh-Hans' : 'en';
 const ogLocale = lang === 'zh' ? 'zh_CN' : 'en_US';
+// The snippet client appends `/chat/completions`, so keep this as the origin.
+const aiSearchApiUrl = 'https://6902291b-4254-4f26-9404-44f89ddb0767.search.ai.cloudflare.com';
+const aiSearchSnippetUrl = `${aiSearchApiUrl}/assets/v0.0.40/search-snippet.es.js`;
+const aiSearchSnippetIntegrity = 'sha384-JvlvGvAgmNxIa/JqW1fKCNi+CMjrH/SG/RAtKUrHgJLf0Z6zBk5F1sSk7ZjhKo0s';
+const aiSearchTranslations = JSON.stringify({
+    chatTitle: 'Ask ai.dosa.dev',
+    chatEmptyTitle: 'Ask the directory',
+    chatEmptyDescription: 'Find the right AI coding tool, compare pricing, or explore alternatives.',
+});
 ---
 <!DOCTYPE html>
 <html lang={htmlLang}>
@@ -176,6 +185,29 @@ const ogLocale = lang === 'zh' ? 'zh_CN' : 'en_US';
     <link rel="manifest" href="/images/icons/site.webmanifest" />
 
     <link rel="stylesheet" href="/css/output.css">
+    <style is:inline>
+        chat-bubble-snippet {
+            color-scheme: dark;
+            --search-snippet-font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+            --search-snippet-primary-color: #f2c040;
+            --search-snippet-primary-hover: #f1d99f;
+            --search-snippet-background: #0a0a0a;
+            --search-snippet-surface: #111111;
+            --search-snippet-hover-background: #171717;
+            --search-snippet-text-color: #ffffff;
+            --search-snippet-text-secondary: #a3a3a3;
+            --search-snippet-text-description: #d4d4d4;
+            --search-snippet-border-color: #222222;
+            --search-snippet-focus-ring: rgba(242, 192, 64, 0.28);
+            --search-snippet-user-message-bg: #f2c040;
+            --search-snippet-user-message-text: #000000;
+            --search-snippet-assistant-message-bg: #171717;
+            --search-snippet-assistant-message-text: #e5e5e5;
+            --chat-bubble-button-icon-color: #000000;
+            --chat-bubble-button-shadow: 0 12px 32px rgba(242, 192, 64, 0.2);
+            --chat-bubble-window-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+        }
+    </style>
 
     {/* Escape `<` so enriched free-text can never close the script tag early */}
     {jsonLd && <script type="application/ld+json" set:html={jsonLd.replace(/</g, '\\u003c')} />}
@@ -193,6 +225,21 @@ const ogLocale = lang === 'zh' ? 'zh_CN' : 'en_US';
     <script src="/dist/site-analytics.js" type="module" defer></script>
     <script src="/dist/onboarding.js" type="module" defer></script>
     <script src="/dist/one-tap.js" type="module" defer></script>
+    <!-- Cloudflare AI Search chat bubble -->
+    <script
+        type="module"
+        src={aiSearchSnippetUrl}
+        integrity={aiSearchSnippetIntegrity}
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+        fetchpriority="low"
+    ></script>
+    <chat-bubble-snippet
+        api-url={aiSearchApiUrl}
+        theme="dark"
+        placeholder="Ask about AI coding tools..."
+        translations={aiSearchTranslations}
+    ></chat-bubble-snippet>
     <!-- Cloudflare Web Analytics -->
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "16936e2eed2a4361adb21441d23573dd"}'></script>
     <!-- End Cloudflare Web Analytics -->
