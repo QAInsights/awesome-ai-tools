@@ -101,6 +101,8 @@ function makeGrid() {
 describe('renderer', () => {
     let bar;
     let countText;
+    let rootStyles;
+    let resizeCallback;
     let thumbnails;
     let compareBtn;
     let clearBtn;
@@ -109,6 +111,15 @@ describe('renderer', () => {
     beforeEach(() => {
         clearSelection();
         process.env.ENABLE_VOTING = 'true';
+        rootStyles = new Map();
+        resizeCallback = null;
+        global.ResizeObserver = class {
+            constructor(callback) {
+                resizeCallback = callback;
+            }
+            observe() {}
+            disconnect() {}
+        };
 
         bar = makeEl('div');
         countText = makeEl('span');
@@ -126,6 +137,11 @@ describe('renderer', () => {
         };
 
         global.document = {
+            documentElement: {
+                style: {
+                    setProperty: (name, value) => rootStyles.set(name, value)
+                }
+            },
             getElementById: (id) => elements[id] ?? null,
             querySelector: () => null
         };
@@ -185,6 +201,28 @@ describe('renderer', () => {
         expect(countText.textContent).toBe('1 of 3 selected');
         expect(thumbnails.innerHTML).toContain('Cursor');
         expect(compareBtn.disabled).toBe(true);
+    });
+
+    test('updates the chat inset when the compare bar resizes and clears', async () => {
+        ({ initRenderer } = await import(`./renderer.js?test=${Date.now()}`));
+        initRenderer(grid);
+        bar.offsetHeight = 132;
+
+        const row = makeCompareRow('cursor', 'Cursor');
+        grid._state.rows = [row];
+        grid._trigger('click', {
+            target: row._control,
+            preventDefault: () => {}
+        });
+
+        expect(rootStyles.get('--compare-bar-h')).toBe('132px');
+
+        bar.offsetHeight = 180;
+        resizeCallback?.();
+        expect(rootStyles.get('--compare-bar-h')).toBe('180px');
+
+        clearBtn._trigger('click');
+        expect(rootStyles.get('--compare-bar-h')).toBe('0px');
     });
 
     test('clicking the row body navigates to the tool page without selecting', async () => {
