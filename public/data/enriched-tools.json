@@ -14352,5 +14352,59 @@
       "CLI"
     ],
     "lastUpdated": "2026-11-26"
+  },
+  {
+    "slug": "vt-code",
+    "name": "VT Code",
+    "company": "Vinh Nguyen (vinhnx)",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under MIT OR Apache-2.0. You bring your own model access: an API key for a hosted provider, a ChatGPT subscription login for OpenAI, a GitHub Copilot login, or a local model through Ollama, LM Studio or llama.cpp.",
+    "description": "VT Code is an open-source coding agent written in Rust. One shared runloop powers a terminal TUI and a native macOS app, with read-only planning, turn diffs, a sandboxed command policy and resumable headless runs, and it can use many hosted or local model providers per task.",
+    "keyFeatures": [
+      "Terminal TUI and native macOS desktop app sharing the same agent runloop, sessions and config",
+      "Read-only planning mode, turn diff review and a sandboxed, auditable command policy",
+      "Resumable headless exec mode with snapshots and subagents",
+      "MCP, skills, plugins, ACP for editors such as Zed, and a WebMCP editor",
+      "Per-task providers including OpenAI, Anthropic, Gemini, DeepSeek, xAI, GitHub Copilot, OpenRouter, Ollama, LM Studio and llama.cpp"
+    ],
+    "bestFor": "Developers who want an open-source, provider-agnostic terminal coding agent with strict execution policy and the option of a native Mac app.",
+    "notIdealFor": "Teams that want a hosted, managed agent service, or Windows and Intel Mac users who want a packaged desktop app (the desktop cask ships Apple Silicon builds only).",
+    "recentUpdates": "v0.185.3 shipped on November 27, 2026 with streaming, MCP preview and accessibility fixes, following v0.185.2 on November 24, 2026, which patched RUSTSEC advisories and tightened sandbox and shell preflight checks.",
+    "verdict": "A fast-moving, security-minded open-source alternative to closed terminal agents, maintained mainly by one developer with near-daily releases.",
+    "tags": [
+      "CLI",
+      "Terminal",
+      "Open Source",
+      "Rust",
+      "MCP"
+    ],
+    "lastUpdated": "2026-11-27"
+  },
+  {
+    "slug": "mulmoterminal",
+    "name": "MulmoTerminal",
+    "company": "receptron",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT licence. You run it locally with `npx mulmoterminal@latest`; the agents it launches use your own subscriptions or API keys.",
+    "description": "MulmoTerminal is a browser terminal for running several AI coding agents in parallel. Each session runs in its own real pty cell, colour-coded by state, with a roster of every session, git worktree isolation, cost readouts and phone notifications when an agent finishes or needs input.",
+    "keyFeatures": [
+      "Grid of live agent sessions colour-coded working, done or needs you, with an attention chime",
+      "Claude Code by default plus Codex, Antigravity, Grok, Muse, GitHub Copilot CLI and Cursor CLI",
+      "tmux-backed sessions that survive server restarts",
+      "One-click git worktrees with diff, commit, push and open PR from each cell",
+      "Web Push and a RemoteHost companion to answer agents from a phone"
+    ],
+    "bestFor": "Developers who run many CLI coding agents at once and lose track of which session is waiting for them.",
+    "notIdealFor": "Developers who run a single agent at a time, or teams that need a hosted, multi-user agent platform.",
+    "recentUpdates": "v13.10.0 shipped on November 27, 2026 with two new built-in themes, following v13.9.0 on November 26, 2026, which stopped background git reads from colliding with your own git commands.",
+    "verdict": "A polished, actively maintained local cockpit for supervising parallel coding agents, shipping several releases a week.",
+    "tags": [
+      "Terminal",
+      "Multi-Agent",
+      "Git Worktrees",
+      "Open Source",
+      "Developer Productivity"
+    ],
+    "lastUpdated": "2026-11-27"
   }
 ]
