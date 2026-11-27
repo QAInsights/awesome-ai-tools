@@ -31,6 +31,11 @@ describe('BaseLayout SEO title escaping', () => {
         expect(source).toContain("chatWindow.querySelectorAll('.chat-content, .powered-by')");
         expect(source).toContain('bubbleButton.inert = bubbleButton.classList.contains(\'hidden\');');
         expect(source).toContain("chatWidgetObserver.observe(chatWidget, { attributes: true, subtree: true, attributeFilter: ['class'] });");
+        expect(source).toContain("chat.shadowRoot.addEventListener('click'");
+        expect(source).toContain('focusInputOnOpen = event.detail === 0;');
+        expect(source).toContain('restoreLauncherOnClose = event.detail === 0;');
+        expect(source).toContain("const focusTarget = chatWindow.querySelector('.chat-input') ?? chatWindow.querySelector('.close-button');");
+        expect(source).toContain('bubbleButton?.focus();');
         expect(source).toContain("chat.shadowRoot.addEventListener('compositionend'");
         expect(source).toContain("chat.shadowRoot.addEventListener('keydown'");
         expect(source).toContain('event.isComposing || event.keyCode === 229 || endedCompositionJustNow');

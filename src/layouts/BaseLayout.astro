@@ -271,6 +271,8 @@ const aiSearchTranslations = JSON.stringify({
         (() => {
             let observedChatWidget = null;
             let chatWidgetObserver = null;
+            let focusInputOnOpen = false;
+            let restoreLauncherOnClose = false;
 
             const syncChatWindowState = (chat) => {
                 const chatWidget = chat.shadowRoot?.querySelector('.chat-bubble-widget');
@@ -286,6 +288,15 @@ const aiSearchTranslations = JSON.stringify({
                     const bubbleButton = chatWidget.querySelector('.bubble-button');
                     if (bubbleButton) {
                         bubbleButton.inert = bubbleButton.classList.contains('hidden');
+                    }
+                    if (expanded && focusInputOnOpen) {
+                        focusInputOnOpen = false;
+                        const focusTarget = chatWindow.querySelector('.chat-input') ?? chatWindow.querySelector('.close-button');
+                        focusTarget?.focus();
+                    }
+                    if (!expanded && restoreLauncherOnClose) {
+                        restoreLauncherOnClose = false;
+                        bubbleButton?.focus();
                     }
                 };
                 syncInertState();
@@ -323,6 +334,14 @@ const aiSearchTranslations = JSON.stringify({
                 if (!chat?.shadowRoot || chat.dataset.aiSearchKeyboardPatched === 'true') return;
                 chat.dataset.aiSearchKeyboardPatched = 'true';
                 let lastCompositionEndAt = null;
+                chat.shadowRoot.addEventListener('click', (event) => {
+                    if (event.target?.classList?.contains('bubble-button')) {
+                        focusInputOnOpen = event.detail === 0;
+                    }
+                    if (event.target?.classList?.contains('close-button')) {
+                        restoreLauncherOnClose = event.detail === 0;
+                    }
+                }, true);
                 chat.shadowRoot.addEventListener('compositionend', (event) => {
                     if (event.target?.classList?.contains('chat-input')) {
                         lastCompositionEndAt = event.timeStamp;
