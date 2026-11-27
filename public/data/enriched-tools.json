@@ -14385,7 +14385,7 @@
     "name": "MulmoTerminal",
     "company": "receptron",
     "pricing": "open-source",
-    "pricingDetail": "Free and open source under the MIT licence. You run it locally with `npx mulmoterminal@latest`; the agents it launches use your own subscriptions or API keys.",
+    "pricingDetail": "Free and open source under the MIT licence. You run it locally with `npx mulmoterminal@latest` (Node 24.15+, plus `git`, `gh` and, by default, a logged-in `claude` CLI; pass `--agent codex` or set `defaultAgent` to start with another agent); the agents it launches use your own subscriptions or API keys.",
     "description": "MulmoTerminal is a browser terminal for running several AI coding agents in parallel. Each session runs in its own real pty cell, colour-coded by state, with a roster of every session, git worktree isolation, cost readouts and phone notifications when an agent finishes or needs input.",
     "keyFeatures": [
       "Grid of live agent sessions colour-coded working, done or needs you, with an attention chime",
