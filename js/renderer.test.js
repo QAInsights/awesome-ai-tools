@@ -103,6 +103,7 @@ describe('renderer', () => {
     let countText;
     let rootStyles;
     let resizeCallback;
+    let observedResizeTarget;
     let thumbnails;
     let compareBtn;
     let clearBtn;
@@ -113,11 +114,14 @@ describe('renderer', () => {
         process.env.ENABLE_VOTING = 'true';
         rootStyles = new Map();
         resizeCallback = null;
+        observedResizeTarget = null;
         global.ResizeObserver = class {
             constructor(callback) {
                 resizeCallback = callback;
             }
-            observe() {}
+            observe(target) {
+                observedResizeTarget = target;
+            }
             disconnect() {}
         };
 
@@ -216,6 +220,7 @@ describe('renderer', () => {
         });
 
         expect(rootStyles.get('--compare-bar-h')).toBe('132px');
+        expect(observedResizeTarget).toBe(bar);
 
         bar.offsetHeight = 180;
         resizeCallback?.();
