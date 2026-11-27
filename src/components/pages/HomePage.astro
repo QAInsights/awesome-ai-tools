@@ -144,15 +144,15 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
                                     <header class="flex items-center justify-between gap-3">
                                         <div class="flex min-w-0 items-center gap-1.5">
                                             <span class="size-1.5 shrink-0 rounded-full bg-gold shadow-[0_0_10px_rgba(214,183,122,0.55)]" aria-hidden="true"></span>
-                                            <h2 class="m-0 truncate font-mono text-[10px] font-normal uppercase tracking-[0.18em] text-ink-muted">
+                                            <h2 class="m-0 truncate font-mono text-[10px] font-normal uppercase tracking-[0.18em] text-ink-secondary">
                                                 {t(lang, 'home.freshDrops', 'Fresh drops')}
                                             </h2>
                                         </div>
-                                        <time datetime={latestDrop.date} class="shrink-0 font-mono text-[11px] text-ink-disabled">{formatDropDateShort(latestDrop.date)}</time>
+                                        <time datetime={latestDrop.date} class="shrink-0 font-mono text-[11px] text-ink-secondary">{formatDropDateShort(latestDrop.date)}</time>
                                     </header>
                                     <p class="m-0 mt-2 truncate text-[15px] font-medium leading-snug text-ink">{latestDropPreview}</p>
                                     <footer class="mt-2.5 flex items-center justify-between gap-3 border-t border-border pt-2.5">
-                                        <span class="font-mono text-[11px] text-ink-muted">{latestDropCountLabel}</span>
+                                        <span class="font-mono text-[11px] text-ink-secondary">{latestDropCountLabel}</span>
                                         <span class="inline-flex shrink-0 items-center gap-1 font-mono text-[12px] text-gold-soft transition-transform group-hover:translate-x-0.5">
                                             {t(lang, 'home.viewFreshDrops', 'View drops')} <span aria-hidden="true">→</span>
                                         </span>
