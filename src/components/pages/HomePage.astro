@@ -134,32 +134,20 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
                         <p class="text-[22px] md:text-[28px] font-semibold text-white leading-tight tracking-tight m-0">
                             {t(lang, 'home.heroTitle1', 'Find your ')}<span class="text-[#e2c48a]">{t(lang, 'home.heroTitleGold', 'AI coding stack')}</span>
                         </p>
-                        <span class="inline-flex items-center gap-4 mt-2">
+                        <span class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
                             <a href="/trending" class="inline-flex items-center gap-1.5 font-mono text-[12px] text-[#a3a3a3] hover:text-[#e2c48a] transition-colors">{t(lang, 'home.trending', 'Trending this week →')}</a>
-                            {latestDrop && latestDropCount > 0 && <a href="/new" class="fresh-drops-inline hidden items-center gap-1.5 font-mono text-[12px] text-ink-secondary hover:text-gold-soft transition-colors">{formatDropDateShort(latestDrop.date)} · {latestDropCountLabel} →</a>}
+                            {latestDrop && latestDropCount > 0 && (
+                                <a href="/new" class="fresh-drops-pill group inline-flex min-w-0 max-w-full items-center gap-2 rounded-full border border-border bg-white/[0.02] px-3 py-1.5 transition-colors hover:border-border-strong hover:bg-white/[0.05] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">
+                                    <span class="size-1.5 shrink-0 rounded-full bg-gold shadow-[0_0_10px_rgba(214,183,122,0.55)]" aria-hidden="true"></span>
+                                    <span class="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-secondary">
+                                        {t(lang, 'home.freshDrops', 'Fresh drops')} · <time datetime={latestDrop.date}>{formatDropDateShort(latestDrop.date)}</time>
+                                    </span>
+                                    <span class="h-3 w-px shrink-0 bg-border" aria-hidden="true"></span>
+                                    <span class="min-w-0 truncate text-[13px] font-medium text-ink">{latestDropPreview}</span>
+                                    <span class="shrink-0 font-mono text-[11px] text-gold-soft transition-transform group-hover:translate-x-0.5">{latestDropCountLabel} →</span>
+                                </a>
+                            )}
                         </span>
-                        {latestDrop && latestDropCount > 0 && (
-                            <a href="/new" class="fresh-drops-card group mt-4 block w-full max-w-[420px] rounded-xl border border-border bg-white/[0.02] transition-colors hover:border-border-strong hover:bg-white/[0.05] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">
-                                <article class="p-4">
-                                    <header class="flex items-center justify-between gap-3">
-                                        <div class="flex min-w-0 items-center gap-1.5">
-                                            <span class="size-1.5 shrink-0 rounded-full bg-gold shadow-[0_0_10px_rgba(214,183,122,0.55)]" aria-hidden="true"></span>
-                                            <h2 class="m-0 truncate font-mono text-[10px] font-normal uppercase tracking-[0.18em] text-ink-secondary">
-                                                {t(lang, 'home.freshDrops', 'Fresh drops')}
-                                            </h2>
-                                        </div>
-                                        <time datetime={latestDrop.date} class="shrink-0 font-mono text-[11px] text-ink-secondary">{formatDropDateShort(latestDrop.date)}</time>
-                                    </header>
-                                    <p class="m-0 mt-2 truncate text-[15px] font-medium leading-snug text-ink">{latestDropPreview}</p>
-                                    <footer class="mt-2.5 flex items-center justify-between gap-3 border-t border-border pt-2.5">
-                                        <span class="font-mono text-[11px] text-ink-secondary">{latestDropCountLabel}</span>
-                                        <span class="inline-flex shrink-0 items-center gap-1 font-mono text-[12px] text-gold-soft transition-transform group-hover:translate-x-0.5">
-                                            {t(lang, 'home.viewFreshDrops', 'View drops')} <span aria-hidden="true">→</span>
-                                        </span>
-                                    </footer>
-                                </article>
-                            </a>
-                        )}
                     </div>
                     <div class="hidden xl:block ml-auto w-full max-w-[640px]">
                         <TodayPromos layout="row" />
@@ -239,15 +227,4 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
     <script src="/dist/app.js" type="module" defer></script>
     <script src="/dist/browse-gate.js" type="module" defer></script>
 
-<style>
-    @media (max-height: 480px) and (orientation: landscape) {
-        .fresh-drops-card {
-            display: none;
-        }
-
-        .fresh-drops-inline {
-            display: inline-flex;
-        }
-    }
-</style>
 </BaseLayout>
