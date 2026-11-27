@@ -138,7 +138,7 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
                             <a href="/trending" class="inline-flex items-center gap-1.5 font-mono text-[12px] text-[#a3a3a3] hover:text-[#e2c48a] transition-colors">{t(lang, 'home.trending', 'Trending this week →')}</a>
                         </span>
                         {latestDrop && latestDropCount > 0 && (
-                            <a href="/new" class="group mt-4 block max-w-[560px] rounded-2xl border border-border bg-white/[0.02] px-3.5 py-3 transition-colors hover:border-border-strong hover:bg-white/[0.04] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">
+                            <a href="/new" class="fresh-drops-card group mt-4 block max-w-[560px] rounded-xl border border-border bg-white/[0.02] p-5 transition-colors hover:border-border-strong hover:bg-white/[0.05] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">
                                 <article class="flex items-center gap-3">
                                     <span class="flex size-9 shrink-0 items-center justify-center rounded-xl border border-gold/25 bg-gold/10 text-gold-soft" aria-hidden="true">
                                         <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -152,7 +152,7 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
                                         </h2>
                                         <p class="m-0 mt-1 truncate text-sm font-medium text-ink">{latestDropPreview}</p>
                                     </div>
-                                    <span class="shrink-0 font-mono text-[11px] text-gold-soft transition-transform group-hover:translate-x-0.5">{latestDropCountLabel} →</span>
+                                    <span class="inline-block shrink-0 font-mono text-[11px] text-gold-soft transition-transform group-hover:translate-x-0.5">{latestDropCountLabel} →</span>
                                 </article>
                             </a>
                         )}
