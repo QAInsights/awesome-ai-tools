@@ -269,17 +269,89 @@ const aiSearchTranslations = JSON.stringify({
     <!-- v0.0.40 parses the translations attribute but does not forward it to ChatView. -->
     <script is:inline>
         (() => {
-            const applyTranslations = () => {
+            let observedChatWindow = null;
+            let chatWindowObserver = null;
+
+            const syncChatWindowState = (chat) => {
+                const chatWindow = chat.shadowRoot?.querySelector('.chat-window');
+                if (!chatWindow) return;
+                const syncInertState = () => {
+                    const expanded = chatWindow.classList.contains('expanded');
+                    chatWindow.inert = !expanded;
+                    const inactive = !expanded || chatWindow.classList.contains('minimized');
+                    chatWindow.querySelectorAll('.chat-content, .powered-by').forEach((region) => {
+                        region.inert = inactive;
+                    });
+                };
+                syncInertState();
+                if (observedChatWindow !== chatWindow) {
+                    chatWindowObserver?.disconnect();
+                    observedChatWindow = chatWindow;
+                    chatWindowObserver = new MutationObserver(syncInertState);
+                    chatWindowObserver.observe(chatWindow, { attributes: true, attributeFilter: ['class'] });
+                }
+            };
+
+            // v0.0.40 is SRI-pinned, so these open-shadow selectors cannot drift.
+            const patchShadowDom = (chat) => {
+                if (!chat?.shadowRoot) return;
+                if (!chat.shadowRoot.querySelector('[data-ai-search-compat]')) {
+                    const style = document.createElement('style');
+                    style.dataset.aiSearchCompat = '';
+                    style.textContent = `
+                        .chat-window {
+                            visibility: hidden;
+                            max-height: calc(100dvh - var(--chat-bubble-button-bottom) - 12px - env(safe-area-inset-top, 0px));
+                            transition: opacity 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), visibility 0s linear 0.3s;
+                        }
+                        .chat-window.expanded {
+                            visibility: visible;
+                            transition: opacity 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), visibility 0s;
+                        }
+                    `;
+                    chat.shadowRoot.appendChild(style);
+                }
+                syncChatWindowState(chat);
+            };
+
+            const patchKeyboard = (chat) => {
+                if (!chat?.shadowRoot || chat.dataset.aiSearchKeyboardPatched === 'true') return;
+                chat.dataset.aiSearchKeyboardPatched = 'true';
+                let lastCompositionEndAt = null;
+                chat.shadowRoot.addEventListener('compositionend', (event) => {
+                    if (event.target?.classList?.contains('chat-input')) {
+                        lastCompositionEndAt = event.timeStamp;
+                    }
+                }, true);
+                chat.shadowRoot.addEventListener('keydown', (event) => {
+                    if (event.key !== 'Enter' || event.shiftKey) return;
+                    if (!event.target?.classList?.contains('chat-input')) return;
+                    const endedCompositionJustNow = lastCompositionEndAt !== null && Math.abs(event.timeStamp - lastCompositionEndAt) < 50;
+                    if (event.isComposing || event.keyCode === 229 || endedCompositionJustNow) {
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+                    }
+                }, true);
+            };
+
+            const applyCompatibilityFixes = () => {
                 const chat = document.querySelector('chat-bubble-snippet');
                 if (!chat) return;
                 try {
                     chat.translations = JSON.parse(chat.getAttribute('translations') || '{}');
                 } catch {}
+                patchShadowDom(chat);
+                patchKeyboard(chat);
+                if (!chat.dataset.aiSearchObserverPatched && chat.shadowRoot) {
+                    chat.dataset.aiSearchObserverPatched = 'true';
+                    new MutationObserver(() => patchShadowDom(chat)).observe(chat.shadowRoot, { childList: true });
+                }
             };
+
             if (customElements.get('chat-bubble-snippet')) {
-                applyTranslations();
+                applyCompatibilityFixes();
             } else {
-                customElements.whenDefined('chat-bubble-snippet').then(applyTranslations);
+                customElements.whenDefined('chat-bubble-snippet').then(applyCompatibilityFixes);
             }
         })();
     </script>
