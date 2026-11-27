@@ -22,7 +22,7 @@ describe('BaseLayout SEO title escaping', () => {
         expect(source).toContain('hide-branding="true"');
         expect(source).toContain('placeholder="Ask about AI coding tools..."');
         expect(source).toContain('translations={aiSearchTranslations}');
-        expect(source).toContain("--search-snippet-primary-color: #f2c040;");
+        expect(source).toContain("--search-snippet-primary-color: var(--color-gold);");
         expect(source).not.toContain('chat/completions/chat/completions');
     });
 });

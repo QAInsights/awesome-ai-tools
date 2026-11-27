@@ -188,24 +188,22 @@ const aiSearchTranslations = JSON.stringify({
     <style is:inline>
         chat-bubble-snippet {
             color-scheme: dark;
-            --search-snippet-font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
-            --search-snippet-primary-color: #f2c040;
-            --search-snippet-primary-hover: #f1d99f;
-            --search-snippet-background: #0a0a0a;
-            --search-snippet-surface: #111111;
-            --search-snippet-hover-background: #171717;
-            --search-snippet-text-color: #ffffff;
-            --search-snippet-text-secondary: #a3a3a3;
-            --search-snippet-text-description: #d4d4d4;
-            --search-snippet-border-color: #222222;
-            --search-snippet-focus-ring: rgba(242, 192, 64, 0.28);
-            --search-snippet-user-message-bg: #f2c040;
-            --search-snippet-user-message-text: #000000;
-            --search-snippet-assistant-message-bg: #171717;
-            --search-snippet-assistant-message-text: #e5e5e5;
-            --chat-bubble-button-icon-color: #000000;
-            --chat-bubble-button-shadow: 0 12px 32px rgba(242, 192, 64, 0.2);
-            --chat-bubble-window-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+            --search-snippet-font-family: var(--font-sans);
+            --search-snippet-primary-color: var(--color-gold);
+            --search-snippet-primary-hover: var(--color-gold-hi);
+            --search-snippet-background: var(--color-panel);
+            --search-snippet-surface: rgb(255 255 255 / 0.02);
+            --search-snippet-hover-background: rgb(255 255 255 / 0.05);
+            --search-snippet-text-color: var(--color-ink);
+            --search-snippet-text-secondary: var(--color-ink-secondary);
+            --search-snippet-text-description: var(--color-ink-secondary);
+            --search-snippet-border-color: var(--color-border);
+            --search-snippet-focus-ring: color-mix(in srgb, var(--color-gold) 28%, transparent);
+            --search-snippet-user-message-bg: var(--color-gold);
+            --search-snippet-user-message-text: var(--color-page);
+            --search-snippet-assistant-message-bg: rgb(255 255 255 / 0.05);
+            --search-snippet-assistant-message-text: var(--color-ink);
+            --chat-bubble-button-icon-color: var(--color-page);
         }
     </style>
 
