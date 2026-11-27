@@ -21,6 +21,8 @@ let loadedCount = 0;
 let observer = null;
 let grid = null;
 let onClearCallback = null;
+let compareBarResizeObserver = null;
+let observedCompareBar = null;
 const COMPARE_LIMIT = 3;
 
 // Escape tool-sourced strings before innerHTML interpolation - README notes
@@ -150,11 +152,9 @@ function updateCompareBar() {
 
     if (!bar) return;
 
-    if (selected.length === 0) {
-        bar.style.translate = '0 100%';
-    } else {
-        bar.style.translate = '0 0';
-    }
+    const visible = selected.length > 0;
+    bar.dataset.visible = visible ? 'true' : 'false';
+    bar.style.translate = visible ? '0 0' : '0 100%';
 
     if (countText) {
         countText.textContent = selected.length === 0
@@ -188,6 +188,24 @@ function updateCompareBar() {
             ? `Compare ${selected.length}`
             : 'Compare';
     }
+
+    syncCompareBarInset(bar, visible);
+    observeCompareBar(bar);
+}
+
+function syncCompareBarInset(bar, visible) {
+    if (!document.documentElement?.style?.setProperty) return;
+    document.documentElement.style.setProperty('--compare-bar-h', visible ? `${bar.offsetHeight}px` : '0px');
+}
+
+function observeCompareBar(bar) {
+    if (typeof ResizeObserver === 'undefined' || observedCompareBar === bar) return;
+    compareBarResizeObserver?.disconnect();
+    observedCompareBar = bar;
+    compareBarResizeObserver = new ResizeObserver(() => {
+        syncCompareBarInset(bar, getSelected().length > 0);
+    });
+    compareBarResizeObserver.observe(bar);
 }
 
 /**

@@ -116,6 +116,15 @@ if (i18nPath) {
 }
 const htmlLang = lang === 'zh' ? 'zh-Hans' : 'en';
 const ogLocale = lang === 'zh' ? 'zh_CN' : 'en_US';
+// The snippet client appends `/chat/completions`, so keep this as the origin.
+const aiSearchApiUrl = 'https://b3dd0976-27cf-4735-8aa3-279f275b235f.search.ai.cloudflare.com';
+const aiSearchSnippetUrl = `${aiSearchApiUrl}/assets/v0.0.40/search-snippet.es.js`;
+const aiSearchSnippetIntegrity = 'sha384-JvlvGvAgmNxIa/JqW1fKCNi+CMjrH/SG/RAtKUrHgJLf0Z6zBk5F1sSk7ZjhKo0s';
+const aiSearchTranslations = JSON.stringify({
+    chatTitle: 'Ask ai.dosa.dev',
+    chatEmptyTitle: 'Ask the directory',
+    chatEmptyDescription: 'Find the right AI coding tool, compare pricing, or explore alternatives.',
+});
 ---
 <!DOCTYPE html>
 <html lang={htmlLang}>
@@ -176,6 +185,54 @@ const ogLocale = lang === 'zh' ? 'zh_CN' : 'en_US';
     <link rel="manifest" href="/images/icons/site.webmanifest" />
 
     <link rel="stylesheet" href="/css/output.css">
+    <style is:inline>
+        chat-bubble-snippet {
+            color-scheme: dark;
+            --search-snippet-font-family: var(--font-sans);
+            --search-snippet-primary-color: var(--color-gold);
+            --search-snippet-primary-hover: var(--color-gold-hi);
+            --search-snippet-background: var(--color-panel);
+            --search-snippet-surface: rgb(255 255 255 / 0.02);
+            --search-snippet-hover-background: rgb(255 255 255 / 0.05);
+            --search-snippet-text-color: var(--color-ink);
+            --search-snippet-text-secondary: var(--color-ink-secondary);
+            --search-snippet-text-description: var(--color-ink-secondary);
+            --search-snippet-border-color: var(--color-border);
+            --search-snippet-focus-ring: color-mix(in srgb, var(--color-gold) 28%, transparent);
+            --search-snippet-user-message-bg: var(--color-gold);
+            --search-snippet-user-message-text: var(--color-page);
+            --search-snippet-assistant-message-bg: rgb(255 255 255 / 0.05);
+            --search-snippet-assistant-message-text: var(--color-ink);
+            --chat-bubble-button-icon-color: var(--color-page);
+            --chat-bubble-button-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+            --chat-bubble-button-right: calc(20px + env(safe-area-inset-right, 0px));
+            --chat-bubble-button-z-index: 20;
+        }
+
+        body:has([data-ea-style="fixedfooter"].loaded) chat-bubble-snippet {
+            --chat-bubble-button-bottom: calc(var(--ea-float-h, 0px) + 20px + env(safe-area-inset-bottom, 0px));
+        }
+
+        @media (max-width: 767px) {
+            chat-bubble-snippet {
+                --chat-bubble-button-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+            }
+
+            body:has([data-ea-style="fixedfooter"].loaded) chat-bubble-snippet {
+                --chat-bubble-button-bottom: calc(var(--ea-float-h, 0px) + 72px + env(safe-area-inset-bottom, 0px));
+            }
+        }
+
+        body:has(#compareFloatingBar[data-visible="true"]) chat-bubble-snippet {
+            --chat-bubble-button-bottom: calc(var(--ea-float-h, 0px) + var(--compare-bar-h, 0px) + 20px + env(safe-area-inset-bottom, 0px));
+        }
+
+        @media (min-width: 1301px) {
+            body:has([data-ea-style="stickybox"].loaded) chat-bubble-snippet {
+                --chat-bubble-button-right: calc(220px + env(safe-area-inset-right, 0px));
+            }
+        }
+    </style>
 
     {/* Escape `<` so enriched free-text can never close the script tag early */}
     {jsonLd && <script type="application/ld+json" set:html={jsonLd.replace(/</g, '\\u003c')} />}
@@ -193,6 +250,39 @@ const ogLocale = lang === 'zh' ? 'zh_CN' : 'en_US';
     <script src="/dist/site-analytics.js" type="module" defer></script>
     <script src="/dist/onboarding.js" type="module" defer></script>
     <script src="/dist/one-tap.js" type="module" defer></script>
+    <!-- Cloudflare AI Search chat bubble -->
+    <script
+        type="module"
+        src={aiSearchSnippetUrl}
+        integrity={aiSearchSnippetIntegrity}
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+        fetchpriority="low"
+    ></script>
+    <chat-bubble-snippet
+        api-url={aiSearchApiUrl}
+        theme="dark"
+        hide-branding="true"
+        placeholder="Ask about AI coding tools..."
+        translations={aiSearchTranslations}
+    ></chat-bubble-snippet>
+    <!-- v0.0.40 parses the translations attribute but does not forward it to ChatView. -->
+    <script is:inline>
+        (() => {
+            const applyTranslations = () => {
+                const chat = document.querySelector('chat-bubble-snippet');
+                if (!chat) return;
+                try {
+                    chat.translations = JSON.parse(chat.getAttribute('translations') || '{}');
+                } catch {}
+            };
+            if (customElements.get('chat-bubble-snippet')) {
+                applyTranslations();
+            } else {
+                customElements.whenDefined('chat-bubble-snippet').then(applyTranslations);
+            }
+        })();
+    </script>
     <!-- Cloudflare Web Analytics -->
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "16936e2eed2a4361adb21441d23573dd"}'></script>
     <!-- End Cloudflare Web Analytics -->
