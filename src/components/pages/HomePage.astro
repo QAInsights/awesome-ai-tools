@@ -16,7 +16,7 @@ import SiteHeader from '../../components/SiteHeader.astro';
 import TodayPromos from '../../components/TodayPromos.astro';
 import ToolRow from '../../components/ToolRow.astro';
 import { formatDate, getAllTools, getLatestUpdate } from '../../lib/tools';
-import { getLatestDropDay, formatDropDateShort } from '../../lib/drops';
+import { getDropDays, formatDropDateShort } from '../../lib/drops';
 import { ORGANIZATION } from '../../lib/site';
 import { t, localePrefix } from '../../i18n/zh';
 
@@ -33,7 +33,7 @@ const categoryCount = new Set(tools.map(t => t.category)).size;
 // pipeline. Falls back to the build date only when no tool is dated.
 const latestUpdate = getLatestUpdate(tools);
 const latestUpdateLabel = latestUpdate ? formatDate(latestUpdate) : '';
-const latestDrop = getLatestDropDay();
+const latestDrop = getDropDays().find(day => day.tools.length > 0) ?? null;
 const latestDropNames = latestDrop ? latestDrop.tools.map(tool => tool.name) : [];
 const latestDropCount = latestDropNames.length;
 const latestDropPreview = latestDropNames.length > 3
