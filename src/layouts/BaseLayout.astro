@@ -117,7 +117,7 @@ if (i18nPath) {
 const htmlLang = lang === 'zh' ? 'zh-Hans' : 'en';
 const ogLocale = lang === 'zh' ? 'zh_CN' : 'en_US';
 // The snippet client appends `/chat/completions`, so keep this as the origin.
-const aiSearchApiUrl = 'https://6902291b-4254-4f26-9404-44f89ddb0767.search.ai.cloudflare.com';
+const aiSearchApiUrl = 'https://b3dd0976-27cf-4735-8aa3-279f275b235f.search.ai.cloudflare.com';
 const aiSearchSnippetUrl = `${aiSearchApiUrl}/assets/v0.0.40/search-snippet.es.js`;
 const aiSearchSnippetIntegrity = 'sha384-JvlvGvAgmNxIa/JqW1fKCNi+CMjrH/SG/RAtKUrHgJLf0Z6zBk5F1sSk7ZjhKo0s';
 const aiSearchTranslations = JSON.stringify({
@@ -237,6 +237,7 @@ const aiSearchTranslations = JSON.stringify({
     <chat-bubble-snippet
         api-url={aiSearchApiUrl}
         theme="dark"
+        hide-branding="true"
         placeholder="Ask about AI coding tools..."
         translations={aiSearchTranslations}
     ></chat-bubble-snippet>
