@@ -223,6 +223,10 @@ const aiSearchTranslations = JSON.stringify({
             }
         }
 
+        body:has(#compareFloatingBar[data-visible="true"]) chat-bubble-snippet {
+            --chat-bubble-button-bottom: calc(var(--ea-float-h, 0px) + var(--compare-bar-h, 0px) + 20px + env(safe-area-inset-bottom, 0px));
+        }
+
         @media (min-width: 1301px) {
             body:has([data-ea-style="stickybox"].loaded) chat-bubble-snippet {
                 --chat-bubble-button-right: calc(220px + env(safe-area-inset-right, 0px));

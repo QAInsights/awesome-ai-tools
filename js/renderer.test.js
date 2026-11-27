@@ -181,6 +181,7 @@ describe('renderer', () => {
         expect(row._control.classList.contains('active')).toBe(true);
         expect(row._checkbox.checked).toBe(true);
         expect(bar.style.translate).toBe('0 0');
+        expect(bar.dataset.visible).toBe('true');
         expect(countText.textContent).toBe('1 of 3 selected');
         expect(thumbnails.innerHTML).toContain('Cursor');
         expect(compareBtn.disabled).toBe(true);
@@ -252,6 +253,7 @@ describe('renderer', () => {
         expect(cursorRow._checkbox.checked).toBe(false);
         expect(windsurfRow._checkbox.checked).toBe(false);
         expect(bar.style.translate).toBe('0 100%');
+        expect(bar.dataset.visible).toBe('false');
         expect(compareBtn.disabled).toBe(true);
     });
 
