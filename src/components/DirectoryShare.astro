@@ -8,9 +8,10 @@ interface Props {
     name: string;
     align?: 'start' | 'end';
     label?: string;
+    compact?: boolean;
 }
 
-const { canonical, kind, slug, name, align = 'end', label = 'Share' } = Astro.props;
+const { canonical, kind, slug, name, align = 'end', label = 'Share', compact = false } = Astro.props;
 const source = DIRECTORY_SHARE_SOURCES[kind];
 const shareUrl = new URL(canonical);
 shareUrl.search = new URLSearchParams({ ref: source }).toString();
@@ -20,9 +21,12 @@ shareUrl.hash = '';
 <details data-directory-share={source} data-share-slug={slug} class="relative max-w-full text-sm max-[600px]:static">
     <summary
         aria-label={`Share ${name}`}
-        class="inline-flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-full border border-border px-4 text-ink-secondary transition-colors hover:border-border-strong hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold [&::-webkit-details-marker]:hidden"
+        class:list={[
+            'inline-flex cursor-pointer list-none items-center gap-2 rounded-full border border-border text-ink-secondary transition-colors hover:border-border-strong hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold [&::-webkit-details-marker]:hidden',
+            compact ? 'min-h-9 px-4 text-sm' : 'min-h-11 px-4',
+        ]}
     >
-        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <svg class:list={[compact ? 'size-3.5' : 'size-4']} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M12 15V3m-4 4 4-4 4 4M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" />
         </svg>
         {label}
