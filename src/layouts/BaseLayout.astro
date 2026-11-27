@@ -209,9 +209,23 @@ const aiSearchTranslations = JSON.stringify({
             --chat-bubble-button-z-index: 20;
         }
 
+        body:has([data-ea-style="fixedfooter"].loaded) chat-bubble-snippet {
+            --chat-bubble-button-bottom: calc(var(--ea-float-h, 0px) + 20px + env(safe-area-inset-bottom, 0px));
+        }
+
         @media (max-width: 767px) {
             chat-bubble-snippet {
                 --chat-bubble-button-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+            }
+
+            body:has([data-ea-style="fixedfooter"].loaded) chat-bubble-snippet {
+                --chat-bubble-button-bottom: calc(var(--ea-float-h, 0px) + 72px + env(safe-area-inset-bottom, 0px));
+            }
+        }
+
+        @media (min-width: 1301px) {
+            body:has([data-ea-style="stickybox"].loaded) chat-bubble-snippet {
+                --chat-bubble-button-right: calc(220px + env(safe-area-inset-right, 0px));
             }
         }
     </style>

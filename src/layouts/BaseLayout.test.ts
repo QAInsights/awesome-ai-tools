@@ -24,6 +24,8 @@ describe('BaseLayout SEO title escaping', () => {
         expect(source).toContain('translations={aiSearchTranslations}');
         expect(source).toContain("--search-snippet-primary-color: var(--color-gold);");
         expect(source).toContain("--chat-bubble-button-z-index: 20;");
+        expect(source).toContain('body:has([data-ea-style="fixedfooter"].loaded) chat-bubble-snippet');
+        expect(source).toContain('body:has([data-ea-style="stickybox"].loaded) chat-bubble-snippet');
         expect(source).not.toContain('chat/completions/chat/completions');
     });
 });
