@@ -29,7 +29,8 @@ describe('BaseLayout SEO title escaping', () => {
         expect(source).toContain('visibility: visible;');
         expect(source).toContain('chatWindow.inert = !expanded;');
         expect(source).toContain("chatWindow.querySelectorAll('.chat-content, .powered-by')");
-        expect(source).toContain("chatWindowObserver.observe(chatWindow, { attributes: true, attributeFilter: ['class'] });");
+        expect(source).toContain('bubbleButton.inert = bubbleButton.classList.contains(\'hidden\');');
+        expect(source).toContain("chatWidgetObserver.observe(chatWidget, { attributes: true, subtree: true, attributeFilter: ['class'] });");
         expect(source).toContain("chat.shadowRoot.addEventListener('compositionend'");
         expect(source).toContain("chat.shadowRoot.addEventListener('keydown'");
         expect(source).toContain('event.isComposing || event.keyCode === 229 || endedCompositionJustNow');

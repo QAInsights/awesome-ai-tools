@@ -269,12 +269,13 @@ const aiSearchTranslations = JSON.stringify({
     <!-- v0.0.40 parses the translations attribute but does not forward it to ChatView. -->
     <script is:inline>
         (() => {
-            let observedChatWindow = null;
-            let chatWindowObserver = null;
+            let observedChatWidget = null;
+            let chatWidgetObserver = null;
 
             const syncChatWindowState = (chat) => {
-                const chatWindow = chat.shadowRoot?.querySelector('.chat-window');
-                if (!chatWindow) return;
+                const chatWidget = chat.shadowRoot?.querySelector('.chat-bubble-widget');
+                const chatWindow = chatWidget?.querySelector('.chat-window');
+                if (!chatWidget || !chatWindow) return;
                 const syncInertState = () => {
                     const expanded = chatWindow.classList.contains('expanded');
                     chatWindow.inert = !expanded;
@@ -282,13 +283,17 @@ const aiSearchTranslations = JSON.stringify({
                     chatWindow.querySelectorAll('.chat-content, .powered-by').forEach((region) => {
                         region.inert = inactive;
                     });
+                    const bubbleButton = chatWidget.querySelector('.bubble-button');
+                    if (bubbleButton) {
+                        bubbleButton.inert = bubbleButton.classList.contains('hidden');
+                    }
                 };
                 syncInertState();
-                if (observedChatWindow !== chatWindow) {
-                    chatWindowObserver?.disconnect();
-                    observedChatWindow = chatWindow;
-                    chatWindowObserver = new MutationObserver(syncInertState);
-                    chatWindowObserver.observe(chatWindow, { attributes: true, attributeFilter: ['class'] });
+                if (observedChatWidget !== chatWidget) {
+                    chatWidgetObserver?.disconnect();
+                    observedChatWidget = chatWidget;
+                    chatWidgetObserver = new MutationObserver(syncInertState);
+                    chatWidgetObserver.observe(chatWidget, { attributes: true, subtree: true, attributeFilter: ['class'] });
                 }
             };
 
