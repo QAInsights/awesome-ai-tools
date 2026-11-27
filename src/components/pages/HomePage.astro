@@ -126,7 +126,7 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
                 </SiteHeader>
                 <!-- Hero: one-line orientation for first-time visitors -->
                 <div class="px-4 md:px-8 pt-6 md:pt-8 pb-2 shrink-0 flex items-start gap-6">
-                    <div class="min-w-0 flex-1">
+                    <div class="fresh-drops-hero min-w-0 flex-1">
                         <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-2.5">
                             <span class="inline-block align-middle mr-2 w-1.5 h-1.5 rounded-full bg-[#d6b77a]"></span>
                             {t(lang, 'home.heroStats', `${tools.length} tools · ${categoryCount} categories · curated by hand`, { tools: tools.length, cats: categoryCount })}{latestUpdateLabel && <>&nbsp;&middot; {t(lang, 'home.heroUpdated', `updated ${latestUpdateLabel}`, { date: latestUpdateLabel })}</>}
@@ -134,29 +134,21 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
                         <p class="text-[22px] md:text-[28px] font-semibold text-white leading-tight tracking-tight m-0">
                             {t(lang, 'home.heroTitle1', 'Find your ')}<span class="text-[#e2c48a]">{t(lang, 'home.heroTitleGold', 'AI coding stack')}</span>
                         </p>
-                        <span class="inline-flex items-center gap-4 mt-2">
+                        <span class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2">
                             <a href="/trending" class="inline-flex items-center gap-1.5 font-mono text-[12px] text-[#a3a3a3] hover:text-[#e2c48a] transition-colors">{t(lang, 'home.trending', 'Trending this week →')}</a>
-                            {latestDrop && latestDropCount > 0 && <a href="/new" class="fresh-drops-inline hidden items-center gap-1.5 font-mono text-[12px] text-ink-secondary hover:text-gold-soft transition-colors">{formatDropDateShort(latestDrop.date)} · {latestDropCountLabel} →</a>}
-                        </span>
-                        {latestDrop && latestDropCount > 0 && (
-                            <a href="/new" class="fresh-drops-card group mt-4 block max-w-[560px] rounded-xl border border-border bg-white/[0.02] p-5 transition-colors hover:border-border-strong hover:bg-white/[0.05] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">
-                                <article class="flex items-center gap-3">
-                                    <span class="flex size-9 shrink-0 items-center justify-center rounded-xl border border-gold/25 bg-gold/10 text-gold-soft" aria-hidden="true">
-                                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z" />
-                                            <path d="M19 15l.9 2.6 2.6.9-2.6.9-.9 2.6-.9-2.6-2.6-.9 2.6-.9z" />
-                                        </svg>
+                            {latestDrop && latestDropCount > 0 && (
+                                <a href="/new" class="fresh-drops-pill group inline-flex min-w-0 max-w-full items-center gap-2 rounded-full border border-border bg-white/[0.02] px-3 py-1.5 transition-colors hover:border-border-strong hover:bg-white/[0.05] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">
+                                    <span class="size-1.5 shrink-0 rounded-full bg-gold shadow-[0_0_10px_rgba(214,183,122,0.55)]" aria-hidden="true"></span>
+                                    <span class="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-secondary">
+                                        {t(lang, 'home.freshDrops', 'Fresh drops')}<span class="fresh-drops-date"> · <time datetime={latestDrop.date}>{formatDropDateShort(latestDrop.date)}</time></span>
                                     </span>
-                                    <div class="min-w-0 flex-1">
-                                        <h2 class="m-0 font-mono text-[10px] font-normal uppercase tracking-[0.18em] text-ink-muted">
-                                            {t(lang, 'home.freshDrops', 'Fresh drops')} · <time datetime={latestDrop.date}>{formatDropDateShort(latestDrop.date)}</time>
-                                        </h2>
-                                        <p class="m-0 mt-1 truncate text-sm font-medium text-ink">{latestDropPreview}</p>
-                                    </div>
-                                    <span class="inline-block shrink-0 font-mono text-[11px] text-gold-soft transition-transform group-hover:translate-x-0.5">{latestDropCountLabel} →</span>
-                                </article>
-                            </a>
-                        )}
+                                    <span class="fresh-drops-divider h-3 w-px shrink-0 bg-border" aria-hidden="true"></span>
+                                    <span class="min-w-0 truncate text-[13px] font-medium text-ink">{latestDropPreview}</span>
+                                    <span class="fresh-drops-count-full shrink-0 font-mono text-[11px] text-gold-soft transition-transform group-hover:translate-x-0.5">{latestDropCountLabel} →</span>
+                                    <span class="fresh-drops-count-compact shrink-0 font-mono text-[11px] text-gold-soft transition-transform group-hover:translate-x-0.5">+{latestDropCount} →</span>
+                                </a>
+                            )}
+                        </span>
                     </div>
                     <div class="hidden xl:block ml-auto w-full max-w-[640px]">
                         <TodayPromos layout="row" />
@@ -237,13 +229,23 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
     <script src="/dist/browse-gate.js" type="module" defer></script>
 
 <style>
-    @media (max-height: 480px) and (orientation: landscape) {
-        .fresh-drops-card {
+    .fresh-drops-hero {
+        container-type: inline-size;
+    }
+
+    .fresh-drops-count-compact {
+        display: none;
+    }
+
+    @container (max-width: 30rem) {
+        .fresh-drops-date,
+        .fresh-drops-divider,
+        .fresh-drops-count-full {
             display: none;
         }
 
-        .fresh-drops-inline {
-            display: inline-flex;
+        .fresh-drops-count-compact {
+            display: inline;
         }
     }
 </style>
