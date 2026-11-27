@@ -1,0 +1,78 @@
+---
+title: "NVIDIA opens 18.88M parsing datasets, QDA automates quantization"
+description: "NVIDIA releases Nemotron 3.5 Parse data and DFlash2, MIT and NVIDIA let a coding agent design quantization recipes, and Microsoft measures agent patch bloat."
+pubDate: 2026-11-27
+tags: ["news","today-in-ai","nvidia","quantization","coding-agents","open-source","chips","regulation"]
+draft: false
+featured: false
+---
+
+This brief covers AI news from 2026-11-27 UTC.
+
+NVIDIA shipped open parsing data and a speculator, a coding agent took over quantization tuning, and Microsoft counted what agents actually add to a patch.
+
+## NVIDIA open-sources 18.88M document-parsing examples and DFlash2
+
+**What happened:** NVIDIA published three CC-BY-4.0 Hugging Face corpora totaling 18.88 million document-parsing examples, a NeMo SFT and GRPO recipe, and the DFlash2 speculative draft model for Nemotron 3.5 Parse, aimed at single-GPU parsing on vLLM.
+
+**Why it matters:** Teams building document pipelines can fine-tune and speed up a parser on one GPU without licensing negotiations or collecting their own labeled pages.
+
+[Source: AI Compass](<https://ashutoshai.com/ai-compass/2026/11/26/>)
+
+## MIT and NVIDIA let Claude Opus 5.5 design quantization recipes
+
+**What happened:** MIT Han Lab and NVIDIA released QDA, a closed loop where Claude Opus 5.5 in Claude Code combines and tunes 21 existing PTQ methods, scored by KL divergence 350 to 990 times faster than full evaluation. The authors report beating the strongest public recipes in 11 of 12 pairs, with code and 30 checkpoints open under Apache-2.0.
+
+**Why it matters:** Quantization tuning that needed a specialist per model can now run as a search job, and the output checkpoints load in vLLM and llama.cpp unchanged.
+
+[Source: mlllm.io](<https://mlllm.io/articles/3926-qda-mit-han-lab-and-nvidia-unveil-system-where-coding-agent-autonomously-selects-llm-quantization-recipe/>)
+
+## Microsoft finds agent patches run 2.33x larger, mostly tests
+
+**What happened:** A Microsoft Research preprint by Aakash Goel, Benjamin Steenhoek and Yu Hu analyzed 7, 660 resolved GitHub Copilot CLI trajectories from 18 frontier models. On SWE-bench Verified, agent patches changed a median 2.33 times more lines than developer patches, with 61% of the extra edits being tests and 13% documentation.
+
+**Why it matters:** Reviewers should expect bigger diffs from agents and budget review time for test code, not just the fix itself.
+
+[Source: Crypto Briefing](<https://cryptobriefing.com/microsoft-study-ai-coding-agents-larger-patches/>)
+
+## IDEA ships MoonBit 1.0, a language built for AI agents
+
+**What happened:** Zhang Hongbo's team at the IDEA Research Institute released MoonBit 1.0, a general-purpose language in development since October 2022, with a WebAssembly sandbox for generated code and an integrated logic language for correctness proofs. In a database-engine test, Opus 5.5 used 12% fewer tokens in MoonBit than in Rust.
+
+**Why it matters:** A sandbox plus machine-checkable proofs gives agent-generated code a place to run and a way to verify it, though the token result is one model on one task.
+
+[Source: Logic Foundry](<https://logicfoundry.app/2026/11/26/idea-releases-moonbit-1-0-a-programming-language-designed-for-ai-agents/>)
+
+## Google Cloud packages reusable agent skills for HPC workloads
+
+**What happened:** At SC26, Google Cloud described composable agent skills that pair Cluster Toolkit YAML blueprints with quota audits, regional capacity checks and a human approval step before cluster deployment, plus workload skills for OpenFOAM, GROMACS, AlphaFold 3 and Devito runs.
+
+**Why it matters:** If your agents touch production infrastructure, the pattern here is worth copying: constrain the agent with domain skills and gate the change on a human checkpoint.
+
+[Source: CodeGangsta](<https://codegangsta.io/hardware/google-cloud-agent-skills-hpc-ai-sc26/>)
+
+## Singapore competition watchdog sets AI market guiding principles
+
+**What happened:** The Competition and Consumer Commission of Singapore released findings from its AI Market Study, saying businesses can switch between cloud providers and models but flagging risks where dominant firms favor their own products or restrict access to essential technologies. It also examined competition risks from AI agents and AI startup acquisitions.
+
+**Why it matters:** Builders selling into Singapore get a stated set of expectations on interoperability and agent conduct before any enforcement arrives.
+
+[Source: CCS Singapore](<https://www.ccs.gov.sg/media-and-events/newsroom/announcements-and-media-releases/ccs-releases-findings-on-singapore-s-artificial-intelligence-market-and-sets-out-guiding-principles-to-safeguard-competition-and-consumers/>)
+
+## ChipAgents expands Renesas chip design rollout to four regions
+
+**What happened:** ChipAgents said Renesas is expanding its AI-native chip design platform across engineering teams in Japan, the United States, Europe and India after design and verification evaluations, with the next phase targeting PPA-optimized RTL closure and analog design.
+
+**Why it matters:** Agentic tooling is moving from pilot to production in semiconductor workflows, a signal for anyone building agents against EDA and hardware design data.
+
+[Source: Futurum Group](<https://futurumgroup.com/insights/chipagents-and-renesas-bet-on-agentic-ai-for-chip-design-at-scale/>)
+
+## Sources
+
+- [AI Compass](<https://ashutoshai.com/ai-compass/2026/11/26/>)
+- [mlllm.io](<https://mlllm.io/articles/3926-qda-mit-han-lab-and-nvidia-unveil-system-where-coding-agent-autonomously-selects-llm-quantization-recipe/>)
+- [Crypto Briefing](<https://cryptobriefing.com/microsoft-study-ai-coding-agents-larger-patches/>)
+- [Logic Foundry](<https://logicfoundry.app/2026/11/26/idea-releases-moonbit-1-0-a-programming-language-designed-for-ai-agents/>)
+- [CodeGangsta](<https://codegangsta.io/hardware/google-cloud-agent-skills-hpc-ai-sc26/>)
+- [CCS Singapore](<https://www.ccs.gov.sg/media-and-events/newsroom/announcements-and-media-releases/ccs-releases-findings-on-singapore-s-artificial-intelligence-market-and-sets-out-guiding-principles-to-safeguard-competition-and-consumers/>)
+- [Futurum Group](<https://futurumgroup.com/insights/chipagents-and-renesas-bet-on-agentic-ai-for-chip-design-at-scale/>)
