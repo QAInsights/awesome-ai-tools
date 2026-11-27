@@ -34,7 +34,7 @@ const categoryCount = new Set(tools.map(t => t.category)).size;
 const latestUpdate = getLatestUpdate(tools);
 const latestUpdateLabel = latestUpdate ? formatDate(latestUpdate) : '';
 const latestDrop = getLatestDropDay();
-const latestDropNames = latestDrop ? [...latestDrop.tools.map(tool => tool.name), ...latestDrop.removed.map(tool => tool.name)] : [];
+const latestDropNames = latestDrop ? latestDrop.tools.map(tool => tool.name) : [];
 const latestDropCount = latestDropNames.length;
 const latestDropPreview = latestDropNames.length > 3
     ? `${latestDropNames.slice(0, 3).join(', ')} +${latestDropNames.length - 3}`
@@ -137,7 +137,7 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
                         <span class="inline-flex items-center gap-4 mt-2">
                             <a href="/trending" class="inline-flex items-center gap-1.5 font-mono text-[12px] text-[#a3a3a3] hover:text-[#e2c48a] transition-colors">{t(lang, 'home.trending', 'Trending this week →')}</a>
                         </span>
-                        {latestDrop && (
+                        {latestDrop && latestDropCount > 0 && (
                             <a href="/new" class="group mt-4 block max-w-[560px] rounded-2xl border border-border bg-white/[0.02] px-3.5 py-3 transition-colors hover:border-border-strong hover:bg-white/[0.04] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">
                                 <article class="flex items-center gap-3">
                                     <span class="flex size-9 shrink-0 items-center justify-center rounded-xl border border-gold/25 bg-gold/10 text-gold-soft" aria-hidden="true">
