@@ -30,6 +30,21 @@ describe('isSearchShortcutEvent', () => {
         expect(isSearchShortcutEvent(evt({ target: { tagName: 'DIV', isContentEditable: true } }))).toBe(false);
     });
 
+    test('ignores "/" typed into an editable shadow DOM target', () => {
+        const input = { tagName: 'TEXTAREA' };
+        const host = { tagName: 'CHAT-BUBBLE-SNIPPET' };
+        expect(isSearchShortcutEvent(evt({
+            target: host,
+            composedPath: () => [input, host, { tagName: 'BODY' }],
+        }))).toBe(false);
+        expect(isSearchShortcutEvent(evt({
+            target: {
+                tagName: 'CHAT-BUBBLE-SNIPPET',
+                shadowRoot: { activeElement: { tagName: 'INPUT' } },
+            },
+        }))).toBe(false);
+    });
+
     test('ignores events already handled elsewhere', () => {
         expect(isSearchShortcutEvent(evt({ defaultPrevented: true }))).toBe(false);
     });

@@ -2,6 +2,16 @@ import { filterTools, renderTools } from '../renderer.js';
 
 const TYPING_TAGS = new Set(['input', 'textarea', 'select']);
 
+function isTypingTarget(target) {
+    return Boolean(target?.isContentEditable || TYPING_TAGS.has(target.tagName?.toLowerCase()));
+}
+
+function hasTypingTarget(target) {
+    if (!target) return false;
+    if (isTypingTarget(target)) return true;
+    return hasTypingTarget(target.shadowRoot?.activeElement);
+}
+
 export function isSearchShortcutEvent(event) {
     if (!event || event.key !== '/') return false;
     if (event.ctrlKey || event.metaKey || event.altKey) return false;
@@ -9,8 +19,9 @@ export function isSearchShortcutEvent(event) {
 
     const target = event.target;
     if (!target) return true;
-    if (target.isContentEditable) return false;
-    return !TYPING_TAGS.has(target.tagName?.toLowerCase());
+    // Shadow DOM retargets events to their host, so inspect the composed path first.
+    if (typeof event.composedPath === 'function' && event.composedPath().some(isTypingTarget)) return false;
+    return !hasTypingTarget(target);
 }
 
 function cleanCategoryName(name) {
