@@ -22,6 +22,8 @@ describe('BaseLayout SEO title escaping', () => {
         expect(source).toContain('hide-branding="true"');
         expect(source).toContain('placeholder="Ask about AI coding tools..."');
         expect(source).toContain('translations={aiSearchTranslations}');
+        expect(source).toContain("customElements.whenDefined('chat-bubble-snippet').then(applyTranslations);");
+        expect(source).toContain("chat.translations = JSON.parse(chat.getAttribute('translations') || '{}');");
         expect(source).toContain("--search-snippet-primary-color: var(--color-gold);");
         expect(source).toContain("--chat-bubble-button-z-index: 20;");
         expect(source).toContain('body:has([data-ea-style="fixedfooter"].loaded) chat-bubble-snippet');

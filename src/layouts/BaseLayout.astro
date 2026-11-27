@@ -266,6 +266,23 @@ const aiSearchTranslations = JSON.stringify({
         placeholder="Ask about AI coding tools..."
         translations={aiSearchTranslations}
     ></chat-bubble-snippet>
+    <!-- v0.0.40 parses the translations attribute but does not forward it to ChatView. -->
+    <script is:inline>
+        (() => {
+            const applyTranslations = () => {
+                const chat = document.querySelector('chat-bubble-snippet');
+                if (!chat) return;
+                try {
+                    chat.translations = JSON.parse(chat.getAttribute('translations') || '{}');
+                } catch {}
+            };
+            if (customElements.get('chat-bubble-snippet')) {
+                applyTranslations();
+            } else {
+                customElements.whenDefined('chat-bubble-snippet').then(applyTranslations);
+            }
+        })();
+    </script>
     <!-- Cloudflare Web Analytics -->
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "16936e2eed2a4361adb21441d23573dd"}'></script>
     <!-- End Cloudflare Web Analytics -->
