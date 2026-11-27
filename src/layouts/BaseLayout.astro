@@ -204,6 +204,15 @@ const aiSearchTranslations = JSON.stringify({
             --search-snippet-assistant-message-bg: rgb(255 255 255 / 0.05);
             --search-snippet-assistant-message-text: var(--color-ink);
             --chat-bubble-button-icon-color: var(--color-page);
+            --chat-bubble-button-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+            --chat-bubble-button-right: calc(20px + env(safe-area-inset-right, 0px));
+            --chat-bubble-button-z-index: 20;
+        }
+
+        @media (max-width: 767px) {
+            chat-bubble-snippet {
+                --chat-bubble-button-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+            }
         }
     </style>
 
