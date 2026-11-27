@@ -136,6 +136,7 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
                         </p>
                         <span class="inline-flex items-center gap-4 mt-2">
                             <a href="/trending" class="inline-flex items-center gap-1.5 font-mono text-[12px] text-[#a3a3a3] hover:text-[#e2c48a] transition-colors">{t(lang, 'home.trending', 'Trending this week →')}</a>
+                            {latestDrop && latestDropCount > 0 && <a href="/new" class="fresh-drops-inline hidden items-center gap-1.5 font-mono text-[12px] text-ink-secondary hover:text-gold-soft transition-colors">{formatDropDateShort(latestDrop.date)} · {latestDropCountLabel} →</a>}
                         </span>
                         {latestDrop && latestDropCount > 0 && (
                             <a href="/new" class="fresh-drops-card group mt-4 block max-w-[560px] rounded-xl border border-border bg-white/[0.02] p-5 transition-colors hover:border-border-strong hover:bg-white/[0.05] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">
@@ -234,4 +235,16 @@ const toolsJson = JSON.stringify(tools.map(({ enriched: _e, ...seed }) => seed))
     <!-- Client-side application scripts -->
     <script src="/dist/app.js" type="module" defer></script>
     <script src="/dist/browse-gate.js" type="module" defer></script>
+
+<style>
+    @media (max-height: 480px) and (orientation: landscape) {
+        .fresh-drops-card {
+            display: none;
+        }
+
+        .fresh-drops-inline {
+            display: inline-flex;
+        }
+    }
+</style>
 </BaseLayout>
