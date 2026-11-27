@@ -158,6 +158,7 @@ const zh: Record<string, string> = {
     'home.trending': '本周热门 →',
     'home.freshDrops': '新鲜上架',
     'home.freshDropsCount': '{n} 个新工具',
+    'home.viewFreshDrops': '查看新工具',
     'home.scope': '筛选',
     'home.browseByCategory': '按分类浏览',
     'home.thName': '名称',
