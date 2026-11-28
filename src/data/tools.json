@@ -2122,5 +2122,13 @@
   {
     "companyName": "receptron",
     "toolName": "MulmoTerminal"
+  },
+  {
+    "companyName": "Pydantic",
+    "toolName": "Pax"
+  },
+  {
+    "companyName": "VLINX Software",
+    "toolName": "VelaTerm"
   }
 ]
