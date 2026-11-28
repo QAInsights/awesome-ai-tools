@@ -14406,5 +14406,59 @@
       "Developer Productivity"
     ],
     "lastUpdated": "2026-11-27"
+  },
+  {
+    "slug": "pax",
+    "name": "Pax",
+    "company": "Pydantic",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT licence. Install with `uv tool install pydantic-ai-pax` (Python 3.11+) or try it with `uvx pydantic-ai-pax`. Model usage is billed by your provider: sign in with a ChatGPT or GitHub Copilot subscription, or bring an API key for OpenAI, Anthropic or another Pydantic AI provider.",
+    "description": "Pax is the Pydantic team's terminal coding agent, built on the Pydantic AI Harness SDK's Coder agent. It reads your code, edits files and runs commands with any model, and because everything in it is a plugin, including the coding agent, you can add tools, commands, sandboxes and workspaces or run your own Pydantic AI agent inside it.",
+    "keyFeatures": [
+      "Any model or account: ChatGPT and GitHub Copilot sign-in, OpenAI, Anthropic, Google and other providers, with mid-conversation switching and fallback chains",
+      "Plugin architecture covering tools, commands, menus, sandboxes, workspaces and the coding agent itself",
+      "`pax --agent my_module:agent` runs your own Pydantic AI agent in the terminal",
+      "Code mode lets the model call many tools from one Python snippet, with optional speculative execution",
+      "Saved sessions you can resume, fork or rewind, plus `--resume-claude` and `--resume-codex` to continue Claude Code or Codex sessions"
+    ],
+    "bestFor": "Python developers who want an open, hackable terminal coding agent, or who build agents with Pydantic AI and want to drive them from a coding TUI.",
+    "notIdealFor": "Developers who want a sandboxed, approval-gated agent by default: Pax runs commands and edits files as you unless you put it in a sandbox.",
+    "recentUpdates": "Pydantic released Pax in beta on November 25, 2026. On November 27 and 28, 2026 it added `pax -x NAME` to load a plugin for one launch, showed the `/permissions` mode in the footer and added configurable input bindings and queue delivery.",
+    "verdict": "A credible, fast-moving open-source terminal agent from a well-known Python team, most compelling for anyone already building on Pydantic AI.",
+    "tags": [
+      "CLI",
+      "Terminal",
+      "Coding Agent",
+      "Open Source",
+      "Python"
+    ],
+    "lastUpdated": "2026-11-28"
+  },
+  {
+    "slug": "velaterm",
+    "name": "VelaTerm",
+    "company": "VLINX Software",
+    "pricing": "open-source",
+    "pricingDetail": "Free and open source under the MIT licence. Download installers for macOS, Windows and Linux from velaterm.com or run `brew install --cask velaterm` on macOS; the coding agents it manages use your own subscriptions or API keys.",
+    "description": "VelaTerm is an agentic development environment that combines Codex-style agent session management with iTerm2-style split terminals. It runs Claude Code, Codex, OpenCode, Copilot, Cursor, Antigravity, Cline, Pi and other agents as managed sessions in a project tree, and lets agents spawn, search and message each other across sessions.",
+    "keyFeatures": [
+      "Managed sessions for Claude Code, Codex, OpenCode, Copilot, Cursor, Antigravity, Cline, Pi and more, with live status and notifications",
+      "`vspawn` child sessions in their own git worktree, plus `vsearch`, `vrefer` and `vtell` for cross-session search and messaging",
+      "Plan / Execute mode that splits a large task across planner and executor sessions",
+      "Built-in Markdown and code editors, Git panel with PR creation and inline diff review comments",
+      "Remote access over SSH, in a browser with end-to-end encryption, or from iOS and Android apps"
+    ],
+    "bestFor": "Developers running many coding agents at once who want one native workspace for sessions, terminals, worktrees and review across desktop, browser and phone.",
+    "notIdealFor": "Developers who prefer a lightweight terminal multiplexer inside their existing terminal, or who run a single agent at a time.",
+    "recentUpdates": "v0.3.7 shipped on November 26, 2026, letting you bind existing sessions into orchestration workflows and making Antigravity a first-class orchestration agent, following v0.3.6 on November 24, 2026 with inline diff review comments and pull request creation from the Git panel.",
+    "verdict": "A feature-rich, actively developed open-source cockpit for multi-agent coding that ships several releases a week.",
+    "tags": [
+      "Terminal",
+      "Multi-Agent",
+      "Git Worktrees",
+      "Open Source",
+      "Developer Productivity"
+    ],
+    "lastUpdated": "2026-11-28"
   }
 ]

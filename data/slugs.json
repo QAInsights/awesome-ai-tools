@@ -1148,6 +1148,13 @@
     "addedAt": "2026-11-27"
   },
   {
+    "slug": "pax",
+    "name": "Pax",
+    "company": "Pydantic",
+    "category": "Terminal & CLI Agents",
+    "addedAt": "2026-11-28"
+  },
+  {
     "slug": "warp",
     "name": "Warp",
     "company": "Warp",
@@ -1223,6 +1230,13 @@
     "company": "receptron",
     "category": "AI-Native Terminals",
     "addedAt": "2026-11-27"
+  },
+  {
+    "slug": "velaterm",
+    "name": "VelaTerm",
+    "company": "VLINX Software",
+    "category": "AI-Native Terminals",
+    "addedAt": "2026-11-28"
   },
   {
     "slug": "jules",
